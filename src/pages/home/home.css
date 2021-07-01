@@ -81,3 +81,91 @@
   color: #bcbcbc;
   font-size: 10px;
 }
+
+.SearchButtonLarge {
+  background-color: #ac172c;
+  border: none;
+  outline: none;
+  border-radius: 10px;
+  padding: .6em 2em;
+  font-family: "DMSans", sans-serif;
+  color: #FFFFFF;
+  width: max-content;
+  font-size: 24px;
+}
+
+.SearchButtonLargeFlex {
+  display: flex;
+  align-items: center;
+}
+
+.SearchIcon35 {
+  height: 35px;
+  margin-right: 20px;
+}
+
+.MainContentWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 75%;
+  margin: 2em 0;
+}
+
+.PinkDot {
+  height: 50px;
+  width: 50px;
+  background-color: #ff7bd1;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: .5em;
+}
+
+.RecommendedSection {
+  width: 100%;
+}
+
+.MainContentHeader {
+  font-weight: bold;
+  color: #626262;
+  font-size: 30px;
+  text-align: left;
+  display: flex;
+  align-items: center;
+}
+
+.CategoriesSection {
+  width: 100%;
+}
+
+.ItemCardSection {
+  padding: 1em 4em;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.CategoryCardSection {
+  padding: 1em 4em;
+  display: flex;
+  justify-content: space-between;
+}
+
+.CategoryImageDiv {
+  width: 25%;
+  padding: 1em;
+  margin-right: 20px;
+  background-color: aqua;
+  border-radius: 10px;
+  color: #FFFFFF;
+}
+
+.CategoryTitle {
+  font-size: 40px;
+  font-weight: bold;
+}
+
+.CategoryItemTotal {
+  font-size: 20px;
+}

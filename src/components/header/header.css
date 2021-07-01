@@ -4,6 +4,7 @@
   justify-content: space-between;
   background-image: url(../../assets/TexturedBackgrounds/LBS_Illustration\ Pattern_RED.jpg);
   background-position: -200px -200px;
+  position: sticky;
 }
 
 .HeaderLogo {
