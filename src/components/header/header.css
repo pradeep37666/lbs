@@ -1,0 +1,25 @@
+.HeaderBar {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  background-image: url(../../assets/TexturedBackgrounds/LBS_Illustration\ Pattern_RED.jpg);
+  background-position: -200px -200px;
+}
+
+.HeaderLogo {
+  margin: 1.5em 2em;
+  max-width: 5.5em;
+}
+
+.SearchWrapper {
+  display: flex;
+  align-items: center;
+  width: 30%;
+}
+
+.LoginWrapper {
+  display: flex;
+  align-items: center;
+  width: 10%;
+  margin-right: 2em;
+}

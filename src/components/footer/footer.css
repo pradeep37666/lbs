@@ -1,0 +1,113 @@
+.Footer {
+  width: 100%;
+}
+
+.FooterBar {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.Advert {
+  background-image: url(../../assets/TexturedBackgrounds/LBS_Illustration\ Pattern_RED.jpg);
+  background-position: -200px 200px;
+}
+
+.Links {
+  background-color: #e9d8b4;
+}
+
+.Copyright {
+  background-color: #33384f;
+}
+
+.FooterWrapper {
+  width: 65%;
+  display: flex;
+  justify-content: space-between;
+  margin: 50px 0;
+  align-items: center;
+}
+
+.FooterLogo {
+  max-width: 100px;
+  border-radius: 20px;
+}
+
+.TextWrapper {
+  padding-left: 2em;
+}
+
+.LargeText {
+  font-size: 50px;
+  color: #FFFFFF;
+  font-weight: bold;
+}
+
+.RegularText {
+  font-size: 25px;
+  color: #FFFFFF;
+}
+
+.AppButtonsSection {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  padding: .3em 0 0 8.5em
+}
+
+.AppButton {
+  display: block;
+  width: 100%;
+  border-radius: 10px;
+  border: none;
+  padding: 12px;
+}
+
+.Apple {
+  background-color: #000000;
+  color: #FFFFFF;
+}
+
+.AppIcon {
+  max-width: 20px;
+  margin-right: 1em;
+}
+
+.Google {
+  background: #FFFFFF;
+}
+
+.AppButtonFlex {
+  display: flex;
+  align-items: center;
+}
+
+.AppButtonText {
+  margin: auto;
+  font-family: "DMSans";
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.Links {
+  font-size: 25px;
+  color: #33384f;
+}
+
+.Links div {
+  padding-bottom: 12px;
+}
+
+.LinkHeader {
+  font-size: 30px;
+  font-weight: bold;
+}
+
+.Copyright {
+  font-size: 20px;
+  line-height: 1.5;
+  color: #FFFFFF;
+}

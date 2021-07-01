@@ -1,38 +1,79 @@
-.App {
-  text-align: center;
+html {
+  box-sizing: border-box;
+}
+*, *:before, *:after {
+  box-sizing: inherit;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+@font-face {
+  font-family: "DMSans";
+  src: url(/src/assets/Fonts/DMSans-Regular.ttf);
+  font-weight: normal;
+  font-style: normal;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+@font-face {
+  font-family: "DMSans";
+  src: url(/src/assets/Fonts/DMSans-Bold.ttf);
+  font-weight: bold;
+  font-style: normal;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+@font-face {
+  font-family: "DMSans";
+  src: url(/src/assets/Fonts/DMSans-BoldItalic.ttf);
+  font-weight: bold;
+  font-style: italic;
 }
 
-.App-link {
-  color: #61dafb;
+@font-face {
+  font-family: "DMSans";
+  src: url(/src/assets/Fonts/DMSans-Italic.ttf);
+  font-weight: normal;
+  font-style: italic;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+@font-face {
+  font-family: "DMSans";
+  src: url(/src/assets/Fonts/DMSans-Medium.ttf);
+  font-weight: 500;
+  font-style: normal;
 }
+
+@font-face {
+  font-family: "DMSans";
+  src: url(/src/assets/Fonts/DMSans-MediumItalic.ttf);
+  font-weight: 500;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "Kameron";
+  src: url(/src/assets/Fonts/Kameron-Regular.ttf);
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Kameron";
+  src: url(/src/assets/Fonts/Kameron-Bold.ttf);
+  font-weight: bold;
+  font-style: italic;
+}
+
+body {
+  margin: 0;
+  font-family: "DMSans", sans-serif;
+}
+
+button {
+  outline: none;
+}
+
+button:hover {
+  cursor: pointer;
+}
+
+
+/* Font imports */
+

@@ -1,0 +1,21 @@
+.SearchButton {
+  background-color: #ac172c;
+  border: none;
+  outline: none;
+  border-radius: 10px;
+  padding: 19px;
+  max-height: 62px;
+  font-family: "DMSans", sans-serif;
+  color: #FFFFFF;
+  width: max-content;
+  font-size: 24px;
+}
+
+.SearchIcon {
+  height: 16px;
+}
+
+.SearchButtonFlex {
+  display: flex;
+  align-items: center;
+}

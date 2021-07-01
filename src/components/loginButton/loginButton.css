@@ -1,0 +1,23 @@
+.LoginButton {
+  background-color: #33384f;
+  border: none;
+  outline: none;
+  border-radius: 10px;
+  padding: 16px;
+  color: #FFFFFF;
+  width: 100%;
+  font-size: 18px;
+  font-family: "DMSans", sans-serif;
+}
+
+.LoginIcon {
+  height: 24px;
+  display: inline;
+  margin-right: 1em;
+}
+
+.LoginFlex {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

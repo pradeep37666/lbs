@@ -1,0 +1,9 @@
+.TextInput {
+  border-radius: 15px;
+  border: 2px solid #95272f;
+  outline: none;
+  padding: 1em 0.6em;
+  width: 100%;
+  font-family: "DMSans", sans-serif;
+}
+
