@@ -5,6 +5,7 @@ import { makeStyles } from '@material-ui/styles';
 const useStyles = makeStyles({
   textInput: props => ({
     fontSize: props.fontSize,
+    padding: props.padding,
   }),
   inputDiv: props => ({
     width: props.width,

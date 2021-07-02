@@ -2,8 +2,9 @@
   border-radius: 15px;
   border: 2px solid #95272f;
   outline: none;
-  padding: 1em 0.6em;
+  padding: 1.3em 0.6em 0.7em 1em;
   width: 100%;
   font-family: "DMSans", sans-serif;
+  background-color: #FFFFFF;
 }
 

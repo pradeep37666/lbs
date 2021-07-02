@@ -3,8 +3,14 @@ import './home.css';
 import PageWrapper from "./../../components/pageWrapper/pageWrapper.js";
 import TextInput from '../../components/textInput/textInput.js';
 import SelectInput from '../../components/selectInput/selectInput.js';
+import CategorySelect from '../../components/categorySelect/categorySelect.js';
+import RatingSelect from '../../components/ratingSelect/ratingSelect.js';
 import SearchIcon from '../../assets/Icons/SearchIcon.png';
 import ItemCard from '../../components/itemCard/itemCard';
+import WateringCanIcon from '../../assets/Icons/WateringCanIcon.png';
+import HammerIcon from '../../assets/Icons/HammerIcon.png';
+import CarIcon from '../../assets/Icons/CarIcon.png';
+import DrillIcon from '../../assets/Icons/DrillIcon.png';
 
 export default function home() {
   return (
@@ -18,7 +24,7 @@ export default function home() {
           <div className="SearchSectionFilters">
             <div className="SearchFiltersRowFlex">
               <TextInput width="35%" label="Keywords" fontSize="20px"/>
-              <SelectInput width="35%" label="Category" fontSize="20px" options={['Automotive', 'Gardening', 'Hand Tools', 'Power Tools']}/>
+              <CategorySelect width="35%" label="Category" fontSize="20px"/>
               
               <TextInput width="25%" label="Location / Postcode" fontSize="20px"/>
             </div>
@@ -29,51 +35,28 @@ export default function home() {
 
             <div className="PriceFilterSearch">
               <div className="PriceFilterContainer">
-                <label className="FloatingLabel">Price Minimum</label>
-                <select className="PriceFilterSelect">
-                  <option value="10">$10</option>
-                  <option value="20">$20</option>
-                  <option value="30">$30</option>
-                  <option value="40">$40</option>
-                  <option value="50">$50</option>
-                  <option value="60">$60</option>
-                  <option value="70">$70</option>
-                  <option value="80">$80</option>
-                </select>
+                <SelectInput className="PriceFilterSelect" borders={false} label="Price Minimum" options={['$10', '$20', '$30', '$40', '$50', '$60', '$70', '$80']}/>
               </div>
 
               <div className="vl"/>
 
               <div className="PriceFilterContainer">
-                <label className="FloatingLabel">Price Maximum</label>
-                <select className="PriceFilterSelect">
-                  <option value="10">$10</option>
-                  <option value="20">$20</option>
-                  <option value="30">$30</option>
-                  <option value="40">$40</option>
-                  <option value="50">$50</option>
-                  <option value="60">$60</option>
-                  <option value="70">$70</option>
-                  <option value="80">$80</option>
-                </select>
+                <SelectInput className="PriceFilterSelect" label="Price Maximum" options={['$10', '$20', '$30', '$40', '$50', '$60', '$70', '$80']}/>
               </div>
 
               <div className="vl"/>
 
               <div className="PriceFilterContainer">
-                <label className="FloatingLabel">Rate</label>
-                <select className="PriceFilterSelect">
-                  
-                  <option value="Day">Per Day</option>
-                  <option value="Hour">Per Hour</option>
-                </select>
+                <SelectInput className="PriceFilterSelect" label="Rate" options={['Per Day', 'Per Hour']}/>
               </div>
 
             </div>
 
-            <SelectInput width="25%" label="Minimum Rating" fontSize="20px" options={['5 Star', '4 Star', '3 Star', '2 Star', '1 Star']}/>
+            {/* <SelectInput width="25%" label="Minimum Rating" borders={true} fontSize="20px" options={['5 Star', '4 Star', '3 Star', '2 Star', '1 Star']}/> */}
 
-            <SelectInput width="25%" label="Delivery" fontSize="20px" options={['Available', 'Unavailable']}/>
+            <RatingSelect width="25%" label="Minimum Rating" fontSize="20px"/>
+
+            <SelectInput width="25%" label="Delivery" borders={true} fontSize="20px" options={['Available', 'Unavailable']}/>
 
             </div>
 
@@ -94,7 +77,7 @@ export default function home() {
 
       <div className="MainContentWrapper">
         <div className="RecommendedSection">
-          <div className="MainContentHeader"><span className="PinkDot"/>Top picks for you</div>
+          <div className="MainContentHeader">Top picks for you</div>
 
 
           <div className="ItemCardSection">
@@ -116,24 +99,33 @@ export default function home() {
         </div>
 
         <div className="CategoriesSection">
-        <div className="MainContentHeader"><span className="PinkDot"/>Helpful Categories</div>
+        <div className="MainContentHeader">Helpful Categories</div>
         <div className="CategoryCardSection">
-          <div className="CategoryImageDiv">
+
+          <div className="CategoryImageDiv Automotive">
             <div className="CategoryTitle">Automotive</div>
             <div className="CategoryItemTotal">21,056 Items</div>
+            <img src={CarIcon} alt="" className="CategoryIcon" style={{ height: '22px'}} />
           </div>
-          <div className="CategoryImageDiv">
+
+          <div className="CategoryImageDiv Gardening">
             <div className="CategoryTitle">Gardening</div>
             <div className="CategoryItemTotal">16,702 Items</div>
+            <img src={WateringCanIcon} alt="" className="CategoryIcon" style={{ height: '28px'}} />
           </div>
-          <div className="CategoryImageDiv">
+
+          <div className="CategoryImageDiv HandTools">
             <div className="CategoryTitle">Hand Tools</div>
             <div className="CategoryItemTotal">12,334 Items</div>
+            <img src={HammerIcon} alt="" className="CategoryIcon"/>
           </div>
-          <div className="CategoryImageDiv">
+
+          <div className="CategoryImageDiv PowerTools">
             <div className="CategoryTitle">Power Tools</div>
             <div className="CategoryItemTotal">4,586 Items</div>
+            <img src={DrillIcon} alt="" className="CategoryIcon"/>
           </div>
+
         </div>
 
         </div>

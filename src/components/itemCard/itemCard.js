@@ -9,7 +9,7 @@ export default function itemCard(props) {
   return (
     <div className="ItemCard">
       {/* new prop for image link to go here later */}
-      <img src={PreviewImage} alt={props.itemName} />
+      <img src={PreviewImage} alt={props.itemName} className="PreviewImage"/>
       <div className="ItemNameText">{props.itemName}</div>
       <div className="ItemPriceText">${props.price} <span className="ItemRateText">per {props.rate}</span></div>
 

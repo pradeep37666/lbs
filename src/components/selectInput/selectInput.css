@@ -1,4 +1,15 @@
 .SelectInput {
   font-size: 20px;
-  max-height: 74px;
+  max-height: 70px;
+  border-radius: 15px;
+  outline: none;
+  padding: 1.3em 0 0.7em 0;
+  width: 100%;
+  font-family: "DMSans", sans-serif;
+  background-color: #FFFFFF;
+}
+
+.hl {
+  margin: 8px 5px;
+  opacity: 0.3;
 }

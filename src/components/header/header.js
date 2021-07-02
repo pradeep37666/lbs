@@ -12,7 +12,7 @@ export default function header() {
       <img src={Logo} alt="Logo" className="HeaderLogo"/>
 
       <div className="SearchWrapper">
-        <Input placeholder="Search for stuff" fontSize="16px" margin="0 25px 0 0" width="100%" />
+        <Input placeholder="Search for stuff" fontSize="16px" margin="0 25px 0 0" width="100%" padding="1em 0.6em" />
         <Search height="16px"/>
         
       </div>

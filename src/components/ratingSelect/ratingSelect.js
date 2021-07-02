@@ -1,10 +1,13 @@
-import { React, useState } from 'react';
-import './selectInput.css';
+import { React, useState} from 'react';
 import { makeStyles, withStyles } from '@material-ui/styles';
+import './ratingSelect.css';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import InputBase from '@material-ui/core/InputBase';
 import ArrowDown from '@material-ui/icons/ExpandMore';
+import StarOutline from './../../assets/Icons/StarOutline.png';
+import StarFilled from './../../assets/Icons/StarFilled.png';
+
 
 const BootstrapInput = withStyles((theme) => ({
   input: {
@@ -42,23 +45,25 @@ const useStyles = makeStyles({
     borderTop: 'none',
     "& .MuiMenuItem-root": {
       fontFamily: 'DMSans, sans-serif',
+      fontSize: '14px',
     }
   }),
   select: props => ({
-    border: props.borders ? '2px solid #95272f' : 'none',
+    border: '2px solid #95272f',
     "& .MuiSvgIcon-root": {
       color: "#95272f",
     }
   }) 
 })
 
-export default function SelectInput(props) {
+export default function RatingSelect(props) {
   const classes = useStyles(props);
-  const [name, setName] = useState(props.options[0]);
+  const [rating, setRating] = useState("Automotive");
 
   const handleChange = (event) => {
-    setName(event.target.value);
+    setRating(event.target.value);
   }
+
   return (
     <div className={`${classes.inputDiv}`}>
       <label className={`${classes.inputLabel}`}>{props.label}</label>
@@ -66,7 +71,7 @@ export default function SelectInput(props) {
       onChange={handleChange} 
       input={<BootstrapInput />} className={`SelectInput ${classes.select}`}
       IconComponent={ArrowDown}
-      value={name}
+      value={rating}
       MenuProps={{
         anchorOrigin: {
           vertical: "bottom",
@@ -83,9 +88,23 @@ export default function SelectInput(props) {
       }}
       >
       <hr className="hl"/>
-      {props.options.map((name, index) => 
-      <MenuItem value={name} key={index}>{name}</MenuItem>
-      )}
+
+      {/* Each star is a menuItem, sends its value back to state, need to push them onto one line, display filled star based on current state (i.e. if rating is 3 items 1-3 will be filled, rest empty easy ternary for img src) style the stars, remove stars from the main box (can use display: none like for categories) but need to add the representative number 1-5 rating  */}
+      <MenuItem value="1">
+      <img src={StarOutline} alt="" className="starIcon"/>
+      </MenuItem>
+      <MenuItem value="2">
+      <img src={StarOutline} alt="" className="starIcon"/>
+      </MenuItem>
+      <MenuItem value="3">
+      <img src={StarOutline} alt="" className="starIcon"/>
+      </MenuItem>
+      <MenuItem value="4">
+      <img src={StarOutline} alt="" className="starIcon"/>
+      </MenuItem>
+      <MenuItem value="5">
+      <img src={StarOutline} alt="" className="starIcon"/>
+      </MenuItem>
       </Select>
     </div>
   )
