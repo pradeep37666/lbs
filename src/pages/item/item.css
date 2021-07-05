@@ -1,0 +1,64 @@
+.ItemMainWrapper {
+    display: flex;
+    justify-content: space-between;
+    width: 65%;
+    margin-top: 3em;
+}
+
+.ItemInfoWrapper {
+    width: 45%;
+    font-family: "DMSans", sans-serif;
+}
+
+.ItemPicturesWrapper {
+    width: 45%;
+}
+
+.ItemName {
+    font-size: 40px;
+    font-weight: bold;
+}
+
+.ItemPriceFlex {
+    display: flex;
+}
+
+.ItemRateDiscountFlex {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    padding-left: 1em;
+}
+
+.ItemPriceTextBig {
+    font-size: 70px;
+    color: #33384f;
+}
+
+.ItemRateTextBig {
+    font-size: 34px;
+    color: #58554e;
+}
+
+.ItemDiscountText {
+    font-size: 18px;
+    color: #ac172c;
+}
+
+.LocationDeliveryCategory {
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+}
+
+.LDCIconContainer {
+    width: 4em;
+}
+
+.LDCIcon {
+    height: 30px;
+}
+
+.DeliveryFeeText {
+    color: #c7c7c7;
+}

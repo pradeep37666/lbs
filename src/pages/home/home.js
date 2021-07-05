@@ -35,13 +35,13 @@ export default function home() {
 
             <div className="PriceFilterSearch">
               <div className="PriceFilterContainer">
-                <SelectInput className="PriceFilterSelect" borders={false} label="Price Minimum" options={['$10', '$20', '$30', '$40', '$50', '$60', '$70', '$80']}/>
+                <SelectInput className="PriceFilterSelect" borders={false} label="$ Min" options={['$10', '$20', '$30', '$40', '$50', '$60', '$70', '$80']}/>
               </div>
 
               <div className="vl"/>
 
               <div className="PriceFilterContainer">
-                <SelectInput className="PriceFilterSelect" label="Price Maximum" options={['$10', '$20', '$30', '$40', '$50', '$60', '$70', '$80']}/>
+                <SelectInput className="PriceFilterSelect" label="$ Max" options={['$10', '$20', '$30', '$40', '$50', '$60', '$70', '$80']}/>
               </div>
 
               <div className="vl"/>
@@ -82,17 +82,21 @@ export default function home() {
 
           <div className="ItemCardSection">
 
-          <ItemCard itemName="Pull along ATV mower attachment with multiple modes" price="750" rate="day" availability={true} location="Brisbane" rating="4"/>
+          <ItemCard itemName="Pull along ATV mower attachment with multiple modes" price="750" rate="day" availability={true} location="Brisbane" rating="2"/>
 
           <ItemCard itemName="Pull along ATV mower attachment with multiple modes" price="750" rate="day" availability={true} location="Brisbane" rating="4"/>
 
           <ItemCard itemName="Pull along ATV mower attachment with multiple modes" price="750" rate="day" availability={true} location="Brisbane" rating="4"/>
 
-          <ItemCard itemName="Pull along ATV mower attachment with multiple modes" price="750" rate="day" availability={true} location="Brisbane" rating="4"/>
+          <ItemCard itemName="Pull along ATV mower attachment with multiple modes" price="750" rate="day" availability={true} location="Brisbane" rating="2"/>
 
-          <ItemCard itemName="Pull along ATV mower attachment with multiple modes" price="750" rate="day" availability={true} location="Brisbane" rating="4"/>
+          <ItemCard itemName="Pull along ATV mower attachment with multiple modes" price="750" rate="day" availability={true} location="Brisbane" rating="1"/>
 
-          <ItemCard itemName="Pull along ATV mower attachment with multiple modes" price="750" rate="day" availability={true} location="Brisbane" rating="4"/>
+          <ItemCard itemName="Pull along ATV mower attachment with multiple modes" price="750" rate="day" availability={true} location="Brisbane" rating="3"/>
+
+          <ItemCard itemName="Pull along ATV mower attachment with multiple modes" price="750" rate="day" availability={true} location="Brisbane" rating="3"/>
+
+          <ItemCard itemName="Pull along ATV mower attachment with multiple modes" price="750" rate="day" availability={true} location="Brisbane" rating="5"/>
 
           </div>
 

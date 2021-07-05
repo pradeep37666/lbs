@@ -14,6 +14,7 @@ import HammerIcon from './../../assets/Icons/HammerIcon_Red.png';
 import OfficeIcon from './../../assets/Icons/OfficeIcon.png';
 import PaintingIcon from './../../assets/Icons/PaintingIcon.png';
 import SportingIcon from './../../assets/Icons/SportingIcon.png';
+import MowingIcon from './../../assets/Icons/MowingIcon.png';
 
 
 const BootstrapInput = withStyles((theme) => ({
@@ -49,6 +50,7 @@ const useStyles = makeStyles({
   dropDown: props => ({
     border: '2px solid #95272f',
     borderRadius: '0 0 15px 15px',
+    overflowY: 'scroll',
     borderTop: 'none',
     "& .MuiMenuItem-root": {
       fontFamily: 'DMSans, sans-serif',
@@ -102,7 +104,7 @@ export default function CategorySelect(props) {
       <MenuItem value="Automotive"><div className="CatIconContainer"><img src={CarIcon} alt="" className="CategoryDDIcon" style={{height: '16px'}}/></div>Automotive</MenuItem>
       <MenuItem value="Power Tools"><div className="CatIconContainer"><img src={DrillIcon} alt="" className="CategoryDDIcon"/></div>Power Tools</MenuItem>
       <MenuItem value="Creative"><div className="CatIconContainer"><img src={CreativeIcon} alt="" className="CategoryDDIcon"/></div>Creative</MenuItem>
-      <MenuItem value="Mowing"><div className="CatIconContainer"><img src={OfficeIcon} alt="" className="CategoryDDIcon"/></div>Mowing</MenuItem>
+      <MenuItem value="Mowing"><div className="CatIconContainer"><img src={MowingIcon} alt="" className="CategoryDDIcon"/></div>Mowing</MenuItem>
       <MenuItem value="Cleaning"><div className="CatIconContainer"><img src={CleaningIcon} alt="" className="CategoryDDIcon"/></div>Cleaning</MenuItem>
       <MenuItem value="Sporting"><div className="CatIconContainer"><img src={SportingIcon} alt="" className="CategoryDDIcon"/></div>Sporting</MenuItem>
       </Select>

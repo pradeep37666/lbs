@@ -46,6 +46,10 @@ const useStyles = makeStyles({
     "& .MuiMenuItem-root": {
       fontFamily: 'DMSans, sans-serif',
       fontSize: '14px',
+      padding: '2px',
+    },
+    "& .MuiMenuItem-root:hover, .MuiMenuItem-root:focus": {
+      backgroundColor: '#FFFFFF',
     }
   }),
   select: props => ({
@@ -53,12 +57,19 @@ const useStyles = makeStyles({
     "& .MuiSvgIcon-root": {
       color: "#95272f",
     }
-  }) 
+  }),
+  option: props => ({
+    display: 'inline',
+    backgroundColor: 'none',
+    ".MuiListItem-root.Mui-selected:hover": {
+      height: '100px',
+    }
+  })
 })
 
 export default function RatingSelect(props) {
   const classes = useStyles(props);
-  const [rating, setRating] = useState("Automotive");
+  const [rating, setRating] = useState(4);
 
   const handleChange = (event) => {
     setRating(event.target.value);
@@ -74,11 +85,11 @@ export default function RatingSelect(props) {
       value={rating}
       MenuProps={{
         anchorOrigin: {
-          vertical: "bottom",
+          vertical: 110,
           horizontal: "left"
         },
         transformOrigin: {
-          vertical: "top",
+          vertical: "bottom",
           horizontal: "left"
         },
         getContentAnchorEl: null,
@@ -88,23 +99,22 @@ export default function RatingSelect(props) {
       }}
       >
       <hr className="hl"/>
-
-      {/* Each star is a menuItem, sends its value back to state, need to push them onto one line, display filled star based on current state (i.e. if rating is 3 items 1-3 will be filled, rest empty easy ternary for img src) style the stars, remove stars from the main box (can use display: none like for categories) but need to add the representative number 1-5 rating  */}
-      <MenuItem value="1">
-      <img src={StarOutline} alt="" className="starIcon"/>
+      <MenuItem value="1" className={`${classes.option}`} style={{marginLeft: '15px'}}>
+      <img src={StarFilled} alt="" className="StarIcon"/><div className="RatingText">{rating} star</div>
       </MenuItem>
-      <MenuItem value="2">
-      <img src={StarOutline} alt="" className="starIcon"/>
+      <MenuItem value="2" className={`${classes.option}`}>
+      <img src={rating >= 2 ? StarFilled : StarOutline} alt="" className="StarIcon"/><div className="RatingText">{rating} star</div>
       </MenuItem>
-      <MenuItem value="3">
-      <img src={StarOutline} alt="" className="starIcon"/>
+      <MenuItem value="3" className={`${classes.option}`}>
+      <img src={rating >= 3 ? StarFilled : StarOutline} alt="" className="StarIcon"/><div className="RatingText">{rating} star</div>
       </MenuItem>
-      <MenuItem value="4">
-      <img src={StarOutline} alt="" className="starIcon"/>
+      <MenuItem value="4" className={`${classes.option}`}>
+      <img src={rating >= 4 ? StarFilled : StarOutline} alt="" className="StarIcon"/><div className="RatingText">{rating} star</div>
       </MenuItem>
-      <MenuItem value="5">
-      <img src={StarOutline} alt="" className="starIcon"/>
+      <MenuItem value="5" className={`${classes.option}`}>
+      <img src={rating >= 5 ? StarFilled : StarOutline} alt="" className="StarIcon"/><div className="RatingText">{rating} star</div>
       </MenuItem>
+      {/* </div> */}
       </Select>
     </div>
   )

@@ -3,9 +3,12 @@ import './itemCard.css';
 import PreviewImage from './../../assets/Images/ATVMower.png';
 import LocationIcon from './../../assets/Icons/LocationIcon.png';
 import DeliveryIcon from './../../assets/Icons/TruckIcon.png';
+import StarOutline from './../../assets/Icons/StarOutline.png';
+import StarFilled from './../../assets/Icons/StarFilled.png';
 
 
 export default function itemCard(props) {
+  const rating = props.rating;
   return (
     <div className="ItemCard">
       {/* new prop for image link to go here later */}
@@ -26,7 +29,14 @@ export default function itemCard(props) {
       </div>
 
       <div className="RatingSection">
-        {props.rating}/5 *stars coming soon tm
+        {rating}/5 <div className="RatingStars">
+          <img src={StarFilled} alt="" className="StarIcon"/>
+          <img src={rating >= 2 ? StarFilled : StarOutline} alt="" className="StarIcon" />
+          <img src={rating >= 3 ? StarFilled : StarOutline} alt="" className="StarIcon"/>
+          <img src={rating >= 4 ? StarFilled : StarOutline} alt="" className="StarIcon"/>
+          <img src={rating >= 5 ? StarFilled : StarOutline} alt="" className="StarIcon"/>
+          
+          </div>
       </div>
 
     </div>

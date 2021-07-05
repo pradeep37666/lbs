@@ -13,3 +13,15 @@
   display: none;
 }
 
+.StarIcon {
+  height: 28px;
+  padding: 2px;
+}
+
+.MuiSelect-root .StarIcon {
+  display: none;
+}
+
+li .RatingText {
+  display: none;
+}

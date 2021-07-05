@@ -144,13 +144,14 @@
 }
 
 .CategoryImageDiv {
-  width: 23%;
+  min-width: 180px;
+  min-height: 300px;
+  flex: 0 1 22%;
   padding: 1em;
   margin-right: 20px;
-  background-color: aqua;
   border-radius: 10px;
   color: #FFFFFF;
-  height: 432px;
+  background-repeat: no-repeat;
 }
 
 .CategoryImageDiv:hover {

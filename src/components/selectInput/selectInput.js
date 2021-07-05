@@ -35,6 +35,8 @@ const useStyles = makeStyles({
     color: '#bcbcbc',
     fontSize: '10px',
     zIndex: 10,
+    maxHeight: '13px',
+    overflow: 'hidden',
   }),
   dropDown: props => ({
     border: '2px solid #95272f',
