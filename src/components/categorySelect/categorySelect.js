@@ -50,7 +50,6 @@ const useStyles = makeStyles({
   dropDown: props => ({
     border: '2px solid #95272f',
     borderRadius: '0 0 15px 15px',
-    overflowY: 'scroll',
     borderTop: 'none',
     "& .MuiMenuItem-root": {
       fontFamily: 'DMSans, sans-serif',
@@ -61,7 +60,7 @@ const useStyles = makeStyles({
     border: '2px solid #95272f',
     "& .MuiSvgIcon-root": {
       color: "#95272f",
-    }
+    },
   }) 
 })
 
@@ -93,7 +92,7 @@ export default function CategorySelect(props) {
         getContentAnchorEl: null,
         classes: {
           paper: classes.dropDown
-        }
+        },
       }}
       >
       <hr className="hl"/>

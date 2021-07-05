@@ -4,12 +4,13 @@ import Logo from './../../assets/Logos/LBS_Logo_Flat_White.png';
 import Input from './../textInput/textInput.js';
 import Search from './../searchButton/searchButton.js';
 import Login from './../loginButton/loginButton.js';
+import { Link } from 'react-router-dom'
 
 export default function header() {
   return (
     <div className="HeaderBar">
-
-      <img src={Logo} alt="Logo" className="HeaderLogo"/>
+      <Link to="/"><img src={Logo} alt="Logo" className="HeaderLogo"/></Link>
+      
 
       <div className="SearchWrapper">
         <Input placeholder="Search for stuff" fontSize="16px" margin="0 25px 0 0" width="100%" padding="1em 0.6em" />

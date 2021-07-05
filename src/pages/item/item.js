@@ -4,7 +4,10 @@ import PageWrapper from '../../components/pageWrapper/pageWrapper';
 import './item.css';
 import Location from './../../assets/Icons/LocationIcon.png';
 import Delivery from './../../assets/Icons/TruckIcon.png';
-import Category from './../../assets/Icons/LocationIcon.png';
+import Category from './../../assets/Icons/CategoriesIcon.png';
+import Profile from './../../assets/Icons/ProfileIcon.png';
+import Calendar from './../../assets/Icons/HangingCalendar.png';
+import Favourite from './../../assets/Icons/FavouritesIcon.png'
 
 export default function Item(props) {
     // const {itemId} = useParams();
@@ -26,10 +29,14 @@ export default function Item(props) {
 
                     <div className="LocationDeliveryCategory">
                         <div className="LDCIconContainer"><img src={Location} alt="" className="LDCIcon"/></div>South Brisbane</div>
-                    <div className="LocationDeliveryCategory"><div className="LDCIconContainer"><img src={Delivery} alt="" className="LDCIcon"/></div> Delivery Available&nbsp;/<span className="DeliveryFeeText">&nbsp;$10 Delivery Fee</span></div>
+                    <div className="LocationDeliveryCategory"><div className="LDCIconContainer"><img src={Delivery} alt="" className="LDCIcon" style={{height: '22px'}}/></div> Delivery Available&nbsp;/<span className="DeliveryFeeText">&nbsp;$10 Delivery Fee</span></div>
                     <div className="LocationDeliveryCategory"><div className="LDCIconContainer"><img src={Category} alt="" className="LDCIcon"/></div>Automotive</div>
 
-                    <div><button>Availability</button><button>Apply Now</button><button>Star **IMG**</button></div>
+                    <div className="ItemButtons">
+                        <button className="ButtonAvailability"><div className="ItemButtonFlex"><img src={Calendar} alt=""/>Availability</div></button>
+                        <button className="ButtonApply"><div className="ItemButtonFlex"><img src={Profile} alt=""/>Apply Now</div></button>
+                        <button className="ButtonFavourite"><img src={Favourite} alt=""/></button>
+                    </div>
                     <hr />
 
                     <div>
