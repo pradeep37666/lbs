@@ -5,6 +5,7 @@ import LocationIcon from './../../assets/Icons/LocationIcon.png';
 import DeliveryIcon from './../../assets/Icons/TruckIcon.png';
 import StarOutline from './../../assets/Icons/StarOutline.png';
 import StarFilled from './../../assets/Icons/StarFilled.png';
+import { Link } from 'react-router-dom';
 
 
 export default function itemCard(props) {
@@ -12,7 +13,9 @@ export default function itemCard(props) {
   return (
     <div className="ItemCard">
       {/* new prop for image link to go here later */}
-      <img src={PreviewImage} alt={props.itemName} className="PreviewImage"/>
+      <Link to={`/item/${props.id}`}>
+        <img src={PreviewImage} alt={props.itemName} className="PreviewImage"/>
+      </Link>
       <div className="ItemNameText">{props.itemName}</div>
       <div className="ItemPriceText">${props.price} <span className="ItemRateText">per {props.rate}</span></div>
 

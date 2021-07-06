@@ -49,8 +49,7 @@ const useStyles = makeStyles({
   }),
   dropDown: props => ({
     border: '2px solid #95272f',
-    borderRadius: '0 0 15px 15px',
-    borderTop: 'none',
+    borderRadius: '15px',
     "& .MuiMenuItem-root": {
       fontFamily: 'DMSans, sans-serif',
       fontSize: '14px',
@@ -95,7 +94,9 @@ export default function CategorySelect(props) {
         },
       }}
       >
-      <hr className="hl"/>
+      <label className={`${classes.inputLabel}`}>{props.label}</label>
+      {/* <div>{category}</div> POC putting everything in the top of the drop down*/}
+      <hr className="hl" style={{marginTop: '1.5em'}}/>
       <MenuItem value="Painting"><div className="CatIconContainer"><img src={PaintingIcon} alt="" className="CategoryDDIcon"/></div>Painting</MenuItem>
       <MenuItem value="Office"><div className="CatIconContainer"><img src={OfficeIcon} alt="" className="CategoryDDIcon"/></div>Office</MenuItem>
       <MenuItem value="Tools"><div className="CatIconContainer"><img src={HammerIcon} alt="" className="CategoryDDIcon"/></div>Tools</MenuItem>

@@ -1,8 +1,8 @@
 .ItemMainWrapper {
     display: flex;
     justify-content: space-between;
-    width: 65%;
-    margin-top: 3em;
+    width: 70%;
+    margin-top: 4em;
 }
 
 .ItemInfoWrapper {
@@ -83,7 +83,7 @@
 .ItemButtonFlex {
     display: flex;
     justify-content: space-between;
-    padding: 0 1em;
+    padding: 0 1.5em;
     align-items: center;
 }
 
@@ -107,4 +107,179 @@
 .ButtonFavourite {
     background-color: #b43b4c;
     border: none;
+}
+
+.hr {
+    border: 1px solid #ebebeb;
+    margin: 35px 0;
+}
+
+.ItemDetailsHeader {
+    font-weight: bold;
+    font-size: 25px;
+    color: #33384f;
+    margin-bottom: .5em;
+}
+
+.ItemDetailsFlex {
+    display: flex;
+    justify-content: space-between;
+    font-size: 18px;
+    width: 80%;
+    margin-bottom: 1em;
+    font-weight: bold;
+}
+
+.ItemDetailsFlex div {
+    font-weight: normal;
+}
+
+.ProductRatingRow {
+    display: flex;
+    justify-content: space-between;
+    font-size: 20px;
+    width: 70%;
+}
+
+.RatingHeader {
+    font-weight: bold;
+}
+
+.RatingStarFlex {
+    display: flex;
+    align-items: center;
+}
+
+.StarIconRating {
+    height: 18px;
+    margin-left: .5em;
+}
+
+.RatingLenderFlex {
+    display: flex;
+}
+
+.ProfileIcon {
+    height: 50px;
+    width: 50px;
+    margin-right: .5em;
+}
+
+.ReviewCardSection {
+    display: flex;
+    justify-content: space-between;
+    margin: 1em 0;
+}
+
+.ViewReviewsButton {
+    width: 100%;
+    border: 1px solid #b03b4b;
+    padding: 1em;
+    text-align: center;
+    font-size: 14px;
+    border-radius: 10px;
+    background-color: #FFFFFF;
+    font-family: 'DMSans', sans-serif;
+}
+
+.ReviewCarousel {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1em;
+}
+
+.ReviewButtonFlex {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Old versions of Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none;
+}
+
+.ReviewButtonFlex:hover {
+    cursor: pointer;
+}
+
+.ReviewCarousel div {
+    height: 16px;
+    width: 16px;
+    border-radius: 50%;
+    margin: 0 .2em;
+    color: #FFFFFF;
+}
+
+.ReviewPageInactive {
+    border: 1px solid #ac172c;
+}
+
+.ReviewPageActive {
+    background-color: #ac172c;
+}
+
+.MainItemImage {
+    width: 100%;
+    border-radius: 30px 30px 0 0;
+    margin-bottom: 1em;
+}
+
+.SecondaryImageFlexContainer {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 2em;
+}
+
+.SecondaryItemImageDiv {
+    width: 48%;
+}
+
+.SecondaryItemImage {
+    width: 100%;
+    display: block;
+}
+
+.ImageModalDiv {
+    position: relative;
+}
+
+.ImageModalButton {
+    width: 45%;
+    color: #FFF;
+    border-radius: 10px;
+    background-color: #ac172c;
+    padding: 1em;
+    border: none;
+    outline: none;
+    font-family: "DMSans", sans-serif;
+}
+
+.NavyOverlay {
+    position: absolute;
+    background-color: rgba( 20, 25, 31, 0.5);
+    border-radius: 0 0 15px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    top: 0;
+}
+
+.PickupLocationText {
+    font-size: 18px;
+    font-weight: bold;
+    margin: .5em 0;
+}
+
+.PickupLocationTextLight {
+    font-size: 18px;
+    color: #c7c7c7c7;
+}
+
+.MapContainer {
+    height: 400px;
+    width: 100%;
 }

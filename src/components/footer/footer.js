@@ -1,8 +1,8 @@
 import React from 'react';
 import './footer.css';
 import Logo from './../../assets/Logos/LBS_Logo_Flat_Red.jpg';
-import AppleIcon from './../../assets/Icons/AppleIcon.png';
-import GoogleIcon from './../../assets/Icons/GoogleIcon.png';
+import GoogleButton from '../../assets/Images/GooglePlayButton.png';
+import AppleButton from '../../assets/Images/AppStoreButton.png';
 
 export default function footer() {
   return (
@@ -15,20 +15,8 @@ export default function footer() {
             <div className="RegularText">Download our mobile app to borrow and lend, where ever you are!</div>
           </div>
           <div className="AppButtonsSection">
-            <button className="AppButton Apple">
-              <div className="AppButtonFlex">
-                <img src={AppleIcon} className="AppIcon" alt="App Store"/> 
-                <div className="AppButtonText">Apple AppStore</div>
-              </div>
-              </button>
-            
-            <button className="AppButton Google">
-              <div className="AppButtonFlex">
-                <img src={GoogleIcon} className="AppIcon" alt="Google Play"/> 
-                <div className="AppButtonText">Google Play</div>
-              </div>              
-              </button>
-
+            <img src={AppleButton} alt="Google Play" className="AppButton"/>
+            <img src={GoogleButton} alt="Google Play" className="AppButton"/>
           </div>
 
         </div>

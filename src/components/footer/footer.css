@@ -53,17 +53,13 @@
   flex-grow: 1;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: space-evenly;
   height: 100%;
-  padding: .3em 0 0 8.5em
+  padding: .3em 0 0 8.5em;
 }
 
-.AppButton {
-  display: block;
-  width: 100%;
-  border-radius: 10px;
-  border: none;
-  padding: 12px;
+.AppButton:hover {
+  cursor: pointer;
 }
 
 .Apple {
