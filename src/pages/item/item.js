@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import PageWrapper from '../../components/pageWrapper/pageWrapper.js';
 import ReviewCard from '../../components/reviewCard/reviewCard.js';
+import ItemImageModal from '../../components/itemImagesModal/imagesModal.js';
 // import { useParams } from 'react-router-dom/cjs/react-router-dom.min';
 import './item.css';
 import Location from './../../assets/Icons/LocationIcon.png';
@@ -18,10 +19,20 @@ import GoogleMapReact from 'google-map-react';
 export default function Item(props) {
     // const {itemId} = useParams();
     // Pass in number of reviews from backend for use in review carousel + modal
-    const NumReviews = 12;
-    const NumReviewPages = Math.ceil(NumReviews/2);
+    const reviewSamples = [
+        ['Blake Dude', '4', 'This is a dummy test review'],
+        ['Jake Friend', '3', 'This is a dummy test review'],
+        ['Angela Owen', '4', 'This is a dummy test review'],
+        ['Lara Nichols', '5', 'This is a dummy test review'],
+        ['Sam Stuart', '1', 'This is a dummy test review'],
+        ['Isaac Myers', '2', 'This is a dummy test review'],
+        ['Christian Zhou', '5', 'This is a dummy test review'],
+    ]
+
+    const NumReviewPages = Math.ceil(reviewSamples.length /2);
 
     const [ReviewPage, setReviewPage] = useState(1);
+    const [ImageModal, setImageModal] = useState(false);
 
     const getReviewPages = () => {
         let content = [];
@@ -39,6 +50,24 @@ export default function Item(props) {
         }
     }
 
+    const getReviews = () => {
+        let content = [];
+        let currentReviews = [];
+        currentReviews.push(reviewSamples[ReviewPage * 2 - 2]);
+        //if we're on the last page
+        if (ReviewPage === NumReviewPages) {
+            //check if the number of reviews is even, if so there will be 2 on last page
+            if (reviewSamples.length % 2 === 0) currentReviews.push(reviewSamples[ReviewPage * 2 - 1]);
+        } else {
+            currentReviews.push(reviewSamples[ReviewPage * 2 - 1]);
+        }
+        currentReviews.map( (review, i) => {
+            content.push(<ReviewCard posterName={review[0]} rating={review[1]} reviewText={review[2]} key={i}/>);
+            return 0;
+        });
+        return content;
+    }
+
     const defaultProps = {
         center: {
         lat: -27.481009,
@@ -49,7 +78,8 @@ export default function Item(props) {
 
     return (
         <PageWrapper>
-        {/* all info to be replaced with props calls once setup */}
+            {ImageModal ? <ItemImageModal setModal={setImageModal} /> : ''}
+            {/* Review modal here */}
             <div className="ItemMainWrapper">
                 <div className="ItemInfoWrapper">
                     <div className="ItemName">Pump jack and 2 jack stands combo</div>
@@ -115,11 +145,7 @@ export default function Item(props) {
                     </div>
 
                     <div className="ReviewCardSection">
-                        {/* Based on our ReviewPage state i.e. which page of reviews we are currently on, display those 2 reviews. I.e. if we're on page 1 display 1 & 2, page 7 15 & 16 etc */}
-                        <ReviewCard posterName='Blake Dude' rating='4' reviewText='Laboris esse consectetur ex proident deserunt nulla eiusmod duis commodo proident cupidatat excepteur proident excepteur.'/>
-
-                        <ReviewCard posterName='Angela Owen' rating='4.5' reviewText='Laboris esse consectetur ex proident deserunt nulla eiusmod duis commodo proident cupidatat excepteur proident excepteur.'/>
-                    
+                        {getReviews()}
                     </div>
 
                     {/* Carousel Selector */}
@@ -144,15 +170,16 @@ export default function Item(props) {
                         </div>
                         <div className="SecondaryItemImageDiv ImageModalDiv">
                             <img src={ItemImage} alt="" className="SecondaryItemImage OpenModalImage" style={{borderRadius: "0 0 15px 0"}}/>
-                            <div className="NavyOverlay"><button className="ImageModalButton">View All</button></div>
+                            <div className="NavyOverlay"><button className="ImageModalButton" onClick={() => setImageModal(true)}>View All</button></div>
                             
                         </div>
-                        
+
                     </div>
 
                     <div className="ItemDetailsHeader">Location</div>
                     <div className="MapContainer">
                         <GoogleMapReact
+                        bootstrapURLKeys={{ key: 'AIzaSyB98s0INvtxhs22OxCOEIjE_--kb54qhlQ' }}
                         defaultCenter={defaultProps.center}
                         defaultZoom={defaultProps.zoom}
                         >

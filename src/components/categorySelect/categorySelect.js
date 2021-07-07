@@ -96,6 +96,7 @@ export default function CategorySelect(props) {
       >
       <label className={`${classes.inputLabel}`}>{props.label}</label>
       {/* <div>{category}</div> POC putting everything in the top of the drop down*/}
+      {/* 55FDG#1 docker pass*/}
       <hr className="hl" style={{marginTop: '1.5em'}}/>
       <MenuItem value="Painting"><div className="CatIconContainer"><img src={PaintingIcon} alt="" className="CategoryDDIcon"/></div>Painting</MenuItem>
       <MenuItem value="Office"><div className="CatIconContainer"><img src={OfficeIcon} alt="" className="CategoryDDIcon"/></div>Office</MenuItem>
