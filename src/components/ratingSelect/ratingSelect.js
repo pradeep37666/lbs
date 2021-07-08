@@ -41,8 +41,8 @@ const useStyles = makeStyles({
   }),
   dropDown: props => ({
     border: '2px solid #95272f',
-    borderRadius: '0 0 15px 15px',
-    borderTop: 'none',
+    borderRadius: '15px',
+    boxSizing: 'content-box',
     "& .MuiMenuItem-root": {
       fontFamily: 'DMSans, sans-serif',
       fontSize: '14px',
@@ -85,8 +85,8 @@ export default function RatingSelect(props) {
       value={rating}
       MenuProps={{
         anchorOrigin: {
-          vertical: 110,
-          horizontal: "left"
+          vertical: 96,
+          horizontal: -2
         },
         transformOrigin: {
           vertical: "bottom",
@@ -98,8 +98,10 @@ export default function RatingSelect(props) {
         }
       }}
       >
+      <label className={`${classes.inputLabel}`}>{props.label}</label>
+      <div className="DropDownTitle">{rating} star</div>
       <hr className="hl"/>
-      <MenuItem value="1" className={`${classes.option}`} style={{marginLeft: '15px'}}>
+      <MenuItem value="1" className={`${classes.option}`} style={{marginLeft: '10px'}}>
       <img src={StarFilled} alt="" className="StarIcon"/><div className="RatingText">{rating} star</div>
       </MenuItem>
       <MenuItem value="2" className={`${classes.option}`}>
@@ -112,7 +114,7 @@ export default function RatingSelect(props) {
       <img src={rating >= 4 ? StarFilled : StarOutline} alt="" className="StarIcon"/><div className="RatingText">{rating} star</div>
       </MenuItem>
       <MenuItem value="5" className={`${classes.option}`}>
-      <img src={rating >= 5 ? StarFilled : StarOutline} alt="" className="StarIcon"/><div className="RatingText">{rating} star</div>
+      <img src={rating >= 5 ? StarFilled : StarOutline} alt="" className="StarIcon" style={{marginRight: '10px'}} /><div className="RatingText">{rating} star</div>
       </MenuItem>
       {/* </div> */}
       </Select>

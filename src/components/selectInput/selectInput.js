@@ -40,8 +40,8 @@ const useStyles = makeStyles({
   }),
   dropDown: props => ({
     border: '2px solid #95272f',
-    borderRadius: '0 0 15px 15px',
-    borderTop: 'none',
+    borderRadius: '15px',
+    boxSizing: 'content-box',
     "& .MuiMenuItem-root": {
       fontFamily: 'DMSans, sans-serif',
     }
@@ -71,8 +71,8 @@ export default function SelectInput(props) {
       value={name}
       MenuProps={{
         anchorOrigin: {
-          vertical: "bottom",
-          horizontal: "left"
+          vertical: -22,
+          horizontal: -2
         },
         transformOrigin: {
           vertical: "top",
@@ -84,6 +84,8 @@ export default function SelectInput(props) {
         }
       }}
       >
+      <label className={`${classes.inputLabel}`}>{props.label}</label>
+      <div className="DropDownTitle">{name}</div>
       <hr className="hl"/>
       {props.options.map((name, index) => 
       <MenuItem value={name} key={index}>{name}</MenuItem>

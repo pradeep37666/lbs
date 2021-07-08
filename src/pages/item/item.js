@@ -13,7 +13,6 @@ import Favourite from './../../assets/Icons/FavouritesIcon.png';
 import Star from './../../assets/Icons/StarFilled.png';
 import Jake from './../../assets/Images/JakeFriend.png';
 import ItemImage from './../../assets/Images/search_section_bg.jpg';
-
 import GoogleMapReact from 'google-map-react';
 
 export default function Item(props) {
