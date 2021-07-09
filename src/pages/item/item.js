@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import PageWrapper from '../../components/pageWrapper/pageWrapper.js';
 import ReviewCard from '../../components/reviewCard/reviewCard.js';
 import ItemImageModal from '../../components/itemImagesModal/imagesModal.js';
+import ItemReviewModal from '../../components/reviewModal/reviewModal.js';
 // import { useParams } from 'react-router-dom/cjs/react-router-dom.min';
 import './item.css';
 import Location from './../../assets/Icons/LocationIcon.png';
@@ -32,6 +33,7 @@ export default function Item(props) {
 
     const [ReviewPage, setReviewPage] = useState(1);
     const [ImageModal, setImageModal] = useState(false);
+    const [ReviewModal, setReviewModal] = useState(false);
 
     const getReviewPages = () => {
         let content = [];
@@ -78,7 +80,7 @@ export default function Item(props) {
     return (
         <PageWrapper>
             {ImageModal ? <ItemImageModal setModal={setImageModal} /> : ''}
-            {/* Review modal here */}
+            {ReviewModal ? <ItemReviewModal setModal={setReviewModal} /> : ''}
             <div className="ItemMainWrapper">
                 <div className="ItemInfoWrapper">
                     <div className="ItemName">Pump jack and 2 jack stands combo</div>
@@ -86,7 +88,7 @@ export default function Item(props) {
                     <div className="ItemPriceFlex">
                         <div className="ItemPriceTextBig">$25</div>
                         <div className="ItemRateDiscountFlex">
-                            <div className="ItemRateTextBig">Per Day</div>
+                            {/* <div className="ItemRateTextBig">Per Day</div> */}
                             <div className="ItemDiscountText">15% off peak discount</div>
                         </div>
                     </div>
@@ -154,7 +156,7 @@ export default function Item(props) {
                         <div className="ReviewPageActive ReviewButtonFlex" onClick={() => handleReviewPageClick("forward")}>{">"}</div>
                     </div>
 
-                    <button className="ViewReviewsButton">View all Reviews</button>
+                    <button className="ViewReviewsButton" onClick={() => setReviewModal(true)}>View all Reviews</button>
 
                     <hr className='hr'/>
 
@@ -170,9 +172,7 @@ export default function Item(props) {
                         <div className="SecondaryItemImageDiv ImageModalDiv">
                             <img src={ItemImage} alt="" className="SecondaryItemImage OpenModalImage" style={{borderRadius: "0 0 15px 0"}}/>
                             <div className="NavyOverlay"><button className="ImageModalButton" onClick={() => setImageModal(true)}>View All</button></div>
-                            
                         </div>
-
                     </div>
 
                     <div className="ItemDetailsHeader">Location</div>

@@ -26,8 +26,9 @@
 .ItemRateDiscountFlex {
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: flex-start;
     padding-left: 1em;
+    padding-top: .5em;
 }
 
 .ItemPriceTextBig {

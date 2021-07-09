@@ -1,0 +1,40 @@
+.ReviewModalFlex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: -webkit-sticky; /* Safari */
+	position: sticky;
+	top: 25%;
+}
+
+.ReviewModalMain {
+    background-color: #FFF;
+    color: #000;
+    border: 2px solid #9e1e29;
+    border-radius: 15px;
+    width: 50%;
+    padding: 2em;
+    height: 60vh;
+}
+
+.ReviewTitle {
+    color: #33384f;
+    font-size: 25px;
+    font-weight: bold;
+    margin-bottom: .5em;
+}
+
+.ReviewModalColumns {
+    width: 100%;
+    display: flex;
+}
+
+.vlReviews {
+    border-right: 1px solid #a7a7a7;
+    margin: 1em;
+    height: 100%;
+}
+
+.MainReviewColumn {
+    width: 50%;
+}

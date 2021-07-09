@@ -18,6 +18,10 @@
   padding: 2px;
 }
 
+.StarIcon:hover {
+  cursor: pointer;
+}
+
 .MuiSelect-root .StarIcon {
   display: none;
 }

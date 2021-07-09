@@ -35,6 +35,7 @@ const BootstrapInput = withStyles((theme) => ({
       }
     }),
     select: ({
+        fontWeight: 'normal',
       "& .MuiSvgIcon-root": {
         color: "#95272f",
       }
@@ -170,14 +171,12 @@ export default function Search() {
                         <MenuItem value="Price - High to Low">Price - High to Low</MenuItem>
                         <MenuItem value="Rating - Low to High">Rating - Low to High</MenuItem>
                         <MenuItem value="Rating - High to Low">Rating - High to Low</MenuItem>
-
                         </Select>
                     </div>
                 </div>
 
                 <div className="ItemCardSection" style={{padding: '1em .5em'}}>
                     {getSearchResultsPage()}
-
                 </div>
 
                 <div className="PaginationSection">
