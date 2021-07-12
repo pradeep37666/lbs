@@ -5,13 +5,13 @@ import ItemImageModal from '../../components/itemImagesModal/imagesModal.js';
 import ItemReviewModal from '../../components/reviewModal/reviewModal.js';
 // import { useParams } from 'react-router-dom/cjs/react-router-dom.min';
 import './item.css';
-import Location from './../../assets/Icons/LocationIcon.png';
-import Delivery from './../../assets/Icons/TruckIcon.png';
-import Category from './../../assets/Icons/CategoriesIcon.png';
-import Profile from './../../assets/Icons/ProfileIcon.png';
-import Calendar from './../../assets/Icons/HangingCalendar.png';
-import Favourite from './../../assets/Icons/FavouritesIcon.png';
-import Star from './../../assets/Icons/StarFilled.png';
+import Location from './../../assets/Icons/LocationIcon.svg';
+import Delivery from './../../assets/Icons/DeliveryIcon.svg';
+import Category from './../../assets/Icons/CategoriesIcon.svg';
+import {ReactComponent as Profile} from './../../assets/Icons/UserCircle.svg';
+import Calendar from './../../assets/Icons/HangingCalendar.svg';
+import {ReactComponent as StarOutline} from './../../assets/Icons/StarOutline.svg';
+import {ReactComponent as StarFilled} from './../../assets/Icons/StarFilled.svg';
 import Jake from './../../assets/Images/JakeFriend.png';
 import ItemImage from './../../assets/Images/search_section_bg.jpg';
 import GoogleMapReact from 'google-map-react';
@@ -20,13 +20,13 @@ export default function Item(props) {
     // const {itemId} = useParams();
     // Pass in number of reviews from backend for use in review carousel + modal
     const reviewSamples = [
-        ['Blake Dude', '4', 'This is a dummy test review'],
-        ['Jake Friend', '3', 'This is a dummy test review'],
-        ['Angela Owen', '4', 'This is a dummy test review'],
-        ['Lara Nichols', '5', 'This is a dummy test review'],
-        ['Sam Stuart', '1', 'This is a dummy test review'],
-        ['Isaac Myers', '2', 'This is a dummy test review'],
-        ['Christian Zhou', '5', 'This is a dummy test review'],
+        ['Blake Dude', '4', 'Cillum nulla cupidatat aute pariatur ad sit tempor consectetur amet culpa labore deserunt sunt. Veniam eiusmod sunt incididunt ullamco fugiat reprehenderit labore. Ipsum irure culpa veniam velit. Elit dolore cillum nulla nulla do nulla Lorem ullamco.'],
+        ['Jake Friend', '3', 'Id sunt laboris ad adipisicing ullamco id elit deserunt deserunt ullamco aute enim tempor tempor.'],
+        ['Angela Owen', '4', 'Dolor ea consectetur eiusmod id pariatur nisi magna minim nostrud et est exercitation ipsum laboris.'],
+        ['Lara Nichols', '5', 'Ex aute do adipisicing proident adipisicing occaecat officia.'],
+        ['Sam Stuart', '1', 'Et proident consectetur mollit laborum ut aliquip voluptate laborum nostrud reprehenderit quis. Ad ex minim aliquip amet irure nostrud labore anim do ipsum aliquip ut consequat commodo. Dolor commodo veniam velit cupidatat deserunt irure aute consectetur consequat.'],
+        ['Isaac Myers', '2', 'Enim aute incididunt proident Lorem id mollit. Occaecat do cillum magna sunt dolore non exercitation et anim enim. Et nulla nulla aute sint minim laborum ut cupidatat nulla fugiat aliqua laboris exercitation mollit. Labore consectetur culpa laboris fugiat velit eu laborum proident consectetur. Eu labore nisi velit velit irure laborum.'],
+        ['Christian Zhou', '5', 'Minim pariatur occaecat Lorem et ea elit reprehenderit sunt commodo ex.'],
     ]
 
     const NumReviewPages = Math.ceil(reviewSamples.length /2);
@@ -80,7 +80,7 @@ export default function Item(props) {
     return (
         <PageWrapper>
             {ImageModal ? <ItemImageModal setModal={setImageModal} /> : ''}
-            {ReviewModal ? <ItemReviewModal setModal={setReviewModal} /> : ''}
+            {ReviewModal ? <ItemReviewModal setModal={setReviewModal} reviews={reviewSamples} /> : ''}
             <div className="ItemMainWrapper">
                 <div className="ItemInfoWrapper">
                     <div className="ItemName">Pump jack and 2 jack stands combo</div>
@@ -100,8 +100,8 @@ export default function Item(props) {
 
                     <div className="ItemButtons">
                         <button className="ButtonAvailability"><div className="ItemButtonFlex"><img src={Calendar} alt=""/>Availability</div></button>
-                        <button className="ButtonApply"><div className="ItemButtonFlex"><img src={Profile} alt=""/>Apply Now</div></button>
-                        <button className="ButtonFavourite"><img src={Favourite} alt=""/></button>
+                        <button className="ButtonApply"><div className="ItemButtonFlex"><Profile fill='#ffffff'/>Apply Now</div></button>
+                        <button className="ButtonFavourite"><StarOutline fill='#ffffff'/></button>
                     </div>
                     <hr className="hr"/>
 
@@ -134,13 +134,13 @@ export default function Item(props) {
                     <div className="ProductRatingRow">
                         <div>
                             <div className="RatingHeader">Product</div>
-                            <div className="RatingStarFlex">4.5/5 <img src={Star} alt="" className="StarIconRating"/></div>
+                            <div className="RatingStarFlex">4.5/5 <StarFilled fill='#e9d8b4' className="StarIconRating"/></div>
                         </div>
                         <div className="RatingLenderFlex">
                             <img src={Jake} alt="" className="ProfileIcon" />
                             <div>
                                 <div className="RatingHeader">Jake Friend</div>
-                                <div className="RatingStarFlex">5/5 <img src={Star} alt="" className="StarIconRating"/></div>
+                                <div className="RatingStarFlex">5/5 <StarFilled fill='#e9d8b4' className="StarIconRating"/></div>
                             </div>
                         </div>
                     </div>

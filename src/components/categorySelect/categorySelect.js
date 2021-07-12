@@ -5,16 +5,16 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import InputBase from '@material-ui/core/InputBase';
 import ArrowDown from '@material-ui/icons/ExpandMore';
-import CarIcon from './../../assets/Icons/CarIcon_Red.png';
-import BBQIcon from './../../assets/Icons/BBQIcon.png';
-import CleaningIcon from './../../assets/Icons/CleaningIcon.png';
-import CreativeIcon from './../../assets/Icons/CreativeIcon.png';
-import DrillIcon from './../../assets/Icons/DrillIcon_Red.png';
-import HammerIcon from './../../assets/Icons/HammerIcon_Red.png';
-import OfficeIcon from './../../assets/Icons/OfficeIcon.png';
-import PaintingIcon from './../../assets/Icons/PaintingIcon.png';
-import SportingIcon from './../../assets/Icons/SportingIcon.png';
-import MowingIcon from './../../assets/Icons/MowingIcon.png';
+import {ReactComponent as CarIcon} from './../../assets/Icons/AutomotiveIcon.svg';
+import {ReactComponent as BBQIcon} from './../../assets/Icons/BBQIcon.svg';
+import {ReactComponent as CleaningIcon} from './../../assets/Icons/CleaningIcon.svg';
+import {ReactComponent as CreativeIcon} from './../../assets/Icons/CreativeIcon.svg';
+import {ReactComponent as DrillIcon} from './../../assets/Icons/DrillIcon.svg';
+import {ReactComponent as HammerIcon} from './../../assets/Icons/HammerIcon.svg';
+import {ReactComponent as OfficeIcon} from './../../assets/Icons/OfficeIcon.svg';
+import {ReactComponent as PaintingIcon} from './../../assets/Icons/PaintingIcon.svg';
+import {ReactComponent as SportingIcon} from './../../assets/Icons/SportingIcon.svg';
+import {ReactComponent as MowingIcon} from './../../assets/Icons/MowingIcon.svg';
 
 
 const BootstrapInput = withStyles((theme) => ({
@@ -98,16 +98,16 @@ export default function CategorySelect(props) {
       <label className={`${classes.inputLabel}`}>{props.label}</label>
       <div className="DropDownTitle">{category}</div>
       <hr className="hl"/>
-      <MenuItem value="Painting"><div className="CatIconContainer"><img src={PaintingIcon} alt="" className="CategoryDDIcon"/></div>Painting</MenuItem>
-      <MenuItem value="Office"><div className="CatIconContainer"><img src={OfficeIcon} alt="" className="CategoryDDIcon"/></div>Office</MenuItem>
-      <MenuItem value="Tools"><div className="CatIconContainer"><img src={HammerIcon} alt="" className="CategoryDDIcon"/></div>Tools</MenuItem>
-      <MenuItem value="BBQ"><div className="CatIconContainer"><img src={BBQIcon} alt="" className="CategoryDDIcon"/></div>BBQ</MenuItem>
-      <MenuItem value="Automotive"><div className="CatIconContainer"><img src={CarIcon} alt="" className="CategoryDDIcon" style={{height: '16px'}}/></div>Automotive</MenuItem>
-      <MenuItem value="Power Tools"><div className="CatIconContainer"><img src={DrillIcon} alt="" className="CategoryDDIcon"/></div>Power Tools</MenuItem>
-      <MenuItem value="Creative"><div className="CatIconContainer"><img src={CreativeIcon} alt="" className="CategoryDDIcon"/></div>Creative</MenuItem>
-      <MenuItem value="Mowing"><div className="CatIconContainer"><img src={MowingIcon} alt="" className="CategoryDDIcon"/></div>Mowing</MenuItem>
-      <MenuItem value="Cleaning"><div className="CatIconContainer"><img src={CleaningIcon} alt="" className="CategoryDDIcon"/></div>Cleaning</MenuItem>
-      <MenuItem value="Sporting"><div className="CatIconContainer"><img src={SportingIcon} alt="" className="CategoryDDIcon"/></div>Sporting</MenuItem>
+      <MenuItem value="Painting"><div className="CatIconContainer"><PaintingIcon  className="CategoryDDIcon"/></div>Painting</MenuItem>
+      <MenuItem value="Office"><div className="CatIconContainer"><OfficeIcon className="CategoryDDIcon"/></div>Office</MenuItem>
+      <MenuItem value="Tools"><div className="CatIconContainer"><HammerIcon fill='#ac172c' className="CategoryDDIcon"/></div>Tools</MenuItem>
+      <MenuItem value="BBQ"><div className="CatIconContainer"><BBQIcon className="CategoryDDIcon"/></div>BBQ</MenuItem>
+      <MenuItem value="Automotive"><div className="CatIconContainer"><CarIcon fill='#ac172c' className="CategoryDDIcon" style={{height: '16px'}}/></div>Automotive</MenuItem>
+      <MenuItem value="Power Tools"><div className="CatIconContainer"><DrillIcon fill='#ac172c' className="CategoryDDIcon"/></div>Power Tools</MenuItem>
+      <MenuItem value="Creative"><div className="CatIconContainer"><CreativeIcon className="CategoryDDIcon"/></div>Creative</MenuItem>
+      <MenuItem value="Mowing"><div className="CatIconContainer"><MowingIcon className="CategoryDDIcon" style={{height: '25px'}}/></div>Mowing</MenuItem>
+      <MenuItem value="Cleaning"><div className="CatIconContainer"><CleaningIcon className="CategoryDDIcon"/></div>Cleaning</MenuItem>
+      <MenuItem value="Sporting"><div className="CatIconContainer"><SportingIcon className="CategoryDDIcon"/></div>Sporting</MenuItem>
       </Select>
     </div>
   )

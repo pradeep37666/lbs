@@ -4,10 +4,14 @@
   justify-content: space-between;
   background-image: url(../../assets/TexturedBackgrounds/LBS_Illustration\ Pattern_RED.jpg);
   background-position: -200px -200px;
+}
+
+.HeaderBarSticky {
   position: -webkit-sticky; /* Safari */
 	position: sticky;
-	top: 0;
+	top: 0%;
   z-index: 100;
+  animation: FadeIn 0.4s;
 }
 
 .HeaderLogo {

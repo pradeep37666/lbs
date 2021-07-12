@@ -9,20 +9,10 @@
     user-select: none;
 }
 
-.CloseModalButton {
-    height: 30px;
-    width: 30px;
-    margin: .5em 1em;
-}
-
-.CloseModalButton:hover {
-    cursor: pointer;
-}
-
 .CarouselModalFlexContainer {
     position: -webkit-sticky; /* Safari */
 	position: sticky;
-	top: 0%;
+	top: 10%;
 }
 
 .ImageModal {
@@ -105,4 +95,11 @@
 
 .HideOverlay {
     display: none;
+}
+
+.ImageModalClose {
+    top: -10%;
+    left: 10px;
+    background-color: #FFF;
+    color: #b43b4c;
 }

@@ -5,8 +5,8 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import InputBase from '@material-ui/core/InputBase';
 import ArrowDown from '@material-ui/icons/ExpandMore';
-import StarOutline from './../../assets/Icons/StarOutline.png';
-import StarFilled from './../../assets/Icons/StarFilled.png';
+import {ReactComponent as StarOutline} from './../../assets/Icons/StarOutline.svg';
+import {ReactComponent as StarFilled} from './../../assets/Icons/StarFilled.svg';
 
 
 const BootstrapInput = withStyles((theme) => ({
@@ -102,19 +102,19 @@ export default function RatingSelect(props) {
       <div className="DropDownTitle">{rating} star</div>
       <hr className="hl"/>
       <MenuItem value="1" className={`${classes.option}`} style={{marginLeft: '10px'}}>
-      <img src={StarFilled} alt="" className="StarIcon"/><div className="RatingText">{rating} star</div>
+      <StarFilled fill='#E9D8B4' className="StarIcon"/><div className="RatingText">{rating} star</div>
       </MenuItem>
       <MenuItem value="2" className={`${classes.option}`}>
-      <img src={rating >= 2 ? StarFilled : StarOutline} alt="" className="StarIcon"/><div className="RatingText">{rating} star</div>
+      {rating >= 2 ? <StarFilled fill='#E9D8B4' className="StarIcon"/> : <StarOutline className="StarIcon"/>}<div className="RatingText">{rating} star</div>
       </MenuItem>
       <MenuItem value="3" className={`${classes.option}`}>
-      <img src={rating >= 3 ? StarFilled : StarOutline} alt="" className="StarIcon"/><div className="RatingText">{rating} star</div>
+      {rating >= 3 ? <StarFilled fill='#E9D8B4' className="StarIcon"/> : <StarOutline className="StarIcon"/>}<div className="RatingText">{rating} star</div>
       </MenuItem>
       <MenuItem value="4" className={`${classes.option}`}>
-      <img src={rating >= 4 ? StarFilled : StarOutline} alt="" className="StarIcon"/><div className="RatingText">{rating} star</div>
+      {rating >= 4 ? <StarFilled fill='#E9D8B4' className="StarIcon"/> : <StarOutline className="StarIcon"/>}<div className="RatingText">{rating} star</div>
       </MenuItem>
       <MenuItem value="5" className={`${classes.option}`}>
-      <img src={rating >= 5 ? StarFilled : StarOutline} alt="" className="StarIcon" style={{marginRight: '10px'}} /><div className="RatingText">{rating} star</div>
+      {rating >= 5 ? <StarFilled fill='#E9D8B4' className="StarIcon"/> : <StarOutline className="StarIcon"/>}<div className="RatingText">{rating} star</div>
       </MenuItem>
       {/* </div> */}
       </Select>

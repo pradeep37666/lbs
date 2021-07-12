@@ -3,6 +3,8 @@
     border-radius: 10px;
     padding: .8em;
     width: 48%;
+    height: 200px;
+    overflow: auto;
 }
 
 .ReviewText {

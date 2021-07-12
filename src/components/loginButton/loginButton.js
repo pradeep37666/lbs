@@ -1,13 +1,13 @@
 import React from 'react';
 import './loginButton.css';
-import Icon from './../../assets/Icons/ProfileIcon.png';
+import {ReactComponent as Icon} from './../../assets/Icons/UserOutlineWhite.svg';
 
 
 const loginButton = () => {
   return (
     <button className="LoginButton">
       <div className="LoginFlex">
-      <img src={Icon} alt="login button" className="LoginIcon"/>
+      <Icon className="LoginIcon"/>
       
       <div>Login</div>
       </div>

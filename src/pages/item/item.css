@@ -67,6 +67,10 @@
     color: #c7c7c7;
 }
 
+.ItemButtons {
+    display: flex;
+}
+
 .ItemButtons button {
     padding: .5em;
     border-radius: 10px;
@@ -74,7 +78,7 @@
     font-family: 'DMSans', sans-serif;
     font-size: 18px;
     margin-right: 10px;
-    height: 50px;
+    
 }
 
 /* .ItemButtons button:hover {
@@ -108,6 +112,7 @@
 .ButtonFavourite {
     background-color: #b43b4c;
     border: none;
+    /* padding: ; */
 }
 
 .hr {

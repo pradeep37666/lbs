@@ -5,12 +5,12 @@ import TextInput from '../../components/textInput/textInput.js';
 import SelectInput from '../../components/selectInput/selectInput.js';
 import CategorySelect from '../../components/categorySelect/categorySelect.js';
 import RatingSelect from '../../components/ratingSelect/ratingSelect.js';
-import SearchIcon from '../../assets/Icons/SearchIcon.png';
+import SearchIcon from '../../assets/Icons/SearchIcon.svg';
 import ItemCard from '../../components/itemCard/itemCard';
-import WateringCanIcon from '../../assets/Icons/WateringCanIcon.png';
-import HammerIcon from '../../assets/Icons/HammerIcon.png';
-import CarIcon from '../../assets/Icons/CarIcon.png';
-import DrillIcon from '../../assets/Icons/DrillIcon.png';
+import WateringCanIcon from '../../assets/Icons/GardeningIcon.svg';
+import HammerIcon from '../../assets/Icons/HammerIcon.svg';
+import CarIcon from '../../assets/Icons/AutomotiveIcon.svg';
+import DrillIcon from '../../assets/Icons/DrillIcon.svg';
 
 export default function home() {
   return (

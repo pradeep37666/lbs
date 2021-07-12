@@ -3,12 +3,6 @@
   margin-bottom: 5px;
 }
 
-.CatIconContainer {
-  width: 30%;
-  display: flex;
-  padding-left: 1em;
-}
-
 .SelectInput .CatIconContainer {
   display: none;
 }

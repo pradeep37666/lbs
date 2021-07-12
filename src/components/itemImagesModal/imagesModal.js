@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './imagesModal.css';
 import ItemImage from './../../assets/Images/search_section_bg.jpg';
-import CloseIcon from './../../assets/Icons/CloseIcon.png';
+import CloseIcon from '@material-ui/icons/Close';
 
 export default function ImagesModal(props) {
     
@@ -61,8 +61,10 @@ export default function ImagesModal(props) {
         <div className="ModalWrapperMain" onClick={ () => {
             closeModal();
         }}>
+
             <div className="CarouselModalFlexContainer">
-            <img className="CloseModalButton" src={CloseIcon} alt="" onClick={() => closeModal()}/>
+            <button className="CloseModalButton ImageModalClose" onClick={() => closeModal()}><CloseIcon/></button>
+
                 <div className="ImageModal">
                     {getBigImages(CurrentImage)}
                     <div className="ImageNumberDisplay">{CurrentImage + 1}/{Images.length}</div>

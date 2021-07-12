@@ -1,6 +1,6 @@
 import React from 'react';
 import './reviewCard.css';
-import Star from './../../assets/Icons/StarFilled.png';
+import {ReactComponent as StarFilled} from './../../assets/Icons/StarFilled.svg';
 import Jake from './../../assets/Images/JakeFriend.png';
 
 export default function reviewCard(props) {
@@ -10,7 +10,7 @@ export default function reviewCard(props) {
                 <img src={Jake} alt="" className="ProfileIconSmall" />
                 <div className="ReviewSmallText">
                     <div className="RatingHeader">{props.posterName}</div>
-                    <div className="RatingStarFlex">{props.rating}/5 <img src={Star} alt="" className="StarIconRatingSmall" /></div>
+                    <div className="RatingStarFlex">{props.rating}/5 <StarFilled fill='#e9d8b4' className="StarIconRatingSmall" /></div>
                 </div>
             </div>
             <div className="ReviewText">

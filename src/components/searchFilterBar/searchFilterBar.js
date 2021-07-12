@@ -1,18 +1,17 @@
 import React, { useState } from 'react';
 import './searchFilterBar.css';
-import RatingSelect from '../ratingSelect/ratingSelect';
-import CarIcon from './../../assets/Icons/CarIcon_Red.png';
-import BBQIcon from './../../assets/Icons/BBQIcon.png';
-import CleaningIcon from './../../assets/Icons/CleaningIcon.png';
-import CreativeIcon from './../../assets/Icons/CreativeIcon.png';
-import DrillIcon from './../../assets/Icons/DrillIcon_Red.png';
-import HammerIcon from './../../assets/Icons/HammerIcon_Red.png';
-import OfficeIcon from './../../assets/Icons/OfficeIcon.png';
-import PaintingIcon from './../../assets/Icons/PaintingIcon.png';
-import SportingIcon from './../../assets/Icons/SportingIcon.png';
-import MowingIcon from './../../assets/Icons/MowingIcon.png';
-import StarOutline from './../../assets/Icons/StarOutline.png';
-import StarFilled from './../../assets/Icons/StarFilled.png';
+import CarIcon from './../../assets/Icons/AutomotiveIcon.svg';
+import BBQIcon from './../../assets/Icons/BBQIcon.svg';
+import CleaningIcon from './../../assets/Icons/CleaningIcon.svg';
+import CreativeIcon from './../../assets/Icons/CreativeIcon.svg';
+import DrillIcon from './../../assets/Icons/DrillIcon.svg';
+import HammerIcon from './../../assets/Icons/HammerIcon.svg';
+import OfficeIcon from './../../assets/Icons/OfficeIcon.svg';
+import PaintingIcon from './../../assets/Icons/PaintingIcon.svg';
+import SportingIcon from './../../assets/Icons/SportingIcon.svg';
+import MowingIcon from './../../assets/Icons/MowingIcon.svg';
+import StarOutline from './../../assets/Icons/StarOutline.svg';
+import StarFilled from './../../assets/Icons/StarFilled.svg';
 import { withStyles } from '@material-ui/core/styles';
 import Slider from '@material-ui/core/Slider';
 import GoogleMapReact from 'google-map-react';
@@ -49,7 +48,7 @@ export default function SearchFilterBar() {
     const [SearchRadius, setSearchRadius] = useState(10);
     const [PriceMin, setPriceMin] = useState();
     const [PriceMax, setPriceMax] = useState();
-    const [Rating, setRating] = useState();
+    const [Rating, setRating] = useState(1);
     const [Delivery, setDelivery] = useState(false);
 
     const defaultProps = {
@@ -163,7 +162,7 @@ export default function SearchFilterBar() {
             <div className="FilterPopout FilterPopoutRating" onClick={(e) => e.stopPropagation()}>
                 <hr className="hl hlPopout"/>
                 <div className="MainBodyPopout">
-                    <div className="RatingFilterHeader">{Rating} Stars</div>
+                    <div className="RatingFilterHeader">{Rating} Star{Rating === 1 ? '' : 's'}</div>
                     <div className="StarsFlex">
                     <img src={StarFilled} alt="" className="StarIcon" onClick={() => setRating(1)}/>
                     <img src={Rating >= 2 ? StarFilled : StarOutline} onClick={() => setRating(2)} alt="" className="StarIcon"/>
