@@ -51,7 +51,9 @@ export default function Header() {
       </div>
 
       <div className="LoginWrapper">
+        <Link to="/login" style={{width: '100%'}}>
         <Login />
+        </Link>
       </div>
       
 

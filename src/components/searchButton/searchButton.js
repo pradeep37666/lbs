@@ -1,12 +1,12 @@
 import React from 'react';
 import './searchButton.css';
-import {ReactComponent as Icon} from './../../assets/Icons/SearchIcon.svg';
+import Icon from './../../assets/Icons/SearchIcon.svg';
 
 export default function SearchButton(props) {
   return (
     <button className="SearchButton">
       <div className="SearchButtonFlex">
-        <Icon />
+      <img src={Icon} alt="search button" />
         <div>{props.buttonText}</div>
       </div>
 

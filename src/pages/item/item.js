@@ -101,7 +101,7 @@ export default function Item(props) {
                     <div className="ItemButtons">
                         <button className="ButtonAvailability"><div className="ItemButtonFlex"><img src={Calendar} alt=""/>Availability</div></button>
                         <button className="ButtonApply"><div className="ItemButtonFlex"><Profile fill='#ffffff'/>Apply Now</div></button>
-                        <button className="ButtonFavourite"><StarOutline fill='#ffffff'/></button>
+                        <button className="ButtonFavourite" style={{padding: '.5em 1em'}}><StarOutline fill='#ffffff'/></button>
                     </div>
                     <hr className="hr"/>
 

@@ -1,0 +1,17 @@
+.Banner {
+    border-bottom: 2px solid #ac172c;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1em 0;
+}
+
+.BannerText {
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.BannerTextNormal {
+    font-weight: normal;
+}

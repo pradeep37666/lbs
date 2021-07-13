@@ -78,12 +78,7 @@
     font-family: 'DMSans', sans-serif;
     font-size: 18px;
     margin-right: 10px;
-    
 }
-
-/* .ItemButtons button:hover {
-    
-} */
 
 .ItemButtonFlex {
     display: flex;
@@ -112,7 +107,6 @@
 .ButtonFavourite {
     background-color: #b43b4c;
     border: none;
-    /* padding: ; */
 }
 
 .hr {

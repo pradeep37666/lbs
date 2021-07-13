@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import './reviewModal.css';
 import Jake from './../../assets/Images/JakeFriend.png';
 import {ReactComponent as StarOutline} from './../../assets/Icons/StarOutline.svg';
@@ -8,7 +8,7 @@ import CloseIcon from '@material-ui/icons/Close';
 
 export default function ReviewModal(props) {
 
-    const [LenderRating, setLenderRating] = useState(4);
+    const LenderRating = 4;
     const Reviews = props.reviews;
 
     const closeModal = () => {
@@ -63,10 +63,7 @@ export default function ReviewModal(props) {
                         {Reviews[i][2]}
                     </div>
                 {hr}
-                {/* add close button */}
-
                 </div>
-                
                 )
         }
         
@@ -109,7 +106,6 @@ export default function ReviewModal(props) {
 
                         <div className="vl" />
                         <div className="MainReviewColumn">
-                            {/* on loop add hr only if not last item */}
                             {getReviewCards()}
                         </div>
 
