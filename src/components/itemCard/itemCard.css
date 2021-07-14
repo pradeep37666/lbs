@@ -53,13 +53,6 @@
   align-content: center;
 }
 
-.RatingStars {
-  margin-left: 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
 .PreviewImage {
   width: 100%;
 }

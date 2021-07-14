@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './home.css';
 import PageWrapper from "./../../components/pageWrapper/pageWrapper.js";
 import TextInput from '../../components/textInput/textInput.js';
@@ -13,8 +13,25 @@ import {ReactComponent as CarIcon} from '../../assets/Icons/AutomotiveIcon.svg';
 import {ReactComponent as DrillIcon} from '../../assets/Icons/DrillIcon.svg';
 import Instance from '../../util/axios';
 
-export default function home() {
-// Find all users
+export default function Home() {
+
+  const numTopItems = 8;
+
+  const [loading, setLoading] = useState(true);
+  const [items, setItems] = useState([]);
+
+  useEffect(() => {
+// Find all Items (empty search)
+
+
+  // Instance.delete(`/items/delete/?i_id=${7}`, {headers: { Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RAdGVzdC5jb20iLCJzdWIiOjEsImlhdCI6MTYyNjIzNjAyNCwiZXhwIjoxNjI3NTMyMDI0fQ.kN0lPhqxe93bDEOeQnxyoiq2HIrFVUCoCl2lh3Unofc`}})
+  // .then((response) => {
+  //   console.log(response);
+  // })
+  // .catch((error) => {
+  //   console.log(error);
+  // })
+
   // Instance.get('/user/findall', {headers: { Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QxMjNAdGVzdC5jb20iLCJzdWIiOjcsImlhdCI6MTYyNjE1MTQwNiwiZXhwIjoxNjI3NDQ3NDA2fQ.q6lH_TAJ-P0YxuJDhOrCu3pU5JWTqDrlcbDdbVLu58A`}}).then((response) => {
   //   console.log(response.data);
   // })
@@ -26,66 +43,50 @@ export default function home() {
   //   // always executed
   // });
 
-// Find all Items (empty search)
-  // Instance.get('/items/search', {headers: { Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QxMjNAdGVzdC5jb20iLCJzdWIiOjcsImlhdCI6MTYyNjE1MTQwNiwiZXhwIjoxNjI3NDQ3NDA2fQ.q6lH_TAJ-P0YxuJDhOrCu3pU5JWTqDrlcbDdbVLu58A`}}).then((response) => {
-  //   console.log(response.data);
-  // })
-  // .catch(function (error) {
-  //   // handle error
-  //   console.log(error);
-  // })
-
-  Instance.post('items/save', {
-    u_id: 1,
-    title: "Test Item for user with id 7",
-    category: "Automotive",
-    description: "Nulla minim enim aliquip commodo cillum consectetur. Test Lorem Ipsum.",
-    rate: "hourly",
-    price: 50,
-    deliveryOption: "pickup",
-  },{headers: { Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QxMjNAdGVzdC5jb20iLCJzdWIiOjcsImlhdCI6MTYyNjE1MTQwNiwiZXhwIjoxNjI3NDQ3NDA2fQ.q6lH_TAJ-P0YxuJDhOrCu3pU5JWTqDrlcbDdbVLu58A`}})
-  .then((response) => {
-      console.log(response);
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
-
-  // Instance.post('/user/register', {
-  //   "email": "test123@test.com",
-  //   "password": "password",
-  //   "mobile": "0412345888",
-  //   "avatar": "string",
-  //   "fullName": "Test User",
-  //   // "created": "2021-07-13T04:24:12.452Z",
-  //   // "updated": "2021-07-13T04:24:12.452Z",
-  //   "address": "126 Test Street",
-  //   "city": "Brisbane",
-  //   "country": "Australia",
-  //   "state": "Queensland",
-  //   "monday_am": "string",
-  //   "monday_pm": "string",
-  //   "tuesday_am": "string",
-  //   "tuesday_pm": "string",
-  //   "wednesday_am": "string",
-  //   "wednesday_pm": "string",
-  //   "thursday_am": "string",
-  //   "thursday_pm": "string",
-  //   "friday_am": "string",
-  //   "friday_pm": "string",
-  //   "saturday_am": "string",
-  //   "saturday_pm": "string",
-  //   "sunday_am": "string",
-  //   "sunday_pm": "string",
-  //   "bsb": "123457",
-  //   "account_number": "12345688",
-  // })
+  // Instance.post('items/save', {
+  //   u_id: 1,
+  //   title: "Kubota ex1830 ride on mower",
+  //   category: "Mowing",
+  //   description: "Nisi incididunt ea eu ut in ea ullamco. Ad magna id proident enim exercitation. Ea veniam anim quis excepteur elit aliqua voluptate duis sit Lorem enim reprehenderit non.",
+  //   rate: "hourly",
+  //   price: 50,
+  //   deliveryOption: "delivery",
+  //   deliveryPrice: 10,
+  //   rating: 3,
+  //   address: "40 Petrie Terrace",
+  //   city: "Brisbane",
+  //   country: "Australia",
+  //   state: "QLD",
+  // },{headers: { Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QxMjNAdGVzdC5jb20iLCJzdWIiOjcsImlhdCI6MTYyNjE1MTQwNiwiZXhwIjoxNjI3NDQ3NDA2fQ.q6lH_TAJ-P0YxuJDhOrCu3pU5JWTqDrlcbDdbVLu58A`}})
   // .then((response) => {
-  //   console.log(response);
-  // })
-  // .catch(function (error) {
-  //   console.log(error);
-  // });
+  //     console.log(response);
+  //   })
+  //   .catch(function (error) {
+  //     console.log(error);
+  //   });
+
+  Instance.get('/items/search').then((response) => {
+    setItems(response.data);
+    console.log(response.data);
+    setLoading(false);
+  })
+  .catch((error) => {
+    // handle error
+    console.log(error);
+  })
+  }, []);
+
+
+  
+  const getTopItems = () => {
+    let content = [];
+
+    items.slice(0, 8).map((item, i) => {
+      content.push(<ItemCard item={item} key={i}/>)
+    })
+
+    return content;
+  }
 
   return (
     <PageWrapper>
@@ -153,22 +154,10 @@ export default function home() {
 
 
           <div className="ItemCardSection">
-
-          <ItemCard itemName="Pull along ATV mower attachment with multiple modes" price="750" rate="day" availability={true} location="Brisbane" rating="2" id="116"/>
-
-          <ItemCard itemName="Pull along ATV mower attachment with multiple modes" price="750" rate="day" availability={true} location="Brisbane" rating="4" id="823"/>
-
-          <ItemCard itemName="Pull along ATV mower attachment with multiple modes" price="750" rate="day" availability={true} location="Brisbane" rating="4" id="546"/>
-
-          <ItemCard itemName="Pull along ATV mower attachment with multiple modes" price="750" rate="day" availability={true} location="Brisbane" rating="2" id="394"/>
-
-          <ItemCard itemName="Pull along ATV mower attachment with multiple modes" price="750" rate="day" availability={true} location="Brisbane" rating="1" id="915"/>
-
-          <ItemCard itemName="Pull along ATV mower attachment with multiple modes" price="750" rate="day" availability={true} location="Brisbane" rating="3" id="265"/>
-
-          <ItemCard itemName="Pull along ATV mower attachment with multiple modes" price="750" rate="day" availability={true} location="Brisbane" rating="3" id="545"/>
-
-          <ItemCard itemName="Pull along ATV mower attachment with multiple modes" price="750" rate="day" availability={true} location="Brisbane" rating="5"/>
+            { loading 
+            ? <div>Loading items...</div>
+            : getTopItems()
+            }
 
           </div>
 

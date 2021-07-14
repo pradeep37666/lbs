@@ -9,38 +9,37 @@ import { Link } from 'react-router-dom';
 
 
 export default function itemCard(props) {
-  const rating = props.rating;
+  const item = props.item;
   return (
     <div className="ItemCard">
       {/* new prop for image link to go here later */}
-      <Link to={`/item/${props.id}`}>
-        <img src={PreviewImage} alt={props.itemName} className="PreviewImage"/>
+      <Link to={`/item/${item.i_id}`} item={item}>
+        <img src={PreviewImage} alt={item.title} className="PreviewImage"/>
       </Link>
-      <div className="ItemNameText">{props.itemName}</div>
-      <div className="ItemPriceText">${props.price} <span className="ItemRateText">per {props.rate}</span></div>
+      <div className="ItemNameText">{item.title}</div>
+      {/* <div className="ItemPriceText">${item.price} <span className="ItemRateText">per {item.rate}</span></div> */}
 
       <div className="StatusLocationSection">
         <div className="StatusLocationSection" style={{paddingRight: '30px'}}>
-          <img src={DeliveryIcon} alt={props.location} className="ItemCardIcon"/>
-          {props.availability ? 'Available' : 'Unavailable'}
+          <img src={DeliveryIcon} alt={item.city} className="ItemCardIcon"/>
+          {item.deliveryOption === 'delivery' ? 'Available' : 'Unavailable'}
         </div>
 
         <div className="StatusLocationSection">
-          <img src={LocationIcon} alt={props.location} className="ItemCardIcon"/>
-          {props.location}
+          <img src={LocationIcon} alt={item.city} className="ItemCardIcon"/>
+          {item.city}
         </div>
       </div>
 
       <div className="RatingSection">
-        {rating}/5 <div className="RatingStars">
+        {item.rating}/5 <div className="RatingStars">
           <StarFilled fill='#E9D8B4' className="StarIcon"/>
-          {rating >= 2 ? <StarFilled fill='#E9D8B4' className="StarIcon"/> : <StarOutline className="StarIcon"/>}
-          {rating >= 3 ? <StarFilled fill='#E9D8B4' className="StarIcon"/> : <StarOutline className="StarIcon"/>}
-          {rating >= 4 ? <StarFilled fill='#E9D8B4' className="StarIcon"/> : <StarOutline className="StarIcon"/>}
-          {rating >= 5 ? <StarFilled fill='#E9D8B4' className="StarIcon"/> : <StarOutline className="StarIcon"/>}
+          {item.rating >= 2 ? <StarFilled fill='#E9D8B4' className="StarIcon"/> : <StarOutline className="StarIcon"/>}
+          {item.rating >= 3 ? <StarFilled fill='#E9D8B4' className="StarIcon"/> : <StarOutline className="StarIcon"/>}
+          {item.rating >= 4 ? <StarFilled fill='#E9D8B4' className="StarIcon"/> : <StarOutline className="StarIcon"/>}
+          {item.rating >= 5 ? <StarFilled fill='#E9D8B4' className="StarIcon"/> : <StarOutline className="StarIcon"/>}
           </div>
       </div>
-
     </div>
   )
 }

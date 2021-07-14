@@ -1,20 +1,21 @@
 import React, { useState } from 'react';
 import './searchFilterBar.css';
-import CarIcon from './../../assets/Icons/AutomotiveIcon.svg';
+import {ReactComponent as CarIcon} from './../../assets/Icons/AutomotiveIcon.svg';
 import BBQIcon from './../../assets/Icons/BBQIcon.svg';
 import CleaningIcon from './../../assets/Icons/CleaningIcon.svg';
 import CreativeIcon from './../../assets/Icons/CreativeIcon.svg';
-import DrillIcon from './../../assets/Icons/DrillIcon.svg';
-import HammerIcon from './../../assets/Icons/HammerIcon.svg';
+import {ReactComponent as DrillIcon} from './../../assets/Icons/DrillIcon.svg';
+import {ReactComponent as HammerIcon} from './../../assets/Icons/HammerIcon.svg';
 import OfficeIcon from './../../assets/Icons/OfficeIcon.svg';
 import PaintingIcon from './../../assets/Icons/PaintingIcon.svg';
 import SportingIcon from './../../assets/Icons/SportingIcon.svg';
 import MowingIcon from './../../assets/Icons/MowingIcon.svg';
-import StarOutline from './../../assets/Icons/StarOutline.svg';
-import StarFilled from './../../assets/Icons/StarFilled.svg';
+import {ReactComponent as StarOutline} from './../../assets/Icons/StarOutline.svg';
+import {ReactComponent as StarFilled} from './../../assets/Icons/StarFilled.svg';
 import { withStyles } from '@material-ui/core/styles';
 import Slider from '@material-ui/core/Slider';
 import GoogleMapReact from 'google-map-react';
+import RatingFiller from '../ratingFiller/ratingFiller';
 
 const LocationSlider = withStyles({
     root: {
@@ -87,13 +88,13 @@ export default function SearchFilterBar() {
                 <hr className="hl hlPopout"/>
                 <div className="MainBodyPopout">
                     <div className="CategoryFiltersFlex">
-                        <div className={`CategoryFilterDiv ${Category === 'Tools' ? 'CategoryFilterDivActive' : ''}`} onClick={() => {setCategory('Tools')}}><img src={HammerIcon} alt="" className="CategoryFilterIcon"/>Tools</div>
+                        <div className={`CategoryFilterDiv ${Category === 'Tools' ? 'CategoryFilterDivActive' : ''}`} onClick={() => {setCategory('Tools')}}><HammerIcon fill="#ac172c" alt="" className="CategoryFilterIcon"/>Tools</div>
                         <div className={`CategoryFilterDiv ${Category === 'Painting' ? 'CategoryFilterDivActive' : ''}`} onClick={() => {setCategory('Painting')}}><img src={PaintingIcon} alt="" className="CategoryFilterIcon"/>Painting</div>
                         <div className={`CategoryFilterDiv ${Category === 'BBQ' ? 'CategoryFilterDivActive' : ''}`} onClick={() => {setCategory('BBQ')}}><img src={BBQIcon} alt="" className="CategoryFilterIcon"/>BBQ</div>
                         <div className={`CategoryFilterDiv ${Category === 'Office' ? 'CategoryFilterDivActive' : ''}`} onClick={() => {setCategory('Office')}}><img src={OfficeIcon} alt="" className="CategoryFilterIcon"/>Office</div>
                         <div className={`CategoryFilterDiv ${Category === 'Creative' ? 'CategoryFilterDivActive' : ''}`} onClick={() => {setCategory('Creative')}}><img src={CreativeIcon} alt="" className="CategoryFilterIcon"/>Creative</div>
-                        <div className={`CategoryFilterDiv ${Category === 'Power Tools' ? 'CategoryFilterDivActive' : ''}`} onClick={() => {setCategory('Power Tools')}}><img src={DrillIcon} alt="" className="CategoryFilterIcon"/>Power Tools</div>
-                        <div className={`CategoryFilterDiv ${Category === 'Automotive' ? 'CategoryFilterDivActive' : ''}`} onClick={() => {setCategory('Automotive')}}><img src={CarIcon} alt="" className="CategoryFilterIcon"/>Automotive</div>
+                        <div className={`CategoryFilterDiv ${Category === 'Power Tools' ? 'CategoryFilterDivActive' : ''}`} onClick={() => {setCategory('Power Tools')}}><DrillIcon fill="#ac172c" alt="" className="CategoryFilterIcon"/>Power Tools</div>
+                        <div className={`CategoryFilterDiv ${Category === 'Automotive' ? 'CategoryFilterDivActive' : ''}`} onClick={() => {setCategory('Automotive')}}><CarIcon fill="#ac172c" alt="" className="CategoryFilterIcon"/>Automotive</div>
                         <div className={`CategoryFilterDiv ${Category === 'Mowing' ? 'CategoryFilterDivActive' : ''}`} onClick={() => {setCategory('Mowing')}}><img src={MowingIcon} alt="" className="CategoryFilterIcon"/>Mowing</div>
                         <div className={`CategoryFilterDiv ${Category === 'Cleaning' ? 'CategoryFilterDivActive' : ''}`} onClick={() => {setCategory('Cleaning')}}><img src={CleaningIcon} alt="" className="CategoryFilterIcon"/>Cleaning</div>
                         <div className={`CategoryFilterDiv ${Category === 'Sporting' ? 'CategoryFilterDivActive' : ''}`} onClick={() => {setCategory('Sporting')}}><img src={SportingIcon} alt="" className="CategoryFilterIcon"/>Sporting</div>
@@ -164,11 +165,11 @@ export default function SearchFilterBar() {
                 <div className="MainBodyPopout">
                     <div className="RatingFilterHeader">{Rating} Star{Rating === 1 ? '' : 's'}</div>
                     <div className="StarsFlex">
-                    <img src={StarFilled} alt="" className="StarIcon" onClick={() => setRating(1)}/>
-                    <img src={Rating >= 2 ? StarFilled : StarOutline} onClick={() => setRating(2)} alt="" className="StarIcon"/>
-                    <img src={Rating >= 3 ? StarFilled : StarOutline} onClick={() => setRating(3)} alt="" className="StarIcon"/>
-                    <img src={Rating >= 4 ? StarFilled : StarOutline} onClick={() => setRating(4)} alt="" className="StarIcon"/>
-                    <img src={Rating >= 5 ? StarFilled : StarOutline}  onClick={() => setRating(5)} alt="" className="StarIcon"/>
+                        <StarFilled className="StarIcon" fill="#E9D8B4" onClick={() => setRating(1)}/>
+                        {Rating >= 2 ? <StarFilled className="StarIcon" fill="#E9D8B4" onClick={() => setRating(2)}/> : <StarOutline className="StarIcon" onClick={() => setRating(2)}/>}
+                        {Rating >= 3 ? <StarFilled className="StarIcon" fill="#E9D8B4" onClick={() => setRating(3)}/> : <StarOutline className="StarIcon" onClick={() => setRating(3)}/>}
+                        {Rating >= 4 ? <StarFilled className="StarIcon" fill="#E9D8B4" onClick={() => setRating(4)}/> : <StarOutline className="StarIcon" onClick={() => setRating(4)}/>}
+                        {Rating >= 5 ? <StarFilled className="StarIcon" fill="#E9D8B4" onClick={() => setRating(5)}/> : <StarOutline className="StarIcon" onClick={() => setRating(5)}/>}
                     </div>
                 
                     <div className="SaveButtonFlex">

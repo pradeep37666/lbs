@@ -1,14 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import './header.css';
 import Logo from './../../assets/Logos/LBS_Logo_Flat_White.png';
-import Input from './../textInput/textInput.js';
 import Search from './../searchButton/searchButton.js';
 import Login from './../loginButton/loginButton.js';
 import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router';
 
 export default function Header() {
 
   const [HeaderSticky, setHeaderSticky] = useState(false);
+  const [searchText, setSearchText] = useState('');
+  const history = useHistory();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    history.push(`/search/${searchText}`);
+  }
 
   useEffect(() => {
     const threshold = 0;
@@ -45,8 +52,14 @@ export default function Header() {
       
 
       <div className="SearchWrapper">
-        <Input placeholder="Search for stuff" fontSize="16px" margin="0 25px 0 0" width="100%" padding="1em 0.6em" />
+        <form onSubmit={handleSubmit}>
+        <div className='HeaderSearchDiv'>
+          <input type='text' placeholder="Search for stuff" className='TextInput HeaderSearchInput' style={{padding: '1em 0.6em'}} value={searchText}onChange={(e) => setSearchText(e.target.value)}></input>
+        </div>
         <Search height="16px"/>
+        </form>
+        
+
         
       </div>
 

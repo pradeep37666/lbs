@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './search.css';
 import { useParams } from 'react-router-dom/cjs/react-router-dom.min';
 import PageWrapper from '../../components/pageWrapper/pageWrapper.js';
@@ -9,6 +9,8 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import InputBase from '@material-ui/core/InputBase';
 import ArrowDown from '@material-ui/icons/ExpandMore';
+import Instance from '../../util/axios';
+
 
 const BootstrapInput = withStyles((theme) => ({
     input: {
@@ -43,53 +45,30 @@ const BootstrapInput = withStyles((theme) => ({
   })
 
 export default function Search() {
-    const {searchParameters} = useParams();
-    console.log(searchParameters);
+    const searchParameters = useParams().searchParams;
 
-    const searchResultSamples = [
-        ["Pull along ATV mower attachment with multiple modes", "1", "day", true, "Brisbane", "3", "523"],
-        ["Pull along ATV mower attachment with multiple modes", "2", "day", true, "Brisbane", "1", "333"],
-        ["Pull along ATV mower attachment with multiple modes", "3", "day", true, "Brisbane", "2", "941"],
-        ["Pull along ATV mower attachment with multiple modes", "4", "day", true, "Brisbane", "1", "278"],
-        ["Pull along ATV mower attachment with multiple modes", "5", "day", true, "Brisbane", "5", "523"],
-        ["Pull along ATV mower attachment with multiple modes", "6", "day", true, "Brisbane", "5", "523"],
-        ["Pull along ATV mower attachment with multiple modes", "7", "day", true, "Brisbane", "3", "523"],
-        ["Pull along ATV mower attachment with multiple modes", "8", "day", true, "Brisbane", "4", "523"],
-        ["Pull along ATV mower attachment with multiple modes", "9", "day", true, "Brisbane", "3", "523"],
-        ["Pull along ATV mower attachment with multiple modes", "10", "day", true, "Brisbane", "1", "333"],
-        ["Pull along ATV mower attachment with multiple modes", "11", "day", true, "Brisbane", "2", "941"],
-        ["Pull along ATV mower attachment with multiple modes", "12", "day", true, "Brisbane", "1", "278"],
-        ["Pull along ATV mower attachment with multiple modes", "13", "day", true, "Brisbane", "5", "523"],
-        ["Pull along ATV mower attachment with multiple modes", "14", "day", true, "Brisbane", "5", "523"],
-        ["Pull along ATV mower attachment with multiple modes", "15", "day", true, "Brisbane", "3", "523"],
-        ["Pull along ATV mower attachment with multiple modes", "16", "day", true, "Brisbane", "4", "523"], 
-        ["Pull along ATV mower attachment with multiple modes", "17", "day", true, "Brisbane", "3", "523"],
-        ["Pull along ATV mower attachment with multiple modes", "18", "day", true, "Brisbane", "1", "333"],
-        ["Pull along ATV mower attachment with multiple modes", "19", "day", true, "Brisbane", "2", "941"],
-        ["Pull along ATV mower attachment with multiple modes", "20", "day", true, "Brisbane", "1", "278"],
-        ["Pull along ATV mower attachment with multiple modes", "21", "day", true, "Brisbane", "5", "523"],
-        ["Pull along ATV mower attachment with multiple modes", "22", "day", true, "Brisbane", "5", "523"],
-        ["Pull along ATV mower attachment with multiple modes", "23", "day", true, "Brisbane", "3", "523"],
-        ["Pull along ATV mower attachment with multiple modes", "24", "day", true, "Brisbane", "4", "523"],   
-        ["Pull along ATV mower attachment with multiple modes", "25", "day", true, "Brisbane", "3", "523"],
-        ["Pull along ATV mower attachment with multiple modes", "26", "day", true, "Brisbane", "1", "333"],
-        ["Pull along ATV mower attachment with multiple modes", "27", "day", true, "Brisbane", "2", "941"],
-        ["Pull along ATV mower attachment with multiple modes", "28", "day", true, "Brisbane", "1", "278"],
-        ["Pull along ATV mower attachment with multiple modes", "29", "day", true, "Brisbane", "5", "523"],
-        ["Pull along ATV mower attachment with multiple modes", "30", "day", true, "Brisbane", "5", "523"],
-        ["Pull along ATV mower attachment with multiple modes", "31", "day", true, "Brisbane", "3", "523"],
-        ["Pull along ATV mower attachment with multiple modes", "32", "day", true, "Brisbane", "4", "523"], 
-        ["Pull along ATV mower attachment with multiple modes", "33", "day", true, "Brisbane", "3", "523"],
-        ["Pull along ATV mower attachment with multiple modes", "34", "day", true, "Brisbane", "1", "333"],
-        // ["Pull along ATV mower attachment with multiple modes", "35", "day", true, "Brisbane", "2", "941"],
-        // ["Pull along ATV mower attachment with multiple modes", "36", "day", true, "Brisbane", "1", "278"],
-        // ["Pull along ATV mower attachment with multiple modes", "37", "day", true, "Brisbane", "5", "523"],
-        // ["Pull along ATV mower attachment with multiple modes", "38", "day", true, "Brisbane", "5", "523"],
-        // ["Pull along ATV mower attachment with multiple modes", "39", "day", true, "Brisbane", "3", "523"],
-        // ["Pull along ATV mower attachment with multiple modes", "40", "day", true, "Brisbane", "4", "523"],      
-    ]
+    const [searchItems, setSearchItems] = useState([]);
+    const [loading, setLoading] = useState(true);
 
-    const NumSearchPages = Math.ceil(searchResultSamples.length / 8);
+    useEffect(() => {
+        // Find all Items (empty search)
+          Instance.get(`/items/search/?keyword=${searchParameters}`).then((response) => {
+            if (response.data.length > 0) {
+              setSearchItems(response.data);
+              setLoading(false);
+              console.log(response.data.length)
+            } else {
+              setLoading(false);
+            }
+            
+          })
+          .catch((error) => {
+            // handle error
+            console.log(error);
+          })
+          }, [searchParameters]);
+
+    const NumSearchPages = Math.ceil(searchItems.length / 8);
 
     const [SearchPage, setSearchPage] = useState(1);
     const [SortBy, setSortBy] = useState('Nothing Selected');
@@ -115,19 +94,13 @@ export default function Search() {
         const startIndex = (SearchPage - 1) * 8;
         let numResults = startIndex + 8;
         // If we're on the last page of results or there's less than 1 page find how many results are left, as if its less than a full page we need to change our iteration so we don't go out of index
-        if (SearchPage === NumSearchPages || searchResultSamples.length < 8) {
-            numResults = startIndex + (searchResultSamples.length - ((SearchPage -1) * 8));
+        if (SearchPage === NumSearchPages || searchItems.length < 8) {
+            numResults = startIndex + (searchItems.length - ((SearchPage -1) * 8));
         }
         for (let i = startIndex; i < numResults; i++) {
             content.push(
             <ItemCard
-            itemName={searchResultSamples[i][0]}
-            price={searchResultSamples[i][1]}
-            rate={searchResultSamples[i][2]}
-            availability={searchResultSamples[i][3]}
-            location={searchResultSamples[i][4]}
-            rating={searchResultSamples[i][5]}
-            id={searchResultSamples[i][6]} 
+            item={searchItems[i]}
             key={i}/>)
         }
         return content;
@@ -138,13 +111,15 @@ export default function Search() {
     }
 
     const classes = useStyles();
-
+// need a setup for no results, in the get functions for search results/pagination just dont loop or w/e if our main items array length is not > 0
     return (
         <PageWrapper>
             <SearchFilterBar />
+            {loading ? <div>Loading search results....</div>
+            :
             <div className="SearchMainContainer">
                 <div className="SearchSortFlex">
-                    <div className="SearchMainText">Search results for: <span style={{fontWeight: 'normal'}}>Pressure Washer</span></div>
+                    <div className="SearchMainText">Search results for: <span style={{fontWeight: 'normal'}}>{searchParameters}</span></div>
                     <div className="SearchMainText">Sort by: 
                     <Select 
                         onChange={handleChange} 
@@ -188,20 +163,18 @@ export default function Search() {
                     </div>
                 </div>
                 <div className="SuggestedItemsSection">
-                    <div className="SearchMainText">Suggested items outside your search for: <span style={{fontWeight: 'normal'}}>Heavy duty car jack</span></div>
+                    <div className="SearchMainText">Suggested items outside your search for: <span style={{fontWeight: 'normal'}}>{searchParameters}</span></div>
 
                     <div className="ItemCardSection" style={{padding: '1em .5em'}}>
-                    <ItemCard itemName={searchResultSamples[0][0]} price={searchResultSamples[0][1]} rate={searchResultSamples[0][2]} availability={searchResultSamples[0][3]} location={searchResultSamples[0][4]} rating={searchResultSamples[0][5]} id={searchResultSamples[0][6]}/>
-
-                    <ItemCard itemName={searchResultSamples[0][0]} price={searchResultSamples[0][1]} rate={searchResultSamples[0][2]} availability={searchResultSamples[0][3]} location={searchResultSamples[0][4]} rating={searchResultSamples[0][5]} id={searchResultSamples[0][6]}/>
-
-                    <ItemCard itemName={searchResultSamples[0][0]} price={searchResultSamples[0][1]} rate={searchResultSamples[0][2]} availability={searchResultSamples[0][3]} location={searchResultSamples[0][4]} rating={searchResultSamples[0][5]} id={searchResultSamples[0][6]}/>
-
-                    <ItemCard itemName={searchResultSamples[0][0]} price={searchResultSamples[0][1]} rate={searchResultSamples[0][2]} availability={searchResultSamples[0][3]} location={searchResultSamples[0][4]} rating={searchResultSamples[0][5]} id={searchResultSamples[0][6]}/>
-
+                        {/* Need the similar items backend for this section, placeholder first item from search for now */}
+                        <ItemCard item={searchItems[0]}/>
+                        <ItemCard item={searchItems[0]}/>
+                        <ItemCard item={searchItems[0]}/>
+                        <ItemCard item={searchItems[0]}/>
                     </div>
                 </div>
             </div>
+            }
         </PageWrapper>
     )
 }
