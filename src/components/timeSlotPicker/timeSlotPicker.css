@@ -1,0 +1,57 @@
+.PickerMain {
+    border-radius: 20px;
+    background-color: #e9d8b4;
+    width: 330px;
+    margin-bottom: 1em;
+}
+
+.PickerHeader {
+    display: flex;
+    justify-content: center;
+    font-size: 17px;
+    color: #33384f;
+    font-weight: bold;
+    padding: 1em 0;
+}
+
+.MorningAfternoonFlex {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 1em 1em 1em;
+}
+
+.TimeSlotDiv {
+    width: 48%;
+    background-color: #FFF;
+    border-radius: 20px;
+    padding: 1em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #33384f;
+    user-select: none;
+}
+
+.TimeSlotDiv:hover {
+    cursor: pointer;
+}
+
+.TimeSlotDiv .DayText {
+    font-size: 17px;
+    font-weight: bold;
+}
+
+.TimeSlotDiv .TimeText {
+    font-size: 14px;
+}
+
+.BackgroundMorning {
+    background-color: #33384F;
+    color: #FFF;
+}
+
+.BackgroundAfternoon {
+    background-color: #AC172C;
+    color: #FFF;
+}

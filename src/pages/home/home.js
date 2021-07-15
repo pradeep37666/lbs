@@ -15,8 +15,6 @@ import Instance from '../../util/axios';
 
 export default function Home() {
 
-  const numTopItems = 8;
-
   const [loading, setLoading] = useState(true);
   const [items, setItems] = useState([]);
 
@@ -75,18 +73,6 @@ export default function Home() {
     console.log(error);
   })
   }, []);
-
-
-  
-  const getTopItems = () => {
-    let content = [];
-
-    items.slice(0, 8).map((item, i) => {
-      content.push(<ItemCard item={item} key={i}/>)
-    })
-
-    return content;
-  }
 
   return (
     <PageWrapper>
@@ -156,7 +142,9 @@ export default function Home() {
           <div className="ItemCardSection">
             { loading 
             ? <div>Loading items...</div>
-            : getTopItems()
+            : items.slice(0, 8).map((item, i) => {
+              return <ItemCard item={item} key={i}/>
+            })
             }
 
           </div>

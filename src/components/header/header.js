@@ -52,7 +52,7 @@ export default function Header() {
       
 
       <div className="SearchWrapper">
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className="SearchForm">
         <div className='HeaderSearchDiv'>
           <input type='text' placeholder="Search for stuff" className='TextInput HeaderSearchInput' style={{padding: '1em 0.6em'}} value={searchText}onChange={(e) => setSearchText(e.target.value)}></input>
         </div>

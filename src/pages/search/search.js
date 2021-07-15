@@ -50,28 +50,22 @@ export default function Search() {
     const [searchItems, setSearchItems] = useState([]);
     const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        // Find all Items (empty search)
-          Instance.get(`/items/search/?keyword=${searchParameters}`).then((response) => {
-            if (response.data.length > 0) {
-              setSearchItems(response.data);
-              setLoading(false);
-              console.log(response.data.length)
-            } else {
-              setLoading(false);
-            }
-            
-          })
-          .catch((error) => {
-            // handle error
-            console.log(error);
-          })
-          }, [searchParameters]);
+    const [SearchPage, setSearchPage] = useState(1);
+    const [SortBy, setSortBy] = useState('Nothing Selected');
 
     const NumSearchPages = Math.ceil(searchItems.length / 8);
 
-    const [SearchPage, setSearchPage] = useState(1);
-    const [SortBy, setSortBy] = useState('Nothing Selected');
+
+    useEffect(() => {
+        // Find all Items (empty search)
+          Instance.get(`/items/search/?keyword=${searchParameters}`).then((response) => {
+            setSearchItems(response.data);
+            setLoading(false);
+          })
+          .catch((error) => {
+            console.log(error);
+          })
+          }, [searchParameters]);
 
     const getSearchPages = () => {
         let content = [];
@@ -106,12 +100,31 @@ export default function Search() {
         return content;
     }
 
+    const getSearchResultsMain = () => {
+      return (
+        <div>
+          <div className="ItemCardSection" style={{ padding: '1em .5em' }}>
+            {getSearchResultsPage()}
+          </div>
+
+          <div className="PaginationSection">
+            <div className="PagesText">Pages</div>
+            <div className="PaginationFlex">
+              <div className="PaginationArrow" onClick={() => handlePaginationButtonClick("backward")}>{"<"}</div>
+              {getSearchPages()}
+              <div className="PaginationArrow" onClick={() => handlePaginationButtonClick("forward")}>{">"}</div>
+            </div>
+          </div>
+        </div>
+              
+      )
+    }
+
     const handleChange = (event) => {
         setSortBy(event.target.value);
     }
 
     const classes = useStyles();
-// need a setup for no results, in the get functions for search results/pagination just dont loop or w/e if our main items array length is not > 0
     return (
         <PageWrapper>
             <SearchFilterBar />
@@ -150,28 +163,21 @@ export default function Search() {
                     </div>
                 </div>
 
-                <div className="ItemCardSection" style={{padding: '1em .5em'}}>
-                    {getSearchResultsPage()}
-                </div>
+                {searchItems.length > 0 ? getSearchResultsMain() 
+                
+                : <div>No results found, try searching with different options.</div>}
 
-                <div className="PaginationSection">
-                    <div className="PagesText">Pages</div>
-                    <div className="PaginationFlex">
-                        <div className="PaginationArrow" onClick={() => handlePaginationButtonClick("backward")}>{"<"}</div>
-                        {getSearchPages()}
-                        <div className="PaginationArrow" onClick={() => handlePaginationButtonClick("forward")}>{">"}</div>
-                    </div>
-                </div>
                 <div className="SuggestedItemsSection">
                     <div className="SearchMainText">Suggested items outside your search for: <span style={{fontWeight: 'normal'}}>{searchParameters}</span></div>
 
-                    <div className="ItemCardSection" style={{padding: '1em .5em'}}>
+                  {searchItems.length > 0 ? <div className="ItemCardSection" style={{padding: '1em .5em'}}>
                         {/* Need the similar items backend for this section, placeholder first item from search for now */}
                         <ItemCard item={searchItems[0]}/>
                         <ItemCard item={searchItems[0]}/>
                         <ItemCard item={searchItems[0]}/>
                         <ItemCard item={searchItems[0]}/>
                     </div>
+                  : ''}
                 </div>
             </div>
             }

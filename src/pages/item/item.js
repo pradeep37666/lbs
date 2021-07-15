@@ -42,7 +42,7 @@ export default function Item(props) {
             // handle error
             console.log(error);
           })
-          }, []);
+          }, [params.itemId]);
 
     const NumReviewPages = Math.ceil(reviewSamples.length /2);
 

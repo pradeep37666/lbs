@@ -24,3 +24,64 @@
     border-radius: 10px;
     padding: .5em;
 }
+
+.ProfilePictureFlex {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.ProfilePictureCircle {
+    border: 1px solid #ac172c;
+    height: 120px;
+    width: 120px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 2em;
+}
+
+.UploadButton {
+    width: 50%;
+    height: 3em;
+}
+
+.CameraIcon {
+    height: 35px;
+}
+
+.PasswordInputContainer {
+    width: 100%;
+    position: relative;
+}
+
+.ShowPasswordIcon {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+}
+
+.ShowPasswordIcon:hover {
+    cursor: pointer;
+}
+
+.BecomeLenderFlex {
+    display: flex;
+    width: 100%;
+    align-items: center;
+}
+
+.LenderSwitchInfoFlex {
+    display: flex;
+    margin-left: 2em;
+    flex-grow: 1;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.SkipNextButtonFlex {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}

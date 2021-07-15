@@ -16,7 +16,7 @@ function App() {
       <ScrollToTop>
       <Route exact path="/" component={Home}/>
       <Route exact path="/item/:itemId" component={ItemPage}/>
-      <Route exact path="/search/:searchParams" component={SearchPage}/>
+      <Route exact path="/search/:searchParams?" component={SearchPage}/>
       <Route exact path="/login" component={LoginPage}/>
       <Route exact path="/register" component={RegisterPage}/>
       </ScrollToTop>

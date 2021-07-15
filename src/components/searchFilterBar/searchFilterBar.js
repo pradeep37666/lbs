@@ -15,7 +15,6 @@ import {ReactComponent as StarFilled} from './../../assets/Icons/StarFilled.svg'
 import { withStyles } from '@material-ui/core/styles';
 import Slider from '@material-ui/core/Slider';
 import GoogleMapReact from 'google-map-react';
-import RatingFiller from '../ratingFiller/ratingFiller';
 
 const LocationSlider = withStyles({
     root: {

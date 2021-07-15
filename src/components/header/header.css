@@ -42,3 +42,8 @@
 .HeaderSearchInput {
   font-size: 16px;
 }
+
+.SearchForm {
+  width: 100%;
+  display: flex;
+}

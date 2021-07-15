@@ -8,13 +8,17 @@
     padding: 2em;
     width: 30%;
     min-width: 350px;
-    margin: 4em 0;
+    margin: 4em 0 2em 0;
 }
 
 .LoginText {
-    padding: 1em 0;
+    padding-bottom: 1em;
     font-size: 18px;
     width: 100%;
+}
+
+.LoginTextSmall {
+    font-size: 14px;
 }
 
 .LoginHeader {
