@@ -1,33 +1,30 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import './slotDay.css';
 import TimeSlotPicker from '../timeSlotPicker/timeSlotPicker';
 
-
 export default function SlotDay(props) {
 
-    const [dayOpen, setDayOpen] = useState(false);
-    const [morning, setMorning] = useState(false);
-    const [afternoon, setAfternoon] = useState(false);
-    useEffect(() => {
-        props.dayMorningUpdate(morning);
-    //eslint-disable-next-line
-    }, [morning])
-
-    useEffect(() => {
-        props.dayAfternoonUpdate(afternoon);
-    //eslint-disable-next-line
-    }, [afternoon])
+    const handleOpenSlot = () => {
+        // calls to parent to close every day, then we open just the one that was clicked on
+        props.closeAll();
+        props.setOpen(!props.open);
+    }
 
     return (
         <div>
             <div className="DayDotsFlex">
-                <div className={`DayInactive ${morning || afternoon ? 'DayActive' : ''}`} onClick={() => setDayOpen(!dayOpen)}>{props.day}</div>
+                <div className={`DayInactive ${props.morning || props.afternoon ? 'DayActive' : ''}`} onClick={handleOpenSlot}>
+                    {props.day}
+                    {props.open ? <div className="triangle"/>: ''}
+                    
+                    </div>
                 <div className="DotsFlex">
-                    <div className={`AvailabilityDot ${morning ? 'DotMorningActive' : ''}`}/>
-                    <div className={`AvailabilityDot ${afternoon ? 'DotAfternoonActive' : ''}`}/>
+                    <div className={`AvailabilityDot ${props.morning ? 'DotMorningActive' : ''}`}/>
+                    <div className={`AvailabilityDot ${props.afternoon ? 'DotAfternoonActive' : ''}`}/>
                 </div>
             </div>
-            {dayOpen ? <TimeSlotPicker changeMorning={setMorning} changeAfternoon={setAfternoon} morning={morning} afternoon={afternoon}/> : ''}
+            {/* this will go in the onclick div to get middle of it and appear there */}
+            {props.open ? <TimeSlotPicker setMorning={props.setMorning} setAfternoon={props.setAfternoon} morning={props.morning} afternoon={props.afternoon}/> : ''}
         </div>
     )
 }

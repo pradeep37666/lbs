@@ -25,6 +25,18 @@
     padding: .5em;
 }
 
+.TCCheckboxFlex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 1em 0;
+    font-size: 15px;
+}
+
+.TCCheckbox {
+    margin-right: 1em;
+}
+
 .ProfilePictureFlex {
     display: flex;
     align-items: center;
@@ -84,4 +96,12 @@
     display: flex;
     justify-content: space-between;
     width: 100%;
+}
+
+.ButtonDisabled {
+    background-color: rgba(172, 23, 44, 0.50);
+}
+
+.ButtonDisabled:hover {
+    cursor: auto;
 }
