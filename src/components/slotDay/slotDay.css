@@ -1,0 +1,44 @@
+
+.DayDotsFlex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1em;
+    font-weight: bold;
+    font-size: 20px;
+    user-select: none;
+}
+
+.DotsFlex {
+    display: flex;
+    align-items: center;
+}
+
+.AvailabilityDot {
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    background-color: #dedede;
+    margin-right: .5em;
+}
+
+.DotMorningActive {
+    background-color: #33384f;
+}
+
+.DotAfternoonActive {
+    background-color: #ac172c;
+}
+
+.DayInactive {
+    color: #adadad;
+}
+
+.DayActive {
+    color: #33384f;
+}
+
+.DayInactive:hover {
+    cursor: pointer;
+    color: #858585;
+}

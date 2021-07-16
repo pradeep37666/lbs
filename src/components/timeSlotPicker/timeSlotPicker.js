@@ -1,17 +1,19 @@
 import React, { useState } from 'react';
 import './timeSlotPicker.css';
 
-export default function TimeSlotPicker() {
+export default function TimeSlotPicker(props) {
 
-    const [morning, setMorning] = useState(false);
-    const [afternoon, setAfternoon] = useState(false);
+    const [morning, setMorning] = useState(props.morning);
+    const [afternoon, setAfternoon] = useState(props.afternoon);
 
     const handleMorningClick = () => {
         setMorning(!morning);
+        props.changeMorning(!morning);
     }
 
     const handleAfternoonClick = () => {
         setAfternoon(!afternoon);
+        props.changeAfternoon(!afternoon);
     }
 
     return (

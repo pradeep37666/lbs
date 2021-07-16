@@ -3,6 +3,7 @@
     background-color: #e9d8b4;
     width: 330px;
     margin-bottom: 1em;
+    user-select: none;
 }
 
 .PickerHeader {
