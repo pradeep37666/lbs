@@ -1,9 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './register.css';
 import PageWrapper from "./../../components/pageWrapper/pageWrapper.js";
 import Banner from "./../../components/bannerText/bannerText.js";
 import LenderSwitch from './../../components/becomeLenderSwitch/becomeLenderSwitch.js';
 import ProductSlots from '../../components/productSlots/productSlots';
+import BasicDetails from '../../components/FormComponents/BasicDetails';
+import Verification from '../../components/FormComponents/Verification';
+import BankDetails from '../../components/FormComponents/BankDetails';
 import TC from '../../components/tcSection/tcSection';
 import {ReactComponent as Logo} from './../../assets/Logos/LogoRed.svg';
 import {ReactComponent as CameraIcon} from './../../assets/Icons/CameraIcon.svg';
@@ -12,181 +15,85 @@ import {ReactComponent as ShowPassword} from './../../assets/Icons/ShowPassword.
 
 export default function Register() {
 
-    const [fullName, setFullName] = useState();
-    const [email, setEmail] = useState();
-    const [phoneNumber, setPhoneNumber] = useState();
-    const [password, setPassword] = useState();
+    const [fullName, setFullName] = useState("");
+    const [email, setEmail] = useState("");
+    const [phoneNumber, setPhoneNumber] = useState("");
+    const [password, setPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
     const [lender, setLender] = useState(false);
 
     // Stripe details?
-    const [cardName, setCardName] = useState();
-    const [cardNumber, setCardNumber] = useState();
-    const [expiry, setExpiry] = useState();
-    const [ccv, setCcv] = useState();
+    const [cardName, setCardName] = useState("");
+    const [cardNumber, setCardNumber] = useState("");
+    const [expiry, setExpiry] = useState("");
+    const [ccv, setCcv] = useState("");
 
-    const [accNumber, setAccNumber] = useState();
-    const [bsb, setBsb] = useState();
+    const [accNumber, setAccNumber] = useState("");
+    const [bsb, setBsb] = useState("");
 
-    const [address, setAddress] = useState();
-    const [city, setCity] = useState();
-    const [country, setCountry] = useState();
-    const [state, setState] = useState();
+    const [address, setAddress] = useState("");
+    const [city, setCity] = useState("");
+    const [country, setCountry] = useState("");
+    const [state, setState] = useState("");
 
-    // all the time slots yikes
+    // const [mondayM, setMondayM] = useState();
+    // const [mondayA, setMondayA] = useState();
+    // const [tuesdayM, setTuesdayM] = useState();
+    // const [tuesdayA, setTuesdayA] = useState();
+    // const [wednesdayM, setWednesdayM] = useState();
+    // const [wednesdayA, setWednesdayA] = useState();
+    // const [thursdayM, setThursdayM] = useState();
+    // const [thursdayA, setThursdayA] = useState();
+    // const [fridayM, setFridayM] = useState();
+    // const [fridayA, setFridayA] = useState();
+    // const [saturdayM, setSaturdayM] = useState();
+    // const [saturdayA, setSaturdayA] = useState();
+    // const [sundayM, setSundayM] = useState();
+    // const [sundayA, setSundayA] = useState();
 
     const [tc, setTC] = useState(false);
 
     const [page, setPage] = useState('Basic Details');
-    
-    const [showPassword, setShowPassword] = useState(false);
-    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+    const [validated, setValidated] = useState(false);
 
     const handleNextPage = (newPage) => {
         setPage(newPage);
         window.scrollTo(0, 0);
     }
 
-    const getBasicDetails = () => {
-        return (
-            <div className="RegistrationWrapper">
-                <div className="LoginMain">
-
-                    <Logo height='50px' width='50px' style={{marginBottom: '.5em'}}/>
-
-                    <div className="LoginHeader">Basic Details</div>
-                    <div className="LoginText">Log in or create an account to start sharing and borrowing from Little Big Shed.</div>
-
-                    <div className="LoginHeader">Full Name</div>
-                    <input type='text' placeholder='Jane Doe' className="LoginInput" value={fullName} onChange={(e) => setFullName(e.target.value)}/>
-
-                    <div className="LoginHeader">Email</div>
-                    <input type='text' placeholder='Jane Doe' className="LoginInput" value={email} onChange={(e) => setEmail(e.target.value)}/>
-
-                    <div className="LoginHeader">Phone Number</div>
-                    <input type='text' placeholder='+61456789012' className="LoginInput" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)}/>
-
-                    <div className="LoginHeader">Profile Picture</div>
-                    {/* upload picture */}
-                    <div className="ProfilePictureFlex">
-                        <div className="ProfilePictureCircle"><CameraIcon className="CameraIcon"/></div>
-                    <button className="LoginFormButton UploadButton">Upload</button>
-
-                    </div>
-
-
-                    </div>
-
-                    <div className="LoginMain LoginMainNoMarg">
-                    <div className="LoginHeader">Password</div>
-                    <div className="LoginText">Create a secure password including: at least 8 characters, 2 numbers and a special character.</div>
-
-                    <div className="LoginHeader">Password</div>
-                    <div className="PasswordInputContainer">
-                        <input type={showPassword ? 'text' : 'password'} placeholder='Jane Doe' className="LoginInput" value={password} onChange={(e) => setPassword(e.target.value)}></input>
-                        <ShowPassword className="ShowPasswordIcon" onClick={() => setShowPassword(!showPassword)}/>
-                    </div>
-                    
-
-                    <div className="LoginHeader">Confirm Password</div>
-                    <div className="PasswordInputContainer">
-                        <input type={showConfirmPassword ? 'text' : 'password'} placeholder='+61456789012' className="LoginInput" />
-                        <ShowPassword className="ShowPasswordIcon" onClick={() => setShowConfirmPassword(!showConfirmPassword)}/>
-                    </div>
-                    </div>
-
-                    <div className="LoginMain LoginMainNoMarg">
-                    <div className="BecomeLenderFlex">
-                        <div className="LoginHeader" style={{width: 'auto'}}>Become Lender</div>
-                        <div className="LenderSwitchInfoFlex">
-                        <LenderSwitch setLender={setLender}/>
-                        <ShowPassword />
-                        </div>
-                    </div>
-                    <div className="LoginText">If you would like to share items on Little Big Shed we need some extra details off you.</div>
-                    <div className="LoginText">These details allow us to send you payments for successful lends and help borrowers find your items</div>
-
-                    <button className="LoginFormButton" onClick={() => handleNextPage('Verification')}>Next</button>
-                    </div>
-            </div>
-        );
-    }
-
-    const getVerification = () => {
-        return (
-            <div className="RegistrationWrapper">
-                <div className="LoginMain">
-                <Logo height='50px' width='50px' style={{marginBottom: '.5em'}}/>
-
-                <div className="LoginHeader">Verify Your Identity</div>
-                <div className="LoginText">Log in or create an account to start sharing and borrowing from Little Big Shed.</div>
-
-                <div className="LoginHeader">Verification Code</div>
-                <input type='text' placeholder='12345678' className="LoginInput" />
-
-                <button className="LoginFormButton" onClick={() => handleNextPage('Bank Details')}>Next</button>
-                </div>
-            </div>
-        )
-    }
-
-    const getBankDetails = () => {
-        return (
-            <div className="RegistrationWrapper">
-                <div className="LoginMain">
-                <Logo height='50px' width='50px' style={{marginBottom: '.5em'}}/>
-
-                <div className="LoginHeader">Payment Details</div>
-                <div className="LoginText">If you would like to share your shed with users, Little big shed will need to know your payment and banking details to allow you to send and receive money for Little Big Shed trades.
-                </div>
-
-                <div className="LoginText">However if you only want to borrow items from other users, we will only need your card details.</div>
-
-                </div>
-
-                <div className="LoginMain LoginMainNoMarg">
-                <div className="LoginHeader">Card Details</div>
-                <div className="LoginText">We need these details to make a successful trade between 2 parties.</div>
-
-                <div className="LoginHeader" style={{marginBottom: '0'}}>Name on Card</div>
-                <input type='text' placeholder='12345678' className="LoginInput" />
-
-                <div className="LoginHeader" style={{marginBottom: '0'}}>Number on Card</div>
-                <input type='text' placeholder='1234 5678 9010 1112' className="LoginInput" />
-
-                <div className="ExpiryCCVFlex">
-                    <div className="LoginHeader">Expiry</div>
-                    <div className="LoginHeader">CCV</div>
-                </div>
-
-                <div className="ExpiryCCVFlex">
-                    <input type='text' placeholder='MM/YY' className="LoginInput" style={{marginRight: '.5em'}} />
-                    <input type='text' placeholder='000' className="LoginInput" />
-                </div>
-                {!lender ?
-                <button className="LoginFormButton" onClick={() => handleNextPage('Terms & Conditions')}>Next</button>
-                : ''
+    useEffect(() => {
+        switch (page) {
+            case 'Basic Details':
+                if (fullName && email && phoneNumber && password && password === confirmPassword) {
+                    setValidated(true)
+                } else setValidated(false)
+                break
+            case 'Verification':
+                break
+            case 'Bank Details':
+                if (!lender) {
+                    if (cardName && cardNumber && expiry && ccv) {
+                        setValidated(true)
+                    } else setValidated(false)
+                } else {
+                    if (cardName && cardNumber && expiry && ccv && accNumber && bsb) {
+                        setValidated(true)
+                    } else setValidated(false)
                 }
-                </div>
-
-                {lender ?
-                <div className="LoginMain LoginMainNoMarg">
-
-                <div className="LoginHeader">Bank Deposit Details</div>
-                <div className="LoginText">Bank details will allow you to upgrade to a lender account.</div>
-
-                <div className="LoginHeader" style={{marginBottom: '0'}}>Account Number</div>
-                <input type='text' placeholder='1234 5678' className="LoginInput" />
-
-                <div className="LoginHeader" style={{marginBottom: '0'}}>BSB</div>
-                <input type='text' placeholder='123-456' className="LoginInput" />
-                <button className="LoginFormButton" onClick={() => handleNextPage('Location Details')}>Next</button>
-                </div>
-                : ''
-                }
-
-            </div>
-        )
-    }
+                break
+            case 'Location Details':
+                break
+            case 'Availability':
+                break
+            case 'Terms & Conditions':
+                break
+            case 'Complete!':
+                break
+            default:
+                return '';
+        }
+    }, [fullName, email, phoneNumber, password, confirmPassword, cardName, cardNumber, expiry, ccv, accNumber, bsb])
 
     const getLocationDetails = () => {
         return (
@@ -273,11 +180,38 @@ export default function Register() {
     const renderSwitch = () => {
         switch (page) {
             case 'Basic Details':
-                return getBasicDetails();
+                return <BasicDetails 
+                validated={validated}
+                handleNextPage={handleNextPage}
+                setFullName={setFullName}
+                setEmail={setEmail}
+                setPhoneNumber={setPhoneNumber}
+                setPassword={setPassword}
+                password={password}
+                confirmPassword={confirmPassword}
+                setConfirmPassword={setConfirmPassword}
+                setLender={setLender}
+                setValidated={setValidated}
+                />
             case 'Verification':
-                return getVerification();
+                return <Verification 
+                validated={validated}
+                handleNextPage={handleNextPage}
+                setValidated={setValidated}
+                />
             case 'Bank Details':
-                return getBankDetails();
+                return <BankDetails 
+                validated={validated}
+                handleNextPage={handleNextPage}
+                lender={lender}
+                setCardName={setCardName}
+                setCardNumber={setCardNumber}
+                setExpiry={setExpiry}
+                setCcv={setCcv}
+                setAccNumber={setAccNumber}
+                setBsb={setBsb}
+                setValidated={setValidated}
+                />
             case 'Location Details':
                 return getLocationDetails();
             case 'Availability':

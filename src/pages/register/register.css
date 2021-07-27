@@ -105,3 +105,20 @@
 .ButtonDisabled:hover {
     cursor: auto;
 }
+
+.ValidationText {
+    color: #ac172c;
+    font-size: 14px;
+    width: 100%;
+    margin-bottom: 1em;
+}
+
+.ValidationTextHide {
+    display: none;
+    /* opacity: 0%; */
+}
+
+.LoginInputValidationContainer {
+    position: relative;
+    width: 100%;
+}
