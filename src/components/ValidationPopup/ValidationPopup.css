@@ -9,9 +9,7 @@
     top: 0%;
     width: fit-content;
     max-width: 300px;
-    /* transition: 0.2s;
-    opacity: 1; */
-    /* opacity for transition setup, will need some class rework sadge */
+    opacity: 0;
 }
 
 .ValidationPopup__Container {
@@ -32,6 +30,7 @@
 	text-align: left;
     left: 105%;
     top: 35%;
+    opacity: 0;
 }
 .triangleLeft:before,
 .triangleLeft:after {

@@ -4,6 +4,7 @@ import {ReactComponent as CameraIcon} from './../../assets/Icons/CameraIcon.svg'
 import {ReactComponent as ShowPassword} from './../../assets/Icons/ShowPassword.svg';
 import LenderSwitch from './../../components/becomeLenderSwitch/becomeLenderSwitch.js';
 import ValidationPopup from '../ValidationPopup/ValidationPopup.js';
+import Instance from '../../util/axios';
 
 export default function BasicDetails(props) {
 
@@ -16,18 +17,20 @@ export default function BasicDetails(props) {
     const [showPassword, setShowPassword] = useState(false)
     const [showConfirmPassword, setShowConfirmPassword] = useState(false)
 
+    const [image, setImage] = useState( {preview: '', raw: ''} )
+
     const showValidation = (field) => {
         switch (field) {
             case 'name':
-                return (nameValidation.length > 0) ?  true : false 
+                return (nameValidation.length > 0) ?  false : true 
             case 'email':
-                return (emailValidation.length > 0 && nameValidation.length === 0) ? true : false
+                return (emailValidation.length > 0 && nameValidation.length === 0) ? false : true
             case 'phone':
-                return (phoneValidation.length > 0 && nameValidation.length === 0 && emailValidation.length === 0) ? true : false
+                return (phoneValidation.length > 0 && nameValidation.length === 0 && emailValidation.length === 0) ? false : true
             case 'password':
-                return (passwordValidation.length > 0) ? true : false
+                return (passwordValidation.length > 0) ? false : true
             case 'confirmPassword':
-                return (confirmPasswordValidation.length > 0 && passwordValidation.length === 0) ? true : false
+                return (confirmPasswordValidation.length > 0 && passwordValidation.length === 0) ? false : true
             default:
                 return
         }
@@ -50,15 +53,27 @@ export default function BasicDetails(props) {
 
     const handleEmail = (e) => {
         let emailInput = e.target.value;
+
         if (emailInput.length === 0) {
             props.setEmail("")
             setEmailValidation("Email is required")
-        } else if (/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/.test(emailInput)) {
-            props.setEmail(emailInput)
-            setEmailValidation("")
+        } else if (/^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[A-Za-z]+$/.test(emailInput)) {
+            // Check if email is already in use
+            Instance.get(`/user/checkEmail/?email=${emailInput}`).then((response) => {
+                if (response.data.code === 200) {
+                    props.setEmail(emailInput)
+                    setEmailValidation("")
+                } else {
+                    props.setEmail("")
+                    setEmailValidation("This user already exists, please use another email address")
+                }
+              })
+              .catch((error) => {
+                setEmailValidation("Sorry something went wrong, please try again")
+              })
         } else {
             props.setEmail("")
-            setEmailValidation("Incorrect email format")
+            setEmailValidation("Incorrect email format, should be in format: example@example.com")
         }
     }
 
@@ -99,6 +114,15 @@ export default function BasicDetails(props) {
         }
     }
 
+    const handleChange = (e) => {
+        if (e.target.files.length) {
+            setImage({
+              preview: URL.createObjectURL(e.target.files[0]),
+              raw: e.target.files[0]
+            })
+          }
+    }
+
     return (
         <div className="RegistrationWrapper">
                 <div className="LoginMain">
@@ -132,8 +156,16 @@ export default function BasicDetails(props) {
 
                     <div className="LoginHeader">Profile Picture</div>
                     <div className="ProfilePictureFlex">
-                        <div className="ProfilePictureCircle"><CameraIcon className="CameraIcon"/></div>
-                    <button className="LoginFormButton UploadButton">Upload</button>
+                        <div className="ProfilePictureCircle" >
+                        {image.preview ? 
+                    
+                        <img src={image.preview} alt="dummy" className="ProfilePicturePreview"/>
+                    
+                        : <CameraIcon className="CameraIcon"/>}
+                        </div>
+                    <input type="file" id="selectFile" style={{ display: "none" }} onChange={(e) => handleChange(e)} />
+                    <button className="LoginFormButton UploadButton" onClick={() => document.getElementById('selectFile').click()}>Upload</button>
+                    
 
                     </div>
 

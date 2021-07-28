@@ -2,64 +2,100 @@ import React, { useState, useEffect } from 'react';
 import './register.css';
 import PageWrapper from "./../../components/pageWrapper/pageWrapper.js";
 import Banner from "./../../components/bannerText/bannerText.js";
-import LenderSwitch from './../../components/becomeLenderSwitch/becomeLenderSwitch.js';
-import ProductSlots from '../../components/productSlots/productSlots';
 import BasicDetails from '../../components/FormComponents/BasicDetails';
 import Verification from '../../components/FormComponents/Verification';
 import BankDetails from '../../components/FormComponents/BankDetails';
-import TC from '../../components/tcSection/tcSection';
+import LocationDetails from '../../components/FormComponents/LocationDetails';
+import Availability from '../../components/FormComponents/Availability';
+import TermsConditions from '../../components/FormComponents/TermsConditions';
 import {ReactComponent as Logo} from './../../assets/Logos/LogoRed.svg';
-import {ReactComponent as CameraIcon} from './../../assets/Icons/CameraIcon.svg';
-import {ReactComponent as ShowPassword} from './../../assets/Icons/ShowPassword.svg';
+import Instance from '../../util/axios';
 
 
 export default function Register() {
 
-    const [fullName, setFullName] = useState("");
-    const [email, setEmail] = useState("");
-    const [phoneNumber, setPhoneNumber] = useState("");
-    const [password, setPassword] = useState("");
-    const [confirmPassword, setConfirmPassword] = useState("");
-    const [lender, setLender] = useState(false);
+    const [fullName, setFullName] = useState("")
+    const [email, setEmail] = useState("")
+    const [phoneNumber, setPhoneNumber] = useState("")
+    const [profilePicture, setProfilePicture] = useState("")
+    const [password, setPassword] = useState("")
+    const [confirmPassword, setConfirmPassword] = useState("")
+    const [lender, setLender] = useState(false)
 
-    // Stripe details?
-    const [cardName, setCardName] = useState("");
-    const [cardNumber, setCardNumber] = useState("");
-    const [expiry, setExpiry] = useState("");
-    const [ccv, setCcv] = useState("");
+    // Stripe details
+    const [cardName, setCardName] = useState("")
+    const [cardNumber, setCardNumber] = useState("")
+    const [expiry, setExpiry] = useState("")
+    const [ccv, setCcv] = useState("")
 
-    const [accNumber, setAccNumber] = useState("");
-    const [bsb, setBsb] = useState("");
+    const [accNumber, setAccNumber] = useState("")
+    const [bsb, setBsb] = useState("")
 
-    const [address, setAddress] = useState("");
-    const [city, setCity] = useState("");
-    const [country, setCountry] = useState("");
-    const [state, setState] = useState("");
+    const [address, setAddress] = useState("")
+    const [city, setCity] = useState("")
+    const [country, setCountry] = useState("")
+    const [state, setState] = useState("")
 
-    // const [mondayM, setMondayM] = useState();
-    // const [mondayA, setMondayA] = useState();
-    // const [tuesdayM, setTuesdayM] = useState();
-    // const [tuesdayA, setTuesdayA] = useState();
-    // const [wednesdayM, setWednesdayM] = useState();
-    // const [wednesdayA, setWednesdayA] = useState();
-    // const [thursdayM, setThursdayM] = useState();
-    // const [thursdayA, setThursdayA] = useState();
-    // const [fridayM, setFridayM] = useState();
-    // const [fridayA, setFridayA] = useState();
-    // const [saturdayM, setSaturdayM] = useState();
-    // const [saturdayA, setSaturdayA] = useState();
-    // const [sundayM, setSundayM] = useState();
-    // const [sundayA, setSundayA] = useState();
+    const [mondayM, setMondayM] = useState(null)
+    const [mondayA, setMondayA] = useState(null)
+    const [tuesdayM, setTuesdayM] = useState(null)
+    const [tuesdayA, setTuesdayA] = useState(null)
+    const [wednesdayM, setWednesdayM] = useState(null)
+    const [wednesdayA, setWednesdayA] = useState(null)
+    const [thursdayM, setThursdayM] = useState(null)
+    const [thursdayA, setThursdayA] = useState(null)
+    const [fridayM, setFridayM] = useState(null)
+    const [fridayA, setFridayA] = useState(null)
+    const [saturdayM, setSaturdayM] = useState(null)
+    const [saturdayA, setSaturdayA] = useState(null)
+    const [sundayM, setSundayM] = useState(null)
+    const [sundayA, setSundayA] = useState(null)
 
-    const [tc, setTC] = useState(false);
+    const [tc, setTC] = useState(false)
 
-    const [page, setPage] = useState('Basic Details');
+    const [page, setPage] = useState('Basic Details')
 
-    const [validated, setValidated] = useState(false);
+    const [validated, setValidated] = useState(false)
 
     const handleNextPage = (newPage) => {
-        setPage(newPage);
-        window.scrollTo(0, 0);
+        setPage(newPage)
+        window.scrollTo(0, 0)
+    }
+
+    const registerUser = () => {
+        Instance.post('/user/register', {
+            email: email,
+            password: password,
+            mobile: phoneNumber,
+            avatar: profilePicture,
+            fullName: fullName,
+            address: address,
+            city: city,
+            country: country,
+            state: state,
+            monday_am: mondayM,
+            monday_pm: mondayA,
+            tuesday_am: tuesdayM,
+            tuesday_pm: tuesdayA,
+            wednesday_am: wednesdayM,
+            wednesday_pm: wednesdayA,
+            thursday_am: thursdayM,
+            thursday_pm: thursdayA,
+            friday_am: fridayM,
+            friday_pm: fridayA,
+            saturday_am: saturdayM,
+            saturday_pm: saturdayA,
+            sunday_am: sundayM,
+            sunday_pm: sundayA,
+            bsb: bsb,
+            account_number: accNumber,
+        })
+        .then((response) => {
+            console.log(response);
+        })
+        .catch((error) => {
+            console.log(error);
+        })
     }
 
     useEffect(() => {
@@ -83,83 +119,29 @@ export default function Register() {
                 }
                 break
             case 'Location Details':
+                if (address && city && country && state) {
+                    setValidated(true)
+                } else setValidated(false)
                 break
             case 'Availability':
+                if (mondayM || mondayA || tuesdayM || tuesdayA || wednesdayM || wednesdayA || thursdayM || thursdayA || 
+                    fridayM || fridayA || saturdayM || saturdayA || sundayM || sundayA) {
+                    setValidated(true)
+                } else setValidated(false)
                 break
             case 'Terms & Conditions':
+                if (tc) {
+                    setValidated(true)
+                } else setValidated(false)
                 break
             case 'Complete!':
+                console.log("All state incoming~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+                console.log(fullName, email, phoneNumber, password, confirmPassword, cardName, cardNumber, expiry, ccv, accNumber, bsb, lender, address, city, country, state, mondayM, mondayA, tuesdayM, tuesdayA, wednesdayM, wednesdayA, thursdayM, thursdayA, fridayM, fridayA, saturdayM, saturdayA, sundayM, sundayA, tc)
                 break
             default:
                 return '';
         }
-    }, [fullName, email, phoneNumber, password, confirmPassword, cardName, cardNumber, expiry, ccv, accNumber, bsb])
-
-    const getLocationDetails = () => {
-        return (
-            <div className="RegistrationWrapper">
-                <div className="LoginMain">
-                <Logo height='50px' width='50px' style={{marginBottom: '.5em'}}/>
-
-                <div className="LoginHeader">Shed Location</div>
-                <div className="LoginText">If you would like to share your shed with users, Little big shed will need to know your location in order for borrowers to find you.</div>
-                <div className="LoginText">You can skip this step and create an account just for borrowing use and update later.</div>
-
-                <div className="LoginHeader" style={{marginBottom: '0'}}>Address</div>
-                <input type='text' placeholder='43 Brandon Road Runcorn' className="LoginInput" />
-                <div className="LoginHeader" style={{marginBottom: '0'}}>City</div>
-                <input type='text' placeholder='Brisbane' className="LoginInput" />
-                <div className="LoginHeader" style={{marginBottom: '0'}}>Country</div>
-                <input type='text' placeholder='Australia' className="LoginInput" />
-                <div className="LoginHeader" style={{marginBottom: '0'}}>State</div>
-                <input type='text' placeholder='Qld' className="LoginInput" />
-
-                <button className="LoginFormButton" onClick={() => handleNextPage('Availability')}>Next</button>
-                {/* ^ will have verification on V go to next step and clear any state set in above inputs */}
-                <button className="LoginFormButton LoginFormButtonInverted" onClick={() => handleNextPage('Availability')} style={{marginTop: '1em'}}>Skip This Step</button>
-
-                </div>
-            </div>
-        )
-    }
-
-    const getAvailability = () => {
-        return (
-            <div className="RegistrationWrapper">
-                <div className="LoginMain">
-                <Logo height='50px' width='50px' style={{marginBottom: '.5em'}}/>
-
-                <div className="LoginHeader">General Product Availability</div>
-                <div className="LoginText LoginTextSmall">Little big shed lets you have control over the days you want to lend out your products.</div>
-                <div className="LoginText LoginTextSmall">Select the days and enter the times you are available for trades.</div>
-
-                <ProductSlots />
-                <div className="SkipNextButtonFlex">
-                    <button className="LoginFormButton LoginFormButtonInverted" onClick={() => handleNextPage('Terms & Conditions')} style={{marginRight: '.5em'}}>Skip Step</button>
-                    <button className="LoginFormButton" onClick={() => handleNextPage('Terms & Conditions')} style={{marginLeft: '.5em'}}>Next</button>
-                </div>
-
-                </div>
-            </div>
-        )
-    }
-
-    const getTC = () => {
-        return (
-            <div className="RegistrationWrapper">
-                <div className="LoginMain">
-                <Logo height='50px' width='50px' style={{marginBottom: '1em'}}/>
-
-                <div className="LoginHeader">Terms {'&'} Conditions</div>
-                <div className="LoginText">Little big shed has outlined its terms and conditions below to help not only protect little big shed from fraudulent activity, but protect its users as well.</div>
-
-                <TC setTC={setTC}/>
-            {/* This is where we will submit all the form data, if user successfully registered takes us to the complete page */}
-                <button className={`LoginFormButton ${tc ? '' : 'ButtonDisabled'}`} disabled={tc ? false : true} onClick={() => handleNextPage('Complete!')}>Next</button> 
-                </div>
-            </div>
-        )
-    }
+    }, [page, fullName, email, phoneNumber, password, confirmPassword, cardName, cardNumber, expiry, ccv, accNumber, bsb,  lender, address, city, country, state, mondayM, mondayA, tuesdayM, tuesdayA, wednesdayM, wednesdayA, thursdayM, thursdayA, fridayM, fridayA, saturdayM, saturdayA, sundayM, sundayA, tc])
 
     const getComplete = () => {
         return (
@@ -213,11 +195,55 @@ export default function Register() {
                 setValidated={setValidated}
                 />
             case 'Location Details':
-                return getLocationDetails();
+                return <LocationDetails 
+                validated={validated}
+                handleNextPage={handleNextPage}
+                setAddress={setAddress}
+                setCity={setCity}
+                setCountry={setCountry}
+                setState={setState}
+                />
             case 'Availability':
-                return getAvailability();
+                return <Availability 
+                validated={validated}
+                handleNextPage={handleNextPage}
+                setMondayM={setMondayM}
+                setMondayA={setMondayA}
+                mondayM={mondayM}
+                mondayA={mondayA}
+                setTuesdayM={setTuesdayM}
+                setTuesdayA={setTuesdayA}
+                tuesdayM={tuesdayM}
+                tuesdayA={tuesdayA}
+                setWednesdayM={setWednesdayM}
+                setWednesdayA={setWednesdayA}
+                wednesdayM={wednesdayM}
+                wednesdayA={wednesdayA}
+                setThursdayM={setThursdayM}
+                setThursdayA={setThursdayA}
+                thursdayM={thursdayM}
+                thursdayA={thursdayA}
+                setFridayM={setFridayM}
+                setFridayA={setFridayA}
+                fridayM={fridayM}
+                fridayA={fridayA}
+                setSaturdayM={setSaturdayM}
+                setSaturdayA={setSaturdayA}
+                saturdayM={saturdayM}
+                saturdayA={saturdayA}
+                setSundayM={setSundayM}
+                setSundayA={setSundayA}
+                sundayM={sundayM}
+                sundayA={sundayA}
+                />
             case 'Terms & Conditions':
-                return getTC();
+                return <TermsConditions 
+                validated={validated}
+                handleNextPage={handleNextPage}
+                setTC={setTC}
+                tc={tc}
+                registerUser={registerUser}
+                />
             case 'Complete!':
                 return getComplete();
             default:

@@ -15,17 +15,17 @@ export default function BankDetails(props) {
     const showValidation = (field) => {
         switch (field) {
             case 'name':
-                return (nameValidation.length > 0) ? true : false
+                return (nameValidation.length > 0) ? false : true
             case 'cardNum':
-                return (cardNumberValidation.length > 0 && nameValidation.length === 0) ? true : false
+                return (cardNumberValidation.length > 0 && nameValidation.length === 0) ? false : true
             case 'expiry':
-                return (expiryValidation.length > 0 && nameValidation.length === 0 && cardNumberValidation.length === 0) ? true : false
+                return (expiryValidation.length > 0 && nameValidation.length === 0 && cardNumberValidation.length === 0) ? false : true
             case 'ccv':
-                return (ccvValidation.length > 0 && nameValidation.length === 0 && cardNumberValidation.length === 0 && expiryValidation.length === 0) ? true : false
+                return (ccvValidation.length > 0 && nameValidation.length === 0 && cardNumberValidation.length === 0 && expiryValidation.length === 0) ? false : true
             case 'accNum':
-                return (accNumberValidation.length > 0) ?  true : false 
+                return (accNumberValidation.length > 0) ?  false : true
             case 'bsb':
-                return (bsbValidation.length > 0 && accNumberValidation.length === 0) ? true : false
+                return (bsbValidation.length > 0 && accNumberValidation.length === 0) ? false : true
             default:
                 return
         }
@@ -193,7 +193,7 @@ export default function BankDetails(props) {
                     <ValidationPopup errorText={bsbValidation} errorHeader='Invalid BSB' hide={showValidation("bsb")}/>
                 </div>
                 {/* on this button we need to check the stripe details first, if we're all good then can move to next page */}
-                <button className={`LoginFormButton ${!props.validated ? 'ButtonDisabled' : ''}`} disabled={!props.validated} onClick={() => props.handleNextPage('Verification')}>Next</button>
+                <button className={`LoginFormButton ${!props.validated ? 'ButtonDisabled' : ''}`} disabled={!props.validated} onClick={() => props.handleNextPage('Location Details')}>Next</button>
                 </div>
                 : ''
                 }
