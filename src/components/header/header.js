@@ -3,14 +3,17 @@ import './header.css';
 import Logo from './../../assets/Logos/LBS_Logo_Flat_White.png';
 import Search from './../searchButton/searchButton.js';
 import Login from './../loginButton/loginButton.js';
+import UserButton from '../UserButton/UserButton';
 import { Link } from 'react-router-dom';
 import { useHistory } from 'react-router';
+import { GetUser } from '../../util/UserStore';
 
 export default function Header() {
 
-  const [HeaderSticky, setHeaderSticky] = useState(false);
-  const [searchText, setSearchText] = useState('');
-  const history = useHistory();
+  const [HeaderSticky, setHeaderSticky] = useState(false)
+  const [searchText, setSearchText] = useState('')
+  const history = useHistory()
+  const user = GetUser()
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -58,15 +61,19 @@ export default function Header() {
         </div>
         <Search height="16px"/>
         </form>
-        
-
-        
+      
       </div>
 
       <div className="LoginWrapper">
-        <Link to="/login" style={{width: '100%'}}>
-        <Login />
-        </Link>
+      {!user ?  
+      <Link to="/login" style={{width: '100%'}}>  
+        <Login /> 
+      </Link>
+      : <UserButton />}
+
+
+        
+
       </div>
       
 

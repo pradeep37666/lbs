@@ -8,17 +8,52 @@ import ScrollToTop from './util/ScrollToTop';
 import {
   HashRouter as Router,
   Route,
+  Redirect
 } from "react-router-dom";
+import { GetUser } from './util/UserStore';
+
+// code for only allowing certain routes if user is authenticated
+/* <Route path="/search" component={Search} onEnter={requireAuth} /> */
+
+
 
 function App() {
+
+  function AuthRoute ({component: Component, ...rest}) {
+    return (
+      <Route
+        {...rest}
+        render={(props) => GetUser()
+          ? <Component {...props} />
+          : <Redirect to={{pathname: '/login', state: {from: props.location}}} />}
+      />
+    )
+  }
+
+  function AuthRedirectRoute ({component: Component, ...rest}) {
+    return (
+      <Route
+        {...rest}
+        render={(props) => GetUser()
+          // pathname to be user path ?? /user
+          ? <Redirect to={{pathname: '/', state: {from: props.location}}} />
+          : <Component {...props} />}
+      />
+    )
+  }
+
+  /* <AuthRoute path="/item/:itemId" component={ItemPage}/> */
+
   return (
     <Router>
       <ScrollToTop>
       <Route exact path="/" component={Home}/>
       <Route exact path="/item/:itemId" component={ItemPage}/>
       <Route exact path="/search/:searchParams?" component={SearchPage}/>
-      <Route exact path="/login" component={LoginPage}/>
-      <Route exact path="/register" component={RegisterPage}/>
+
+      {/* Routes for login/register should redirect to user page if user is logged in */}
+      <AuthRedirectRoute path="/login" component={LoginPage}/>
+      <AuthRedirectRoute path="/register" component={RegisterPage}/>
       </ScrollToTop>
       
     </Router>

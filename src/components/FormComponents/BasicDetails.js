@@ -202,7 +202,6 @@ export default function BasicDetails(props) {
                         <div className="LoginHeader" style={{width: 'auto'}}>Become Lender</div>
                         <div className="LenderSwitchInfoFlex">
                         <LenderSwitch setLender={props.setLender}/>
-                        <ShowPassword />
                         </div>
                     </div>
                     <div className="LoginText">If you would like to share items on Little Big Shed we need some extra details off you.</div>

@@ -10,6 +10,8 @@ import Availability from '../../components/FormComponents/Availability';
 import TermsConditions from '../../components/FormComponents/TermsConditions';
 import {ReactComponent as Logo} from './../../assets/Logos/LogoRed.svg';
 import Instance from '../../util/axios';
+import { useHistory } from 'react-router-dom';
+import { LoginUser, LogoutUser } from '../../util/UserStore';
 
 
 export default function Register() {
@@ -57,6 +59,8 @@ export default function Register() {
 
     const [validated, setValidated] = useState(false)
 
+    const history = useHistory()
+
     const handleNextPage = (newPage) => {
         setPage(newPage)
         window.scrollTo(0, 0)
@@ -91,10 +95,17 @@ export default function Register() {
             account_number: accNumber,
         })
         .then((response) => {
-            console.log(response);
+            if (response.data.code === 200) {
+                LoginUser(response.data.data)
+            } else {
+                LogoutUser()
+                alert("an error occurred during registration, please try again")
+                history.push({pathname: '/login'})
+            }
         })
         .catch((error) => {
-            console.log(error);
+            history.push({pathname: '/login'})
+            alert("an error occurred during registration, please try again")
         })
     }
 
@@ -135,8 +146,6 @@ export default function Register() {
                 } else setValidated(false)
                 break
             case 'Complete!':
-                console.log("All state incoming~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
-                console.log(fullName, email, phoneNumber, password, confirmPassword, cardName, cardNumber, expiry, ccv, accNumber, bsb, lender, address, city, country, state, mondayM, mondayA, tuesdayM, tuesdayA, wednesdayM, wednesdayA, thursdayM, thursdayA, fridayM, fridayA, saturdayM, saturdayA, sundayM, sundayA, tc)
                 break
             default:
                 return '';

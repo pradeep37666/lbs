@@ -21,51 +21,8 @@ export default function Home() {
   useEffect(() => {
 // Find all Items (empty search)
 
-
-  // Instance.delete(`/items/delete/?i_id=${7}`, {headers: { Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RAdGVzdC5jb20iLCJzdWIiOjEsImlhdCI6MTYyNjIzNjAyNCwiZXhwIjoxNjI3NTMyMDI0fQ.kN0lPhqxe93bDEOeQnxyoiq2HIrFVUCoCl2lh3Unofc`}})
-  // .then((response) => {
-  //   console.log(response);
-  // })
-  // .catch((error) => {
-  //   console.log(error);
-  // })
-
-  // Instance.get('/user/findall', {headers: { Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QxMjNAdGVzdC5jb20iLCJzdWIiOjcsImlhdCI6MTYyNjE1MTQwNiwiZXhwIjoxNjI3NDQ3NDA2fQ.q6lH_TAJ-P0YxuJDhOrCu3pU5JWTqDrlcbDdbVLu58A`}}).then((response) => {
-  //   console.log(response.data);
-  // })
-  // .catch(function (error) {
-  //   // handle error
-  //   console.log(error);
-  // })
-  // .then(function () {
-  //   // always executed
-  // });
-
-  // Instance.post('items/save', {
-  //   u_id: 1,
-  //   title: "Kubota ex1830 ride on mower",
-  //   category: "Mowing",
-  //   description: "Nisi incididunt ea eu ut in ea ullamco. Ad magna id proident enim exercitation. Ea veniam anim quis excepteur elit aliqua voluptate duis sit Lorem enim reprehenderit non.",
-  //   rate: "hourly",
-  //   price: 50,
-  //   deliveryOption: "delivery",
-  //   deliveryPrice: 10,
-  //   rating: 3,
-  //   address: "40 Petrie Terrace",
-  //   city: "Brisbane",
-  //   country: "Australia",
-  //   state: "QLD",
-  // },{headers: { Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QxMjNAdGVzdC5jb20iLCJzdWIiOjcsImlhdCI6MTYyNjE1MTQwNiwiZXhwIjoxNjI3NDQ3NDA2fQ.q6lH_TAJ-P0YxuJDhOrCu3pU5JWTqDrlcbDdbVLu58A`}})
-  // .then((response) => {
-  //     console.log(response);
-  //   })
-  //   .catch(function (error) {
-  //     console.log(error);
-  //   });
-
   Instance.get('/items/search').then((response) => {
     setItems(response.data);
-    console.log(response.data);
     setLoading(false);
   })
   .catch((error) => {

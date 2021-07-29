@@ -1,0 +1,65 @@
+.UserButton {
+    background-color: #33384f;
+    border: none;
+    outline: none;
+    border-radius: 10px;
+    padding: 1em 1.5em;
+    color: #FFFFFF;
+    width: 100%;
+    font-size: 18px;
+    font-family: "DMSans", sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    user-select: none;
+    max-height: 60px;
+    position: relative;
+}
+
+.UserButton--Active {
+    box-shadow: 0px 2px 4px -1px rgb(0 0 0 / 20%), 0px 2px 5px 0px rgb(0 0 0 / 14%), 0px 1px 10px 0px rgb(0 0 0 / 12%);
+}
+
+.UserButton__FirstName {
+    text-transform: capitalize;
+}
+
+.UserButton_ProfilePicture {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+.UserButton__Menu {
+    position: absolute;
+    background-color: #FFF;
+    border-radius: 10px;
+    border: 2px solid #ac172c;
+    color: #33384f;
+    text-align: left;
+    font-weight: bold;
+    font-size: 15px;
+    width: 100%;
+    padding: 1em 2em;
+    left: 0;
+    top: -200px;
+    opacity: 0%;
+    transition: 0.5s;
+    pointer-events: none;
+}
+
+.UserButton__Menu--Active {
+    opacity: 100%;
+    top: 80px;
+}
+
+.UserButton__Menu div {
+    display: flex;
+    align-items: center;
+    pointer-events: all;
+}
+
+.hr__UserMenu {
+    border: 1px solid #b4b4b4;
+    margin: 20px 0;
+}
