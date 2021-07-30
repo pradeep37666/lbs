@@ -1,0 +1,48 @@
+.UserShedNav {
+    height: 100%;
+    min-width: 20%;
+    margin-right: 4em;
+    padding: 1em 0;
+    font-size: 20px;
+    color: #33384f;
+}
+
+.UserShedNav__LinkFlex {
+    display: flex;
+    align-items: center;
+    padding: .5em 0 .5em 2em;
+    margin-bottom: 1em;
+    user-select: none;
+    border: 2px solid;
+    border-radius: 10px;
+    border-color: rgba(176,59,75, 0);
+    transition: 0.3s;
+}
+
+.UserShedNav__LinkFlex:hover {
+    cursor: pointer;
+}
+
+.UserShedNav__LinkFlex--Active {
+    border-color: rgba(176,59,75, 1);
+}
+
+.UserShedNav__Icon {
+    margin-right: 1em;
+}
+
+.LogoutButton {
+    width: 100%;
+    background-color: #ac172c;
+    font-size: 18px;
+    font-family: 'DMSans';
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    outline: none;
+    color: #FFF;
+    border-radius: 10px;
+    padding: .5em 0;
+}

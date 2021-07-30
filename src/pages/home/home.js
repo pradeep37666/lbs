@@ -38,7 +38,7 @@ export default function Home() {
 
         <div className="SearchSectionWrapper">
           
-          <div className="SearchSectionTitle">Let's share stuff and do good</div>
+          <div className="SearchSectionTitle">Let's Find Your Next Borrow</div>
           <div className="SearchSectionFilters">
             <div className="SearchFiltersRowFlex">
               <TextInput width="35%" label="Keywords" fontSize="20px"/>

@@ -67,7 +67,7 @@ export default function Register() {
     }
 
     const registerUser = () => {
-        Instance.post('/user/register', {
+        Instance.post('/auth/signUp', {
             email: email,
             password: password,
             mobile: phoneNumber,
@@ -95,8 +95,11 @@ export default function Register() {
             account_number: accNumber,
         })
         .then((response) => {
-            if (response.data.code === 200) {
-                LoginUser(response.data.data)
+            console.log(response.data)
+            console.log(response.data.user)
+            console.log(response.data.token)
+            if (response.status === 201) {
+                LoginUser(response.data)
             } else {
                 LogoutUser()
                 alert("an error occurred during registration, please try again")

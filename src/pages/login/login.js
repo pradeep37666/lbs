@@ -18,15 +18,16 @@ export default function Login() {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        Instance.post('/user/login', {
+        Instance.post('/auth/signIn', {
             email: email,
             password: password
         }).then((response) => {
+            console.log(response)
             // Only log in if details are correct
-            if (response.data.code === 600) {
+            if (response.status === 404) {
                 setLoginValidation("Incorrect username or password, please try again")
-            } else if (response.data.code === 200) {
-                LoginUser(response.data.data)
+            } else if (response.status === 201) {
+                LoginUser(response.data)
                 setLoginValidation("")
                 history.push({pathname: '/'})
             }

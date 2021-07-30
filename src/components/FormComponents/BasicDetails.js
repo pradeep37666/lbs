@@ -59,8 +59,8 @@ export default function BasicDetails(props) {
             setEmailValidation("Email is required")
         } else if (/^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[A-Za-z]+$/.test(emailInput)) {
             // Check if email is already in use
-            Instance.get(`/user/checkEmail/?email=${emailInput}`).then((response) => {
-                if (response.data.code === 200) {
+            Instance.get(`/user/checkExist/?email=${emailInput}`).then((response) => {
+                if (response.status === 204) {
                     props.setEmail(emailInput)
                     setEmailValidation("")
                 } else {
@@ -83,8 +83,18 @@ export default function BasicDetails(props) {
             props.setPhoneNumber("")
             setPhoneValidation("Phone number is required")
         } else if (/^(?:\+?(61))? ?(?:\((?=.*\)))?(0?[2-57-8])\)? ?(\d\d(?:[- ](?=\d{3})|(?!\d\d[- ]?\d[- ]))\d\d[- ]?\d[- ]?\d{3})$/.test(phoneInput)) {
-            props.setPhoneNumber(phoneInput)
-            setPhoneValidation("")
+            Instance.get(`/user/checkExist/?mobile=${phoneInput}`).then((response) => {
+                if (response.status === 204) {
+                    props.setPhoneNumber(phoneInput)
+                    setPhoneValidation("")
+                } else {
+                    props.setPhoneNumber("")
+                    setPhoneValidation("This mobile number is already registered to another user, please use a different number")
+                }
+              })
+              .catch((error) => {
+                setPhoneValidation("Sorry something went wrong, please try again")
+              })
         } else {
             props.setPhoneNumber("")
             setPhoneValidation("Incorrect phone number format")

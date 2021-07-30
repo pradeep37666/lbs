@@ -1,6 +1,6 @@
 export const LoginUser = (data) => {
     localStorage.setItem('user', JSON.stringify(data.user))
-    localStorage.setItem('token', data.token)
+    localStorage.setItem('token', data.token.accessToken)
 }
 
 export const GetUser = () => {

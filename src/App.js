@@ -4,6 +4,7 @@ import ItemPage from './pages/item/item.js';
 import SearchPage from './pages/search/search.js';
 import LoginPage from './pages/login/login.js';
 import RegisterPage from './pages/register/register.js';
+import AccountPage from './pages/account/account.js';
 import ScrollToTop from './util/ScrollToTop';
 import {
   HashRouter as Router,
@@ -50,6 +51,15 @@ function App() {
       <Route exact path="/" component={Home}/>
       <Route exact path="/item/:itemId" component={ItemPage}/>
       <Route exact path="/search/:searchParams?" component={SearchPage}/>
+
+      <AuthRoute path="/user/trades" component={AccountPage}/>
+      <AuthRoute path="/user/messages" component={AccountPage}/>
+      <AuthRoute path="/user/your_shed" component={AccountPage}/>
+      <AuthRoute path="/user/favourites" component={AccountPage}/>
+      <AuthRoute path="/user/account" component={AccountPage}/>
+
+      {/* post an item */}
+      {/* <AuthRoute path="/postitem" component={postitem}/> */}
 
       {/* Routes for login/register should redirect to user page if user is logged in */}
       <AuthRedirectRoute path="/login" component={LoginPage}/>
