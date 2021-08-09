@@ -1,0 +1,75 @@
+.AccountSettings__FlexMain {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.AccountSettings__Main {
+    width: 48%;
+}
+
+.AccountSettings__Container {
+    border-radius: 10px;
+    border: 1px solid #c7c7c7;
+    padding: 2em;
+    width: 100%;
+    margin-bottom: 2em;
+}
+
+.AccountSettings__Title {
+    font-weight: bold;
+    font-size: 25px;
+    color: #33384f;
+    margin-bottom: .5em;
+}
+
+.AccountSettings__UserFlex {
+    padding: 1em 0;
+    display: flex;
+    width: 100%;
+}
+
+.AccountSettings__Avatar {
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+}
+
+.AccountSettings__UserDetails {
+    margin-left: 1em;
+}
+
+.AccountSettings__UserName {
+    font-size: 20px;
+    text-transform: capitalize;
+    color: #33384f;
+    font-weight: bold;
+}
+
+.AccountSettings__Ratings {
+    display: flex;
+    align-items: center;
+    font-size: 17px;
+    color: #000;
+    flex-wrap: wrap;
+}
+
+.AccountSettings__Ratings span {
+    padding-right: .5em;
+}
+
+.AccountSettings-Medium {
+    font-weight: 500;
+}
+
+.AccountSettings__AccountProductsFlex {
+    display: flex;
+    justify-content: space-between;
+}
+
+.AccountSettings__UpdateHeader {
+    font-weight: bold;
+    font-size: 15px;
+    color: #33384f;
+    margin-bottom: .5em;
+}

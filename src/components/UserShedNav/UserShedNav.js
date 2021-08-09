@@ -5,18 +5,19 @@ import {ReactComponent as Messages} from '../../assets/Icons/Messages.svg'
 import {ReactComponent as YourShed} from '../../assets/Icons/YourShed.svg'
 import {ReactComponent as Favourites} from '../../assets/Icons/FavouritesIcon.svg'
 import {ReactComponent as Account} from '../../assets/Icons/Account.svg'
+import {ReactComponent as Logout} from '../../assets/Icons/LogoutIcon.svg'
+import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import { Link } from 'react-router-dom'
 import { LogoutUser } from '../../util/UserStore'
 import { useHistory } from 'react-router-dom'
 
-export default function UserShedNav() {
+export default function UserShedNav(props) {
 
     const urlArr = window.location.href.split("/")
     const url = urlArr[urlArr.length-1]
     const history = useHistory() 
 
     const [activeMain, setActiveMain] = useState(url)
-    const [activeSecondary, setActiveSecondary] = useState()
 
     const handleLogout = () => {
         LogoutUser()
@@ -60,13 +61,66 @@ export default function UserShedNav() {
                 </div>
             </Link>
 
+            {activeMain === 'account' ? 
+                <div>
+                    <div>
+                        <div className={`UserShedNav__SecondaryLink ${props.accountContent === 'Account' ? 'UserShedNav__SecondaryLink--active' : ''} UserShedNav__SecondaryLink__ExtraSpacing`} onClick={() => props.setAccountContent('Account')}>
+                            Account & Settings
+                            <ChevronRightIcon style={{ fill: '#b43b4c' }} />
+                        </div>
+                    </div>
 
-            <div>
-                extra links go here
-            </div>
+                    <div className="HL" />
+                    <div>
+                        <div className={`UserShedNav__SecondaryLink ${props.accountContent === 'Become a Lender' ? 'UserShedNav__SecondaryLink--active' : ''}`} onClick={() => props.setAccountContent('Become a Lender')}>
+                            Become Lender
+                            <ChevronRightIcon style={{ fill: '#b43b4c' }} />
+                        </div>
+                    </div>
+
+                    <div className="HL" />
+                    <div>
+                        <div className={`UserShedNav__SecondaryLink ${props.accountContent === 'Availability' ? 'UserShedNav__SecondaryLink--active' : ''}`} onClick={() => props.setAccountContent('Availability')}>
+                            Availability
+                            <ChevronRightIcon style={{ fill: '#b43b4c' }} />
+                        </div>
+                    </div>
+
+                    <div className="HL" />
+                    <div>
+                        <div className={`UserShedNav__SecondaryLink ${props.accountContent === 'Terms & Conditions' ? 'UserShedNav__SecondaryLink--active' : ''}`} onClick={() => props.setAccountContent('Terms & Conditions')}>
+                            Terms & Conditions
+                            <ChevronRightIcon style={{ fill: '#b43b4c' }} />
+                        </div>
+                    </div>
+
+                    <div className="HL" />
+                    <div>
+                        <div className={`UserShedNav__SecondaryLink ${props.accountContent === 'Support' ? 'UserShedNav__SecondaryLink--active' : ''}`} onClick={() => props.setAccountContent('Support')}>
+                            Support
+                            <ChevronRightIcon style={{ fill: '#b43b4c' }} />
+                        </div>
+                    </div>
+
+                    <div className="HL" />
+
+
+
+
+
+
+                </div>
+            
+            
+            
+            
+            
+            
+            : ''}
+            
 
             <button className="LogoutButton" onClick={() => handleLogout()}>
-                <YourShed height='40px' width='40px' style={{marginRight: '1em'}}/>
+                <Logout height='40px' width='43px' style={{marginRight: '1em'}}/>
                 Logout
             </button>
 

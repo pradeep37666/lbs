@@ -4,3 +4,23 @@
     margin: 2em 0;
     padding: 0 25% 0 10%;
 }
+
+.UserShed__Title {
+    color: #33384f;
+    font-weight: bold;
+    font-size: 35px;
+    margin: 1em 0;
+}
+
+.UserShed__MainContent {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+}
+
+@media screen and (max-width: 1300px) {
+    .UserShedWrapper {
+        padding: 0;
+    }
+  }

@@ -46,3 +46,28 @@
     border-radius: 10px;
     padding: .5em 0;
 }
+
+.UserShedNav__SecondaryLink {
+    color: #33384f;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.UserShedNav__SecondaryLink:hover {
+    cursor: pointer;
+}
+
+.UserShedNav__SecondaryLink--active {
+    font-weight: bold;
+}   
+
+.UserShedNav__SecondaryLink__ExtraSpacing {
+    margin-top: 3em;
+}
+
+.HL {
+    border: 1px solid #ebebeb;
+    margin: 1.5em 0;
+}

@@ -4,7 +4,7 @@ import {ReactComponent as CameraIcon} from './../../assets/Icons/CameraIcon.svg'
 import {ReactComponent as ShowPassword} from './../../assets/Icons/ShowPassword.svg';
 import LenderSwitch from './../../components/becomeLenderSwitch/becomeLenderSwitch.js';
 import ValidationPopup from '../ValidationPopup/ValidationPopup.js';
-import Instance from '../../util/axios';
+import { handleFullName, handleEmail, handlePhoneNumber } from '../../util/UserValidation'
 
 export default function BasicDetails(props) {
 
@@ -33,71 +33,6 @@ export default function BasicDetails(props) {
                 return (confirmPasswordValidation.length > 0 && passwordValidation.length === 0) ? false : true
             default:
                 return
-        }
-    }
-
-    const handleFullName = (e) => {
-        let nameInput = e.target.value;
-
-        if (nameInput.length === 0) {
-            props.setFullName("")
-            setNameValidation("Full name is required")
-        } else if (nameInput.length >= 4) {
-            props.setFullName(nameInput)
-            setNameValidation("")
-        } else {
-            setNameValidation("Full name must be at least 4 characters")
-            props.setFullName("")
-        }
-    }
-
-    const handleEmail = (e) => {
-        let emailInput = e.target.value;
-
-        if (emailInput.length === 0) {
-            props.setEmail("")
-            setEmailValidation("Email is required")
-        } else if (/^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[A-Za-z]+$/.test(emailInput)) {
-            // Check if email is already in use
-            Instance.get(`/user/checkExist/?email=${emailInput}`).then((response) => {
-                if (response.status === 204) {
-                    props.setEmail(emailInput)
-                    setEmailValidation("")
-                } else {
-                    props.setEmail("")
-                    setEmailValidation("This user already exists, please use another email address")
-                }
-              })
-              .catch((error) => {
-                setEmailValidation("Sorry something went wrong, please try again")
-              })
-        } else {
-            props.setEmail("")
-            setEmailValidation("Incorrect email format, should be in format: example@example.com")
-        }
-    }
-
-    const handlePhoneNumber = (e) => {
-        let phoneInput = e.target.value;
-        if (phoneInput.length === 0) {
-            props.setPhoneNumber("")
-            setPhoneValidation("Phone number is required")
-        } else if (/^(?:\+?(61))? ?(?:\((?=.*\)))?(0?[2-57-8])\)? ?(\d\d(?:[- ](?=\d{3})|(?!\d\d[- ]?\d[- ]))\d\d[- ]?\d[- ]?\d{3})$/.test(phoneInput)) {
-            Instance.get(`/user/checkExist/?mobile=${phoneInput}`).then((response) => {
-                if (response.status === 204) {
-                    props.setPhoneNumber(phoneInput)
-                    setPhoneValidation("")
-                } else {
-                    props.setPhoneNumber("")
-                    setPhoneValidation("This mobile number is already registered to another user, please use a different number")
-                }
-              })
-              .catch((error) => {
-                setPhoneValidation("Sorry something went wrong, please try again")
-              })
-        } else {
-            props.setPhoneNumber("")
-            setPhoneValidation("Incorrect phone number format")
         }
     }
 
@@ -144,7 +79,7 @@ export default function BasicDetails(props) {
 
                     <div className="LoginHeader">Full Name</div>
                     <div className="LoginInputValidationContainer">
-                        <input type='text' placeholder='Jane Doe' className="LoginInput" onBlur={(e) => handleFullName(e)}/>
+                        <input type='text' placeholder='Jane Doe' className="LoginInput" onBlur={(e) => handleFullName(e, props.setFullName, setNameValidation)}/>
                         <div className={`triangleLeft ${showValidation("name") ? '' : 'ValidationTextHide'}`} />
                         <ValidationPopup errorText={nameValidation} errorHeader='Invalid Full Name' hide={showValidation("name")}/>
                     </div>
@@ -152,14 +87,14 @@ export default function BasicDetails(props) {
 
                     <div className="LoginHeader">Email</div>
                     <div className="LoginInputValidationContainer">
-                        <input type='text' placeholder='JaneDoe@DoeJane.com' className="LoginInput" onBlur={(e) => handleEmail(e)}/>
+                        <input type='text' placeholder='JaneDoe@DoeJane.com' className="LoginInput" onBlur={(e) => handleEmail(e, props.setEmail, setEmailValidation)}/>
                         <div className={`triangleLeft ${showValidation("email") ? '' : 'ValidationTextHide'}`} />
                         <ValidationPopup errorText={emailValidation} errorHeader='Invalid Email' hide={showValidation("email")}/>
                     </div>
 
                     <div className="LoginHeader">Phone Number</div>
                     <div className="LoginInputValidationContainer">
-                        <input type='text' placeholder='+61456789012' className="LoginInput" onBlur={(e) => handlePhoneNumber(e)}/>
+                        <input type='text' placeholder='+61456789012' className="LoginInput" onBlur={(e) => handlePhoneNumber(e, props.setPhoneNumber, setPhoneValidation)}/>
                         <div className={`triangleLeft ${showValidation("phone") ? '' : 'ValidationTextHide'}`} />
                         <ValidationPopup errorText={phoneValidation} errorHeader='Invalid Phone Number' hide={showValidation("phone")}/>
                     </div>
