@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import {ReactComponent as Logo} from './../../assets/Logos/LogoRed.svg';
 import {ReactComponent as CameraIcon} from './../../assets/Icons/CameraIcon.svg';
 import {ReactComponent as ShowPassword} from './../../assets/Icons/ShowPassword.svg';
-import LenderSwitch from './../../components/becomeLenderSwitch/becomeLenderSwitch.js';
+import LBSSwitch from '../LBSSwitch/LBSSwitch.js';
 import ValidationPopup from '../ValidationPopup/ValidationPopup.js';
 import { handleFullName, handleEmail, handlePhoneNumber } from '../../util/UserValidation'
 
@@ -146,7 +146,7 @@ export default function BasicDetails(props) {
                     <div className="BecomeLenderFlex">
                         <div className="LoginHeader" style={{width: 'auto'}}>Become Lender</div>
                         <div className="LenderSwitchInfoFlex">
-                        <LenderSwitch setLender={props.setLender}/>
+                        <LBSSwitch set={props.setLender} text='Yes'/>
                         </div>
                     </div>
                     <div className="LoginText">If you would like to share items on Little Big Shed we need some extra details off you.</div>

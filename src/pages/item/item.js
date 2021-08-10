@@ -94,8 +94,8 @@ export default function Item(props) {
 
     return (
         <PageWrapper>
-            {ImageModal ? <ItemImageModal setModal={setImageModal} /> : ''}
-            {ReviewModal ? <ItemReviewModal setModal={setReviewModal} reviews={reviewSamples} /> : ''}
+            {ImageModal ? <ItemImageModal setModal={setImageModal} modal={ImageModal} /> : ''}
+            {ReviewModal ? <ItemReviewModal setModal={setReviewModal} modal={ReviewModal} reviews={reviewSamples} /> : ''}
             {loading ? <div>Loading item data...</div>
             
         :

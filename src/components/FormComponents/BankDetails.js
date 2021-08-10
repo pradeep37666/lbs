@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import {ReactComponent as Logo} from './../../assets/Logos/LogoRed.svg';
 import ValidationPopup from '../ValidationPopup/ValidationPopup';
+import { handleCardName, handleCardNumber, handleExpiry, handleCcv, handleAccNumber, handleBsb } from '../../util/UserValidation'
 
 export default function BankDetails(props) {
 
@@ -31,93 +32,6 @@ export default function BankDetails(props) {
         }
     }
 
-    const handleName = (e) => {
-        let nameInput = e.target.value
-
-        if (nameInput.length === 0) {
-            props.setCardName("")
-            setNameValidation("Card Name is required")
-        } else {
-            props.setCardName(nameInput)
-            setNameValidation("")
-        }
-    }
-
-    const handleCardNumber = (e) => {
-        let numberInput = e.target.value
-
-        if (numberInput.length === 0) {
-            props.setCardNumber("")
-            setCardNumberValidation("Card Number is required")
-        } else if (/\b\d{16}\b/.test(numberInput)) {
-            props.setCardNumber(numberInput)
-            setCardNumberValidation("")
-        } else {
-            props.setCardNumber("")
-            setCardNumberValidation("Incorrect format for card number, should be in the format: 1234567890123456")
-        }
-    }
-
-    const handleExpiry = (e) => {
-        let expiryInput = e.target.value
-
-        if (expiryInput.length === 0) {
-            props.setExpiry("")
-            setExpiryValidation("Expiry date is required")
-        } else if (/^(0[1-9]|1[0-2])\/?([0-9]{4}|[0-9]{2})$/.test(expiryInput)) {
-            props.setExpiry(expiryInput)
-            setExpiryValidation("")
-        } else {
-            props.setExpiry("")
-            setExpiryValidation("Incorrect format for card number, should be in the format: mm/yy, mmyy or mmyyyy")
-        }
-    }
-
-    const handleCcv = (e) => {
-        let ccvInput = e.target.value
-
-        if (ccvInput.length === 0) {
-            props.setCcv("")
-            setCcvValidation("CCV is required")
-        } else if (/\b\d{3}\b/.test(ccvInput)) {
-            props.setCcv(ccvInput)
-            setCcvValidation("")
-        } else {
-            props.setCcv("")
-            setCcvValidation("Incorrect format for ccv, should be in the format: 123")
-        }
-    }
-
-    const handleAccNumber = (e) => {
-        let accNumberInput = e.target.value
-
-        if (accNumberInput.length === 0) {
-            props.setAccNumber("")
-            setAccNumberValidation("Account number is required")
-        } else if (/\b\d{8}\b/.test(accNumberInput)) {
-            props.setAccNumber(accNumberInput)
-            setAccNumberValidation("")
-        } else {
-            props.setAccNumber("")
-            setAccNumberValidation("Incorrect format for account number")
-        }
-    }
-
-    const handleBsb = (e) => {
-        let bsbInput = e.target.value
-
-        if (bsbInput.length === 0) {
-            props.setBsb("")
-            setBsbValidation("Account number is required")
-        } else if (/\b\d{6}\b/.test(bsbInput)) {
-            props.setBsb(bsbInput)
-            setBsbValidation("")
-        } else {
-            props.setBsb("")
-            setBsbValidation("Incorrect format for account number")
-        }
-    }
-
     return (
         <div className="RegistrationWrapper">
                 <div className="LoginMain">
@@ -137,7 +51,7 @@ export default function BankDetails(props) {
 
                 <div className="LoginHeader" style={{marginBottom: '0'}}>Name on Card</div>
                 <div className="LoginInputValidationContainer">
-                    <input type='text' placeholder='Jane Doe' className="LoginInput" onBlur={(e) => handleName(e)} />
+                    <input type='text' placeholder='Jane Doe' className="LoginInput" onBlur={(e) => handleCardName(e, props.setCardName, setNameValidation)} />
                     <div className={`triangleLeft ${showValidation("name") ? '' : 'ValidationTextHide'}`} />
                     <ValidationPopup errorText={nameValidation} errorHeader='Invalid Card Name' hide={showValidation("name")}/>
                 </div>
@@ -145,7 +59,7 @@ export default function BankDetails(props) {
 
                 <div className="LoginHeader" style={{marginBottom: '0'}}>Number on Card</div>
                 <div className="LoginInputValidationContainer">
-                    <input type='text' placeholder='1234 5678 9010 1112' className="LoginInput" onBlur={(e) => handleCardNumber(e)}/>
+                    <input type='text' placeholder='1234 5678 9010 1112' className="LoginInput" onBlur={(e) => handleCardNumber(e, props.setCardNumber, setCardNumberValidation)}/>
                     <div className={`triangleLeft ${showValidation("cardNum") ? '' : 'ValidationTextHide'}`} />
                     <ValidationPopup errorText={cardNumberValidation} errorHeader='Invalid Card Number' hide={showValidation("cardNum")}/>
                 </div>
@@ -156,8 +70,8 @@ export default function BankDetails(props) {
                 </div>
                 <div className="LoginInputValidationContainer">
                     <div className="ExpiryCCVFlex">
-                        <input type='text' placeholder='MM/YY' className="LoginInput" style={{marginRight: '.5em'}} onBlur={(e) => handleExpiry(e)} />
-                        <input type='text' placeholder='000' className="LoginInput" onBlur={(e) => handleCcv(e)}/>
+                        <input type='text' placeholder='MM/YY' className="LoginInput" style={{marginRight: '.5em'}} onBlur={(e) => handleExpiry(e, props.setExpiry, setExpiryValidation)} />
+                        <input type='text' placeholder='000' className="LoginInput" onBlur={(e) => handleCcv(e, props.setCcv, setCcvValidation)}/>
                     </div>
                     <div className={`triangleLeft ${showValidation("expiry") ? '' : 'ValidationTextHide'}`} />
                     <ValidationPopup errorText={expiryValidation} errorHeader='Invalid Expiry Date' hide={showValidation("expiry")}/>
@@ -179,7 +93,7 @@ export default function BankDetails(props) {
                 <div className="LoginHeader" style={{marginBottom: '0'}}>Account Number</div>
                 <div className="LoginInputValidationContainer">
 
-                    <input type='text' placeholder='1234 5678' className="LoginInput" onBlur={(e) => handleAccNumber(e)}/>
+                    <input type='text' placeholder='1234 5678' className="LoginInput" onBlur={(e) => handleAccNumber(e, props.setAccNumber, setAccNumberValidation)}/>
                     <div className={`triangleLeft ${showValidation("accNum") ? '' : 'ValidationTextHide'}`} />
                     <ValidationPopup errorText={accNumberValidation} errorHeader='Invalid Account Number' hide={showValidation("accNum")}/>
                 </div>
@@ -188,7 +102,7 @@ export default function BankDetails(props) {
                 <div className="LoginHeader" style={{marginBottom: '0'}}>BSB</div>
                 <div className="LoginInputValidationContainer">
 
-                    <input type='text' placeholder='123-456' className="LoginInput" onBlur={(e) => handleBsb(e)}/>
+                    <input type='text' placeholder='123-456' className="LoginInput" onBlur={(e) => handleBsb(e, props.setBsb, setBsbValidation)}/>
                     <div className={`triangleLeft ${showValidation("bsb") ? '' : 'ValidationTextHide'}`} />
                     <ValidationPopup errorText={bsbValidation} errorHeader='Invalid BSB' hide={showValidation("bsb")}/>
                 </div>

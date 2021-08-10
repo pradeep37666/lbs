@@ -3,7 +3,7 @@ import { withStyles } from '@material-ui/core/styles';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
-import './becomeLenderSwitch.css';
+import './LBSSwitch.css';
 
 const IOSSwitch = withStyles((theme) => ({
   root: {
@@ -64,7 +64,7 @@ export default function CustomizedSwitches(props) {
 
   const handleChange = (event) => {
     setState({ ...state, [event.target.name]: event.target.checked });
-    props.setLender(event.target.checked);
+    props.set(event.target.checked);
   };
 
   return (
@@ -72,7 +72,7 @@ export default function CustomizedSwitches(props) {
       <FormControlLabel
         control={<IOSSwitch checked={state.checked} onChange={handleChange} name="checkedB" />}
       />
-      {state.checkedB ? <div className="LenderSwitchLabel">Yes</div> : ''}
+      {state.checkedB ? <div className="LenderSwitchLabel">{props.text}</div> : ''}
     </FormGroup>
   );
 }

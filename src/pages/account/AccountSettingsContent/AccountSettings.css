@@ -6,6 +6,7 @@
 
 .AccountSettings__Main {
     width: 48%;
+    min-width: 400px;
 }
 
 .AccountSettings__Container {
@@ -72,4 +73,32 @@
     font-size: 15px;
     color: #33384f;
     margin-bottom: .5em;
+}
+
+.AccountSettings__SaveButton {
+    width: 60%;
+}
+
+.AccountSettings__ButtonFlex {
+    display: flex;
+    justify-content: center;
+}
+
+.AccountSettings__SyncButtonFlex {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 20px;
+    font-weight: bold;
+    color: #33384f;
+}
+
+.AccountSettings__SyncButton__Text {
+    width: 50%;
+}
+
+.AccountSettings__BodyText {
+    font-size: 14px;
+    margin: 1em 0;
 }

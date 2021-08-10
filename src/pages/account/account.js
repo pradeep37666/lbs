@@ -3,6 +3,8 @@ import './account.css'
 import PageWrapper from '../../components/pageWrapper/pageWrapper'
 import UserShedNav from '../../components/UserShedNav/UserShedNav'
 import AccountSettings from './AccountSettingsContent/AccountSettings'
+import TermsConditions from './TermsConditions/TermsConditions'
+import Availability from './Availability/Availability'
 
 export default function Account() {
 
@@ -15,14 +17,18 @@ export default function Account() {
             case 'Become a Lender': 
                 return 'yes this is become lender'
             case 'Availability':
-                return 'yes this is availability'
+                return <Availability return={returnToAccountSettings}/>
             case 'Terms & Conditions':
-                return 'yes this is t&cs'
+                return <TermsConditions />
             case 'Support':
                 return 'uhhhh support'
             default: 
                 return 'account page'
         }
+    }
+
+    const returnToAccountSettings = () => {
+        setAccountContent('Account')
     }
 
     return (

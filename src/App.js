@@ -5,6 +5,10 @@ import SearchPage from './pages/search/search.js';
 import LoginPage from './pages/login/login.js';
 import RegisterPage from './pages/register/register.js';
 import AccountPage from './pages/account/account.js';
+import TradesPage from './pages/trades/trades.js';
+import MessagesPage from './pages/messages/messages.js';
+import YourshedPage from './pages/yourshed/yourshed.js';
+import FavouritesPage from './pages/favourites/favourites.js';
 import ScrollToTop from './util/ScrollToTop';
 import {
   HashRouter as Router,
@@ -12,11 +16,6 @@ import {
   Redirect
 } from "react-router-dom";
 import { GetUser } from './util/UserStore';
-
-// code for only allowing certain routes if user is authenticated
-/* <Route path="/search" component={Search} onEnter={requireAuth} /> */
-
-
 
 function App() {
 
@@ -52,10 +51,10 @@ function App() {
       <Route exact path="/item/:itemId" component={ItemPage}/>
       <Route exact path="/search/:searchParams?" component={SearchPage}/>
 
-      <AuthRoute path="/user/trades" component={AccountPage}/>
-      <AuthRoute path="/user/messages" component={AccountPage}/>
-      <AuthRoute path="/user/your_shed" component={AccountPage}/>
-      <AuthRoute path="/user/favourites" component={AccountPage}/>
+      <AuthRoute path="/user/trades" component={TradesPage}/>
+      <AuthRoute path="/user/messages" component={MessagesPage}/>
+      <AuthRoute path="/user/your_shed" component={YourshedPage}/>
+      <AuthRoute path="/user/favourites" component={FavouritesPage}/>
       <AuthRoute path="/user/account" component={AccountPage}/>
 
       {/* post an item */}

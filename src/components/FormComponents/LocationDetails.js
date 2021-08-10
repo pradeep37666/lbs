@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import {ReactComponent as Logo} from './../../assets/Logos/LogoRed.svg';
 import ValidationPopup from '../ValidationPopup/ValidationPopup';
+import { handleAddress, handleCity, handleCountry, handleState } from '../../util/UserValidation';
 
 export default function LocationDetails(props) {
 
@@ -24,66 +25,6 @@ export default function LocationDetails(props) {
         }
     }
 
-    const handleAddress = (e) => {
-        let addressInput = e.target.value;
-
-        if (addressInput.length === 0) {
-            props.setAddress("")
-            setAddressValidation("Address is required")
-        } else if (/\d+\s[a-zA-Z]+/gi.test(addressInput)) {
-            props.setAddress(addressInput)
-            setAddressValidation("")
-        } else {
-            props.setAddress("")
-            setAddressValidation("Incorrect address format, should be in format: 12 Example Street")
-        }
-    }
-
-    const handleCity = (e) => {
-        let cityInput = e.target.value;
-
-        if (cityInput.length === 0) {
-            props.setCity("")
-            setCityValidation("City is required")
-        } else if (/^([^0-9!@#$%^&*()]*)$/.test(cityInput) && cityInput.length >= 2) {
-            props.setCity(cityInput)
-            setCityValidation("")
-        } else {
-            props.setCity("")
-            setCityValidation("Incorrect city format, should be in format: Brisbane")
-        }
-    }
-
-    const handleCountry = (e) => {
-        let countryInput = e.target.value;
-
-        if (countryInput.length === 0) {
-            props.setCountry("")
-            setCountryValidation("Country is required")
-        } else if (/^([^0-9!@#$%^&*()]*)$/.test(countryInput) && countryInput.length >= 4) {
-            props.setCountry(countryInput)
-            setCountryValidation("")
-        } else {
-            props.setCountry("")
-            setCountryValidation("Incorrect country format, should be in format: Australia")
-        }
-    }
-
-    const handleState = (e) => {
-        let stateInput = e.target.value;
-
-        if (stateInput.length === 0) {
-            props.setState("")
-            setStateValidation("State is required")
-        } else if (/^([^0-9!@#$%^&*()]*)$/.test(stateInput) && stateInput.length >= 3) {
-            props.setState(stateInput)
-            setStateValidation("")
-        } else {
-            props.setState("")
-            setStateValidation("Incorrect state format, should be in format: Australia")
-        }
-    }
-
     const wipeState = () => {
         props.setAddress("")
         props.setCity("")
@@ -102,31 +43,30 @@ export default function LocationDetails(props) {
 
                 <div className="LoginHeader" style={{marginBottom: '0'}}>Address</div>
                 <div className="LoginInputValidationContainer">
-                    <input type='text' placeholder='43 Brandon Road Runcorn' className="LoginInput" onBlur={(e) => handleAddress(e)}/>
+                    <input type='text' placeholder='43 Brandon Road Runcorn' className="LoginInput" onBlur={(e) => handleAddress(e, props.setAddress, setAddressValidation)}/>
                     <div className={`triangleLeft ${showValidation("address") ? '' : 'ValidationTextHide'}`} />
                     <ValidationPopup errorText={addressValidation} errorHeader='Invalid Address' hide={showValidation("address")}/>
                 </div>
                 <div className="LoginHeader" style={{marginBottom: '0'}}>City</div>
                 <div className="LoginInputValidationContainer">
-                    <input type='text' placeholder='Brisbane' className="LoginInput" onBlur={(e) => handleCity(e)}/>
+                    <input type='text' placeholder='Brisbane' className="LoginInput" onBlur={(e) => handleCity(e, props.setCity, setCityValidation)}/>
                     <div className={`triangleLeft ${showValidation("city") ? '' : 'ValidationTextHide'}`} />
                     <ValidationPopup errorText={cityValidation} errorHeader='Invalid City' hide={showValidation("city")}/>
                 </div>
                 <div className="LoginHeader" style={{marginBottom: '0'}}>Country</div>
                 <div className="LoginInputValidationContainer">
-                    <input type='text' placeholder='Australia' className="LoginInput" onBlur={(e) => handleCountry(e)}/>
+                    <input type='text' placeholder='Australia' className="LoginInput" onBlur={(e) => handleCountry(e, props.setCountry, setCountryValidation)}/>
                     <div className={`triangleLeft ${showValidation("country") ? '' : 'ValidationTextHide'}`} />
                     <ValidationPopup errorText={countryValidation} errorHeader='Invalid Country' hide={showValidation("country")}/>
                 </div>
                 <div className="LoginHeader" style={{marginBottom: '0'}}>State</div>
                 <div className="LoginInputValidationContainer">
-                    <input type='text' placeholder='Qld' className="LoginInput" onBlur={(e) => handleState(e)}/>
+                    <input type='text' placeholder='Qld' className="LoginInput" onBlur={(e) => handleState(e, props.setState, setStateValidation)}/>
                     <div className={`triangleLeft ${showValidation("state") ? '' : 'ValidationTextHide'}`} />
                     <ValidationPopup errorText={stateValidation} errorHeader='Invalid State' hide={showValidation("state")}/>
                 </div>
 
                 <button className={`LoginFormButton ${!props.validated ? 'ButtonDisabled' : ''}`} disabled={!props.validated} onClick={() => props.handleNextPage('Availability')}>Next</button>
-                {/* ^ will have verification on V go to next step and clear any state set in above inputs */}
                 <button className="LoginFormButton LoginFormButtonInverted" onClick={() => {
                     wipeState()
                     props.handleNextPage('Availability')

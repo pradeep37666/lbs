@@ -5,6 +5,7 @@ import {ReactComponent as StarOutline} from './../../assets/Icons/StarOutline.sv
 import {ReactComponent as StarFilled} from './../../assets/Icons/StarFilled.svg';
 import ItemImage from './../../assets/Images/search_section_bg.jpg';
 import CloseIcon from '@material-ui/icons/Close';
+import { Slide } from '@material-ui/core';
 
 export default function ReviewModal(props) {
 
@@ -75,42 +76,44 @@ export default function ReviewModal(props) {
             closeModal();
         }}>
             <div className="ReviewModalFlex">
-                <div className="ReviewModalMain" onClick={(e) => e.stopPropagation()}>
-                    <button className="CloseModalButton ReviewModalClose" onClick={() => closeModal()}><CloseIcon/></button>
-                    <div className="ReviewTitle">All Ratings</div>
-                    <div className="ReviewModalColumns">
-                        <div className="MainLenderColumn">
-                            <div className="RatingLenderFlex">
-                                <img src={Jake} alt="" className="ProfileIconReview" />
+                <Slide in={props.modal} mountOnEnter unmountOnExit direction="down" timeout={500}>
+                    <div className="ReviewModalMain" onClick={(e) => e.stopPropagation()}>
+                        <button className="CloseModalButton ReviewModalClose" onClick={() => closeModal()}><CloseIcon /></button>
+                        <div className="ReviewTitle">All Ratings</div>
+                        <div className="ReviewModalColumns">
+                            <div className="MainLenderColumn">
+                                <div className="RatingLenderFlex">
+                                    <img src={Jake} alt="" className="ProfileIconReview" />
+                                    <div>
+                                        <div className="RatingHeaderReview">Jake Friend</div>
+                                        <div className="RatingLenderReview">{LenderRating}/5 </div>
+                                    </div>
+                                </div>
+                                <div className="StarsLenderReview">
+                                    {LenderRating >= 1 ? <StarFilled fill='#E9D8B4' className="StarIcon" /> : <StarOutline className="StarIcon" />}
+                                    {LenderRating >= 2 ? <StarFilled fill='#E9D8B4' className="StarIcon" /> : <StarOutline className="StarIcon" />}
+                                    {LenderRating >= 3 ? <StarFilled fill='#E9D8B4' className="StarIcon" /> : <StarOutline className="StarIcon" />}
+                                    {LenderRating >= 4 ? <StarFilled fill='#E9D8B4' className="StarIcon" /> : <StarOutline className="StarIcon" />}
+                                    {LenderRating >= 5 ? <StarFilled fill='#E9D8B4' className="StarIcon" /> : <StarOutline className="StarIcon" />}
+                                </div>
                                 <div>
-                                    <div className="RatingHeaderReview">Jake Friend</div>
-                                    <div className="RatingLenderReview">{LenderRating}/5 </div>
+                                    <div className="LenderItemsHeader">Lender Items</div>
+                                    {getLenderItemCard('Pull along ATV mower attachment with multiple modes', 4)}
+                                    <hr className="hl" />
+                                    {getLenderItemCard('Heavy Duty 1800kg hand pump car jack', 5)}
                                 </div>
                             </div>
-                            <div className="StarsLenderReview">
-                            {LenderRating >= 1 ? <StarFilled fill='#E9D8B4' className="StarIcon"/> : <StarOutline className="StarIcon"/>}
-                            {LenderRating >= 2 ? <StarFilled fill='#E9D8B4' className="StarIcon"/> : <StarOutline className="StarIcon"/>}
-                            {LenderRating >= 3 ? <StarFilled fill='#E9D8B4' className="StarIcon"/> : <StarOutline className="StarIcon"/>}
-                            {LenderRating >= 4 ? <StarFilled fill='#E9D8B4' className="StarIcon"/> : <StarOutline className="StarIcon"/>}
-                            {LenderRating >= 5 ? <StarFilled fill='#E9D8B4' className="StarIcon"/> : <StarOutline className="StarIcon"/>}
+
+
+
+                            <div className="vl" />
+                            <div className="MainReviewColumn">
+                                {getReviewCards()}
                             </div>
-                            <div>
-                                <div className="LenderItemsHeader">Lender Items</div>
-                                {getLenderItemCard('Pull along ATV mower attachment with multiple modes', 4)}
-                                <hr className="hl" />
-                                {getLenderItemCard('Heavy Duty 1800kg hand pump car jack', 5)}
-                            </div>
+
                         </div>
-
-
-
-                        <div className="vl" />
-                        <div className="MainReviewColumn">
-                            {getReviewCards()}
-                        </div>
-
                     </div>
-                </div>
+                </Slide>
             </div>
             
 

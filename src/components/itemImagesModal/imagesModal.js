@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './imagesModal.css';
 import ItemImage from './../../assets/Images/search_section_bg.jpg';
 import CloseIcon from '@material-ui/icons/Close';
+import { Fade } from '@material-ui/core';
 
 export default function ImagesModal(props) {
     
@@ -61,20 +62,20 @@ export default function ImagesModal(props) {
         <div className="ModalWrapperMain" onClick={ () => {
             closeModal();
         }}>
+            <Fade in={props.modal} timeout={500}>
+                <div className="CarouselModalFlexContainer">
+                    <button className="CloseModalButton ImageModalClose" onClick={() => closeModal()}><CloseIcon /></button>
 
-            <div className="CarouselModalFlexContainer">
-            <button className="CloseModalButton ImageModalClose" onClick={() => closeModal()}><CloseIcon/></button>
+                    <div className="ImageModal">
+                        {getBigImages(CurrentImage)}
+                        <div className="ImageNumberDisplay">{CurrentImage + 1}/{Images.length}</div>
+                    </div>
 
-                <div className="ImageModal">
-                    {getBigImages(CurrentImage)}
-                    <div className="ImageNumberDisplay">{CurrentImage + 1}/{Images.length}</div>
+                    <div className="ImageModalCarousel">
+                        {getSmallImages()}
+                    </div>
                 </div>
-
-                <div className="ImageModalCarousel">
-                    {getSmallImages()}            
-                </div>
-            </div>
-            
+            </Fade>
 
         </div>
     )

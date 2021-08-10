@@ -1,0 +1,15 @@
+.TermsConditions__Container {
+    border-radius: 10px;
+    border: 1px solid #c7c7c7;
+    padding: 2em;
+    width: 70%;
+    height: 100%;
+}
+
+.TermsConditionsScroll {
+    width: 100%;
+    overflow: auto;
+    border: 1px solid #ac172c;
+    border-radius: 10px;
+    padding: 1em;
+}
