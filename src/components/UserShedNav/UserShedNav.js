@@ -10,12 +10,14 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import { Link } from 'react-router-dom'
 import { LogoutUser } from '../../util/UserStore'
 import { useHistory } from 'react-router-dom'
+import { GetUser } from '../../util/UserStore'
 
 export default function UserShedNav(props) {
 
     const urlArr = window.location.href.split("/")
     const url = urlArr[urlArr.length-1]
-    const history = useHistory() 
+    const history = useHistory()
+    const user = GetUser()
 
     const [activeMain, setActiveMain] = useState(url)
 
@@ -71,20 +73,27 @@ export default function UserShedNav(props) {
                     </div>
 
                     <div className="HL" />
-                    <div>
-                        <div className={`UserShedNav__SecondaryLink ${props.accountContent === 'Become a Lender' ? 'UserShedNav__SecondaryLink--active' : ''}`} onClick={() => props.setAccountContent('Become a Lender')}>
-                            Become Lender
-                            <ChevronRightIcon style={{ fill: '#b43b4c' }} />
-                        </div>
-                    </div>
 
-                    <div className="HL" />
-                    <div>
-                        <div className={`UserShedNav__SecondaryLink ${props.accountContent === 'Availability' ? 'UserShedNav__SecondaryLink--active' : ''}`} onClick={() => props.setAccountContent('Availability')}>
-                            Availability
-                            <ChevronRightIcon style={{ fill: '#b43b4c' }} />
-                        </div>
-                    </div>
+                    {!user.bsb ?  
+                        <Link to='/user/upgrade_to_lender'>
+                            <div>
+                                <div className={`UserShedNav__SecondaryLink ${props.accountContent === 'Become a Lender' ? 'UserShedNav__SecondaryLink--active' : ''}`} onClick={() => props.setAccountContent('Become a Lender')}>
+                                    Become Lender
+                                    <ChevronRightIcon style={{ fill: '#b43b4c' }} />
+                                </div>
+                            </div>
+                        </Link>
+                    : 
+                        <div>
+                            <div className={`UserShedNav__SecondaryLink ${props.accountContent === 'Availability' ? 'UserShedNav__SecondaryLink--active' : ''}`} onClick={() => props.setAccountContent('Availability')}>
+                                Availability
+                                <ChevronRightIcon style={{ fill: '#b43b4c' }} />
+                            </div>
+                        </div>}
+                    
+                    {/* {!user.bsb ? <div className="HL" /> : ''} */}
+
+                    
 
                     <div className="HL" />
                     <div>

@@ -45,11 +45,13 @@ export default function BankDetails(props) {
 
                 </div>
 
+                {!props.isUpgrade ? 
+                
                 <div className="LoginMain LoginMainNoMarg">
                 <div className="LoginHeader">Card Details</div>
                 <div className="LoginText">We need these details to make a successful trade between 2 parties.</div>
 
-                <div className="LoginHeader" style={{marginBottom: '0'}}>Name on Card</div>
+                <div className="LoginHeader LoginHeader--NoMargin">Name on Card</div>
                 <div className="LoginInputValidationContainer">
                     <input type='text' placeholder='Jane Doe' className="LoginInput" onBlur={(e) => handleCardName(e, props.setCardName, setNameValidation)} />
                     <div className={`triangleLeft ${showValidation("name") ? '' : 'ValidationTextHide'}`} />
@@ -57,7 +59,7 @@ export default function BankDetails(props) {
                 </div>
 
 
-                <div className="LoginHeader" style={{marginBottom: '0'}}>Number on Card</div>
+                <div className="LoginHeader LoginHeader--NoMargin">Number on Card</div>
                 <div className="LoginInputValidationContainer">
                     <input type='text' placeholder='1234 5678 9010 1112' className="LoginInput" onBlur={(e) => handleCardNumber(e, props.setCardNumber, setCardNumberValidation)}/>
                     <div className={`triangleLeft ${showValidation("cardNum") ? '' : 'ValidationTextHide'}`} />
@@ -83,6 +85,11 @@ export default function BankDetails(props) {
                 : ''
                 }
                 </div>
+                
+                
+                : ''}
+
+                
 
                 {props.lender ?
                 <div className="LoginMain LoginMainNoMarg">
@@ -90,7 +97,7 @@ export default function BankDetails(props) {
                 <div className="LoginHeader">Bank Deposit Details</div>
                 <div className="LoginText">Bank details will allow you to upgrade to a lender account.</div>
 
-                <div className="LoginHeader" style={{marginBottom: '0'}}>Account Number</div>
+                <div className="LoginHeader LoginHeader--NoMargin">Account Number</div>
                 <div className="LoginInputValidationContainer">
 
                     <input type='text' placeholder='1234 5678' className="LoginInput" onBlur={(e) => handleAccNumber(e, props.setAccNumber, setAccNumberValidation)}/>
@@ -99,14 +106,14 @@ export default function BankDetails(props) {
                 </div>
 
 
-                <div className="LoginHeader" style={{marginBottom: '0'}}>BSB</div>
+                <div className="LoginHeader LoginHeader--NoMargin">BSB</div>
                 <div className="LoginInputValidationContainer">
 
                     <input type='text' placeholder='123-456' className="LoginInput" onBlur={(e) => handleBsb(e, props.setBsb, setBsbValidation)}/>
                     <div className={`triangleLeft ${showValidation("bsb") ? '' : 'ValidationTextHide'}`} />
                     <ValidationPopup errorText={bsbValidation} errorHeader='Invalid BSB' hide={showValidation("bsb")}/>
                 </div>
-                {/* on this button we need to check the stripe details first, if we're all good then can move to next page */}
+                {/* on this button we need to check the stripe details first (during register but not upgrade to lender), if we're all good then can move to next page */}
                 <button className={`LoginFormButton ${!props.validated ? 'ButtonDisabled' : ''}`} disabled={!props.validated} onClick={() => props.handleNextPage('Location Details')}>Next</button>
                 </div>
                 : ''

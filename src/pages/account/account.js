@@ -1,10 +1,12 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import './account.css'
 import PageWrapper from '../../components/pageWrapper/pageWrapper'
 import UserShedNav from '../../components/UserShedNav/UserShedNav'
 import AccountSettings from './AccountSettingsContent/AccountSettings'
 import TermsConditions from './TermsConditions/TermsConditions'
 import Availability from './Availability/Availability'
+import Instance from '../../util/axios'
+import { GetUser, GetToken } from '../../util/UserStore'
 
 export default function Account() {
 
@@ -14,8 +16,6 @@ export default function Account() {
         switch (accountContent) {
             case 'Account':
                 return <AccountSettings />
-            case 'Become a Lender': 
-                return 'yes this is become lender'
             case 'Availability':
                 return <Availability return={returnToAccountSettings}/>
             case 'Terms & Conditions':
@@ -30,6 +30,31 @@ export default function Account() {
     const returnToAccountSettings = () => {
         setAccountContent('Account')
     }
+
+    // Removes bsb from account essentially making the user only a borrower again , for testing purposes
+
+    const user = GetUser()
+
+    useEffect(() => {
+        if (accountContent === 'Support') {
+            const data = {
+                account_number: '',
+                bsb: '',
+            }
+    
+            Instance.put('user/update', data , {headers: { Authorization: `Bearer ${GetToken()}`}})
+                .then((response) => {
+                    console.log(response)
+                    let newData = user
+                    newData.account_number = data.account_number
+                    newData.bsb = data.bsb
+                    localStorage.setItem('user', JSON.stringify(newData))
+                })
+                .catch((error) => {
+                    console.log(error)
+                })
+        }
+    }, [accountContent])
 
     return (
         <PageWrapper>

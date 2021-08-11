@@ -164,7 +164,7 @@ export default function Register() {
                 <div className="LoginHeader">Account Created</div>
                 <div className="LoginText">You have successfully created your Little Big Shed account and are now ready to start borrowing!</div>
 
-                <button className="LoginFormButton">Continue</button>
+                <button className="LoginFormButton" onClick={() => history.push({pathname: '/user/account'})}>Continue</button>
 
                 </div>
             </div>
@@ -205,6 +205,7 @@ export default function Register() {
                 setAccNumber={setAccNumber}
                 setBsb={setBsb}
                 setValidated={setValidated}
+                isUpgrade={false}
                 />
             case 'Location Details':
                 return <LocationDetails 

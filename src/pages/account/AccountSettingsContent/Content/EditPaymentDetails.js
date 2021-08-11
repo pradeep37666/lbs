@@ -85,7 +85,7 @@ export default function EditPaymentDetails() {
 
             {/* pull default values from stripe once setup */}
 
-            <div className="LoginHeader" style={{ marginBottom: '0' }}>Name on Card</div>
+            <div className="LoginHeader LoginHeader--NoMargin">Name on Card</div>
             <div className="LoginInputValidationContainer">
                 <input type='text' placeholder='Jane Doe' className="LoginInput" onBlur={(e) => handleCardName(e, setCardName, setCardNameValidation)} />
                 <div className={`triangleLeft ${showValidation("cardName") ? '' : 'ValidationTextHide'}`} />
@@ -93,7 +93,7 @@ export default function EditPaymentDetails() {
             </div>
 
 
-            <div className="LoginHeader" style={{ marginBottom: '0' }}>Number on Card</div>
+            <div className="LoginHeader LoginHeader--NoMargin">Number on Card</div>
             <div className="LoginInputValidationContainer">
                 <input type='text' placeholder='1234 5678 9010 1112' className="LoginInput" onBlur={(e) => handleCardNumber(e, setCardNumber, setCardNumberValidation)} />
                 <div className={`triangleLeft ${showValidation("cardNum") ? '' : 'ValidationTextHide'}`} />

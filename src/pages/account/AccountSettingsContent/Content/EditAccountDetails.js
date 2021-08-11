@@ -7,6 +7,7 @@ import LBSSwitch from '../../../../components/LBSSwitch/LBSSwitch'
 import { GetUser, GetToken } from '../../../../util/UserStore'
 import { useHistory } from 'react-router'
 import Instance from '../../../../util/axios';
+import { Link } from 'react-router-dom';
 
 export default function EditAccountDetails(props) {
 
@@ -117,12 +118,14 @@ export default function EditAccountDetails(props) {
                     </div>
 
                     <div className="HL"/>
-                    <div>
-                        <div className={'UserShedNav__SecondaryLink UserShedNav__SecondaryLink--active'}>
-                            Update Password
-                            <ChevronRightIcon style={{ fill: '#b43b4c' }} />
+                    <Link to='/user/update_password'>
+                        <div>
+                            <div className={'UserShedNav__SecondaryLink UserShedNav__SecondaryLink--active'}>
+                                Update Password
+                                <ChevronRightIcon style={{ fill: '#b43b4c' }} />
+                            </div>
                         </div>
-                    </div>
+                    </Link>
 
                     <div className="HL"/>
 

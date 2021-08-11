@@ -67,6 +67,28 @@ export const handlePhoneNumber = (e, setPhone, setValidation) => {
     }
 }
 
+export const handlePassword = (e, setPassword, setValidation) => {
+    let passwordInput = e.target.value;
+    if (/^(?=.*[A-Za-z])(?=(?:.*?[0-9]){2})[A-Za-z\d@$!%*#?&]{8,}$/.test(passwordInput)) {
+        setPassword(passwordInput)
+        setValidation("")
+    } else {
+        setPassword("")
+        setValidation("Password must be at least 8 characters, contain 2 numbers and a special character")
+    }
+}
+
+export const handlePasswordConfirm = (e, setConfirmPassword, setValidation, password) => {
+    let passwordInput = e.target.value;
+    if (passwordInput === password) {
+        setConfirmPassword(passwordInput)
+        setValidation("")
+    } else {
+        setConfirmPassword("")
+        setValidation("Passwords must match")
+    }
+}
+
 // End Basic Details
 
 
@@ -158,8 +180,6 @@ export const handleBsb = (e, setBsb, setValidation) => {
         setValidation("Incorrect format for account number")
     }
 }
-
-
 
 // End Bank Details
 

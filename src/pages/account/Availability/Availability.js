@@ -10,38 +10,38 @@ export default function Availability(props) {
     const history = useHistory()
     const user = GetUser()
 
-    const [mondayM, setMondayM] = useState(null)
-    const [mondayA, setMondayA] = useState(null)
-    const [tuesdayM, setTuesdayM] = useState(null)
-    const [tuesdayA, setTuesdayA] = useState(null)
-    const [wednesdayM, setWednesdayM] = useState(null)
-    const [wednesdayA, setWednesdayA] = useState(null)
-    const [thursdayM, setThursdayM] = useState(null)
-    const [thursdayA, setThursdayA] = useState(null)
-    const [fridayM, setFridayM] = useState(null)
-    const [fridayA, setFridayA] = useState(null)
-    const [saturdayM, setSaturdayM] = useState(null)
-    const [saturdayA, setSaturdayA] = useState(null)
-    const [sundayM, setSundayM] = useState(null)
-    const [sundayA, setSundayA] = useState(null)
+    const [mondayM, setMondayM] = useState(user.monday_am)
+    const [mondayA, setMondayA] = useState(user.monday_pm)
+    const [tuesdayM, setTuesdayM] = useState(user.tuesday_am)
+    const [tuesdayA, setTuesdayA] = useState(user.tuesday_pm)
+    const [wednesdayM, setWednesdayM] = useState(user.wednesday_am)
+    const [wednesdayA, setWednesdayA] = useState(user.wednesday_pm)
+    const [thursdayM, setThursdayM] = useState(user.thursday_am)
+    const [thursdayA, setThursdayA] = useState(user.thursday_pm)
+    const [fridayM, setFridayM] = useState(user.friday_am)
+    const [fridayA, setFridayA] = useState(user.friday_pm)
+    const [saturdayM, setSaturdayM] = useState(user.saturday_am)
+    const [saturdayA, setSaturdayA] = useState(user.saturday_pm)
+    const [sundayM, setSundayM] = useState(user.sunday_am)
+    const [sundayA, setSundayA] = useState(user.sunday_pm)
 
     const updateAvailability = () => {
 
         const data = {
-            monday_am: mondayM,
-            monday_pm: mondayA,
-            tuesday_am: tuesdayM,
-            tuesday_pm: tuesdayA,
-            wednesday_am: wednesdayM,
-            wednesday_pm: wednesdayA,
-            thursday_am: thursdayM,
-            thursday_pm: thursdayA,
-            friday_am: fridayM,
-            friday_pm: fridayA,
-            saturday_am: saturdayM,
-            saturday_pm: saturdayA,
-            sunday_am: sundayM,
-            sunday_pm: sundayA,
+            monday_am: mondayM ? mondayM : user.monday_am,
+            monday_pm: mondayA ? mondayA : user.monday_pm,
+            tuesday_am: tuesdayM ? tuesdayM : user.tuesday_am,
+            tuesday_pm: tuesdayA ? tuesdayA : user.tuesday_pm,
+            wednesday_am: wednesdayM ? wednesdayM : user.wednesday_am,
+            wednesday_pm: wednesdayA ? wednesdayA : user.wednesday_pm,
+            thursday_am: thursdayM ? thursdayM : user.thursday_am,
+            thursday_pm: thursdayA ? thursdayA : user.thursday_pm,
+            friday_am: fridayM ? fridayM : user.friday_am,
+            friday_pm: fridayA ? fridayA : user.friday_pm,
+            saturday_am: saturdayM ? saturdayM : user.saturday_am,
+            saturday_pm: saturdayA ? saturdayA : user.saturday_pm,
+            sunday_am: sundayM ? sundayM : user.sunday_am,
+            sunday_pm: sundayA ? sundayA : user.sunday_pm,
         }
 
         Instance.put('user/update', data, { headers: { Authorization: `Bearer ${GetToken()}` } })

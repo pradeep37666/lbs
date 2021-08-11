@@ -73,25 +73,25 @@ export default function EditLocation() {
 
             </div>
 
-            <div className="LoginHeader" style={{ marginBottom: '0' }}>Address</div>
+            <div className="LoginHeader LoginHeader--NoMargin">Address</div>
             <div className="LoginInputValidationContainer">
                 <input type='text' placeholder='43 Brandon Road Runcorn' defaultValue={user.address} className="LoginInput" onBlur={(e) => handleAddress(e, setAddress, setAddressValidation)} />
                 <div className={`triangleLeft ${showValidation("address") ? '' : 'ValidationTextHide'}`} />
                 <ValidationPopup errorText={addressValidation} errorHeader='Invalid Address' hide={showValidation("address")} />
             </div>
-            <div className="LoginHeader" style={{ marginBottom: '0' }}>City</div>
+            <div className="LoginHeader LoginHeader--NoMargin">City</div>
             <div className="LoginInputValidationContainer">
                 <input type='text' placeholder='Brisbane' defaultValue={user.city} className="LoginInput" onBlur={(e) => handleCity(e, setCity, setCityValidation)} />
                 <div className={`triangleLeft ${showValidation("city") ? '' : 'ValidationTextHide'}`} />
                 <ValidationPopup errorText={cityValidation} errorHeader='Invalid City' hide={showValidation("city")} />
             </div>
-            <div className="LoginHeader" style={{ marginBottom: '0' }}>Country</div>
+            <div className="LoginHeader LoginHeader--NoMargin">Country</div>
             <div className="LoginInputValidationContainer">
                 <input type='text' placeholder='Australia' defaultValue={user.country} className="LoginInput" onBlur={(e) => handleCountry(e, setCountry, setCountryValidation)} />
                 <div className={`triangleLeft ${showValidation("country") ? '' : 'ValidationTextHide'}`} />
                 <ValidationPopup errorText={countryValidation} errorHeader='Invalid Country' hide={showValidation("country")} />
             </div>
-            <div className="LoginHeader" style={{ marginBottom: '0' }}>State</div>
+            <div className="LoginHeader LoginHeader--NoMargin">State</div>
             <div className="LoginInputValidationContainer">
                 <input type='text' placeholder='Qld' defaultValue={user.state} className="LoginInput" onBlur={(e) => handleState(e, setState, setStateValidation)} />
                 <div className={`triangleLeft ${showValidation("state") ? '' : 'ValidationTextHide'}`} />

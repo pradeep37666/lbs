@@ -61,7 +61,13 @@ export default function AccountSettings() {
 
                 <EditPaymentDetails />
 
+                {user.bsb ?  
+                
                 <EditLocation />
+                
+                : ''}
+
+                
 
             </div>
         </div>
