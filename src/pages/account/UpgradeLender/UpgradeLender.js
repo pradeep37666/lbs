@@ -5,13 +5,16 @@ import BankDetails from '../../../components/FormComponents/BankDetails'
 import LocationDetails from '../../../components/FormComponents/LocationDetails'
 import Availability from '../../../components/FormComponents/Availability'
 import Instance from '../../../util/axios'
-import {ReactComponent as Logo} from '../../../assets/Logos/LogoRed.svg';
+import { ReactComponent as Logo } from '../../../assets/Logos/LogoRed.svg';
 import { GetUser, GetToken } from '../../../util/UserStore'
 import { useHistory } from 'react-router'
+import useGlobalState from '../../../util/useGlobalState'
 
 export default function UpgradeLender() {
+    const dispatch = useGlobalState().dispatch
+    const globalState = useGlobalState().state
+    const { user } = globalState
 
-    const user = GetUser()
     const history = useHistory()
 
     const [page, setPage] = useState('Bank Details')
@@ -50,13 +53,13 @@ export default function UpgradeLender() {
         return (
             <div className="RegistrationWrapper">
                 <div className="LoginMain">
-                <Logo height='50px' width='50px' style={{marginBottom: '1em'}}/>
+                    <Logo height='50px' width='50px' style={{ marginBottom: '1em' }} />
 
-                <div className="LoginHeader">Lender Upgrade Complete!</div>
-                <div className="LoginText">You have successfully updated your Little Big Shed account and are now ready to start lending!</div>
+                    <div className="LoginHeader">Lender Upgrade Complete!</div>
+                    <div className="LoginText">You have successfully updated your Little Big Shed account and are now ready to start lending!</div>
 
-                
-                <button className="LoginFormButton" onClick={() => history.push({pathname: '/user/account'})}>Continue</button>
+
+                    <button className="LoginFormButton" onClick={() => history.push({ pathname: '/user/account' })}>Continue</button>
 
                 </div>
             </div>
@@ -88,7 +91,7 @@ export default function UpgradeLender() {
             sunday_pm: sundayA ? sundayA : user.sunday_pm,
         }
 
-        Instance.put('user/update', data , {headers: { Authorization: `Bearer ${GetToken()}`}})
+        Instance.put('user/update', data)
             .then((response) => {
                 console.log(response)
                 let newData = user
@@ -112,7 +115,7 @@ export default function UpgradeLender() {
                 newData.saturday_pm = data.saturday_pm
                 newData.sunday_am = data.sunday_am
                 newData.sunday_pm = data.sunday_pm
-                localStorage.setItem('user', JSON.stringify(newData))
+                dispatch({ type: 'setUser', data: newData })
             })
             .catch((error) => {
                 console.log(error)
@@ -123,58 +126,58 @@ export default function UpgradeLender() {
     const renderSwitch = () => {
         switch (page) {
             case 'Bank Details':
-                return <BankDetails 
-                validated={validated}
-                handleNextPage={handleNextPage}
-                setAccNumber={setAccNumber}
-                setBsb={setBsb}
-                setValidated={setValidated}
-                isUpgrade={true}
-                lender={true}
+                return <BankDetails
+                    validated={validated}
+                    handleNextPage={handleNextPage}
+                    setAccNumber={setAccNumber}
+                    setBsb={setBsb}
+                    setValidated={setValidated}
+                    isUpgrade={true}
+                    lender={true}
                 />
             case 'Location Details':
-                return <LocationDetails 
-                validated={validated}
-                handleNextPage={handleNextPage}
-                setAddress={setAddress}
-                setCity={setCity}
-                setCountry={setCountry}
-                setState={setState}
+                return <LocationDetails
+                    validated={validated}
+                    handleNextPage={handleNextPage}
+                    setAddress={setAddress}
+                    setCity={setCity}
+                    setCountry={setCountry}
+                    setState={setState}
                 />
             case 'Availability':
-                return <Availability 
-                validated={validated}
-                handleNextPage={handleNextPage}
-                setMondayM={setMondayM}
-                setMondayA={setMondayA}
-                mondayM={mondayM}
-                mondayA={mondayA}
-                setTuesdayM={setTuesdayM}
-                setTuesdayA={setTuesdayA}
-                tuesdayM={tuesdayM}
-                tuesdayA={tuesdayA}
-                setWednesdayM={setWednesdayM}
-                setWednesdayA={setWednesdayA}
-                wednesdayM={wednesdayM}
-                wednesdayA={wednesdayA}
-                setThursdayM={setThursdayM}
-                setThursdayA={setThursdayA}
-                thursdayM={thursdayM}
-                thursdayA={thursdayA}
-                setFridayM={setFridayM}
-                setFridayA={setFridayA}
-                fridayM={fridayM}
-                fridayA={fridayA}
-                setSaturdayM={setSaturdayM}
-                setSaturdayA={setSaturdayA}
-                saturdayM={saturdayM}
-                saturdayA={saturdayA}
-                setSundayM={setSundayM}
-                setSundayA={setSundayA}
-                sundayM={sundayM}
-                sundayA={sundayA}
-                isUpgrade={true}
-                submitUpgrade={submitUpgrade}
+                return <Availability
+                    validated={validated}
+                    handleNextPage={handleNextPage}
+                    setMondayM={setMondayM}
+                    setMondayA={setMondayA}
+                    mondayM={mondayM}
+                    mondayA={mondayA}
+                    setTuesdayM={setTuesdayM}
+                    setTuesdayA={setTuesdayA}
+                    tuesdayM={tuesdayM}
+                    tuesdayA={tuesdayA}
+                    setWednesdayM={setWednesdayM}
+                    setWednesdayA={setWednesdayA}
+                    wednesdayM={wednesdayM}
+                    wednesdayA={wednesdayA}
+                    setThursdayM={setThursdayM}
+                    setThursdayA={setThursdayA}
+                    thursdayM={thursdayM}
+                    thursdayA={thursdayA}
+                    setFridayM={setFridayM}
+                    setFridayA={setFridayA}
+                    fridayM={fridayM}
+                    fridayA={fridayA}
+                    setSaturdayM={setSaturdayM}
+                    setSaturdayA={setSaturdayA}
+                    saturdayM={saturdayM}
+                    saturdayA={saturdayA}
+                    setSundayM={setSundayM}
+                    setSundayA={setSundayA}
+                    sundayM={sundayM}
+                    sundayA={sundayA}
+                    isUpgrade={true}
+                    submitUpgrade={submitUpgrade}
                 />
             case 'Complete!':
                 return getComplete()
@@ -196,7 +199,7 @@ export default function UpgradeLender() {
                 } else setValidated(false)
                 break
             case 'Availability':
-                if (mondayM || mondayA || tuesdayM || tuesdayA || wednesdayM || wednesdayA || thursdayM || thursdayA || 
+                if (mondayM || mondayA || tuesdayM || tuesdayA || wednesdayM || wednesdayA || thursdayM || thursdayA ||
                     fridayM || fridayA || saturdayM || saturdayA || sundayM || sundayA) {
                     setValidated(true)
                 } else setValidated(false)
@@ -211,7 +214,7 @@ export default function UpgradeLender() {
             <Banner textBold='Lender Upgrade' textNormal={page} />
 
             {renderSwitch()}
-            
+
         </PageWrapper>
     )
 }

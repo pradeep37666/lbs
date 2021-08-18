@@ -4,10 +4,12 @@ import { useHistory } from 'react-router'
 import Instance from '../../../../util/axios';
 import { handleAddress, handleCity, handleCountry, handleState } from '../../../../util/UserValidation'
 import ValidationPopup from '../../../../components/ValidationPopup/ValidationPopup';
+import useGlobalState from '../../../../util/useGlobalState';
 
 export default function EditLocation() {
-
-    const user = GetUser()
+    const globalState = useGlobalState().state
+    const dispatch = useGlobalState().dispatch
+    const { user } = globalState
     const history = useHistory()
 
     const [addressValidation, setAddressValidation] = useState("")
@@ -44,21 +46,21 @@ export default function EditLocation() {
             country: country ? country : user.country,
             state: state ? state : user.state
         }
-    
-        Instance.put('user/update', data, { headers: { Authorization: `Bearer ${GetToken()}` } })
-        .then((response) => {
-            console.log(response)
-            let newData = user
-            newData.address = data.address
-            newData.city = data.city
-            newData.country = data.country
-            newData.state = data.state
-            localStorage.setItem('user', JSON.stringify(newData))
-            history.go(0)
-        })
-        .catch((error) => {
-            console.log(error)
-        })
+
+        Instance.put('user/update', data)
+            .then((response) => {
+                console.log(response)
+                let newData = user
+                newData.address = data.address
+                newData.city = data.city
+                newData.country = data.country
+                newData.state = data.state
+                dispatch({ type: 'setUser', data: newData })
+                // history.go(0)
+            })
+            .catch((error) => {
+                console.log(error)
+            })
 
     }
 

@@ -1,4 +1,4 @@
-import React, { useReducer } from 'react';
+import React, { useReducer, useEffect } from 'react';
 import './App.css';
 import Home from './pages/home/home.js';
 import ItemPage from './pages/item/item.js';
@@ -18,8 +18,8 @@ import {
   Route,
   Redirect
 } from "react-router-dom";
-import { GetUser } from './util/UserStore';
 import reducer from './util/reducer'
+import instance from './util/axios';
 
 export const GlobalStateContext = React.createContext()
 
@@ -29,14 +29,23 @@ const initialState = {}
 function App() {
 
   const [state, dispatch] = useReducer(reducer, initialState)
+  const { user } = state
+
+  useEffect(() => {
+    const token = localStorage.getItem('token')
+    if (!token) return
+    instance.get('/user/me')
+      .then(({ data }) => dispatch({ type: 'setUser', data }))
+  }, [])
 
   function AuthRoute({ component: Component, ...rest }) {
     return (
       <Route
         {...rest}
-        render={(props) => GetUser()
-          ? <Component {...props} />
-          : <Redirect to={{ pathname: '/login', state: { from: props.location } }} />}
+        render={(props) =>
+          user
+            ? <Component {...props} />
+            : <Redirect to={{ pathname: '/login', state: { from: props.location } }} />}
       />
     )
   }
@@ -45,9 +54,10 @@ function App() {
     return (
       <Route
         {...rest}
-        render={(props) => GetUser()
-          ? <Redirect to={{ pathname: '/', state: { from: props.location } }} />
-          : <Component {...props} />}
+        render={(props) =>
+          user
+            ? <Redirect to={{ pathname: '/', state: { from: props.location } }} />
+            : <Component {...props} />}
       />
     )
   }
@@ -56,9 +66,10 @@ function App() {
     return (
       <Route
         {...rest}
-        render={(props) => GetUser().bsb
-          ? <Redirect to={{ pathname: '/user/account', state: { from: props.location } }} />
-          : <Component {...props} />}
+        render={(props) =>
+          user && user.bsb
+            ? <Redirect to={{ pathname: '/user/account', state: { from: props.location } }} />
+            : <Component {...props} />}
       />
     )
   }

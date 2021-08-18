@@ -4,11 +4,12 @@ import './Availability.css'
 import Instance from '../../../util/axios'
 import { GetUser, GetToken } from '../../../util/UserStore'
 import { useHistory } from 'react-router'
+import useGlobalState from '../../../util/useGlobalState'
 
 export default function Availability(props) {
-
+    const { state, dispatch } = useGlobalState()
+    const { user } = state
     const history = useHistory()
-    const user = GetUser()
 
     const [mondayM, setMondayM] = useState(user.monday_am)
     const [mondayA, setMondayA] = useState(user.monday_pm)
@@ -43,7 +44,7 @@ export default function Availability(props) {
             sunday_am: sundayM ? sundayM : user.sunday_am,
             sunday_pm: sundayA ? sundayA : user.sunday_pm,
         }
-        Instance.put('user/update', data, { headers: { Authorization: `Bearer ${GetToken()}` } })
+        Instance.put('user/update', data)
             .then((response) => {
                 console.log(response)
                 let newData = user
@@ -61,8 +62,8 @@ export default function Availability(props) {
                 newData.saturday_pm = data.saturday_pm
                 newData.sunday_am = data.sunday_am
                 newData.sunday_pm = data.sunday_pm
-                localStorage.setItem('user', JSON.stringify(newData))
-                // history.go(0)
+                dispatch({ type: 'setUser', data: newData })
+                history.go(0)
             })
             .catch((error) => {
                 console.log(error)

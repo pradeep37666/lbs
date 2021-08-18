@@ -7,9 +7,11 @@ import TermsConditions from './TermsConditions/TermsConditions'
 import Availability from './Availability/Availability'
 import Instance from '../../util/axios'
 import { GetUser, GetToken } from '../../util/UserStore'
+import useGlobalState from '../../util/useGlobalState'
 
 export default function Account() {
-
+    const { state, dispatch } = useGlobalState()
+    const { user } = state
     const [accountContent, setAccountContent] = useState('Account')
 
     const getAccountSettingsContent = () => {
@@ -17,12 +19,12 @@ export default function Account() {
             case 'Account':
                 return <AccountSettings />
             case 'Availability':
-                return <Availability return={returnToAccountSettings}/>
+                return <Availability return={returnToAccountSettings} />
             case 'Terms & Conditions':
                 return <TermsConditions />
             case 'Support':
                 return 'uhhhh support'
-            default: 
+            default:
                 return 'account page'
         }
     }
@@ -33,7 +35,7 @@ export default function Account() {
 
     // Removes bsb from account essentially making the user only a borrower again , for testing purposes
 
-    const user = GetUser()
+    // const user = GetUser()
 
     useEffect(() => {
         if (accountContent === 'Support') {
@@ -41,14 +43,14 @@ export default function Account() {
                 account_number: '',
                 bsb: '',
             }
-    
-            Instance.put('user/update', data , {headers: { Authorization: `Bearer ${GetToken()}`}})
+
+            Instance.put('user/update', data)
                 .then((response) => {
                     console.log(response)
                     let newData = user
                     newData.account_number = data.account_number
                     newData.bsb = data.bsb
-                    localStorage.setItem('user', JSON.stringify(newData))
+                    dispatch({ type: 'setUser', data: newData })
                 })
                 .catch((error) => {
                     console.log(error)
@@ -59,20 +61,20 @@ export default function Account() {
     return (
         <PageWrapper>
             <div className="UserShedWrapper">
-            <UserShedNav setAccountContent={setAccountContent} accountContent={accountContent}/>
+                <UserShedNav setAccountContent={setAccountContent} accountContent={accountContent} />
 
-            <div className="UserShed__MainContent">
-                <div className="UserShed__Title">
-                    {accountContent}
+                <div className="UserShed__MainContent">
+                    <div className="UserShed__Title">
+                        {accountContent}
+                    </div>
+
+                    {getAccountSettingsContent()}
+
                 </div>
 
-                {getAccountSettingsContent()}
 
-            </div>
 
-            
 
-            
 
             </div>
         </PageWrapper>
