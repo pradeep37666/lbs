@@ -22,6 +22,7 @@ import reducer from './util/reducer'
 import instance from './util/axios';
 import { CometChat } from "@cometchat-pro/chat";
 import Login from './pages/login/login.js';
+import Application from './pages/application/Application';
 
 export const GlobalStateContext = React.createContext()
 
@@ -123,7 +124,7 @@ function App() {
           <AuthRoute path="/user/update_password" component={UpdatePassword} />
           {/* if the user is already a lender they should be unable to access the upgrade to lender page */}
           <RedirectBecomeLender path="/user/upgrade_to_lender" component={UpgradeLender} />
-
+          <AuthRoute path="/item/:itemId/application" component={Application} />
           {/* post an item */}
           {/* <AuthRoute path="/postitem" component={postitem}/> */}
 

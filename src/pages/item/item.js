@@ -15,8 +15,8 @@ import Jake from './../../assets/Images/JakeFriend.png';
 import ItemImage from './../../assets/Images/search_section_bg.jpg';
 import GoogleMapReact from 'google-map-react';
 import Instance from '../../util/axios';
-import { useParams } from 'react-router';
-
+import { useParams} from 'react-router';
+import { Link } from 'react-router-dom';
 export default function Item(props) {
     // Pass in number of reviews from backend for use in review carousel + modal
     const params = useParams();
@@ -117,7 +117,10 @@ export default function Item(props) {
 
                 <div className="ItemButtons">
                     <button className="ButtonAvailability"><div className="ItemButtonFlex"><img src={Calendar} alt=""/>Availability</div></button>
-                    <button className="ButtonApply"><div className="ItemButtonFlex"><Profile fill='#ffffff'/>Apply Now</div></button>
+                    <Link to={`/item/${params.itemId}/application`}>
+                        <button className="ButtonApply"><div className="ItemButtonFlex"><Profile fill='#ffffff'/>Apply Now</div></button>
+                    </Link>
+                    
                     <button className="ButtonFavourite" style={{padding: '.5em 1em'}}><StarOutline fill='#ffffff'/></button>
                 </div>
                 <hr className="hr"/>
