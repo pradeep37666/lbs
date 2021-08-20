@@ -46,7 +46,7 @@ export default function EditLocation() {
             country: country ? country : user.country,
             state: state ? state : user.state
         }
-
+        console.log('sending', data)
         Instance.put('user/update', data)
             .then((response) => {
                 console.log(response)
