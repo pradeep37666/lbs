@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { GetUser, GetToken } from '../../../../util/UserStore'
 import { useHistory } from 'react-router'
 import Instance from '../../../../util/axios';
 import { handleAddress, handleCity, handleCountry, handleState } from '../../../../util/UserValidation'

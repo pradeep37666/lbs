@@ -6,7 +6,6 @@ import LocationDetails from '../../../components/FormComponents/LocationDetails'
 import Availability from '../../../components/FormComponents/Availability'
 import Instance from '../../../util/axios'
 import { ReactComponent as Logo } from '../../../assets/Logos/LogoRed.svg';
-import { GetUser, GetToken } from '../../../util/UserStore'
 import { useHistory } from 'react-router'
 import useGlobalState from '../../../util/useGlobalState'
 

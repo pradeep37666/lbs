@@ -11,7 +11,6 @@ import TermsConditions from '../../components/FormComponents/TermsConditions';
 import {ReactComponent as Logo} from './../../assets/Logos/LogoRed.svg';
 import Instance from '../../util/axios';
 import { useHistory } from 'react-router-dom';
-import { LoginUser, LogoutUser } from '../../util/UserStore';
 import useGlobalState from '../../util/useGlobalState';
 
 
@@ -103,7 +102,6 @@ export default function Register() {
             if (response.status === 201) {
                 dispatch({ type: 'setUser', data: response.data.user})
             } else {
-                LogoutUser()
                 alert("an error occurred during registration, please try again")
                 history.push({pathname: '/login'})
             }

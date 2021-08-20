@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { GetUser, GetToken } from '../../../../util/UserStore'
 import { useHistory } from 'react-router'
 import Instance from '../../../../util/axios';
 import { handleCardName, handleCardNumber, handleExpiry, handleCcv, handleAccNumber, handleBsb } from '../../../../util/UserValidation'
@@ -64,7 +63,7 @@ export default function EditPaymentDetails() {
                 bsb: bsb ? bsb : user.bsb
             }
 
-            Instance.put('user/update', data, { headers: { Authorization: `Bearer ${GetToken()}` } })
+            Instance.put('user/update', data)
                 .then((response) => {
                     console.log(response)
                     let newData = user

@@ -20,6 +20,8 @@ import {
 } from "react-router-dom";
 import reducer from './util/reducer'
 import instance from './util/axios';
+import { CometChat } from "@cometchat-pro/chat";
+import Login from './pages/login/login.js';
 
 export const GlobalStateContext = React.createContext()
 
@@ -27,6 +29,37 @@ export const GlobalStateContext = React.createContext()
 const initialState = {}
 
 function App() {
+
+  useEffect(() => {
+    const appID = "192324d641d60059";
+      const region = "us";
+      const appSetting = new CometChat.AppSettingsBuilder().subscribePresenceForAllUsers().setRegion(region).build();
+      CometChat.init(appID, appSetting).then(
+        () => {
+          console.log("Initialization completed successfully");
+          cometChatLogin()
+        },
+        error => {
+          console.log("Initialization failed with error:", error);
+          // Check the reason for error and take appropriate action.
+        }
+      );
+      const cometChatLogin = () => {
+        const authKey = "dd531027e3e0dbecbc714f3c5d7e912b9c5397b5";
+        const uid = "SUPERHERO1";
+
+        CometChat.login(uid, authKey).then(
+          user => {
+            console.log("Login Successful:", { user });    
+          },
+          error => {
+            console.log("Login failed with exception:", { error });    
+          }
+      );}
+  },[])
+
+  
+
 
   const [state, dispatch] = useReducer(reducer, initialState)
   const { user } = state

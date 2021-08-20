@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import './messages.css'
 import PageWrapper from '../../components/pageWrapper/pageWrapper'
 import UserShedNav from '../../components/UserShedNav/UserShedNav'
+import {CometChatUI} from '../../../src/cometchat-pro-react-ui-kit/CometChatWorkspace/src'
 
 export default function Messages() {
     const [accountContent, setAccountContent] = useState('Messages')
@@ -15,7 +16,7 @@ export default function Messages() {
                 <div className="UserShed__Title">
                     {accountContent}
                 </div>
-
+            <CometChatUI />
                 
 
             </div>
