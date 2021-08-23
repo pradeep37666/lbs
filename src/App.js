@@ -1,4 +1,4 @@
-import React, { useReducer, useEffect } from 'react';
+import React, { useReducer, useEffect, useState } from 'react';
 import './App.css';
 import Home from './pages/home/home.js';
 import ItemPage from './pages/item/item.js';
@@ -29,13 +29,17 @@ const initialState = {}
 function App() {
 
   const [state, dispatch] = useReducer(reducer, initialState)
+  const [loadingUser, setLoadingUser] = useState(true)
   const { user } = state
   const token = localStorage.getItem('token')
 
-  useEffect(() => {
+  useEffect(async () => {
     if (!token) return
     instance.get('/user/me')
-      .then(({ data }) => dispatch({ type: 'setUser', data }))
+      .then(({ data }) => {
+        dispatch({ type: 'setUser', data })
+        setLoadingUser(false)
+      })
   }, [])
 
   function AuthRoute({ component: Component, ...rest }) {
@@ -76,6 +80,8 @@ function App() {
 
   return (
     <GlobalStateContext.Provider value={{ state, dispatch }}>
+      {loadingUser ? '' : 
+      
       <Router>
         <ScrollToTop>
           <Route exact path="/" component={Home} />
@@ -100,6 +106,9 @@ function App() {
         </ScrollToTop>
 
       </Router>
+
+      }
+      
     </GlobalStateContext.Provider>
   );
 }

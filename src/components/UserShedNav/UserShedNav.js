@@ -74,8 +74,9 @@ export default function UserShedNav(props) {
                     </div>
 
                     <div className="HL" />
+                    {console.log(user)}
 
-                    {user && user.bsb ?
+                    {!user.bsb ?
                         <Link to='/user/upgrade_to_lender'>
                             <div>
                                 <div className={`UserShedNav__SecondaryLink ${props.accountContent === 'Become a Lender' ? 'UserShedNav__SecondaryLink--active' : ''}`} onClick={() => props.setAccountContent('Become a Lender')}>
