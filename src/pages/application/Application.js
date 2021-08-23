@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react'
 import ItemAvailability from '../../components/application/ItemAvailability'
 import ItemOptions from '../../components/application/ItemOptions'
 import ItemOverview from '../../components/application/ItemOverview'
+import AvailabilityCalendar from '../../components/availabilityCalendar/AvailabilityCalendar'
+import Header from '../../components/header/header'
 
 export default function Application() {
     const [page, setPage] = useState('ItemAvailability')
@@ -31,7 +33,9 @@ export default function Application() {
 
     return (
         <div>
+            <Header />
             { renderApplicaiton() }
+            <AvailabilityCalendar />
         </div>
     )
 }
