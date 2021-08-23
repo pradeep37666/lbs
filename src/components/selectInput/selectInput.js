@@ -8,7 +8,6 @@ import ArrowDown from '@material-ui/icons/ExpandMore';
 
 const BootstrapInput = withStyles((theme) => ({
   input: {
-    paddingLeft: '1em',
     textAlign: 'left',
     fontSize: '20px',
     fontFamily: ['DMSans, sans-serif'].join(','),

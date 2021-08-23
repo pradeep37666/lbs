@@ -36,29 +36,6 @@ export default function BasicDetails(props) {
         }
     }
 
-    // const handlePassword = (e) => {
-    //     let passwordInput = e.target.value;
-    //     if (/^(?=.*[A-Za-z])(?=(?:.*?[0-9]){2})[A-Za-z\d@$!%*#?&]{8,}$/.test(passwordInput)) {
-    //         props.setPassword(passwordInput)
-    //         setPasswordValidation("")
-    //         // if (passwordInput !== props.confirmPassword) setConfirmPasswordValidation("Passwords must match")
-    //     } else {
-    //         props.setPassword("")
-    //         setPasswordValidation("Password must be at least 8 characters, contain 2 numbers and a special character")
-    //     }
-    // }
-
-    // const handlePasswordConfirm = (e) => {
-    //     let passwordInput = e.target.value;
-    //     if (passwordInput === props.password) {
-    //         props.setConfirmPassword(passwordInput)
-    //         setConfirmPasswordValidation("")
-    //     } else {
-    //         props.setConfirmPassword("")
-    //         setConfirmPasswordValidation("Passwords must match")
-    //     }
-    // }
-
     const handleChange = (e) => {
         if (e.target.files.length) {
             setImage({

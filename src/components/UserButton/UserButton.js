@@ -56,7 +56,7 @@ export default function UserButton() {
                         </Link>
                         <hr className="hr__UserMenu" />
 
-                        <Link to='/user/account'>
+                        <Link to='/postitem'>
                             <div>
                                 <PostItem height="28px" width="50px"/>
                                 Post an Item

@@ -1,0 +1,20 @@
+.PostItem__ItemPictures__Container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.PostItem__ItemPictures__Add__Container {
+    padding: 5em 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.PostItem__ItemPictures__Preview {
+    width: 45%;
+    margin-bottom: 1em;
+    border: 1px solid #ac172c;
+    border-radius: 5px;
+    padding: .5em;
+}
