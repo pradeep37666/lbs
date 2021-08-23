@@ -34,7 +34,7 @@ export default function AccountSettings() {
                 <div className="AccountSettings__Container">
                     <div className="AccountSettings__Title">Your Account</div>
                     <div className="AccountSettings__UserFlex">
-                        <img src={`${!user.avatar ? MissingProfile : user.avatar}`} className="AccountSettings__Avatar" alt="ProfilePicture" />
+                        <img src={`${user && user.avatar ? user.avatar : MissingProfile }`} className="AccountSettings__Avatar" alt="ProfilePicture" />
                         <div className="AccountSettings__UserDetails">
                             <div className="AccountSettings__UserName">{user.fullName}</div>
                             <div className="AccountSettings__Ratings"><span className="AccountSettings-Medium">Lender:</span> {user.lender_rating}/5 <RatingFiller rating={user.lender_rating} /></div>
@@ -62,11 +62,11 @@ export default function AccountSettings() {
 
                 <EditPaymentDetails />
 
-                {user.bsb ?
+                {user.bsb &&
 
                     <EditLocation />
 
-                    : ''}
+                    }
 
 
 

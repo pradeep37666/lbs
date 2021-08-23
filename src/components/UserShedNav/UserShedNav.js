@@ -75,7 +75,7 @@ export default function UserShedNav(props) {
 
                     <div className="HL" />
 
-                    {!user.bsb ?
+                    {user && user.bsb ?
                         <Link to='/user/upgrade_to_lender'>
                             <div>
                                 <div className={`UserShedNav__SecondaryLink ${props.accountContent === 'Become a Lender' ? 'UserShedNav__SecondaryLink--active' : ''}`} onClick={() => props.setAccountContent('Become a Lender')}>
@@ -95,7 +95,6 @@ export default function UserShedNav(props) {
                     {/* {!user.bsb ? <div className="HL" /> : ''} */}
 
 
-
                     <div className="HL" />
                     <div>
                         <div className={`UserShedNav__SecondaryLink ${props.accountContent === 'Terms & Conditions' ? 'UserShedNav__SecondaryLink--active' : ''}`} onClick={() => props.setAccountContent('Terms & Conditions')}>
@@ -113,19 +112,7 @@ export default function UserShedNav(props) {
                     </div>
 
                     <div className="HL" />
-
-
-
-
-
-
                 </div>
-
-
-
-
-
-
                 : ''}
 
 

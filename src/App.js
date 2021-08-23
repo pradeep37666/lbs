@@ -30,9 +30,9 @@ function App() {
 
   const [state, dispatch] = useReducer(reducer, initialState)
   const { user } = state
+  const token = localStorage.getItem('token')
 
   useEffect(() => {
-    const token = localStorage.getItem('token')
     if (!token) return
     instance.get('/user/me')
       .then(({ data }) => dispatch({ type: 'setUser', data }))
