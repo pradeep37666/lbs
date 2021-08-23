@@ -1,14 +1,21 @@
 .CalendarContainer {
   border: 1px solid black;
+  width: 50%;
+}
+.CalendarRow {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
 }
-
 .CalendarItem {
   border: 1px solid black;
   cursor: pointer;
 }
-
+.CalendarPadding {
+  grid-column-start: 1;
+  grid-column-end: 8;
+  display: flex;
+  justify-content: center;
+}
 .CalendarStart {
   grid-column-start: 4;
 }

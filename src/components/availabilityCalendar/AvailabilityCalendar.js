@@ -1,6 +1,7 @@
 import React from 'react'
 import './AvailabilityCalendar.css'
 import CalendarItem from './CalendarItem';
+import CalendarRow from './CalendarRow';
 
 export default function AvailabilityCalendar({ month }) {
     function getDaysInMonth(month, year) {
@@ -12,19 +13,42 @@ export default function AvailabilityCalendar({ month }) {
         }
         return days;
       }
-    const dayArray = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday' ]
+    const dayArray = ['Su','Mo','Tu','We','Th','Fr','Sa' ]
 
-    const days = getDaysInMonth(7, 2021)
+    const days = getDaysInMonth(5, 2021)
+
+    const renderRows = () => {
+        const rows = []
+        let rowDays = []
+        for(let i = 0; i < days.length; i++){
+            console.log(days[i])
+            rowDays.push(days[i])
+            // add a new row when there are 7 days in the rowDays array
+            if(days[i].getDay() === 6){
+                rows.push(<CalendarRow days={rowDays}/>)
+                rowDays = []
+                continue
+            }
+            // add a last row if there are now enough days to make a new week
+            if(i + 1 === days.length){
+                rows.push(<CalendarRow days={rowDays}/>)
+                break
+            }
+
+        }
+        console.log(rows)
+        return rows
+    }
     return (
         <div>
             <div className="CalendarContainer">
-                {dayArray.map((day, index) => {
+                <div className="CalendarRow">
+                  {dayArray.map((day, index) => {
                     return <div key={index}>{day}</div>
-                })}
-                { days.map((day, index) => {
-                return (
-                <CalendarItem day={day} index={index}/>
-                )})}
+                })}  
+                </div>
+                
+                { renderRows() }
             </div>
             
         </div>
