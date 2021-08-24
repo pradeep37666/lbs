@@ -39,7 +39,7 @@ export default function Messages() {
             )
         })
     }
-    
+
     return (
         <PageWrapper>
             <div className="UserShedWrapper">
@@ -52,13 +52,13 @@ export default function Messages() {
                 <div className="UserCardContainer">
 
                     { isLoading ? (
-                        <Facebook />
+                        Array(5).fill(<Facebook />)
                     ):(
                          renderCards()     
                     )}
                 </div>
                 { activeChatUser && 
-                <ActiveChat user={activeChatUser} />}
+                <ActiveChat activeChatUser={activeChatUser} />}
 
             </div>
 

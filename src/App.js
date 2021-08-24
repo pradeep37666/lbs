@@ -35,7 +35,6 @@ function App() {
   const token = localStorage.getItem('token')
 
   useEffect(() => {
-    
     setupCometChat()
     if (!token){
       setLoadingUser(false)
@@ -53,7 +52,6 @@ function App() {
 
   const setupCometChat = () => {
     const appId = process.env.REACT_APP_CHAT_APP_ID
-    console.log(appId)
     let cometChatSettings = new CometChat.AppSettingsBuilder().subscribePresenceForAllUsers().setRegion('us').build();
     console.log('settings', cometChatSettings)
     CometChat.init(appId, cometChatSettings)
