@@ -2,6 +2,8 @@
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
+    margin-top: 2em;
+    width: 100%;
 }
 
 .PostItem__ItemPictures__Add__Container {
@@ -16,5 +18,17 @@
     margin-bottom: 1em;
     border: 1px solid #ac172c;
     border-radius: 5px;
-    padding: .5em;
+    /* padding: .5em; */
+    position: relative;
+}
+
+.PostItem__TextArea {
+    resize: none;
+    font-weight: 400;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }

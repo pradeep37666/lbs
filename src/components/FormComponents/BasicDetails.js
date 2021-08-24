@@ -81,7 +81,7 @@ export default function BasicDetails(props) {
                         <div className="ProfilePictureCircle" >
                         {image.preview ? 
                     
-                        <img src={image.preview} alt="dummy" className="ProfilePicturePreview"/>
+                        <img src={image.preview} alt="" className="ProfilePicturePreview"/>
                     
                         : <CameraIcon className="CameraIcon"/>}
                         </div>

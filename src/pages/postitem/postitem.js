@@ -4,10 +4,12 @@ import PageWrapper from '../../components/pageWrapper/pageWrapper'
 import Banner from '../../components/bannerText/bannerText'
 import BasicDetails from './PostItemContent/BasicDetails'
 import ItemPictures from './PostItemContent/ItemPictures'
+import AdvancedDetails from './PostItemContent/AdvancedDetails'
+import LocationDetails from '../../components/FormComponents/LocationDetails'
 
 export default function PostItem() {
     
-    const [page, setPage] = useState('Item Pictures') 
+    const [page, setPage] = useState('Item Location') 
     const [validated, setValidated] = useState(false)
 
     const [title, setTitle] = useState('')
@@ -17,7 +19,7 @@ export default function PostItem() {
 
     const [description, setDescription] = useState('')
     const [price, setPrice] = useState('')
-    const [discount, setDiscount] = useState('')
+    const [discount, setDiscount] = useState(0)
     const [delivery, setDelivery] = useState(0)
 
     const [address, setAddress] = useState("")
@@ -64,9 +66,20 @@ export default function PostItem() {
                 pictures={pictures}
                 />
             case 'Advanced Details':
-                return 'yes advanced'
+                return <AdvancedDetails 
+                validated={validated}
+                handleNextPage={handleNextPage}
+                setDescription={setDescription}
+                setPrice={setPrice}
+                setDiscount={setDiscount}
+                setDelivery={setDelivery}                
+                />
             case 'Item Location':
-                return 'yes advanced'
+                return <LocationDetails 
+                validated={validated}
+                handleNextPage={handleNextPage}
+                
+                />
             case 'Availability':
                 return 'yes advanced'
             case 'Complete!':
@@ -91,7 +104,7 @@ export default function PostItem() {
                 } else setValidated(false)
                 break
             case 'Advanced Details':
-                if (description && price && discount) {
+                if (description && price) {
                     setValidated(true)
                 } else setValidated(false)
                 break
@@ -111,7 +124,7 @@ export default function PostItem() {
             default:
                 return '';
         }
-    }, [page, title, category, address, city, country, state, mondayM, mondayA, tuesdayM, tuesdayA, wednesdayM, wednesdayA, thursdayM, thursdayA, fridayM, fridayA, saturdayM, saturdayA, sundayM, sundayA])
+    }, [page, title, category, pictures, description, price, address, city, country, state, mondayM, mondayA, tuesdayM, tuesdayA, wednesdayM, wednesdayA, thursdayM, thursdayA, fridayM, fridayA, saturdayM, saturdayA, sundayM, sundayA])
 
     return (
         <PageWrapper>
