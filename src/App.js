@@ -20,6 +20,7 @@ import {
 } from "react-router-dom";
 import reducer from './util/reducer'
 import instance from './util/axios';
+import { CometChat } from '@cometchat-pro/chat'
 
 export const GlobalStateContext = React.createContext()
 
@@ -33,14 +34,45 @@ function App() {
   const { user } = state
   const token = localStorage.getItem('token')
 
-  useEffect(async () => {
-    if (!token) return
+  useEffect(() => {
+    
+    setupCometChat()
+    if (!token){
+      setLoadingUser(false)
+     return 
+    } 
+    
+    setLoadingUser(false)
     instance.get('/user/me')
       .then(({ data }) => {
         dispatch({ type: 'setUser', data })
         setLoadingUser(false)
       })
+      .catch((e) => console.log(e))
   }, [])
+
+  const setupCometChat = () => {
+    const appId = process.env.REACT_APP_CHAT_APP_ID
+    console.log(appId)
+    let cometChatSettings = new CometChat.AppSettingsBuilder().subscribePresenceForAllUsers().setRegion('us').build();
+    console.log('settings', cometChatSettings)
+    CometChat.init(appId, cometChatSettings)
+    .then(
+      () => {
+        console.log("Initialization completed successfully");
+       },
+       error => {
+        console.log("Initialization failed with error:", error);
+      }
+    );
+    // const user = new CometChat.User('d5953d29-7b59-4ae7-b1e6-038b0adc13e2')
+
+    // user.setName('George Hawkins')
+    // CometChat.createUser(user, process.env.REACT_APP_CHAT_AUTH_KEY)
+    // .then(user => console.log("created comet chat user", user))
+    // .catch(err => console.log(err))
+  }
+
 
   function AuthRoute({ component: Component, ...rest }) {
     return (

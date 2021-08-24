@@ -102,6 +102,7 @@ export default function Register() {
             console.log(response.data.token)
             if (response.status === 201) {
                 dispatch({ type: 'setUser', data: response.data.user})
+                // registerCometChat(response.data.user)
             } else {
                 LogoutUser()
                 alert("an error occurred during registration, please try again")
@@ -113,6 +114,14 @@ export default function Register() {
             alert("an error occurred during registration, please try again")
         })
     }
+
+    // const registerCometChat = (user) => {
+    //     const user = new CometChat.User(user.id)
+    //     user.setName(user.fullName)
+    //     CometChat.createUser(user, process.env.REACT_APP_CHAT_AUTH_KEY)
+    //     .then(user => console.log("created comet chat user", user))
+    //     .catch(err => console.log(err))
+    // }
 
     useEffect(() => {
         switch (page) {

@@ -8,6 +8,7 @@ import { LoginUser } from '../../util/UserStore';
 import { useHistory } from 'react-router-dom';
 import ValidationPopup from '../../components/ValidationPopup/ValidationPopup';
 import useGlobalState from '../../util/useGlobalState';
+import { CometChat } from '@cometchat-pro/chat';
 
 export default function Login() {
     const { dispatch } = useGlobalState()
@@ -31,7 +32,7 @@ export default function Login() {
                 // Add user to global state
                 dispatch({ type: 'setUser', data: response.data.user })
                 localStorage.setItem('token', response.data.token.accessToken)
-                // LoginUser(response.data)
+                cometChatLogin(response.data.user)
                 setLoginValidation("")
                 history.push({ pathname: '/' })
             }
@@ -42,6 +43,14 @@ export default function Login() {
             })
     }
 
+    const cometChatLogin = async (user) => {
+        try{
+            const User = await  CometChat.login(user.id, process.env.REACT_APP_CHAT_AUTH_KEY)
+            console.log(User, 'logged into comet chat')
+        } catch(e) {
+            console.log(e)
+        }
+    }
 
     return (
         <PageWrapper>
