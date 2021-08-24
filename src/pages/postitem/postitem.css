@@ -27,6 +27,34 @@
     font-weight: 400;
 }
 
+.PostItem__Complete__TextCenter {
+    text-align: center;
+}
+
+.PostItem__Complete__Bold {
+    font-weight: bold;
+}
+
+.PostItem__Complete__ItemPreview {
+    border: 1px solid #707070;
+    border-radius: 5px;
+    padding-bottom: 100%;
+    width: 100%;
+    position: relative;
+}
+
+.PostItem__Complete__ItemImage {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    padding: 1em;
+}
+
+.PostItem__Complete__ItemDetails__Container {
+    width: 100%;
+}
+
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;

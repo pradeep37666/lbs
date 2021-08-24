@@ -82,7 +82,7 @@ export default function AdvancedDetails(props) {
                 </div>
 
                 <div className="LoginHeader">Price ($)</div>
-                <input type='number' min="1" step="any" placeholder='10' className="LoginInput" onBlur={(e) => props.setPrice(e.target.value)}/>
+                <input type='number' min="1" step="any" placeholder='10' className="LoginInput" onChange={(e) => props.setDelivery(e.target.value)}/>
 
                 <button className={`LoginFormButton ${!props.validated ? 'ButtonDisabled' : ''}`} disabled={!props.validated} onClick={() => props.handleNextPage('Item Location')}>Next</button>
 

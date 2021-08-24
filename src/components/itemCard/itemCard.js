@@ -10,6 +10,7 @@ import { Link } from 'react-router-dom';
 
 export default function itemCard(props) {
   const item = props.item;
+  console.log(item)
   return (
     <div className="ItemCard">
       {/* new prop for image link to go here later */}
@@ -17,7 +18,7 @@ export default function itemCard(props) {
         <img src={PreviewImage} alt={item.title} className="PreviewImage"/>
       </Link>
       <div className="ItemNameText">{item.title}</div>
-      {/* <div className="ItemPriceText">${item.price} <span className="ItemRateText">per {item.rate}</span></div> */}
+      <div className="ItemPriceText">${item.price}</div>
 
       <div className="StatusLocationSection">
         <div className="StatusLocationSection" style={{paddingRight: '30px'}}>
