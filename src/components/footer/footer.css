@@ -89,20 +89,19 @@
   font-size: 14px;
 }
 
-.Links {
-  font-size: 25px;
-  color: #33384f;
-}
-
 .Links div {
   padding-bottom: 12px;
 }
 
 .LinkHeader {
-  font-size: 30px;
+  font-size: 25px;
   font-weight: bold;
 }
 
+.LinkText {
+  font-size: 18px;
+  color: #33384f;
+}
 .Copyright {
   font-size: 20px;
   line-height: 1.5;

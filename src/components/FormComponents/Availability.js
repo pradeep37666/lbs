@@ -64,9 +64,21 @@ export default function Availability(props) {
                 <div className="SkipNextButtonFlex">
                     <button className="LoginFormButton LoginFormButtonInverted" onClick={() => {
                         wipeState()
-                        props.handleNextPage('Terms & Conditions')
+                        if (props.isUpgrade) {
+                            props.submitUpgrade()
+                            props.handleNextPage('Complete!')
+                        } else {
+                            props.handleNextPage('Terms & Conditions')
+                        }
                     }} style={{marginRight: '.5em'}}>Skip Step</button>
-                    <button className={`LoginFormButton ${!props.validated ? 'ButtonDisabled' : ''}`} disabled={!props.validated} onClick={() => props.handleNextPage('Terms & Conditions')}>Next</button>
+                    <button className={`LoginFormButton ${!props.validated ? 'ButtonDisabled' : ''}`} disabled={!props.validated} onClick={() => {
+                        if (props.isUpgrade) {
+                            props.submitUpgrade()
+                            props.handleNextPage('Complete!')
+                        } else {
+                            props.handleNextPage('Terms & Conditions')
+                        }
+                        }}>Next</button>
                 </div>
 
                 </div>

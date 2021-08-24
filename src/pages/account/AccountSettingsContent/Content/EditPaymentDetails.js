@@ -4,9 +4,12 @@ import { useHistory } from 'react-router'
 import Instance from '../../../../util/axios';
 import { handleCardName, handleCardNumber, handleExpiry, handleCcv, handleAccNumber, handleBsb } from '../../../../util/UserValidation'
 import ValidationPopup from '../../../../components/ValidationPopup/ValidationPopup';
+import useGlobalState from '../../../../util/useGlobalState';
 
 export default function EditPaymentDetails() {
-    const user = GetUser()
+    const { state, dispatch } = useGlobalState()
+    const { user } = state
+
     const history = useHistory()
 
     const [cardNameValidation, setCardNameValidation] = useState("")
@@ -60,19 +63,19 @@ export default function EditPaymentDetails() {
                 account_number: accNumber ? accNumber : user.account_number,
                 bsb: bsb ? bsb : user.bsb
             }
-    
-            Instance.put('user/update', data , {headers: { Authorization: `Bearer ${GetToken()}`}})
-            .then((response) => {
-                console.log(response)
-                let newData = user
-                newData.account_number = data.account_number
-                newData.bsb = data.bsb
-                localStorage.setItem('user', JSON.stringify(newData))
-                history.go(0)
-            })
-            .catch((error) => {
-                console.log(error)
-            })
+
+            Instance.put('user/update', data, { headers: { Authorization: `Bearer ${GetToken()}` } })
+                .then((response) => {
+                    console.log(response)
+                    let newData = user
+                    newData.account_number = data.account_number
+                    newData.bsb = data.bsb
+                    dispatch({ type: 'setUser', data: newData })
+                    history.go(0)
+                })
+                .catch((error) => {
+                    console.log(error)
+                })
         }
 
     }
@@ -85,7 +88,7 @@ export default function EditPaymentDetails() {
 
             {/* pull default values from stripe once setup */}
 
-            <div className="LoginHeader" style={{ marginBottom: '0' }}>Name on Card</div>
+            <div className="LoginHeader LoginHeader--NoMargin">Name on Card</div>
             <div className="LoginInputValidationContainer">
                 <input type='text' placeholder='Jane Doe' className="LoginInput" onBlur={(e) => handleCardName(e, setCardName, setCardNameValidation)} />
                 <div className={`triangleLeft ${showValidation("cardName") ? '' : 'ValidationTextHide'}`} />
@@ -93,7 +96,7 @@ export default function EditPaymentDetails() {
             </div>
 
 
-            <div className="LoginHeader" style={{ marginBottom: '0' }}>Number on Card</div>
+            <div className="LoginHeader LoginHeader--NoMargin">Number on Card</div>
             <div className="LoginInputValidationContainer">
                 <input type='text' placeholder='1234 5678 9010 1112' className="LoginInput" onBlur={(e) => handleCardNumber(e, setCardNumber, setCardNumberValidation)} />
                 <div className={`triangleLeft ${showValidation("cardNum") ? '' : 'ValidationTextHide'}`} />

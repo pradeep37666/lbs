@@ -3,16 +3,20 @@ import './UserButton.css'
 import { GetUser } from '../../util/UserStore'
 import MissingProfile from '../../assets/Icons/MissingProfileIcon.png'
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown'
-import {ReactComponent as Trades} from '../../assets/Icons/Trades.svg'
-import {ReactComponent as Messages} from '../../assets/Icons/Messages.svg'
-import {ReactComponent as YourShed} from '../../assets/Icons/YourShed.svg'
-import {ReactComponent as PostItem} from '../../assets/Icons/PostItem.svg'
-import {ReactComponent as Favourites} from '../../assets/Icons/FavouritesIcon.svg'
-import {ReactComponent as Account} from '../../assets/Icons/Account.svg'
+import { ReactComponent as Trades } from '../../assets/Icons/Trades.svg'
+import { ReactComponent as Messages } from '../../assets/Icons/Messages.svg'
+import { ReactComponent as YourShed } from '../../assets/Icons/YourShed.svg'
+import { ReactComponent as PostItem } from '../../assets/Icons/PostItem.svg'
+import { ReactComponent as Favourites } from '../../assets/Icons/FavouritesIcon.svg'
+import { ReactComponent as Account } from '../../assets/Icons/Account.svg'
 import { Link } from 'react-router-dom'
+import useGlobalState from '../../util/useGlobalState'
 
 export default function UserButton() {
-    const user = GetUser()
+    const { state } = useGlobalState()
+    const { user } = state
+
+
     const firstName = user.fullName.split(" ")[0]
 
     const [menuOpen, setMenuOpen] = useState(false)
@@ -21,73 +25,73 @@ export default function UserButton() {
         <div className="UserButton__Container">
             <button className={`UserButton ${menuOpen ? 'UserButton--Active' : ''}`} onClick={() => setMenuOpen(!menuOpen)}>
 
-            <img src={`${!user.avatar ? MissingProfile : user.avatar}`} className="UserButton_ProfilePicture" alt="ProfilePicture"/>
+                <img src={`${!user.avatar ? MissingProfile : user.avatar}`} className="UserButton_ProfilePicture" alt="ProfilePicture" />
 
-            <div className="UserButton__FirstName">{firstName}</div>
+                <div className="UserButton__FirstName">{firstName}</div>
 
-            <KeyboardArrowDownIcon />
+                <KeyboardArrowDownIcon />
 
             </button>
 
             <div className={`UserButton__Menu__Wrapper ${menuOpen ? 'UserButton__Menu--Active' : ''}`}>
                 <div className={`UserButton__Menu`} onClick={(e) => e.stopPropagation()}>
-                        <Link to='/user/trades'>
-                            <div>
-                                <Trades height="28px" width="50px"/>
-                                Trades
-                            </div>
-                        </Link>
-                        
-                        <hr className="hr__UserMenu" />
-                        
-                        <Link to='/user/messages'>
-                            <div>
-                                <Messages height="28px" width="50px"/>
-                                Messages
-                            </div>
-                        </Link>
-                        <hr className="hr__UserMenu" />
+                    <Link to='/user/trades'>
+                        <div>
+                            <Trades height="28px" width="50px" />
+                            Trades
+                        </div>
+                    </Link>
 
-                        <Link to='/user/your_shed'>
-                            <div>
-                                <YourShed height="28px" width="50px"/>
-                                Your Shed
-                            </div>
-                        </Link>
-                        <hr className="hr__UserMenu" />
+                    <hr className="hr__UserMenu" />
 
-                        <Link to='/user/account'>
-                            <div>
-                                <PostItem height="28px" width="50px"/>
-                                Post an Item
-                            </div>
-                        </Link>
-                        <hr className="hr__UserMenu" />
+                    <Link to='/user/messages'>
+                        <div>
+                            <Messages height="28px" width="50px" />
+                            Messages
+                        </div>
+                    </Link>
+                    <hr className="hr__UserMenu" />
 
-                        <Link to='/user/favourites'>
-                            <div>
-                                <Favourites height="28px" width="50px"/>
-                                Favourites
-                            </div>
-                        </Link>
-                        <hr className="hr__UserMenu" />
+                    <Link to='/user/your_shed'>
+                        <div>
+                            <YourShed height="28px" width="50px" />
+                            Your Shed
+                        </div>
+                    </Link>
+                    <hr className="hr__UserMenu" />
 
-                        <Link to='/user/account'>
-                            <div>
-                                <Account height="28px" width="50px"/>
-                                Account
-                            </div>
-                        </Link>
-                        
+                    <Link to='/user/account'>
+                        <div>
+                            <PostItem height="28px" width="50px" />
+                            Post an Item
+                        </div>
+                    </Link>
+                    <hr className="hr__UserMenu" />
+
+                    <Link to='/user/favourites'>
+                        <div>
+                            <Favourites height="28px" width="50px" />
+                            Favourites
+                        </div>
+                    </Link>
+                    <hr className="hr__UserMenu" />
+
+                    <Link to='/user/account'>
+                        <div>
+                            <Account height="28px" width="50px" />
+                            Account
+                        </div>
+                    </Link>
+
                 </div>
             </div>
 
 
-            {menuOpen ? <div className="UserButton__Menu__CloseWrapper" onClick={() => setMenuOpen(false)}/> : ''}
+            {menuOpen ? <div className="UserButton__Menu__CloseWrapper" onClick={() => setMenuOpen(false)} /> : ''}
 
 
-            
+
         </div>
-    
+
     )
 }
