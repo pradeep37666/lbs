@@ -18,6 +18,8 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
   const [items, setItems] = useState([]);
 
+  const [category, setCategory] = useState('Automotive')
+
   useEffect(() => {
 // Find all Items (empty search)
 
@@ -42,7 +44,7 @@ export default function Home() {
           <div className="SearchSectionFilters">
             <div className="SearchFiltersRowFlex">
               <TextInput width="35%" label="Keywords" fontSize="20px"/>
-              <CategorySelect width="35%" label="Category" fontSize="20px"/>
+              <CategorySelect width="35%" label="Category" setCategory={setCategory}/>
               
               <TextInput width="25%" label="Location / Postcode" fontSize="20px"/>
             </div>

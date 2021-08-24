@@ -6,6 +6,7 @@ import SearchPage from './pages/search/search.js';
 import LoginPage from './pages/login/login.js';
 import RegisterPage from './pages/register/register.js';
 import AccountPage from './pages/account/account.js';
+import PostItem from './pages/postitem/postitem';
 import TradesPage from './pages/trades/trades.js';
 import MessagesPage from './pages/messages/messages.js';
 import YourshedPage from './pages/yourshed/yourshed.js';
@@ -98,7 +99,7 @@ function App() {
           <RedirectBecomeLender path="/user/upgrade_to_lender" component={UpgradeLender} />
 
           {/* post an item */}
-          {/* <AuthRoute path="/postitem" component={postitem}/> */}
+          <AuthRoute path="/postitem" component={PostItem}/>
 
           {/* Routes for login/register should redirect to user page if user is logged in */}
           <AuthRedirectRoute path="/login" component={LoginPage} />

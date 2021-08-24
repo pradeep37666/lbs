@@ -35,54 +35,55 @@ export default function UserButton() {
 
             <div className={`UserButton__Menu__Wrapper ${menuOpen ? 'UserButton__Menu--Active' : ''}`}>
                 <div className={`UserButton__Menu`} onClick={(e) => e.stopPropagation()}>
-                    <Link to='/user/trades'>
-                        <div>
-                            <Trades height="28px" width="50px" />
-                            Trades
-                        </div>
-                    </Link>
+                
+                        <Link to='/user/trades'>
+                            <div>
+                                <Trades height="28px" width="50px"/>
+                                Trades
+                            </div>
+                        </Link>
+                        
+                        <hr className="hr__UserMenu" />
+                        
+                        <Link to='/user/messages'>
+                            <div>
+                                <Messages height="28px" width="50px"/>
+                                Messages
+                            </div>
+                        </Link>
+                        <hr className="hr__UserMenu" />
 
-                    <hr className="hr__UserMenu" />
+                        <Link to='/user/your_shed'>
+                            <div>
+                                <YourShed height="28px" width="50px"/>
+                                Your Shed
+                            </div>
+                        </Link>
+                        <hr className="hr__UserMenu" />
 
-                    <Link to='/user/messages'>
-                        <div>
-                            <Messages height="28px" width="50px" />
-                            Messages
-                        </div>
-                    </Link>
-                    <hr className="hr__UserMenu" />
+                        <Link to='/postitem'>
+                            <div>
+                                <PostItem height="28px" width="50px"/>
+                                Post an Item
+                            </div>
+                        </Link>
+                        <hr className="hr__UserMenu" />
 
-                    <Link to='/user/your_shed'>
-                        <div>
-                            <YourShed height="28px" width="50px" />
-                            Your Shed
-                        </div>
-                    </Link>
-                    <hr className="hr__UserMenu" />
+                        <Link to='/user/favourites'>
+                            <div>
+                                <Favourites height="28px" width="50px"/>
+                                Favourites
+                            </div>
+                        </Link>
+                        <hr className="hr__UserMenu" />
 
-                    <Link to='/user/account'>
-                        <div>
-                            <PostItem height="28px" width="50px" />
-                            Post an Item
-                        </div>
-                    </Link>
-                    <hr className="hr__UserMenu" />
-
-                    <Link to='/user/favourites'>
-                        <div>
-                            <Favourites height="28px" width="50px" />
-                            Favourites
-                        </div>
-                    </Link>
-                    <hr className="hr__UserMenu" />
-
-                    <Link to='/user/account'>
-                        <div>
-                            <Account height="28px" width="50px" />
-                            Account
-                        </div>
-                    </Link>
-
+                        <Link to='/user/account'>
+                            <div>
+                                <Account height="28px" width="50px"/>
+                                Account
+                            </div>
+                        </Link>
+                        
                 </div>
             </div>
 

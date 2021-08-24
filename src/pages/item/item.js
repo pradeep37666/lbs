@@ -111,9 +111,23 @@ export default function Item(props) {
                 </div>
 
                 <div className="LocationDeliveryCategory">
-                    <div className="LDCIconContainer"><img src={Location} alt="" className="LDCIcon"/></div>{item.city}</div>
-                <div className="LocationDeliveryCategory"><div className="LDCIconContainer"><img src={Delivery} alt="" className="LDCIcon" style={{height: '22px'}}/></div>{item.deliveryOptions === 'delivery' ? 'Delivery Available' : 'Pickup only'}&nbsp;<span className={`${item.deliveryOptions === 'delivery' ? '' : 'Hide'}`}>/</span><span className={`DeliveryFeeText ${item.deliveryOptions === 'delivery' ? '' : 'Hide'}`}>&nbsp;$10 Delivery Fee</span></div>
-                <div className={'LocationDeliveryCategory'}><div className="LDCIconContainer"><img src={Category} alt="" className="LDCIcon"/></div>{item.category}</div>
+                    <div className="LDCIconContainer">
+                        <img src={Location} alt="" className="LDCIcon"/>
+                    </div>
+                    {item.city}
+                </div>
+                <div className="LocationDeliveryCategory">
+                    <div className="LDCIconContainer">
+                        <img src={Delivery} alt="" className="LDCIcon" style={{height: '22px'}}/>
+                    </div>
+                    {item.deliveryOptions === 'delivery' ? 'Delivery Available' : 'Pickup only'}&nbsp;<span className={`${item.deliveryOptions === 'delivery' ? '' : 'Hide'}`}>/</span><span className={`DeliveryFeeText ${item.deliveryOptions === 'delivery' ? '' : 'Hide'}`}>&nbsp;$10 Delivery Fee</span>
+                </div>
+                <div className={'LocationDeliveryCategory'}>
+                    <div className="LDCIconContainer">
+                        <img src={Category} alt="" className="LDCIcon"/>
+                    </div>
+                    {item.category}
+                </div>
 
                 <div className="ItemButtons">
                     <button className="ButtonAvailability"><div className="ItemButtonFlex"><img src={Calendar} alt=""/>Availability</div></button>
