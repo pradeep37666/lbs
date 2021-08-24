@@ -41,25 +41,25 @@ export default function LocationDetails(props) {
                 <div className="LoginText">If you would like to share your shed with users, Little big shed will need to know your location in order for borrowers to find you.</div>
                 <div className="LoginText">You can skip this step and create an account just for borrowing use and update later.</div>
 
-                <div className="LoginHeader" style={{marginBottom: '0'}}>Address</div>
+                <div className="LoginHeader LoginHeader--NoMargin">Address</div>
                 <div className="LoginInputValidationContainer">
                     <input type='text' placeholder='43 Brandon Road Runcorn' className="LoginInput" onBlur={(e) => handleAddress(e, props.setAddress, setAddressValidation)}/>
                     <div className={`triangleLeft ${showValidation("address") ? '' : 'ValidationTextHide'}`} />
                     <ValidationPopup errorText={addressValidation} errorHeader='Invalid Address' hide={showValidation("address")}/>
                 </div>
-                <div className="LoginHeader" style={{marginBottom: '0'}}>City</div>
+                <div className="LoginHeader LoginHeader--NoMargin">City</div>
                 <div className="LoginInputValidationContainer">
                     <input type='text' placeholder='Brisbane' className="LoginInput" onBlur={(e) => handleCity(e, props.setCity, setCityValidation)}/>
                     <div className={`triangleLeft ${showValidation("city") ? '' : 'ValidationTextHide'}`} />
                     <ValidationPopup errorText={cityValidation} errorHeader='Invalid City' hide={showValidation("city")}/>
                 </div>
-                <div className="LoginHeader" style={{marginBottom: '0'}}>Country</div>
+                <div className="LoginHeader LoginHeader--NoMargin">Country</div>
                 <div className="LoginInputValidationContainer">
                     <input type='text' placeholder='Australia' className="LoginInput" onBlur={(e) => handleCountry(e, props.setCountry, setCountryValidation)}/>
                     <div className={`triangleLeft ${showValidation("country") ? '' : 'ValidationTextHide'}`} />
                     <ValidationPopup errorText={countryValidation} errorHeader='Invalid Country' hide={showValidation("country")}/>
                 </div>
-                <div className="LoginHeader" style={{marginBottom: '0'}}>State</div>
+                <div className="LoginHeader LoginHeader--NoMargin">State</div>
                 <div className="LoginInputValidationContainer">
                     <input type='text' placeholder='Qld' className="LoginInput" onBlur={(e) => handleState(e, props.setState, setStateValidation)}/>
                     <div className={`triangleLeft ${showValidation("state") ? '' : 'ValidationTextHide'}`} />

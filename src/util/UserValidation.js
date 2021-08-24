@@ -67,6 +67,28 @@ export const handlePhoneNumber = (e, setPhone, setValidation) => {
     }
 }
 
+export const handlePassword = (e, setPassword, setValidation) => {
+    let passwordInput = e.target.value;
+    if (/^(?=.*[A-Za-z])(?=(?:.*?[0-9]){2})[A-Za-z\d@$!%*#?&]{8,}$/.test(passwordInput)) {
+        setPassword(passwordInput)
+        setValidation("")
+    } else {
+        setPassword("")
+        setValidation("Password must be at least 8 characters, contain 2 numbers and a special character")
+    }
+}
+
+export const handlePasswordConfirm = (e, setConfirmPassword, setValidation, password) => {
+    let passwordInput = e.target.value;
+    if (passwordInput === password) {
+        setConfirmPassword(passwordInput)
+        setValidation("")
+    } else {
+        setConfirmPassword("")
+        setValidation("Passwords must match")
+    }
+}
+
 // End Basic Details
 
 
@@ -159,8 +181,6 @@ export const handleBsb = (e, setBsb, setValidation) => {
     }
 }
 
-
-
 // End Bank Details
 
 // Start Location Details
@@ -216,7 +236,7 @@ export const handleState = (e, setState, setValidation) => {
     if (stateInput.length === 0) {
         setState("")
         setValidation("State is required")
-    } else if (/^([^0-9!@#$%^&*()]*)$/.test(stateInput) && stateInput.length >= 3) {
+    } else if (/^([^0-9!@#$%^&*()]*)$/.test(stateInput)) {
         setState(stateInput)
         setValidation("")
     } else {

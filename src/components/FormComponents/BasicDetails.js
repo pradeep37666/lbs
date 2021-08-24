@@ -4,7 +4,7 @@ import {ReactComponent as CameraIcon} from './../../assets/Icons/CameraIcon.svg'
 import {ReactComponent as ShowPassword} from './../../assets/Icons/ShowPassword.svg';
 import LBSSwitch from '../LBSSwitch/LBSSwitch.js';
 import ValidationPopup from '../ValidationPopup/ValidationPopup.js';
-import { handleFullName, handleEmail, handlePhoneNumber } from '../../util/UserValidation'
+import { handleFullName, handleEmail, handlePhoneNumber, handlePassword, handlePasswordConfirm } from '../../util/UserValidation'
 
 export default function BasicDetails(props) {
 
@@ -36,28 +36,28 @@ export default function BasicDetails(props) {
         }
     }
 
-    const handlePassword = (e) => {
-        let passwordInput = e.target.value;
-        if (/^(?=.*[A-Za-z])(?=(?:.*?[0-9]){2})[A-Za-z\d@$!%*#?&]{8,}$/.test(passwordInput)) {
-            props.setPassword(passwordInput)
-            setPasswordValidation("")
-            if (passwordInput !== props.confirmPassword) setConfirmPasswordValidation("Passwords must match")
-        } else {
-            props.setPassword("")
-            setPasswordValidation("Password must be at least 8 characters, contain 2 numbers and a special character")
-        }
-    }
+    // const handlePassword = (e) => {
+    //     let passwordInput = e.target.value;
+    //     if (/^(?=.*[A-Za-z])(?=(?:.*?[0-9]){2})[A-Za-z\d@$!%*#?&]{8,}$/.test(passwordInput)) {
+    //         props.setPassword(passwordInput)
+    //         setPasswordValidation("")
+    //         // if (passwordInput !== props.confirmPassword) setConfirmPasswordValidation("Passwords must match")
+    //     } else {
+    //         props.setPassword("")
+    //         setPasswordValidation("Password must be at least 8 characters, contain 2 numbers and a special character")
+    //     }
+    // }
 
-    const handlePasswordConfirm = (e) => {
-        let passwordInput = e.target.value;
-        if (passwordInput === props.password) {
-            props.setConfirmPassword(passwordInput)
-            setConfirmPasswordValidation("")
-        } else {
-            props.setConfirmPassword("")
-            setConfirmPasswordValidation("Passwords must match")
-        }
-    }
+    // const handlePasswordConfirm = (e) => {
+    //     let passwordInput = e.target.value;
+    //     if (passwordInput === props.password) {
+    //         props.setConfirmPassword(passwordInput)
+    //         setConfirmPasswordValidation("")
+    //     } else {
+    //         props.setConfirmPassword("")
+    //         setConfirmPasswordValidation("Passwords must match")
+    //     }
+    // }
 
     const handleChange = (e) => {
         if (e.target.files.length) {
@@ -123,7 +123,7 @@ export default function BasicDetails(props) {
                     <div className="LoginHeader">Password</div>
                     <div className="LoginInputValidationContainer">
                     <div className="PasswordInputContainer">
-                        <input type={showPassword ? 'text' : 'password'} className="LoginInput" onBlur={(e) => handlePassword(e)}></input>
+                        <input type={showPassword ? 'text' : 'password'} className="LoginInput" onBlur={(e) => handlePassword(e, props.setPassword, setPasswordValidation)}></input>
                         <ShowPassword className="ShowPasswordIcon" onClick={() => setShowPassword(!showPassword)}/>
                     </div>
                         <div className={`triangleLeft ${showValidation("password") ? '' : 'ValidationTextHide'}`} />
@@ -133,7 +133,7 @@ export default function BasicDetails(props) {
                     <div className="LoginHeader">Confirm Password</div>
                     <div className="LoginInputValidationContainer">
                     <div className="PasswordInputContainer">
-                        <input type={showConfirmPassword ? 'text' : 'password'} className="LoginInput" onBlur={(e) => handlePasswordConfirm(e)}/>
+                        <input type={showConfirmPassword ? 'text' : 'password'} className="LoginInput" onBlur={(e) => handlePasswordConfirm(e, props.setConfirmPassword, setConfirmPasswordValidation, props.password)}/>
                         <ShowPassword className="ShowPasswordIcon" onClick={() => setShowConfirmPassword(!showConfirmPassword)}/>
                     </div>
                     <div className={`triangleLeft ${showValidation("confirmPassword") ? '' : 'ValidationTextHide'}`} />

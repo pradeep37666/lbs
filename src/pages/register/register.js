@@ -12,9 +12,11 @@ import {ReactComponent as Logo} from './../../assets/Logos/LogoRed.svg';
 import Instance from '../../util/axios';
 import { useHistory } from 'react-router-dom';
 import { LoginUser, LogoutUser } from '../../util/UserStore';
+import useGlobalState from '../../util/useGlobalState';
 
 
 export default function Register() {
+    const { dispatch } = useGlobalState()
 
     const [fullName, setFullName] = useState("")
     const [email, setEmail] = useState("")
@@ -99,7 +101,7 @@ export default function Register() {
             console.log(response.data.user)
             console.log(response.data.token)
             if (response.status === 201) {
-                LoginUser(response.data)
+                dispatch({ type: 'setUser', data: response.data.user})
             } else {
                 LogoutUser()
                 alert("an error occurred during registration, please try again")
@@ -164,7 +166,7 @@ export default function Register() {
                 <div className="LoginHeader">Account Created</div>
                 <div className="LoginText">You have successfully created your Little Big Shed account and are now ready to start borrowing!</div>
 
-                <button className="LoginFormButton">Continue</button>
+                <button className="LoginFormButton" onClick={() => history.push({pathname: '/user/account'})}>Continue</button>
 
                 </div>
             </div>
@@ -205,6 +207,7 @@ export default function Register() {
                 setAccNumber={setAccNumber}
                 setBsb={setBsb}
                 setValidated={setValidated}
+                isUpgrade={false}
                 />
             case 'Location Details':
                 return <LocationDetails 
