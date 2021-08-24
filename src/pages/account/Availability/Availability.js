@@ -4,11 +4,12 @@ import './Availability.css'
 import Instance from '../../../util/axios'
 import { GetUser, GetToken } from '../../../util/UserStore'
 import { useHistory } from 'react-router'
+import useGlobalState from '../../../util/useGlobalState'
 
 export default function Availability(props) {
-
+    const { state, dispatch } = useGlobalState()
+    const { user } = state
     const history = useHistory()
-    const user = GetUser()
 
     const [mondayM, setMondayM] = useState(user.monday_am)
     const [mondayA, setMondayA] = useState(user.monday_pm)
@@ -43,40 +44,39 @@ export default function Availability(props) {
             sunday_am: sundayM ? sundayM : user.sunday_am,
             sunday_pm: sundayA ? sundayA : user.sunday_pm,
         }
-
-        Instance.put('user/update', data, { headers: { Authorization: `Bearer ${GetToken()}` } })
-        .then((response) => {
-            console.log(response)
-            let newData = user
-            newData.monday_am = data.monday_am
-            newData.monday_pm = data.monday_pm
-            newData.tuesday_am = data.tuesday_am
-            newData.tuesday_pm = data.tuesday_pm
-            newData.wednesday_am = data.wednesday_am
-            newData.wednesday_pm = data.wednesday_pm
-            newData.thursday_am = data.thursday_am
-            newData.thursday_pm = data.thursday_pm
-            newData.friday_am = data.friday_am
-            newData.friday_pm = data.friday_pm
-            newData.saturday_am = data.saturday_am
-            newData.saturday_pm = data.saturday_pm
-            newData.sunday_am = data.sunday_am
-            newData.sunday_pm = data.sunday_pm
-            localStorage.setItem('user', JSON.stringify(newData))
-            history.go(0)
-        })
-        .catch((error) => {
-            console.log(error)
-        })
+        Instance.put('user/update', data)
+            .then((response) => {
+                console.log(response)
+                let newData = user
+                newData.monday_am = data.monday_am
+                newData.monday_pm = data.monday_pm
+                newData.tuesday_am = data.tuesday_am
+                newData.tuesday_pm = data.tuesday_pm
+                newData.wednesday_am = data.wednesday_am
+                newData.wednesday_pm = data.wednesday_pm
+                newData.thursday_am = data.thursday_am
+                newData.thursday_pm = data.thursday_pm
+                newData.friday_am = data.friday_am
+                newData.friday_pm = data.friday_pm
+                newData.saturday_am = data.saturday_am
+                newData.saturday_pm = data.saturday_pm
+                newData.sunday_am = data.sunday_am
+                newData.sunday_pm = data.sunday_pm
+                dispatch({ type: 'setUser', data: newData })
+                history.go(0)
+            })
+            .catch((error) => {
+                console.log(error)
+            })
     }
 
     return (
         <div className="Availability__Container">
             <div className="LoginHeader">General Product Availability</div>
-                <div className="LoginText LoginTextSmall">Little big shed lets you have control over the days you want to lend out your products.</div>
-                <div className="LoginText LoginTextSmall">Select the days and enter the times you are available for trades.</div>
+            <div className="LoginText LoginTextSmall">Little big shed lets you have control over the days you want to lend out your products.</div>
+            <div className="LoginText LoginTextSmall">Select the days and enter the times you are available for trades.</div>
 
-                <ProductSlots 
+            <ProductSlots
                 setMondayM={setMondayM}
                 setMondayA={setMondayA}
                 mondayM={mondayM}
@@ -105,10 +105,10 @@ export default function Availability(props) {
                 setSundayA={setSundayA}
                 sundayM={sundayM}
                 sundayA={sundayA}
-                />
+            />
 
-                <button className='LoginFormButton' style={{marginBottom: '1em'}} onClick={() => updateAvailability()}>Save</button>
-                <button className='LoginFormButton LoginFormButtonInverted' onClick={props.return}>Cancel Changes</button>
+            <button className='LoginFormButton' style={{ marginBottom: '1em' }} onClick={() => updateAvailability()}>Save</button>
+            <button className='LoginFormButton LoginFormButtonInverted' onClick={props.return}>Cancel Changes</button>
         </div>
     )
 }

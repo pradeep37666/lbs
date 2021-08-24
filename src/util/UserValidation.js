@@ -236,7 +236,7 @@ export const handleState = (e, setState, setValidation) => {
     if (stateInput.length === 0) {
         setState("")
         setValidation("State is required")
-    } else if (/^([^0-9!@#$%^&*()]*)$/.test(stateInput) && stateInput.length >= 3) {
+    } else if (/^([^0-9!@#$%^&*()]*)$/.test(stateInput)) {
         setState(stateInput)
         setValidation("")
     } else {
