@@ -28,6 +28,13 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: #e9d8b4;
   cursor: pointer;
+}
+
+.ItemCircleFocused {
+  border: 1px solid gray;
+}
+
+.ItemCircleSelected {
+  background-color: #e9d8b4;
 }

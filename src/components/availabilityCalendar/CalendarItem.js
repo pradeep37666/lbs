@@ -1,18 +1,27 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import TimeSlotPicker from '../timeSlotPicker/timeSlotPicker'
 import './CalendarItem.css'
-export default function CalendarItem({day, index, onClick}) {
+import { ApplicationContext } from '../../pages/application/Application'
 
+export default function CalendarItem({day, index, expandRow, selected}) {
+    const {selectedStart, setSelectedStart, focused, setFocused} = useContext(ApplicationContext)
+
+
+    const handleClick = () => {
+        setFocused(day.getDate())
+        expandRow()
+    }
 
     return (
         <div 
         key={index} 
-        className="CalendarItem"
+        className={'CalendarItem'}
         style={{ gridColumnStart: index === 0 ? day.getDay() + 1 : null}}
         >
             <div 
-            onClick={onClick}
-            className="ItemCircle"
+            onClick={handleClick}
+            className={`ItemCircle ${selectedStart === day.getDate() && 'ItemCircleSelected'} 
+            ${focused === day.getDate() && 'ItemCircleFocused'}`}
             >
                 <span style={{ height: 'auto'}}>{day.getDate()}</span>
                 <div className="ItemAvailabilityContainer">

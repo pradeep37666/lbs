@@ -9,9 +9,16 @@ import Header from '../../components/header/header'
 import instance from '../../util/axios'
 import './application.css'
 
+export const ApplicationContext = React.createContext()
+
 export default function Application() {
     const [page, setPage] = useState('ItemAvailability')
     const [item, setItem] = useState(null)
+
+    const [selectedStart, setSelectedStart] = useState(5)
+    const [selectedEnd, setSelectedEnd] = useState()
+    const [ focused, setFocused] = useState()
+
     const { itemId } = useParams()
     useEffect(() => {
         const getItem = async () => {
@@ -44,17 +51,18 @@ export default function Application() {
     }
 
     return (
-        <div >
-            <Header />
-            <ApplicationHeader 
-            item={item ? item : null}
-            page={page} 
-            />
-            <div >
-                { renderApplicaiton() }
-            </div>
-            
-            
-        </div>
+        <ApplicationContext.Provider value={{ selectedStart, setSelectedStart, focused, setFocused }}>
+            <div>
+                <Header />
+                <ApplicationHeader 
+                item={item ? item : null}
+                page={page} 
+                />
+                <div >
+                    { renderApplicaiton() }
+                </div>
+            </div>  
+        </ApplicationContext.Provider>
+        
     )
 }
