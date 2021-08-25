@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import ProductSlots from '../../../components/productSlots/productSlots'
 import './Availability.css'
 import Instance from '../../../util/axios'
-import { GetUser, GetToken } from '../../../util/UserStore'
 import { useHistory } from 'react-router'
 import useGlobalState from '../../../util/useGlobalState'
 
@@ -11,57 +10,52 @@ export default function Availability(props) {
     const { user } = state
     const history = useHistory()
 
-    const [mondayM, setMondayM] = useState(user.monday_am)
-    const [mondayA, setMondayA] = useState(user.monday_pm)
-    const [tuesdayM, setTuesdayM] = useState(user.tuesday_am)
-    const [tuesdayA, setTuesdayA] = useState(user.tuesday_pm)
-    const [wednesdayM, setWednesdayM] = useState(user.wednesday_am)
-    const [wednesdayA, setWednesdayA] = useState(user.wednesday_pm)
-    const [thursdayM, setThursdayM] = useState(user.thursday_am)
-    const [thursdayA, setThursdayA] = useState(user.thursday_pm)
-    const [fridayM, setFridayM] = useState(user.friday_am)
-    const [fridayA, setFridayA] = useState(user.friday_pm)
-    const [saturdayM, setSaturdayM] = useState(user.saturday_am)
-    const [saturdayA, setSaturdayA] = useState(user.saturday_pm)
-    const [sundayM, setSundayM] = useState(user.sunday_am)
-    const [sundayA, setSundayA] = useState(user.sunday_pm)
+    const [mondayM, setMondayM] = useState(user.available.charAt(0) === '1' ? true : false)
+    const [mondayA, setMondayA] = useState(user.available.charAt(1) === '1' ? true : false)
+    const [tuesdayM, setTuesdayM] = useState(user.available.charAt(2) === '1' ? true : false)
+    const [tuesdayA, setTuesdayA] = useState(user.available.charAt(3) === '1' ? true : false)
+    const [wednesdayM, setWednesdayM] = useState(user.available.charAt(4) === '1' ? true : false)
+    const [wednesdayA, setWednesdayA] = useState(user.available.charAt(5) === '1' ? true : false)
+    const [thursdayM, setThursdayM] = useState(user.available.charAt(6) === '1' ? true : false)
+    const [thursdayA, setThursdayA] = useState(user.available.charAt(7) === '1' ? true : false)
+    const [fridayM, setFridayM] = useState(user.available.charAt(8) === '1' ? true : false)
+    const [fridayA, setFridayA] = useState(user.available.charAt(9) === '1' ? true : false)
+    const [saturdayM, setSaturdayM] = useState(user.available.charAt(10) === '1' ? true : false)
+    const [saturdayA, setSaturdayA] = useState(user.available.charAt(11) === '1' ? true : false)
+    const [sundayM, setSundayM] = useState(user.available.charAt(12) === '1' ? true : false)
+    const [sundayA, setSundayA] = useState(user.available.charAt(13) === '1' ? true : false)
+
+    const formatAvailability = () => {
+        var string = ''
+
+        string = string.concat(mondayM ? '1' : '0')
+        string = string.concat(mondayA ? '1' : '0')
+        string = string.concat(tuesdayM ? '1' : '0')
+        string = string.concat(tuesdayA ? '1' : '0')
+        string = string.concat(wednesdayM ? '1' : '0')
+        string = string.concat(wednesdayA ? '1' : '0')
+        string = string.concat(thursdayM ? '1' : '0')
+        string = string.concat(thursdayA ? '1' : '0')
+        string = string.concat(fridayM ? '1' : '0')
+        string = string.concat(fridayA ? '1' : '0')
+        string = string.concat(saturdayM ? '1' : '0')
+        string = string.concat(saturdayA ? '1' : '0')
+        string = string.concat(sundayM ? '1' : '0')
+        string = string.concat(sundayA ? '1' : '0')
+
+        return string
+    }
 
     const updateAvailability = () => {
 
         const data = {
-            monday_am: mondayM ? mondayM : user.monday_am,
-            monday_pm: mondayA ? mondayA : user.monday_pm,
-            tuesday_am: tuesdayM ? tuesdayM : user.tuesday_am,
-            tuesday_pm: tuesdayA ? tuesdayA : user.tuesday_pm,
-            wednesday_am: wednesdayM ? wednesdayM : user.wednesday_am,
-            wednesday_pm: wednesdayA ? wednesdayA : user.wednesday_pm,
-            thursday_am: thursdayM ? thursdayM : user.thursday_am,
-            thursday_pm: thursdayA ? thursdayA : user.thursday_pm,
-            friday_am: fridayM ? fridayM : user.friday_am,
-            friday_pm: fridayA ? fridayA : user.friday_pm,
-            saturday_am: saturdayM ? saturdayM : user.saturday_am,
-            saturday_pm: saturdayA ? saturdayA : user.saturday_pm,
-            sunday_am: sundayM ? sundayM : user.sunday_am,
-            sunday_pm: sundayA ? sundayA : user.sunday_pm,
+            available: formatAvailability()
         }
         Instance.put('user/update', data)
             .then((response) => {
                 console.log(response)
                 let newData = user
-                newData.monday_am = data.monday_am
-                newData.monday_pm = data.monday_pm
-                newData.tuesday_am = data.tuesday_am
-                newData.tuesday_pm = data.tuesday_pm
-                newData.wednesday_am = data.wednesday_am
-                newData.wednesday_pm = data.wednesday_pm
-                newData.thursday_am = data.thursday_am
-                newData.thursday_pm = data.thursday_pm
-                newData.friday_am = data.friday_am
-                newData.friday_pm = data.friday_pm
-                newData.saturday_am = data.saturday_am
-                newData.saturday_pm = data.saturday_pm
-                newData.sunday_am = data.sunday_am
-                newData.sunday_pm = data.sunday_pm
+                newData.available = data.available
                 dispatch({ type: 'setUser', data: newData })
                 history.go(0)
             })

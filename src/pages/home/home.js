@@ -20,11 +20,13 @@ export default function Home() {
 
   const [category, setCategory] = useState('Automotive')
 
-  useEffect(() => {
-// Find all Items (empty search)
+  const numItems = 8
 
-  Instance.get('/items/search').then((response) => {
-    setItems(response.data);
+  useEffect(() => {
+  // Find all Items (empty search)
+
+  Instance.get(`/items/search/?limit=${numItems}`).then((response) => {
+    setItems(response.data[0]);
     setLoading(false);
   })
   .catch((error) => {
@@ -101,7 +103,7 @@ export default function Home() {
           <div className="ItemCardSection">
             { loading 
             ? <div>Loading items...</div>
-            : items.slice(0, 8).map((item, i) => {
+            : items.map((item, i) => {
               return <ItemCard item={item} key={i}/>
             })
             }

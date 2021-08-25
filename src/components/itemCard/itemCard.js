@@ -10,7 +10,6 @@ import { Link } from 'react-router-dom';
 
 export default function itemCard(props) {
   const item = props.item;
-  console.log(item)
   return (
     <div className="ItemCard">
       {/* new prop for image link to go here later */}

@@ -4,14 +4,16 @@ import PageWrapper from '../../../components/pageWrapper/pageWrapper'
 import Banner from '../../../components/bannerText/bannerText'
 import { ReactComponent as Logo } from '../../../assets/Logos/LogoRed.svg'
 import Instance from '../../../util/axios'
-import { GetUser, GetToken } from '../../../util/UserStore'
+import { GetToken } from '../../../util/UserStore'
 import ValidationPopup from '../../../components/ValidationPopup/ValidationPopup'
 import { handlePassword, handlePasswordConfirm } from '../../../util/UserValidation'
 import { useHistory } from 'react-router'
+import useGlobalState from '../../../util/useGlobalState'
 
 export default function UpdatePassword() {
 
-    const user = GetUser()
+    const { state } = useGlobalState()
+    const { user } = state
     const history = useHistory()
 
     const [title, setTitle] = useState('Current Password')

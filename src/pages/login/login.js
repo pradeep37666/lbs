@@ -31,7 +31,6 @@ export default function Login() {
                 // Add user to global state
                 dispatch({ type: 'setUser', data: response.data.user })
                 localStorage.setItem('token', response.data.token.accessToken)
-                // LoginUser(response.data)
                 setLoginValidation("")
                 history.push({ pathname: '/' })
             }

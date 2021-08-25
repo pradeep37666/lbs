@@ -34,8 +34,11 @@ function App() {
   const { user } = state
   const token = localStorage.getItem('token')
 
-  useEffect(async () => {
-    if (!token) return
+  useEffect(() => {
+    if (!token) {
+      setLoadingUser(false)
+      return
+    } 
     instance.get('/user/me')
       .then(({ data }) => {
         dispatch({ type: 'setUser', data })

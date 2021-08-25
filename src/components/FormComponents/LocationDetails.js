@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import {ReactComponent as Logo} from './../../assets/Logos/LogoRed.svg';
 import ValidationPopup from '../ValidationPopup/ValidationPopup';
 import { handleAddress, handleCity, handleCountry, handleState } from '../../util/UserValidation';
-import { GetUser } from '../../util/UserStore';
+import useGlobalState from '../../util/useGlobalState';
 
 export default function LocationDetails(props) {
 
-    const user = GetUser()
+    const { state } = useGlobalState()
+    const { user } = state
 
     const [addressValidation, setAddressValidation] = useState("")
     const [cityValidation, setCityValidation] = useState("")
