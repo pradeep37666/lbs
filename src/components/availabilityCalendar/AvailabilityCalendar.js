@@ -40,7 +40,7 @@ export default function AvailabilityCalendar({ month }) {
         return rows
     }
     return (
-        <div>
+
             <div className="CalendarContainer">
                 <div className="CalendarRow">
                   {dayArray.map((day, index) => {
@@ -50,7 +50,5 @@ export default function AvailabilityCalendar({ month }) {
                 
                 { renderRows() }
             </div>
-            
-        </div>
     )
 }

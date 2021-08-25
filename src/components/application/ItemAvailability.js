@@ -1,18 +1,17 @@
 import React from 'react'
-import { Calendar, momentLocalizer } from 'react-big-calendar'
-import moment from 'moment'
-
-const localizer = momentLocalizer(moment)
+import AvailabilityCalendar from '../availabilityCalendar/AvailabilityCalendar'
+import './ItemAvailability.css'
 
 export default function ItemAvailability({ handleNextPage }) {
     return (
-        <div>
-            {/* <Calendar 
-            localizer={localizer}
-            /> */}
+        <div >
             Item availability
 
             <button onClick={() => handleNextPage('ItemOptions')}>next</button>
+        <div className="AvailabilityContainer">
+            <AvailabilityCalendar />
+        </div>
+            
         </div>
     )
 }
