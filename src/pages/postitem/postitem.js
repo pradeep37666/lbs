@@ -9,10 +9,14 @@ import LocationDetails from '../../components/FormComponents/LocationDetails'
 import Availability from './PostItemContent/Availability'
 import Complete from './PostItemContent/Complete'
 import useGlobalState from '../../util/useGlobalState'
+import Instance from '../../util/axios'
+import { useHistory } from 'react-router'
+import Geocode from 'react-geocode'
 
 export default function PostItem() {
     const { state } = useGlobalState()
     const { user } = state
+    const history = useHistory()
     
     const [page, setPage] = useState('Basic Details') 
     const [validated, setValidated] = useState(false)
@@ -32,13 +36,55 @@ export default function PostItem() {
     const [country, setCountry] = useState(user.country)
     const [stateL, setStateL] = useState(user.state)
 
-    //set these default to the users default availability
-
     const [availability, setAvailability] = useState(user.available)
+
+    const [lat, setLat] = useState()
+    const [lng, setLng] = useState()
 
     const handleNextPage = (newPage) => {
         setPage(newPage)
         window.scrollTo(0, 0)
+    }
+
+    const checkCoords = () => {
+        
+    }
+
+    // lat and long from geocode api
+    // return item id on save for use on see item button
+
+    const createItem = () => {
+        Instance.post('/items/save', {
+            title: title,
+            category: category,
+            pictures: pictures,
+            description: description,
+            price: price,
+            deliveryPrice: delivery,
+            // extra: discount, ???
+            available: availability,
+            lat: lat,
+            lng: lng,
+            address: address,
+            city: city,
+            country: country,
+            state: state
+        })
+        .then((response) => {
+            console.log(response.data)
+            if (response.status === 201) {
+                console.log('nice we made the item')
+                // idk do something here
+            } else {
+                alert("an error occurred creating your item, please try again")
+                history.push({pathname: '/postitem'})
+            }
+        })
+        .catch((error) => {
+            console.log(error)
+            history.push({pathname: '/postitem'})
+            alert("an error occurred creating your item, please try again")
+        })
     }
 
     const renderSwitch = () => {
@@ -72,13 +118,15 @@ export default function PostItem() {
                 setAddress={setAddress}
                 setCity={setCity}
                 setCountry={setCountry}
-                setState={setStateL}                
+                setState={setStateL}
+                checkCoords={checkCoords}       
                 />
             case 'Availability':
                 return <Availability 
                 validated={validated}
                 handleNextPage={handleNextPage}
                 setAvailability={setAvailability}
+                createItem={createItem}
                 />
             case 'Complete!':
                 return <Complete 
@@ -90,7 +138,11 @@ export default function PostItem() {
                 delivery={delivery}               
                 />
             default:
-                return 'yes barhjsic'
+                return <BasicDetails 
+                validated={validated}
+                handleNextPage={handleNextPage}
+                setTitle={setTitle}
+                setCategory={setCategory} />
         }
     }
 
