@@ -38,6 +38,8 @@ export default function PostItem() {
 
     const [availability, setAvailability] = useState(user.available)
 
+    const [itemID, setItemID] = useState(null)
+
     const [lat, setLat] = useState(0)
     const [lng, setLng] = useState(0)
 
@@ -87,14 +89,12 @@ export default function PostItem() {
             address: address,
             city: city,
             country: country,
-            state: state
+            state: stateL
         })
         .then((response) => {
-            console.log(response)
             console.log(response.data)
             if (response.status === 201) {
-                console.log('nice we made the item')
-                // idk do something here
+                setItemID(response.data.i_id)
             } else {
                 alert("an error occurred creating your item, please try again")
                 // history.go(0)
@@ -157,7 +157,8 @@ export default function PostItem() {
                 price={price}
                 city={city}
                 category={category} 
-                delivery={delivery}               
+                delivery={delivery}
+                itemID={itemID}             
                 />
             default:
                 return <BasicDetails 

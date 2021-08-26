@@ -54,6 +54,11 @@ export default function Complete(props) {
                 </div>
                 {/* Goes to newly made item page soon tm */}
                 <button className="LoginFormButton" onClick={() => {
+                    if (!props.itemID) {
+                        return
+                    } else {
+                        history.push({pathname: `/item/${props.itemID}`})
+                    }
                 }} style={{ marginBottom: '1em' }}>See Item</button>
 
             </div>

@@ -75,7 +75,7 @@ export default function LocationDetails(props) {
                 </div>
 
                 <button className={`LoginFormButton ${!props.validated ? 'ButtonDisabled' : ''}`} disabled={!props.validated} onClick={() => {
-                    props.checkCoords()
+                    user ? props.checkCoords() : props.handleNextPage('Availability')
                 }}>Next</button>
                 {user ? '' : <button className="LoginFormButton LoginFormButtonInverted" onClick={() => {
                     wipeState()
