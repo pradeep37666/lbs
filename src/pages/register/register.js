@@ -11,7 +11,7 @@ import TermsConditions from '../../components/FormComponents/TermsConditions';
 import {ReactComponent as Logo} from './../../assets/Logos/LogoRed.svg';
 import Instance from '../../util/axios';
 import { useHistory } from 'react-router-dom';
-import { LoginUser, LogoutUser } from '../../util/UserStore';
+import { LogoutUser } from '../../util/UserStore';
 import useGlobalState from '../../util/useGlobalState';
 
 
@@ -200,34 +200,6 @@ export default function Register() {
                 validated={validated}
                 handleNextPage={handleNextPage}
                 setAvailability={setAvailability}
-                // setMondayM={setMondayM}
-                // setMondayA={setMondayA}
-                // mondayM={mondayM}
-                // mondayA={mondayA}
-                // setTuesdayM={setTuesdayM}
-                // setTuesdayA={setTuesdayA}
-                // tuesdayM={tuesdayM}
-                // tuesdayA={tuesdayA}
-                // setWednesdayM={setWednesdayM}
-                // setWednesdayA={setWednesdayA}
-                // wednesdayM={wednesdayM}
-                // wednesdayA={wednesdayA}
-                // setThursdayM={setThursdayM}
-                // setThursdayA={setThursdayA}
-                // thursdayM={thursdayM}
-                // thursdayA={thursdayA}
-                // setFridayM={setFridayM}
-                // setFridayA={setFridayA}
-                // fridayM={fridayM}
-                // fridayA={fridayA}
-                // setSaturdayM={setSaturdayM}
-                // setSaturdayA={setSaturdayA}
-                // saturdayM={saturdayM}
-                // saturdayA={saturdayA}
-                // setSundayM={setSundayM}
-                // setSundayA={setSundayA}
-                // sundayM={sundayM}
-                // sundayA={sundayA}
                 />
             case 'Terms & Conditions':
                 return <TermsConditions 

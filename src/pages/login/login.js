@@ -4,7 +4,6 @@ import PageWrapper from "./../../components/pageWrapper/pageWrapper.js";
 import { ReactComponent as Logo } from './../../assets/Logos/LogoRed.svg';
 import { Link } from 'react-router-dom';
 import Instance from '../../util/axios';
-import { LoginUser } from '../../util/UserStore';
 import { useHistory } from 'react-router-dom';
 import ValidationPopup from '../../components/ValidationPopup/ValidationPopup';
 import useGlobalState from '../../util/useGlobalState';

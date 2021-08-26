@@ -38,30 +38,49 @@ export default function PostItem() {
 
     const [availability, setAvailability] = useState(user.available)
 
-    const [lat, setLat] = useState()
-    const [lng, setLng] = useState()
+    const [lat, setLat] = useState(0)
+    const [lng, setLng] = useState(0)
 
     const handleNextPage = (newPage) => {
         setPage(newPage)
         window.scrollTo(0, 0)
     }
 
-    const checkCoords = () => {
-        
+    const checkCoords = async () => {
+        Geocode.setApiKey('AIzaSyB98s0INvtxhs22OxCOEIjE_--kb54qhlQ')
+        Geocode.setLanguage('en')
+        Geocode.setRegion('au')
+        Geocode.setLocationType('ROOFTOP')
+        Geocode.enableDebug(false)
+
+        Geocode.fromAddress(address + ' ' + city + ' ' + stateL + ' ' + country)
+        .then((response) => {
+            if (response.results[0].address_components.length >= 6) {
+                const locLat = response.results[0].geometry.location.lat
+                const locLng = response.results[0].geometry.location.lng
+                setLat(locLat)
+                setLng(locLng)
+                handleNextPage('Availability')
+            } else {
+                alert('There was an issue processing this address, please make sure you have correct details in all fields')
+            }
+        })
+        .catch((error) => {
+            console.log(error)
+            alert('There was an issue processing this address, please make sure you have correct details in all fields')
+        })
     }
 
-    // lat and long from geocode api
-    // return item id on save for use on see item button
-
     const createItem = () => {
+        // api call to post the images to the server, should return a key for each image and then we'll use that key in the items/save api
         Instance.post('/items/save', {
             title: title,
             category: category,
-            pictures: pictures,
+            // pictures: pictures,
             description: description,
             price: price,
             deliveryPrice: delivery,
-            // extra: discount, ???
+            discount: discount,
             available: availability,
             lat: lat,
             lng: lng,
@@ -71,18 +90,21 @@ export default function PostItem() {
             state: state
         })
         .then((response) => {
+            console.log(response)
             console.log(response.data)
             if (response.status === 201) {
                 console.log('nice we made the item')
                 // idk do something here
             } else {
                 alert("an error occurred creating your item, please try again")
-                history.push({pathname: '/postitem'})
+                // history.go(0)
             }
         })
         .catch((error) => {
-            console.log(error)
-            history.push({pathname: '/postitem'})
+            console.log(error.response)
+            console.log(error.message)
+            console.log(error.data)
+            // history.go(0)
             alert("an error occurred creating your item, please try again")
         })
     }
@@ -151,31 +173,27 @@ export default function PostItem() {
             case 'Basic Details':
                 if (title && category) {
                     setValidated(true)
-                    console.log(title, category)
                 } else setValidated(false)
                 break
             case 'Item Pictures':
                 if (pictures.length > 0) {
                     setValidated(true)
-                    console.log(pictures)
                 } else setValidated(false)
                 break
             case 'Advanced Details':
                 if (description && price) {
                     setValidated(true)
-                    console.log(description, price, discount, delivery)
                 } else setValidated(false)
                 break
             case 'Item Location':
                 if (address && city && country && stateL) {
                     setValidated(true)
-                    console.log(address, city, country, stateL)
                 } else setValidated(false)
                 break
             case 'Availability':
                 if (availability !== '00000000000000') {
                     setValidated(true)
-                    console.log(availability)
+                    console.log(title, category, description, price, delivery, discount, address, city, country, stateL, availability, lat, lng)
                 } else setValidated(false)
                 break
             case 'Complete!':
@@ -183,7 +201,7 @@ export default function PostItem() {
             default:
                 return '';
         }
-    }, [page, title, category, pictures, description, price, delivery, discount, address, city, country, stateL, availability])
+    }, [page, title, category, pictures, description, price, delivery, discount, address, city, country, stateL, availability, lat, lng])
 
     return (
         <PageWrapper>

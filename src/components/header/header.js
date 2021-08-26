@@ -6,7 +6,6 @@ import Login from './../loginButton/loginButton.js';
 import UserButton from '../UserButton/UserButton';
 import { Link } from 'react-router-dom';
 import { useHistory } from 'react-router';
-import { GetUser } from '../../util/UserStore';
 import useGlobalState from '../../util/useGlobalState';
 
 export default function Header() {

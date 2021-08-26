@@ -66,7 +66,7 @@ export default function Availability(props) {
                     <div className="LoginText LoginTextSmall">You can keep the dates you set up on creation of your Little Big Shed Lender Account, or create a custom set of dates and times for this item.</div>
 
                     <button className="LoginFormButton" onClick={() => {
-                        //handle post item with time slots from user account
+                        props.createItem()
                         props.handleNextPage("Complete!")
                     }} style={{marginBottom: '1em'}}>Keep Set Times</button>
                     <button className="LoginFormButton LoginFormButtonInverted" onClick={() => {
@@ -119,6 +119,7 @@ export default function Availability(props) {
                     <div className="SkipNextButtonFlex">
                         <button className={`LoginFormButton ${!props.validated ? 'ButtonDisabled' : ''}`} disabled={!props.validated} onClick={() => {
                             // handle post the item
+                            props.createItem()
                             props.handleNextPage('Complete!')
                         }}>Next</button>
                     </div>

@@ -50,7 +50,7 @@ export default function AdvancedDetails(props) {
                 </div>
 
                 <div className="LoginHeader">Price ($)</div>
-                <input type='number' min="1" step="any" placeholder='10' className="LoginInput" onBlur={(e) => props.setPrice(e.target.value)}/>
+                <input type='number' min="1" step="any" placeholder='10' className="LoginInput" onBlur={(e) => props.setPrice(parseInt(e.target.value))}/>
 
                 <div className="BecomeLenderFlex">
                         <div className="LoginHeader" style={{width: 'auto'}}>Off Peak Discount</div>
@@ -65,7 +65,7 @@ export default function AdvancedDetails(props) {
                             Give borrowers the ability to borrow an item at a cheaper price in off peak times. The off peak discount is a 5% discount by default.
 
                         </div>
-                        <input type='number' min="1" step="any" placeholder='5% discount' className="LoginInput" onBlur={(e) => props.setDiscount(e.target.value)} />
+                        <input type='number' min="1" step="any" placeholder='5% discount' className="LoginInput" onBlur={(e) => props.setDiscount(parseInt(e.target.value))} />
                         </div>
                     </Fade>
 
@@ -82,7 +82,7 @@ export default function AdvancedDetails(props) {
                 </div>
 
                 <div className="LoginHeader">Price ($)</div>
-                <input type='number' min="1" step="any" placeholder='10' className="LoginInput" onChange={(e) => props.setDelivery(e.target.value)}/>
+                <input type='number' min="1" step="any" placeholder='10' className="LoginInput" onChange={(e) => props.setDelivery(parseInt(e.target.value))}/>
 
                 <button className={`LoginFormButton ${!props.validated ? 'ButtonDisabled' : ''}`} disabled={!props.validated} onClick={() => props.handleNextPage('Item Location')}>Next</button>
 

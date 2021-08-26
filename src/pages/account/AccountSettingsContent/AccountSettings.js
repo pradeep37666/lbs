@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import './AccountSettings.css'
-import { GetUser, GetToken } from '../../../util/UserStore'
 import MissingProfile from '../../../assets/Icons/MissingProfileIcon.png'
 import RatingFiller from '../../../components/ratingFiller/ratingFiller'
 import Instance from '../../../util/axios'
@@ -15,7 +14,7 @@ export default function AccountSettings() {
     const [userProducts, setUserProducts] = useState(0)
 
     useEffect(() => {
-        Instance.get('items/findByUid', { headers: { Authorization: `Bearer ${GetToken()}` } })
+        Instance.get('items/findByUid')
             .then((response) => {
                 if (response.status === 200) {
                     setUserProducts(response.data.length)
