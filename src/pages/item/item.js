@@ -105,31 +105,42 @@ export default function Item(props) {
 
                 <div className="ItemPriceFlex">
                     <div className="ItemPriceTextBig">${item.price}</div>
-                    <div className="ItemRateDiscountFlex">
-                        <div className="ItemDiscountText">*DISCOUNT*% off peak discount</div>
-                    </div>
+                    {item.discount > 0 ?  
+                                <div className="ItemRateDiscountFlex">
+                                    <div className="ItemDiscountText">{item.discount}% off peak discount</div>
+                                </div>
+                    : ''}
+                    
                 </div>
 
                 <div className="LocationDeliveryCategory">
-                    <div className="LDCIconContainer"><img src={Location} alt="" className="LDCIcon"/></div>{item.city}</div>
-                <div className="LocationDeliveryCategory"><div className="LDCIconContainer"><img src={Delivery} alt="" className="LDCIcon" style={{height: '22px'}}/></div>{item.deliveryOptions === 'delivery' ? 'Delivery Available' : 'Pickup only'}&nbsp;<span className={`${item.deliveryOptions === 'delivery' ? '' : 'Hide'}`}>/</span><span className={`DeliveryFeeText ${item.deliveryOptions === 'delivery' ? '' : 'Hide'}`}>&nbsp;$10 Delivery Fee</span></div>
-                <div className={'LocationDeliveryCategory'}><div className="LDCIconContainer"><img src={Category} alt="" className="LDCIcon"/></div>{item.category}</div>
+                    <div className="LDCIconContainer">
+                        <img src={Location} alt="" className="LDCIcon"/>
+                    </div>
+                    {item.city}
+                </div>
+                <div className="LocationDeliveryCategory">
+                    <div className="LDCIconContainer">
+                        <img src={Delivery} alt="" className="LDCIcon" style={{height: '22px'}}/>
+                    </div>
+                    {item.deliveryPrice > 0 ?  
+                    <>Delivery Available /<span className={`DeliveryFeeText`}>&nbsp;${item.deliveryPrice} Delivery Fee</span> </>     
+                    : 
+                    <>Pickup only</>
+                    }
+                </div>
+                <div className={'LocationDeliveryCategory'}>
+                    <div className="LDCIconContainer">
+                        <img src={Category} alt="" className="LDCIcon"/>
+                    </div>
+                    {item.category}
+                </div>
 
                 <div className="ItemButtons">
                     <button className="ButtonAvailability"><div className="ItemButtonFlex"><img src={Calendar} alt=""/>Availability</div></button>
                     <button className="ButtonApply"><div className="ItemButtonFlex"><Profile fill='#ffffff'/>Apply Now</div></button>
                     <button className="ButtonFavourite" style={{padding: '.5em 1em'}}><StarOutline fill='#ffffff'/></button>
                 </div>
-                <hr className="hr"/>
-
-                <div>
-                    <div className="ItemDetailsHeader">Item Details</div>
-                    <div className="ItemDetailsFlex">Brand <div>SCA</div></div>
-                    <div className="ItemDetailsFlex">Build Date <div>2018</div></div>
-                    <div className="ItemDetailsFlex">Condition <div>Fair</div></div>
-                    <div className="ItemDetailsFlex">Strength <div>Heavy Duty</div></div>
-                </div>
-
                 <hr className="hr"/>
 
                 <div className="ItemDetailsHeader">Description</div>

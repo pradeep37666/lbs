@@ -1,14 +1,13 @@
 import React, { useState } from 'react'
-import { GetUser, GetToken } from '../../../../util/UserStore'
-import { useHistory } from 'react-router'
 import Instance from '../../../../util/axios';
 import { handleAddress, handleCity, handleCountry, handleState } from '../../../../util/UserValidation'
 import ValidationPopup from '../../../../components/ValidationPopup/ValidationPopup';
+import useGlobalState from '../../../../util/useGlobalState';
 
 export default function EditLocation() {
-
-    const user = GetUser()
-    const history = useHistory()
+    const globalState = useGlobalState().state
+    const dispatch = useGlobalState().dispatch
+    const { user } = globalState
 
     const [addressValidation, setAddressValidation] = useState("")
     const [cityValidation, setCityValidation] = useState("")
@@ -44,21 +43,20 @@ export default function EditLocation() {
             country: country ? country : user.country,
             state: state ? state : user.state
         }
-    
-        Instance.put('user/update', data, { headers: { Authorization: `Bearer ${GetToken()}` } })
-        .then((response) => {
-            console.log(response)
-            let newData = user
-            newData.address = data.address
-            newData.city = data.city
-            newData.country = data.country
-            newData.state = data.state
-            localStorage.setItem('user', JSON.stringify(newData))
-            history.go(0)
-        })
-        .catch((error) => {
-            console.log(error)
-        })
+        console.log('sending', data)
+        Instance.put('user/update', data)
+            .then((response) => {
+                console.log(response)
+                let newData = user
+                newData.address = data.address
+                newData.city = data.city
+                newData.country = data.country
+                newData.state = data.state
+                dispatch({ type: 'setUser', data: newData })
+            })
+            .catch((error) => {
+                console.log(error)
+            })
 
     }
 
@@ -73,25 +71,25 @@ export default function EditLocation() {
 
             </div>
 
-            <div className="LoginHeader" style={{ marginBottom: '0' }}>Address</div>
+            <div className="LoginHeader LoginHeader--NoMargin">Address</div>
             <div className="LoginInputValidationContainer">
                 <input type='text' placeholder='43 Brandon Road Runcorn' defaultValue={user.address} className="LoginInput" onBlur={(e) => handleAddress(e, setAddress, setAddressValidation)} />
                 <div className={`triangleLeft ${showValidation("address") ? '' : 'ValidationTextHide'}`} />
                 <ValidationPopup errorText={addressValidation} errorHeader='Invalid Address' hide={showValidation("address")} />
             </div>
-            <div className="LoginHeader" style={{ marginBottom: '0' }}>City</div>
+            <div className="LoginHeader LoginHeader--NoMargin">City</div>
             <div className="LoginInputValidationContainer">
                 <input type='text' placeholder='Brisbane' defaultValue={user.city} className="LoginInput" onBlur={(e) => handleCity(e, setCity, setCityValidation)} />
                 <div className={`triangleLeft ${showValidation("city") ? '' : 'ValidationTextHide'}`} />
                 <ValidationPopup errorText={cityValidation} errorHeader='Invalid City' hide={showValidation("city")} />
             </div>
-            <div className="LoginHeader" style={{ marginBottom: '0' }}>Country</div>
+            <div className="LoginHeader LoginHeader--NoMargin">Country</div>
             <div className="LoginInputValidationContainer">
                 <input type='text' placeholder='Australia' defaultValue={user.country} className="LoginInput" onBlur={(e) => handleCountry(e, setCountry, setCountryValidation)} />
                 <div className={`triangleLeft ${showValidation("country") ? '' : 'ValidationTextHide'}`} />
                 <ValidationPopup errorText={countryValidation} errorHeader='Invalid Country' hide={showValidation("country")} />
             </div>
-            <div className="LoginHeader" style={{ marginBottom: '0' }}>State</div>
+            <div className="LoginHeader LoginHeader--NoMargin">State</div>
             <div className="LoginInputValidationContainer">
                 <input type='text' placeholder='Qld' defaultValue={user.state} className="LoginInput" onBlur={(e) => handleState(e, setState, setStateValidation)} />
                 <div className={`triangleLeft ${showValidation("state") ? '' : 'ValidationTextHide'}`} />

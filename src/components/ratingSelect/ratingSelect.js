@@ -11,7 +11,6 @@ import {ReactComponent as StarFilled} from './../../assets/Icons/StarFilled.svg'
 
 const BootstrapInput = withStyles((theme) => ({
   input: {
-    paddingLeft: '1em',
     textAlign: 'left',
     fontSize: '20px',
     fontFamily: ['DMSans, sans-serif'].join(','),

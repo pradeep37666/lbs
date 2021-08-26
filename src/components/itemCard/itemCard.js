@@ -17,7 +17,7 @@ export default function itemCard(props) {
         <img src={PreviewImage} alt={item.title} className="PreviewImage"/>
       </Link>
       <div className="ItemNameText">{item.title}</div>
-      {/* <div className="ItemPriceText">${item.price} <span className="ItemRateText">per {item.rate}</span></div> */}
+      <div className="ItemPriceText">${item.price}</div>
 
       <div className="StatusLocationSection">
         <div className="StatusLocationSection" style={{paddingRight: '30px'}}>

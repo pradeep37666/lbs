@@ -6,14 +6,15 @@ import Login from './../loginButton/loginButton.js';
 import UserButton from '../UserButton/UserButton';
 import { Link } from 'react-router-dom';
 import { useHistory } from 'react-router';
-import { GetUser } from '../../util/UserStore';
+import useGlobalState from '../../util/useGlobalState';
 
 export default function Header() {
 
   const [HeaderSticky, setHeaderSticky] = useState(false)
   const [searchText, setSearchText] = useState('')
   const history = useHistory()
-  const user = GetUser()
+  const { state } = useGlobalState()
+  const { user } = state
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -51,33 +52,33 @@ export default function Header() {
 
   return (
     <div className={`HeaderBar ${HeaderSticky ? 'HeaderBarSticky' : ''}`}>
-      <Link to="/"><img src={Logo} alt="Logo" className="HeaderLogo"/></Link>
-      
+      <Link to="/"><img src={Logo} alt="Logo" className="HeaderLogo" /></Link>
+
 
       <div className="SearchWrapper">
         <form onSubmit={handleSubmit} className="SearchForm">
-        <div className='HeaderSearchDiv'>
-          <input type='text' placeholder="Search for stuff" className='TextInput HeaderSearchInput' style={{padding: '1em 0.6em'}} value={searchText}onChange={(e) => setSearchText(e.target.value)}></input>
-        </div>
-        <Search height="16px"/>
+          <div className='HeaderSearchDiv'>
+            <input type='text' placeholder="Search for stuff" className='TextInput HeaderSearchInput' style={{ padding: '1em 0.6em' }} value={searchText} onChange={(e) => setSearchText(e.target.value)}></input>
+          </div>
+          <Search height="16px" />
         </form>
-      
+
       </div>
 
       <div className="LoginWrapper">
-      {!user ?  
-      <Link to="/login" style={{width: '100%'}}>  
-        <Login /> 
-      </Link>
-      : <UserButton />}
+        {!user ?
+          <Link to="/login" style={{ width: '100%' }}>
+            <Login />
+          </Link>
+          : <UserButton />}
 
 
-        
+
 
       </div>
-      
 
-      
+
+
     </div>
   )
 }

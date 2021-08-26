@@ -18,11 +18,15 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
   const [items, setItems] = useState([]);
 
-  useEffect(() => {
-// Find all Items (empty search)
+  const [category, setCategory] = useState('Automotive')
 
-  Instance.get('/items/search').then((response) => {
-    setItems(response.data);
+  const numItems = 8
+
+  useEffect(() => {
+  // Find all Items (empty search)
+
+  Instance.get(`/items/search/?limit=${numItems}`).then((response) => {
+    setItems(response.data[0]);
     setLoading(false);
   })
   .catch((error) => {
@@ -42,7 +46,7 @@ export default function Home() {
           <div className="SearchSectionFilters">
             <div className="SearchFiltersRowFlex">
               <TextInput width="35%" label="Keywords" fontSize="20px"/>
-              <CategorySelect width="35%" label="Category" fontSize="20px"/>
+              <CategorySelect width="35%" label="Category" setCategory={setCategory}/>
               
               <TextInput width="25%" label="Location / Postcode" fontSize="20px"/>
             </div>
@@ -99,7 +103,7 @@ export default function Home() {
           <div className="ItemCardSection">
             { loading 
             ? <div>Loading items...</div>
-            : items.slice(0, 8).map((item, i) => {
+            : items.map((item, i) => {
               return <ItemCard item={item} key={i}/>
             })
             }

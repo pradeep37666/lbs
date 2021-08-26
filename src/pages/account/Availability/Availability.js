@@ -2,81 +2,75 @@ import React, { useState } from 'react'
 import ProductSlots from '../../../components/productSlots/productSlots'
 import './Availability.css'
 import Instance from '../../../util/axios'
-import { GetUser, GetToken } from '../../../util/UserStore'
 import { useHistory } from 'react-router'
+import useGlobalState from '../../../util/useGlobalState'
 
 export default function Availability(props) {
-
+    const { state, dispatch } = useGlobalState()
+    const { user } = state
     const history = useHistory()
-    const user = GetUser()
 
-    const [mondayM, setMondayM] = useState(null)
-    const [mondayA, setMondayA] = useState(null)
-    const [tuesdayM, setTuesdayM] = useState(null)
-    const [tuesdayA, setTuesdayA] = useState(null)
-    const [wednesdayM, setWednesdayM] = useState(null)
-    const [wednesdayA, setWednesdayA] = useState(null)
-    const [thursdayM, setThursdayM] = useState(null)
-    const [thursdayA, setThursdayA] = useState(null)
-    const [fridayM, setFridayM] = useState(null)
-    const [fridayA, setFridayA] = useState(null)
-    const [saturdayM, setSaturdayM] = useState(null)
-    const [saturdayA, setSaturdayA] = useState(null)
-    const [sundayM, setSundayM] = useState(null)
-    const [sundayA, setSundayA] = useState(null)
+    const [mondayM, setMondayM] = useState(user.available.charAt(0) === '1' ? true : false)
+    const [mondayA, setMondayA] = useState(user.available.charAt(1) === '1' ? true : false)
+    const [tuesdayM, setTuesdayM] = useState(user.available.charAt(2) === '1' ? true : false)
+    const [tuesdayA, setTuesdayA] = useState(user.available.charAt(3) === '1' ? true : false)
+    const [wednesdayM, setWednesdayM] = useState(user.available.charAt(4) === '1' ? true : false)
+    const [wednesdayA, setWednesdayA] = useState(user.available.charAt(5) === '1' ? true : false)
+    const [thursdayM, setThursdayM] = useState(user.available.charAt(6) === '1' ? true : false)
+    const [thursdayA, setThursdayA] = useState(user.available.charAt(7) === '1' ? true : false)
+    const [fridayM, setFridayM] = useState(user.available.charAt(8) === '1' ? true : false)
+    const [fridayA, setFridayA] = useState(user.available.charAt(9) === '1' ? true : false)
+    const [saturdayM, setSaturdayM] = useState(user.available.charAt(10) === '1' ? true : false)
+    const [saturdayA, setSaturdayA] = useState(user.available.charAt(11) === '1' ? true : false)
+    const [sundayM, setSundayM] = useState(user.available.charAt(12) === '1' ? true : false)
+    const [sundayA, setSundayA] = useState(user.available.charAt(13) === '1' ? true : false)
+
+    const formatAvailability = () => {
+        var string = ''
+
+        string = string.concat(mondayM ? '1' : '0')
+        string = string.concat(mondayA ? '1' : '0')
+        string = string.concat(tuesdayM ? '1' : '0')
+        string = string.concat(tuesdayA ? '1' : '0')
+        string = string.concat(wednesdayM ? '1' : '0')
+        string = string.concat(wednesdayA ? '1' : '0')
+        string = string.concat(thursdayM ? '1' : '0')
+        string = string.concat(thursdayA ? '1' : '0')
+        string = string.concat(fridayM ? '1' : '0')
+        string = string.concat(fridayA ? '1' : '0')
+        string = string.concat(saturdayM ? '1' : '0')
+        string = string.concat(saturdayA ? '1' : '0')
+        string = string.concat(sundayM ? '1' : '0')
+        string = string.concat(sundayA ? '1' : '0')
+
+        return string
+    }
 
     const updateAvailability = () => {
 
         const data = {
-            monday_am: mondayM,
-            monday_pm: mondayA,
-            tuesday_am: tuesdayM,
-            tuesday_pm: tuesdayA,
-            wednesday_am: wednesdayM,
-            wednesday_pm: wednesdayA,
-            thursday_am: thursdayM,
-            thursday_pm: thursdayA,
-            friday_am: fridayM,
-            friday_pm: fridayA,
-            saturday_am: saturdayM,
-            saturday_pm: saturdayA,
-            sunday_am: sundayM,
-            sunday_pm: sundayA,
+            available: formatAvailability()
         }
-
-        Instance.put('user/update', data, { headers: { Authorization: `Bearer ${GetToken()}` } })
-        .then((response) => {
-            console.log(response)
-            let newData = user
-            newData.monday_am = data.monday_am
-            newData.monday_pm = data.monday_pm
-            newData.tuesday_am = data.tuesday_am
-            newData.tuesday_pm = data.tuesday_pm
-            newData.wednesday_am = data.wednesday_am
-            newData.wednesday_pm = data.wednesday_pm
-            newData.thursday_am = data.thursday_am
-            newData.thursday_pm = data.thursday_pm
-            newData.friday_am = data.friday_am
-            newData.friday_pm = data.friday_pm
-            newData.saturday_am = data.saturday_am
-            newData.saturday_pm = data.saturday_pm
-            newData.sunday_am = data.sunday_am
-            newData.sunday_pm = data.sunday_pm
-            localStorage.setItem('user', JSON.stringify(newData))
-            history.go(0)
-        })
-        .catch((error) => {
-            console.log(error)
-        })
+        Instance.put('user/update', data)
+            .then((response) => {
+                console.log(response)
+                let newData = user
+                newData.available = data.available
+                dispatch({ type: 'setUser', data: newData })
+                history.go(0)
+            })
+            .catch((error) => {
+                console.log(error)
+            })
     }
 
     return (
         <div className="Availability__Container">
             <div className="LoginHeader">General Product Availability</div>
-                <div className="LoginText LoginTextSmall">Little big shed lets you have control over the days you want to lend out your products.</div>
-                <div className="LoginText LoginTextSmall">Select the days and enter the times you are available for trades.</div>
+            <div className="LoginText LoginTextSmall">Little big shed lets you have control over the days you want to lend out your products.</div>
+            <div className="LoginText LoginTextSmall">Select the days and enter the times you are available for trades.</div>
 
-                <ProductSlots 
+            <ProductSlots
                 setMondayM={setMondayM}
                 setMondayA={setMondayA}
                 mondayM={mondayM}
@@ -105,10 +99,10 @@ export default function Availability(props) {
                 setSundayA={setSundayA}
                 sundayM={sundayM}
                 sundayA={sundayA}
-                />
+            />
 
-                <button className='LoginFormButton' style={{marginBottom: '1em'}} onClick={() => updateAvailability()}>Save</button>
-                <button className='LoginFormButton LoginFormButtonInverted' onClick={props.return}>Cancel Changes</button>
+            <button className='LoginFormButton' style={{ marginBottom: '1em' }} onClick={() => updateAvailability()}>Save</button>
+            <button className='LoginFormButton LoginFormButtonInverted' onClick={props.return}>Cancel Changes</button>
         </div>
     )
 }
