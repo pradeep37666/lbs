@@ -65,12 +65,12 @@ export default function Home() {
               <div className="PriceFilterContainer">
                 <SelectInput className="PriceFilterSelect" label="$ Max" options={['$10', '$20', '$30', '$40', '$50', '$60', '$70', '$80']}/>
               </div>
-
+{/* 
               <div className="vl"/>
 
               <div className="PriceFilterContainer">
                 <SelectInput className="PriceFilterSelect" label="Rate" options={['Per Day', 'Per Hour']}/>
-              </div>
+              </div> */}
 
             </div>
 

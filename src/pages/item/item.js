@@ -18,7 +18,7 @@ import Instance from '../../util/axios';
 import { useParams } from 'react-router';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
-export default function Item(props) {
+export default function Item() {
     // Pass in number of reviews from backend for use in review carousel + modal
     const params = useParams();
     const [item, setItem] = useState([]);
