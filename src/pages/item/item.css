@@ -288,3 +288,7 @@
 .Hide {
     visibility: hidden;
 }
+
+.ItemPage__Loading__Container {
+    margin: 5em 0;
+}

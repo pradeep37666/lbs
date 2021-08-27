@@ -16,6 +16,7 @@ import ItemImage from './../../assets/Images/search_section_bg.jpg';
 import GoogleMapReact from 'google-map-react';
 import Instance from '../../util/axios';
 import { useParams } from 'react-router';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 export default function Item(props) {
     // Pass in number of reviews from backend for use in review carousel + modal
@@ -96,7 +97,7 @@ export default function Item(props) {
         <PageWrapper>
             {ImageModal ? <ItemImageModal setModal={setImageModal} modal={ImageModal} /> : ''}
             {ReviewModal ? <ItemReviewModal setModal={setReviewModal} modal={ReviewModal} reviews={reviewSamples} /> : ''}
-            {loading ? <div>Loading item data...</div>
+            {loading ? <div className="ItemPage__Loading__Container"><CircularProgress size={75}/></div>
             
         :
         <div className="ItemMainWrapper">
