@@ -1,5 +1,5 @@
 .CalendarContainer {
-  width: 60%;
+  width: 100%;
 }
 .CalendarRow {
   display: grid;

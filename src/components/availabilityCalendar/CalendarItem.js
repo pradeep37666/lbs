@@ -4,11 +4,10 @@ import './CalendarItem.css'
 import { ApplicationContext } from '../../pages/application/Application'
 
 export default function CalendarItem({day, index, expandRow, selected}) {
-    const {selectedStart, setSelectedStart, focused, setFocused} = useContext(ApplicationContext)
+    const {selectedStart, setSelectedStart, focused } = useContext(ApplicationContext)
 
 
     const handleClick = () => {
-        setFocused(day.getDate())
         expandRow()
     }
 

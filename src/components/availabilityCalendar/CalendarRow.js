@@ -7,7 +7,7 @@ export default function CalendarRow({ days  }) {
     const [expanded, setExpanded] = useState(false)
     
     const expandRow = () => {
-
+        setExpanded(!expanded)
     }
     
     return (
@@ -18,7 +18,7 @@ export default function CalendarRow({ days  }) {
                 expandRow={expandRow}
                 day={day} 
                 index={index} 
-
+                key={index}
                 />)
             })}
             { expanded && 

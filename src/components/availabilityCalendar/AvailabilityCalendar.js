@@ -4,7 +4,7 @@ import CalendarItem from './CalendarItem';
 import CalendarRow from './CalendarRow';
 import { ApplicationContext } from '../../pages/application/Application';
 
-export default function AvailabilityCalendar({ month }) {
+export default function AvailabilityCalendar({ month, year }) {
 
     function getDaysInMonth(month, year) {
         var date = new Date(year, month, 1);
@@ -17,7 +17,7 @@ export default function AvailabilityCalendar({ month }) {
       }
     const dayArray = ['Su','Mo','Tu','We','Th','Fr','Sa' ]
 
-    const days = getDaysInMonth(5, 2021)
+    const days = getDaysInMonth(month, year)
 
     const renderRows = () => {
         const rows = []
@@ -37,12 +37,13 @@ export default function AvailabilityCalendar({ month }) {
             }
 
         }
-        console.log(rows)
         return rows
     }
+    const monthArray = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
     return (
-
-            <div className="CalendarContainer">
+        <div className="CalendarContainer">
+            <h2>{monthArray[month]}</h2>
+            <div >
                 <div className="CalendarRow">
                     {dayArray.map((day, index) => {
                         return <div key={index}>{day}</div>
@@ -51,5 +52,6 @@ export default function AvailabilityCalendar({ month }) {
                 
                 { renderRows() }
             </div>
+        </div>
     )
 }

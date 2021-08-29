@@ -4,8 +4,7 @@ import ApplicationHeader from '../../components/application/ApplicationHeader'
 import ItemAvailability from '../../components/application/ItemAvailability'
 import ItemOptions from '../../components/application/ItemOptions'
 import ItemOverview from '../../components/application/ItemOverview'
-import AvailabilityCalendar from '../../components/availabilityCalendar/AvailabilityCalendar'
-import Header from '../../components/header/header'
+import PageWrapper from '../../components/pageWrapper/pageWrapper'
 import instance from '../../util/axios'
 import './application.css'
 
@@ -14,13 +13,20 @@ export const ApplicationContext = React.createContext()
 export default function Application() {
     const [page, setPage] = useState('ItemAvailability')
     const [item, setItem] = useState(null)
+    const [currentDate, setCurrentDate] = useState()
+    const [currentMonth, setCurrentMonth] = useState()
+    const [currentYear, setCurrentYear] = useState()
 
     const [selectedStart, setSelectedStart] = useState(5)
     const [selectedEnd, setSelectedEnd] = useState()
-    const [ focused, setFocused] = useState()
 
     const { itemId } = useParams()
     useEffect(() => {
+        const today = new Date()
+        setCurrentDate(today.getDate())
+        setCurrentMonth(today.getMonth())
+        setCurrentYear(today.getFullYear())
+
         const getItem = async () => {
             const { data, status } = await instance.get(`/items/findByIid?i_id=${itemId}`)
             console.log(data)
@@ -51,17 +57,16 @@ export default function Application() {
     }
 
     return (
-        <ApplicationContext.Provider value={{ selectedStart, setSelectedStart, focused, setFocused }}>
-            <div>
-                <Header />
-                <ApplicationHeader 
-                item={item ? item : null}
-                page={page} 
-                />
-                <div >
-                    { renderApplicaiton() }
-                </div>
-            </div>  
+        <ApplicationContext.Provider value={{ selectedStart, setSelectedStart, currentDate, currentMonth, currentYear }}>
+            <PageWrapper>
+            <ApplicationHeader 
+            item={item ? item : null}
+            page={page} 
+            />
+            <div >
+                { renderApplicaiton() }
+            </div>
+            </PageWrapper>
         </ApplicationContext.Provider>
         
     )

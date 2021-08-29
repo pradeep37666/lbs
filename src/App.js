@@ -20,13 +20,8 @@ import {
 } from "react-router-dom";
 import reducer from './util/reducer'
 import instance from './util/axios';
-<<<<<<< HEAD
-import { CometChat } from '@cometchat-pro/chat'
-=======
-import { CometChat } from "@cometchat-pro/chat";
 import Login from './pages/login/login.js';
 import Application from './pages/application/Application';
->>>>>>> 200a83bcf2749e9cf6645abf6d9767852929474f
 
 export const GlobalStateContext = React.createContext()
 
@@ -35,44 +30,12 @@ const initialState = {}
 
 function App() {
 
-  useEffect(() => {
-    const appID = "192324d641d60059";
-      const region = "us";
-      const appSetting = new CometChat.AppSettingsBuilder().subscribePresenceForAllUsers().setRegion(region).build();
-      CometChat.init(appID, appSetting).then(
-        () => {
-          console.log("Initialization completed successfully");
-          cometChatLogin()
-        },
-        error => {
-          console.log("Initialization failed with error:", error);
-          // Check the reason for error and take appropriate action.
-        }
-      );
-      const cometChatLogin = () => {
-        const authKey = "dd531027e3e0dbecbc714f3c5d7e912b9c5397b5";
-        const uid = "SUPERHERO1";
-
-        CometChat.login(uid, authKey).then(
-          user => {
-            console.log("Login Successful:", { user });    
-          },
-          error => {
-            console.log("Login failed with exception:", { error });    
-          }
-      );}
-  },[])
-
-  
-
-
   const [state, dispatch] = useReducer(reducer, initialState)
   const [loadingUser, setLoadingUser] = useState(true)
   const { user } = state
   const token = localStorage.getItem('token')
 
   useEffect(() => {
-    setupCometChat()
     if (!token){
       setLoadingUser(false)
      return 
@@ -86,28 +49,6 @@ function App() {
       })
       .catch((e) => console.log(e))
   }, [])
-
-  const setupCometChat = () => {
-    const appId = process.env.REACT_APP_CHAT_APP_ID
-    let cometChatSettings = new CometChat.AppSettingsBuilder().subscribePresenceForAllUsers().setRegion('us').build();
-    console.log('settings', cometChatSettings)
-    CometChat.init(appId, cometChatSettings)
-    .then(
-      () => {
-        console.log("Initialization completed successfully");
-       },
-       error => {
-        console.log("Initialization failed with error:", error);
-      }
-    );
-    // const user = new CometChat.User('d5953d29-7b59-4ae7-b1e6-038b0adc13e2')
-
-    // user.setName('George Hawkins')
-    // CometChat.createUser(user, process.env.REACT_APP_CHAT_AUTH_KEY)
-    // .then(user => console.log("created comet chat user", user))
-    // .catch(err => console.log(err))
-  }
-
 
   function AuthRoute({ component: Component, ...rest }) {
     return (
