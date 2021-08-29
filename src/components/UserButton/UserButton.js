@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import './UserButton.css'
-import { GetUser } from '../../util/UserStore'
 import MissingProfile from '../../assets/Icons/MissingProfileIcon.png'
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown'
 import { ReactComponent as Trades } from '../../assets/Icons/Trades.svg'

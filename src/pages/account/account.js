@@ -6,7 +6,6 @@ import AccountSettings from './AccountSettingsContent/AccountSettings'
 import TermsConditions from './TermsConditions/TermsConditions'
 import Availability from './Availability/Availability'
 import Instance from '../../util/axios'
-import { GetUser, GetToken } from '../../util/UserStore'
 import useGlobalState from '../../util/useGlobalState'
 
 export default function Account() {

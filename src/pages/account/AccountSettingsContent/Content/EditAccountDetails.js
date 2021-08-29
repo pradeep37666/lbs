@@ -4,7 +4,6 @@ import { handleFullName, handleEmail, handlePhoneNumber } from '../../../../util
 import { ReactComponent as CameraIcon } from '../../../../assets/Icons/CameraIcon.svg';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import LBSSwitch from '../../../../components/LBSSwitch/LBSSwitch'
-import { GetUser, GetToken } from '../../../../util/UserStore'
 import { useHistory } from 'react-router'
 import Instance from '../../../../util/axios';
 import { Link } from 'react-router-dom';
@@ -64,7 +63,7 @@ export default function EditAccountDetails(props) {
             // avatar: image.raw ? image.raw : user.avatar, 
         }
 
-        Instance.put('user/update', data, { headers: { Authorization: `Bearer ${GetToken()}` } })
+        Instance.put('user/update', data)
             .then((response) => {
                 console.log(response)
                 let newData = user

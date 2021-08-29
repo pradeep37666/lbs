@@ -9,7 +9,13 @@ export default function SlotDay(props) {
         props.closeAll();
         props.setOpen(!props.open);
     }
+    const handleMorningClick = () => {
+       props.setMorning(!props.morning)
+    }
 
+    const handleAfternoonClick = () => {
+        props.setAfternoon(!props.afternoon)
+    }
     return (
         <div>
             <div className="DayDotsFlex">
@@ -24,7 +30,7 @@ export default function SlotDay(props) {
                 </div>
             </div>
             {/* this will go in the onclick div to get middle of it and appear there */}
-            {props.open ? <TimeSlotPicker setMorning={props.setMorning} setAfternoon={props.setAfternoon} morning={props.morning} afternoon={props.afternoon}/> : ''}
+            {props.open ? <TimeSlotPicker morningClick={handleMorningClick} afternoonClick={handleAfternoonClick} morning={props.morning} afternoon={props.afternoon}/> : ''}
         </div>
     )
 }

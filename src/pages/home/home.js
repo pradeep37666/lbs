@@ -22,7 +22,7 @@ export default function Home() {
 // Find all Items (empty search)
 
   Instance.get('/items/search').then((response) => {
-    setItems(response.data);
+    setItems(response.data[0]);
     setLoading(false);
   })
   .catch((error) => {

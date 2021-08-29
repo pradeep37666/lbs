@@ -1,0 +1,40 @@
+.CalendarItem {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+}
+.ItemAMAvailability {
+  background-color: #33384f;
+  height: 8px;
+  width: 8px;
+  border-radius: 4px;
+  margin-right: 2px;
+}
+.ItemPMAvailability {
+  background-color: #ac172c;
+  height: 8px;
+  width: 8px;
+  border-radius: 4px;
+}
+.ItemAvailabilityContainer {
+  display: flex;
+}
+.ItemCircle {
+  height: 40px;
+  width: 40px;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.ItemCircleFocused {
+  border: 1px solid gray;
+}
+
+.ItemCircleSelected {
+  background-color: #e9d8b4;
+}

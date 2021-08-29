@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import ProductSlots from '../../../components/productSlots/productSlots'
 import './Availability.css'
 import Instance from '../../../util/axios'
-import { GetUser, GetToken } from '../../../util/UserStore'
 import { useHistory } from 'react-router'
 import useGlobalState from '../../../util/useGlobalState'
 
