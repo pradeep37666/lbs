@@ -164,11 +164,11 @@ export default function SearchFilterBar() {
                 <div className="MainBodyPopout">
                     <div className="RatingFilterHeader">{Rating} Star{Rating === 1 ? '' : 's'}</div>
                     <div className="StarsFlex">
-                        <StarFilled className="StarIcon" fill="#E9D8B4" onClick={() => setRating(1)}/>
-                        {Rating >= 2 ? <StarFilled className="StarIcon" fill="#E9D8B4" onClick={() => setRating(2)}/> : <StarOutline className="StarIcon" onClick={() => setRating(2)}/>}
-                        {Rating >= 3 ? <StarFilled className="StarIcon" fill="#E9D8B4" onClick={() => setRating(3)}/> : <StarOutline className="StarIcon" onClick={() => setRating(3)}/>}
-                        {Rating >= 4 ? <StarFilled className="StarIcon" fill="#E9D8B4" onClick={() => setRating(4)}/> : <StarOutline className="StarIcon" onClick={() => setRating(4)}/>}
-                        {Rating >= 5 ? <StarFilled className="StarIcon" fill="#E9D8B4" onClick={() => setRating(5)}/> : <StarOutline className="StarIcon" onClick={() => setRating(5)}/>}
+                        <StarFilled className="StarIcon StarClick" fill="#E9D8B4" onClick={() => setRating(1)}/>
+                        {Rating >= 2 ? <StarFilled className="StarIcon StarClick" fill="#E9D8B4" onClick={() => setRating(2)}/> : <StarOutline className="StarIcon StarClick" onClick={() => setRating(2)}/>}
+                        {Rating >= 3 ? <StarFilled className="StarIcon StarClick" fill="#E9D8B4" onClick={() => setRating(3)}/> : <StarOutline className="StarIcon StarClick" onClick={() => setRating(3)}/>}
+                        {Rating >= 4 ? <StarFilled className="StarIcon StarClick" fill="#E9D8B4" onClick={() => setRating(4)}/> : <StarOutline className="StarIcon StarClick" onClick={() => setRating(4)}/>}
+                        {Rating >= 5 ? <StarFilled className="StarIcon StarClick" fill="#E9D8B4" onClick={() => setRating(5)}/> : <StarOutline className="StarIcon StarClick" onClick={() => setRating(5)}/>}
                     </div>
                 
                     <div className="SaveButtonFlex">
