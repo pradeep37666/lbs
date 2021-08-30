@@ -5,6 +5,24 @@
     background-color: white;
     width: 100vw;
     display: flex;
-    justify-content: center;
+    align-items: center;
+    flex-direction: column;
     border: 1px solid black
+}
+.ApplicationFooterDetailsContainer {
+    display: flex;
+}
+.ApplicationFooterButtonContainer {
+    display: flex;
+}
+.ApplicationFooterClearButton {
+    cursor: pointer;
+    border: 1px solid #ac172c;
+    border-radius: 10px;
+}
+
+.ApplicationFooterNextButton {
+    cursor: pointer;
+    border: 1px solid black;
+    border-radius: 10px;
 }

@@ -15,7 +15,7 @@ export default function Application() {
     const [page, setPage] = useState('ItemAvailability')
     const [item, setItem] = useState(null)
 
-    const [selectedStart, setSelectedStart] = useState(null)
+    const [selected, setSelected] = useState(null)
     const [confirmedStart, setConfirmedStart] = useState(null)
     const [selectedEnd, setSelectedEnd] = useState(null)
     const [confirmedEnd, setConfirmedEnd] = useState(null)
@@ -56,13 +56,12 @@ export default function Application() {
     }
 
     const handleNextPage = (newPage) => {
-        console.log(newPage)
         setPage(newPage)
         window.scrollTo(0, 0)
     }
 
     return (
-        <ApplicationContext.Provider value={{ selectedStart, setSelectedStart, currentDate, currentMonth, currentYear, confirmedStart, confirmedEnd, setConfirmedStart, setConfirmedEnd }}>
+        <ApplicationContext.Provider value={{ selected, setSelected, currentDate, currentMonth, currentYear, confirmedStart, confirmedEnd, setConfirmedStart, setConfirmedEnd, handleNextPage }}>
             <PageWrapper>
                 <ApplicationHeader 
                 item={item ? item : null}

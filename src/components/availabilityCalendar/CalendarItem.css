@@ -48,7 +48,9 @@
 .Pointer {
   cursor: pointer;
 }
-
+.ItemApplicationPeriod {
+  background: red;
+}
 .ItemUnavailable {
   color: gray;
 

@@ -1,15 +1,18 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import TimeSlotPicker from '../timeSlotPicker/timeSlotPicker'
 import './CalendarItem.css'
 import { ApplicationContext } from '../../pages/application/Application'
+import compareDates from '../../util/compareDates'
 
 export default function CalendarItem({day, index, onClick, isCurrentMonth, unavailable }) {
-    const {selectedStart, currentDate } = useContext(ApplicationContext)
+    const {selected, currentDate, confirmedStart, confirmedEnd } = useContext(ApplicationContext)
 
     const handleClick = () => {
         if(unavailable) return
         onClick(day)
     }
+
+    
     return (
         <div 
         key={index} 
@@ -20,7 +23,10 @@ export default function CalendarItem({day, index, onClick, isCurrentMonth, unava
             onClick={handleClick}
             className={`
             ItemCircle 
-            ${selectedStart && selectedStart.toDateString() === day.toDateString() && 'ItemCircleSelected'} 
+            ${confirmedStart && confirmedEnd && day < confirmedEnd.day && day > confirmedStart.day &&  'ItemApplicationPeriod'}
+            ${selected && compareDates(selected, day) && 'ItemCircleSelected'}
+            ${confirmedEnd && compareDates(confirmedEnd.day, day) && 'ItemCircleSelected'}
+            ${confirmedStart && compareDates(confirmedStart.day, day) && 'ItemCircleSelected'} 
             ${currentDate === day.getDate() && isCurrentMonth && 'ItemCurrentDay'}
             ${unavailable ? 'ItemUnavailable' : 'Pointer'}`}
             >

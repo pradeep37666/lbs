@@ -19,10 +19,7 @@ export default function ItemAvailability({ handleNextPage }) {
         )})
     }
     return (
-        <div >
-            Item availability
-
-            <button onClick={() => handleNextPage('ItemOptions')}>next</button>
+        <div >            
             <div className="AvailabilityContainer">
             {renderMonths()}
             </div>
