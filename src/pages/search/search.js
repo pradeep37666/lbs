@@ -11,6 +11,7 @@ import InputBase from '@material-ui/core/InputBase';
 import ArrowDown from '@material-ui/icons/ExpandMore';
 import Instance from '../../util/axios';
 import { CircularProgress } from '@material-ui/core';
+import { useLocation } from 'react-router';
 
 const BootstrapInput = withStyles((theme) => ({
   input: {
@@ -44,8 +45,8 @@ const useStyles = makeStyles({
   })
 })
 
-export default function Search() {
-  const searchParameters = useParams().searchParams;
+export default function Search(props) {
+  const searchParameters = props.location.pathname
 
   const [searchItems, setSearchItems] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -55,6 +56,7 @@ export default function Search() {
 
   const NumSearchPages = Math.ceil(searchItems.length / 8);
 
+  //format the url query so that it fits the search query
 
   useEffect(() => {
     Instance.get(`/items/search/?keyword=${searchParameters}`).then((response) => {
@@ -64,7 +66,8 @@ export default function Search() {
       .catch((error) => {
         console.log(error);
       })
-  }, [searchParameters]);
+      console.log(searchParameters)
+  }, []);
 
   const getSearchPages = () => {
     let content = [];

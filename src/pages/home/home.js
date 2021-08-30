@@ -12,15 +12,43 @@ import {ReactComponent as HammerIcon} from '../../assets/Icons/HammerIcon.svg';
 import {ReactComponent as CarIcon} from '../../assets/Icons/AutomotiveIcon.svg';
 import {ReactComponent as DrillIcon} from '../../assets/Icons/DrillIcon.svg';
 import Instance from '../../util/axios';
+import { useHistory } from 'react-router';
 
 export default function Home() {
 
   const [loading, setLoading] = useState(true);
   const [items, setItems] = useState([]);
+  const [searchParams, setSearchParams] = useState(null)
+  const history = useHistory()
 
-  const [category, setCategory] = useState('Automotive')
+  const [keywords, setKeywords] = useState('')
+  const [category, setCategory] = useState('')
+  const [location, setLocation] = useState('')
+  const [priceMin, setPriceMin] = useState('')
+  const [priceMax, setPriceMax] = useState('')
+  const [rating, setRating] = useState('')
+  const [delivery, setDelivery] = useState('')
 
   const numItems = 8
+
+  const formatSearchParams = () => {
+    let string = ''
+
+    if (keywords) string = string.concat('keywords=' + keywords)
+    if (category) string = string.concat('&category=' + category)
+    if (location) string = string.concat('&location=' + location)
+    if (priceMin) string = string.concat('&min=' + priceMin)
+    if (priceMax) string = string.concat('&max=' + priceMax)
+    if (rating) string = string.concat('&rating=' + rating)
+    if (delivery) string = string.concat('&delivery=' + delivery)
+
+    setSearchParams(string)
+  }
+
+  const handleSubmit = () => {
+    formatSearchParams()
+    
+  }
 
   useEffect(() => {
   // Find all Items (empty search)
@@ -35,6 +63,14 @@ export default function Home() {
   })
   }, []);
 
+  useEffect(() => {
+    if (searchParams) {
+      history.push(`/search/${searchParams}`)
+    } else if (searchParams === '') {
+      history.push(`/search/`)
+    }
+  }, [searchParams])
+
   return (
     <PageWrapper>
 
@@ -45,10 +81,10 @@ export default function Home() {
           <div className="SearchSectionTitle">Let's Find Your Next Borrow</div>
           <div className="SearchSectionFilters">
             <div className="SearchFiltersRowFlex">
-              <TextInput width="35%" label="Keywords" fontSize="20px"/>
+              <TextInput width="35%" label="Keywords" fontSize="20px" onChange={(e) => setKeywords(e.target.value)}/>
               <CategorySelect width="35%" label="Category" setCategory={setCategory}/>
               
-              <TextInput width="25%" label="Location / Postcode" fontSize="20px"/>
+              <TextInput width="25%" label="Location / Postcode" fontSize="20px" onChange={(e) => setLocation(e.target.value)}/>
             </div>
 
             <hr className="DividingLine"/>
@@ -57,32 +93,26 @@ export default function Home() {
 
             <div className="PriceFilterSearch">
               <div className="PriceFilterContainer">
-                <SelectInput className="PriceFilterSelect" borders={false} label="$ Min" options={['$10', '$20', '$30', '$40', '$50', '$60', '$70', '$80']}/>
+                <SelectInput className="PriceFilterSelect" borders={false} label="$ Min" options={['','$10', '$20', '$30', '$40', '$50', '$60', '$70', '$80']} onChange={(e) => setPriceMin(e.target.value)}/>
               </div>
 
               <div className="vl"/>
 
               <div className="PriceFilterContainer">
-                <SelectInput className="PriceFilterSelect" label="$ Max" options={['$10', '$20', '$30', '$40', '$50', '$60', '$70', '$80']}/>
+                <SelectInput className="PriceFilterSelect" label="$ Max" options={['','$10', '$20', '$30', '$40', '$50', '$60', '$70', '$80']} onChange={(e) => setPriceMax(e.target.value)}/>
               </div>
-{/* 
-              <div className="vl"/>
-
-              <div className="PriceFilterContainer">
-                <SelectInput className="PriceFilterSelect" label="Rate" options={['Per Day', 'Per Hour']}/>
-              </div> */}
 
             </div>
 
-            <RatingSelect width="25%" label="Minimum Rating" fontSize="20px"/>
+            <RatingSelect width="25%" label="Minimum Rating" fontSize="20px" onChange={(e) => setRating(e.target.value)}/>
 
-            <SelectInput width="25%" label="Delivery" borders={true} fontSize="20px" options={['Available', 'Unavailable']}/>
+            <SelectInput width="25%" label="Delivery" borders={true} fontSize="20px" options={['' , 'Available', 'Unavailable']} onChange={(e) => setDelivery(e.target.value)}/>
 
             </div>
 
           </div>
           <div>
-          <button className="SearchButtonLarge">
+          <button className="SearchButtonLarge" onClick={handleSubmit}>
             <div className="SearchButtonLargeFlex">
               <img src={SearchIcon} alt="search button" className="SearchIcon35"/>
               <div>Search</div>
