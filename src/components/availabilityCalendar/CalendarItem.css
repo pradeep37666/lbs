@@ -4,19 +4,34 @@
   align-items: center;
   padding: 10px;
 }
-.ItemAMAvailability {
+.ItemAMAvailable {
   background-color: #33384f;
   height: 8px;
   width: 8px;
   border-radius: 4px;
   margin-right: 2px;
 }
-.ItemPMAvailability {
+.ItemPMAvailable {
   background-color: #ac172c;
   height: 8px;
   width: 8px;
   border-radius: 4px;
 }
+
+.ItemAMUnavailable {
+  background-color: gray;
+  height: 8px;
+  width: 8px;
+  border-radius: 4px;
+  margin-right: 2px;
+}
+.ItemPMUnavailable {
+  background-color: gray;
+  height: 8px;
+  width: 8px;
+  border-radius: 4px;
+}
+
 .ItemAvailabilityContainer {
   display: flex;
 }
@@ -28,10 +43,17 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  font-weight: 700;
+}
+.Pointer {
   cursor: pointer;
 }
 
-.ItemCircleFocused {
+.ItemUnavailable {
+  color: gray;
+
+}
+.ItemCurrentDay {
   border: 1px solid gray;
 }
 

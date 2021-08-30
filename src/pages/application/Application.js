@@ -6,6 +6,7 @@ import ItemOptions from '../../components/application/ItemOptions'
 import ItemOverview from '../../components/application/ItemOverview'
 import PageWrapper from '../../components/pageWrapper/pageWrapper'
 import instance from '../../util/axios'
+import ApplicationFooter from '../../components/application/ApplicationFooter'
 import './application.css'
 
 export const ApplicationContext = React.createContext()
@@ -17,7 +18,7 @@ export default function Application() {
     const [currentMonth, setCurrentMonth] = useState()
     const [currentYear, setCurrentYear] = useState()
 
-    const [selectedStart, setSelectedStart] = useState(5)
+    const [selectedStart, setSelectedStart] = useState(1)
     const [selectedEnd, setSelectedEnd] = useState()
 
     const { itemId } = useParams()
@@ -59,14 +60,15 @@ export default function Application() {
     return (
         <ApplicationContext.Provider value={{ selectedStart, setSelectedStart, currentDate, currentMonth, currentYear }}>
             <PageWrapper>
-            <ApplicationHeader 
-            item={item ? item : null}
-            page={page} 
-            />
-            <div >
-                { renderApplicaiton() }
-            </div>
+                <ApplicationHeader 
+                item={item ? item : null}
+                page={page} 
+                />
+                <div >
+                    { renderApplicaiton() }
+                </div>
             </PageWrapper>
+            { selectedStart && <ApplicationFooter />}
         </ApplicationContext.Provider>
         
     )

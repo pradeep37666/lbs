@@ -3,13 +3,20 @@ import CalendarItem from './CalendarItem'
 import TimeSlotPicker from '../timeSlotPicker/timeSlotPicker'
 import { ApplicationContext } from '../../pages/application/Application'
 
-export default function CalendarRow({ days  }) {
+export default function CalendarRow({ days, isCurrentMonth }) {
     const [expanded, setExpanded] = useState(false)
     
     const expandRow = () => {
         setExpanded(!expanded)
     }
     
+    const handleMorningClick = () => {
+        
+    }
+
+    const handleAfternoonClick = () => {
+
+    }
     return (
         <div className={`CalendarRow ${expanded && 'CalendarRowExpanded'}`}>
             { days.map((day, index) => {
@@ -19,11 +26,15 @@ export default function CalendarRow({ days  }) {
                 day={day} 
                 index={index} 
                 key={index}
+                isCurrentMonth={isCurrentMonth}
+                unavailable={isCurrentMonth}
                 />)
             })}
             { expanded && 
             <div className="CalendarPadding">
-                <TimeSlotPicker />
+                <TimeSlotPicker 
+                
+                />
             </div>}
         </div>
     )

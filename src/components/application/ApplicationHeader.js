@@ -5,7 +5,13 @@ export default function ApplicationHeader({ page, item }) {
     const renderContent = () => {
         switch(page) {
             case 'ItemAvailability' : {
-                return <h1>Apply For Product - Select pick up date and time</h1>
+                return (
+                    <div className="HeaderTextContainer">
+                        <h2>Apply For Product</h2> 
+                        <p> - Select pick up date and time</p>
+                    </div>
+                   
+                )
                 break
             }
             case 'ItemOptions' : {

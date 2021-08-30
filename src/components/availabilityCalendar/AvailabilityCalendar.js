@@ -5,6 +5,7 @@ import CalendarRow from './CalendarRow';
 import { ApplicationContext } from '../../pages/application/Application';
 
 export default function AvailabilityCalendar({ month, year }) {
+    const { currentMonth } = useContext(ApplicationContext)
 
     function getDaysInMonth(month, year) {
         var date = new Date(year, month, 1);
@@ -26,13 +27,22 @@ export default function AvailabilityCalendar({ month, year }) {
             rowDays.push(days[i])
             // add a new row when there are 7 days in the rowDays array
             if(days[i].getDay() === 6){
-                rows.push(<CalendarRow days={rowDays}/> )
+                rows.push(
+                    <CalendarRow 
+                    isCurrentMonth={currentMonth === month}
+                    days={rowDays}
+                    /> 
+                )
                 rowDays = []
                 continue
             }
             // add a last row if there are now enough days to make a new week
             if(i + 1 === days.length){
-                rows.push(<CalendarRow days={rowDays} />)
+                rows.push(
+                <CalendarRow 
+                days={rowDays} 
+                isCurrentMonth={currentMonth === month}
+                />)
                 break
             }
 

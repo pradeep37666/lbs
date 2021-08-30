@@ -3,11 +3,11 @@ import TimeSlotPicker from '../timeSlotPicker/timeSlotPicker'
 import './CalendarItem.css'
 import { ApplicationContext } from '../../pages/application/Application'
 
-export default function CalendarItem({day, index, expandRow, selected}) {
-    const {selectedStart, setSelectedStart, focused } = useContext(ApplicationContext)
-
+export default function CalendarItem({day, index, expandRow, isCurrentMonth, unavailable }) {
+    const {selectedStart, setSelectedStart, currentDate } = useContext(ApplicationContext)
 
     const handleClick = () => {
+        if(unavailable) return
         expandRow()
     }
 
@@ -19,13 +19,16 @@ export default function CalendarItem({day, index, expandRow, selected}) {
         >
             <div 
             onClick={handleClick}
-            className={`ItemCircle ${selectedStart === day.getDate() && 'ItemCircleSelected'} 
-            ${focused === day.getDate() && 'ItemCircleFocused'}`}
+            className={`
+            ItemCircle 
+            ${selectedStart === day.getDate() && 'ItemCircleSelected'} 
+            ${currentDate === day.getDate() && isCurrentMonth && 'ItemCurrentDay'}
+            ${unavailable ? 'ItemUnavailable' : 'Pointer'}`}
             >
                 <span style={{ height: 'auto'}}>{day.getDate()}</span>
                 <div className="ItemAvailabilityContainer">
-                    <div className="ItemAMAvailability"></div>
-                    <div className="ItemPMAvailability"></div>
+                    <div className={`${ unavailable ? 'ItemAMUnavailable' : 'ItemAMAvailable'}`}/>
+                    <div className={`${ unavailable ? 'ItemPMUnavailable' : 'ItemPMAvailable'}`} />
                 </div>
             </div>
         </div>
