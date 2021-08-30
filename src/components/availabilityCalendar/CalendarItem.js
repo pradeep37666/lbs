@@ -3,14 +3,13 @@ import TimeSlotPicker from '../timeSlotPicker/timeSlotPicker'
 import './CalendarItem.css'
 import { ApplicationContext } from '../../pages/application/Application'
 
-export default function CalendarItem({day, index, expandRow, isCurrentMonth, unavailable }) {
-    const {selectedStart, setSelectedStart, currentDate } = useContext(ApplicationContext)
+export default function CalendarItem({day, index, onClick, isCurrentMonth, unavailable }) {
+    const {selectedStart, currentDate } = useContext(ApplicationContext)
 
     const handleClick = () => {
         if(unavailable) return
-        expandRow()
+        onClick(day)
     }
-
     return (
         <div 
         key={index} 
@@ -21,7 +20,7 @@ export default function CalendarItem({day, index, expandRow, isCurrentMonth, una
             onClick={handleClick}
             className={`
             ItemCircle 
-            ${selectedStart === day.getDate() && 'ItemCircleSelected'} 
+            ${selectedStart && selectedStart.toDateString() === day.toDateString() && 'ItemCircleSelected'} 
             ${currentDate === day.getDate() && isCurrentMonth && 'ItemCurrentDay'}
             ${unavailable ? 'ItemUnavailable' : 'Pointer'}`}
             >

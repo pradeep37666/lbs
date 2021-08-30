@@ -14,23 +14,27 @@ export const ApplicationContext = React.createContext()
 export default function Application() {
     const [page, setPage] = useState('ItemAvailability')
     const [item, setItem] = useState(null)
-    const [currentDate, setCurrentDate] = useState()
-    const [currentMonth, setCurrentMonth] = useState()
-    const [currentYear, setCurrentYear] = useState()
 
-    const [selectedStart, setSelectedStart] = useState(1)
-    const [selectedEnd, setSelectedEnd] = useState()
+    const [selectedStart, setSelectedStart] = useState(null)
+    const [confirmedStart, setConfirmedStart] = useState(null)
+    const [selectedEnd, setSelectedEnd] = useState(null)
+    const [confirmedEnd, setConfirmedEnd] = useState(null)
 
     const { itemId } = useParams()
-    useEffect(() => {
-        const today = new Date()
-        setCurrentDate(today.getDate())
-        setCurrentMonth(today.getMonth())
-        setCurrentYear(today.getFullYear())
 
+    const today = new Date()
+    const currentDate = today.getDate()
+    const currentMonth = today.getMonth()
+    const currentYear = today.getFullYear()
+
+    useEffect(() => {
         const getItem = async () => {
             const { data, status } = await instance.get(`/items/findByIid?i_id=${itemId}`)
             console.log(data)
+            // {name}
+            // {item:{name},
+            // yearAa: string}
+
             if(status !== 200) return
             setItem(data)
         }
@@ -58,7 +62,7 @@ export default function Application() {
     }
 
     return (
-        <ApplicationContext.Provider value={{ selectedStart, setSelectedStart, currentDate, currentMonth, currentYear }}>
+        <ApplicationContext.Provider value={{ selectedStart, setSelectedStart, currentDate, currentMonth, currentYear, confirmedStart, confirmedEnd, setConfirmedStart, setConfirmedEnd }}>
             <PageWrapper>
                 <ApplicationHeader 
                 item={item ? item : null}
@@ -68,7 +72,7 @@ export default function Application() {
                     { renderApplicaiton() }
                 </div>
             </PageWrapper>
-            { selectedStart && <ApplicationFooter />}
+            { confirmedStart && <ApplicationFooter />}
         </ApplicationContext.Provider>
         
     )
