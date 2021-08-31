@@ -66,7 +66,7 @@ const useStyles = makeStyles({
 
 export default function CategorySelect(props) {
   const classes = useStyles(props)
-  const [category, setCategory] = useState("Automotive")
+  const [category, setCategory] = useState("")
 
   const handleChange = (event) => {
     setCategory(event.target.value)
@@ -99,6 +99,7 @@ export default function CategorySelect(props) {
       <label className={`${classes.inputLabel}`}>{props.label}</label>
       <div className="DropDownTitle">{category}</div>
       <hr className="hl"/>
+      <MenuItem value=""><div className="CatIconContainer"></div></MenuItem>
       <MenuItem value="Painting"><div className="CatIconContainer"><PaintingIcon  className="CategoryDDIcon"/></div>Painting</MenuItem>
       <MenuItem value="Office"><div className="CatIconContainer"><OfficeIcon className="CategoryDDIcon"/></div>Office</MenuItem>
       <MenuItem value="Tools"><div className="CatIconContainer"><HammerIcon fill='#ac172c' className="CategoryDDIcon"/></div>Tools</MenuItem>
