@@ -16,12 +16,16 @@ import ItemImage from './../../assets/Images/search_section_bg.jpg';
 import GoogleMapReact from 'google-map-react';
 import Instance from '../../util/axios';
 import { useParams } from 'react-router';
+import useGlobalState from "../../util/useGlobalState"
 
 export default function Item(props) {
     // Pass in number of reviews from backend for use in review carousel + modal
     const params = useParams();
     const [item, setItem] = useState([]);
+    const [favourited,setFavourited]=useState()
     const [loading, setLoading] = useState(true);
+    const {state} = useGlobalState()
+    const {user}= state
     const reviewSamples = [
         ['Blake Dude', '4', 'Cillum nulla cupidatat aute pariatur ad sit tempor consectetur amet culpa labore deserunt sunt. Veniam eiusmod sunt incididunt ullamco fugiat reprehenderit labore. Ipsum irure culpa veniam velit. Elit dolore cillum nulla nulla do nulla Lorem ullamco.'],
         ['Jake Friend', '3', 'Id sunt laboris ad adipisicing ullamco id elit deserunt deserunt ullamco aute enim tempor tempor.'],
@@ -34,7 +38,7 @@ export default function Item(props) {
 
     useEffect(() => {
         // Find the item with the id used in the link
-          Instance.get(`/items/findByIid/?i_id=${params.itemId}`, {headers: { Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QxMjNAdGVzdC5jb20iLCJzdWIiOjcsImlhdCI6MTYyNjE1MTQwNiwiZXhwIjoxNjI3NDQ3NDA2fQ.q6lH_TAJ-P0YxuJDhOrCu3pU5JWTqDrlcbDdbVLu58A`}}).then((response) => {
+          Instance.get(`/items/findByIid/?i_id=${params.itemId}`).then((response) => {
             setItem(response.data.item);
             setLoading(false);
             console.log("item ",response.data.item )
@@ -65,6 +69,13 @@ export default function Item(props) {
         } else {
             (ReviewPage === 1) ? setReviewPage(NumReviewPages) : setReviewPage(ReviewPage - 1);
         }
+    }
+    const handleFavourit =()=>{
+        console.log("posted item ",item)
+        Instance.post(`/liked/save`)
+        .then((data)=>{
+            console.log(data)})
+        .catch((e)=>{console.log(e)})
     }
 
     const getReviews = () => {
@@ -136,12 +147,15 @@ export default function Item(props) {
                     </div>
                     {item.category}
                 </div>
-
-                <div className="ItemButtons">
+               { (user&&user.id==item.u_id)?
+               <button class="editButton">
+                   Edit Item Details
+               </button>:
+               <div className="ItemButtons">
                     <button className="ButtonAvailability"><div className="ItemButtonFlex"><img src={Calendar} alt=""/>Availability</div></button>
                     <button className="ButtonApply"><div className="ItemButtonFlex"><Profile fill='#ffffff'/>Apply Now</div></button>
-                    <button className="ButtonFavourite" style={{padding: '.5em 1em'}}><StarOutline fill='#ffffff'/></button>
-                </div>
+                    <button onClick={handleFavourit} className="ButtonFavourite" style={{padding: '.5em 1em'} }><StarOutline /></button>
+                </div>}
                 <hr className="hr"/>
 
                 <div className="ItemDetailsHeader">Description</div>

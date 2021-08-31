@@ -288,3 +288,22 @@
 .Hide {
     visibility: hidden;
 }
+.marker {
+    width: 39px;
+    height: 39px;
+    border-radius:50%;
+    background:"#B03B4B" ;
+
+}
+.editButton {
+    width:100%;
+    background-color: #33384f;
+    border: none;
+    color:#FFF;
+    font-size: 18px;
+    padding: .5em;
+    border-radius: 10px;
+    outline: none;
+    font-family: 'DMSans', sans-serif;
+    font-size: 18px;
+}
