@@ -38,6 +38,7 @@ export default function Item() {
           Instance.get(`/items/findByIid/?i_id=${params.itemId}`, {headers: { Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QxMjNAdGVzdC5jb20iLCJzdWIiOjcsImlhdCI6MTYyNjE1MTQwNiwiZXhwIjoxNjI3NDQ3NDA2fQ.q6lH_TAJ-P0YxuJDhOrCu3pU5JWTqDrlcbDdbVLu58A`}}).then((response) => {
             setItem(response.data.item);
             setLoading(false);
+            console.log("item ",response.data.item )
           })
           .catch((error) => {
             // handle error
@@ -92,7 +93,7 @@ export default function Item() {
         },
         zoom: 15
       };
-
+    
     return (
         <PageWrapper>
             {ImageModal ? <ItemImageModal setModal={setImageModal} modal={ImageModal} /> : ''}
@@ -204,9 +205,10 @@ export default function Item() {
                 <div className="MapContainer">
                     <GoogleMapReact
                     bootstrapURLKeys={{ key: 'AIzaSyB98s0INvtxhs22OxCOEIjE_--kb54qhlQ' }}
-                    defaultCenter={defaultProps.center}
+                    defaultCenter={{lat: item.lat, lng: item.lng}}
                     defaultZoom={defaultProps.zoom}
                     >
+                    <Marker lat={item.lat} lng={item.lng}/>
                     </GoogleMapReact>
                 </div>
 
@@ -219,5 +221,11 @@ export default function Item() {
         
             }
             </PageWrapper>
+    )
+}
+
+  function Marker(){
+    return(
+        <div style={{width:"39px",height:"39px",borderRadius:"50%", background:"#B03B4B", border:"3px solid #F6EFE6"}}></div>
     )
 }
