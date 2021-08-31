@@ -15,10 +15,20 @@ export default function ApplicationHeader({ page, item }) {
                 break
             }
             case 'ItemOptions' : {
-                return <h1>Book your stuff - Make your borrowing easier</h1>
+                return (
+                    <div className="HeaderTextContainer">
+                        <h2>Book your stuff</h2> 
+                        <p> - Make your borrowing easier</p>
+                    </div>
+                )
             }
             case 'ItemOverview' : {
-                return <h1>Book your stuff - Please check we've got everything right</h1>
+                return (
+                <div className="HeaderTextContainer">
+                    <h2>Book your stuff</h2> 
+                    <p> - Please check we've got everything right</p>
+                </div>
+                )
             }
         }
     }

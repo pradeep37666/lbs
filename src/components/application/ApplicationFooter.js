@@ -3,9 +3,9 @@ import { ApplicationContext } from '../../pages/application/Application'
 import './ApplicationFooter.css'
 
 export default function ApplicationFooter() {
-    const { confirmedStart, confirmedEnd, setConfirmedStart, setConfirmedEnd, setSelected, handleNextPage } = useContext(ApplicationContext)
+    const { page, confirmedStart, confirmedEnd, setConfirmedStart, setConfirmedEnd, setSelected, handleNextPage } = useContext(ApplicationContext)
     const dayArray = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
-    const monthArray = ["January", "February", "March", "April", "June", "July", "August", "September", "October", "November", "December"]
+    const monthArray = ["January", "February", "March", "April","May", "June", "July", "August", "September", "October", "November", "December"]
 
     const clearDates = () => {
         setConfirmedEnd(null)
@@ -23,6 +23,15 @@ export default function ApplicationFooter() {
             default : return date + 'th'
         }
     }
+
+    const handleClick = () => {
+        let route
+        if(page === 'ItemAvailability') route = 'ItemOptions'
+        if(page === 'ItemOptions') route = 'ItemOverview'
+        if(page === 'ItemOverview') route = 'ItemAvailability'
+        handleNextPage(route)
+    }
+
     return (
         <div className="ApplicationFooter">
          <div className="ApplicationFooterContainer">
@@ -31,10 +40,10 @@ export default function ApplicationFooter() {
                 <span>$75</span>
             </div>
             <div className="ApplicationFooterDetailsContainer">
-                <div>
-                    <h3>Collect</h3>
+                <div className="ApplicationFooterDetails">
+                    <p>Collect</p>
                     <div>
-                        {confirmedStart?.am ? '8:00am' : '1:00pm'}
+                        <span className="ApplicationFooterTime">{confirmedStart?.am ? '8:00am' : '1:00pm'}</span>
                         {dayArray[confirmedStart.day.getDay()]}
                     </div>
                     <div>
@@ -45,10 +54,10 @@ export default function ApplicationFooter() {
                 <div>
                     <h2>{'\u2192'}</h2>
                 </div>
-                <div>
-                    <h3>Return</h3>
+                <div className="ApplicationFooterDetails">
+                    <p>Return</p>
                     <div>
-                        {confirmedEnd?.am ? '12:00am' : '5:00pm'}
+                        <span className="ApplicationFooterTime">{confirmedEnd?.am ? '12:00pm' : '5:00pm'}</span>
                         {dayArray[confirmedEnd.day.getDay()]}
                     </div>
                     <div>
@@ -59,10 +68,10 @@ export default function ApplicationFooter() {
             </div>
             <div className="ApplicationFooterButtonContainer">
                 <div onClick={clearDates} className="ApplicationFooterClearButton">
-                    <h3>Clear Dates</h3>
+                    <h4>Clear Dates</h4>
                 </div>
-                <div onClick={() => handleNextPage('ItemOptions')} className="ApplicationFooterNextButton">
-                    <h3>Next</h3>
+                <div onClick={handleClick} className="ApplicationFooterNextButton">
+                    <h4>Next</h4>
                 </div>  
             </div>
             

@@ -24,7 +24,7 @@ export default function CalendarRow({ days, isCurrentMonth }) {
         } else {
             setExpanded(false)
         }
-    },[selected])
+    },[selected, confirmedStart, confirmedEnd])
 
     const handleItemClick = ({ day, availability }) => {  
         console.log(availability)  
@@ -48,10 +48,15 @@ export default function CalendarRow({ days, isCurrentMonth }) {
                 setConfirmedEnd({ day: selected, am: true})
                 return
             }
+            // Clicking on the same time period, clear everything
             setSelected(null)
             setConfirmedStart(null)
             setConfirmedEnd(null)
             return
+        }
+        if(confirmedStart && selected < confirmedStart.day){
+            setConfirmedStart({ day: selected, am: true})
+            return 
         }
         // Start has already been selected, set end point
         if(confirmedStart){
@@ -59,7 +64,6 @@ export default function CalendarRow({ days, isCurrentMonth }) {
             return
         }
         // No start selected, set start point
-        setSelected(null)
         setConfirmedStart({ day: selected, am: true })
         setConfirmedEnd({ day: selected, am: true, sameTimeSlot: true })
     }
@@ -81,6 +85,10 @@ export default function CalendarRow({ days, isCurrentMonth }) {
             setConfirmedStart(null)
             setConfirmedEnd(null)
             return
+        }
+        if(confirmedStart && selected < confirmedStart.day){
+            setConfirmedStart({ day: selected, pm: true})
+            return 
         }
         if(confirmedStart){
             setConfirmedEnd({ day: selected, pm: true })

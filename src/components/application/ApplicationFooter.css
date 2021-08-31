@@ -10,7 +10,6 @@
 
 .ApplicationFooterContainer {
     width: 40%;
-    border: 1px solid blue;
 }
 .ApplicationFooterDetailsContainer {
     display: flex;
@@ -27,6 +26,8 @@
     min-width: 45%;
     display: flex;
     justify-content: center;
+    max-height: 50px;
+    align-items: center;
 }
 
 .ApplicationFooterNextButton {
@@ -35,11 +36,25 @@
     color: white;
     border-radius: 10px;
     min-width: 45%;
+    max-height: 50px;
     display: flex;
     justify-content: center;
+    align-items: center;
 }
 .ApplicationFooterPriceContainer {
     display: flex;
     justify-content: space-between;
-    border: 1px solid black;
+    font-size: large;
+    border-bottom: 1px solid gray;
+}
+.ApplicationFooterDetails {
+    min-width: 45%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.ApplicationFooterTime {
+    color: #ac172c;
+    font-size: 16px;
 }

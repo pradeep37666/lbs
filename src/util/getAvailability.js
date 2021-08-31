@@ -44,9 +44,9 @@ const getAvailability = (dateObj, itemAvailabilityString, yearAvailabilityString
     } else {
         dayIndex = day
     }
-    //
+    const booked = yearAvailabilityString[(yearIndex * 2) - 2] === '0'
     const am = yearAvailabilityString[yearIndex * 2 - 2] === itemAvailabilityString[dayIndex * 2 - 2]
     const pm = yearAvailabilityString[(yearIndex * 2) - 1] === itemAvailabilityString[(dayIndex * 2) - 1]
-    return { am, pm }
+    return { am, pm, booked }
 }
 export default getAvailability

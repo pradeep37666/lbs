@@ -1,7 +1,12 @@
 .OptionsContainer {
-    
+    min-height: 80vh;
 }
-
+.OptionsPrice {
+    color: #ac172c;
+}
 .OptionsItemContainer {
     display: flex;
+    align-items: center;
+    border: 1px solid black;
+    justify-content: space-between;
 }

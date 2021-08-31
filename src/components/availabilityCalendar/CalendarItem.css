@@ -65,3 +65,7 @@
 .ItemCircleSelected {
   background-color: #c6b8c1;
 }
+
+.ItemBooked {
+  opacity: 0;
+}

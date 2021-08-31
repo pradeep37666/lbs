@@ -21,6 +21,9 @@ export default function Application() {
     const [confirmedStart, setConfirmedStart] = useState(null)
     const [confirmedEnd, setConfirmedEnd] = useState(null)
 
+    const [deliverySelected, setDeliverySelected] = useState(false)
+    const [pickupSelected, setPickupSelected] = useState(false)
+
     const { itemId } = useParams()
 
     const today = new Date()
@@ -64,7 +67,7 @@ export default function Application() {
     }
 
     return (
-        <ApplicationContext.Provider value={{ item, selected, setSelected, currentDate, currentMonth, currentYear, confirmedStart, confirmedEnd, setConfirmedStart, setConfirmedEnd, handleNextPage, yearAvailability, itemAvailability }}>
+        <ApplicationContext.Provider value={{ page, item, selected, setSelected, currentDate, currentMonth, currentYear, confirmedStart, confirmedEnd, setConfirmedStart, setConfirmedEnd, handleNextPage, yearAvailability, itemAvailability, setDeliverySelected, setPickupSelected, deliverySelected, pickupSelected }}>
             <PageWrapper>
                 <ApplicationHeader 
                 item={item ? item : null}
