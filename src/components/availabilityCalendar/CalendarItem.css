@@ -59,6 +59,9 @@
   border: 1px solid gray;
 }
 
-.ItemCircleSelected {
+.ItemCircleConfirmed {
   background-color: #e9d8b4;
+}
+.ItemCircleSelected {
+  background-color: #c6b8c1;
 }

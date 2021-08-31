@@ -5,7 +5,24 @@ import { ApplicationContext } from '../../pages/application/Application'
 import compareDates from '../../util/compareDates'
 
 export default function CalendarItem({day, index, onClick, isCurrentMonth, unavailable }) {
+    const [isApplicationPeriod, setIsApplicationPeriod] = useState(false)
     const {selected, currentDate, confirmedStart, confirmedEnd } = useContext(ApplicationContext)
+
+    useEffect(() => {
+        // Clicking outside of the set start and end period
+        if(confirmedStart && !confirmedEnd?.sameTimeSlot && selected > confirmedEnd.day) return
+        // Colors the days in between the set start and end points
+        if(confirmedStart && !confirmedEnd?.sameTimeSlot && day > confirmedStart.day && day < confirmedEnd.day){
+            setIsApplicationPeriod(true)
+            return
+        }
+        // Start is set with no end point
+        if(confirmedStart && selected && day < selected && day > confirmedStart.day){
+            setIsApplicationPeriod(true)
+            return
+        }
+        setIsApplicationPeriod(false)
+    },[selected,confirmedEnd])
 
     const handleClick = () => {
         if(unavailable) return
@@ -23,10 +40,11 @@ export default function CalendarItem({day, index, onClick, isCurrentMonth, unava
             onClick={handleClick}
             className={`
             ItemCircle 
-            ${confirmedStart && confirmedEnd && day < confirmedEnd.day && day > confirmedStart.day &&  'ItemApplicationPeriod'}
+            ${isApplicationPeriod ? 'ItemApplicationPeriod' : null}
+            ${confirmedEnd && compareDates(confirmedEnd.day, day) && 'ItemCircleConfirmed'}
             ${selected && compareDates(selected, day) && 'ItemCircleSelected'}
-            ${confirmedEnd && compareDates(confirmedEnd.day, day) && 'ItemCircleSelected'}
-            ${confirmedStart && compareDates(confirmedStart.day, day) && 'ItemCircleSelected'} 
+            
+            ${confirmedStart && compareDates(confirmedStart.day, day) && 'ItemCircleConfirmed'} 
             ${currentDate === day.getDate() && isCurrentMonth && 'ItemCurrentDay'}
             ${unavailable ? 'ItemUnavailable' : 'Pointer'}`}
             >

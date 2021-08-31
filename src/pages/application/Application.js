@@ -17,7 +17,6 @@ export default function Application() {
 
     const [selected, setSelected] = useState(null)
     const [confirmedStart, setConfirmedStart] = useState(null)
-    const [selectedEnd, setSelectedEnd] = useState(null)
     const [confirmedEnd, setConfirmedEnd] = useState(null)
 
     const { itemId } = useParams()

@@ -1,28 +1,46 @@
-.ApplicationFooterContainer {
+.ApplicationFooter {
     position: sticky;
     bottom: 20px;
     margin-bottom: -100px;
     background-color: white;
-    width: 100vw;
+    width: 100%;
     display: flex;
-    align-items: center;
-    flex-direction: column;
+    justify-content: center;
     border: 1px solid black
+}
+
+.ApplicationFooterContainer {
+    width: 40%;
+    border: 1px solid blue;
 }
 .ApplicationFooterDetailsContainer {
     display: flex;
+    justify-content: space-between;
 }
 .ApplicationFooterButtonContainer {
     display: flex;
+    justify-content: space-between;
 }
 .ApplicationFooterClearButton {
     cursor: pointer;
     border: 1px solid #ac172c;
     border-radius: 10px;
+    min-width: 45%;
+    display: flex;
+    justify-content: center;
 }
 
 .ApplicationFooterNextButton {
     cursor: pointer;
-    border: 1px solid black;
+    background-color: #ac172c;
+    color: white;
     border-radius: 10px;
+    min-width: 45%;
+    display: flex;
+    justify-content: center;
+}
+.ApplicationFooterPriceContainer {
+    display: flex;
+    justify-content: space-between;
+    border: 1px solid black;
 }
