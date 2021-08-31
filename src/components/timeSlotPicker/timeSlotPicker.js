@@ -4,8 +4,7 @@ import {ReactComponent as MorningIcon} from './../../assets/Icons/MorningIcon.sv
 import {ReactComponent as AfternoonIcon} from './../../assets/Icons/AfternoonIcon.svg';
 import {ReactComponent as AfternoonIconRed} from './../../assets/Icons/AfternoonIcon-red.svg';
 
-export default function TimeSlotPicker({ morning, afternoon, morningClick, afternoonClick }) {
-
+export default function TimeSlotPicker({ morning, afternoon, morningClick, afternoonClick, morningUnavailable, afternoonUnavailable }) {
     const handleMorningClick = () => {
         morningClick()
     }
@@ -18,13 +17,20 @@ export default function TimeSlotPicker({ morning, afternoon, morningClick, after
         <div className="PickerMain">
             <div className="PickerHeader">Availability Time Slot</div>
             <div className="MorningAfternoonFlex">
-                <div className={`TimeSlotDiv ${morning ? 'BackgroundMorning' : ''}`} onClick={handleMorningClick}>
+                <div className={`TimeSlotDiv 
+                ${morning ? 'BackgroundMorning' : ''}
+                ${morningUnavailable ? 'MorningUnavailable' : null}`} onClick={handleMorningClick}>
                     <MorningIcon width="100%" height="50%"/>
                     <div className="DayText">Morning</div>
                     <div className="TimeText">8am - 12pm</div>
                     </div>
-                <div className={`TimeSlotDiv ${afternoon ? 'BackgroundAfternoon' : ''}`} onClick={handleAfternoonClick}>
-                    {afternoon ? <AfternoonIcon width="100%" height="50%"/> : <AfternoonIconRed width="100%" height="50%"/>}
+                <div 
+                className={`TimeSlotDiv 
+                ${afternoon ? 'BackgroundAfternoon' : ''}
+                ${afternoonUnavailable ? 'AfternoonUnavailable' : null}`} 
+                onClick={handleAfternoonClick}
+                >
+                    {afternoon ? <AfternoonIcon fill="#fff" stroke="#fff" width="100%" height="50%"/> : <AfternoonIconRed width="100%" height="50%"/>}
                     <div className="DayText">Afternoon</div>
                     <div className="TimeText">1pm - 5pm</div>
                 </div>

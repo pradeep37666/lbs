@@ -14,6 +14,8 @@ export const ApplicationContext = React.createContext()
 export default function Application() {
     const [page, setPage] = useState('ItemAvailability')
     const [item, setItem] = useState(null)
+    const [yearAvailability, setYearAvailability] = useState(null)
+    const [itemAvailability, setItemAvailability] = useState(null)
 
     const [selected, setSelected] = useState(null)
     const [confirmedStart, setConfirmedStart] = useState(null)
@@ -35,7 +37,9 @@ export default function Application() {
             // yearAa: string}
 
             if(status !== 200) return
-            setItem(data)
+            setItem(data.item)
+            setItemAvailability(data.item.available)
+            setYearAvailability(data.yearAvailability)
         }
         getItem()
     },[])
@@ -60,7 +64,7 @@ export default function Application() {
     }
 
     return (
-        <ApplicationContext.Provider value={{ selected, setSelected, currentDate, currentMonth, currentYear, confirmedStart, confirmedEnd, setConfirmedStart, setConfirmedEnd, handleNextPage }}>
+        <ApplicationContext.Provider value={{ item, selected, setSelected, currentDate, currentMonth, currentYear, confirmedStart, confirmedEnd, setConfirmedStart, setConfirmedEnd, handleNextPage, yearAvailability, itemAvailability }}>
             <PageWrapper>
                 <ApplicationHeader 
                 item={item ? item : null}
@@ -69,8 +73,9 @@ export default function Application() {
                 <div >
                     { renderApplicaiton() }
                 </div>
+            { confirmedStart && <ApplicationFooter />}    
             </PageWrapper>
-            { confirmedStart && <ApplicationFooter />}
+            
         </ApplicationContext.Provider>
         
     )

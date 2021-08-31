@@ -3,10 +3,20 @@ import TimeSlotPicker from '../timeSlotPicker/timeSlotPicker'
 import './CalendarItem.css'
 import { ApplicationContext } from '../../pages/application/Application'
 import compareDates from '../../util/compareDates'
+import getAvailability from '../../util/getAvailability'
 
-export default function CalendarItem({day, index, onClick, isCurrentMonth, unavailable }) {
+export default function CalendarItem({day, index, onClick, isCurrentMonth }) {
     const [isApplicationPeriod, setIsApplicationPeriod] = useState(false)
-    const {selected, currentDate, confirmedStart, confirmedEnd } = useContext(ApplicationContext)
+    const [availability, setAvailability] = useState()
+    const {selected, currentDate, confirmedStart, confirmedEnd, yearAvailability, itemAvailability } = useContext(ApplicationContext)
+
+    useEffect(() => {
+        if(!yearAvailability) return
+        setAvailability(getAvailability(day, itemAvailability, yearAvailability))
+    },[yearAvailability])
+        
+    
+    
 
     useEffect(() => {
         // Clicking outside of the set start and end period
@@ -25,8 +35,8 @@ export default function CalendarItem({day, index, onClick, isCurrentMonth, unava
     },[selected,confirmedEnd])
 
     const handleClick = () => {
-        if(unavailable) return
-        onClick(day)
+        if(!availability.am && !availability.pm) return
+        onClick({day, availability})
     }
 
     
@@ -46,12 +56,12 @@ export default function CalendarItem({day, index, onClick, isCurrentMonth, unava
             
             ${confirmedStart && compareDates(confirmedStart.day, day) && 'ItemCircleConfirmed'} 
             ${currentDate === day.getDate() && isCurrentMonth && 'ItemCurrentDay'}
-            ${unavailable ? 'ItemUnavailable' : 'Pointer'}`}
+            ${availability && !availability.am && !availability.pm ? 'ItemUnavailable' : 'Pointer'}`}
             >
                 <span style={{ height: 'auto'}}>{day.getDate()}</span>
                 <div className="ItemAvailabilityContainer">
-                    <div className={`${ unavailable ? 'ItemAMUnavailable' : 'ItemAMAvailable'}`}/>
-                    <div className={`${ unavailable ? 'ItemPMUnavailable' : 'ItemPMAvailable'}`} />
+                    <div className={`${ availability && !availability.am ? 'ItemAMUnavailable' : 'ItemAMAvailable'}`}/>
+                    <div className={`${ availability && !availability.pm ? 'ItemPMUnavailable' : 'ItemPMAvailable'}`} />
                 </div>
             </div>
         </div>

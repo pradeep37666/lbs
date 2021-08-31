@@ -8,6 +8,8 @@ export default function CalendarRow({ days, isCurrentMonth }) {
     const { selected, setSelected, setConfirmedStart, confirmedStart, setConfirmedEnd, confirmedEnd } = useContext(ApplicationContext)
     const [expanded, setExpanded] = useState(false)
     const [morningActive, setMorningActive] = useState(false)
+    const [morningUnavailable, setMorningUnavailable] = useState(false)
+    const [afternoonUnavailable, setAfternoonUnavailable] = useState(false)
     const [afternoonActive, setAfternoonActive] = useState(false)
 
     useEffect(() => {
@@ -24,13 +26,14 @@ export default function CalendarRow({ days, isCurrentMonth }) {
         }
     },[selected])
 
-    const handleItemClick = (day) => {    
+    const handleItemClick = ({ day, availability }) => {  
+        console.log(availability)  
         if(selected && compareDates(selected, day)){
-            console.log('a')
-            setSelected(null) 
-            // setExpanded(!expanded)
+            setSelected(null)
             return
         } 
+        setMorningUnavailable(!availability.am)
+        setAfternoonUnavailable(!availability.pm)
         setSelected(day)
     }
     
@@ -122,6 +125,8 @@ export default function CalendarRow({ days, isCurrentMonth }) {
                 <TimeSlotPicker 
                 morning={morningActive}
                 afternoon={afternoonActive}
+                morningUnavailable={morningUnavailable}
+                afternoonUnavailable={afternoonUnavailable}
                 morningClick={handleMorningClick}
                 afternoonClick={handleAfternoonClick}
                 />

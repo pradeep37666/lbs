@@ -22,7 +22,6 @@ export default function ApplicationFooter() {
             case '3' : return date + 'rd'
             default : return date + 'th'
         }
-        
     }
     return (
         <div className="ApplicationFooter">
