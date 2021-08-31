@@ -38,9 +38,9 @@ useEffect(()=>{
               return <ItemCard item={item} key={i}/>
             })}
             <div className="ItemCard" >
-                <div className="addItemBox">
+                <Link className="addItemBox" to="/postitem">
                     +
-                </div>
+                </Link>
                 <Link className="addItemButton" to="/postitem">Add New Item</Link>
             </div>
             </>
