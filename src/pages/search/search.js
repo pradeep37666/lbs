@@ -58,8 +58,9 @@ export default function Search() {
 
     useEffect(() => {
         // Find all Items (empty search)
+        console.log(searchParameters)
           Instance.get(`/items/search/?keyword=${searchParameters}`).then((response) => {
-            setSearchItems(response.data);
+            setSearchItems(response.data[0]);
             setLoading(false);
           })
           .catch((error) => {

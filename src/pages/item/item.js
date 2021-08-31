@@ -35,7 +35,7 @@ export default function Item(props) {
     useEffect(() => {
         // Find the item with the id used in the link
           Instance.get(`/items/findByIid/?i_id=${params.itemId}`, {headers: { Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QxMjNAdGVzdC5jb20iLCJzdWIiOjcsImlhdCI6MTYyNjE1MTQwNiwiZXhwIjoxNjI3NDQ3NDA2fQ.q6lH_TAJ-P0YxuJDhOrCu3pU5JWTqDrlcbDdbVLu58A`}}).then((response) => {
-            setItem(response.data);
+            setItem(response.data.item);
             setLoading(false);
           })
           .catch((error) => {
