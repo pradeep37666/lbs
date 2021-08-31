@@ -9,9 +9,9 @@ export default function ApplicationFooter() {
     const monthArray = ["January", "February", "March", "April","May", "June", "July", "August", "September", "October", "November", "December"]
 
     const clearDates = () => {
-        dispatch({ type: 'setConfirmedEnd', type: null})
-        dispatch({ type: 'setConfirmedStart', type: null})
-        dispatch({ type: 'setSelectedEnd', type: null})
+        dispatch({ type: 'setConfirmedEnd', data: null})
+        dispatch({ type: 'setConfirmedStart', data: null})
+        dispatch({ type: 'setSelectedEnd', data: null})
     }
 
     const handleDate = (confirmedDate) => {
@@ -83,10 +83,19 @@ export default function ApplicationFooter() {
                 </div>
             </div>
             <div className="ApplicationFooterButtonContainer">
-                <div onClick={clearDates} className="ApplicationFooterClearButton">
+                <div 
+                onClick={clearDates} 
+                className={`ApplicationFooterClearButton
+                ${page === 'ItemAvailability' ? '' : 'ApplicationFooterClearRemoved'}`}
+                
+                >
                     <h4>Clear Dates</h4>
                 </div>
-                <div onClick={handleClick} className="ApplicationFooterNextButton">
+                <div 
+                onClick={handleClick} 
+                className={`ApplicationFooterNextButton
+                ${page === 'ItemAvailability' ? '' : 'ApplicationFooterLargeNextButton'}`}
+                >
                     <h4>Next</h4>
                 </div>  
             </div>

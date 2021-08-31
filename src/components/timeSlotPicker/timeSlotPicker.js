@@ -21,7 +21,7 @@ export default function TimeSlotPicker({ morning, afternoon, morningClick, after
             <div className="MorningAfternoonFlex">
                 <div className={`TimeSlotDiv 
                 ${morning ? 'BackgroundMorning' : ''}
-                ${morningUnavailable ? 'MorningUnavailable' : null}`} onClick={handleMorningClick}>
+                ${morningUnavailable ? 'MorningUnavailable' : 'Pointer'}`} onClick={handleMorningClick}>
                     <MorningIcon width="100%" height="50%"/>
                     <div className="DayText">Morning</div>
                     <div className="TimeText">8am - 12pm</div>
@@ -29,7 +29,7 @@ export default function TimeSlotPicker({ morning, afternoon, morningClick, after
                 <div 
                 className={`TimeSlotDiv 
                 ${afternoon ? 'BackgroundAfternoon' : ''}
-                ${afternoonUnavailable ? 'AfternoonUnavailable' : null}`} 
+                ${afternoonUnavailable ? 'AfternoonUnavailable' : 'Pointer'}`} 
                 onClick={handleAfternoonClick}
                 >
                     {afternoon ? <AfternoonIcon fill="#fff" stroke="#fff" width="100%" height="50%"/> : <AfternoonIconRed width="100%" height="50%"/>}

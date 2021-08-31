@@ -29,7 +29,12 @@
     max-height: 50px;
     align-items: center;
 }
-
+.ApplicationFooterLargeNextButton {
+    width: 100%;
+}
+.ApplicationFooterClearRemoved {
+    display: none
+}
 .ApplicationFooterNextButton {
     cursor: pointer;
     background-color: #ac172c;

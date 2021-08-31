@@ -25,6 +25,7 @@ const initialState = {
 }
 export default function Application() {
     const [state, dispatch] = useReducer(applicationReducer, initialState)
+    console.log(state)
     const { page, item, confirmedStart } = state
  
     const { itemId } = useParams()

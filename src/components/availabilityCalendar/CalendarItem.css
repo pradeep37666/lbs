@@ -49,8 +49,26 @@
   cursor: pointer;
 }
 .ItemApplicationPeriod {
-  background: red;
+  background: rgba(172, 23, 44, 0.12);
+  padding: 0px;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
+
+.ItemApplicationPeriodStart {
+  background: linear-gradient(to right, white 50%, rgba(172, 23, 44, 0.12) 50%); 
+  padding: 0px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.ItemApplicationPeriodEnd {
+  background: linear-gradient(to left, white 50%, rgba(172, 23, 44, 0.12) 50%);
+  padding: 0px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
 .ItemUnavailable {
   color: gray;
 
@@ -64,6 +82,7 @@
 }
 .ItemCircleSelected {
   background-color: #c6b8c1;
+  color: white;
 }
 
 .ItemBooked {

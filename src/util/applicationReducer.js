@@ -73,6 +73,10 @@ const applicationReducer = (state, action) => {
                 currentYear: action.data
             }
         }
+        default : {
+            return state
+        }
+        
     }
 }
 
