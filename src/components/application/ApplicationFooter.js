@@ -3,7 +3,7 @@ import { ApplicationContext } from '../../pages/application/Application'
 import './ApplicationFooter.css'
 
 export default function ApplicationFooter() {
-    const { page, confirmedStart, confirmedEnd, setConfirmedStart, setConfirmedEnd, setSelected, handleNextPage } = useContext(ApplicationContext)
+    const { page, item, confirmedStart, confirmedEnd, setConfirmedStart, setConfirmedEnd, setSelected, handleNextPage } = useContext(ApplicationContext)
     const dayArray = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
     const monthArray = ["January", "February", "March", "April","May", "June", "July", "August", "September", "October", "November", "December"]
 
@@ -32,12 +32,27 @@ export default function ApplicationFooter() {
         handleNextPage(route)
     }
 
+    const calculatePrice = () => {
+        if(confirmedEnd.sameTimeSlot) return item.price
+        const days = confirmedEnd.day.getDate() - confirmedStart.day.getDate()
+        let timeSlots
+        if(confirmedStart?.am && confirmedEnd?.am || confirmedStart?.pm && confirmedEnd?.pm){
+            timeSlots = (days * 2) + 1
+        }
+        if(confirmedStart?.am && confirmedEnd?.pm){
+            timeSlots = (days + 1) * 2
+        }
+        if(confirmedStart?.pm && confirmedEnd?.am){
+            timeSlots = days * 2
+        }
+        return item.price * timeSlots
+    }
     return (
         <div className="ApplicationFooter">
          <div className="ApplicationFooterContainer">
             <div className="ApplicationFooterPriceContainer">
                 <span>Total Price</span>
-                <span>$75</span>
+                <span>${calculatePrice()}</span>
             </div>
             <div className="ApplicationFooterDetailsContainer">
                 <div className="ApplicationFooterDetails">
