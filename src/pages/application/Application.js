@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useReducer } from 'react'
 import { useParams } from 'react-router-dom/cjs/react-router-dom.min'
 import ApplicationHeader from '../../components/application/ApplicationHeader'
 import ItemAvailability from '../../components/application/ItemAvailability'
@@ -7,29 +7,29 @@ import ItemOverview from '../../components/application/ItemOverview'
 import PageWrapper from '../../components/pageWrapper/pageWrapper'
 import instance from '../../util/axios'
 import ApplicationFooter from '../../components/application/ApplicationFooter'
+import applicationReducer from '../../util/applicationReducer'
 import './application.css'
 
 export const ApplicationContext = React.createContext()
 
+const initialState = {
+    page: 'ItemAvailability',
+    item: null,
+    yearAvailability: null,
+    itemAvailability: null,
+    selected: null,
+    confirmedStart: null,
+    confirmedEnd: null,
+    deliverySelected: false,
+    pickupSelected: false
+}
 export default function Application() {
-    const [page, setPage] = useState('ItemAvailability')
-    const [item, setItem] = useState(null)
-    const [yearAvailability, setYearAvailability] = useState(null)
-    const [itemAvailability, setItemAvailability] = useState(null)
-
-    const [selected, setSelected] = useState(null)
-    const [confirmedStart, setConfirmedStart] = useState(null)
-    const [confirmedEnd, setConfirmedEnd] = useState(null)
-
-    const [deliverySelected, setDeliverySelected] = useState(false)
-    const [pickupSelected, setPickupSelected] = useState(false)
-
+    const [state, dispatch] = useReducer(applicationReducer, initialState)
+    const { page, item, confirmedStart } = state
+ 
     const { itemId } = useParams()
 
-    const today = new Date()
-    const currentDate = today.getDate()
-    const currentMonth = today.getMonth()
-    const currentYear = today.getFullYear()
+    
 
     useEffect(() => {
         const getItem = async () => {
@@ -40,11 +40,19 @@ export default function Application() {
             // yearAa: string}
 
             if(status !== 200) return
-            setItem(data.item)
-            setItemAvailability(data.item.available)
-            setYearAvailability(data.yearAvailability)
+            dispatch({ type: 'setItem', data: data.item})
+            dispatch({ type: 'setItemAvailability', data: data.item.available})
+            dispatch({ type: 'setYearAvailability', data: data.yearAvailability})
         }
         getItem()
+
+        const today = new Date()
+        const currentDate = today.getDate()
+        const currentMonth = today.getMonth()
+        const currentYear = today.getFullYear()
+        dispatch({ type: 'setCurrentDate', data: currentDate})
+        dispatch({ type: 'setCurrentMonth', data: currentMonth})
+        dispatch({ type: 'setCurrentYear', data: currentYear})
     },[])
     
     const renderApplicaiton = () => {
@@ -62,12 +70,12 @@ export default function Application() {
     }
 
     const handleNextPage = (newPage) => {
-        setPage(newPage)
+        dispatch({ type: 'setPage', data: newPage})
         window.scrollTo(0, 0)
     }
 
     return (
-        <ApplicationContext.Provider value={{ page, item, selected, setSelected, currentDate, currentMonth, currentYear, confirmedStart, confirmedEnd, setConfirmedStart, setConfirmedEnd, handleNextPage, yearAvailability, itemAvailability, setDeliverySelected, setPickupSelected, deliverySelected, pickupSelected }}>
+        <ApplicationContext.Provider value={{ state, dispatch, handleNextPage}}>
             <PageWrapper>
                 <ApplicationHeader 
                 item={item ? item : null}

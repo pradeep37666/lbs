@@ -4,7 +4,8 @@ import './ItemAvailability.css'
 import { ApplicationContext } from '../../pages/application/Application'
 
 export default function ItemAvailability({ handleNextPage }) {
-    const { currentDay, currentMonth, currentYear } = useContext(ApplicationContext)
+    const { state } = useContext(ApplicationContext)
+    const { currentDay, currentMonth, currentYear } = state
     
 
     const renderMonths = () => {

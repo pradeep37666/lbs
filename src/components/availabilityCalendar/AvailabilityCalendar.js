@@ -5,7 +5,8 @@ import CalendarRow from './CalendarRow';
 import { ApplicationContext } from '../../pages/application/Application';
 
 export default function AvailabilityCalendar({ month, year }) {
-    const { currentMonth } = useContext(ApplicationContext)
+    const { state } = useContext(ApplicationContext)
+    const { currentMonth } = state
 
     function getDaysInMonth(month, year) {
         var date = new Date(year, month, 1);

@@ -9,7 +9,9 @@ export default function CalendarItem({day, index, onClick, isCurrentMonth }) {
     const [isApplicationPeriod, setIsApplicationPeriod] = useState(false)
     const [booked, setBooked] = useState(false)
     const [availability, setAvailability] = useState()
-    const {selected, currentDate, confirmedStart, confirmedEnd, yearAvailability, itemAvailability } = useContext(ApplicationContext)
+    
+    const { state } = useContext(ApplicationContext)
+    const {selected, currentDate, confirmedStart, confirmedEnd, yearAvailability, itemAvailability } = state
 
     useEffect(() => {
         if(!yearAvailability) return

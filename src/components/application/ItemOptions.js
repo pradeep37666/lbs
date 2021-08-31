@@ -4,7 +4,8 @@ import CheckBox from '../checkBox/CheckBox'
 import './ItemOptions.css'
 
 export default function ItemOptions({ handleNextPage }) {
-    const { item, deliverySelected, setDeliverySelected, pickupSelected, setPickupSelected } = useContext(ApplicationContext)
+    const { state, dispatch } = useContext(ApplicationContext)
+    const { item, deliverySelected, setDeliverySelected, pickupSelected, setPickupSelected } = state
     return (
         <div className="OptionsContainer">
             <div>
@@ -18,7 +19,7 @@ export default function ItemOptions({ handleNextPage }) {
                 </div>
                 <CheckBox 
                 checked={deliverySelected} 
-                onClick={() => setDeliverySelected(!deliverySelected)}
+                onClick={() => dispatch({type: 'setDeliverySelected', data: !deliverySelected})}
                 /> 
             </div>
             <div className="OptionsItemContainer">
@@ -28,7 +29,7 @@ export default function ItemOptions({ handleNextPage }) {
                 </div>
                 <CheckBox 
                 checked={pickupSelected} 
-                onClick={() => setPickupSelected(!pickupSelected)}
+                onClick={() => dispatch({type: 'setPickupSelected', data: !pickupSelected})}
                 />  
             </div>
             <div className="OptionsItemContainer">

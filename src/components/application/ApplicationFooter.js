@@ -3,14 +3,15 @@ import { ApplicationContext } from '../../pages/application/Application'
 import './ApplicationFooter.css'
 
 export default function ApplicationFooter() {
-    const { page, item, confirmedStart, confirmedEnd, setConfirmedStart, setConfirmedEnd, setSelected, handleNextPage } = useContext(ApplicationContext)
+    const  { state, dispatch, handleNextPage } = useContext(ApplicationContext)
+    const { page, item, confirmedStart, confirmedEnd } = state
     const dayArray = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
     const monthArray = ["January", "February", "March", "April","May", "June", "July", "August", "September", "October", "November", "December"]
 
     const clearDates = () => {
-        setConfirmedEnd(null)
-        setConfirmedStart(null)
-        setSelected(null)
+        dispatch({ type: 'setConfirmedEnd', type: null})
+        dispatch({ type: 'setConfirmedStart', type: null})
+        dispatch({ type: 'setSelectedEnd', type: null})
     }
 
     const handleDate = (confirmedDate) => {
