@@ -42,7 +42,7 @@ export default function Item(props) {
             setItem(response.data.item);
             setLoading(false);
             setFavourited(response.data.liked)
-            console.log("item ",response.data )
+            //console.log("item ",response.data )
           })
           .catch((error) => {
             // handle error
@@ -80,15 +80,14 @@ export default function Item(props) {
                 setFavourited(true)})
             .catch((e)=>{console.log(e)})
             
-            }   
+        }   
         else{ 
-            console.log("delet like handle visited")
             Instance.delete(`/liked/delete/?i_id=${item.i_id}`)
             .then((data)=>{
-                console.log("delet like res ",data)
+               // console.log("delet like res ",data)
                 setFavourited(false)})
             .catch((e)=>{console.log(e)})}
-    }
+        }
 
     const getReviews = () => {
         let content = [];

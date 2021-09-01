@@ -13,7 +13,6 @@ export default function Favourites() {
     useEffect(()=>{
         instance.get('/liked/findByUid')
           .then(({data} ) => {
-            console.log("response",data)
             setItems(data);
             setLoading(false);
           })
