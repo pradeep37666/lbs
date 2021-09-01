@@ -16,13 +16,17 @@ import ItemImage from './../../assets/Images/search_section_bg.jpg';
 import GoogleMapReact from 'google-map-react';
 import Instance from '../../util/axios';
 import { useParams } from 'react-router';
+import useGlobalState from "../../util/useGlobalState"
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 export default function Item() {
     // Pass in number of reviews from backend for use in review carousel + modal
     const params = useParams();
     const [item, setItem] = useState([]);
+    const [favourited,setFavourited]=useState(false)
     const [loading, setLoading] = useState(true);
+    const {state} = useGlobalState()
+    const {user}= state
     const reviewSamples = [
         ['Blake Dude', '4', 'Cillum nulla cupidatat aute pariatur ad sit tempor consectetur amet culpa labore deserunt sunt. Veniam eiusmod sunt incididunt ullamco fugiat reprehenderit labore. Ipsum irure culpa veniam velit. Elit dolore cillum nulla nulla do nulla Lorem ullamco.'],
         ['Jake Friend', '3', 'Id sunt laboris ad adipisicing ullamco id elit deserunt deserunt ullamco aute enim tempor tempor.'],
@@ -35,10 +39,11 @@ export default function Item() {
 
     useEffect(() => {
         // Find the item with the id used in the link
-          Instance.get(`/items/findByIid/?i_id=${params.itemId}`, {headers: { Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QxMjNAdGVzdC5jb20iLCJzdWIiOjcsImlhdCI6MTYyNjE1MTQwNiwiZXhwIjoxNjI3NDQ3NDA2fQ.q6lH_TAJ-P0YxuJDhOrCu3pU5JWTqDrlcbDdbVLu58A`}}).then((response) => {
+          Instance.get(`/items/findByIid/?i_id=${params.itemId}&u_id=${user.id}`).then((response) => {
             setItem(response.data.item);
             setLoading(false);
-            console.log("item ",response.data.item )
+            setFavourited(response.data.liked)
+            //console.log("item ",response.data )
           })
           .catch((error) => {
             // handle error
@@ -67,6 +72,23 @@ export default function Item() {
             (ReviewPage === 1) ? setReviewPage(NumReviewPages) : setReviewPage(ReviewPage - 1);
         }
     }
+    const handleFavourit =()=>{
+        console.log("posted favourite item ",item)
+        console.log("favourited", favourited)
+        if(!favourited){
+            Instance.post(`/liked/save`,{i_id:item.i_id})
+            .then((data)=>{
+                setFavourited(true)})
+            .catch((e)=>{console.log(e)})
+            
+        }   
+        else{ 
+            Instance.delete(`/liked/delete/?i_id=${item.i_id}`)
+            .then((data)=>{
+               // console.log("delet like res ",data)
+                setFavourited(false)})
+            .catch((e)=>{console.log(e)})}
+        }
 
     const getReviews = () => {
         let content = [];
@@ -137,12 +159,15 @@ export default function Item() {
                     </div>
                     {item.category}
                 </div>
-
-                <div className="ItemButtons">
+               { (user&&user.id==item.u_id)?
+               <button class="editButton">
+                   Edit Item Details
+               </button>:
+               <div className="ItemButtons">
                     <button className="ButtonAvailability"><div className="ItemButtonFlex"><img src={Calendar} alt=""/>Availability</div></button>
                     <button className="ButtonApply"><div className="ItemButtonFlex"><Profile fill='#ffffff'/>Apply Now</div></button>
-                    <button className="ButtonFavourite" style={{padding: '.5em 1em'}}><StarOutline fill='#ffffff'/></button>
-                </div>
+                    <button onClick={handleFavourit} className="ButtonFavourite" style={{padding: '.5em 1em'} }>{favourited?<StarFilled/>:<StarOutline />}</button>
+                </div>}
                 <hr className="hr"/>
 
                 <div className="ItemDetailsHeader">Description</div>

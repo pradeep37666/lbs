@@ -61,3 +61,16 @@
 .PreviewImage:hover {
   cursor: pointer;
 }
+.favouriteStar {
+  position: absolute;
+  top: 13px ;
+  right:13px;
+  height:38px;
+  width:38px;
+  border-radius:50%;
+  background-color:#B43B4C;
+  display:flex;
+  align-items: center;
+  justify-content:center;
+
+}

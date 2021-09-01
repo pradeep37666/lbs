@@ -15,7 +15,7 @@ export default function Yourshed() {
 useEffect(()=>{
     instance.get('/items/findByUid')
       .then(({data} ) => {
-        console.log("response",data)
+        //console.log("response",data)
         setItems(data);
         setLoading(false);
       })
@@ -30,24 +30,22 @@ useEffect(()=>{
                     {accountContent}
                 </div>
                 <div className="ItemCardSection">
-            { loading 
-            ? <div>Loading items...</div>
-            :
-            <>
-            { items.map((item, i) => {
-              return <ItemCard item={item} key={i}/>
-            })}
-            <div className="ItemCard" >
-                <Link className="addItemBox" to="/postitem">
-                    +
-                </Link>
-                <Link className="addItemButton" to="/postitem">Add New Item</Link>
-            </div>
-            </>
-            }
-            
-
-          </div>
+                    { loading 
+                    ? <div>Loading items...</div>
+                    :
+                    <>
+                    { items.map((item, i) => {
+                    return <ItemCard item={item} key={i}/>
+                    })}
+                    <div className="ItemCard" >
+                        <Link className="addItemBox" to="/postitem">
+                            +
+                        </Link>
+                        <Link className="addItemButton" to="/postitem">Add New Item</Link>
+                    </div>
+                    </>
+                    }
+                </div>
                 
 
             </div>
