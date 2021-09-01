@@ -18,3 +18,7 @@
   margin: 8px 5px;
   opacity: 0.3;
 }
+
+.SelectInput__Option {
+  min-height: 25px;
+}

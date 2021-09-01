@@ -29,7 +29,7 @@ export default function TextInput(props) {
   return (
     <div className={`${classes.inputDiv}`}>
     <label className={`${classes.inputLabel}`}>{props.label}</label>
-    <input type='text' placeholder={props.placeholder} className={`TextInput ${classes.textInput}`}></input>
+    <input type='text' placeholder={props.placeholder} className={`TextInput ${classes.textInput}`} onChange={props.onChange}></input>
     </div>
     
   )

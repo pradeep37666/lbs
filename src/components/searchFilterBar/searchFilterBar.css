@@ -234,3 +234,7 @@
     font-size: 20px;
     margin-bottom: 1em;
 }
+
+.StarClick:hover {
+    cursor: pointer;
+}
