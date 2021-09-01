@@ -34,14 +34,15 @@ export default function CalendarRow({ days, isCurrentMonth }) {
         }
     },[selected, confirmedStart, confirmedEnd])
 
-    const handleItemClick = ({ day, availability }) => { 
+    const handleItemClick = ({ day, availability, booked }) => { 
         console.log(availability)  
+        // Clicking on a day that is already selected
         if(selected && compareDates(selected, day)){
             dispatch({ type: 'setSelected', data: null})
             return
         } 
-        setMorningUnavailable(!availability.am)
-        setAfternoonUnavailable(!availability.pm)
+        setMorningUnavailable(!availability.am || booked.am)
+        setAfternoonUnavailable(!availability.pm || booked.pm)
         dispatch({ type: 'setSelected', data: day})
     }
     
@@ -83,10 +84,11 @@ export default function CalendarRow({ days, isCurrentMonth }) {
     const validateTimeSlots = ({ am }) => {
         const startIndex = getDateIndex(confirmedStart.day)
 
-        const endIndex = getDateIndex(confirmedEnd.day)
-        
+        const endIndex = getDateIndex(selected)
+        // console.log("morning start" ,confirmedStart?.am, )
+        // console.log("morning end", confirmedEnd?.am )
         const timeSlot = yearAvailability.slice((startIndex * 2) - (confirmedStart?.am ? 2 : 1), (endIndex * 2) - (am ? 2 : 1))
-
+        console.log(timeSlot)
         if(timeSlot.indexOf('0') > -1) { 
             setExpanded(false)
             setErrorHidden(false)

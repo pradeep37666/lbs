@@ -1,5 +1,6 @@
 .CalendarContainer {
   width: 100%;
+  margin-bottom: 30px;
 }
 .CalendarRow {
   display: grid;
@@ -19,4 +20,17 @@
 .CalendarRowErrorContainer {
   position: relative;
   width: 100%;
+}
+.CalendarMonth {
+  color: #33384f;
+  font-size: 16px;
+  font-weight: bold;
+}
+.CalendarYear {
+  color: #33384f;
+  font-size: 16px;
+  font-weight: bold;
+}
+.CalendarInfoContainer {
+  margin-bottom: 10px;
 }

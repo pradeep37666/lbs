@@ -1,3 +1,38 @@
 .ItemOverviewContainer {
     min-height: 80vh;
+    width: 100vh;
+    display: flex;
+    justify-content: space-between;
+}
+
+.ApplicationOverviewContainer {
+    border: solid 1px #b4b4b4;
+    min-width: 50%;
+    border-radius: 20px;
+    padding: 30px
+}
+.ItemOverviewPrice {
+    font-size: 20px;
+    font-weight: bold;
+    color: #33384f;
+}
+.ApplicationOverviewHeader {
+    color: #33384f;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.ItemOverviewItemContainer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.ItemOverviewEditButton {
+    color: gray;
+    cursor: pointer;
+
+}
+.ItemOverviewEditButton:hover {
+    text-decoration: underline;
 }

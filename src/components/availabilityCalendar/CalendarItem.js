@@ -43,8 +43,8 @@ export default function CalendarItem({day, index, onClick, isCurrentMonth }) {
     const handleClick = (e) => {
         e.stopPropagation()
         // Dont show time slot picker if the day is completely unavailable or completely booked
-        if(booked.am && booked.pm || !availability.am && !availability.pm) return
-        onClick({day, availability})
+        if((booked.am || !availability.am) &&  (booked.pm || !availability.pm)) return
+        onClick({day, availability, booked})
     }
 
     const handleApplicationPeriodLogic = () => {
@@ -67,6 +67,10 @@ export default function CalendarItem({day, index, onClick, isCurrentMonth }) {
         }
     }
 
+    const handleUnavailableLogic = () => {
+        if(availability && (!availability.am || booked.am) && (!availability.pm || booked.pm) ) return true
+        return false
+    }
 
     return (
         <div 
@@ -85,7 +89,7 @@ export default function CalendarItem({day, index, onClick, isCurrentMonth }) {
             ${selected && compareDates(selected, day) && 'ItemCircleSelected'}
             ${confirmedStart && compareDates(confirmedStart.day, day) && 'ItemCircleConfirmed'} 
             ${currentDate === day.getDate() && isCurrentMonth && 'ItemCurrentDay'}
-            ${availability && !availability.am && !availability.pm ? 'ItemUnavailable' : 'Pointer'}`}
+            ${handleUnavailableLogic() ? 'ItemUnavailable' : 'Pointer'}`}
             >
                 <span style={{ height: 'auto'}}>{day.getDate()}</span>
                 <div className="ItemAvailabilityContainer">

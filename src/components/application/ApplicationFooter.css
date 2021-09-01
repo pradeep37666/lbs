@@ -1,11 +1,15 @@
 .ApplicationFooter {
     position: sticky;
-    bottom: 20px;
     background-color: white;
     width: 100%;
+    margin-bottom: 10px;
+    bottom: 10px;
     display: flex;
     justify-content: center;
-    border: 1px solid black
+    border-top: 3px solid #ac172c;
+    border-bottom: 3px solid #ac172c;
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
 
 .ApplicationFooterContainer {
@@ -14,6 +18,8 @@
 .ApplicationFooterDetailsContainer {
     display: flex;
     justify-content: space-between;
+    padding-top: 8px;
+    padding-bottom: 8px;
 }
 .ApplicationFooterButtonContainer {
     display: flex;
@@ -26,7 +32,7 @@
     min-width: 45%;
     display: flex;
     justify-content: center;
-    max-height: 50px;
+    max-height: 40px;
     align-items: center;
 }
 .ApplicationFooterLargeNextButton {
@@ -41,7 +47,7 @@
     color: white;
     border-radius: 10px;
     min-width: 45%;
-    max-height: 50px;
+    max-height: 40px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -50,7 +56,8 @@
     display: flex;
     justify-content: space-between;
     font-size: large;
-    border-bottom: 1px solid gray;
+    border-bottom: 1px solid #dedede;
+    padding-bottom: 8px;
 }
 .ApplicationFooterDetails {
     min-width: 45%;
@@ -61,5 +68,30 @@
 }
 .ApplicationFooterTime {
     color: #ac172c;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.ApplciationFooterArrow {
+    color: #ac172c;
+    font-size: 35px;
+}
+.ApplicationFooterArrowContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+.ApplicatonFooterPrice {
+    font-size: 20px;
+    font-weight: bold;
+    color: #33384f;
+}
+.ApplicationFooterDetailsHeader {
+    color: #33384f;
+    font-size: 17px;
+    font-weight: bold;
+}
+.ApplicationFooterDay {
+    font-weight: bold;
     font-size: 16px;
 }

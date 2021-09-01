@@ -5,7 +5,7 @@ import './ApplicationFooter.css'
 
 export default function ApplicationFooter() {
     const  { state, dispatch, handleNextPage } = useContext(ApplicationContext)
-    const { page, item, confirmedStart, confirmedEnd } = state
+    const { page, item, confirmedStart, confirmedEnd, deliverySelected, pickupSelected } = state
     const dayArray = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
     const monthArray = ["January", "February", "March", "April","May", "June", "July", "August", "September", "October", "November", "December"]
 
@@ -16,13 +16,30 @@ export default function ApplicationFooter() {
     }
 
     const handleDate = (confirmedDate) => {
-        const date = confirmedDate.day.getDate().toString()
-        const lastChar = date.charAt(date.length - 1)
+        const date = confirmedDate.day.getDate()
+        const dateString = date.toString()
+        const lastChar = dateString.charAt(dateString.length - 1)
+
         switch(lastChar){
-            case '1' : return date + 'st'
-            case '2' : return date + 'nd'
-            case '3' : return date + 'rd'
-            default : return date + 'th'
+        case '1' : {
+            if(date > 10 && date < 20){
+                return date + 'th'
+            }
+            return date + 'st'
+        }
+        case '2' : {
+            if(date > 10 && date < 20){
+                return date + 'th'
+            }
+            return date + 'nd'
+        }
+        case '3' : {
+            if(date > 10 && date < 20){
+                return date + 'th'
+            }
+            return date + 'rd'
+        }
+        default : return date + 'th'
         }
     }
 
@@ -48,7 +65,7 @@ export default function ApplicationFooter() {
         if(confirmedStart?.pm && confirmedEnd?.am){
             timeSlots = days * 2
         }
-        return item.price * timeSlots
+        return item.price * timeSlots + ( (deliverySelected ? item.deliveryPrice : 0) + (pickupSelected ? item.deliveryPrice : 0))
     }
 
     return (
@@ -56,32 +73,32 @@ export default function ApplicationFooter() {
          <div className="ApplicationFooterContainer">
             <div className="ApplicationFooterPriceContainer">
                 <span>Total Price</span>
-                <span>${calculatePrice()}</span>
+                <span className="ApplicatonFooterPrice">${calculatePrice()}</span>
             </div>
             <div className="ApplicationFooterDetailsContainer">
                 <div className="ApplicationFooterDetails">
-                    <p>Collect</p>
+                    <span className="ApplicationFooterDetailsHeader">Collect</span>
                     <div>
-                        <span className="ApplicationFooterTime">{confirmedStart?.am ? '8:00am' : '1:00pm'}</span>
-                        {dayArray[confirmedStart.day.getDay()]}
+                        <span className="ApplicationFooterTime">{confirmedStart?.am ? '8:00am' : '1:00pm'} </span>
+                        <span className="ApplicationFooterDay">{dayArray[confirmedStart.day.getDay()]}</span>
                     </div>
                     <div>
-                        { handleDate(confirmedStart)}
-                        { monthArray[confirmedStart.day.getMonth()]}
+                        <span>{ handleDate(confirmedStart)} </span> 
+                        <span>{ monthArray[confirmedStart.day.getMonth()]}</span>
                     </div>
                 </div>
-                <div>
-                    <h2>{'\u2192'}</h2>
+                <div className="ApplicationFooterArrowContainer">
+                    <span className="ApplciationFooterArrow">{'\u2192'}</span>
                 </div>
                 <div className="ApplicationFooterDetails">
-                    <p>Return</p>
+                    <span className="ApplicationFooterDetailsHeader">Return</span>
                     <div>
-                        <span className="ApplicationFooterTime">{confirmedEnd?.am ? '12:00pm' : '5:00pm'}</span>
-                        {dayArray[confirmedEnd.day.getDay()]}
+                        <span className="ApplicationFooterTime">{confirmedEnd?.am ? '12:00pm' : '5:00pm'} </span>
+                        <span className="ApplicationFooterDay">{dayArray[confirmedEnd.day.getDay()]}</span>
                     </div>
                     <div>
-                        {handleDate(confirmedEnd)}
-                        { monthArray[confirmedEnd.day.getMonth()]}
+                        <span>{handleDate(confirmedEnd)} </span>
+                        <span>{ monthArray[confirmedEnd.day.getMonth()]}</span>
                     </div>
                 </div>
             </div>

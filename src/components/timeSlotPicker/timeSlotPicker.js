@@ -1,7 +1,7 @@
 import React from 'react';
 import './timeSlotPicker.css';
-import {ReactComponent as MorningIcon} from './../../assets/Icons/MorningIcon.svg';
-import {ReactComponent as AfternoonIcon} from './../../assets/Icons/AfternoonIcon.svg';
+import MorningIcon from '../../assets/Icons/MorningIcon';
+import AfternoonIcon from '../../assets/Icons/AfternoonIcon';
 import {ReactComponent as AfternoonIconRed} from './../../assets/Icons/AfternoonIcon-red.svg';
 
 export default function TimeSlotPicker({ morning, afternoon, morningClick, afternoonClick, morningUnavailable, afternoonUnavailable }) {
@@ -24,7 +24,7 @@ export default function TimeSlotPicker({ morning, afternoon, morningClick, after
                 <div className={`TimeSlotDiv 
                 ${morning ? 'BackgroundMorning' : ''}
                 ${morningUnavailable ? 'MorningUnavailable' : 'Pointer'}`} onClick={handleMorningClick}>
-                    <MorningIcon width="100%" height="50%"/>
+                    <MorningIcon color={morningUnavailable ? "gray" : null}/>
                     <div className="DayText">Morning</div>
                     <div className="TimeText">8am - 12pm</div>
                     </div>
@@ -34,7 +34,7 @@ export default function TimeSlotPicker({ morning, afternoon, morningClick, after
                 ${afternoonUnavailable ? 'AfternoonUnavailable' : 'Pointer'}`} 
                 onClick={handleAfternoonClick}
                 >
-                    {afternoon ? <AfternoonIcon fill="#fff" stroke="#fff" width="100%" height="50%"/> : <AfternoonIconRed width="100%" height="50%"/>}
+                    <AfternoonIcon color={afternoon ? '#e9d8b4' : afternoonUnavailable ? "gray" : null }/>
                     <div className="DayText">Afternoon</div>
                     <div className="TimeText">1pm - 5pm</div>
                 </div>

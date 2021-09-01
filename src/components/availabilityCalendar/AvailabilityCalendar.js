@@ -53,7 +53,11 @@ export default function AvailabilityCalendar({ month, year }) {
     const monthArray = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
     return (
         <div className="CalendarContainer">
-            <h2>{monthArray[month]}</h2>
+            <div className="CalendarInfoContainer">
+                <span className="CalendarMonth">{monthArray[month]} </span>
+                <span className="CalendarYear">{year}</span>
+            </div>
+           
             <div >
                 <div className="CalendarRow">
                     {dayArray.map((day, index) => {
