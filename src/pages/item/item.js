@@ -22,7 +22,7 @@ export default function Item(props) {
     // Pass in number of reviews from backend for use in review carousel + modal
     const params = useParams();
     const [item, setItem] = useState([]);
-    const [favourited,setFavourited]=useState()
+    const [favourited,setFavourited]=useState(false)
     const [loading, setLoading] = useState(true);
     const {state} = useGlobalState()
     const {user}= state
@@ -38,10 +38,11 @@ export default function Item(props) {
 
     useEffect(() => {
         // Find the item with the id used in the link
-          Instance.get(`/items/findByIid/?i_id=${params.itemId}`).then((response) => {
+          Instance.get(`/items/findByIid/?i_id=${params.itemId}&u_id=${user.id}`).then((response) => {
             setItem(response.data.item);
             setLoading(false);
-            console.log("item ",response.data.item )
+            setFavourited(response.data.liked)
+            console.log("item ",response.data )
           })
           .catch((error) => {
             // handle error
@@ -71,11 +72,22 @@ export default function Item(props) {
         }
     }
     const handleFavourit =()=>{
-        console.log("posted item ",item)
-        Instance.post(`/liked/save`)
-        .then((data)=>{
-            console.log(data)})
-        .catch((e)=>{console.log(e)})
+        console.log("posted favourite item ",item)
+        console.log("favourited", favourited)
+        if(!favourited){
+            Instance.post(`/liked/save`,{i_id:item.i_id})
+            .then((data)=>{
+                setFavourited(true)})
+            .catch((e)=>{console.log(e)})
+            
+            }   
+        else{ 
+            console.log("delet like handle visited")
+            Instance.delete(`/liked/delete/?i_id=${item.i_id}`)
+            .then((data)=>{
+                console.log("delet like res ",data)
+                setFavourited(false)})
+            .catch((e)=>{console.log(e)})}
     }
 
     const getReviews = () => {
@@ -154,7 +166,7 @@ export default function Item(props) {
                <div className="ItemButtons">
                     <button className="ButtonAvailability"><div className="ItemButtonFlex"><img src={Calendar} alt=""/>Availability</div></button>
                     <button className="ButtonApply"><div className="ItemButtonFlex"><Profile fill='#ffffff'/>Apply Now</div></button>
-                    <button onClick={handleFavourit} className="ButtonFavourite" style={{padding: '.5em 1em'} }><StarOutline /></button>
+                    <button onClick={handleFavourit} className="ButtonFavourite" style={{padding: '.5em 1em'} }>{favourited?<StarFilled/>:<StarOutline />}</button>
                 </div>}
                 <hr className="hr"/>
 
