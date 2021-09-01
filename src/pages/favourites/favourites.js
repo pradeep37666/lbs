@@ -35,7 +35,7 @@ export default function Favourites() {
                     ? <div>Loading items...</div>
                     :               
                      items.map((item, i) => {
-                    return <ItemCard item={item} key={i}/>
+                    return <ItemCard item={item} key={i} favourited={true}/>
                     })
                     }
                 </div>
