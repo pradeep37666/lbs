@@ -9,12 +9,12 @@ export default function ItemOptions({ handleNextPage }) {
     return (
         <div className="OptionsContainer">
             <div>
-                <h3>Borrow Extras</h3>
+                <span className="OptionsItemHeader">Borrow Extras</span>
                 <p>Options to help you borrow better</p>
             </div>
             <div className="OptionsItemContainer">
                <div>
-                    <p>Delivery <span className="OptionsPrice">${item.deliveryPrice}</span></p>
+                    <span className="OptionsItemHeader">Delivery <span className="OptionsPrice">${item.deliveryPrice}</span></span>
                     <p>Have your item delivered to you</p>
                 </div>
                 <CheckBox 
@@ -24,7 +24,7 @@ export default function ItemOptions({ handleNextPage }) {
             </div>
             <div className="OptionsItemContainer">
               <div >
-                    <p>Pickup <span className="OptionsPrice">${item.deliveryPrice}</span></p>
+                    <span className="OptionsItemHeader"> Pickup <span className="OptionsPrice">${item.deliveryPrice}</span></span>
                     <p>Have your item picked up from you</p>
                 </div>
                 <CheckBox 
