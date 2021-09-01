@@ -114,12 +114,12 @@ export default function ItemOverview() {
                 <div className="ApplicationFooterDetails">
                     <p>Collect</p>
                     <div>
-                        <span className="ApplicationFooterTime">{confirmedStart?.am ? '8:00am' : '1:00pm'}</span>
-                        {dayArray[confirmedStart.day.getDay()]}
+                        <span className="ApplicationFooterTime">{confirmedStart?.am ? '8:00am' : '1:00pm'} </span>
+                        <span>{dayArray[confirmedStart.day.getDay()]}</span>
                     </div>
                     <div>
-                        { handleDate(confirmedStart)}
-                        { monthArray[confirmedStart.day.getMonth()]}
+                        <span>{ handleDate(confirmedStart)} </span>
+                        <span>{ monthArray[confirmedStart.day.getMonth()]}</span>
                     </div>
                 </div>
                 <div className="ApplicationFooterArrowContainer">
@@ -128,12 +128,12 @@ export default function ItemOverview() {
                 <div className="ApplicationFooterDetails">
                     <p>Return</p>
                     <div>
-                        <span className="ApplicationFooterTime">{confirmedEnd?.am ? '12:00pm' : '5:00pm'}</span>
-                        {dayArray[confirmedEnd.day.getDay()]}
+                        <span className="ApplicationFooterTime">{confirmedEnd?.am ? '12:00pm' : '5:00pm'} </span>
+                        <span>{dayArray[confirmedEnd.day.getDay()]}</span>
                     </div>
                     <div>
-                        {handleDate(confirmedEnd)}
-                        { monthArray[confirmedEnd.day.getMonth()]}
+                        <span>{handleDate(confirmedEnd)} </span>
+                        <span>{ monthArray[confirmedEnd.day.getMonth()]} </span>
                     </div>
                 </div>
             </div>

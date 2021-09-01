@@ -67,7 +67,12 @@ export default function CalendarRow({ days, isCurrentMonth }) {
             dispatch({type: 'setConfirmedEnd', data: null})
             return
         }
-        if(confirmedStart && selected < confirmedStart.day){
+        if(confirmedStart && selected < confirmedStart.day && confirmedEnd.sameTimeSlot){
+            dispatch({ type: 'setConfirmedStart', data: { day: selected, am: true }})
+            dispatch({ type: 'setConfirmedEnd', data: {day: selected, am: true, sameTimeSlot: true} })
+            return
+        }
+        if(confirmedStart && selected < confirmedStart.day ){
             dispatch({type: 'setConfirmedStart', data: { day: selected, am: true}})
             return 
         }
@@ -117,6 +122,11 @@ export default function CalendarRow({ days, isCurrentMonth }) {
             dispatch({type: 'setSelected', data: null})
             dispatch({type: 'setConfirmedStart', data: null})
             dispatch({type: 'setConfirmedEnd', data: null})
+            return
+        }
+        if(confirmedStart && selected < confirmedStart.day && confirmedEnd.sameTimeSlot){
+            dispatch({ type: 'setConfirmedStart', data: { day: selected, pm: true }})
+            dispatch({ type: 'setConfirmedEnd', data: {day: selected, pm: true, sameTimeSlot: true} })
             return
         }
         if(confirmedStart && selected < confirmedStart.day){

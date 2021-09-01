@@ -1,16 +1,33 @@
 .OptionsContainer {
-    min-height: 80vh;
+  min-height: 80vh;
 }
 .OptionsPrice {
-    color: #ac172c;
+  color: #ac172c;
 }
 .OptionsItemContainer {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 .OptionsItemHeader {
-    font-size: 20px;
-    color: #33384f;
-    font-weight: bold;
+  font-size: 20px;
+  color: #33384f;
+  font-weight: bold;
+}
+
+.OptionsItemHeaderContainer {
+  margin-bottom: 30px;
+}
+.DeliveryOptionsContainer {
+  border-bottom: 2px solid #dedede;
+  margin-bottom: 20px;
+}
+.AdditionalItemsHeader {
+  font-size: 17px;
+  font-weight: bold;
+  color: #33384f;
+}
+.AdditionalItemsText {
+  font-size: 16px;
+  color: #33384f;
 }
