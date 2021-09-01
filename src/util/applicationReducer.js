@@ -1,5 +1,4 @@
 const applicationReducer = (state, action) => {
-    console.log(action)
     switch(action.type){
         case 'setYearAvailability' : {
             return {

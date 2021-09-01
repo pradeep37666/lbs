@@ -77,16 +77,23 @@ export default function Application() {
 
     return (
         <ApplicationContext.Provider value={{ state, dispatch, handleNextPage}}>
-            <PageWrapper>
+            <div onClick={(e) => {
+                console.log(e.target)
+                console.log('parent on click')
+                dispatch({ type: 'setSelected', data: null })
+                }}>
+               <PageWrapper>
                 <ApplicationHeader 
                 item={item ? item : null}
                 page={page} 
                 />
-                <div >
+                <div>
                     { renderApplicaiton() }
                 </div>
             { confirmedStart && <ApplicationFooter />}    
-            </PageWrapper>
+            </PageWrapper> 
+            </div>
+            
             
         </ApplicationContext.Provider>
         

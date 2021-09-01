@@ -15,3 +15,8 @@
 .CalendarStart {
   grid-column-start: 4;
 }
+
+.CalendarRowErrorContainer {
+  position: relative;
+  width: 100%;
+}

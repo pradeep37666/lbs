@@ -5,12 +5,14 @@ import {ReactComponent as AfternoonIcon} from './../../assets/Icons/AfternoonIco
 import {ReactComponent as AfternoonIconRed} from './../../assets/Icons/AfternoonIcon-red.svg';
 
 export default function TimeSlotPicker({ morning, afternoon, morningClick, afternoonClick, morningUnavailable, afternoonUnavailable }) {
-    const handleMorningClick = () => {
+    const handleMorningClick = (e) => {
+        e.stopPropagation()
         if(morningUnavailable) return
         morningClick()
     }
 
-    const handleAfternoonClick = () => {
+    const handleAfternoonClick = (e) => {
+        e.stopPropagation()
         if(afternoonUnavailable) return
         afternoonClick()
     }

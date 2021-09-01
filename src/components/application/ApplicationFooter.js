@@ -1,5 +1,6 @@
 import React, { useContext } from 'react'
 import { ApplicationContext } from '../../pages/application/Application'
+import getDateIndex from '../../util/getDateIndex'
 import './ApplicationFooter.css'
 
 export default function ApplicationFooter() {
@@ -35,7 +36,8 @@ export default function ApplicationFooter() {
 
     const calculatePrice = () => {
         if(confirmedEnd.sameTimeSlot) return item.price
-        const days = confirmedEnd.day.getDate() - confirmedStart.day.getDate()
+        //const days = confirmedEnd.day.getDate() - confirmedStart.day.getDate()
+        const days = getDateIndex(confirmedEnd.day) - getDateIndex(confirmedStart.day)
         let timeSlots
         if(confirmedStart?.am && confirmedEnd?.am || confirmedStart?.pm && confirmedEnd?.pm){
             timeSlots = (days * 2) + 1
@@ -48,6 +50,7 @@ export default function ApplicationFooter() {
         }
         return item.price * timeSlots
     }
+
     return (
         <div className="ApplicationFooter">
          <div className="ApplicationFooterContainer">

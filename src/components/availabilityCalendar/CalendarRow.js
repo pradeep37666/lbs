@@ -3,18 +3,24 @@ import CalendarItem from './CalendarItem'
 import TimeSlotPicker from '../timeSlotPicker/timeSlotPicker'
 import { ApplicationContext } from '../../pages/application/Application'
 import compareDates from '../../util/compareDates'
+import ValidationPopup from '../ValidationPopup/ValidationPopup'
+import '../../components/FormComponents/BasicDetails'
+import getDateIndex from '../../util/getDateIndex'
+import itemCard from '../itemCard/itemCard'
 
 export default function CalendarRow({ days, isCurrentMonth }) {
     const { state, dispatch } = useContext(ApplicationContext)
-    const { selected, confirmedStart, confirmedEnd } = state
+    const { selected, confirmedStart, confirmedEnd, yearAvailability } = state
     
     const [expanded, setExpanded] = useState(false)
+    const [errorHidden, setErrorHidden] = useState(true)
     const [morningActive, setMorningActive] = useState(false)
     const [morningUnavailable, setMorningUnavailable] = useState(false)
     const [afternoonUnavailable, setAfternoonUnavailable] = useState(false)
     const [afternoonActive, setAfternoonActive] = useState(false)
 
     useEffect(() => {
+        setErrorHidden(true)
         handleMorningLogic()
         handleAfternoonLogic()
         if(!selected){
@@ -28,7 +34,7 @@ export default function CalendarRow({ days, isCurrentMonth }) {
         }
     },[selected, confirmedStart, confirmedEnd])
 
-    const handleItemClick = ({ day, availability }) => {  
+    const handleItemClick = ({ day, availability }) => { 
         console.log(availability)  
         if(selected && compareDates(selected, day)){
             dispatch({ type: 'setSelected', data: null})
@@ -40,6 +46,10 @@ export default function CalendarRow({ days, isCurrentMonth }) {
     }
     
     const handleMorningClick = () => {
+        if(confirmedStart && !compareDates(selected, confirmedStart.day)){
+            const valid = validateTimeSlots({ am: true})
+            if(!valid) return 
+        }
         // morning has already been selected
         if(confirmedStart && compareDates(selected, confirmedStart.day)){
             // Changing from afternoon to morning
@@ -69,8 +79,27 @@ export default function CalendarRow({ days, isCurrentMonth }) {
         dispatch({type: 'setConfirmedStart', data: { day: selected, am: true}})
         dispatch({type: 'setConfirmedEnd', data: { day: selected, am: true, sameTimeSlot: true}})
     }
-    
+
+    const validateTimeSlots = ({ am }) => {
+        const startIndex = getDateIndex(confirmedStart.day)
+
+        const endIndex = getDateIndex(confirmedEnd.day)
+        
+        const timeSlot = yearAvailability.slice((startIndex * 2) - (confirmedStart?.am ? 2 : 1), (endIndex * 2) - (am ? 2 : 1))
+
+        if(timeSlot.indexOf('0') > -1) { 
+            setExpanded(false)
+            setErrorHidden(false)
+            return false
+        }
+        return true
+    }
+
     const handleAfternoonClick = () => {
+        if(confirmedStart && !compareDates(selected, confirmedStart.day)){
+            const valid = validateTimeSlots({ am: false})
+            if(!valid) return 
+        }
         // Afternoon has already been selected
         if(confirmedStart && compareDates(selected, confirmedStart.day)){
             // Changing from morning to afternoon
@@ -118,29 +147,32 @@ export default function CalendarRow({ days, isCurrentMonth }) {
         setAfternoonActive(false)
     }
     return (
-        <div className={`CalendarRow ${expanded && 'CalendarRowExpanded'}`}>
-            { days.map((day, index) => {
-                return (
-                <CalendarItem 
-                onClick={handleItemClick}
-                day={day} 
-                index={index} 
-                key={index}
-                isCurrentMonth={isCurrentMonth}
-                unavailable={isCurrentMonth}
-                />)
-            })}
-            { expanded && 
-            <div className="CalendarPadding">
-                <TimeSlotPicker 
-                morning={morningActive}
-                afternoon={afternoonActive}
-                morningUnavailable={morningUnavailable}
-                afternoonUnavailable={afternoonUnavailable}
-                morningClick={handleMorningClick}
-                afternoonClick={handleAfternoonClick}
-                />
-            </div>}
+        <div className="CalendarRowErrorContainer">
+            <ValidationPopup errorText={'error'} errorHeader='Invalid Time Slot' hide={errorHidden}/>
+            <div className={`CalendarRow ${expanded && 'CalendarRowExpanded'}`}>
+                { days.map((day, index) => {
+                    return (
+                    <CalendarItem 
+                    onClick={handleItemClick}
+                    day={day} 
+                    index={index} 
+                    key={index}
+                    isCurrentMonth={isCurrentMonth}
+                    unavailable={isCurrentMonth}
+                    />)
+                })}
+                { expanded && 
+                <div className="CalendarPadding">
+                    <TimeSlotPicker 
+                    morning={morningActive}
+                    afternoon={afternoonActive}
+                    morningUnavailable={morningUnavailable}
+                    afternoonUnavailable={afternoonUnavailable}
+                    morningClick={handleMorningClick}
+                    afternoonClick={handleAfternoonClick}
+                    />
+                </div>}
+            </div>
         </div>
     )
 }

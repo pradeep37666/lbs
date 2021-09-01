@@ -19,7 +19,6 @@ export default function CalendarItem({day, index, onClick, isCurrentMonth }) {
         console.log(availability,booked)
         setAvailability(availability)
         setBooked(booked)
-        if(day.getDate() % 5 === 0) setBooked({ am: true, pm: false})
         if(day.getDate() < currentDate && isCurrentMonth) {
             setBooked({ am: true, pm: true })
         }
@@ -41,7 +40,8 @@ export default function CalendarItem({day, index, onClick, isCurrentMonth }) {
         setIsApplicationPeriod(false)
     },[selected,confirmedEnd, confirmedStart])
 
-    const handleClick = () => {
+    const handleClick = (e) => {
+        e.stopPropagation()
         // Dont show time slot picker if the day is completely unavailable or completely booked
         if(booked.am && booked.pm || !availability.am && !availability.pm) return
         onClick({day, availability})
@@ -49,6 +49,7 @@ export default function CalendarItem({day, index, onClick, isCurrentMonth }) {
 
     const handleApplicationPeriodLogic = () => {
         if(!confirmedStart ) return ''
+        if(!selected && confirmedEnd.sameTimeSlot) return ''
         if(!selected && !confirmedEnd.sameTimeSlot && !compareDates(day, confirmedStart.day) && !compareDates(day, confirmedEnd.day) ) return ''
         if(selected && compareDates(selected, confirmedStart.day) && confirmedEnd.sameTimeSlot) return ''
         if(selected && !confirmedEnd.sameTimeSlot && compareDates(day, selected) && !compareDates(day,confirmedStart.day) && !compareDates(day,confirmedEnd.day)) return ''
