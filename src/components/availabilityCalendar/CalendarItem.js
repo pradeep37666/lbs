@@ -16,7 +16,6 @@ export default function CalendarItem({day, index, onClick, isCurrentMonth }) {
     useEffect(() => {
         if(!yearAvailability) return
         const { availability, booked } = getAvailability(day, itemAvailability, yearAvailability)
-        console.log(availability,booked)
         setAvailability(availability)
         setBooked(booked)
         if(day.getDate() < currentDate && isCurrentMonth) {

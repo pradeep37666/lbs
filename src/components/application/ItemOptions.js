@@ -13,34 +13,35 @@ export default function ItemOptions({ handleNextPage }) {
     const [userItems, setUserItems] = useState(['a'])
     const { item, deliverySelected, confirmedStart, confirmedEnd, pickupSelected, currentYear } = state
 
-    useEffect(() => {
-        getRelatedItems()
-    }, [])
+    // Code for getting related items
+    // useEffect(() => {
+    //     getRelatedItems()
+    // }, [])
 
-    const getRelatedItems = async () => {
-        setIsLoading(true)
-        const startIndex = (getDateIndex(confirmedStart.day) * 2) + (confirmedStart.day?.am ? 2 : 1)
-        const endIndex = (getDateIndex(confirmedEnd.day) * 2) + (confirmedEnd.day?.am ? 2 : 1)
+    // const getRelatedItems = async () => {
+    //     setIsLoading(true)
+    //     const startIndex = (getDateIndex(confirmedStart.day) * 2) + (confirmedStart.day?.am ? 2 : 1)
+    //     const endIndex = (getDateIndex(confirmedEnd.day) * 2) + (confirmedEnd.day?.am ? 2 : 1)
         
-        try{
-            const { data, status } = await instance.get(`/items/findSameOwnerItem?i_id=${item.i_id}&u_id=${item.u_id}&start=${startIndex}&end=${endIndex}&year=${currentYear}` )
-            if(status !== 200){
-                setIsLoading(false)
-                return
-            }
-            setUserItems(data)
-            setIsLoading(false)
+    //     try{
+    //         const { data, status } = await instance.get(`/items/findSameOwnerItem?i_id=${item.i_id}&u_id=${item.u_id}&start=${startIndex}&end=${endIndex}&year=${currentYear}` )
+    //         if(status !== 200){
+    //             setIsLoading(false)
+    //             return
+    //         }
+    //         setUserItems(data)
+    //         setIsLoading(false)
 
-        } catch(e) {
-            console.log(e)
-            setIsLoading(false)
-        }
-    }
-    const renderItems = () => {
-        return userItems.map((item, index) => {
-            return <ApplicationItemCard key={index} item={item} extra/>
-        })
-    }
+    //     } catch(e) {
+    //         console.log(e)
+    //         setIsLoading(false)
+    //     }
+    // }
+    // const renderItems = () => {
+    //     return userItems.map((item, index) => {
+    //         return <ApplicationItemCard key={index} item={item} extra/>
+    //     })
+    // }
 
     return (
         <div className="OptionsContainer">
@@ -71,7 +72,7 @@ export default function ItemOptions({ handleNextPage }) {
                 </div> 
             </div>
             
-            <div className="AdditionalItemsMainContainer">
+            {/* <div className="AdditionalItemsMainContainer">
                <div>
                     <span className="AdditionalItemsHeader">Need another item?</span><br></br>
                     <span className="AdditionalItemsText">Select another item this lender has available in these time slots</span>
@@ -85,7 +86,7 @@ export default function ItemOptions({ handleNextPage }) {
                 </div>
                 
             </div>
-            
+             */}
         </div>
     )
 }

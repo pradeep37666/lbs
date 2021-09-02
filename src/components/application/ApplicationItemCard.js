@@ -5,7 +5,7 @@ import CheckBox from '../checkBox/CheckBox'
 
 export default function ApplicationItemCard({ item, onClick, extra }) {
     const [selected, setSelected] = useState()
-
+    console.log('item', item)
     return (
         <div className="ApplicationItemCardContainer">
             <img placeholder="item image" style={{ height: 70, width: 70, marginRight: 15}}></img>

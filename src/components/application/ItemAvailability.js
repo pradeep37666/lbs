@@ -2,10 +2,11 @@ import React, { useContext } from 'react'
 import AvailabilityCalendar from '../availabilityCalendar/AvailabilityCalendar'
 import './ItemAvailability.css'
 import { ApplicationContext } from '../../pages/application/Application'
+import { CircularProgress } from '@material-ui/core'
 
 export default function ItemAvailability({ handleNextPage }) {
     const { state } = useContext(ApplicationContext)
-    const { currentDay, currentMonth, currentYear } = state
+    const { item, currentDay, currentMonth, currentYear } = state
     
 
     const renderMonths = () => {
@@ -22,7 +23,7 @@ export default function ItemAvailability({ handleNextPage }) {
     return (
         <div >            
             <div className="AvailabilityContainer">
-            {renderMonths()}
+                {item ? renderMonths() : <CircularProgress size={30} color="#000" />}
             </div>
             
         </div>

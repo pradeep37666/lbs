@@ -17,9 +17,16 @@ import GoogleMapReact from 'google-map-react';
 import Instance from '../../util/axios';
 import { useParams} from 'react-router';
 import { Link } from 'react-router-dom';
+import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
+import ApplicationModal from '../../components/applicationModal/ApplicationModal.js';
+
 export default function Item(props) {
+    const location = useLocation()
+   
+
     // Pass in number of reviews from backend for use in review carousel + modal
     const params = useParams();
+    const [modalVisible, setModalVisible] = useState()
     const [item, setItem] = useState([]);
     const [loading, setLoading] = useState(true);
     const reviewSamples = [
@@ -33,6 +40,9 @@ export default function Item(props) {
     ]
 
     useEffect(() => {
+        // update modal state if navigated to this screen after creating a booking
+        const bookingCreated = location.state?.bookingCreated
+        if(bookingCreated) setModalVisible(true)
         // Find the item with the id used in the link
           Instance.get(`/items/findByIid/?i_id=${params.itemId}`, {headers: { Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QxMjNAdGVzdC5jb20iLCJzdWIiOjcsImlhdCI6MTYyNjE1MTQwNiwiZXhwIjoxNjI3NDQ3NDA2fQ.q6lH_TAJ-P0YxuJDhOrCu3pU5JWTqDrlcbDdbVLu58A`}}).then((response) => {
             setItem(response.data);
@@ -92,6 +102,10 @@ export default function Item(props) {
         zoom: 15
       };
 
+    const handleModalClick = () => {
+        setModalVisible()
+    }
+
     return (
         <PageWrapper>
             {ImageModal ? <ItemImageModal setModal={setImageModal} modal={ImageModal} /> : ''}
@@ -100,6 +114,7 @@ export default function Item(props) {
             
         :
         <div className="ItemMainWrapper">
+            { modalVisible && <ApplicationModal item={item.item} onClick={handleModalClick}/>}
             <div className="ItemInfoWrapper">
                 <div className="ItemName">{item.title}</div>
 

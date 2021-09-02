@@ -6,11 +6,13 @@ import getDateIndex from '../../util/getDateIndex'
 import Arrow from '../../assets/Icons/Arrow'
 import ApplicationItemCard from './ApplicationItemCard'
 import instance from '../../util/axios'
+import { useHistory } from 'react-router'
 
 export default function ItemOverview() {
     const { state, dispatch } = useContext(ApplicationContext)
     const { item, confirmedEnd, confirmedStart, deliverySelected, pickupSelected,  } = state
 
+    const history = useHistory()
     const dayArray = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
     const monthArray = ["January", "February", "March", "April","May", "June", "July", "August", "September", "October", "November", "December"]
 
@@ -76,7 +78,6 @@ export default function ItemOverview() {
         })
         try{
             const { data, status } = await instance.post('booking/save', {
-                u_id: 3,
                 i_id: item.i_id,
                 io_id: item.u_id,
                 deliveryOption,
@@ -84,10 +85,16 @@ export default function ItemOverview() {
                 endDate: endIndex
             })
             console.log(data, status)
+            history.push({ 
+                pathname: `/item/${item.i_id}`, 
+                state: {bookingCreated: true, price: calculatePrice()}
+            })
         } catch(e) {
-            console.log(e)
+            console.log(e.response)
         }
+        
     }
+
     return (
             <div className="ApplicationOverviewContainer">
                 <span className="ApplicationOverviewHeader">Application Overview</span>
