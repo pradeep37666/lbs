@@ -11,7 +11,6 @@ import {ReactComponent as StarFilled} from './../../assets/Icons/StarFilled.svg'
 
 const BootstrapInput = withStyles((theme) => ({
   input: {
-    paddingLeft: '1em',
     textAlign: 'left',
     fontSize: '20px',
     fontFamily: ['DMSans, sans-serif'].join(','),
@@ -69,10 +68,11 @@ const useStyles = makeStyles({
 
 export default function RatingSelect(props) {
   const classes = useStyles(props);
-  const [rating, setRating] = useState(4);
+  const [rating, setRating] = useState();
 
   const handleChange = (event) => {
-    setRating(event.target.value);
+    setRating(event.target.value)
+    props.onChange(event)
   }
 
   return (
@@ -99,8 +99,10 @@ export default function RatingSelect(props) {
       }}
       >
       <label className={`${classes.inputLabel}`}>{props.label}</label>
-      <div className="DropDownTitle">{rating} star</div>
+      <div className="DropDownTitle">{rating ? rating + ' star' : ''}</div>
       <hr className="hl"/>
+      <MenuItem value="" className={`${classes.option}`} style={{marginLeft: '10px'}}>
+      </MenuItem>
       <MenuItem value="1" className={`${classes.option}`} style={{marginLeft: '10px'}}>
       <StarFilled fill='#E9D8B4' className="StarIcon"/><div className="RatingText">{rating} star</div>
       </MenuItem>

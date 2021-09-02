@@ -6,7 +6,6 @@ import LocationDetails from '../../../components/FormComponents/LocationDetails'
 import Availability from '../../../components/FormComponents/Availability'
 import Instance from '../../../util/axios'
 import { ReactComponent as Logo } from '../../../assets/Logos/LogoRed.svg';
-import { GetUser, GetToken } from '../../../util/UserStore'
 import { useHistory } from 'react-router'
 import useGlobalState from '../../../util/useGlobalState'
 
@@ -27,20 +26,7 @@ export default function UpgradeLender() {
     const [country, setCountry] = useState("")
     const [state, setState] = useState("")
 
-    const [mondayM, setMondayM] = useState(null)
-    const [mondayA, setMondayA] = useState(null)
-    const [tuesdayM, setTuesdayM] = useState(null)
-    const [tuesdayA, setTuesdayA] = useState(null)
-    const [wednesdayM, setWednesdayM] = useState(null)
-    const [wednesdayA, setWednesdayA] = useState(null)
-    const [thursdayM, setThursdayM] = useState(null)
-    const [thursdayA, setThursdayA] = useState(null)
-    const [fridayM, setFridayM] = useState(null)
-    const [fridayA, setFridayA] = useState(null)
-    const [saturdayM, setSaturdayM] = useState(null)
-    const [saturdayA, setSaturdayA] = useState(null)
-    const [sundayM, setSundayM] = useState(null)
-    const [sundayA, setSundayA] = useState(null)
+    const [availability, setAvailability] = useState('00000000000000')
 
     const [validated, setValidated] = useState(false)
 
@@ -75,20 +61,7 @@ export default function UpgradeLender() {
             city: city ? city : user.city,
             country: country ? country : user.country,
             state: state ? state : user.state,
-            monday_am: mondayM ? mondayM : user.monday_am,
-            monday_pm: mondayA ? mondayA : user.monday_pm,
-            tuesday_am: tuesdayM ? tuesdayM : user.tuesday_am,
-            tuesday_pm: tuesdayA ? tuesdayA : user.tuesday_pm,
-            wednesday_am: wednesdayM ? wednesdayM : user.wednesday_am,
-            wednesday_pm: wednesdayA ? wednesdayA : user.wednesday_pm,
-            thursday_am: thursdayM ? thursdayM : user.thursday_am,
-            thursday_pm: thursdayA ? thursdayA : user.thursday_pm,
-            friday_am: fridayM ? fridayM : user.friday_am,
-            friday_pm: fridayA ? fridayA : user.friday_pm,
-            saturday_am: saturdayM ? saturdayM : user.saturday_am,
-            saturday_pm: saturdayA ? saturdayA : user.saturday_pm,
-            sunday_am: sundayM ? sundayM : user.sunday_am,
-            sunday_pm: sundayA ? sundayA : user.sunday_pm,
+            available: availability ? availability : user.available
         }
 
         Instance.put('user/update', data)
@@ -101,20 +74,7 @@ export default function UpgradeLender() {
                 newData.city = data.city
                 newData.country = data.country
                 newData.state = data.state
-                newData.monday_am = data.monday_am
-                newData.monday_pm = data.monday_pm
-                newData.tuesday_am = data.tuesday_am
-                newData.tuesday_pm = data.tuesday_pm
-                newData.wednesday_am = data.wednesday_am
-                newData.wednesday_pm = data.wednesday_pm
-                newData.thursday_am = data.thursday_am
-                newData.thursday_pm = data.thursday_pm
-                newData.friday_am = data.friday_am
-                newData.friday_pm = data.friday_pm
-                newData.saturday_am = data.saturday_am
-                newData.saturday_pm = data.saturday_pm
-                newData.sunday_am = data.sunday_am
-                newData.sunday_pm = data.sunday_pm
+                newData.available = data.available
                 dispatch({ type: 'setUser', data: newData })
             })
             .catch((error) => {
@@ -148,34 +108,7 @@ export default function UpgradeLender() {
                 return <Availability
                     validated={validated}
                     handleNextPage={handleNextPage}
-                    setMondayM={setMondayM}
-                    setMondayA={setMondayA}
-                    mondayM={mondayM}
-                    mondayA={mondayA}
-                    setTuesdayM={setTuesdayM}
-                    setTuesdayA={setTuesdayA}
-                    tuesdayM={tuesdayM}
-                    tuesdayA={tuesdayA}
-                    setWednesdayM={setWednesdayM}
-                    setWednesdayA={setWednesdayA}
-                    wednesdayM={wednesdayM}
-                    wednesdayA={wednesdayA}
-                    setThursdayM={setThursdayM}
-                    setThursdayA={setThursdayA}
-                    thursdayM={thursdayM}
-                    thursdayA={thursdayA}
-                    setFridayM={setFridayM}
-                    setFridayA={setFridayA}
-                    fridayM={fridayM}
-                    fridayA={fridayA}
-                    setSaturdayM={setSaturdayM}
-                    setSaturdayA={setSaturdayA}
-                    saturdayM={saturdayM}
-                    saturdayA={saturdayA}
-                    setSundayM={setSundayM}
-                    setSundayA={setSundayA}
-                    sundayM={sundayM}
-                    sundayA={sundayA}
+                    setAvailability={setAvailability}
                     isUpgrade={true}
                     submitUpgrade={submitUpgrade}
                 />
@@ -199,15 +132,14 @@ export default function UpgradeLender() {
                 } else setValidated(false)
                 break
             case 'Availability':
-                if (mondayM || mondayA || tuesdayM || tuesdayA || wednesdayM || wednesdayA || thursdayM || thursdayA ||
-                    fridayM || fridayA || saturdayM || saturdayA || sundayM || sundayA) {
+                if (availability !== '00000000000000') {
                     setValidated(true)
                 } else setValidated(false)
                 break
             default:
                 return '';
         }
-    }, [page, accNumber, bsb, address, city, country, state, mondayM, mondayA, tuesdayM, tuesdayA, wednesdayM, wednesdayA, thursdayM, thursdayA, fridayM, fridayA, saturdayM, saturdayA, sundayM, sundayA])
+    }, [page, accNumber, bsb, address, city, country, state, availability])
 
     return (
         <PageWrapper>

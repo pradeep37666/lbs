@@ -4,7 +4,6 @@ import PageWrapper from "./../../components/pageWrapper/pageWrapper.js";
 import { ReactComponent as Logo } from './../../assets/Logos/LogoRed.svg';
 import { Link } from 'react-router-dom';
 import Instance from '../../util/axios';
-import { LoginUser } from '../../util/UserStore';
 import { useHistory } from 'react-router-dom';
 import ValidationPopup from '../../components/ValidationPopup/ValidationPopup';
 import useGlobalState from '../../util/useGlobalState';
@@ -32,7 +31,10 @@ export default function Login() {
                 // Add user to global state
                 dispatch({ type: 'setUser', data: response.data.user })
                 localStorage.setItem('token', response.data.token.accessToken)
+<<<<<<< HEAD
                 cometChatLogin(response.data.user)
+=======
+>>>>>>> master
                 setLoginValidation("")
                 history.push({ pathname: '/' })
             }

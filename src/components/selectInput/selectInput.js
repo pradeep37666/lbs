@@ -8,7 +8,6 @@ import ArrowDown from '@material-ui/icons/ExpandMore';
 
 const BootstrapInput = withStyles((theme) => ({
   input: {
-    paddingLeft: '1em',
     textAlign: 'left',
     fontSize: '20px',
     fontFamily: ['DMSans, sans-serif'].join(','),
@@ -25,6 +24,9 @@ const useStyles = makeStyles({
     position: 'relative',
     margin: props.margin,
     maxHeight: '74px',
+  }),
+  option: props => ({
+    minHeight: '30px'
   }),
   inputLabel: props => ({
     display: (props.label === '') ? 'none' : 'block',
@@ -55,11 +57,12 @@ const useStyles = makeStyles({
 })
 
 export default function SelectInput(props) {
-  const classes = useStyles(props);
-  const [name, setName] = useState(props.options[0]);
+  const classes = useStyles(props)
+  const [name, setName] = useState(props.options[0])
 
   const handleChange = (event) => {
-    setName(event.target.value);
+    setName(event.target.value)
+    props.onChange(event)
   }
   return (
     <div className={`${classes.inputDiv}`}>
@@ -88,7 +91,7 @@ export default function SelectInput(props) {
       <div className="DropDownTitle">{name}</div>
       <hr className="hl"/>
       {props.options.map((name, index) => 
-      <MenuItem value={name} key={index}>{name}</MenuItem>
+      <MenuItem value={name} key={index} className={`${classes.option}`}>{name}</MenuItem>
       )}
       </Select>
     </div>
