@@ -53,7 +53,7 @@ export default function ApplicationFooter() {
     }
 
     const calculatePrice = () => {
-        if(confirmedEnd.sameTimeSlot) return item.price
+        if(confirmedEnd.sameTimeSlot) return item.price + ( (deliverySelected ? item.deliveryPrice : 0) + (pickupSelected ? item.deliveryPrice : 0))
         //const days = confirmedEnd.day.getDate() - confirmedStart.day.getDate()
         const days = getDateIndex(confirmedEnd.day) - getDateIndex(confirmedStart.day)
         let timeSlots

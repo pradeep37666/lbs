@@ -23,7 +23,7 @@ export default function ApplicationItemCard({ item, onClick, extra }) {
             </div>
             { extra &&
             <div className="ApplicationItemCheckContainer">
-                <CheckBox />
+                <CheckBox onClick={() => null } />
             </div>}
         </div>
     )

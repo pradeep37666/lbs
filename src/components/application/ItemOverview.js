@@ -66,9 +66,17 @@ export default function ItemOverview() {
         let deliveryOption = (deliverySelected && pickupSelected) ? 'both' : deliverySelected ? 'delivery' : 'pickup'
         const startIndex = (getDateIndex(confirmedStart.day) * 2) + (confirmedStart.day?.am ? 2 : 1)
         const endIndex = (getDateIndex(confirmedEnd.day) * 2) + (confirmedEnd.day?.am ? 2 : 1)
-        
+        console.log({
+            u_id: 3,
+            i_id: item.i_id,
+            io_id: item.u_id,
+            deliveryOption,
+            startDate: startIndex,
+            endDate: endIndex
+        })
         try{
             const { data, status } = await instance.post('booking/save', {
+                u_id: 3,
                 i_id: item.i_id,
                 io_id: item.u_id,
                 deliveryOption,
@@ -90,7 +98,7 @@ export default function ItemOverview() {
                         <p>Cost for items</p>
                         <span className="ItemOverviewPrice">${calculatePrice()}</span>
                     </div>
-                    <div>
+                    <div className="ItemOverviewBorrowContainer">
                         <div className="ItemOverviewItemContainer">
                             <p>Borrow options total</p>
                             <span className="ItemOverviewPrice">${calculateBorrowOptions()}</span>
