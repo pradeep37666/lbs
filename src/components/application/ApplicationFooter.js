@@ -1,4 +1,5 @@
 import React, { useContext } from 'react'
+import Arrow from '../../assets/Icons/Arrow'
 import { ApplicationContext } from '../../pages/application/Application'
 import getDateIndex from '../../util/getDateIndex'
 import './ApplicationFooter.css'
@@ -65,6 +66,10 @@ export default function ApplicationFooter() {
         if(confirmedStart?.pm && confirmedEnd?.am){
             timeSlots = days * 2
         }
+        // Dont' calculate delivery and pickup if the user is looking at the calendar
+        if(page === 'ItemAvailability'){
+            return item.price * timeSlots
+        }
         return item.price * timeSlots + ( (deliverySelected ? item.deliveryPrice : 0) + (pickupSelected ? item.deliveryPrice : 0))
     }
 
@@ -88,7 +93,7 @@ export default function ApplicationFooter() {
                     </div>
                 </div>
                 <div className="ApplicationFooterArrowContainer">
-                    <span className="ApplciationFooterArrow">{'\u2192'}</span>
+                    <Arrow />
                 </div>
                 <div className="ApplicationFooterDetails">
                     <span className="ApplicationFooterDetailsHeader">Return</span>

@@ -1,7 +1,7 @@
 .CheckBox {
     height: 30px;
     width: 30px;
-    border: 1px solid #ac172c;
+    border: 2px solid #ac172c;
     cursor: pointer;
     border-radius: 5px;
 }

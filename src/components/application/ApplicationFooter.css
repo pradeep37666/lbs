@@ -13,7 +13,7 @@
 }
 
 .ApplicationFooterContainer {
-    width: 40%;
+    width: 45%;
 }
 .ApplicationFooterDetailsContainer {
     display: flex;
@@ -79,7 +79,7 @@
 .ApplicationFooterArrowContainer {
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
+    justify-content: center;
 }
 .ApplicatonFooterPrice {
     font-size: 20px;

@@ -1,5 +1,6 @@
 .OptionsContainer {
   min-height: 80vh;
+  width: 80%;
 }
 .OptionsPrice {
   color: #ac172c;
@@ -30,4 +31,15 @@
 .AdditionalItemsText {
   font-size: 16px;
   color: #33384f;
+}
+.AdditionalItemsMainContainer {
+    display: flex;
+    flex-direction: column;
+}
+.AdditionalItemsContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 200px;
+    align-items: center;
 }
