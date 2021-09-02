@@ -92,6 +92,7 @@ export default function Register() {
     }
 
     const registerCometChat = (userObj) => {
+        console.log('in comet chat')
         const newUser = new CometChat.User(userObj.id)
         newUser.setName(newUser.fullName)
         CometChat.createUser(newUser, process.env.REACT_APP_CHAT_AUTH_KEY)

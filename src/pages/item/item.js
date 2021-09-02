@@ -26,7 +26,7 @@ export default function Item() {
     const [favourited,setFavourited]=useState(false)
     const [loading, setLoading] = useState(true);
     const {state} = useGlobalState()
-    const {user}= state
+    const { user } = state
     const reviewSamples = [
         ['Blake Dude', '4', 'Cillum nulla cupidatat aute pariatur ad sit tempor consectetur amet culpa labore deserunt sunt. Veniam eiusmod sunt incididunt ullamco fugiat reprehenderit labore. Ipsum irure culpa veniam velit. Elit dolore cillum nulla nulla do nulla Lorem ullamco.'],
         ['Jake Friend', '3', 'Id sunt laboris ad adipisicing ullamco id elit deserunt deserunt ullamco aute enim tempor tempor.'],
