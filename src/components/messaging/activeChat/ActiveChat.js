@@ -10,6 +10,7 @@ export default function ActiveChat({ activeChatUser }) {
     const [messages, setMessages] = useState([])
 
     useEffect(() => {
+        setMessageText('')
         CometChat.addMessageListener(user.id,
             new CometChat.MessageListener({
                 onTextMessageReceived: textMessage => {
@@ -18,20 +19,20 @@ export default function ActiveChat({ activeChatUser }) {
             }))
 
         const getMessages = async () => {
-            const messagesRequest = new CometChat.MessagesRequestBuilder().setLimit(10).setUID(user.id).build()
+            console.log(user.id)
+            const messagesRequest = new CometChat.MessagesRequestBuilder().setLimit(10).build()
             const res = await messagesRequest.fetchPrevious()
-            console.log(res)
+            console.log('messages', res)
         }
         
         getMessages()
-    },[])
+    },[activeChatUser])
 
     const sendMessage = async () => {
-        const textMessage = new CometChat.TextMessage('SUPERHERO2',messageText, CometChat.RECEIVER_TYPE.USER)
-        console.log(textMessage)
+        const textMessage = new CometChat.TextMessage('SUPERHERO1',messageText, CometChat.RECEIVER_TYPE.USER)
         try{
             const res = await CometChat.sendMessage(textMessage)
-            console.log(res)
+            console.log('sent message', res)
         } catch(e) {
             console.log(e)
         }
@@ -49,7 +50,7 @@ export default function ActiveChat({ activeChatUser }) {
 
     return (
         <div className="ActiveChatContainer">
-            <h1>Billy King</h1>
+            <h1>{activeChatUser.name}</h1>
             <form 
             onSubmit={handleSubmit}
             className="ActiveChatInputContainer"

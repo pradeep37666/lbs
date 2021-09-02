@@ -3,7 +3,7 @@ import './UserCard.css'
 export default function UserCard({ conversation, setActiveChatUser }) {
 
     const handleClick = () => {
-        setActiveChatUser(conversation.conversationId)
+        setActiveChatUser(conversation.conversationWith)
     }
 
     return (

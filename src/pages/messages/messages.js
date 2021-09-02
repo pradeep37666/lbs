@@ -14,6 +14,7 @@ export default function Messages() {
     const [activeChatUser, setActiveChatUser] = useState()
 
     useEffect(() => {
+        // sendMessage()
         const getConversations = async () => {
             try{
                let conversationRequest = new CometChat.ConversationsRequestBuilder().setLimit(10).build()
@@ -29,6 +30,17 @@ export default function Messages() {
         getConversations()
     }, [])
 
+    // const sendMessage = async () => {
+    //     const textMessage = new CometChat.TextMessage('SUPERHERO2','hello', CometChat.RECEIVER_TYPE.USER)
+    //     console.log(textMessage)
+    //     try{
+    //         const res = await CometChat.sendMessage(textMessage)
+    //         console.log(res)
+    //     } catch(e) {
+    //         console.log(e)
+    //     }
+       
+    // }
     const renderCards = () => {
         return conversations.map((conversation, index) => {
             return (
@@ -54,7 +66,10 @@ export default function Messages() {
                     { isLoading ? (
                         Array(5).fill(<Facebook />)
                     ):(
-                         renderCards()     
+                        <div>
+                            <h1>Messages</h1>
+                            {renderCards()}
+                        </div>   
                     )}
                 </div>
                 { activeChatUser && 

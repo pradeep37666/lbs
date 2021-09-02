@@ -91,13 +91,27 @@ export default function Register() {
         })
     }
 
-    const registerCometChat = (userObj) => {
+    const registerCometChat = async (userObj) => {
         console.log('in comet chat', userObj)
         const newUser = new CometChat.User(userObj.id)
-        newUser.setName(newUser.fullName)
-        CometChat.createUser(newUser, process.env.REACT_APP_CHAT_AUTH_KEY)
-        .then(newUser => console.log("created comet chat user", newUser))
-        .catch(err => console.log(err.response))
+        newUser.setName(userObj.fullName)
+        try{
+            await CometChat.createUser(newUser, process.env.REACT_APP_CHAT_AUTH_KEY)
+            console.log('successfully registered to comet chat', newUser)
+            await cometChatLogin(userObj)
+        } catch(e) {
+            console.log('comet chat register error', e)
+        }
+        
+    }
+
+    const cometChatLogin = async (user) => {
+        try{
+            const User = await  CometChat.login(user.id, process.env.REACT_APP_CHAT_AUTH_KEY)
+            console.log(User, 'logged into comet chat')
+        } catch(e) {
+            console.log(e)
+        }
     }
 
     useEffect(() => {
