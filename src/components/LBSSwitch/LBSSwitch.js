@@ -57,7 +57,7 @@ const IOSSwitch = withStyles((theme) => ({
   );
 });
 
-export default function CustomizedSwitches(props) {
+export default function LBSSwitch(props) {
   const [state, setState] = React.useState({
     checkedB: true
   });

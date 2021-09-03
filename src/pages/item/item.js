@@ -15,20 +15,19 @@ import Jake from './../../assets/Images/JakeFriend.png';
 import ItemImage from './../../assets/Images/search_section_bg.jpg';
 import GoogleMapReact from 'google-map-react';
 import Instance from '../../util/axios';
-import { useParams} from 'react-router';
-import { Link } from 'react-router-dom';
-import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
-import ApplicationModal from '../../components/applicationModal/ApplicationModal.js';
+import { useParams } from 'react-router';
+import useGlobalState from "../../util/useGlobalState"
+import CircularProgress from '@material-ui/core/CircularProgress';
 
-export default function Item(props) {
-    const location = useLocation()
-   
-
+export default function Item() {
     // Pass in number of reviews from backend for use in review carousel + modal
     const params = useParams();
     const [modalVisible, setModalVisible] = useState()
     const [item, setItem] = useState([]);
+    const [favourited,setFavourited]=useState(false)
     const [loading, setLoading] = useState(true);
+    const {state} = useGlobalState()
+    const {user}= state
     const reviewSamples = [
         ['Blake Dude', '4', 'Cillum nulla cupidatat aute pariatur ad sit tempor consectetur amet culpa labore deserunt sunt. Veniam eiusmod sunt incididunt ullamco fugiat reprehenderit labore. Ipsum irure culpa veniam velit. Elit dolore cillum nulla nulla do nulla Lorem ullamco.'],
         ['Jake Friend', '3', 'Id sunt laboris ad adipisicing ullamco id elit deserunt deserunt ullamco aute enim tempor tempor.'],
@@ -44,9 +43,11 @@ export default function Item(props) {
         const bookingCreated = location.state?.bookingCreated
         if(bookingCreated) setModalVisible(true)
         // Find the item with the id used in the link
-          Instance.get(`/items/findByIid/?i_id=${params.itemId}`, {headers: { Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QxMjNAdGVzdC5jb20iLCJzdWIiOjcsImlhdCI6MTYyNjE1MTQwNiwiZXhwIjoxNjI3NDQ3NDA2fQ.q6lH_TAJ-P0YxuJDhOrCu3pU5JWTqDrlcbDdbVLu58A`}}).then((response) => {
-            setItem(response.data);
+          Instance.get(`/items/findByIid/?i_id=${params.itemId}&u_id=${user.id}`).then((response) => {
+            setItem(response.data.item);
             setLoading(false);
+            setFavourited(response.data.liked)
+            //console.log("item ",response.data )
           })
           .catch((error) => {
             // handle error
@@ -75,6 +76,23 @@ export default function Item(props) {
             (ReviewPage === 1) ? setReviewPage(NumReviewPages) : setReviewPage(ReviewPage - 1);
         }
     }
+    const handleFavourit =()=>{
+        console.log("posted favourite item ",item)
+        console.log("favourited", favourited)
+        if(!favourited){
+            Instance.post(`/liked/save`,{i_id:item.i_id})
+            .then((data)=>{
+                setFavourited(true)})
+            .catch((e)=>{console.log(e)})
+            
+        }   
+        else{ 
+            Instance.delete(`/liked/delete/?i_id=${item.i_id}`)
+            .then((data)=>{
+               // console.log("delet like res ",data)
+                setFavourited(false)})
+            .catch((e)=>{console.log(e)})}
+        }
 
     const getReviews = () => {
         let content = [];
@@ -110,7 +128,7 @@ export default function Item(props) {
         <PageWrapper>
             {ImageModal ? <ItemImageModal setModal={setImageModal} modal={ImageModal} /> : ''}
             {ReviewModal ? <ItemReviewModal setModal={setReviewModal} modal={ReviewModal} reviews={reviewSamples} /> : ''}
-            {loading ? <div>Loading item data...</div>
+            {loading ? <div className="ItemPage__Loading__Container"><CircularProgress size={75}/></div>
             
         :
         <div className="ItemMainWrapper">
@@ -120,34 +138,45 @@ export default function Item(props) {
 
                 <div className="ItemPriceFlex">
                     <div className="ItemPriceTextBig">${item.price}</div>
-                    <div className="ItemRateDiscountFlex">
-                        <div className="ItemDiscountText">*DISCOUNT*% off peak discount</div>
-                    </div>
+                    {item.discount > 0 ?  
+                                <div className="ItemRateDiscountFlex">
+                                    <div className="ItemDiscountText">{item.discount}% off peak discount</div>
+                                </div>
+                    : ''}
+                    
                 </div>
 
                 <div className="LocationDeliveryCategory">
-                    <div className="LDCIconContainer"><img src={Location} alt="" className="LDCIcon"/></div>{item.city}</div>
-                <div className="LocationDeliveryCategory"><div className="LDCIconContainer"><img src={Delivery} alt="" className="LDCIcon" style={{height: '22px'}}/></div>{item.deliveryOptions === 'delivery' ? 'Delivery Available' : 'Pickup only'}&nbsp;<span className={`${item.deliveryOptions === 'delivery' ? '' : 'Hide'}`}>/</span><span className={`DeliveryFeeText ${item.deliveryOptions === 'delivery' ? '' : 'Hide'}`}>&nbsp;$10 Delivery Fee</span></div>
-                <div className={'LocationDeliveryCategory'}><div className="LDCIconContainer"><img src={Category} alt="" className="LDCIcon"/></div>{item.category}</div>
-
-                <div className="ItemButtons">
+                    <div className="LDCIconContainer">
+                        <img src={Location} alt="" className="LDCIcon"/>
+                    </div>
+                    {item.city}
+                </div>
+                <div className="LocationDeliveryCategory">
+                    <div className="LDCIconContainer">
+                        <img src={Delivery} alt="" className="LDCIcon" style={{height: '22px'}}/>
+                    </div>
+                    {item.deliveryPrice > 0 ?  
+                    <>Delivery Available /<span className={`DeliveryFeeText`}>&nbsp;${item.deliveryPrice} Delivery Fee</span> </>     
+                    : 
+                    <>Pickup only</>
+                    }
+                </div>
+                <div className={'LocationDeliveryCategory'}>
+                    <div className="LDCIconContainer">
+                        <img src={Category} alt="" className="LDCIcon"/>
+                    </div>
+                    {item.category}
+                </div>
+               { (user&&user.id==item.u_id)?
+               <button class="editButton">
+                   Edit Item Details
+               </button>:
+               <div className="ItemButtons">
                     <button className="ButtonAvailability"><div className="ItemButtonFlex"><img src={Calendar} alt=""/>Availability</div></button>
-                    <Link to={`/item/${params.itemId}/application`}>
-                        <button className="ButtonApply"><div className="ItemButtonFlex"><Profile fill='#ffffff'/>Apply Now</div></button>
-                    </Link>
-                    
-                    <button className="ButtonFavourite" style={{padding: '.5em 1em'}}><StarOutline fill='#ffffff'/></button>
-                </div>
-                <hr className="hr"/>
-
-                <div>
-                    <div className="ItemDetailsHeader">Item Details</div>
-                    <div className="ItemDetailsFlex">Brand <div>SCA</div></div>
-                    <div className="ItemDetailsFlex">Build Date <div>2018</div></div>
-                    <div className="ItemDetailsFlex">Condition <div>Fair</div></div>
-                    <div className="ItemDetailsFlex">Strength <div>Heavy Duty</div></div>
-                </div>
-
+                    <button className="ButtonApply"><div className="ItemButtonFlex"><Profile fill='#ffffff'/>Apply Now</div></button>
+                    <button onClick={handleFavourit} className="ButtonFavourite" style={{padding: '.5em 1em'} }>{favourited?<StarFilled/>:<StarOutline />}</button>
+                </div>}
                 <hr className="hr"/>
 
                 <div className="ItemDetailsHeader">Description</div>
@@ -210,9 +239,10 @@ export default function Item(props) {
                 <div className="MapContainer">
                     <GoogleMapReact
                     bootstrapURLKeys={{ key: 'AIzaSyB98s0INvtxhs22OxCOEIjE_--kb54qhlQ' }}
-                    defaultCenter={defaultProps.center}
+                    defaultCenter={{lat: item.lat, lng: item.lng}}
                     defaultZoom={defaultProps.zoom}
                     >
+                    <Marker lat={item.lat} lng={item.lng}/>
                     </GoogleMapReact>
                 </div>
 
@@ -225,5 +255,11 @@ export default function Item(props) {
         
             }
             </PageWrapper>
+    )
+}
+
+  function Marker(){
+    return(
+        <div style={{width:"39px",height:"39px",borderRadius:"50%", background:"#B03B4B", border:"3px solid #F6EFE6"}}></div>
     )
 }

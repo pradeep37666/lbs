@@ -13,11 +13,12 @@ export default function itemCard(props) {
   return (
     <div className="ItemCard">
       {/* new prop for image link to go here later */}
-      <Link to={`/item/${item.i_id}`} item={item}>
+      <Link to={`/item/${item.i_id}`} item={item} style={{position:"relative"}}>
         <img src={PreviewImage} alt={item.title} className="PreviewImage"/>
+        {props.favourited&&<div className="favouriteStar"><StarFilled/></div>}
       </Link>
       <div className="ItemNameText">{item.title}</div>
-      {/* <div className="ItemPriceText">${item.price} <span className="ItemRateText">per {item.rate}</span></div> */}
+      <div className="ItemPriceText">${item.price}</div>
 
       <div className="StatusLocationSection">
         <div className="StatusLocationSection" style={{paddingRight: '30px'}}>
