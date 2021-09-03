@@ -3,6 +3,8 @@ import './ActiveChat.css'
 import { CometChat, CometChatConstants } from '@cometchat-pro/chat'
 import useGlobalState from '../../../util/useGlobalState'
 import { CircularProgress } from '@material-ui/core'
+import ReceivedMessage from '../receivedMessage/ReceivedMessage'
+import SentMessage from '../sentMessage/SentMessage'
 
 export default function ActiveChat({ activeChatUser }) {
     const { state, dispatch } = useGlobalState()
@@ -25,6 +27,7 @@ export default function ActiveChat({ activeChatUser }) {
             try{
                 const messagesRequest = new CometChat.MessagesRequestBuilder().setLimit(10).setUID(activeChatUser.uid).build()
                 const res = await messagesRequest.fetchPrevious()
+                console.log(res)
                 setMessages(res)
                 setIsLoading(false)
             } catch(e) {
@@ -36,9 +39,11 @@ export default function ActiveChat({ activeChatUser }) {
     },[activeChatUser])
 
     const sendMessage = async () => {
-        const textMessage = new CometChat.TextMessage('0730ac8d-7aa9-4c7e-ab1e-e8c2b3698e3c',messageText, CometChat.RECEIVER_TYPE.USER)
+        const textMessage = new CometChat.TextMessage(activeChatUser.uid, messageText, CometChat.RECEIVER_TYPE.USER)
+        textMessage.setMetadata({ enquiry: 'mower'})
         try{
             const res = await CometChat.sendMessage(textMessage)
+            setMessageText('')
             console.log('sent message', res)
         } catch(e) {
             console.log(e)
@@ -58,13 +63,15 @@ export default function ActiveChat({ activeChatUser }) {
     const renderMessages = () => {
         return messages.map((message, index ) => {
             return (
-                message.sender.uid ? (
+                message.sender.uid === user.id ? (
                    <div key={index}>
-                    <p>{message.data.text}</p>
+                        <SentMessage message={message.data.text}/>
 
                     </div> 
                 ) : (
-                    <div>not mine</div>
+                    <div>
+                        <ReceivedMessage message={message.data.text}/>
+                    </div>
                 )
                 
             )

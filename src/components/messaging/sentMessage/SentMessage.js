@@ -1,4 +1,5 @@
 import React from 'react'
+import './SentMessage.css'
 
 export default function SentMessage({ message }) {
     return (

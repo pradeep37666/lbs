@@ -31,14 +31,14 @@ export default function Messages() {
     }, [])
 
     const sendMessage = async () => {
-        const textMessage = new CometChat.TextMessage('0730ac8d-7aa9-4c7e-ab1e-e8c2b3698e3c','hello', CometChat.RECEIVER_TYPE.USER)
-        console.log(textMessage)
-        try{
-            const res = await CometChat.sendMessage(textMessage)
-            console.log(res)
-        } catch(e) {
-            console.log(e)
-        }
+        // const textMessage = new CometChat.TextMessage('0730ac8d-7aa9-4c7e-ab1e-e8c2b3698e3c','hello', CometChat.RECEIVER_TYPE.USER)
+        // console.log(textMessage)
+        // try{
+        //     const res = await CometChat.sendMessage(textMessage)
+        //     console.log(res)
+        // } catch(e) {
+        //     console.log(e)
+        // }
        
     }
     const renderCards = () => {
