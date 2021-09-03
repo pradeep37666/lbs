@@ -37,19 +37,10 @@ function App() {
   const token = localStorage.getItem('token')
 
   useEffect(() => {
-<<<<<<< HEAD
-    if (!token){
-      setLoadingUser(false)
-     return 
-    } 
-    
-    setLoadingUser(false)
-=======
     if (!token) {
       setLoadingUser(false)
       return
     } 
->>>>>>> master
     instance.get('/user/me')
       .then(({ data }) => {
         dispatch({ type: 'setUser', data })

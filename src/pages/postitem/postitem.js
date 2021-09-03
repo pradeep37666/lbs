@@ -94,6 +94,7 @@ export default function PostItem() {
         .then((response) => {
             console.log(response.data)
             if (response.status === 201) {
+                uploadImages()
                 setItemID(response.data.i_id)
             } else {
                 alert("an error occurred creating your item, please try again")
@@ -107,6 +108,16 @@ export default function PostItem() {
             // history.go(0)
             alert("an error occurred creating your item, please try again")
         })
+    }
+
+    const uploadImages = async () => {
+        const images = pictures.map((item) => item.raw)
+        try{
+            const {data, status} = Instance.post('/file-upload/uploadManyToS3', { images })
+            console.log(status, data)
+        } catch(e) {
+            console.log('image upload error', e)
+        }
     }
 
     const renderSwitch = () => {
