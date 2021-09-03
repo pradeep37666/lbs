@@ -5,6 +5,7 @@ import useGlobalState from '../../../util/useGlobalState'
 import { CircularProgress } from '@material-ui/core'
 import ReceivedMessage from '../receivedMessage/ReceivedMessage'
 import SentMessage from '../sentMessage/SentMessage'
+import EnquiryMessage from '../equiryMessage/EnquiryMessage'
 
 export default function ActiveChat({ activeChatUser }) {
     const { state, dispatch } = useGlobalState()
@@ -62,6 +63,10 @@ export default function ActiveChat({ activeChatUser }) {
 
     const renderMessages = () => {
         return messages.map((message, index ) => {
+            if(message.data?.metadata?.enquiry){
+                const isOwnEnquiry = message.sender.uid === user.id
+                return <EnquiryMessage message={message.data.metadata.enquiry} />
+            }
             return (
                 message.sender.uid === user.id ? (
                    <div key={index}>
