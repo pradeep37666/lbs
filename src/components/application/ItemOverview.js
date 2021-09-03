@@ -178,7 +178,7 @@ export default function ItemOverview() {
                     </div>
                     <div className="ItemOverviewItemContainer">
                         <span className="ItemOverviewSmallText">Off Peak Discount </span>
-                        <span className="ItemOverviewSmallText">-${5}</span>
+                        <span className="ItemOverviewSmallText">-${calculateDiscountTimeSlots() * item.price * (item.discount / 100)}</span>
 
                     </div>
                     <div className="ItemOverviewItemContainer">
