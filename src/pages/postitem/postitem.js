@@ -112,11 +112,12 @@ export default function PostItem() {
 
     const uploadImages = async () => {
         console.log('0000')
-        const files = pictures.map((item) => item.raw)
+        
         //console.log('posting', file)
         const formData = new FormData()
-        formData.append('files', files)
-        console.log('files',files)
+        pictures.forEach((item) => formData.append('files', item.raw))
+        
+        // console.log('files',files)
         try{
             const res = await Instance.post('/file-upload/uploadManyToS3', formData)
             console.log(res)
