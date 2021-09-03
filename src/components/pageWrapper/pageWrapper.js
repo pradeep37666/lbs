@@ -1,7 +1,7 @@
 import React from 'react';
 import './pageWrapper.css';
 import Header from './../header/header.js';
-import Footer from '../footer/Footer.js';
+import Footer from '../footer/Footer'
 
 const pageWrapper = (props) => {
   return (
