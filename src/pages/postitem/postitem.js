@@ -111,10 +111,14 @@ export default function PostItem() {
     }
 
     const uploadImages = async () => {
-        const images = pictures.map((item) => item.raw)
+        const files = pictures.map((item) => item.raw)
+        //console.log('posting', file)
+        const formData = new FormData()
+        formData.append('files', files)
+        console.log(pictures[0])
         try{
-            const {data, status} = Instance.post('/file-upload/uploadManyToS3', { images })
-            console.log(status, data)
+            const res = await Instance.post('/file-upload/uploadManyToS3', formData)
+            console.log(res)
         } catch(e) {
             console.log('image upload error', e)
         }
