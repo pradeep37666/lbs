@@ -1,9 +1,23 @@
-import React from 'react'
+import React, { useRef, useState } from 'react'
+import { Popover } from '@material-ui/core'
 import './UserCard.css'
+import axios from 'axios'
 export default function UserCard({ conversation, setActiveChatUser }) {
+
 
     const handleClick = () => {
         setActiveChatUser(conversation.conversationWith)
+    }
+
+    const handleDotClick = async (e) => {
+        e.stopPropagation()
+        const {data, status} = await axios.delete(`https://${process.env.REACT_APP_CHAT_APP_ID}.api-US.cometchat.io/v3.0/conversations/${conversation.conversationId}`,{
+            headers: {
+                apiKey: process.env.REACT_APP_CHAT_API_KEY
+            }
+        })
+        setActiveChatUser(null)
+        
     }
 
     return (
@@ -13,15 +27,18 @@ export default function UserCard({ conversation, setActiveChatUser }) {
                 <div className="UserCardDetails">
                     <ul style={{ listStyleType: 'none'}}>
                         <li>{conversation.conversationWith.name}</li>
-                        <li>Status: ITEM STATUS</li>
                     </ul>
+                </div>
+                <div  style={{ background: 'red' }} onClick={handleDotClick}>
+                    <p>delete chat</p>
+
                 </div>
                 <div>
 
                 </div> 
             </div>
             <div className="UserCardBottom">
-                <p>Billy has enquired about your "ITEM NAME"</p>
+                <p>{conversation.conversationWith.name} has enquired about your "ITEM NAME"</p>
             </div>
             
         </div>

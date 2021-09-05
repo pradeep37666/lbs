@@ -14,13 +14,13 @@ export default function Messages() {
     const [activeChatUser, setActiveChatUser] = useState()
 
     useEffect(() => {
+        console.log('use effect')
         sendMessage()
         const getConversations = async () => {
             try{
                let conversationRequest = new CometChat.ConversationsRequestBuilder().setLimit(10).build()
                 const conversations = await conversationRequest.fetchNext()
                 setConversations(conversations) 
-                console.log(conversations)
                 setIsLoading(false)
             } catch(e) {
                 console.log(e)
@@ -28,7 +28,7 @@ export default function Messages() {
             
         }
         getConversations()
-    }, [])
+    }, [activeChatUser])
 
     const sendMessage = async () => {
         // const textMessage = new CometChat.TextMessage('0730ac8d-7aa9-4c7e-ab1e-e8c2b3698e3c','hello', CometChat.RECEIVER_TYPE.USER)

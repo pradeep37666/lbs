@@ -18,15 +18,13 @@ export default function ActiveChat({ activeChatUser }) {
         setMessageText('')
         CometChat.addMessageListener(user.id,
             new CometChat.MessageListener({
-                onTextMessageReceived: textMessage => {
-                    console.log('message received successfully', textMessage)
-                }
+                onTextMessageReceived: handleTextMessage
             }))
 
         const getMessages = async () => {
             setIsLoading(true)
             try{
-                const messagesRequest = new CometChat.MessagesRequestBuilder().setLimit(10).setUID(activeChatUser.uid).build()
+                const messagesRequest = new CometChat.MessagesRequestBuilder().setLimit(0).setUID(activeChatUser.uid).build()
                 const res = await messagesRequest.fetchPrevious()
                 console.log(res)
                 setMessages(res)
@@ -39,13 +37,17 @@ export default function ActiveChat({ activeChatUser }) {
         getMessages()
     },[activeChatUser])
 
+    const handleTextMessage = (textMessage) => {
+        setMessages(prevMessages => [ ...prevMessages, textMessage ])
+    }
+
     const sendMessage = async () => {
-        const textMessage = new CometChat.TextMessage(activeChatUser.uid, messageText, CometChat.RECEIVER_TYPE.USER)
-        textMessage.setMetadata({ enquiry: 'mower'})
+        
+        const textMessage = new CometChat.TextMessage('ddb8dc38-a334-495d-9444-7013e88a6947', messageText, CometChat.RECEIVER_TYPE.USER)
+        setMessageText('')
         try{
-            const res = await CometChat.sendMessage(textMessage)
-            setMessageText('')
-            console.log('sent message', res)
+            const sentMessage = await CometChat.sendMessage(textMessage)
+            setMessages(prevMessages => [...prevMessages, sentMessage])
         } catch(e) {
             console.log(e)
         }
@@ -74,7 +76,7 @@ export default function ActiveChat({ activeChatUser }) {
 
                     </div> 
                 ) : (
-                    <div>
+                    <div key={index}>
                         <ReceivedMessage message={message.data.text}/>
                     </div>
                 )

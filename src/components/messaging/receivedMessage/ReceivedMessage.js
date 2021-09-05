@@ -4,6 +4,7 @@ export default function ReceivedMessage({ message }) {
     return (
         <div className="ReceivedMessageContainer">
             <p>{message}</p>
+            <div className="MessageTriangle"></div>
         </div>
     )
 }
