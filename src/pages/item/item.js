@@ -15,13 +15,20 @@ import Jake from './../../assets/Images/JakeFriend.png';
 import ItemImage from './../../assets/Images/search_section_bg.jpg';
 import GoogleMapReact from 'google-map-react';
 import Instance from '../../util/axios';
-import { useParams } from 'react-router';
-import useGlobalState from "../../util/useGlobalState"
-import CircularProgress from '@material-ui/core/CircularProgress';
+import { useParams} from 'react-router';
+import { Link } from 'react-router-dom';
+import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
+import ApplicationModal from '../../components/applicationModal/ApplicationModal.js';
+import useGlobalState from '../../util/useGlobalState.js';
+import { CircularProgress } from '@material-ui/core';
 
-export default function Item() {
+export default function Item(props) {
+    const location = useLocation()
+   
+
     // Pass in number of reviews from backend for use in review carousel + modal
     const params = useParams();
+    const [modalVisible, setModalVisible] = useState()
     const [item, setItem] = useState([]);
     const [favourited,setFavourited]=useState(false)
     const [loading, setLoading] = useState(true);
@@ -38,6 +45,9 @@ export default function Item() {
     ]
 
     useEffect(() => {
+        // update modal state if navigated to this screen after creating a booking
+        const bookingCreated = location.state?.bookingCreated
+        if(bookingCreated) setModalVisible(true)
         // Find the item with the id used in the link
           Instance.get(`/items/findByIid/?i_id=${params.itemId}&u_id=${user.id}`).then((response) => {
             setItem(response.data.item);
@@ -115,7 +125,11 @@ export default function Item() {
         },
         zoom: 15
       };
-    
+
+    const handleModalClick = () => {
+        setModalVisible()
+    }
+
     return (
         <PageWrapper>
             {ImageModal ? <ItemImageModal setModal={setImageModal} modal={ImageModal} /> : ''}
@@ -124,6 +138,7 @@ export default function Item() {
             
         :
         <div className="ItemMainWrapper">
+            { modalVisible && <ApplicationModal item={item.item} onClick={handleModalClick}/>}
             <div className="ItemInfoWrapper">
                 <div className="ItemName">{item.title}</div>
 

@@ -1,4 +1,5 @@
 import React, { useContext } from 'react'
+import Arrow from '../../assets/Icons/Arrow'
 import { ApplicationContext } from '../../pages/application/Application'
 import getDateIndex from '../../util/getDateIndex'
 import './ApplicationFooter.css'
@@ -52,22 +53,55 @@ export default function ApplicationFooter() {
     }
 
     const calculatePrice = () => {
-        if(confirmedEnd.sameTimeSlot) return item.price
+        let discountTimeSlots = 0
+        if(item.discount > 0) discountTimeSlots = calculateDiscount()
+        let price
+        if(confirmedEnd.sameTimeSlot) {
+            price = item.price 
+            // + ( (deliverySelected ? item.deliveryPrice : 0) + (pickupSelected ? item.deliveryPrice : 0))
+        }
         //const days = confirmedEnd.day.getDate() - confirmedStart.day.getDate()
         const days = getDateIndex(confirmedEnd.day) - getDateIndex(confirmedStart.day)
-        let timeSlots
+        let totalTimeSlots
         if(confirmedStart?.am && confirmedEnd?.am || confirmedStart?.pm && confirmedEnd?.pm){
-            timeSlots = (days * 2) + 1
+            totalTimeSlots = (days * 2) + 1
         }
         if(confirmedStart?.am && confirmedEnd?.pm){
-            timeSlots = (days + 1) * 2
+            totalTimeSlots = (days + 1) * 2
         }
         if(confirmedStart?.pm && confirmedEnd?.am){
-            timeSlots = days * 2
+            totalTimeSlots = days * 2
         }
-        return item.price * timeSlots + ( (deliverySelected ? item.deliveryPrice : 0) + (pickupSelected ? item.deliveryPrice : 0))
+        const weekendTimeSlots = totalTimeSlots - discountTimeSlots
+        price = (weekendTimeSlots * item.price) + (discountTimeSlots * (item.price * (1 - item.discount / 100)))
+        // Dont' calculate delivery and pickup if the user is looking at the calendar
+        if(page === 'ItemAvailability' && !confirmedEnd.sameTimeSlot){
+            return price
+        }
+        return price + ( (deliverySelected ? item.deliveryPrice : 0) + (pickupSelected ? item.deliveryPrice : 0))
     }
 
+    const calculateDiscount = () => {
+        const startDay = new Date(confirmedStart.day.getFullYear(), confirmedStart.day.getMonth(), confirmedStart.day.getDate())
+        let timeSlots = 0
+        while(startDay <= confirmedEnd.day) {
+            const day = startDay.getDay()
+            const date = startDay.getDate()
+            if( day > 0 && day < 6 ){
+                console.log('a')
+                timeSlots += 2
+            }
+            startDay.setDate(date + 1)
+        }
+        if(confirmedStart?.pm && isWeekday(confirmedStart.day)) timeSlots -= 1
+        if(confirmedEnd?.am && isWeekday(confirmedEnd.day)) timeSlots -= 1
+        return timeSlots
+    }
+
+    const isWeekday = (dateObj) => {
+        const day = dateObj.getDay()
+        return day > 0 && day < 6
+    } 
     return (
         <div className="ApplicationFooter">
          <div className="ApplicationFooterContainer">
@@ -88,7 +122,7 @@ export default function ApplicationFooter() {
                     </div>
                 </div>
                 <div className="ApplicationFooterArrowContainer">
-                    <span className="ApplciationFooterArrow">{'\u2192'}</span>
+                    <Arrow />
                 </div>
                 <div className="ApplicationFooterDetails">
                     <span className="ApplicationFooterDetailsHeader">Return</span>

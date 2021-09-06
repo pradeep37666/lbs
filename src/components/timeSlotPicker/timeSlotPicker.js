@@ -34,7 +34,7 @@ export default function TimeSlotPicker({ morning, afternoon, morningClick, after
                 ${afternoonUnavailable ? 'AfternoonUnavailable' : 'Pointer'}`} 
                 onClick={handleAfternoonClick}
                 >
-                    <AfternoonIcon color={afternoon ? '#e9d8b4' : afternoonUnavailable ? "gray" : null }/>
+                    <AfternoonIcon color={afternoonUnavailable ? 'gray' : '' }/>
                     <div className="DayText">Afternoon</div>
                     <div className="TimeText">1pm - 5pm</div>
                 </div>

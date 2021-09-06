@@ -1,15 +1,12 @@
-.ItemOverviewContainer {
-    min-height: 80vh;
-    width: 100vh;
-    display: flex;
-    justify-content: space-between;
-}
 
 .ApplicationOverviewContainer {
+    margin-bottom: 30px;
+    width: 70%;
     border: solid 1px #b4b4b4;
-    min-width: 50%;
     border-radius: 20px;
-    padding: 30px
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
 }
 .ItemOverviewPrice {
     font-size: 20px;
@@ -35,4 +32,35 @@
 }
 .ItemOverviewEditButton:hover {
     text-decoration: underline;
+}
+.ApplicationOverviewSubHeader {
+    font-size: 20px;
+    color: #33384f;
+    font-weight: bold;
+}
+.ItemOverviewSmallText {
+    font-size: 12px;
+    margin-bottom: 5px;
+}
+.ItemOverviewSendButton {
+    background-color: #ac172c;
+    margin-top: 20px;
+    align-self: center;
+    width: 80%;
+    border-radius: 8px;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 40px;
+    cursor: pointer;
+}
+
+.ItemOverviewSendText {
+    font-size: 15px;
+}
+.ItemOverviewBorrowContainer {
+    padding-bottom: 15px;
+    border-bottom: 2px solid #31364c;
+    margin-bottom: 15px;
 }

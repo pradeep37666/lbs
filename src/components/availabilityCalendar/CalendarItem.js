@@ -16,7 +16,6 @@ export default function CalendarItem({day, index, onClick, isCurrentMonth }) {
     useEffect(() => {
         if(!yearAvailability) return
         const { availability, booked } = getAvailability(day, itemAvailability, yearAvailability)
-        console.log(availability,booked)
         setAvailability(availability)
         setBooked(booked)
         if(day.getDate() < currentDate && isCurrentMonth) {
@@ -56,6 +55,7 @@ export default function CalendarItem({day, index, onClick, isCurrentMonth }) {
         if( selected && !compareDates(selected, confirmedStart.day) && compareDates(day, selected) && (selected > confirmedStart.day)){
             return 'ItemApplicationPeriodEnd'
         }
+        if(selected && confirmedEnd.sameTimeSlot && compareDates(day, confirmedStart.day) && selected < confirmedStart.day) return ''
         if( selected && compareDates(day,confirmedStart.day)) {
             return 'ItemApplicationPeriodStart'
         }
