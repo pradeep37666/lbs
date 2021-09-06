@@ -4,6 +4,7 @@ import './UserCard.css'
 import axios from 'axios'
 export default function UserCard({ conversation, setActiveChatUser }) {
     const [isDeleting, setIsDeleting] = useState(false)
+    console.log(conversation)
 
     const handleClick = () => {
         setActiveChatUser(conversation.conversationWith)
@@ -44,7 +45,7 @@ export default function UserCard({ conversation, setActiveChatUser }) {
                         </div> 
                     </div>
                     <div className="UserCardBottom">
-                        <p>{conversation.conversationWith.name} has enquired about your "ITEM NAME"</p>
+                        <p>{conversation.lastMessage.data.text}</p>
                     </div>
                 </>
             )}

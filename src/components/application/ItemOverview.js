@@ -7,10 +7,14 @@ import Arrow from '../../assets/Icons/Arrow'
 import ApplicationItemCard from './ApplicationItemCard'
 import instance from '../../util/axios'
 import { useHistory } from 'react-router'
+import { CometChat } from '@cometchat-pro/chat'
+import useGlobalState from '../../util/useGlobalState'
 
 export default function ItemOverview() {
     const { state, dispatch } = useContext(ApplicationContext)
-    const { page, item, confirmedEnd, confirmedStart, deliverySelected, pickupSelected,  } = state
+    const globalState = useGlobalState()
+    const user  = globalState.state.user
+    const { page, item, confirmedEnd, confirmedStart, deliverySelected, pickupSelected } = state
 
     const history = useHistory()
     const dayArray = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
@@ -139,15 +143,26 @@ export default function ItemOverview() {
                 startDate: startIndex,
                 endDate: endIndex
             })
-            console.log(data, status)
+            sendEnquiry(item)
             history.push({ 
                 pathname: `/item/${item.i_id}`, 
                 state: {bookingCreated: true, price: calculatePrice()}
             })
         } catch(e) {
-            console.log(e.response)
+            console.log(e.response.error.message)
         }
         
+    }
+
+    const sendEnquiry = async (item) => {
+        const textMessage = new CometChat.TextMessage(item.u_id, `${user.fullName} has enquired about your ${item.title}`, CometChat.RECEIVER_TYPE.USER)
+        textMessage.setMetadata({ enquiry: true })
+        try{
+            const res = await CometChat.sendMessage(textMessage)
+            console.log(res)
+        } catch(e) {
+            console.log(e)
+        }
     }
 
     return (

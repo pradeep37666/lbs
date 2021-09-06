@@ -67,7 +67,7 @@ export default function ActiveChat({ activeChatUser }) {
         return messages.map((message, index ) => {
             if(message.data?.metadata?.enquiry){
                 const isOwnEnquiry = message.sender.uid === user.id
-                return <EnquiryMessage message={message.data.metadata.enquiry} />
+                return <EnquiryMessage message={message.data.text} />
             }
             return (
                 message.sender.uid === user.id ? (

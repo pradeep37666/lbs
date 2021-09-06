@@ -1,9 +1,9 @@
 import React from 'react'
 
-export default function EnquiryMessage({ sender, itemName }) {
+export default function EnquiryMessage({ message }) {
     return (
         <div>
-            <p>enquiry</p>
+            <p>{message}</p>
         </div>
     )
 }
