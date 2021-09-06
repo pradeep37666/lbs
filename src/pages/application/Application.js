@@ -1,0 +1,101 @@
+import React, { useEffect, useReducer } from 'react'
+import { useParams } from 'react-router-dom/cjs/react-router-dom.min'
+import ApplicationHeader from '../../components/application/ApplicationHeader'
+import ItemAvailability from '../../components/application/ItemAvailability'
+import ItemOptions from '../../components/application/ItemOptions'
+import ItemOverview from '../../components/application/ItemOverview'
+import PageWrapper from '../../components/pageWrapper/pageWrapper'
+import instance from '../../util/axios'
+import ApplicationFooter from '../../components/application/ApplicationFooter'
+import applicationReducer from '../../util/applicationReducer'
+import './application.css'
+
+export const ApplicationContext = React.createContext()
+
+const initialState = {
+    page: 'ItemAvailability',
+    item: null,
+    yearAvailability: null,
+    itemAvailability: null,
+    selected: null,
+    confirmedStart: null,
+    confirmedEnd: null,
+    deliverySelected: false,
+    pickupSelected: false
+}
+export default function Application() {
+    const [state, dispatch] = useReducer(applicationReducer, initialState)
+    console.log(state)
+    const { page, item, confirmedStart } = state
+ 
+    const { itemId } = useParams()
+
+    
+
+    useEffect(() => {
+        const getItem = async () => {
+            const { data, status } = await instance.get(`/items/findByIid?i_id=${itemId}`)
+            console.log(data)
+            // {name}
+            // {item:{name},
+            // yearAa: string}
+
+            if(status !== 200) return
+            dispatch({ type: 'setItem', data: data.item})
+            dispatch({ type: 'setItemAvailability', data: data.item.available})
+            dispatch({ type: 'setYearAvailability', data: data.yearAvailability})
+        }
+        getItem()
+
+        const today = new Date()
+        const currentDate = today.getDate()
+        const currentMonth = today.getMonth()
+        const currentYear = today.getFullYear()
+        dispatch({ type: 'setCurrentDate', data: currentDate})
+        dispatch({ type: 'setCurrentMonth', data: currentMonth})
+        dispatch({ type: 'setCurrentYear', data: currentYear})
+    },[])
+    
+    const renderApplicaiton = () => {
+        switch(page){
+            case 'ItemAvailability' : {
+                return <ItemAvailability handleNextPage={handleNextPage}/>    
+            }
+            case 'ItemOptions' : {
+                return <ItemOptions handleNextPage={handleNextPage}/>    
+            }
+            case 'ItemOverview' : {
+                return <ItemOverview />
+            }
+        }
+    }
+
+    const handleNextPage = (newPage) => {
+        dispatch({ type: 'setPage', data: newPage})
+        window.scrollTo(0, 0)
+    }
+
+    return (
+        <ApplicationContext.Provider value={{ state, dispatch, handleNextPage}}>
+            <div onClick={(e) => {
+                console.log(e.target)
+                console.log('parent on click')
+                dispatch({ type: 'setSelected', data: null })
+                }}>
+               <PageWrapper>
+                <ApplicationHeader 
+                item={item ? item : null}
+                page={page} 
+                />
+                <div>
+                    { renderApplicaiton() }
+                </div>
+            { confirmedStart && <ApplicationFooter />}    
+            </PageWrapper> 
+            </div>
+            
+            
+        </ApplicationContext.Provider>
+        
+    )
+}

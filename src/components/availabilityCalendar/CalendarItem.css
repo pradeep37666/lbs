@@ -1,0 +1,90 @@
+.CalendarItem {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+}
+.ItemAMAvailable {
+  background-color: #33384f;
+  height: 8px;
+  width: 8px;
+  border-radius: 4px;
+  margin-right: 2px;
+}
+.ItemPMAvailable {
+  background-color: #ac172c;
+  height: 8px;
+  width: 8px;
+  border-radius: 4px;
+}
+
+.ItemAMUnavailable {
+  background-color: gray;
+  height: 8px;
+  width: 8px;
+  border-radius: 4px;
+  margin-right: 2px;
+}
+.ItemPMUnavailable {
+  background-color: gray;
+  height: 8px;
+  width: 8px;
+  border-radius: 4px;
+}
+
+.ItemAvailabilityContainer {
+  display: flex;
+}
+.ItemCircle {
+  height: 40px;
+  width: 40px;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-weight: 700;
+}
+.Pointer {
+  cursor: pointer;
+}
+.ItemApplicationPeriod {
+  background: rgba(172, 23, 44, 0.12);
+  padding: 0px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.ItemApplicationPeriodStart {
+  background: linear-gradient(to right, white 50%, rgba(172, 23, 44, 0.12) 50%); 
+  padding: 0px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.ItemApplicationPeriodEnd {
+  background: linear-gradient(to left, white 50%, rgba(172, 23, 44, 0.12) 50%);
+  padding: 0px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.ItemUnavailable {
+  color: gray;
+
+}
+.ItemCurrentDay {
+  border: 1px solid gray;
+}
+
+.ItemCircleConfirmed {
+  background-color: #e9d8b4;
+}
+.ItemCircleSelected {
+  background-color: #c6b8c1;
+  color: white;
+}
+
+.ItemBooked {
+  opacity: 0;
+}

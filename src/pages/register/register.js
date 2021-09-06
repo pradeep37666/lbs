@@ -11,7 +11,6 @@ import TermsConditions from '../../components/FormComponents/TermsConditions';
 import {ReactComponent as Logo} from './../../assets/Logos/LogoRed.svg';
 import Instance from '../../util/axios';
 import { useHistory } from 'react-router-dom';
-import { LogoutUser } from '../../util/UserStore';
 import useGlobalState from '../../util/useGlobalState';
 import { CometChat } from '@cometchat-pro/chat';
 
@@ -79,7 +78,6 @@ export default function Register() {
                 dispatch({ type: 'setUser', data: response.data.user})
                 registerCometChat(response.data.user)
             } else {
-                LogoutUser()
                 alert("an error occurred during registration, please try again")
                 history.push({pathname: '/login'})
             }

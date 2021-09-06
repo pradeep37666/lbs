@@ -33,7 +33,7 @@
     user-select: none;
 }
 
-.TimeSlotDiv:hover {
+.Pointer {
     cursor: pointer;
 }
 
@@ -54,4 +54,14 @@
 .BackgroundAfternoon {
     background-color: #AC172C;
     color: #FFF;
+}
+
+.MorningUnavailable {
+    background-color: rgb(211, 211, 211);
+    color: gray;
+}
+.AfternoonUnavailable {
+    background-color: rgb(211, 211, 211);
+    color: gray;
+    cursor: default;
 }

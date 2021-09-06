@@ -75,9 +75,9 @@ export default function Messages() {
                 { activeChatUser && 
                 <ActiveChat activeChatUser={activeChatUser} />}
 
-            </div>
+             </div>
 
-            </div>
-        </PageWrapper>
-    )
-}
+             </div>
+         </PageWrapper>
+     )
+ }

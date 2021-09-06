@@ -1,0 +1,10 @@
+.ApplicationHeaderContainer {
+  display: flex;
+}
+.HeaderTextContainer {
+  display: flex;
+  align-items: center;
+}
+.ItemDetails {
+  display: flex;
+}

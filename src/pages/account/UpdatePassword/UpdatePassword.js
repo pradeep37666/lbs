@@ -4,15 +4,13 @@ import PageWrapper from '../../../components/pageWrapper/pageWrapper'
 import Banner from '../../../components/bannerText/bannerText'
 import { ReactComponent as Logo } from '../../../assets/Logos/LogoRed.svg'
 import Instance from '../../../util/axios'
-import { GetToken } from '../../../util/UserStore'
 import ValidationPopup from '../../../components/ValidationPopup/ValidationPopup'
 import { handlePassword, handlePasswordConfirm } from '../../../util/UserValidation'
 import { useHistory } from 'react-router'
 import useGlobalState from '../../../util/useGlobalState'
 
 export default function UpdatePassword() {
-
-    const { state } = useGlobalState()
+    const {state, dispatch } = useGlobalState()
     const { user } = state
     const history = useHistory()
 
@@ -55,7 +53,7 @@ export default function UpdatePassword() {
             password: newPassword
         }
 
-        Instance.put('user/update', data, { headers: { Authorization: `Bearer ${GetToken()}` } })
+        Instance.put('user/update', data)
             .then((response) => {
                 if (response.status === 200) {
                     setShowSuccess(true)

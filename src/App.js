@@ -21,7 +21,8 @@ import {
 } from "react-router-dom";
 import reducer from './util/reducer'
 import instance from './util/axios';
-import { CometChat } from '@cometchat-pro/chat'
+import Login from './pages/login/login.js';
+import Application from './pages/application/Application';
 
 export const GlobalStateContext = React.createContext()
 
@@ -36,7 +37,6 @@ function App() {
   const token = localStorage.getItem('token')
 
   useEffect(() => {
-    setupCometChat()
     if (!token){
       setLoadingUser(false)
      return 
@@ -50,28 +50,6 @@ function App() {
       })
       .catch((e) => console.log(e))
   }, [])
-
-  const setupCometChat = () => {
-    const appId = process.env.REACT_APP_CHAT_APP_ID
-    let cometChatSettings = new CometChat.AppSettingsBuilder().subscribePresenceForAllUsers().setRegion('us').build();
-    console.log('settings', cometChatSettings)
-    CometChat.init(appId, cometChatSettings)
-    .then(
-      () => {
-        console.log("Initialization completed successfully");
-       },
-       error => {
-        console.log("Initialization failed with error:", error);
-      }
-    );
-    // const user = new CometChat.User('d5953d29-7b59-4ae7-b1e6-038b0adc13e2')
-
-    // user.setName('George Hawkins')
-    // CometChat.createUser(user, process.env.REACT_APP_CHAT_AUTH_KEY)
-    // .then(user => console.log("created comet chat user", user))
-    // .catch(err => console.log(err))
-  }
-
 
   function AuthRoute({ component: Component, ...rest }) {
     return (
@@ -127,7 +105,7 @@ function App() {
           <AuthRoute path="/user/update_password" component={UpdatePassword} />
           {/* if the user is already a lender they should be unable to access the upgrade to lender page */}
           <RedirectBecomeLender path="/user/upgrade_to_lender" component={UpgradeLender} />
-
+          <AuthRoute path="/item/:itemId/application" component={Application} />
           {/* post an item */}
           <AuthRoute path="/postitem" component={PostItem}/>
 
