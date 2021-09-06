@@ -110,9 +110,7 @@ export default function PostItem() {
         })
     }
 
-    const uploadImages = async () => {
-        console.log('0000')
-        
+    const uploadImages = async () => {        
         //console.log('posting', file)
         const formData = new FormData()
         pictures.forEach((item) => formData.append('files', item.raw))

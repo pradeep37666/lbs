@@ -25,6 +25,7 @@ export default function Register() {
     const [password, setPassword] = useState("")
     const [confirmPassword, setConfirmPassword] = useState("")
     const [lender, setLender] = useState(false)
+    const [image, setImage] = useState()
 
     // Stripe details
     const [cardName, setCardName] = useState("")
@@ -54,7 +55,9 @@ export default function Register() {
         setPage(newPage)
         window.scrollTo(0, 0)
     }
-
+    useEffect(() => {
+        console.log(image, 'image')
+    }, [image])
     const registerUser = () => {
         Instance.post('/auth/signUp', {
             fullName: fullName,
@@ -71,9 +74,10 @@ export default function Register() {
             password: password,
         })
         .then((response) => {
-            console.log(response.data)
-            console.log(response.data.user)
-            console.log(response.data.token)
+            // console.log(response.data)
+            // console.log(response.data.user)
+            // console.log(response.data.token)
+            uploadImage()
             if (response.status === 201) {
                 dispatch({ type: 'setUser', data: response.data.user})
                 registerCometChat(response.data.user)
@@ -88,6 +92,20 @@ export default function Register() {
             history.push({pathname: '/login'})
             alert("an error occurred during registration, please try again")
         })
+    }
+
+    const uploadImage = async () => {        
+        //console.log('posting', file)
+        const formData = new FormData()
+        formData.append('file', image.raw)
+        
+        // console.log('files',files)
+        try{
+            const res = await Instance.post('/file-upload/uploadToS3', formData)
+            console.log(res)
+        } catch(e) {
+            console.log('image upload error', e)
+        }
     }
 
     const registerCometChat = async (userObj) => {
@@ -188,6 +206,8 @@ export default function Register() {
                 setConfirmPassword={setConfirmPassword}
                 setLender={setLender}
                 setValidated={setValidated}
+                image={image}
+                setImage={setImage}
                 />
             case 'Verification':
                 return <Verification 
