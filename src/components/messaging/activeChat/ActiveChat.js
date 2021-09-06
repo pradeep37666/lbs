@@ -86,26 +86,32 @@ export default function ActiveChat({ activeChatUser }) {
     }
     return (
         <div className="ActiveChatContainer">
-            <h1>{activeChatUser.name}</h1>
-            {isLoading ? (
-                <CircularProgress size={30}/>
-            ) : (
-            <div>
-                { messages && renderMessages() }
+            <div className="ActiveChatHeader">
+                <span className="ActiveChatHeaderText">{activeChatUser.name}</span>
             </div>
-            )}
-            <form 
-            onSubmit={handleSubmit}
-            className="ActiveChatInputContainer"
-            >
+            <div style={ isLoading ? { justifyContent: 'center', alignItems: 'center'} : null} className="ActiveChatMessageContainer">
+                {isLoading ? (
+                    <CircularProgress size={30}/>
+                ) : (
+                     messages && renderMessages() 
+                )}
+             </div>
+            <div className="ActiveChatInputContainer">
+                <form 
+                onSubmit={handleSubmit}
+                style={{ width: '100%'}}
+                >
                 <input 
                 className="ActiveChatInput"
                 placeholder="Message" 
                 onChange={handleChange}
                 value={messageText}
                 />
-                <button>Send</button>
-            </form>
+                </form>  
+                <button className="ActiveChatButton" onClick={handleSubmit}>Send</button>
+            
+            </div>
+            
         </div>
     )
 }
