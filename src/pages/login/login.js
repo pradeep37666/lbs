@@ -31,7 +31,10 @@ export default function Login() {
                 // Add user to global state
                 dispatch({ type: 'setUser', data: response.data.user })
                 localStorage.setItem('token', response.data.token.accessToken)
+<<<<<<< HEAD
                 cometChatLogin(response.data.user)
+=======
+>>>>>>> 7848db0b13c5eb9cc77daec4401dc425675b6113
                 setLoginValidation("")
                 history.push({ pathname: '/' })
             }

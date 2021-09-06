@@ -37,6 +37,7 @@ function App() {
   const token = localStorage.getItem('token')
 
   useEffect(() => {
+<<<<<<< HEAD
     setupCometChat()
     if (!token){
       setLoadingUser(false)
@@ -44,6 +45,12 @@ function App() {
     } 
     
     setLoadingUser(false)
+=======
+    if (!token) {
+      setLoadingUser(false)
+      return
+    } 
+>>>>>>> 7848db0b13c5eb9cc77daec4401dc425675b6113
     instance.get('/user/me')
       .then(({ data }) => {
         dispatch({ type: 'setUser', data })

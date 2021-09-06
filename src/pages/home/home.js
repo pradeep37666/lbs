@@ -53,7 +53,11 @@ export default function Home() {
   useEffect(() => {
   // Find all Items (empty search)
 
+<<<<<<< HEAD
   Instance.get('/items/search').then((response) => {
+=======
+  Instance.get(`/items/search/?limit=${numItems}`).then((response) => {
+>>>>>>> 7848db0b13c5eb9cc77daec4401dc425675b6113
     setItems(response.data[0]);
     setLoading(false);
   })

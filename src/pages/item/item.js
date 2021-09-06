@@ -15,17 +15,15 @@ import Jake from './../../assets/Images/JakeFriend.png';
 import ItemImage from './../../assets/Images/search_section_bg.jpg';
 import GoogleMapReact from 'google-map-react';
 import Instance from '../../util/axios';
-import { useParams} from 'react-router';
-import { Link } from 'react-router-dom';
-import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
-import ApplicationModal from '../../components/applicationModal/ApplicationModal.js';
+import { useParams, useLocation } from 'react-router';
+import useGlobalState from "../../util/useGlobalState"
+import CircularProgress from '@material-ui/core/CircularProgress';
+import ApplicationModal from '../../components/applicationModal/ApplicationModal'
 
-export default function Item(props) {
-    const location = useLocation()
-   
-
+export default function Item() {
     // Pass in number of reviews from backend for use in review carousel + modal
     const params = useParams();
+    const location = useLocation()
     const [modalVisible, setModalVisible] = useState()
     const [item, setItem] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -126,17 +124,20 @@ export default function Item(props) {
                 </div>
 
                 <div className="LocationDeliveryCategory">
-                    <div className="LDCIconContainer"><img src={Location} alt="" className="LDCIcon"/></div>{item.city}</div>
-                <div className="LocationDeliveryCategory"><div className="LDCIconContainer"><img src={Delivery} alt="" className="LDCIcon" style={{height: '22px'}}/></div>{item.deliveryOptions === 'delivery' ? 'Delivery Available' : 'Pickup only'}&nbsp;<span className={`${item.deliveryOptions === 'delivery' ? '' : 'Hide'}`}>/</span><span className={`DeliveryFeeText ${item.deliveryOptions === 'delivery' ? '' : 'Hide'}`}>&nbsp;$10 Delivery Fee</span></div>
-                <div className={'LocationDeliveryCategory'}><div className="LDCIconContainer"><img src={Category} alt="" className="LDCIcon"/></div>{item.category}</div>
-
-                <div className="ItemButtons">
-                    <button className="ButtonAvailability"><div className="ItemButtonFlex"><img src={Calendar} alt=""/>Availability</div></button>
-                    <Link to={`/item/${params.itemId}/application`}>
-                        <button className="ButtonApply"><div className="ItemButtonFlex"><Profile fill='#ffffff'/>Apply Now</div></button>
-                    </Link>
-                    
-                    <button className="ButtonFavourite" style={{padding: '.5em 1em'}}><StarOutline fill='#ffffff'/></button>
+                    <div className="LDCIconContainer">
+                        <img src={Location} alt="" className="LDCIcon"/>
+                    </div>
+                    {item.city}
+                </div>
+                <div className="LocationDeliveryCategory">
+                    <div className="LDCIconContainer">
+                        <img src={Delivery} alt="" className="LDCIcon" style={{height: '22px'}}/>
+                    </div>
+                    {item.deliveryPrice > 0 ?  
+                    <>Delivery Available /<span className={`DeliveryFeeText`}>&nbsp;${item.deliveryPrice} Delivery Fee</span> </>     
+                    : 
+                    <>Pickup only</>
+                    }
                 </div>
                 <hr className="hr"/>
 

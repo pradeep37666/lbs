@@ -34,7 +34,7 @@ export default function Register() {
 
     const [accNumber, setAccNumber] = useState("")
     const [bsb, setBsb] = useState("")
-
+    
     const [address, setAddress] = useState("")
     const [city, setCity] = useState("")
     const [country, setCountry] = useState("")
@@ -77,6 +77,7 @@ export default function Register() {
             if (response.status === 201) {
                 dispatch({ type: 'setUser', data: response.data.user})
                 registerCometChat(response.data.user)
+                localStorage.setItem('token', response.data.token.accessToken)
             } else {
                 alert("an error occurred during registration, please try again")
                 history.push({pathname: '/login'})
