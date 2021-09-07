@@ -19,14 +19,24 @@ import { useParams, useLocation } from 'react-router';
 import useGlobalState from "../../util/useGlobalState"
 import CircularProgress from '@material-ui/core/CircularProgress';
 import ApplicationModal from '../../components/applicationModal/ApplicationModal'
+import getImage from '../../util/getImage.js';
+import ItemPictures from '../postitem/PostItemContent/ItemPictures.js';
+import { Avatar } from '@material-ui/core';
+import userEvent from '@testing-library/user-event';
 
 export default function Item() {
+    const { state } = useGlobalState()
+    const { user } = state
     // Pass in number of reviews from backend for use in review carousel + modal
     const params = useParams();
     const location = useLocation()
     const [modalVisible, setModalVisible] = useState()
     const [item, setItem] = useState();
+    const [itemPictures, setItemPictures] = useState([])
+    const [isUserItem, setIsUserItem] = useState(false)
+    const [itemOwner, setItemOwner] = useState(null)
     const [loading, setLoading] = useState(true);
+
     const reviewSamples = [
         ['Blake Dude', '4', 'Cillum nulla cupidatat aute pariatur ad sit tempor consectetur amet culpa labore deserunt sunt. Veniam eiusmod sunt incididunt ullamco fugiat reprehenderit labore. Ipsum irure culpa veniam velit. Elit dolore cillum nulla nulla do nulla Lorem ullamco.'],
         ['Jake Friend', '3', 'Id sunt laboris ad adipisicing ullamco id elit deserunt deserunt ullamco aute enim tempor tempor.'],
@@ -36,22 +46,40 @@ export default function Item() {
         ['Isaac Myers', '2', 'Enim aute incididunt proident Lorem id mollit. Occaecat do cillum magna sunt dolore non exercitation et anim enim. Et nulla nulla aute sint minim laborum ut cupidatat nulla fugiat aliqua laboris exercitation mollit. Labore consectetur culpa laboris fugiat velit eu laborum proident consectetur. Eu labore nisi velit velit irure laborum.'],
         ['Christian Zhou', '5', 'Minim pariatur occaecat Lorem et ea elit reprehenderit sunt commodo ex.'],
     ]
+    console.log(itemPictures)
 
     useEffect(() => {
         // update modal state if navigated to this screen after creating a booking
         const bookingCreated = location.state?.bookingCreated
         if(bookingCreated) setModalVisible(true)
+
         // Find the item with the id used in the link
           Instance.get(`/items/findByIid/?i_id=${params.itemId}`, {headers: { Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QxMjNAdGVzdC5jb20iLCJzdWIiOjcsImlhdCI6MTYyNjE1MTQwNiwiZXhwIjoxNjI3NDQ3NDA2fQ.q6lH_TAJ-P0YxuJDhOrCu3pU5JWTqDrlcbDdbVLu58A`}}).then((response) => {
-            setItem(response.data);
+            setItem(response.data.item);
             setLoading(false);
             console.log(response)
+            // Split picture string into an array and save
+            setItemPictures(response.data.item.pictures.split(','))
+            // Check if user owns the item
+            if(!user || (response.data.item.u_id !== user.id)){
+                console.log('not my item')
+                getItemOwner()
+                return
+            }
+            setIsUserItem(true)
           })
           .catch((error) => {
             // handle error
             console.log(error);
           })
           }, [params.itemId]);
+        
+    const getItemOwner= async () => {
+        setIsUserItem(false)
+        const { data, status } = await Instance.get(`user/getOneUser?id=${item.u_id}`)
+        setItemOwner(data)
+    
+    }
 
     const NumReviewPages = Math.ceil(reviewSamples.length /2);
 
@@ -105,9 +133,12 @@ export default function Item() {
         setModalVisible()
     }
 
+    
+
+    console.log('owner', itemOwner)
     return (
         <PageWrapper>
-            {ImageModal ? <ItemImageModal setModal={setImageModal} modal={ImageModal} /> : ''}
+            {ImageModal ? <ItemImageModal setModal={setImageModal} images={itemPictures} modal={ImageModal} /> : ''}
             {ReviewModal ? <ItemReviewModal setModal={setReviewModal} modal={ReviewModal} reviews={reviewSamples} /> : ''}
             {loading ? <div>Loading item data...</div>
             
@@ -170,9 +201,9 @@ export default function Item() {
                         <div className="RatingStarFlex">{item.rating}/5 <StarFilled fill='#e9d8b4' className="StarIconRating"/></div>
                     </div>
                     <div className="RatingLenderFlex">
-                        <img src={Jake} alt="" className="ProfileIcon" />
+                        <Avatar src={getImage('images/4ae50d50-0f9d-11ec-a272-15b02550487a.jpeg')} alt="" className="ProfileIcon" />
                         <div>
-                            <div className="RatingHeader">Jake Friend</div>
+                            <div className="RatingHeader">{isUserItem ? user.fullName : itemOwner ? itemOwner.fullName : ''}</div>
                             <div className="RatingStarFlex">5/5 <StarFilled fill='#e9d8b4' className="StarIconRating"/></div>
                         </div>
                     </div>
@@ -197,15 +228,26 @@ export default function Item() {
             </div>
 
             <div className="ItemPicturesWrapper">
-                <img src={ItemImage} alt="" className="MainItemImage"/>
+                 <img src={getImage(itemPictures[0])} alt="" className="MainItemImage "/>  
                 <div className="SecondaryImageFlexContainer">
-                    <div className="SecondaryItemImageDiv">
-                        <img src={ItemImage} alt="" className="SecondaryItemImage" style={{borderRadius: "0 0 0 15px"}}/>
-                    </div>
-                    <div className="SecondaryItemImageDiv ImageModalDiv">
-                        <img src={ItemImage} alt="" className="SecondaryItemImage OpenModalImage" style={{borderRadius: "0 0 15px 0"}}/>
-                        <div className="NavyOverlay"><button className="ImageModalButton" onClick={() => setImageModal(true)}>View All</button></div>
-                    </div>
+                    { itemPictures[1] &&
+                        <div className="SecondaryItemImageDiv ImageModalDiv">
+                            <img src={getImage(itemPictures[1])} alt="" className="SecondaryItemImage" style={{borderRadius: "0 0 0 15px"}}/>
+                            <div className="NavyOverlay">
+                                    <button className="ImageModalButton" onClick={() => setImageModal(true)}>View All</button>
+                                </div>                   
+                        </div>
+                    }
+                    { itemPictures[2] && 
+                        <div className="SecondaryItemImageDiv ImageModalDiv">
+                            <img src={' '} alt="" className="SecondaryItemImage OpenModalImage" style={{borderRadius: "0 0 15px 0"}}/>
+                            { itemPictures[3] && 
+                                <div className="NavyOverlay">
+                                    <button className="ImageModalButton" onClick={() => setImageModal(true)}>View All</button>
+                                </div>
+                            }
+                        </div>
+                    }
                 </div>
 
                 <div className="ItemDetailsHeader">Location</div>

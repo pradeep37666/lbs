@@ -10,11 +10,13 @@ import { ReactComponent as Favourites } from '../../assets/Icons/FavouritesIcon.
 import { ReactComponent as Account } from '../../assets/Icons/Account.svg'
 import { Link } from 'react-router-dom'
 import useGlobalState from '../../util/useGlobalState'
+import getImage from '../../util/getImage'
+import { Avatar } from '@material-ui/core'
 
 export default function UserButton() {
     const { state } = useGlobalState()
     const { user } = state
-
+    console.log('user', user)
     const firstName = user.fullName.split(" ")[0]
 
     const [menuOpen, setMenuOpen] = useState(false)
@@ -23,7 +25,7 @@ export default function UserButton() {
         <div className="UserButton__Container">
             <button className={`UserButton ${menuOpen ? 'UserButton--Active' : ''}`} onClick={() => setMenuOpen(!menuOpen)}>
 
-                <img src={`${!user.avatar ? MissingProfile : 'http://192.168.1.107:3000/file-upload/getFile?key=images/61c359b0-0f9c-11ec-85ba-398afb1b30d0.png'}`} className="UserButton_ProfilePicture" alt="ProfilePicture" />
+                <Avatar src={`${!user.avatar ? MissingProfile : getImage(user.avatar)}`} className="UserButton_ProfilePicture" alt="ProfilePicture" />
 
                 <div className="UserButton__FirstName">{firstName}</div>
 
