@@ -73,25 +73,34 @@ export default function PostItem() {
         })
     }
 
-    const createItem = () => {
+    const createItem = async () => {
         // api call to post the images to the server, should return a key for each image and then we'll use that key in the items/save api
-        Instance.post('/items/save', {
+        const itemDetails = {
             title: title,
             category: category,
-            // pictures: pictures,
+            files: pictures,
             description: description,
             price: price,
             deliveryPrice: delivery,
             discount: discount,
             available: availability,
-            lat: lat,
-            lng: lng,
+            lat: 5.5,
+            lng: 12.3,
             address: address,
             city: city,
             country: country,
             state: stateL
-        })
-        .then((response) => {
+        }
+        const formData = new FormData()
+        for(let key in itemDetails){
+            if(key === 'files'){
+                pictures.forEach((item) => formData.append('files', item.raw))
+                continue
+            }
+            formData.append(key, itemDetails[key])
+        }
+        try {
+            const response = await Instance.post('/items/save', formData)
             console.log(response.data)
             if (response.status === 201) {
                 uploadImages()
@@ -100,14 +109,43 @@ export default function PostItem() {
                 alert("an error occurred creating your item, please try again")
                 // history.go(0)
             }
-        })
-        .catch((error) => {
-            console.log(error.response)
-            console.log(error.message)
-            console.log(error.data)
-            // history.go(0)
-            alert("an error occurred creating your item, please try again")
-        })
+        }catch (e) {
+            console.log(e.response)
+            console.log(e.response.error.message)
+        }
+        // Instance.post('/items/save', {
+        //     title: title,
+        //     category: category,
+        //     // pictures: pictures,
+        //     description: description,
+        //     price: price,
+        //     deliveryPrice: delivery,
+        //     discount: discount,
+        //     available: availability,
+        //     lat: lat,
+        //     lng: lng,
+        //     address: address,
+        //     city: city,
+        //     country: country,
+        //     state: stateL
+        // })
+        // .then((response) => {
+        //     console.log(response.data)
+        //     if (response.status === 201) {
+        //         uploadImages()
+        //         setItemID(response.data.i_id)
+        //     } else {
+        //         alert("an error occurred creating your item, please try again")
+        //         // history.go(0)
+        //     }
+        // })
+        // .catch((error) => {
+        //     console.log(error.response)
+        //     console.log(error.message)
+        //     console.log(error.data)
+        //     // history.go(0)
+        //     alert("an error occurred creating your item, please try again")
+        // })
     }
 
     const uploadImages = async () => {        

@@ -25,7 +25,7 @@ export default function Item() {
     const params = useParams();
     const location = useLocation()
     const [modalVisible, setModalVisible] = useState()
-    const [item, setItem] = useState([]);
+    const [item, setItem] = useState();
     const [loading, setLoading] = useState(true);
     const reviewSamples = [
         ['Blake Dude', '4', 'Cillum nulla cupidatat aute pariatur ad sit tempor consectetur amet culpa labore deserunt sunt. Veniam eiusmod sunt incididunt ullamco fugiat reprehenderit labore. Ipsum irure culpa veniam velit. Elit dolore cillum nulla nulla do nulla Lorem ullamco.'],
@@ -45,6 +45,7 @@ export default function Item() {
           Instance.get(`/items/findByIid/?i_id=${params.itemId}`, {headers: { Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QxMjNAdGVzdC5jb20iLCJzdWIiOjcsImlhdCI6MTYyNjE1MTQwNiwiZXhwIjoxNjI3NDQ3NDA2fQ.q6lH_TAJ-P0YxuJDhOrCu3pU5JWTqDrlcbDdbVLu58A`}}).then((response) => {
             setItem(response.data);
             setLoading(false);
+            console.log(response)
           })
           .catch((error) => {
             // handle error

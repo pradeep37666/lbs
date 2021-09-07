@@ -58,54 +58,40 @@ export default function Register() {
     useEffect(() => {
         console.log(image, 'image')
     }, [image])
-    const registerUser = () => {
-        Instance.post('/auth/signUp', {
-            fullName: fullName,
-            email: email,
-            avatar: profilePicture,
-            mobile: phoneNumber,
-            address: address,
-            city: city,
-            country: country,
-            state: state,
-            bsb: bsb,
-            account_number: accNumber,
-            available: availability,
-            password: password,
+
+    const registerUser = async () => {
+        const userDetails = {
+                fullName: fullName,
+                email: email,
+                avatar: image.raw,
+                mobile: phoneNumber,
+                address: address,
+                city: city,
+                country: country,
+                state: state,
+                bsb: bsb,
+                account_number: accNumber,
+                available: availability,
+                password: password,
+            }
+        const formData = new FormData()
+        Object.keys(userDetails).forEach(key => {
+            formData.append(key, userDetails[key])
         })
-        .then((response) => {
-            // console.log(response.data)
-            // console.log(response.data.user)
-            // console.log(response.data.token)
-            uploadImage()
-            if (response.status === 201) {
+        
+        try{
+            const response = await Instance.post('/auth/signUp', formData)
+            if(response.status === 201) {
                 dispatch({ type: 'setUser', data: response.data.user})
                 registerCometChat(response.data.user)
                 localStorage.setItem('token', response.data.token.accessToken)
-            } else {
-                alert("an error occurred during registration, please try again")
-                history.push({pathname: '/login'})
             }
-        })
-        .catch((error) => {
-            console.log(error)
+        } catch(e) {
+            console.log(e)
             history.push({pathname: '/login'})
             alert("an error occurred during registration, please try again")
-        })
-    }
-
-    const uploadImage = async () => {        
-        //console.log('posting', file)
-        const formData = new FormData()
-        formData.append('file', image.raw)
-        
-        // console.log('files',files)
-        try{
-            const res = await Instance.post('/file-upload/uploadToS3', formData)
-            console.log(res)
-        } catch(e) {
-            console.log('image upload error', e)
         }
+        
     }
 
     const registerCometChat = async (userObj) => {

@@ -15,7 +15,6 @@ export default function UserButton() {
     const { state } = useGlobalState()
     const { user } = state
 
-
     const firstName = user.fullName.split(" ")[0]
 
     const [menuOpen, setMenuOpen] = useState(false)
@@ -24,7 +23,7 @@ export default function UserButton() {
         <div className="UserButton__Container">
             <button className={`UserButton ${menuOpen ? 'UserButton--Active' : ''}`} onClick={() => setMenuOpen(!menuOpen)}>
 
-                <img src={`${!user.avatar ? MissingProfile : user.avatar}`} className="UserButton_ProfilePicture" alt="ProfilePicture" />
+                <img src={`${!user.avatar ? MissingProfile : 'http://192.168.1.107:3000/file-upload/getFile?key=images/61c359b0-0f9c-11ec-85ba-398afb1b30d0.png'}`} className="UserButton_ProfilePicture" alt="ProfilePicture" />
 
                 <div className="UserButton__FirstName">{firstName}</div>
 
