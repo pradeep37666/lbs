@@ -1,0 +1,6 @@
+.EnquiryMessageContainer {
+  background-color: rgba(51, 56, 79, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

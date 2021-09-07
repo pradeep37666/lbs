@@ -43,7 +43,7 @@ export default function ActiveChat({ activeChatUser }) {
 
     const sendMessage = async () => {
         
-        const textMessage = new CometChat.TextMessage('ddb8dc38-a334-495d-9444-7013e88a6947', messageText, CometChat.RECEIVER_TYPE.USER)
+        const textMessage = new CometChat.TextMessage(activeChatUser.uid, messageText, CometChat.RECEIVER_TYPE.USER)
         setMessageText('')
         try{
             const sentMessage = await CometChat.sendMessage(textMessage)
@@ -67,7 +67,7 @@ export default function ActiveChat({ activeChatUser }) {
         return messages.map((message, index ) => {
             if(message.data?.metadata?.enquiry){
                 const isOwnEnquiry = message.sender.uid === user.id
-                return <EnquiryMessage message={message.data.text} />
+                return <EnquiryMessage messageObj={message} />
             }
             return (
                 message.sender.uid === user.id ? (

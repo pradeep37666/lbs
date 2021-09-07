@@ -2,6 +2,7 @@
   border: 1px solid #33384f;
   border-radius: 5px;
   position: relative;
+  width: 100%;
 }
 .arrow-up {
   width: 0;
@@ -11,25 +12,20 @@
   border-style: solid;
 }
 .MessageTriangle {
-  position: absolute;
-  background-color: #e9d8b4;
-  text-align: left;
-  left: 40%;
-  top: 120%;
-}
-.MessageTriangle:before,
-.MessageTriangle:after {
-  content: "";
-  position: absolute;
-  background-color: inherit;
-}
-.MessageTriangle,
-.MessageTriangle:before,
-.MessageTriangle:after {
-  width: 1em;
-  height: 1em;
-  border-top-right-radius: 30%;
+  display: none;
 }
 
-.MessageTriangle {
+@supports (clip-path: inset(50%)) {
+  .MessageTriangle {
+    display: block;
+    height: 20px;
+    width: 20px;
+    border: 3px solid black;
+    border: inherit;
+    position: absolute;
+    left: 50px;
+    clip-path: polygon(0% 100%, 50% 0%, 100% 100%);
+    transform: rotate(0deg);
+    border-radius: 0 0 0 0;
+  }
 }

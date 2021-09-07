@@ -156,7 +156,7 @@ export default function ItemOverview() {
 
     const sendEnquiry = async (item) => {
         const textMessage = new CometChat.TextMessage(item.u_id, `${user.fullName} has enquired about your ${item.title}`, CometChat.RECEIVER_TYPE.USER)
-        textMessage.setMetadata({ enquiry: true })
+        textMessage.setMetadata({ enquiry: true, itemName: item.title })
         try{
             const res = await CometChat.sendMessage(textMessage)
             console.log(res)

@@ -1,24 +1,43 @@
 .UserCard {
-    display: flex;
-    flex-direction: column;
-    padding: 10;
-    width: '100%';
-    border-bottom: 1px solid gray;
-    margin-bottom: 20px;
-    
+  display: flex;
+  flex-direction: row;
+  padding: 10;
+  width: "100%";
+  border-bottom: 1px solid gray;
+  margin-bottom: 20px;
+  min-height: 80px;
 }
 .UserCard:hover {
-    cursor: pointer;
-    background-color: gray;
+  cursor: pointer;
 }
 
 .UserCardDetails {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 .UserCardTop {
-    display: flex;
-    flex-direction: row;
-    height: 50%;
+  display: flex;
+  flex-direction: row;
+  height: 50%;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+.UserCardIconContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding-top: 5%;
+  padding-bottom: 5%;
+}
+.UserCardContent {
+  display: flex;
+  flex-direction: column;
+}
+.UserCardDeleteButton {
+  padding: 5px;
+}
+.UserCardDeleteButton:hover {
+  cursor: pointer;
+  text-decoration: underline;
 }

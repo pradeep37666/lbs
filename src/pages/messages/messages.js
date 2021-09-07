@@ -6,12 +6,14 @@ import { CometChat } from '@cometchat-pro/chat'
 import UserCard from '../../components/messaging/userCard/UserCard'
 import ActiveChat from '../../components/messaging/activeChat/ActiveChat'
 import { Facebook } from 'react-content-loader'
+import { ClickAwayListener } from '@material-ui/core'
 
 export default function Messages() {
     const [accountContent, setAccountContent] = useState('Messages')
     const [isLoading, setIsLoading] = useState(true)
     const [conversations, setConversations] = useState([])
     const [activeChatUser, setActiveChatUser] = useState()
+    const [popupOpen, setPopupOpen] = useState()
 
     useEffect(() => {
         console.log('use effect')
@@ -41,22 +43,27 @@ export default function Messages() {
         // }
        
     }
+
     const renderCards = () => {
         return conversations.map((conversation, index) => {
             return (
             <UserCard 
             setActiveChatUser={setActiveChatUser}
             conversation={conversation} 
-            key={index}/>
+            setConversations={setConversations}
+            key={index}
+            popupOpen={popupOpen}
+            setPopupOpen={setPopupOpen}
+            />
             )
         })
     }
 
     return (
         <PageWrapper>
+            <ClickAwayListener onClickAway={() => setPopupOpen(false)}>
             <div className="UserShedWrapper">
             <UserShedNav setAccountContent={setAccountContent} accountContent={accountContent}/>
-
             <div className="ContentContainer">
                 {/* <div className="UserShed__Title">
                     {accountContent}
@@ -78,6 +85,7 @@ export default function Messages() {
              </div>
 
              </div>
+             </ClickAwayListener>
          </PageWrapper>
      )
  }
