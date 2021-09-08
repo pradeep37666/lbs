@@ -8,13 +8,12 @@ import Instance from '../../../util/axios'
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 
-export default function UserCard({ conversation, setActiveChatUser, setConversations, setPopupOpen, popupOpen }) {
+export default function UserCard({ conversation, setActiveChatUser, setConversations, setPopupOpen, popupOpen, setMessages}) {
     const dotRef = useRef()
     const { state, dispatch } = useGlobalState()
     const { user } = state
     const [isDeleting, setIsDeleting] = useState(false)
     const [anchorEl, setAnchorEl] = useState(null)
-    console.log(conversation)
 
     useEffect(() => {
         
@@ -23,10 +22,6 @@ export default function UserCard({ conversation, setActiveChatUser, setConversat
 
     const getUserRating = async () => {
         // const { data, status } = await Instance.get('/user/me?')
-    }
-
-    const handleClick = () => {
-        setActiveChatUser(conversation.conversationWith)
     }
 
     const deleteChat = async (e) => {
@@ -62,10 +57,15 @@ export default function UserCard({ conversation, setActiveChatUser, setConversat
             
         }
         
-        return conversation.lastMessage.data.text
+        return conversation.lastMessage.sender.uid === user.id ? "You: " +  conversation.lastMessage.data.text : `${conversation.conversationWith.name}: ` + conversation.lastMessage.data.text
+    }
+
+    const handleCardClick = () => {
+        setActiveChatUser(conversation.conversationWith)
+        setMessages(null)
     }
     return (
-        <div style={isDeleting ? { alignItems: 'center', justifyContent: 'center' } : null } className="UserCard" onClick={handleClick}>
+        <div style={isDeleting ? { alignItems: 'center', justifyContent: 'center' } : null } className="UserCard" onClick={handleCardClick}>
 
             { isDeleting ? (
                 <CircularProgress  size={30}/>

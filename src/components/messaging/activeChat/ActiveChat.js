@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import './ActiveChat.css'
 import { CometChat, CometChatConstants } from '@cometchat-pro/chat'
 import useGlobalState from '../../../util/useGlobalState'
@@ -7,41 +7,30 @@ import ReceivedMessage from '../receivedMessage/ReceivedMessage'
 import SentMessage from '../sentMessage/SentMessage'
 import EnquiryMessage from '../equiryMessage/EnquiryMessage'
 
-export default function ActiveChat({ activeChatUser, messages, setMessages }) {
+export default function ActiveChat({ activeChatUser, messages, setMessages, getConversations }) {
+    // const messageEndRef = useRef(null)
     const { state, dispatch } = useGlobalState()
     const { user } = state
     const [messageText, setMessageText] = useState("") 
     // const [messages, setMessages] = useState([])
     const [isLoading, setIsLoading] = useState(true)
 
+    // useEffect(() => {
+    //     scrollToBottom()
+    // }, [messages])
+
+    // const scrollToBottom = () => messageEndRef.current?.scrollIntoView({ behaviour: 'smooth'})
+
     useEffect(() => {
         setMessageText('')
         setIsLoading(true)
-        // CometChat.addMessageListener(user.id,
-        //     new CometChat.MessageListener({
-        //         onTextMessageReceived: handleTextMessage
-        //     }))
-
-        // const getMessages = async () => {
-        //     setIsLoading(true)
-        //     try{
-        //         const messagesRequest = new CometChat.MessagesRequestBuilder().setLimit(0).setUID(activeChatUser.uid).build()
-        //         const res = await messagesRequest.fetchPrevious()
-        //         console.log(res)
-        //         setMessages(res)
-        //         setIsLoading(false)
-        //     } catch(e) {
-        //         console.log('error fetching messages', e)
-        //     }
-        // }
-        
-        // getMessages()
-        console.log('messages', messages)
+        console.log('active chat use effect')
         if(!messages) {
-            
+            setIsLoading(false)
             return
+           
         }
-        setIsLoading(false)
+       setIsLoading(false)
 
     },[activeChatUser, messages])
 
@@ -59,7 +48,7 @@ export default function ActiveChat({ activeChatUser, messages, setMessages }) {
         } catch(e) {
             console.log(e)
         }
-       
+       getConversations()
     }
 
     const handleSubmit = async (e) => {
@@ -103,6 +92,7 @@ export default function ActiveChat({ activeChatUser, messages, setMessages }) {
                 ) : (
                      messages && renderMessages() 
                 )}
+                {/* <div ref={messageEndRef}></div> */}
              </div>
             <div className="ActiveChatInputContainer">
                 <form 

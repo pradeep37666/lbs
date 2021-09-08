@@ -5,7 +5,6 @@ import './EnquiryMessage.css'
 export default function EnquiryMessage({ messageObj }) {
     const { state, dispatch } = useGlobalState()
     const { user } = state
-    console.log('enquiry', messageObj)
     const renderEnquiry = () => {
         if(messageObj.data.metadata?.enquiry){
             return messageObj.sender.uid === user.id ? (

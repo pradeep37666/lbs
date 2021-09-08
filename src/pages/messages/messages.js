@@ -27,7 +27,6 @@ export default function Messages() {
     }, [])
 
     useEffect(() => {
-        console.log('use effect')
         // sendMessage()
         getConversations()
 
@@ -62,7 +61,9 @@ export default function Messages() {
         
     const handleTextMessage = async (msg) => {
         console.log('message from listener', msg)
-        if(activeChatUser && (msg.sender.uid === activeChatUser.uid)){
+        console.log('active chat user', activeChatUser)
+        if(activeChatUser && ((msg.sender.uid === activeChatUser.uid) || (msg.sender.uid === user.id))){
+            console.log('updating messages')
             setMessages(prevMessages => [...prevMessages, msg])
         }
         try{
@@ -83,20 +84,10 @@ export default function Messages() {
         
 
     }
-    const sendMessage = async () => {
-        // const textMessage = new CometChat.TextMessage('0730ac8d-7aa9-4c7e-ab1e-e8c2b3698e3c','hello', CometChat.RECEIVER_TYPE.USER)
-        // console.log(textMessage)
-        // try{
-        //     const res = await CometChat.sendMessage(textMessage)
-        //     console.log(res)
-        // } catch(e) {
-        //     console.log(e)
-        // }
-       
-    }
+
+    
 
     const renderCards = () => {
-        console.log('render cards')
         return conversations.map((conversation, index) => {
             return (
             <UserCard 
@@ -106,6 +97,7 @@ export default function Messages() {
             key={index}
             popupOpen={popupOpen}
             setPopupOpen={setPopupOpen}
+            setMessages={setMessages}
             />
             )
         })
@@ -132,7 +124,12 @@ export default function Messages() {
                     )}
                 </div>
                 { activeChatUser && 
-                <ActiveChat activeChatUser={activeChatUser} messages={messages} setMessages={setMessages}/>}
+                <ActiveChat 
+                activeChatUser={activeChatUser} 
+                messages={messages} 
+                setMessages={setMessages}
+                getConversations={getConversations}
+                />}
 
              </div>
 
