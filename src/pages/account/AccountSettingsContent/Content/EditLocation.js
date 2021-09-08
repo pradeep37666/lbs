@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { useHistory } from 'react-router'
 import Instance from '../../../../util/axios';
 import { handleAddress, handleCity, handleCountry, handleState } from '../../../../util/UserValidation'
 import ValidationPopup from '../../../../components/ValidationPopup/ValidationPopup';
@@ -9,7 +8,6 @@ export default function EditLocation() {
     const globalState = useGlobalState().state
     const dispatch = useGlobalState().dispatch
     const { user } = globalState
-    const history = useHistory()
 
     const [addressValidation, setAddressValidation] = useState("")
     const [cityValidation, setCityValidation] = useState("")
@@ -55,7 +53,6 @@ export default function EditLocation() {
                 newData.country = data.country
                 newData.state = data.state
                 dispatch({ type: 'setUser', data: newData })
-                // history.go(0)
             })
             .catch((error) => {
                 console.log(error)

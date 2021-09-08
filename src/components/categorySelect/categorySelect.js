@@ -19,9 +19,7 @@ import {ReactComponent as MowingIcon} from './../../assets/Icons/MowingIcon.svg'
 
 const BootstrapInput = withStyles((theme) => ({
   input: {
-    paddingLeft: '1em',
     textAlign: 'left',
-    fontSize: '20px',
     fontFamily: ['DMSans, sans-serif'].join(','),
     '&:focus': {
       backgroundColor: '#FFFFFF',
@@ -48,7 +46,7 @@ const useStyles = makeStyles({
     zIndex: 10,
   }),
   dropDown: props => ({
-    border: '2px solid #95272f',
+    border: props.thinBorder ? '1px solid #95272f' : '2px solid #95272f',
     borderRadius: '15px',
     boxSizing: 'content-box',
     "& .MuiMenuItem-root": {
@@ -57,7 +55,9 @@ const useStyles = makeStyles({
     }
   }),
   select: props => ({
-    border: '2px solid #95272f',
+    border: props.thinBorder ? '1px solid #95272f' : '2px solid #95272f',
+    fontSize: props.thinBorder ? '18px' : '20px',
+    fontWeight: props.thinBorder ? 'bold' : 'normal',
     "& .MuiSvgIcon-root": {
       color: "#95272f",
     },
@@ -65,11 +65,12 @@ const useStyles = makeStyles({
 })
 
 export default function CategorySelect(props) {
-  const classes = useStyles(props);
-  const [category, setCategory] = useState("Automotive");
+  const classes = useStyles(props)
+  const [category, setCategory] = useState("")
 
   const handleChange = (event) => {
-    setCategory(event.target.value);
+    setCategory(event.target.value)
+    props.setCategory(event.target.value)
   }
 
   return (
@@ -77,7 +78,7 @@ export default function CategorySelect(props) {
       <label className={`${classes.inputLabel}`}>{props.label}</label>
       <Select 
       onChange={handleChange} 
-      input={<BootstrapInput />} className={`SelectInput ${classes.select}`}
+      input={<BootstrapInput />} className={`SelectInput ${props.thinBorder ? 'SelectInput--Thin' : ''} ${classes.select}`}
       IconComponent={ArrowDown}
       value={category}
       MenuProps={{
@@ -98,6 +99,7 @@ export default function CategorySelect(props) {
       <label className={`${classes.inputLabel}`}>{props.label}</label>
       <div className="DropDownTitle">{category}</div>
       <hr className="hl"/>
+      <MenuItem value=""><div className="CatIconContainer"></div></MenuItem>
       <MenuItem value="Painting"><div className="CatIconContainer"><PaintingIcon  className="CategoryDDIcon"/></div>Painting</MenuItem>
       <MenuItem value="Office"><div className="CatIconContainer"><OfficeIcon className="CategoryDDIcon"/></div>Office</MenuItem>
       <MenuItem value="Tools"><div className="CatIconContainer"><HammerIcon fill='#ac172c' className="CategoryDDIcon"/></div>Tools</MenuItem>

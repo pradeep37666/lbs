@@ -39,20 +39,7 @@ export default function Register() {
     const [country, setCountry] = useState("")
     const [state, setState] = useState("")
 
-    const [mondayM, setMondayM] = useState(null)
-    const [mondayA, setMondayA] = useState(null)
-    const [tuesdayM, setTuesdayM] = useState(null)
-    const [tuesdayA, setTuesdayA] = useState(null)
-    const [wednesdayM, setWednesdayM] = useState(null)
-    const [wednesdayA, setWednesdayA] = useState(null)
-    const [thursdayM, setThursdayM] = useState(null)
-    const [thursdayA, setThursdayA] = useState(null)
-    const [fridayM, setFridayM] = useState(null)
-    const [fridayA, setFridayA] = useState(null)
-    const [saturdayM, setSaturdayM] = useState(null)
-    const [saturdayA, setSaturdayA] = useState(null)
-    const [sundayM, setSundayM] = useState(null)
-    const [sundayA, setSundayA] = useState(null)
+    const [availability, setAvailability] = useState('00000000000000')
 
     const [tc, setTC] = useState(false)
 
@@ -69,31 +56,18 @@ export default function Register() {
 
     const registerUser = () => {
         Instance.post('/auth/signUp', {
-            email: email,
-            password: password,
-            mobile: phoneNumber,
-            avatar: profilePicture,
             fullName: fullName,
+            email: email,
+            avatar: profilePicture,
+            mobile: phoneNumber,
             address: address,
             city: city,
             country: country,
             state: state,
-            monday_am: mondayM,
-            monday_pm: mondayA,
-            tuesday_am: tuesdayM,
-            tuesday_pm: tuesdayA,
-            wednesday_am: wednesdayM,
-            wednesday_pm: wednesdayA,
-            thursday_am: thursdayM,
-            thursday_pm: thursdayA,
-            friday_am: fridayM,
-            friday_pm: fridayA,
-            saturday_am: saturdayM,
-            saturday_pm: saturdayA,
-            sunday_am: sundayM,
-            sunday_pm: sundayA,
             bsb: bsb,
             account_number: accNumber,
+            available: availability,
+            password: password,
         })
         .then((response) => {
             console.log(response.data)
@@ -102,12 +76,14 @@ export default function Register() {
             if (response.status === 201) {
                 dispatch({ type: 'setUser', data: response.data.user})
                 // registerCometChat(response.data.user)
+                localStorage.setItem('token', response.data.token.accessToken)
             } else {
                 alert("an error occurred during registration, please try again")
                 history.push({pathname: '/login'})
             }
         })
         .catch((error) => {
+            console.log(error)
             history.push({pathname: '/login'})
             alert("an error occurred during registration, please try again")
         })
@@ -147,12 +123,13 @@ export default function Register() {
                 } else setValidated(false)
                 break
             case 'Availability':
-                if (mondayM || mondayA || tuesdayM || tuesdayA || wednesdayM || wednesdayA || thursdayM || thursdayA || 
-                    fridayM || fridayA || saturdayM || saturdayA || sundayM || sundayA) {
+                console.log(availability)
+                if (availability !== '00000000000000') {
                     setValidated(true)
                 } else setValidated(false)
                 break
             case 'Terms & Conditions':
+                console.log(email, fullName, profilePicture, phoneNumber, address, city, country, state, bsb, accNumber, availability, password)
                 if (tc) {
                     setValidated(true)
                 } else setValidated(false)
@@ -162,7 +139,7 @@ export default function Register() {
             default:
                 return '';
         }
-    }, [page, fullName, email, phoneNumber, password, confirmPassword, cardName, cardNumber, expiry, ccv, accNumber, bsb,  lender, address, city, country, state, mondayM, mondayA, tuesdayM, tuesdayA, wednesdayM, wednesdayA, thursdayM, thursdayA, fridayM, fridayA, saturdayM, saturdayA, sundayM, sundayA, tc])
+    }, [page, fullName, email, phoneNumber, password, confirmPassword, cardName, cardNumber, expiry, ccv, accNumber, bsb,  lender, address, city, country, state, availability, tc])
 
     const getComplete = () => {
         return (
@@ -229,34 +206,7 @@ export default function Register() {
                 return <Availability 
                 validated={validated}
                 handleNextPage={handleNextPage}
-                setMondayM={setMondayM}
-                setMondayA={setMondayA}
-                mondayM={mondayM}
-                mondayA={mondayA}
-                setTuesdayM={setTuesdayM}
-                setTuesdayA={setTuesdayA}
-                tuesdayM={tuesdayM}
-                tuesdayA={tuesdayA}
-                setWednesdayM={setWednesdayM}
-                setWednesdayA={setWednesdayA}
-                wednesdayM={wednesdayM}
-                wednesdayA={wednesdayA}
-                setThursdayM={setThursdayM}
-                setThursdayA={setThursdayA}
-                thursdayM={thursdayM}
-                thursdayA={thursdayA}
-                setFridayM={setFridayM}
-                setFridayA={setFridayA}
-                fridayM={fridayM}
-                fridayA={fridayA}
-                setSaturdayM={setSaturdayM}
-                setSaturdayA={setSaturdayA}
-                saturdayM={saturdayM}
-                saturdayA={saturdayA}
-                setSundayM={setSundayM}
-                setSundayA={setSundayA}
-                sundayM={sundayM}
-                sundayA={sundayA}
+                setAvailability={setAvailability}
                 />
             case 'Terms & Conditions':
                 return <TermsConditions 
