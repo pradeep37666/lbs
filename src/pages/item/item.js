@@ -59,7 +59,7 @@ export default function Item() {
             setLoading(false);
             console.log(response)
             // Split picture string into an array and save
-            setItemPictures(response.data.item.pictures.split(','))
+            //setItemPictures(response.data.item.pictures.split(','))
             // Check if user owns the item
             if(!user || (response.data.item.u_id !== user.id)){
                 getItemOwner(response.data.item)
@@ -77,6 +77,7 @@ export default function Item() {
         setIsUserItem(false)
 
         const { data, status } = await Instance.get(`user/getOneUser?id=${item.u_id}`)
+        console.log('get one user', data)
         setItemOwner(data)
     
     }
@@ -204,7 +205,8 @@ export default function Item() {
                         <Avatar src={getImage('images/4ae50d50-0f9d-11ec-a272-15b02550487a.jpeg')} alt="" className="ProfileIcon" />
                         <div>
                             <div className="RatingHeader">{isUserItem ? user.fullName : itemOwner ? itemOwner.fullName : ''}</div>
-                            <div className="RatingStarFlex">5/5 <StarFilled fill='#e9d8b4' className="StarIconRating"/></div>
+                            <div className="RatingStarFlex">{ isUserItem ? user.lender_rating : itemOwner  && itemOwner.lender_rating }/5 <StarFilled fill='#e9d8b4' className="StarIconRating"/></div>
+                            
                         </div>
                     </div>
                 </div>
