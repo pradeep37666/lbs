@@ -10,6 +10,7 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import { Link } from 'react-router-dom'
 import { useHistory } from 'react-router-dom'
 import useGlobalState from '../../util/useGlobalState'
+import { CometChat } from '@cometchat-pro/chat'
 
 export default function UserShedNav(props) {
 
@@ -21,9 +22,11 @@ export default function UserShedNav(props) {
 
     const [activeMain, setActiveMain] = useState(url)
 
-    const handleLogout = () => {
+    const handleLogout = async () => {
         localStorage.removeItem('token')
         dispatch({ type: 'setUser', data: null })
+        const res = await CometChat.logout()
+        console.log('log out from comet chat', res)
         history.push({ pathname: '/' })
     }
 

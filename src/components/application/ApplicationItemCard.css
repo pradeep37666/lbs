@@ -1,0 +1,33 @@
+.ApplicationItemCardContainer {
+    display: flex;
+    width: 100%;
+    margin-bottom: 15px;
+    margin-top: 15px;
+}
+.ApplicationItemCardHeader {
+    font-weight: bold;
+    font-size: 16px;
+}
+.ApplicationItemRatingContainer {
+    display: flex;
+    align-items: center;
+}
+.ApplicationItemCheckContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.ApplicationItemPrice {
+    font-size: 18px;
+    color: #ac172c;
+}
+.ApplicationItemExtra {
+    font-size: 14px;
+    color: #a8a8a8;
+}
+.ApplicationItemRating {
+    font-size: 17px;
+}
+.ApplicationItemDetailsContainer {
+    margin-right: 15px;
+}

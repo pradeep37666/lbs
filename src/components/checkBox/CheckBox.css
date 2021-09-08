@@ -1,0 +1,15 @@
+.CheckBox {
+    height: 30px;
+    width: 30px;
+    border: 2px solid #ac172c;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.CheckBoxActive {
+    background-color: #ac172c;
+}
+
+.CheckBoxInactive {
+    background-color: white;
+}   

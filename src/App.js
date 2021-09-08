@@ -21,6 +21,8 @@ import {
 } from "react-router-dom";
 import reducer from './util/reducer'
 import instance from './util/axios';
+import Login from './pages/login/login.js';
+import Application from './pages/application/Application';
 
 export const GlobalStateContext = React.createContext()
 
@@ -35,15 +37,19 @@ function App() {
   const token = localStorage.getItem('token')
 
   useEffect(() => {
-    if (!token) {
+    if (!token){
       setLoadingUser(false)
-      return
+     return 
     } 
+    
     instance.get('/user/me')
       .then(({ data }) => {
         dispatch({ type: 'setUser', data })
         setLoadingUser(false)
+        return
       })
+      .catch((e) => console.log(e))
+    setLoadingUser(false)
   }, [])
 
   function AuthRoute({ component: Component, ...rest }) {
@@ -100,7 +106,7 @@ function App() {
           <AuthRoute path="/user/update_password" component={UpdatePassword} />
           {/* if the user is already a lender they should be unable to access the upgrade to lender page */}
           <RedirectBecomeLender path="/user/upgrade_to_lender" component={UpgradeLender} />
-
+          <AuthRoute path="/item/:itemId/application" component={Application} />
           {/* post an item */}
           <AuthRoute path="/postitem" component={PostItem}/>
 

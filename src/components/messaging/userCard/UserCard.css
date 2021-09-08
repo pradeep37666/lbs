@@ -1,0 +1,24 @@
+.UserCard {
+    display: flex;
+    flex-direction: column;
+    padding: 10;
+    width: '100%';
+    border-bottom: 1px solid gray;
+    margin-bottom: 20px;
+    
+}
+.UserCard:hover {
+    cursor: pointer;
+    background-color: gray;
+}
+
+.UserCardDetails {
+    display: flex;
+    flex-direction: column;
+}
+
+.UserCardTop {
+    display: flex;
+    flex-direction: row;
+    height: 50%;
+}

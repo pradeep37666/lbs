@@ -11,7 +11,6 @@ import TermsConditions from '../../components/FormComponents/TermsConditions';
 import {ReactComponent as Logo} from './../../assets/Logos/LogoRed.svg';
 import Instance from '../../util/axios';
 import { useHistory } from 'react-router-dom';
-import { LogoutUser } from '../../util/UserStore';
 import useGlobalState from '../../util/useGlobalState';
 
 
@@ -76,9 +75,9 @@ export default function Register() {
             console.log(response.data.token)
             if (response.status === 201) {
                 dispatch({ type: 'setUser', data: response.data.user})
+                // registerCometChat(response.data.user)
                 localStorage.setItem('token', response.data.token.accessToken)
             } else {
-                LogoutUser()
                 alert("an error occurred during registration, please try again")
                 history.push({pathname: '/login'})
             }
@@ -89,6 +88,14 @@ export default function Register() {
             alert("an error occurred during registration, please try again")
         })
     }
+
+    // const registerCometChat = (user) => {
+    //     const user = new CometChat.User(user.id)
+    //     user.setName(user.fullName)
+    //     CometChat.createUser(user, process.env.REACT_APP_CHAT_AUTH_KEY)
+    //     .then(user => console.log("created comet chat user", user))
+    //     .catch(err => console.log(err))
+    // }
 
     useEffect(() => {
         switch (page) {

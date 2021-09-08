@@ -5,7 +5,7 @@ import GoogleButton from '../../assets/Images/GooglePlayButton.png';
 import AppleButton from '../../assets/Images/AppStoreButton.png';
 import { SvgIcon } from '@material-ui/core';
 
-export default function footer() {
+export default function Footer() {
   return (
     <div className="Footer">
       <div className="FooterBar Advert">
