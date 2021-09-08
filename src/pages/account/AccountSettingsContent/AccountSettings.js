@@ -7,6 +7,8 @@ import EditAccountDetails from './Content/EditAccountDetails'
 import EditPaymentDetails from './Content/EditPaymentDetails'
 import EditLocation from './Content/EditLocation'
 import useGlobalState from '../../../util/useGlobalState'
+import { Avatar } from '@material-ui/core'
+import getImage from '../../../util/getImage'
 
 export default function AccountSettings() {
     const { state, dispatch } = useGlobalState()
@@ -33,7 +35,7 @@ export default function AccountSettings() {
                 <div className="AccountSettings__Container">
                     <div className="AccountSettings__Title">Your Account</div>
                     <div className="AccountSettings__UserFlex">
-                        <img src={`${user && user.avatar ? user.avatar : MissingProfile }`} className="AccountSettings__Avatar" alt="ProfilePicture" />
+                        <Avatar src={`${user && user.avatar ? getImage(user.avatar) : MissingProfile }`} className="AccountSettings__Avatar" alt="ProfilePicture" />
                         <div className="AccountSettings__UserDetails">
                             <div className="AccountSettings__UserName">{user.fullName}</div>
                             <div className="AccountSettings__Ratings"><span className="AccountSettings-Medium">Lender:</span> {user.lender_rating}/5 <RatingFiller rating={user.lender_rating} /></div>

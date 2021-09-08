@@ -62,8 +62,7 @@ export default function Item() {
             setItemPictures(response.data.item.pictures.split(','))
             // Check if user owns the item
             if(!user || (response.data.item.u_id !== user.id)){
-                console.log('not my item')
-                getItemOwner()
+                getItemOwner(response.data.item)
                 return
             }
             setIsUserItem(true)
@@ -74,8 +73,9 @@ export default function Item() {
           })
           }, [params.itemId]);
         
-    const getItemOwner= async () => {
+    const getItemOwner= async (item) => {
         setIsUserItem(false)
+
         const { data, status } = await Instance.get(`user/getOneUser?id=${item.u_id}`)
         setItemOwner(data)
     
