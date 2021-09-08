@@ -7,35 +7,43 @@ import ReceivedMessage from '../receivedMessage/ReceivedMessage'
 import SentMessage from '../sentMessage/SentMessage'
 import EnquiryMessage from '../equiryMessage/EnquiryMessage'
 
-export default function ActiveChat({ activeChatUser }) {
+export default function ActiveChat({ activeChatUser, messages, setMessages }) {
     const { state, dispatch } = useGlobalState()
     const { user } = state
     const [messageText, setMessageText] = useState("") 
-    const [messages, setMessages] = useState([])
+    // const [messages, setMessages] = useState([])
     const [isLoading, setIsLoading] = useState(true)
 
     useEffect(() => {
         setMessageText('')
-        CometChat.addMessageListener(user.id,
-            new CometChat.MessageListener({
-                onTextMessageReceived: handleTextMessage
-            }))
+        setIsLoading(true)
+        // CometChat.addMessageListener(user.id,
+        //     new CometChat.MessageListener({
+        //         onTextMessageReceived: handleTextMessage
+        //     }))
 
-        const getMessages = async () => {
-            setIsLoading(true)
-            try{
-                const messagesRequest = new CometChat.MessagesRequestBuilder().setLimit(0).setUID(activeChatUser.uid).build()
-                const res = await messagesRequest.fetchPrevious()
-                console.log(res)
-                setMessages(res)
-                setIsLoading(false)
-            } catch(e) {
-                console.log('error fetching messages', e)
-            }
-        }
+        // const getMessages = async () => {
+        //     setIsLoading(true)
+        //     try{
+        //         const messagesRequest = new CometChat.MessagesRequestBuilder().setLimit(0).setUID(activeChatUser.uid).build()
+        //         const res = await messagesRequest.fetchPrevious()
+        //         console.log(res)
+        //         setMessages(res)
+        //         setIsLoading(false)
+        //     } catch(e) {
+        //         console.log('error fetching messages', e)
+        //     }
+        // }
         
-        getMessages()
-    },[activeChatUser])
+        // getMessages()
+        console.log('messages', messages)
+        if(!messages) {
+            
+            return
+        }
+        setIsLoading(false)
+
+    },[activeChatUser, messages])
 
     const handleTextMessage = (textMessage) => {
         setMessages(prevMessages => [ ...prevMessages, textMessage ])

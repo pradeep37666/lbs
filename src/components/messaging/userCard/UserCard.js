@@ -62,7 +62,7 @@ export default function UserCard({ conversation, setActiveChatUser, setConversat
             
         }
         
-        return 'not an enquiry'
+        return conversation.lastMessage.data.text
     }
     return (
         <div style={isDeleting ? { alignItems: 'center', justifyContent: 'center' } : null } className="UserCard" onClick={handleClick}>
