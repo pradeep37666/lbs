@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react'
-import { CircularProgress, Popover } from '@material-ui/core'
+import { Avatar, CircularProgress, Popover } from '@material-ui/core'
 import './UserCard.css'
 import axios from 'axios'
 import userEvent from '@testing-library/user-event'
@@ -7,6 +7,8 @@ import useGlobalState from '../../../util/useGlobalState'
 import Instance from '../../../util/axios'
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
+import MissingProfile from '../../../assets/Icons/MissingProfileIcon.png'
+import { CometChat } from '@cometchat-pro/chat'
 
 export default function UserCard({ conversation, setActiveChatUser, setConversations, setPopupOpen, popupOpen, setMessages}) {
     const dotRef = useRef()
@@ -24,22 +26,27 @@ export default function UserCard({ conversation, setActiveChatUser, setConversat
         // const { data, status } = await Instance.get('/user/me?')
     }
 
-    const deleteChat = async (e) => {
-        setIsDeleting(true)
-        e.stopPropagation()
-        try{
-            const {data, status} = await axios.delete(`https://${process.env.REACT_APP_CHAT_APP_ID}.api-US.cometchat.io/v3.0/conversations/${conversation.conversationId}`,{
-                headers: {
-                    apiKey: process.env.REACT_APP_CHAT_API_KEY
-                }
-            })    
-        } catch (e) {
-            console.log(e)
-        }
-        setConversations(conversations => conversations.filter(item => item.conversationId != conversation.conversationId))
-        setActiveChatUser(null)
-        setIsDeleting(false)
+    // const deleteChat = async (e) => {
+    //     setIsDeleting(true)
+    //     e.stopPropagation()
+    //     try{
+    //         const {data, status} = await axios.delete(`https://${process.env.REACT_APP_CHAT_APP_ID}.api-US.cometchat.io/v3.0/conversations/${conversation.conversationId}`,{
+    //             headers: {
+    //                 apiKey: process.env.REACT_APP_CHAT_API_KEY
+    //             }
+    //         })    
+    //     } catch (e) {
+    //         console.log(e)
+    //     }
+    //     setConversations(conversations => conversations.filter(item => item.conversationId != conversation.conversationId))
+    //     setActiveChatUser(null)
+    //     setIsDeleting(false)
         
+    // }
+    const blockUser = () => {
+        const userList = [user.id, conversation.conversationWith.uid]
+        console.log(userList)
+        // CometChat.blockUsers([])
     }
 
 
@@ -64,6 +71,8 @@ export default function UserCard({ conversation, setActiveChatUser, setConversat
         setActiveChatUser(conversation.conversationWith)
         setMessages(null)
     }
+
+    console.log(conversation.conversationWith)
     return (
         <div style={isDeleting ? { alignItems: 'center', justifyContent: 'center' } : null } className="UserCard" onClick={handleCardClick}>
 
@@ -74,7 +83,7 @@ export default function UserCard({ conversation, setActiveChatUser, setConversat
                 <>
                     <div className="UserCardContent">
                         <div className="UserCardTop" >
-                        <img src={conversation.conversationWith.avatar} style={{ height: 50, width: 50}}></img>
+                        <Avatar src={conversation.conversationWith.avatar ? ' ' :  MissingProfile} style={{ height: 50, width: 50}}></Avatar>
                             <div className="UserCardDetails">
                                 <ul style={{ listStyleType: 'none'}}>
                                     <li>{conversation.conversationWith.name}</li>
@@ -114,7 +123,7 @@ export default function UserCard({ conversation, setActiveChatUser, setConversat
                             
                             }}
                             open={popupOpen && popupOpen === conversation.conversationId}>
-                                <div className="UserCardDeleteButton" onClick={deleteChat}>
+                                <div className="UserCardDeleteButton" onClick={blockUser}>
                                     <p>Delete conversation</p>
                                 </div>
                             </Popover>
