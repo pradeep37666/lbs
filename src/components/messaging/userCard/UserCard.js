@@ -9,6 +9,7 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import MissingProfile from '../../../assets/Icons/MissingProfileIcon.png'
 import { CometChat } from '@cometchat-pro/chat'
+import getImage from '../../../util/getImage'
 
 
 export default function UserCard({ conversation, setActiveChatUser, setConversations, setPopupOpen, popupOpen, setMessages}) {
@@ -17,15 +18,22 @@ export default function UserCard({ conversation, setActiveChatUser, setConversat
     const { user } = state
     const [isDeleting, setIsDeleting] = useState(false)
     const [anchorEl, setAnchorEl] = useState(null)
+    const [cardUser, setCardUser] = useState()
 
     useEffect(() => {
-        // const BlockedUsersRequest = CometChat.BlockedUsersRequest
-        
+        console.log('conversation', conversation)
         getUserRating()
     }, [])
 
     const getUserRating = async () => {
-        // const { data, status } = await Instance.get('/user/me?')
+        try{
+            const {data, status} = await Instance.get(`user/getOneUser?id=${conversation.conversationWith.uid}`) 
+            setCardUser(data)
+        } catch(e) {
+            console.log(e)
+        }
+       
+        
     }
 
     // const deleteChat = async (e) => {
@@ -86,7 +94,7 @@ export default function UserCard({ conversation, setActiveChatUser, setConversat
                 <>
                     <div className="UserCardContent">
                         <div className="UserCardTop" >
-                        <Avatar src={conversation.conversationWith.avatar ? ' ' :  MissingProfile} style={{ height: 50, width: 50}}></Avatar>
+                        <Avatar src={cardUser && cardUser.avatar ? getImage(cardUser.avatar) :  MissingProfile} style={{ height: 50, width: 50}}></Avatar>
                             <div className="UserCardDetails">
                                 <ul style={{ listStyleType: 'none'}}>
                                     <li>{conversation.conversationWith.name}</li>

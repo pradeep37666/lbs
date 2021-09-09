@@ -9,10 +9,11 @@ import Delivery from './../../assets/Icons/DeliveryIcon.svg';
 import Category from './../../assets/Icons/CategoriesIcon.svg';
 import {ReactComponent as Profile} from './../../assets/Icons/UserCircle.svg';
 import Calendar from './../../assets/Icons/HangingCalendar.svg';
-import {ReactComponent as StarOutline} from './../../assets/Icons/StarOutline.svg';
+
 import {ReactComponent as StarFilled} from './../../assets/Icons/StarFilled.svg';
-import Jake from './../../assets/Images/JakeFriend.png';
-import ItemImage from './../../assets/Images/search_section_bg.jpg';
+import { Link } from 'react-router-dom';
+import { StarOutline } from '@material-ui/icons';
+
 import GoogleMapReact from 'google-map-react';
 import Instance from '../../util/axios';
 import { useParams, useLocation } from 'react-router';
@@ -20,9 +21,9 @@ import useGlobalState from "../../util/useGlobalState"
 import CircularProgress from '@material-ui/core/CircularProgress';
 import ApplicationModal from '../../components/applicationModal/ApplicationModal'
 import getImage from '../../util/getImage.js';
-import ItemPictures from '../postitem/PostItemContent/ItemPictures.js';
+
 import { Avatar } from '@material-ui/core';
-import userEvent from '@testing-library/user-event';
+import MissingProfile from '../../assets/Icons/MissingProfileIcon.png'
 
 export default function Item() {
     const { state } = useGlobalState()
@@ -134,7 +135,15 @@ export default function Item() {
         setModalVisible()
     }
 
-    
+    const handleItemImage = () => {
+        if(isUserItem && user?.avatar){
+            return getImage(user.avatar)
+        }
+        if(itemOwner?.avatar){
+            return getImage(itemOwner.avatar)
+        }
+        return MissingProfile
+    }
 
     console.log('owner', itemOwner)
     return (
@@ -145,7 +154,7 @@ export default function Item() {
             
         :
         <div className="ItemMainWrapper">
-            { modalVisible && <ApplicationModal item={item.item} onClick={handleModalClick}/>}
+            { modalVisible && <ApplicationModal item={item} onClick={handleModalClick}/>}
             <div className="ItemInfoWrapper">
                 <div className="ItemName">{item.title}</div>
 
@@ -171,6 +180,14 @@ export default function Item() {
                     : 
                     <>Pickup only</>
                     }
+                </div>
+                <div className="ItemButtons">
+                    <button className="ButtonAvailability"><div className="ItemButtonFlex"><img src={Calendar} alt=""/>Availability</div></button>
+                    <Link to={`/item/${params.itemId}/application`}>
+                        <button className="ButtonApply"><div className="ItemButtonFlex"><Profile fill='#ffffff'/>Apply Now</div></button>
+                    </Link>
+                    
+                    <button className="ButtonFavourite" style={{padding: '.5em 1em'}}><StarOutline fill='#ffffff'/></button>
                 </div>
                 <hr className="hr"/>
 
@@ -202,7 +219,7 @@ export default function Item() {
                         <div className="RatingStarFlex">{item.rating}/5 <StarFilled fill='#e9d8b4' className="StarIconRating"/></div>
                     </div>
                     <div className="RatingLenderFlex">
-                        <Avatar src={getImage('images/4ae50d50-0f9d-11ec-a272-15b02550487a.jpeg')} alt="" className="ProfileIcon" />
+                        <Avatar src={ handleItemImage() } alt="" className="ProfileIcon" />
                         <div>
                             <div className="RatingHeader">{isUserItem ? user.fullName : itemOwner ? itemOwner.fullName : ''}</div>
                             <div className="RatingStarFlex">{ isUserItem ? user.lender_rating : itemOwner  && itemOwner.lender_rating }/5 <StarFilled fill='#e9d8b4' className="StarIconRating"/></div>

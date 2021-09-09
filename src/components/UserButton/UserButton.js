@@ -16,7 +16,6 @@ import { Avatar } from '@material-ui/core'
 export default function UserButton() {
     const { state } = useGlobalState()
     const { user } = state
-    console.log('user', user)
     const firstName = user.fullName.split(" ")[0]
 
     const [menuOpen, setMenuOpen] = useState(false)
