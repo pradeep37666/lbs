@@ -10,6 +10,7 @@ import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import MissingProfile from '../../../assets/Icons/MissingProfileIcon.png'
 import { CometChat } from '@cometchat-pro/chat'
 
+
 export default function UserCard({ conversation, setActiveChatUser, setConversations, setPopupOpen, popupOpen, setMessages}) {
     const dotRef = useRef()
     const { state, dispatch } = useGlobalState()
@@ -18,6 +19,7 @@ export default function UserCard({ conversation, setActiveChatUser, setConversat
     const [anchorEl, setAnchorEl] = useState(null)
 
     useEffect(() => {
+        // const BlockedUsersRequest = CometChat.BlockedUsersRequest
         
         getUserRating()
     }, [])
@@ -43,10 +45,11 @@ export default function UserCard({ conversation, setActiveChatUser, setConversat
     //     setIsDeleting(false)
         
     // }
-    const blockUser = () => {
+    const blockUser = async () => {
         const userList = [user.id, conversation.conversationWith.uid]
         console.log(userList)
-        // CometChat.blockUsers([])
+        const res = await CometChat.blockUsers(userList)
+        console.log('response', res)
     }
 
 

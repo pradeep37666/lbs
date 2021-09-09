@@ -2,10 +2,12 @@ import React, { useEffect, useState, useRef } from 'react'
 import './ActiveChat.css'
 import { CometChat, CometChatConstants } from '@cometchat-pro/chat'
 import useGlobalState from '../../../util/useGlobalState'
-import { CircularProgress } from '@material-ui/core'
+import { Avatar, CircularProgress } from '@material-ui/core'
 import ReceivedMessage from '../receivedMessage/ReceivedMessage'
 import SentMessage from '../sentMessage/SentMessage'
 import EnquiryMessage from '../equiryMessage/EnquiryMessage'
+// import getImage from '../../../util/'
+import MissingProfile from '../../../assets/Icons/MissingProfileIcon.png'
 
 export default function ActiveChat({ activeChatUser, messages, setMessages, getConversations }) {
     // const messageEndRef = useRef(null)
@@ -26,7 +28,7 @@ export default function ActiveChat({ activeChatUser, messages, setMessages, getC
         setIsLoading(true)
         console.log('active chat use effect')
         if(!messages) {
-            setIsLoading(false)
+            // setIsLoading(false)
             return
            
         }
@@ -84,6 +86,7 @@ export default function ActiveChat({ activeChatUser, messages, setMessages, getC
     return (
         <div className="ActiveChatContainer">
             <div className="ActiveChatHeader">
+                <Avatar src={activeChatUser?.avatar ? ' ' : MissingProfile}/>
                 <span className="ActiveChatHeaderText">{activeChatUser.name}</span>
             </div>
             <div style={ isLoading ? { justifyContent: 'center', alignItems: 'center'} : null} className="ActiveChatMessageContainer">

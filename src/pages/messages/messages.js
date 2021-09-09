@@ -20,6 +20,10 @@ export default function Messages() {
     const [popupOpen, setPopupOpen] = useState()
 
     useEffect(() => {
+        var blockedUsersRequest = new CometChat.BlockedUsersRequestBuilder()
+        .setLimit(10)
+        .build();
+        blockedUsersRequest.fetchNext().then(res => console.log('blocked users', res))
         CometChat.addMessageListener(user.id,
             new CometChat.MessageListener({
                 onTextMessageReceived: handleTextMessage

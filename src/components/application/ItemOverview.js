@@ -9,6 +9,7 @@ import instance from '../../util/axios'
 import { useHistory } from 'react-router'
 import { CometChat } from '@cometchat-pro/chat'
 import useGlobalState from '../../util/useGlobalState'
+import axios from 'axios'
 
 export default function ItemOverview() {
     const { state, dispatch } = useContext(ApplicationContext)
@@ -154,7 +155,28 @@ export default function ItemOverview() {
         
     }
 
+    const unblockUser = async () => {
+        const res = await axios.delete(`https://192491b43d1b6230.api-US.cometchat.io/v3.0/users/${item.u_id}/blockedusers`, {
+            headers: {
+                'apiKey' : process.env.REACT_APP_CHAT_API_KEY
+            },
+            data: {
+                blockedUids: [user.id]
+            }
+        })
+        console.log('res', res)
+        // const usersList = [user.id, item.u_id]
+        // CometChat.unblockUsers(usersList).then(
+        //     list => {
+        //       console.log("users list unblocked", { list });
+        //     },
+        //     error => {
+        //       console.log("unblocking user fails with error", error);
+        //     }
+        //   );
+    }
     const sendEnquiry = async (item) => {
+        await unblockUser()
         const textMessage = new CometChat.TextMessage(item.u_id, `${user.fullName} has enquired about your ${item.title}`, CometChat.RECEIVER_TYPE.USER)
         textMessage.setMetadata({ enquiry: true, itemName: item.title })
         try{
