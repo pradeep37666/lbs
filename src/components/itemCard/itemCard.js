@@ -6,15 +6,18 @@ import DeliveryIcon from './../../assets/Icons/DeliveryIcon.svg';
 import {ReactComponent as StarOutline} from './../../assets/Icons/StarOutline.svg';
 import {ReactComponent as StarFilled} from './../../assets/Icons/StarFilled.svg';
 import { Link } from 'react-router-dom';
+import getImage from '../../util/getImage';
 
 
 export default function itemCard(props) {
   const item = props.item;
+  const itemPictures = item.pictures?.split(',')
+  console.log('item pics', itemPictures)
   return (
     <div className="ItemCard">
       {/* new prop for image link to go here later */}
       <Link to={`/item/${item.i_id}`} item={item} style={{position:"relative"}}>
-        <img src={PreviewImage} alt={item.title} className="PreviewImage"/>
+        <img src={itemPictures ? getImage(itemPictures[0]) : PreviewImage} alt={item.title} className="PreviewImage"/>
         {props.favourited&&<div className="favouriteStar"><StarFilled/></div>}
       </Link>
       <div className="ItemNameText">{item.title}</div>

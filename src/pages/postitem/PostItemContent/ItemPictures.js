@@ -76,6 +76,7 @@ export default function ItemPictures(props) {
         props.setPictures(newPictures)
     }
 
+    
     return (
         <div className="RegistrationWrapper">
             <div className="LoginMain">

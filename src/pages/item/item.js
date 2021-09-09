@@ -15,20 +15,28 @@ import Jake from './../../assets/Images/JakeFriend.png';
 import ItemImage from './../../assets/Images/search_section_bg.jpg';
 import GoogleMapReact from 'google-map-react';
 import Instance from '../../util/axios';
-import { useParams} from 'react-router';
-import { Link } from 'react-router-dom';
-import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
-import ApplicationModal from '../../components/applicationModal/ApplicationModal.js';
+import { useParams, useLocation } from 'react-router';
+import useGlobalState from "../../util/useGlobalState"
+import CircularProgress from '@material-ui/core/CircularProgress';
+import ApplicationModal from '../../components/applicationModal/ApplicationModal'
+import getImage from '../../util/getImage.js';
+import ItemPictures from '../postitem/PostItemContent/ItemPictures.js';
+import { Avatar } from '@material-ui/core';
+import userEvent from '@testing-library/user-event';
 
-export default function Item(props) {
-    const location = useLocation()
-   
-
+export default function Item() {
+    const { state } = useGlobalState()
+    const { user } = state
     // Pass in number of reviews from backend for use in review carousel + modal
     const params = useParams();
+    const location = useLocation()
     const [modalVisible, setModalVisible] = useState()
-    const [item, setItem] = useState([]);
+    const [item, setItem] = useState();
+    const [itemPictures, setItemPictures] = useState([])
+    const [isUserItem, setIsUserItem] = useState(false)
+    const [itemOwner, setItemOwner] = useState(null)
     const [loading, setLoading] = useState(true);
+
     const reviewSamples = [
         ['Blake Dude', '4', 'Cillum nulla cupidatat aute pariatur ad sit tempor consectetur amet culpa labore deserunt sunt. Veniam eiusmod sunt incididunt ullamco fugiat reprehenderit labore. Ipsum irure culpa veniam velit. Elit dolore cillum nulla nulla do nulla Lorem ullamco.'],
         ['Jake Friend', '3', 'Id sunt laboris ad adipisicing ullamco id elit deserunt deserunt ullamco aute enim tempor tempor.'],
@@ -38,21 +46,41 @@ export default function Item(props) {
         ['Isaac Myers', '2', 'Enim aute incididunt proident Lorem id mollit. Occaecat do cillum magna sunt dolore non exercitation et anim enim. Et nulla nulla aute sint minim laborum ut cupidatat nulla fugiat aliqua laboris exercitation mollit. Labore consectetur culpa laboris fugiat velit eu laborum proident consectetur. Eu labore nisi velit velit irure laborum.'],
         ['Christian Zhou', '5', 'Minim pariatur occaecat Lorem et ea elit reprehenderit sunt commodo ex.'],
     ]
+    console.log(itemPictures)
 
     useEffect(() => {
         // update modal state if navigated to this screen after creating a booking
         const bookingCreated = location.state?.bookingCreated
         if(bookingCreated) setModalVisible(true)
+
         // Find the item with the id used in the link
           Instance.get(`/items/findByIid/?i_id=${params.itemId}`, {headers: { Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QxMjNAdGVzdC5jb20iLCJzdWIiOjcsImlhdCI6MTYyNjE1MTQwNiwiZXhwIjoxNjI3NDQ3NDA2fQ.q6lH_TAJ-P0YxuJDhOrCu3pU5JWTqDrlcbDdbVLu58A`}}).then((response) => {
-            setItem(response.data);
+            setItem(response.data.item);
             setLoading(false);
+            console.log(response)
+            // Split picture string into an array and save
+            setItemPictures(response.data.item.pictures.split(','))
+            // Check if user owns the item
+            if(!user || (response.data.item.u_id !== user.id)){
+                getItemOwner(response.data.item)
+                return
+            }
+            setIsUserItem(true)
           })
           .catch((error) => {
             // handle error
             console.log(error);
           })
           }, [params.itemId]);
+        
+    const getItemOwner= async (item) => {
+        setIsUserItem(false)
+
+        const { data, status } = await Instance.get(`user/getOneUser?id=${item.u_id}`)
+        console.log('get one user', data)
+        setItemOwner(data)
+    
+    }
 
     const NumReviewPages = Math.ceil(reviewSamples.length /2);
 
@@ -106,9 +134,12 @@ export default function Item(props) {
         setModalVisible()
     }
 
+    
+
+    console.log('owner', itemOwner)
     return (
         <PageWrapper>
-            {ImageModal ? <ItemImageModal setModal={setImageModal} modal={ImageModal} /> : ''}
+            {ImageModal ? <ItemImageModal setModal={setImageModal} images={itemPictures} modal={ImageModal} /> : ''}
             {ReviewModal ? <ItemReviewModal setModal={setReviewModal} modal={ReviewModal} reviews={reviewSamples} /> : ''}
             {loading ? <div>Loading item data...</div>
             
@@ -126,17 +157,20 @@ export default function Item(props) {
                 </div>
 
                 <div className="LocationDeliveryCategory">
-                    <div className="LDCIconContainer"><img src={Location} alt="" className="LDCIcon"/></div>{item.city}</div>
-                <div className="LocationDeliveryCategory"><div className="LDCIconContainer"><img src={Delivery} alt="" className="LDCIcon" style={{height: '22px'}}/></div>{item.deliveryOptions === 'delivery' ? 'Delivery Available' : 'Pickup only'}&nbsp;<span className={`${item.deliveryOptions === 'delivery' ? '' : 'Hide'}`}>/</span><span className={`DeliveryFeeText ${item.deliveryOptions === 'delivery' ? '' : 'Hide'}`}>&nbsp;$10 Delivery Fee</span></div>
-                <div className={'LocationDeliveryCategory'}><div className="LDCIconContainer"><img src={Category} alt="" className="LDCIcon"/></div>{item.category}</div>
-
-                <div className="ItemButtons">
-                    <button className="ButtonAvailability"><div className="ItemButtonFlex"><img src={Calendar} alt=""/>Availability</div></button>
-                    <Link to={`/item/${params.itemId}/application`}>
-                        <button className="ButtonApply"><div className="ItemButtonFlex"><Profile fill='#ffffff'/>Apply Now</div></button>
-                    </Link>
-                    
-                    <button className="ButtonFavourite" style={{padding: '.5em 1em'}}><StarOutline fill='#ffffff'/></button>
+                    <div className="LDCIconContainer">
+                        <img src={Location} alt="" className="LDCIcon"/>
+                    </div>
+                    {item.city}
+                </div>
+                <div className="LocationDeliveryCategory">
+                    <div className="LDCIconContainer">
+                        <img src={Delivery} alt="" className="LDCIcon" style={{height: '22px'}}/>
+                    </div>
+                    {item.deliveryPrice > 0 ?  
+                    <>Delivery Available /<span className={`DeliveryFeeText`}>&nbsp;${item.deliveryPrice} Delivery Fee</span> </>     
+                    : 
+                    <>Pickup only</>
+                    }
                 </div>
                 <hr className="hr"/>
 
@@ -168,10 +202,11 @@ export default function Item(props) {
                         <div className="RatingStarFlex">{item.rating}/5 <StarFilled fill='#e9d8b4' className="StarIconRating"/></div>
                     </div>
                     <div className="RatingLenderFlex">
-                        <img src={Jake} alt="" className="ProfileIcon" />
+                        <Avatar src={getImage('images/4ae50d50-0f9d-11ec-a272-15b02550487a.jpeg')} alt="" className="ProfileIcon" />
                         <div>
-                            <div className="RatingHeader">Jake Friend</div>
-                            <div className="RatingStarFlex">5/5 <StarFilled fill='#e9d8b4' className="StarIconRating"/></div>
+                            <div className="RatingHeader">{isUserItem ? user.fullName : itemOwner ? itemOwner.fullName : ''}</div>
+                            <div className="RatingStarFlex">{ isUserItem ? user.lender_rating : itemOwner  && itemOwner.lender_rating }/5 <StarFilled fill='#e9d8b4' className="StarIconRating"/></div>
+                            
                         </div>
                     </div>
                 </div>
@@ -195,15 +230,26 @@ export default function Item(props) {
             </div>
 
             <div className="ItemPicturesWrapper">
-                <img src={ItemImage} alt="" className="MainItemImage"/>
+                 <img src={getImage(itemPictures[0])} alt="" className="MainItemImage "/>  
                 <div className="SecondaryImageFlexContainer">
-                    <div className="SecondaryItemImageDiv">
-                        <img src={ItemImage} alt="" className="SecondaryItemImage" style={{borderRadius: "0 0 0 15px"}}/>
-                    </div>
-                    <div className="SecondaryItemImageDiv ImageModalDiv">
-                        <img src={ItemImage} alt="" className="SecondaryItemImage OpenModalImage" style={{borderRadius: "0 0 15px 0"}}/>
-                        <div className="NavyOverlay"><button className="ImageModalButton" onClick={() => setImageModal(true)}>View All</button></div>
-                    </div>
+                    { itemPictures[1] &&
+                        <div className="SecondaryItemImageDiv ImageModalDiv">
+                            <img src={getImage(itemPictures[1])} alt="" className="SecondaryItemImage" style={{borderRadius: "0 0 0 15px"}}/>
+                            <div className="NavyOverlay">
+                                    <button className="ImageModalButton" onClick={() => setImageModal(true)}>View All</button>
+                                </div>                   
+                        </div>
+                    }
+                    { itemPictures[2] && 
+                        <div className="SecondaryItemImageDiv ImageModalDiv">
+                            <img src={' '} alt="" className="SecondaryItemImage OpenModalImage" style={{borderRadius: "0 0 15px 0"}}/>
+                            { itemPictures[3] && 
+                                <div className="NavyOverlay">
+                                    <button className="ImageModalButton" onClick={() => setImageModal(true)}>View All</button>
+                                </div>
+                            }
+                        </div>
+                    }
                 </div>
 
                 <div className="ItemDetailsHeader">Location</div>

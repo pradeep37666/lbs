@@ -3,10 +3,11 @@ import './imagesModal.css';
 import ItemImage from './../../assets/Images/search_section_bg.jpg';
 import CloseIcon from '@material-ui/icons/Close';
 import { Fade } from '@material-ui/core';
+import getImage from '../../util/getImage';
 
 export default function ImagesModal(props) {
-    
-    const Images = [{ItemImage},{ItemImage},{ItemImage},{ItemImage},{ItemImage}];
+    console.log('modal images', props.images)
+    const Images = props.images;
 
     //The image that the modal is currently focused on, default is first image
     const [CurrentImage, setCurrentImage] = useState(0);
@@ -14,14 +15,14 @@ export default function ImagesModal(props) {
     const getBigImages = (currentImage) => {
         let content = [];
         // Push off screen left if we're not on first image
-        if (currentImage > 0) content.push(<img src={Images[currentImage - 1].ItemImage} alt="" className="ImageModalImage OffScreenBackward" key={currentImage - 1} onClick={(e) => {
+        if (currentImage > 0) content.push(<img src={getImage(Images[currentImage - 1])} alt="" className="ImageModalImage OffScreenBackward" key={currentImage - 1} onClick={(e) => {
             setCurrentImage(CurrentImage - 1);
             e.stopPropagation();
         }}/>);
         //Push main focus image
-        content.push(<img src={Images[CurrentImage].ItemImage} alt="" className="ImageModalImage" key={currentImage} onClick={ (e) => e.stopPropagation()}/>)
+        content.push(<img src={getImage(Images[CurrentImage])} alt="" className="ImageModalImage" key={currentImage} onClick={ (e) => e.stopPropagation()}/>)
         //Push off screen right if we're not on last image
-        if (currentImage < Images.length - 1) content.push(<img src={Images[currentImage + 1].ItemImage} alt="" className="ImageModalImage OffScreenForward" key={currentImage + 1} onClick={(e) => {
+        if (currentImage < Images.length - 1) content.push(<img src={getImage(Images[currentImage + 1])} alt="" className="ImageModalImage OffScreenForward" key={currentImage + 1} onClick={(e) => {
             setCurrentImage(CurrentImage + 1)
             e.stopPropagation();
         }}/>);
@@ -34,7 +35,7 @@ export default function ImagesModal(props) {
         Images.map( (image, i) => {
             content.push(
             <div className="ImageSmallContainer" key={i}>
-            <img src={Images[i].ItemImage} alt="" className={`ImageModalSmall ${i === CurrentImage ? 'SmallImageActive' : ''}`} onClick={ (e) => e.stopPropagation()}/>
+            <img src={getImage(Images[i])} alt="" className={`ImageModalSmall ${i === CurrentImage ? 'SmallImageActive' : ''}`} onClick={ (e) => e.stopPropagation()}/>
             <div className={`SmallImageInactive ${i === CurrentImage ? 'HideOverlay' : ''}`} onClick={(e) => {
                 setCurrentImage(i);
                 e.stopPropagation();            

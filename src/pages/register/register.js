@@ -25,6 +25,7 @@ export default function Register() {
     const [password, setPassword] = useState("")
     const [confirmPassword, setConfirmPassword] = useState("")
     const [lender, setLender] = useState(false)
+    const [image, setImage] = useState()
 
     // Stripe details
     const [cardName, setCardName] = useState("")
@@ -34,7 +35,7 @@ export default function Register() {
 
     const [accNumber, setAccNumber] = useState("")
     const [bsb, setBsb] = useState("")
-
+    
     const [address, setAddress] = useState("")
     const [city, setCity] = useState("")
     const [country, setCountry] = useState("")
@@ -54,39 +55,43 @@ export default function Register() {
         setPage(newPage)
         window.scrollTo(0, 0)
     }
+    useEffect(() => {
+        console.log(image, 'image')
+    }, [image])
 
-    const registerUser = () => {
-        Instance.post('/auth/signUp', {
-            fullName: fullName,
-            email: email,
-            avatar: profilePicture,
-            mobile: phoneNumber,
-            address: address,
-            city: city,
-            country: country,
-            state: state,
-            bsb: bsb,
-            account_number: accNumber,
-            available: availability,
-            password: password,
+    const registerUser = async () => {
+        const userDetails = {
+                fullName: fullName,
+                email: email,
+                avatar: image.raw,
+                mobile: phoneNumber,
+                address: address,
+                city: city,
+                country: country,
+                state: state,
+                bsb: bsb,
+                account_number: accNumber,
+                available: availability,
+                password: password,
+            }
+        const formData = new FormData()
+        Object.keys(userDetails).forEach(key => {
+            formData.append(key, userDetails[key])
         })
-        .then((response) => {
-            console.log(response.data)
-            console.log(response.data.user)
-            console.log(response.data.token)
-            if (response.status === 201) {
+        
+        try{
+            const response = await Instance.post('/auth/signUp', formData)
+            if(response.status === 201) {
                 dispatch({ type: 'setUser', data: response.data.user})
                 registerCometChat(response.data.user)
-            } else {
-                alert("an error occurred during registration, please try again")
-                history.push({pathname: '/login'})
+                localStorage.setItem('token', response.data.token.accessToken)
             }
-        })
-        .catch((error) => {
-            console.log(error)
+        } catch(e) {
+            console.log(e)
             history.push({pathname: '/login'})
             alert("an error occurred during registration, please try again")
-        })
+        }
+        
     }
 
     const registerCometChat = async (userObj) => {
@@ -187,6 +192,8 @@ export default function Register() {
                 setConfirmPassword={setConfirmPassword}
                 setLender={setLender}
                 setValidated={setValidated}
+                image={image}
+                setImage={setImage}
                 />
             case 'Verification':
                 return <Verification 

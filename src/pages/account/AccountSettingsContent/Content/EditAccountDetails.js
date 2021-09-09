@@ -8,6 +8,8 @@ import { useHistory } from 'react-router'
 import Instance from '../../../../util/axios';
 import { Link } from 'react-router-dom';
 import useGlobalState from '../../../../util/useGlobalState';
+import { Avatar } from '@material-ui/core';
+import getImage from '../../../../util/getImage';
 
 export default function EditAccountDetails(props) {
     const { state, dispatch } = useGlobalState()
@@ -109,7 +111,7 @@ export default function EditAccountDetails(props) {
                 <div className="ProfilePictureCircle" >
                     {image.preview ?
 
-                        <img src={image.preview} alt="dummy" className="ProfilePicturePreview" />
+                        <Avatar src={getImage(user.avatar)} alt="dummy" className="ProfilePicturePreview" />
 
                         : <CameraIcon className="CameraIcon" />}
                 </div>
