@@ -59,7 +59,7 @@ export default function Item() {
             setLoading(false);
             console.log(response)
             // Split picture string into an array and save
-            //setItemPictures(response.data.item.pictures.split(','))
+            setItemPictures(response.data.item.pictures.split(','))
             // Check if user owns the item
             if(!user || (response.data.item.u_id !== user.id)){
                 getItemOwner(response.data.item)
