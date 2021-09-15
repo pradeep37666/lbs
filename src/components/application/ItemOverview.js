@@ -156,13 +156,28 @@ export default function ItemOverview() {
     }
 
     const unblockUser = async () => {
+        var blockedUsersRequest = new CometChat.BlockedUsersRequestBuilder()
+        .setLimit(10)
+        .build();
+        const blockedUsers = await blockedUsersRequest.fetchNext()
+        let userId, blockedId
+        // Applicant has blocked the item owner
+        if(blockedUsers.find(user => user.uid === item.u_id)){
+            userId = user.id
+            blockedId = item.u_id
+        } else {
+            // Item owner has blocked the applicant
+            userId = item.u_id
+            blockedId = user.id
+        }
         try{
-            const res = await axios.delete(`https://192491b43d1b6230.api-US.cometchat.io/v3.0/users/${item.u_id}/blockedusers`, {
+            
+            const res = await axios.delete(`https://192491b43d1b6230.api-US.cometchat.io/v3.0/users/${userId}/blockedusers`, {
                 headers: {
                     'apiKey' : process.env.REACT_APP_CHAT_API_KEY
                 },
                 data: {
-                    blockedUids: [user.id]
+                    blockedUids: [blockedId]
                 }
             })
             console.log('response from unblock function', res)

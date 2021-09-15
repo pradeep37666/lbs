@@ -17,8 +17,8 @@ export default function Messages() {
     const [messages, setMessages] = useState(null)
     const [isLoading, setIsLoading] = useState(true)
     const [conversations, setConversations] = useState([])
-    const [activeChatUser, setActiveChatUser] = useState('aaa')
-    const [popupOpen, setPopupOpen] = useState()
+    const [activeChatUser, setActiveChatUser] = useState()
+    const [popupOpen, setPopupOpen] = useState(false)
 
     useEffect(() => {
         setupChat()
@@ -59,10 +59,7 @@ export default function Messages() {
         }
     }
     const setupChat = () => {
-        var blockedUsersRequest = new CometChat.BlockedUsersRequestBuilder()
-        .setLimit(10)
-        .build();
-        blockedUsersRequest.fetchNext().then(res => console.log('blocked users', res))
+        
         CometChat.addMessageListener(user.id,
             new CometChat.MessageListener({
                 onTextMessageReceived: (msg) => handleTextMessage(msg)
@@ -101,6 +98,10 @@ export default function Messages() {
         })
     }
 
+    const renderSkeletons = () => {
+        const array = Array(5).fill()
+        return array.map((skeleton, index) => <Facebook key={index} />)
+    }
     return (
         <PageWrapper>
             <ClickAwayListener onClickAway={() => setPopupOpen(false)}>
@@ -113,7 +114,7 @@ export default function Messages() {
                 <div className="UserCardContainer">
 
                     { isLoading ? (
-                        Array(5).fill(<Facebook />)
+                        renderSkeletons()
                     ):(
                         <div>
                             <h1>Messages</h1>

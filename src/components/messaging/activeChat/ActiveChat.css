@@ -26,10 +26,20 @@
   background-color: white;
   display: flex;
   align-items: center;
+  padding: 0.6rem;
+}
+.ActiveChatHeaderUser {
+  display: flex;
 }
 .ActiveChatHeaderText {
   font-size: 30px;
   font-weight: bold;
+  margin-left: 0.5rem;
+}
+.ActiveChatHeaderRating {
+  margin-left: 1rem;
+  display: flex;
+  align-items: flex-start;
 }
 .ActiveChatButton {
   background-color: #33384f;
@@ -37,6 +47,9 @@
   height: 50px;
   width: 50px;
   border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .ActiveChatMessageContainer {

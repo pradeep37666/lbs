@@ -21,8 +21,9 @@ export default function UserCard({ conversation, setActiveChatUser, setConversat
     const [cardUser, setCardUser] = useState()
 
     useEffect(() => {
+        console.log('getting new user')
         getUserRating()
-    }, [])
+    }, [conversation])
 
     const getUserRating = async () => {
         try{

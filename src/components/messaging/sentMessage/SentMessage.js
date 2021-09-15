@@ -8,13 +8,14 @@ import { Avatar } from '@material-ui/core'
 export default function SentMessage({ message }) {
     const { state } = useGlobalState()
     const { user } = state
+
     return (
         <div className="SentMessageContainer">
             
             <div className="SentMessageTextContainer">
                 <p>{message}</p>
             </div> 
-            <Avatar src={getImage(user.avatar ? user.avatar : MissingProfile) } className="SentMessageImage" />
+            <Avatar src={user ? getImage(user.avatar) : MissingProfile } className="SentMessageImage" />
         </div>
         
     )

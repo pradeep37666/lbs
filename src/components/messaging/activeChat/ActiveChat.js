@@ -10,13 +10,16 @@ import MissingProfile from '../../../assets/Icons/MissingProfileIcon.png'
 import Instance from '../../../util/axios'
 import {ReactComponent as StarFilled} from '../../../assets/Icons/StarFilled.svg';
 import getImage from '../../../util/getImage'
+import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 
 export default function ActiveChat({ activeChatUser, messages, setMessages, getConversations }) {
+    const messageEndRef = useRef()
     const { state, dispatch } = useGlobalState()
     const { user } = state
     const [messageText, setMessageText] = useState("") 
     const [isLoading, setIsLoading] = useState(true)
     const [activeUserDetails, setActiveUserDetails] = useState()
+    const [messagesLoaded, setMessagesLoaded] = useState(false)
 
 
     useEffect(() => {
@@ -28,8 +31,13 @@ export default function ActiveChat({ activeChatUser, messages, setMessages, getC
         if(activeChatUser){
             getActiveUserDetails()
         }
-
+        
     },[activeChatUser, messages])
+
+    // useEffect(() => {
+    //     if(!messagesLoaded) return
+    //     if(messageEndRef.current) 
+    // }, [messagesLoaded])
 
     const getActiveUserDetails = async () => {
         try{
@@ -65,8 +73,7 @@ export default function ActiveChat({ activeChatUser, messages, setMessages, getC
     const renderMessages = () => {
         return messages.map((message, index ) => {
             if(message.data?.metadata?.enquiry){
-                const isOwnEnquiry = message.sender.uid === user.id
-                return <EnquiryMessage messageObj={message} />
+                return <EnquiryMessage messageObj={message} key={index}/>
             }
             return (
                 message.sender.uid === user.id ? (
@@ -76,28 +83,36 @@ export default function ActiveChat({ activeChatUser, messages, setMessages, getC
                     </div> 
                 ) : (
                     <div key={index}>
-                        <ReceivedMessage user={activeUserDetails} message={message.data.text}/>
+                        <ReceivedMessage user={activeUserDetails} message={message.data.text} />
                     </div>
                 )
                 
             )
         })
     }
+
+
     return (
         <div className="ActiveChatContainer">
+            {!isLoading &&
             <div className="ActiveChatHeader">
-                <Avatar src={activeUserDetails ? getImage(activeUserDetails.avatar) : MissingProfile}/>
-                <span className="ActiveChatHeaderText">{activeChatUser.name}</span>
-                <span>{activeUserDetails && activeUserDetails.lender_rating}/5</span>
-                <StarFilled fill='#e9d8b4' className="StarIconRating"/>
-            </div>
+                <div className="ActiveChatHeaderUser">
+                    <Avatar src={activeUserDetails ? getImage(activeUserDetails.avatar) : MissingProfile}/>
+                    <span className="ActiveChatHeaderText">{activeChatUser.name}</span>
+                </div>
+
+                <div className="ActiveChatHeaderRating">
+                    <span>{activeUserDetails && activeUserDetails.lender_rating}/5</span>
+                    <StarFilled fill='#e9d8b4' className="StarIconRating"/>
+                </div>
+            </div>}
             <div style={ isLoading ? { justifyContent: 'center', alignItems: 'center'} : null} className="ActiveChatMessageContainer">
                 {isLoading ? (
                     <CircularProgress size={30}/>
                 ) : (
-                     messages && renderMessages() 
+                    messages && renderMessages() 
                 )}
-                {/* <div ref={messageEndRef}></div> */}
+                <div ref={messageEndRef}></div> 
              </div>
             <div className="ActiveChatInputContainer">
                 <form 
@@ -111,7 +126,9 @@ export default function ActiveChat({ activeChatUser, messages, setMessages, getC
                 value={messageText}
                 />
                 </form>  
-                <button className="ActiveChatButton" onClick={handleSubmit}>Send</button>
+                <div className="ActiveChatButton" onClick={handleSubmit}>
+                    <ArrowUpwardIcon style={{ color: 'white' }}/>
+                </div>
             
             </div>
             

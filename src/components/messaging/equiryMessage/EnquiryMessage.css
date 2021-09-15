@@ -9,3 +9,13 @@
   margin-right: 5px;
   border-radius: 5px;
 }
+
+.EnquiryMessageText {
+  color: white;
+  font-size: 15px;
+}
+.EnquiryMessageBold {
+  color: white;
+  font-weight: bold;
+  font-size: 16px;
+}
