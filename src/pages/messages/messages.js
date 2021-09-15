@@ -8,6 +8,7 @@ import ActiveChat from '../../components/messaging/activeChat/ActiveChat'
 import { Facebook } from 'react-content-loader'
 import { ClickAwayListener } from '@material-ui/core'
 import useGlobalState from '../../util/useGlobalState'
+import Instance from '../../util/axios'
 
 export default function Messages() {
     const { state } = useGlobalState()
@@ -20,14 +21,7 @@ export default function Messages() {
     const [popupOpen, setPopupOpen] = useState()
 
     useEffect(() => {
-        var blockedUsersRequest = new CometChat.BlockedUsersRequestBuilder()
-        .setLimit(10)
-        .build();
-        blockedUsersRequest.fetchNext().then(res => console.log('blocked users', res))
-        CometChat.addMessageListener(user.id,
-            new CometChat.MessageListener({
-                onTextMessageReceived: handleTextMessage
-            }))
+        setupChat()
     }, [])
 
     useEffect(() => {
@@ -38,6 +32,7 @@ export default function Messages() {
         getMessages()
     }, [activeChatUser])
 
+    
     const getConversations = async () => {
         try{
            let conversationRequest = new CometChat.ConversationsRequestBuilder().setLimit(10).build()
@@ -61,6 +56,16 @@ export default function Messages() {
         } catch(e) {
             console.log('error fetching messages', e)
         }
+    }
+    const setupChat = () => {
+        var blockedUsersRequest = new CometChat.BlockedUsersRequestBuilder()
+        .setLimit(10)
+        .build();
+        blockedUsersRequest.fetchNext().then(res => console.log('blocked users', res))
+        CometChat.addMessageListener(user.id,
+            new CometChat.MessageListener({
+                onTextMessageReceived: handleTextMessage
+            }))
     }
         
     const handleTextMessage = async (msg) => {

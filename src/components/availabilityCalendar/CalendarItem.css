@@ -56,7 +56,7 @@
 }
 
 .ItemApplicationPeriodStart {
-  background: linear-gradient(to right, white 50%, rgba(172, 23, 44, 0.12) 50%); 
+  background: linear-gradient(to right, white 50%, rgba(172, 23, 44, 0.12) 50%);
   padding: 0px;
   margin-top: 10px;
   margin-bottom: 10px;
@@ -71,7 +71,6 @@
 
 .ItemUnavailable {
   color: gray;
-
 }
 .ItemCurrentDay {
   border: 1px solid gray;
@@ -87,4 +86,7 @@
 
 .ItemBooked {
   opacity: 0;
+}
+.CalendarItemText {
+  font-size: 21px;
 }

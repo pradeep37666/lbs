@@ -25,9 +25,7 @@ const initialState = {
 }
 export default function Application() {
     const [state, dispatch] = useReducer(applicationReducer, initialState)
-    console.log(state)
     const { page, item, confirmedStart } = state
- 
     const { itemId } = useParams()
 
     
@@ -35,10 +33,6 @@ export default function Application() {
     useEffect(() => {
         const getItem = async () => {
             const { data, status } = await instance.get(`/items/findByIid?i_id=${itemId}`)
-            console.log(data)
-            // {name}
-            // {item:{name},
-            // yearAa: string}
 
             if(status !== 200) return
             dispatch({ type: 'setItem', data: data.item})

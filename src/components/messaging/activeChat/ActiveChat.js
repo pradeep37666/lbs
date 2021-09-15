@@ -6,38 +6,38 @@ import { Avatar, CircularProgress } from '@material-ui/core'
 import ReceivedMessage from '../receivedMessage/ReceivedMessage'
 import SentMessage from '../sentMessage/SentMessage'
 import EnquiryMessage from '../equiryMessage/EnquiryMessage'
-// import getImage from '../../../util/'
 import MissingProfile from '../../../assets/Icons/MissingProfileIcon.png'
+import Instance from '../../../util/axios'
+import {ReactComponent as StarFilled} from '../../../assets/Icons/StarFilled.svg';
+import getImage from '../../../util/getImage'
 
 export default function ActiveChat({ activeChatUser, messages, setMessages, getConversations }) {
-    // const messageEndRef = useRef(null)
     const { state, dispatch } = useGlobalState()
     const { user } = state
     const [messageText, setMessageText] = useState("") 
-    // const [messages, setMessages] = useState([])
     const [isLoading, setIsLoading] = useState(true)
+    const [activeUserDetails, setActiveUserDetails] = useState()
 
-    // useEffect(() => {
-    //     scrollToBottom()
-    // }, [messages])
-
-    // const scrollToBottom = () => messageEndRef.current?.scrollIntoView({ behaviour: 'smooth'})
 
     useEffect(() => {
         setMessageText('')
         setIsLoading(true)
         console.log('active chat use effect')
-        if(!messages) {
-            // setIsLoading(false)
-            return
-           
+        if(!messages) return
+        setIsLoading(false)
+        if(activeChatUser){
+            getActiveUserDetails()
         }
-       setIsLoading(false)
 
     },[activeChatUser, messages])
 
-    const handleTextMessage = (textMessage) => {
-        setMessages(prevMessages => [ ...prevMessages, textMessage ])
+    const getActiveUserDetails = async () => {
+        try{
+            const {data, status} = await Instance.get(`user/getOneUser?id=${activeChatUser.uid}`)
+            setActiveUserDetails(data)
+        } catch(e){
+            console.log(e)
+        }
     }
 
     const sendMessage = async () => {
@@ -86,8 +86,10 @@ export default function ActiveChat({ activeChatUser, messages, setMessages, getC
     return (
         <div className="ActiveChatContainer">
             <div className="ActiveChatHeader">
-                <Avatar src={activeChatUser?.avatar ? ' ' : MissingProfile}/>
+                <Avatar src={activeUserDetails ? getImage(activeUserDetails.avatar) : MissingProfile}/>
                 <span className="ActiveChatHeaderText">{activeChatUser.name}</span>
+                <span>{activeUserDetails && activeUserDetails.lender_rating}/5</span>
+                <StarFilled fill='#e9d8b4' className="StarIconRating"/>
             </div>
             <div style={ isLoading ? { justifyContent: 'center', alignItems: 'center'} : null} className="ActiveChatMessageContainer">
                 {isLoading ? (

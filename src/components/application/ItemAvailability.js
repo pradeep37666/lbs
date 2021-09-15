@@ -21,7 +21,7 @@ export default function ItemAvailability({ handleNextPage }) {
         )})
     }
     return (
-        <div >            
+        <div>            
             <div className="AvailabilityContainer">
                 {item ? renderMonths() : <CircularProgress size={30} color="#000" />}
             </div>

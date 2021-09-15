@@ -6,7 +6,7 @@ import { ApplicationContext } from '../../pages/application/Application';
 
 export default function AvailabilityCalendar({ month, year }) {
     const { state } = useContext(ApplicationContext)
-    const { currentMonth } = state
+    const { currentMonth, currentYear } = state
 
     function getDaysInMonth(month, year) {
         var date = new Date(year, month, 1);
@@ -54,6 +54,7 @@ export default function AvailabilityCalendar({ month, year }) {
     return (
         <div className="CalendarContainer">
             <div className="CalendarInfoContainer">
+                {/* <span className="CalendarCurrentYear">{currentYear}</span> */}
                 <span className="CalendarMonth">{monthArray[month]} </span>
                 <span className="CalendarYear">{year}</span>
             </div>

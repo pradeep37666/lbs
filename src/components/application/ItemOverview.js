@@ -156,15 +156,22 @@ export default function ItemOverview() {
     }
 
     const unblockUser = async () => {
-        const res = await axios.delete(`https://192491b43d1b6230.api-US.cometchat.io/v3.0/users/${item.u_id}/blockedusers`, {
-            headers: {
-                'apiKey' : process.env.REACT_APP_CHAT_API_KEY
-            },
-            data: {
-                blockedUids: [user.id]
-            }
-        })
-        console.log('res', res)
+        try{
+            const res = await axios.delete(`https://192491b43d1b6230.api-US.cometchat.io/v3.0/users/${item.u_id}/blockedusers`, {
+                headers: {
+                    'apiKey' : process.env.REACT_APP_CHAT_API_KEY
+                },
+                data: {
+                    blockedUids: [user.id]
+                }
+            })
+            console.log('response from unblock function', res)
+        } catch(e) {
+            console.log(e)
+            
+        }
+        
+        
         // const usersList = [user.id, item.u_id]
         // CometChat.unblockUsers(usersList).then(
         //     list => {

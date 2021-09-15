@@ -1,14 +1,22 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import getImage from '../../util/getImage'
 import './ApplicationHeader.css'
 
 export default function ApplicationHeader({ page, item }) {
+    const [pictures, setPictures] = useState()
+
+    useEffect(() => {
+        if(!item) return
+        setPictures(item.pictures.split(','))
+    },[item])
+
     const renderContent = () => {
         switch(page) {
             case 'ItemAvailability' : {
                 return (
                     <div className="HeaderTextContainer">
-                        <h2>Apply For Product</h2> 
-                        <p> - Select pick up date and time</p>
+                        <span className="ApplicationHeaderHeading">Apply For Product</span> 
+                        <span className="ApplicationHeaderSubheading"> - Select pick up date and time</span>
                     </div>
                    
                 )
@@ -17,16 +25,16 @@ export default function ApplicationHeader({ page, item }) {
             case 'ItemOptions' : {
                 return (
                     <div className="HeaderTextContainer">
-                        <h2>Book your stuff</h2> 
-                        <p> - Make your borrowing easier</p>
+                        <span className="ApplicationHeaderHeading">Book your stuff</span> 
+                        <span className="ApplicationHeaderSubheading"> - Make your borrowing easier</span>
                     </div>
                 )
             }
             case 'ItemOverview' : {
                 return (
                 <div className="HeaderTextContainer">
-                    <h2>Book your stuff</h2> 
-                    <p> - Please check we've got everything right</p>
+                    <span className="ApplicationHeaderHeading">Book your stuff</span> 
+                    <span className="ApplicationHeaderSubheading"> - Please check we've got everything right</span>
                 </div>
                 )
             }
@@ -36,11 +44,11 @@ export default function ApplicationHeader({ page, item }) {
         <div className="ApplicationHeaderContainer">
             { renderContent() }
             <div className="ItemDetails">
-                <h3>Item - </h3>
+                <span className="ApplicationHeaderHeading">Item - </span>
                 {item && 
                     <>
-                        <img src={item.pictures && item.pictures[0]} alt="item image"></img>
-                        <p>{item.title}</p>
+                        <img src={pictures ? getImage(pictures[0]) : ''} alt="item image" className="ApplicationHeaderItemImage"></img>
+                        <span className="ApplicationHeaderItemTitle">{item.title}</span>
                     </>}
             </div>
         </div>

@@ -25,6 +25,7 @@
 .ActiveChatHeader {
   background-color: white;
   display: flex;
+  align-items: center;
 }
 .ActiveChatHeaderText {
   font-size: 30px;

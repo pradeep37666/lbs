@@ -111,7 +111,7 @@ export default function EditAccountDetails(props) {
                 <div className="ProfilePictureCircle" >
                     {image.preview ?
 
-                        <Avatar src={getImage(user.avatar)} alt="dummy" className="ProfilePicturePreview" />
+                        <img src={getImage(user.avatar)} alt="dummy" className="ProfilePicturePreview" />
 
                         : <CameraIcon className="CameraIcon" />}
                 </div>

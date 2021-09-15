@@ -91,7 +91,7 @@ export default function CalendarItem({day, index, onClick, isCurrentMonth }) {
             ${currentDate === day.getDate() && isCurrentMonth && 'ItemCurrentDay'}
             ${handleUnavailableLogic() ? 'ItemUnavailable' : 'Pointer'}`}
             >
-                <span style={{ height: 'auto'}}>{day.getDate()}</span>
+                <span className="CalendarItemText" style={{ height: 'auto'}}>{day.getDate()}</span>
                 <div className="ItemAvailabilityContainer">
                     <div className={`${booked.am ? 'ItemBooked' : null}
                     ${ availability && !availability.am ? 'ItemAMUnavailable' : 'ItemAMAvailable'}`}/>

@@ -31,28 +31,9 @@ export default function UserCard({ conversation, setActiveChatUser, setConversat
             setCardUser(data)
         } catch(e) {
             console.log(e)
-        }
-       
-        
+        } 
     }
 
-    // const deleteChat = async (e) => {
-    //     setIsDeleting(true)
-    //     e.stopPropagation()
-    //     try{
-    //         const {data, status} = await axios.delete(`https://${process.env.REACT_APP_CHAT_APP_ID}.api-US.cometchat.io/v3.0/conversations/${conversation.conversationId}`,{
-    //             headers: {
-    //                 apiKey: process.env.REACT_APP_CHAT_API_KEY
-    //             }
-    //         })    
-    //     } catch (e) {
-    //         console.log(e)
-    //     }
-    //     setConversations(conversations => conversations.filter(item => item.conversationId != conversation.conversationId))
-    //     setActiveChatUser(null)
-    //     setIsDeleting(false)
-        
-    // }
     const blockUser = async () => {
         const userList = [user.id, conversation.conversationWith.uid]
         console.log(userList)
@@ -71,14 +52,12 @@ export default function UserCard({ conversation, setActiveChatUser, setConversat
                 // Someone has enquired about the user's item
                 `${conversation.conversationWith.name} has enquired about your ${conversation.lastMessage.data.metadata.itemName}`
             )
-            
-            
-        }
-        
+        } 
         return conversation.lastMessage.sender.uid === user.id ? "You: " +  conversation.lastMessage.data.text : `${conversation.conversationWith.name}: ` + conversation.lastMessage.data.text
     }
 
     const handleCardClick = () => {
+        console.log('into active chat', conversation.conversationWith)
         setActiveChatUser(conversation.conversationWith)
         setMessages(null)
     }
@@ -94,7 +73,7 @@ export default function UserCard({ conversation, setActiveChatUser, setConversat
                 <>
                     <div className="UserCardContent">
                         <div className="UserCardTop" >
-                        <Avatar src={cardUser && cardUser.avatar ? getImage(cardUser.avatar) :  MissingProfile} style={{ height: 50, width: 50}}></Avatar>
+                            <Avatar src={cardUser && cardUser.avatar ? getImage(cardUser.avatar) :  MissingProfile} style={{ height: 50, width: 50}}></Avatar>
                             <div className="UserCardDetails">
                                 <ul style={{ listStyleType: 'none'}}>
                                     <li>{conversation.conversationWith.name}</li>
