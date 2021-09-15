@@ -12,7 +12,6 @@ import getImage from '../../util/getImage';
 export default function itemCard(props) {
   const item = props.item;
   const itemPictures = item.pictures?.split(',')
-  console.log('item pics', itemPictures)
   return (
     <div className="ItemCard">
       {/* new prop for image link to go here later */}

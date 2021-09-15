@@ -51,6 +51,7 @@ function App() {
   }, [])
 
   const setupCometChat = () => {
+    console.log('a')
     const appId = process.env.REACT_APP_CHAT_APP_ID
     let cometChatSettings = new CometChat.AppSettingsBuilder().subscribePresenceForAllUsers().setRegion('us').build();
     console.log('settings', cometChatSettings)

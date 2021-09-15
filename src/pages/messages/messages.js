@@ -17,7 +17,7 @@ export default function Messages() {
     const [messages, setMessages] = useState(null)
     const [isLoading, setIsLoading] = useState(true)
     const [conversations, setConversations] = useState([])
-    const [activeChatUser, setActiveChatUser] = useState()
+    const [activeChatUser, setActiveChatUser] = useState('aaa')
     const [popupOpen, setPopupOpen] = useState()
 
     useEffect(() => {
@@ -38,6 +38,7 @@ export default function Messages() {
            let conversationRequest = new CometChat.ConversationsRequestBuilder().setLimit(10).build()
             const conversations = await conversationRequest.fetchNext()
             setConversations(conversations) 
+            console.log(conversations)
             setIsLoading(false)
         } catch(e) {
             console.log(e)
@@ -64,29 +65,17 @@ export default function Messages() {
         blockedUsersRequest.fetchNext().then(res => console.log('blocked users', res))
         CometChat.addMessageListener(user.id,
             new CometChat.MessageListener({
-                onTextMessageReceived: handleTextMessage
+                onTextMessageReceived: (msg) => handleTextMessage(msg)
             }))
     }
-        
+
     const handleTextMessage = async (msg) => {
-        console.log('message from listener', msg)
-        console.log('active chat user', activeChatUser)
         if(activeChatUser && ((msg.sender.uid === activeChatUser.uid) || (msg.sender.uid === user.id))){
             console.log('updating messages')
             setMessages(prevMessages => [...prevMessages, msg])
         }
-        try{
-           const newConversation = await CometChat.CometChatHelper.getConversationFromMessage(msg)
+        try{        
            getConversations()
-        //    const index = conversations.findIndex(conversation => conversation.conversationId === newConversation.conversationId)
-        //    const newConversationsArray = conversations
-        //    if(index > -1){
-        //     newConversationsArray.splice(index, 1)
-        //    }
-        //    newConversationsArray.push(newConversation)
-        //    console.log(newConversationsArray)
-        //    setConversations(newConversationsArray)
-           // setConversations(prevConversations => [...prevConversations, newConversation]) 
         } catch(e) {
             console.log(e)
         }

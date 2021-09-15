@@ -166,11 +166,11 @@ export default function ItemOverview() {
                 }
             })
             console.log('response from unblock function', res)
+            return
         } catch(e) {
             console.log(e)
-            
+            return
         }
-        
         
         // const usersList = [user.id, item.u_id]
         // CometChat.unblockUsers(usersList).then(
@@ -188,7 +188,7 @@ export default function ItemOverview() {
         textMessage.setMetadata({ enquiry: true, itemName: item.title })
         try{
             const res = await CometChat.sendMessage(textMessage)
-            console.log(res)
+            console.log('message', res)
         } catch(e) {
             console.log(e)
         }

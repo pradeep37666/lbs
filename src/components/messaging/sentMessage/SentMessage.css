@@ -1,7 +1,8 @@
-.SentMessageContainer {
+.SentMessageTextContainer {
   background-color: #e9d8b4;
   border: 1px solid black;
   position: relative;
+  width: 100%;
   border-radius: 5px;
   padding-left: 15px;
   padding-right: 15px;
@@ -9,4 +10,14 @@
   margin-bottom: 8px;
   margin-left: 5px;
   margin-right: 5px;
+}
+.SentMessageContainer {
+  display: flex;
+  width: 100%;
+}
+
+.SentMessageImage {
+  height: 30px;
+  width: 30px;
+  align-self: center;
 }

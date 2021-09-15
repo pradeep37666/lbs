@@ -76,7 +76,7 @@ export default function ActiveChat({ activeChatUser, messages, setMessages, getC
                     </div> 
                 ) : (
                     <div key={index}>
-                        <ReceivedMessage message={message.data.text}/>
+                        <ReceivedMessage user={activeUserDetails} message={message.data.text}/>
                     </div>
                 )
                 
