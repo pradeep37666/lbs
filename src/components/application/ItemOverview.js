@@ -186,17 +186,8 @@ export default function ItemOverview() {
             console.log(e)
             return
         }
-        
-        // const usersList = [user.id, item.u_id]
-        // CometChat.unblockUsers(usersList).then(
-        //     list => {
-        //       console.log("users list unblocked", { list });
-        //     },
-        //     error => {
-        //       console.log("unblocking user fails with error", error);
-        //     }
-        //   );
     }
+
     const sendEnquiry = async (item) => {
         await unblockUser()
         const textMessage = new CometChat.TextMessage(item.u_id, `${user.fullName} has enquired about your ${item.title}`, CometChat.RECEIVER_TYPE.USER)
@@ -211,8 +202,11 @@ export default function ItemOverview() {
 
     return (
             <div className="ApplicationOverviewContainer">
-                <span className="ApplicationOverviewHeader">Application Overview</span>
-                <ApplicationItemCard item={item}/>
+                <div className="ItemOverviewCardContainer">
+                    <span className="ApplicationOverviewHeader">Application Overview</span>
+                    <ApplicationItemCard item={item}/>
+                </div>
+                
                 <div>
                     <span className="ApplicationOverviewSubHeader">Itemised Costs</span>
                     <div className="ItemOverviewItemContainer">

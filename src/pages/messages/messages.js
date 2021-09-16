@@ -21,8 +21,14 @@ export default function Messages() {
     const [popupOpen, setPopupOpen] = useState(false)
 
     useEffect(() => {
-        setupChat()
-    }, [])
+        CometChat.addMessageListener(user.id,
+            new CometChat.MessageListener({
+                onTextMessageReceived: handleTextMessage
+            }))
+        return () => {
+            CometChat.removeMessageListener(user.id)
+        }
+    }, [activeChatUser])
 
     useEffect(() => {
         // sendMessage()
@@ -60,13 +66,11 @@ export default function Messages() {
     }
     const setupChat = () => {
         
-        CometChat.addMessageListener(user.id,
-            new CometChat.MessageListener({
-                onTextMessageReceived: (msg) => handleTextMessage(msg)
-            }))
+       
     }
 
     const handleTextMessage = async (msg) => {
+        console.log('active chat user', activeChatUser)
         if(activeChatUser && ((msg.sender.uid === activeChatUser.uid) || (msg.sender.uid === user.id))){
             console.log('updating messages')
             setMessages(prevMessages => [...prevMessages, msg])

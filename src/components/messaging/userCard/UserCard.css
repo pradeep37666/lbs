@@ -27,7 +27,7 @@
 .UserCardIconContainer {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-start;
   padding-top: 2%;
   padding-bottom: 2%;
   padding-right: 2%;
@@ -42,4 +42,11 @@
 .UserCardDeleteButton:hover {
   cursor: pointer;
   text-decoration: underline;
+}
+
+.UserCardDotIconContainer {
+  margin-bottom: 0.5em;
+}
+.LastMessageOwner {
+  font-weight: bold;
 }

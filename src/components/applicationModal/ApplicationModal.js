@@ -6,8 +6,8 @@ import './ApplicationModal.css'
 
 export default function ApplicationModal({ onClick, item }) {
     return (
-        <div className="ModalWrapperMain" onClick={onClick}>
-            <div className="ReviewModalFlex">
+        <div className="ApplicationModalWrapper" onClick={onClick}>
+            
                 <Slide in={true} mountOnEnter unmountOnExit direction="down" timeout={500}>
                     <div className="ApplicationModalMain" onClick={(e) => e.stopPropagation() }>
                         <div className="AppicationModalCheck">
@@ -21,7 +21,7 @@ export default function ApplicationModal({ onClick, item }) {
                         </div>
                     </div>
                 </Slide>
-            </div>
+           
         </div>
     )
 }

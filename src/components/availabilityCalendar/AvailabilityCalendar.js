@@ -30,6 +30,7 @@ export default function AvailabilityCalendar({ month, year }) {
             if(days[i].getDay() === 6){
                 rows.push(
                     <CalendarRow 
+                    key={i}
                     isCurrentMonth={currentMonth === month}
                     days={rowDays}
                     /> 
@@ -41,6 +42,7 @@ export default function AvailabilityCalendar({ month, year }) {
             if(i + 1 === days.length){
                 rows.push(
                 <CalendarRow 
+                key={i}
                 days={rowDays} 
                 isCurrentMonth={currentMonth === month}
                 />)

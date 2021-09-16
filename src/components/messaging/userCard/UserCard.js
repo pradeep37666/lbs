@@ -21,7 +21,6 @@ export default function UserCard({ conversation, setActiveChatUser, setConversat
     const [cardUser, setCardUser] = useState()
 
     useEffect(() => {
-        console.log('getting new user')
         getUserRating()
     }, [conversation])
 
@@ -53,7 +52,18 @@ export default function UserCard({ conversation, setActiveChatUser, setConversat
                 `${conversation.conversationWith.name} has enquired about your ${conversation.lastMessage.data.metadata.itemName}`
             )
         } 
-        return conversation.lastMessage.sender.uid === user.id ? "You: " +  conversation.lastMessage.data.text : `${conversation.conversationWith.name}: ` + conversation.lastMessage.data.text
+        return conversation.lastMessage.sender.uid === user.id ? (
+            <> 
+             <span className="LastMessageOwner">You: </span>
+             <span>{conversation.lastMessage.data.text}</span>
+            </>
+      
+        ) : (
+            <>
+                <span className="LastMessageOwner">{conversation.conversationWith.name}</span>
+                <span>{conversation.lastMessage.data.text}</span>
+            </>
+        ) 
     }
 
     const handleCardClick = () => {
@@ -62,7 +72,6 @@ export default function UserCard({ conversation, setActiveChatUser, setConversat
         setMessages(null)
     }
 
-    console.log(conversation.conversationWith)
     return (
         <div style={isDeleting ? { alignItems: 'center', justifyContent: 'center' } : null } className="UserCard" onClick={handleCardClick}>
 
@@ -86,17 +95,14 @@ export default function UserCard({ conversation, setActiveChatUser, setConversat
                         </div>
                         <div className="UserCardBottom">
                             <div>
-                                <span>{renderLastMessage()}</span>
+                                {renderLastMessage()}
                             </div>
                             
                         </div>
                     </div>
                     <div className="UserCardIconContainer">
-                        <div ref={dotRef}>
-
-                        
+                        <div ref={dotRef} className="UserCardDotIconContainer">
                             <MoreHorizIcon 
-                            
                             onClick={(e) => {
                                 e.stopPropagation()
                                 setPopupOpen(conversation.conversationId)
@@ -112,7 +118,7 @@ export default function UserCard({ conversation, setActiveChatUser, setConversat
                                 setPopupOpen(null)
                             
                             }}
-                            open={popupOpen && popupOpen === conversation.conversationId}>
+                            open={popupOpen ? popupOpen === conversation.conversationId : false}>
                                 <div className="UserCardDeleteButton" onClick={blockUser}>
                                     <p>Delete conversation</p>
                                 </div>

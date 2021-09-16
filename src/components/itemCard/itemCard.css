@@ -1,9 +1,10 @@
 .ItemCard {
   display: flex;
   flex-direction: column;
+  justify-content: flex-end;
   width: 23%;
   min-width: 220px;
-  margin-right: .5em;
+  margin-right: 0.5em;
 }
 
 .ItemNameText {
@@ -13,7 +14,7 @@
   width: 100%;
   display: -webkit-box;
   -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;  
+  -webkit-box-orient: vertical;
   overflow: hidden;
   min-height: 66px;
 }
@@ -63,14 +64,13 @@
 }
 .favouriteStar {
   position: absolute;
-  top: 13px ;
-  right:13px;
-  height:38px;
-  width:38px;
-  border-radius:50%;
-  background-color:#B43B4C;
-  display:flex;
+  top: 13px;
+  right: 13px;
+  height: 38px;
+  width: 38px;
+  border-radius: 50%;
+  background-color: #b43b4c;
+  display: flex;
   align-items: center;
-  justify-content:center;
-
+  justify-content: center;
 }
