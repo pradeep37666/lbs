@@ -3,8 +3,8 @@
   flex-direction: row;
   justify-content: space-between;
   padding: 10;
-  width: "100%";
-  border-bottom: 1px solid gray;
+  width: 100%;
+  border-bottom: 1px solid #ebebeb;
   margin-bottom: 20px;
   min-height: 80px;
 }
@@ -15,13 +15,15 @@
 .UserCardDetails {
   display: flex;
   flex-direction: column;
+  margin-left: 1rem;
 }
 
 .UserCardTop {
   display: flex;
   flex-direction: row;
   height: 50%;
-  justify-content: space-between;
+  justify-content: flex-start;
+  align-items: center;
   margin-bottom: 10px;
 }
 .UserCardIconContainer {

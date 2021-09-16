@@ -55,13 +55,20 @@ export default function UserCard({ conversation, setActiveChatUser, setConversat
         return conversation.lastMessage.sender.uid === user.id ? (
             <> 
              <span className="LastMessageOwner">You: </span>
-             <span>{conversation.lastMessage.data.text}</span>
+             <span>{
+                conversation.lastMessage.data.text.length > 25 ? (
+                    `${conversation.lastMessage.data.text.slice(0,25)}...`
+                ) : (
+                    conversation.lastMessage.data.text
+                )}
+
+             </span>
             </>
       
         ) : (
             <>
-                <span className="LastMessageOwner">{conversation.conversationWith.name}</span>
-                <span>{conversation.lastMessage.data.text}</span>
+                <span className="LastMessageOwner">{conversation.conversationWith.name}: </span>
+                <span>{conversation.lastMessage.data.text.split(0,20)}</span>
             </>
         ) 
     }
@@ -84,9 +91,9 @@ export default function UserCard({ conversation, setActiveChatUser, setConversat
                         <div className="UserCardTop" >
                             <Avatar src={cardUser && cardUser.avatar ? getImage(cardUser.avatar) :  MissingProfile} style={{ height: 50, width: 50}}></Avatar>
                             <div className="UserCardDetails">
-                                <ul style={{ listStyleType: 'none'}}>
-                                    <li>{conversation.conversationWith.name}</li>
-                                </ul>
+                                
+                                <span>{conversation.conversationWith.name}</span>
+                               
                             </div>
                             
                             <div>

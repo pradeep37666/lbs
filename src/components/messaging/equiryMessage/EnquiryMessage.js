@@ -11,14 +11,20 @@ export default function EnquiryMessage({ messageObj }) {
                 // User has enquired about someone else's item
                 //  `You enquired about ${messageObj.receiver.name}'s ${messageObj.data.metadata.itemName}` 
                  <>
-                 <span className="EnquiryMessageBold">You </span>
-                 <span className="EnquiryMessageText">enquired about </span>
-                 <span className="EnquiryMessageBold">{messageObj.receiver.name}'s</span>
-                 <span className="EnquiryMessageText"> {messageObj.data.metadata.itemName}</span>
+                    <span className="EnquiryMessageText">You </span>
+                    <span className="EnquiryMessageText">enquired about </span>
+                    <span className="EnquiryMessageBold">{messageObj.receiver.name}'s</span>
+                    <span className="EnquiryMessageText"> {messageObj.data.metadata.itemName}</span>
                  </>
              ) : (
                  // Someone has enquired about the user's item
-                 `${messageObj.sender.name} has enquired about your ${messageObj.data.metadata.itemName}`
+                 <>
+                    <span className="EnquiryMessageBold">{messageObj.sender.name} </span>
+                    <span className="EnquiryMessageText">enquired about </span>
+                    <span className="EnquiryMessageText">your </span>
+                    <span className="EnquiryMessageText"> {messageObj.data.metadata.itemName}</span>
+                 </>
+                 
              )
          }
     }

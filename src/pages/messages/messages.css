@@ -1,7 +1,8 @@
 .UserCardContainer {
   display: flex;
   flex-direction: column;
-  width: 45%;
+  max-width: 35%;
+  margin-right: 2rem;
 }
 
 .ContentContainer {
