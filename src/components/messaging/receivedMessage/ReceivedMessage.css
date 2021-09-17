@@ -25,10 +25,12 @@
   left: calc(10% - 8px);
 }
 .ReceivedMessageImage {
-  height: 30px;
-  width: 30px;
+  height: 80%;
+  width: 80%;
   margin-right: 15px;
 }
 .ReceivedMessageImageContainer {
   width: 10%;
+  display: flex;
+  align-items: center;
 }

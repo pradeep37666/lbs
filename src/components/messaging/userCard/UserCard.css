@@ -38,10 +38,10 @@
   display: flex;
   flex-direction: column;
 }
-.UserCardDeleteButton {
-  padding: 5px;
+.UserCardBlockButton {
+  padding: 0.5rem 1rem;
 }
-.UserCardDeleteButton:hover {
+.UserCardBlockButton:hover {
   cursor: pointer;
   text-decoration: underline;
 }

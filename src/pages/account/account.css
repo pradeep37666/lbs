@@ -21,6 +21,6 @@
 
 @media screen and (max-width: 1300px) {
   .UserShedWrapper {
-    padding: 0;
+    padding: 0 2% 0 2%;
   }
 }

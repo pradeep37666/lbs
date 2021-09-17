@@ -2,7 +2,11 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 10px;
+  padding: 8px;
+}
+.CalendarItemDayName {
+  display: flex;
+  justify-content: center;
 }
 .ItemAMAvailable {
   background-color: #33384f;

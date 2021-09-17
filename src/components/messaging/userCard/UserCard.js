@@ -126,8 +126,8 @@ export default function UserCard({ conversation, setActiveChatUser, setConversat
                             
                             }}
                             open={popupOpen ? popupOpen === conversation.conversationId : false}>
-                                <div className="UserCardDeleteButton" onClick={blockUser}>
-                                    <p>Delete conversation</p>
+                                <div className="UserCardBlockButton" onClick={blockUser}>
+                                    <p>Block User</p>
                                 </div>
                             </Popover>
                             <ChevronRightIcon style={{ fill: '#b43b4c' }} />

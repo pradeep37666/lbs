@@ -19,8 +19,8 @@
 }
 
 .SentMessageImage {
-  height: 30px;
-  width: 30px;
+  height: 80%;
+  width: 80%;
   margin-left: 15px;
 }
 
@@ -32,4 +32,6 @@
 
 .SentMessageImageContainer {
   width: 10%;
+  display: flex;
+  align-items: center;
 }

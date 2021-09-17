@@ -11,6 +11,7 @@ import Instance from '../../../util/axios'
 import {ReactComponent as StarFilled} from '../../../assets/Icons/StarFilled.svg';
 import getImage from '../../../util/getImage'
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
+import ScrollToBottom from 'react-scroll-to-bottom'
 
 export default function ActiveChat({ activeChatUser, messages, setMessages, getConversations }) {
     const messageEndRef = useRef()
@@ -33,11 +34,6 @@ export default function ActiveChat({ activeChatUser, messages, setMessages, getC
         }
         
     },[activeChatUser, messages])
-
-    // useEffect(() => {
-    //     if(!messagesLoaded) return
-    //     if(messageEndRef.current) 
-    // }, [messagesLoaded])
 
     const getActiveUserDetails = async () => {
         try{
@@ -71,7 +67,7 @@ export default function ActiveChat({ activeChatUser, messages, setMessages, getC
     }
 
     const renderMessages = () => {
-        return messages.map((message, index ) => {
+        const messagesArray = messages.map((message, index ) => {
             if(message.data?.metadata?.enquiry){
                 return <EnquiryMessage messageObj={message} key={index}/>
             }
@@ -89,6 +85,11 @@ export default function ActiveChat({ activeChatUser, messages, setMessages, getC
                 
             )
         })
+        // if(messagesArray.length > 0){
+        //     messagesArray.push(<div ref={messageEndRef}>aaaa</div>)
+        // }
+        
+        return messagesArray
     }
 
 
@@ -97,7 +98,7 @@ export default function ActiveChat({ activeChatUser, messages, setMessages, getC
             {!isLoading &&
             <div className="ActiveChatHeader">
                 <div className="ActiveChatHeaderUser">
-                    <Avatar src={activeUserDetails ? getImage(activeUserDetails.avatar) : MissingProfile}/>
+                    <Avatar src={activeUserDetails && activeUserDetails.avatar ? getImage(activeUserDetails.avatar) : MissingProfile}/>
                     <span className="ActiveChatHeaderText">{activeChatUser.name}</span>
                 </div>
 
@@ -106,14 +107,19 @@ export default function ActiveChat({ activeChatUser, messages, setMessages, getC
                     <StarFilled fill='#e9d8b4' className="StarIconRating"/>
                 </div>
             </div>}
+            
             <div style={ isLoading ? { justifyContent: 'center', alignItems: 'center'} : null} className="ActiveChatMessageContainer">
                 {isLoading ? (
                     <CircularProgress size={30}/>
                 ) : (
-                    messages && renderMessages() 
+                    <>
+                    {messages && renderMessages() }
+                    
+                    </>
                 )}
-                <div ref={messageEndRef}></div> 
-             </div>
+            
+            </div>
+             
             <div className="ActiveChatInputContainer">
                 <form 
                 onSubmit={handleSubmit}
