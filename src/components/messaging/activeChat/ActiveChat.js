@@ -14,7 +14,7 @@ import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import ScrollToBottom from 'react-scroll-to-bottom'
 
 export default function ActiveChat({ activeChatUser, messages, setMessages, getConversations }) {
-    const messageEndRef = useRef()
+    const messageEndRef = useRef(null)
     const { state, dispatch } = useGlobalState()
     const { user } = state
     const [messageText, setMessageText] = useState("") 
@@ -26,15 +26,32 @@ export default function ActiveChat({ activeChatUser, messages, setMessages, getC
     useEffect(() => {
         setMessageText('')
         setIsLoading(true)
-        console.log('active chat use effect')
+        autoScroll()
         if(!messages) return
         setIsLoading(false)
         if(activeChatUser){
+            setActiveUserDetails(null)
             getActiveUserDetails()
         }
         
-    },[activeChatUser, messages])
+    },[activeChatUser, messages, messagesLoaded])
 
+    // useEffect(() => {
+        
+    // }) 
+
+    // useEffect(() => {
+    //     autoScroll()
+    // }, [])
+
+    const autoScroll = () => {
+        console.log('messages', messages)
+        setMessagesLoaded(true)
+        console.log('a')
+        console.log(messageEndRef.current.scrollHeight) 
+        messageEndRef.current.scrollTo(0, 300)
+    }
+    
     const getActiveUserDetails = async () => {
         try{
             const {data, status} = await Instance.get(`user/getOneUser?id=${activeChatUser.uid}`)
@@ -67,7 +84,8 @@ export default function ActiveChat({ activeChatUser, messages, setMessages, getC
     }
 
     const renderMessages = () => {
-        const messagesArray = messages.map((message, index ) => {
+
+        return messages.map((message, index ) => {
             if(message.data?.metadata?.enquiry){
                 return <EnquiryMessage messageObj={message} key={index}/>
             }
@@ -86,12 +104,10 @@ export default function ActiveChat({ activeChatUser, messages, setMessages, getC
             )
         })
         // if(messagesArray.length > 0){
-        //     messagesArray.push(<div ref={messageEndRef}>aaaa</div>)
+        //     messagesArray.push(<div>aaaa</div>)
         // }
-        
-        return messagesArray
+        // return messagesArray
     }
-
 
     return (
         <div className="ActiveChatContainer">
@@ -108,7 +124,7 @@ export default function ActiveChat({ activeChatUser, messages, setMessages, getC
                 </div>
             </div>}
             
-            <div style={ isLoading ? { justifyContent: 'center', alignItems: 'center'} : null} className="ActiveChatMessageContainer">
+            <div ref={messageEndRef} style={ isLoading ? { justifyContent: 'center', alignItems: 'center'} : null} className="ActiveChatMessageContainer">
                 {isLoading ? (
                     <CircularProgress size={30}/>
                 ) : (

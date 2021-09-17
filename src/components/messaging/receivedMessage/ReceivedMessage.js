@@ -6,7 +6,6 @@ import MissingProfile from '../../../assets/Icons/MissingProfileIcon.png'
 import GreyTriangle from '../../../assets/Icons/GreyTriangle'
 
 export default function ReceivedMessage({ user, message }) {
-    console.log(user)
     return (
         <div className="ReceivedMessageContainer">
             <div className="ReceivedMessageImageContainer">

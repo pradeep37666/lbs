@@ -57,22 +57,15 @@ export default function Messages() {
         try{
             const messagesRequest = new CometChat.MessagesRequestBuilder().setLimit(0).setUID(activeChatUser.uid).build()
             const res = await messagesRequest.fetchPrevious()
-            console.log(res)
             setMessages(res)
             // setIsLoading(false)
         } catch(e) {
             console.log('error fetching messages', e)
         }
     }
-    const setupChat = () => {
-        
-       
-    }
 
     const handleTextMessage = async (msg) => {
-        console.log('active chat user', activeChatUser)
         if(activeChatUser && ((msg.sender.uid === activeChatUser.uid) || (msg.sender.uid === user.id))){
-            console.log('updating messages')
             setMessages(prevMessages => [...prevMessages, msg])
         }
         try{        
@@ -80,11 +73,7 @@ export default function Messages() {
         } catch(e) {
             console.log(e)
         }
-        
-
     }
-
-    
 
     const renderCards = () => {
         return conversations.map((conversation, index) => {
@@ -120,10 +109,10 @@ export default function Messages() {
                     { isLoading ? (
                         renderSkeletons()
                     ):(
-                        <div>
+                        <>
                             <h1>Messages</h1>
                             {renderCards()}
-                        </div>   
+                        </>   
                     )}
                 </div>
                 { activeChatUser && 

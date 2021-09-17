@@ -35,9 +35,14 @@ export default function UserCard({ conversation, setActiveChatUser, setConversat
 
     const blockUser = async () => {
         const userList = [user.id, conversation.conversationWith.uid]
-        console.log(userList)
-        const res = await CometChat.blockUsers(userList)
-        console.log('response', res)
+        try{
+            const res = await CometChat.blockUsers(userList)
+            setActiveChatUser(false)
+            setMessages(null)
+
+        }catch(e) {
+            console.log(e)
+        }
     }
 
 
@@ -74,7 +79,6 @@ export default function UserCard({ conversation, setActiveChatUser, setConversat
     }
 
     const handleCardClick = () => {
-        console.log('into active chat', conversation.conversationWith)
         setActiveChatUser(conversation.conversationWith)
         setMessages(null)
     }
