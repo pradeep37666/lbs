@@ -46,8 +46,10 @@ function App() {
       .then(({ data }) => {
         dispatch({ type: 'setUser', data })
         setLoadingUser(false)
+        return
       })
       .catch((e) => console.log(e))
+    setLoadingUser(false)
   }, [])
 
   const setupCometChat = () => {

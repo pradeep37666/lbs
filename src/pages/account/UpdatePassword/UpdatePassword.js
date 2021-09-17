@@ -10,7 +10,8 @@ import { useHistory } from 'react-router'
 import useGlobalState from '../../../util/useGlobalState'
 
 export default function UpdatePassword() {
-    const {state, dispatch } = useGlobalState()
+
+    const { state } = useGlobalState()
     const { user } = state
     const history = useHistory()
 
