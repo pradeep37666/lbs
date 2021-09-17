@@ -17,7 +17,7 @@ export default function BasicDetails(props) {
     const [showPassword, setShowPassword] = useState(false)
     const [showConfirmPassword, setShowConfirmPassword] = useState(false)
 
-    const [image, setImage] = useState( {preview: '', raw: ''} )
+    // const [image, setImage] = useState(  )
 
     const showValidation = (field) => {
         switch (field) {
@@ -38,7 +38,7 @@ export default function BasicDetails(props) {
 
     const handleChange = (e) => {
         if (e.target.files.length) {
-            setImage({
+            props.setImage({
               preview: URL.createObjectURL(e.target.files[0]),
               raw: e.target.files[0]
             })
@@ -79,9 +79,9 @@ export default function BasicDetails(props) {
                     <div className="LoginHeader">Profile Picture</div>
                     <div className="ProfilePictureFlex">
                         <div className="ProfilePictureCircle" >
-                        {image.preview ? 
+                        {props.image ? 
                     
-                        <img src={image.preview} alt="" className="ProfilePicturePreview"/>
+                        <img src={props.image.preview} alt="" className="ProfilePicturePreview"/>
                     
                         : <CameraIcon className="CameraIcon"/>}
                         </div>

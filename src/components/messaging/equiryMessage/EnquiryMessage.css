@@ -1,0 +1,21 @@
+.EnquiryMessageContainer {
+  background-color: rgba(51, 56, 79, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  margin-left: 5px;
+  margin-right: 5px;
+  border-radius: 5px;
+}
+
+.EnquiryMessageText {
+  color: white;
+  font-size: 15px;
+}
+.EnquiryMessageBold {
+  color: white;
+  font-weight: bold;
+  font-size: 16px;
+}

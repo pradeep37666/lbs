@@ -35,7 +35,6 @@ export default function CalendarRow({ days, isCurrentMonth }) {
     },[selected, confirmedStart, confirmedEnd])
 
     const handleItemClick = ({ day, availability, booked }) => { 
-        console.log(availability)  
         // Clicking on a day that is already selected
         if(selected && compareDates(selected, day)){
             dispatch({ type: 'setSelected', data: null})

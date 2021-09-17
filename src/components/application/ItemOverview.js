@@ -7,10 +7,15 @@ import Arrow from '../../assets/Icons/Arrow'
 import ApplicationItemCard from './ApplicationItemCard'
 import instance from '../../util/axios'
 import { useHistory } from 'react-router'
+import { CometChat } from '@cometchat-pro/chat'
+import useGlobalState from '../../util/useGlobalState'
+import axios from 'axios'
 
 export default function ItemOverview() {
     const { state, dispatch } = useContext(ApplicationContext)
-    const { page, item, confirmedEnd, confirmedStart, deliverySelected, pickupSelected,  } = state
+    const globalState = useGlobalState()
+    const user  = globalState.state.user
+    const { page, item, confirmedEnd, confirmedStart, deliverySelected, pickupSelected } = state
 
     const history = useHistory()
     const dayArray = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
@@ -139,21 +144,69 @@ export default function ItemOverview() {
                 startDate: startIndex,
                 endDate: endIndex
             })
-            console.log(data, status)
+            sendEnquiry(item)
             history.push({ 
                 pathname: `/item/${item.i_id}`, 
                 state: {bookingCreated: true, price: calculatePrice()}
             })
         } catch(e) {
-            console.log(e.response)
+            console.log(e.response.error.message)
         }
         
     }
 
+    const unblockUser = async () => {
+        var blockedUsersRequest = new CometChat.BlockedUsersRequestBuilder()
+        .setLimit(10)
+        .build();
+        const blockedUsers = await blockedUsersRequest.fetchNext()
+        let userId, blockedId
+        // Applicant has blocked the item owner
+        if(blockedUsers.find(user => user.uid === item.u_id)){
+            userId = user.id
+            blockedId = item.u_id
+        } else {
+            // Item owner has blocked the applicant
+            userId = item.u_id
+            blockedId = user.id
+        }
+        try{
+            
+            const res = await axios.delete(`https://192491b43d1b6230.api-US.cometchat.io/v3.0/users/${userId}/blockedusers`, {
+                headers: {
+                    'apiKey' : process.env.REACT_APP_CHAT_API_KEY
+                },
+                data: {
+                    blockedUids: [blockedId]
+                }
+            })
+            console.log('response from unblock function', res)
+            return
+        } catch(e) {
+            console.log(e)
+            return
+        }
+    }
+
+    const sendEnquiry = async (item) => {
+        await unblockUser()
+        const textMessage = new CometChat.TextMessage(item.u_id, `${user.fullName} has enquired about your ${item.title}`, CometChat.RECEIVER_TYPE.USER)
+        textMessage.setMetadata({ enquiry: true, itemName: item.title })
+        try{
+            const res = await CometChat.sendMessage(textMessage)
+            console.log('message', res)
+        } catch(e) {
+            console.log(e)
+        }
+    }
+
     return (
             <div className="ApplicationOverviewContainer">
-                <span className="ApplicationOverviewHeader">Application Overview</span>
-                <ApplicationItemCard item={item}/>
+                <div className="ItemOverviewCardContainer">
+                    <span className="ApplicationOverviewHeader">Application Overview</span>
+                    <ApplicationItemCard item={item}/>
+                </div>
+                
                 <div>
                     <span className="ApplicationOverviewSubHeader">Itemised Costs</span>
                     <div className="ItemOverviewItemContainer">

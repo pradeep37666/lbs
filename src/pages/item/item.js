@@ -9,30 +9,36 @@ import Delivery from './../../assets/Icons/DeliveryIcon.svg';
 import Category from './../../assets/Icons/CategoriesIcon.svg';
 import { ReactComponent as Profile } from './../../assets/Icons/UserCircle.svg';
 import Calendar from './../../assets/Icons/HangingCalendar.svg';
-import { ReactComponent as StarOutline } from './../../assets/Icons/StarOutline.svg';
+
 import { ReactComponent as StarFilled } from './../../assets/Icons/StarFilled.svg';
-import Jake from './../../assets/Images/JakeFriend.png';
-import ItemImage from './../../assets/Images/search_section_bg.jpg';
+import { Link } from 'react-router-dom';
+import { StarOutline } from '@material-ui/icons';
+
 import GoogleMapReact from 'google-map-react';
 import Instance from '../../util/axios';
-import { useParams } from 'react-router';
-import { Link } from 'react-router-dom';
-import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
-import ApplicationModal from '../../components/applicationModal/ApplicationModal.js';
+import { useParams, useLocation } from 'react-router';
 import useGlobalState from "../../util/useGlobalState"
 import CircularProgress from '@material-ui/core/CircularProgress';
+import ApplicationModal from '../../components/applicationModal/ApplicationModal'
+import getImage from '../../util/getImage.js';
 
-export default function Item(props) {
-    const location = useLocation()
+import { Avatar } from '@material-ui/core';
+import MissingProfile from '../../assets/Icons/MissingProfileIcon.png'
 
-    // Pass in number of reviews from backend for use in review carousel + modal
-    const params = useParams();
-    const [modalVisible, setModalVisible] = useState()
-    const [item, setItem] = useState([]);
-    const [favourited, setFavourited] = useState(false)
-    const [loading, setLoading] = useState(true);
+export default function Item() {
     const { state } = useGlobalState()
     const { user } = state
+    // Pass in number of reviews from backend for use in review carousel + modal
+    const params = useParams();
+    const location = useLocation()
+    const [modalVisible, setModalVisible] = useState()
+    const [item, setItem] = useState();
+    const [itemPictures, setItemPictures] = useState([])
+    const [favourited, setFavourited] = useState(false)
+    const [isUserItem, setIsUserItem] = useState(false)
+    const [itemOwner, setItemOwner] = useState(null)
+    const [loading, setLoading] = useState(true);
+
     const reviewSamples = [
         ['Blake Dude', '4', 'Cillum nulla cupidatat aute pariatur ad sit tempor consectetur amet culpa labore deserunt sunt. Veniam eiusmod sunt incididunt ullamco fugiat reprehenderit labore. Ipsum irure culpa veniam velit. Elit dolore cillum nulla nulla do nulla Lorem ullamco.'],
         ['Jake Friend', '3', 'Id sunt laboris ad adipisicing ullamco id elit deserunt deserunt ullamco aute enim tempor tempor.'],
@@ -42,36 +48,57 @@ export default function Item(props) {
         ['Isaac Myers', '2', 'Enim aute incididunt proident Lorem id mollit. Occaecat do cillum magna sunt dolore non exercitation et anim enim. Et nulla nulla aute sint minim laborum ut cupidatat nulla fugiat aliqua laboris exercitation mollit. Labore consectetur culpa laboris fugiat velit eu laborum proident consectetur. Eu labore nisi velit velit irure laborum.'],
         ['Christian Zhou', '5', 'Minim pariatur occaecat Lorem et ea elit reprehenderit sunt commodo ex.'],
     ]
+    console.log(itemPictures)
 
     useEffect(() => {
         // update modal state if navigated to this screen after creating a booking
         const bookingCreated = location.state?.bookingCreated
         if (bookingCreated) setModalVisible(true)
+
         // Find the item with the id used in the link
         if (user) {
             Instance.get(`/items/findByIid/?i_id=${params.itemId}&u_id=${user.id}`)
-            .then((response) => {
-                setItem(response.data.item)
-                setLoading(false)
-                setFavourited(response.data.liked)
-            })
+                .then((response) => {
+                    setItem(response.data.item);
+                    setLoading(false);
+                    setFavourited(response.data.liked)
+                    console.log(response)
+                    // Split picture string into an array and save
+                    setItemPictures(response.data.item.pictures.split(','))
+                    // Check if user owns the item
+                    if (!user || (response.data.item.u_id !== user.id)) {
+                        getItemOwner(response.data.item)
+                        return
+                    }
+                    setIsUserItem(true)
+                })
                 .catch((error) => {
                     // handle error
-                    console.log(error)
-            })
+                    console.log(error);
+                })
         } else {
             Instance.get(`/items/findByIid/?i_id=${params.itemId}`)
-            .then((response) => {
-                setItem(response.data.item)
-                setLoading(false)
-            })
+                .then((response) => {
+                    setItem(response.data.item)
+                    setLoading(false)
+                    setItemPictures(response.data.item.pictures.split(','))
+                })
                 .catch((error) => {
                     // handle error
                     console.log(error)
-            })
+                })
         }
-        
-    }, [params.itemId])
+
+    }, [params.itemId]);
+
+    const getItemOwner = async (item) => {
+        setIsUserItem(false)
+
+        const { data, status } = await Instance.get(`user/getOneUser?id=${item.u_id}`)
+        console.log('get one user', data)
+        setItemOwner(data)
+
+    }
 
     const NumReviewPages = Math.ceil(reviewSamples.length / 2)
 
@@ -146,9 +173,20 @@ export default function Item(props) {
         setModalVisible()
     }
 
+    const handleItemImage = () => {
+        if (isUserItem && user?.avatar) {
+            return getImage(user.avatar)
+        }
+        if (itemOwner?.avatar) {
+            return getImage(itemOwner.avatar)
+        }
+        return MissingProfile
+    }
+
+    console.log('owner', itemOwner)
     return (
         <PageWrapper>
-            {ImageModal ? <ItemImageModal setModal={setImageModal} modal={ImageModal} /> : ''}
+            {ImageModal ? <ItemImageModal setModal={setImageModal} images={itemPictures} modal={ImageModal} /> : ''}
             {ReviewModal ? <ItemReviewModal setModal={setReviewModal} modal={ReviewModal} reviews={reviewSamples} /> : ''}
             {loading ? <div className="ItemPage__Loading__Container"><CircularProgress size={75} /></div>
 
@@ -167,14 +205,21 @@ export default function Item(props) {
                                 : ''}
 
                         </div>
-
+                        {/* each LDCIconContainer Div had its own LocationDeliveryCategory div, check this */}
                         <div className="LocationDeliveryCategory">
-                            <div className="LDCIconContainer"><img src={Location} alt="" className="LDCIcon" /></div>{item.city}</div>
-                        <div className="LocationDeliveryCategory"><div className="LDCIconContainer"><img src={Delivery} alt="" className="LDCIcon" style={{ height: '22px' }} /></div>{item.deliveryOptions === 'delivery' ? 'Delivery Available' : 'Pickup only'}&nbsp;<span className={`${item.deliveryOptions === 'delivery' ? '' : 'Hide'}`}>/</span><span className={`DeliveryFeeText ${item.deliveryOptions === 'delivery' ? '' : 'Hide'}`}>&nbsp;$10 Delivery Fee</span></div>
-                        <div className={'LocationDeliveryCategory'}><div className="LDCIconContainer"><img src={Category} alt="" className="LDCIcon" /></div>{item.category}</div>
-
+                            <div className="LDCIconContainer"><img src={Location} alt="" className="LDCIcon" /></div>
+                            {item.city}
+                        </div>
+                        <div className="LocationDeliveryCategory">
+                            <div className="LDCIconContainer"><img src={Delivery} alt="" className="LDCIcon" style={{ height: '22px' }} /></div>
+                            {item.deliveryPrice > 0 ? 'Delivery Available' : 'Pickup only'}&nbsp;<span className={`${item.deliveryPrice > 0 ? '' : 'Hide'}`}>/</span><span className={`DeliveryFeeText ${item.deliveryPrice > 0 ? '' : 'Hide'}`}>&nbsp;${item.deliveryPrice} Delivery Fee</span>
+                        </div>
+                        <div className="LocationDeliveryCategory">
+                            <div className="LDCIconContainer"><img src={Category} alt="" className="LDCIcon" /></div>
+                            {item.category}
+                        </div>
+                        
                         {(user && user.id === item.u_id) ?
-
                             <button class="editButton">
                                 Edit Item Details
                             </button>
@@ -189,7 +234,6 @@ export default function Item(props) {
                             </div>
 
                         }
-
 
                         <hr className="hr" />
 
@@ -211,10 +255,11 @@ export default function Item(props) {
                                 <div className="RatingStarFlex">{item.rating}/5 <StarFilled fill='#e9d8b4' className="StarIconRating" /></div>
                             </div>
                             <div className="RatingLenderFlex">
-                                <img src={Jake} alt="" className="ProfileIcon" />
+                                <Avatar src={handleItemImage()} alt="" className="ProfileIcon" />
                                 <div>
-                                    <div className="RatingHeader">Jake Friend</div>
-                                    <div className="RatingStarFlex">5/5 <StarFilled fill='#e9d8b4' className="StarIconRating" /></div>
+                                    <div className="RatingHeader">{isUserItem ? user.fullName : itemOwner ? itemOwner.fullName : ''}</div>
+                                    <div className="RatingStarFlex">{isUserItem ? user.lender_rating : itemOwner && itemOwner.lender_rating}/5 <StarFilled fill='#e9d8b4' className="StarIconRating" /></div>
+
                                 </div>
                             </div>
                         </div>
@@ -233,40 +278,47 @@ export default function Item(props) {
                         <button className="ViewReviewsButton" onClick={() => setReviewModal(true)}>View all Reviews</button>
 
                         <hr className='hr' />
-
-
                     </div>
 
                     <div className="ItemPicturesWrapper">
-                        <img src={ItemImage} alt="" className="MainItemImage" />
+                        <img src={getImage(itemPictures[0])} alt="" className="MainItemImage " />
                         <div className="SecondaryImageFlexContainer">
-                            <div className="SecondaryItemImageDiv">
-                                <img src={ItemImage} alt="" className="SecondaryItemImage" style={{ borderRadius: "0 0 0 15px" }} />
-                            </div>
-                            <div className="SecondaryItemImageDiv ImageModalDiv">
-                                <img src={ItemImage} alt="" className="SecondaryItemImage OpenModalImage" style={{ borderRadius: "0 0 15px 0" }} />
-                                <div className="NavyOverlay"><button className="ImageModalButton" onClick={() => setImageModal(true)}>View All</button></div>
-                            </div>
+                            {itemPictures[1] &&
+                                <div className="SecondaryItemImageDiv ImageModalDiv">
+                                    <img src={getImage(itemPictures[1])} alt="" className="SecondaryItemImage" style={{ borderRadius: "0 0 0 15px" }} />
+                                    <div className="NavyOverlay">
+                                        <button className="ImageModalButton" onClick={() => setImageModal(true)}>View All</button>
+                                    </div>
+                                </div>
+                            }
+                            {itemPictures[2] &&
+                                <div className="SecondaryItemImageDiv ImageModalDiv">
+                                    <img src={' '} alt="" className="SecondaryItemImage OpenModalImage" style={{ borderRadius: "0 0 15px 0" }} />
+                                    {itemPictures[3] &&
+                                        <div className="NavyOverlay">
+                                            <button className="ImageModalButton" onClick={() => setImageModal(true)}>View All</button>
+                                        </div>
+                                    }
+                                </div>
+                            }
                         </div>
 
                         <div className="ItemDetailsHeader">Location</div>
                         <div className="MapContainer">
                             <GoogleMapReact
                                 bootstrapURLKeys={{ key: 'AIzaSyB98s0INvtxhs22OxCOEIjE_--kb54qhlQ' }}
-                                defaultCenter={{ lat: item.lat, lng: item.lng }}
+                                defaultCenter={defaultProps.center}
                                 defaultZoom={defaultProps.zoom}
                             >
                                 <Marker lat={item.lat} lng={item.lng} />
                             </GoogleMapReact>
+                            <div className="PickupLocationText">Pickup location around Kangaroo Point</div>
+                            <div className="PickupLocationTextLight">Enquire about the item to acquire location</div>
                         </div>
 
-                        <div className="PickupLocationText">Pickup location around Kangaroo Point</div>
-                        <div className="PickupLocationTextLight">Enquire about the item to acquire location</div>
                     </div>
 
                 </div>
-
-
             }
         </PageWrapper>
     )

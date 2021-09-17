@@ -1,0 +1,37 @@
+.SentMessageTextContainer {
+  background-color: #e9d8b4;
+  position: relative;
+  width: 90%;
+  max-width: 90%;
+  border-radius: 5px;
+  padding-left: 15px;
+  padding-right: 25px;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+}
+.SentMessageContainer {
+  display: flex;
+  width: 100%;
+  position: relative;
+  padding: 0px 5px;
+}
+
+.SentMessageImage {
+  height: 80%;
+  width: 80%;
+  margin-left: 15px;
+}
+
+.SentMessageTriangle {
+  position: absolute;
+  right: calc(10% - 8px);
+  bottom: 3px;
+}
+
+.SentMessageImageContainer {
+  width: 10%;
+  display: flex;
+  align-items: center;
+}

@@ -17,13 +17,13 @@ export default function Login() {
 
     const [loginValidation, setLoginValidation] = useState("")
 
-    const handleSubmit = (e) => {
-        e.preventDefault()
-        Instance.post('/auth/signIn', {
-            email: email,
-            password: password
-        }).then((response) => {
-            console.log(response)
+    const handleSubmit = async (e) => {
+        try{
+            e.preventDefault()
+            const response = await Instance.post('/auth/signIn', {
+                email: email,
+                password: password
+            })
             // Only log in if details are correct
             if (response.status === 404) {
                 setLoginValidation("Incorrect username or password, please try again")
@@ -31,15 +31,19 @@ export default function Login() {
                 // Add user to global state
                 dispatch({ type: 'setUser', data: response.data.user })
                 localStorage.setItem('token', response.data.token.accessToken)
-                // cometChatLogin(response.data.user)
+                await cometChatLogin(response.data.user)
                 setLoginValidation("")
                 history.push({ pathname: '/' })
             }
-        })
-            .catch((error) => {
-                setLoginValidation("An error occurred whilst logging in, please try again")
-                console.log(error)
-            })
+        }catch(error){
+            setLoginValidation("An error occurred whilst logging in, please try again")
+            console.log(error) 
+        }
+        
+        
+        
+               
+            
     }
 
     const cometChatLogin = async (user) => {

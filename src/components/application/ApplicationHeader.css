@@ -1,10 +1,39 @@
 .ApplicationHeaderContainer {
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
   display: flex;
+  border-bottom: 2px solid #ac172c;
+  width: 100%;
+  justify-content: center;
+  margin-bottom: 20px;
 }
 .HeaderTextContainer {
   display: flex;
   align-items: center;
+  padding-right: 25px;
 }
 .ItemDetails {
   display: flex;
+  align-items: center;
+}
+
+.ApplicationHeaderItemImage {
+  height: 60px;
+  width: 60px;
+  border-radius: 5px;
+  margin-right: 8px;
+  margin-left: 8px;
+}
+
+.ApplicationHeaderItemTitle {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.ApplicationHeaderHeading {
+  font-size: 25px;
+  font-weight: bold;
+}
+.ApplicationHeaderSubheading {
+  font-size: 25px;
 }

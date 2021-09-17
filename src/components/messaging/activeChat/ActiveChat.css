@@ -1,18 +1,63 @@
 .ActiveChatInputContainer {
-    
-    border: 1px solid red;
-    width: 100%;
-    border-radius: 10px;
-    padding: 5px;
+  border: 1px solid #ac172c;
+  width: 100%;
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px;
 }
 .ActiveChatInput {
-    width: 80%;
-    border: none;
-    padding: 10px;
+  width: 100%;
+  border: none;
+  padding: 10px;
+}
+.ActiveChatInput:focus {
+  outline-width: 0px;
 }
 .ActiveChatContainer {
-    width: 70%; 
-    height: 100%;
-    display: flex;
-    flex-direction: column;
+  max-width: 600px;
+  width: 65%;
+  height: 60vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  position: relative;
+  overflow: auto;
+}
+.ActiveChatHeader {
+  background-color: white;
+  display: flex;
+  align-items: center;
+  padding: 0.6rem;
+}
+.ActiveChatHeaderUser {
+  display: flex;
+}
+.ActiveChatHeaderText {
+  font-size: 30px;
+  font-weight: bold;
+  margin-left: 0.5rem;
+}
+.ActiveChatHeaderRating {
+  margin-left: 1rem;
+  display: flex;
+  align-items: flex-start;
+}
+.ActiveChatButton {
+  background-color: #33384f;
+  border: none;
+  height: 50px;
+  width: 50px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.ActiveChatMessageContainer {
+  overflow: auto;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }

@@ -1,0 +1,36 @@
+.ReceivedMessageTextContainer {
+  background-color: #ebebeb;
+  width: 90%;
+  max-width: 90%;
+  border-radius: 5px;
+  position: relative;
+  padding-left: 15px;
+  padding-right: 15px;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  margin-right: auto;
+}
+.ReceivedMessageContainer {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  position: relative;
+  padding: 0px 5px;
+}
+.ReceivedMessageTriangle {
+  position: absolute;
+  bottom: 3px;
+  left: calc(10% - 8px);
+}
+.ReceivedMessageImage {
+  height: 80%;
+  width: 80%;
+  margin-right: 15px;
+}
+.ReceivedMessageImageContainer {
+  width: 10%;
+  display: flex;
+  align-items: center;
+}

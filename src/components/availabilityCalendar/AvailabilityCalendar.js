@@ -6,7 +6,7 @@ import { ApplicationContext } from '../../pages/application/Application';
 
 export default function AvailabilityCalendar({ month, year }) {
     const { state } = useContext(ApplicationContext)
-    const { currentMonth } = state
+    const { currentMonth, currentYear } = state
 
     function getDaysInMonth(month, year) {
         var date = new Date(year, month, 1);
@@ -30,6 +30,7 @@ export default function AvailabilityCalendar({ month, year }) {
             if(days[i].getDay() === 6){
                 rows.push(
                     <CalendarRow 
+                    key={i}
                     isCurrentMonth={currentMonth === month}
                     days={rowDays}
                     /> 
@@ -41,6 +42,7 @@ export default function AvailabilityCalendar({ month, year }) {
             if(i + 1 === days.length){
                 rows.push(
                 <CalendarRow 
+                key={i}
                 days={rowDays} 
                 isCurrentMonth={currentMonth === month}
                 />)
@@ -50,9 +52,20 @@ export default function AvailabilityCalendar({ month, year }) {
         }
         return rows
     }
+
+    const renderCurrentYearLabel = () => {
+        if(currentMonth === month){
+            return <span className="CalendarCurrentYearLabel">{currentYear}</span>
+        }
+        if(monthArray[month] === 'January'){
+            return <span>{currentYear + 1}</span>
+        }
+    }
+
     const monthArray = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
     return (
         <div className="CalendarContainer">
+            { renderCurrentYearLabel() }
             <div className="CalendarInfoContainer">
                 <span className="CalendarMonth">{monthArray[month]} </span>
                 <span className="CalendarYear">{year}</span>
@@ -61,7 +74,7 @@ export default function AvailabilityCalendar({ month, year }) {
             <div >
                 <div className="CalendarRow">
                     {dayArray.map((day, index) => {
-                        return <div key={index}>{day}</div>
+                        return <div className="CalendarItemDayName" key={index}>{day}</div>
                     })}  
                 </div>
                 

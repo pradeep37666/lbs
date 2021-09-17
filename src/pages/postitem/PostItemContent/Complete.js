@@ -8,7 +8,7 @@ import { useHistory } from 'react-router';
 
 export default function Complete(props) {
     const history = useHistory()
-
+    console.log(props.picture)
     return (
         <>
             <div className="LoginMain">
@@ -23,7 +23,7 @@ export default function Complete(props) {
 
             <div className="LoginMain LoginMainNoMarg">
                 <div className="PostItem__Complete__ItemPreview">
-                    <img src={Mower} alt={props.title} className="PostItem__Complete__ItemImage" />
+                    <img src={props.picture.preview} alt={props.title} className="PostItem__Complete__ItemImage" />
                     {/* <img src={props.picture.preview} alt={props.title} className="PostItem__Complete__ItemImage"/> */}
                 </div>
                 <div className="PostItem__Complete__ItemDetails__Container">

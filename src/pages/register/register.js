@@ -12,6 +12,7 @@ import {ReactComponent as Logo} from './../../assets/Logos/LogoRed.svg';
 import Instance from '../../util/axios';
 import { useHistory } from 'react-router-dom';
 import useGlobalState from '../../util/useGlobalState';
+import { CometChat } from '@cometchat-pro/chat';
 
 
 export default function Register() {
@@ -24,6 +25,7 @@ export default function Register() {
     const [password, setPassword] = useState("")
     const [confirmPassword, setConfirmPassword] = useState("")
     const [lender, setLender] = useState(false)
+    const [image, setImage] = useState()
 
     // Stripe details
     const [cardName, setCardName] = useState("")
@@ -33,7 +35,7 @@ export default function Register() {
 
     const [accNumber, setAccNumber] = useState("")
     const [bsb, setBsb] = useState("")
-
+    
     const [address, setAddress] = useState("")
     const [city, setCity] = useState("")
     const [country, setCountry] = useState("")
@@ -53,49 +55,67 @@ export default function Register() {
         setPage(newPage)
         window.scrollTo(0, 0)
     }
+    useEffect(() => {
+        console.log(image, 'image')
+    }, [image])
 
-    const registerUser = () => {
-        Instance.post('/auth/signUp', {
-            fullName: fullName,
-            email: email,
-            avatar: profilePicture,
-            mobile: phoneNumber,
-            address: address,
-            city: city,
-            country: country,
-            state: state,
-            bsb: bsb,
-            account_number: accNumber,
-            available: availability,
-            password: password,
-        })
-        .then((response) => {
-            console.log(response.data)
-            console.log(response.data.user)
-            console.log(response.data.token)
-            if (response.status === 201) {
-                dispatch({ type: 'setUser', data: response.data.user})
-                // registerCometChat(response.data.user)
-                localStorage.setItem('token', response.data.token.accessToken)
-            } else {
-                alert("an error occurred during registration, please try again")
-                history.push({pathname: '/login'})
+    const registerUser = async () => {
+        const userDetails = {
+                fullName: fullName,
+                email: email,
+                avatar: image.raw,
+                mobile: phoneNumber,
+                address: address,
+                city: city,
+                country: country,
+                state: state,
+                bsb: bsb,
+                account_number: accNumber,
+                available: availability,
+                password: password,
             }
+        const formData = new FormData()
+        Object.keys(userDetails).forEach(key => {
+            formData.append(key, userDetails[key])
         })
-        .catch((error) => {
-            console.log(error)
+        
+        try{
+            const response = await Instance.post('/auth/signUp', formData)
+            if(response.status === 201) {
+                dispatch({ type: 'setUser', data: response.data.user})
+                registerCometChat(response.data.user)
+                localStorage.setItem('token', response.data.token.accessToken)
+            }
+        } catch(e) {
+            console.log(e)
             history.push({pathname: '/login'})
             alert("an error occurred during registration, please try again")
-        })
+        }
+        
     }
 
-    // const registerCometChat = (user) => {
-    //     const user = new CometChat.User(user.id)
-    //     user.setName(user.fullName)
-    //     CometChat.createUser(user, process.env.REACT_APP_CHAT_AUTH_KEY)
-    //     .then(user => console.log("created comet chat user", user))
-    //     .catch(err => console.log(err))
-    // }
+    const registerCometChat = async (userObj) => {
+        console.log('in comet chat', userObj)
+        const newUser = new CometChat.User(userObj.id)
+        newUser.setName(userObj.fullName)
+        try{
+            await CometChat.createUser(newUser, process.env.REACT_APP_CHAT_AUTH_KEY)
+            console.log('successfully registered to comet chat', newUser)
+            await cometChatLogin(userObj)
+        } catch(e) {
+            console.log('comet chat register error', e)
+        }
+        
+    }
+
+    const cometChatLogin = async (user) => {
+        try{
+            const User = await  CometChat.login(user.id, process.env.REACT_APP_CHAT_AUTH_KEY)
+            console.log(User, 'logged into comet chat')
+        } catch(e) {
+            console.log(e)
+        }
+    }
 
     useEffect(() => {
         switch (page) {
@@ -172,6 +192,8 @@ export default function Register() {
                 setConfirmPassword={setConfirmPassword}
                 setLender={setLender}
                 setValidated={setValidated}
+                image={image}
+                setImage={setImage}
                 />
             case 'Verification':
                 return <Verification 
