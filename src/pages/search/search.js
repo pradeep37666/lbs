@@ -101,7 +101,7 @@ export default function Search(props) {
     }
     return content;
   }
-
+  console.log('trying git!')
   const getSearchResultsMain = () => {
     return (
       <div>
