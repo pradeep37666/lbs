@@ -12,7 +12,7 @@ html {
   font-weight: normal;
   font-style: normal;
 }
-
+   
 @font-face {
   font-family: "DMSans";
   src: url(/src/assets/Fonts/DMSans-Bold.ttf);
