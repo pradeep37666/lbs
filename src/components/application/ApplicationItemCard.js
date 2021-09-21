@@ -6,9 +6,10 @@ import getImage from '../../util/getImage'
 
 export default function ApplicationItemCard({ item, onClick, extra }) {
     const [selected, setSelected] = useState()
-    const pictures = item.pictures.split(',')
     console.log('item', item)
-    console.log(pictures[0])
+    const pictures = item.pictures.split(',')
+    // console.log('item', item)
+    // console.log(pictures[0])
     return (
         <div className="ApplicationItemCardContainer">
             <img placeholder="item image" src={getImage(pictures[0])} style={{ height: 70, width: 70, marginRight: 15}}></img>

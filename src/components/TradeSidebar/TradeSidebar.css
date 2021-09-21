@@ -1,0 +1,4 @@
+.TradeSidebarContainer {
+  display: flex;
+  flex-direction: column;
+}

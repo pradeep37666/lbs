@@ -15,6 +15,7 @@ export default function Trades() {
         const getBookings = async () => {
            const { data, status } = await Instance.get('booking/findByOwnerId')
            if(status !== 200) return
+           console.log('bookings', data)
            setBookings(data)
         }
         getBookings()
@@ -26,15 +27,17 @@ export default function Trades() {
             <div className="UserShedWrapper">
             <UserShedNav setAccountContent={setAccountContent} accountContent={accountContent}/>
 
-            <div className="UserShed__MainContent">
+            <div className="TradesContainer">
                 <div className="UserShed__Title">
                     {accountContent}
                 </div>
-                <TradeCalendar bookings={bookings}/>
+                <TradeCalendar 
+                setSelectedBooking={setSelectedBooking}
+                bookings={bookings}/>
                 
 
             </div>
-                <TradeSidebar booking={selectedBooking} />
+                { selectedBooking && <TradeSidebar booking={selectedBooking} />}
             </div>
         </PageWrapper>
     )

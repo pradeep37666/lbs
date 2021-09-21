@@ -1,9 +1,9 @@
 .TradeCalendarContainer {
   border: 1px solid black;
   width: 100%;
+  overflow-x: auto;
 }
 
 .TradeCalendarDaysContainer {
   display: grid;
-  grid-template-columns: repeat(30, 1fr);
 }
