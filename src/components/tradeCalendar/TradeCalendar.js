@@ -3,8 +3,9 @@ import getDateIndex from '../../util/getDateIndex'
 import './TradeCalendar.css'
 import TradeCalendarItem from './TradeCalendarItem'
 import getDateObject from '../../util/getDateObject'
+import TradeCalendarItemContainer from './tradeCalendarItemContainer/TradeCalendarItemContainer'
 
-export default function TradeCalendar({ bookings, setSelectedBooking }) {
+export default function TradeCalendar({ bookingItems, setSelectedBooking }) {
     const [currentDate, setCurrentDate] = useState()
     const [currentMonth, setCurrentMonth] = useState()
     const [currentYear, setCurrentYear] = useState()
@@ -31,14 +32,16 @@ export default function TradeCalendar({ bookings, setSelectedBooking }) {
         return days;
       }
 
-    const renderBookings = () => {
+    const renderBookingItems = () => {
         
-        return bookings.map(( booking, index) => {
+        return bookingItems.map(( bookingItem, index) => {
             return (
-                <TradeCalendarItem 
+                <TradeCalendarItemContainer
                 setSelectedBooking={setSelectedBooking}
-                booking={booking} 
-                key={index} />
+                bookingItem={bookingItem} 
+                key={index} 
+                totalDates={totalDates}
+                />
             )
         })
     }
@@ -88,9 +91,9 @@ export default function TradeCalendar({ bookings, setSelectedBooking }) {
                     {renderDates()} 
                     
                     </div>
-                    <div className="TradeCalendarBookingsContainer" style={{ display: 'grid', gridTemplateColumns: `repeat(${totalDates * 2}, 40px)` }}>
-                        {bookings && renderBookings()}
-                    </div>
+                    
+                        {bookingItems && renderBookingItems()}
+                    
                 </div>
                 
             </div>

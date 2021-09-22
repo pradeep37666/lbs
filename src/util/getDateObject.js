@@ -9,6 +9,7 @@ const getDateObject = (dateIndex) => {
     const date = new Date()
     date.setMonth(i + 1)
     const day = ( dateIndex ) / 2
+    // console.log('day', day)
     date.setDate(day)
 
     if(day % 1 === 0){

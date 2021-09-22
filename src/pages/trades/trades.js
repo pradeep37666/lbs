@@ -9,17 +9,31 @@ import TradeSidebar from '../../components/TradeSidebar/TradeSidebar'
 export default function Trades() {
     const [accountContent, setAccountContent] = useState('Trades')
     const [selectedBooking, setSelectedBooking] = useState(null)
-    const [bookings, setBookings] = useState([])
+    const [bookingItems, setBookingItems] = useState([])
 
     useEffect(() => {
-        const getBookings = async () => {
-           const { data, status } = await Instance.get('booking/findByOwnerId')
-           if(status !== 200) return
-           console.log('bookings', data)
-           setBookings(data)
-        }
         getBookings()
     },[])
+
+    const getBookings = async () => {
+        const { data, status } = await Instance.get('booking/findByOwnerId')
+        if(status !== 200) return
+        const parsedBookings = parseBookings(data)
+        setBookingItems(parsedBookings)
+     }
+
+     const parseBookings = (bookings) => {
+        const filteredBookings = []
+        bookings.forEach(bookingObj => {
+            const foundIndex = filteredBookings.findIndex(obj => obj.items_title === bookingObj.items_title)
+            if(foundIndex !== -1 ){
+                filteredBookings[foundIndex].bookings.push(bookingObj)
+            } else {
+                filteredBookings.push({ items_title: bookingObj.items_title, bookings: [bookingObj]})
+            }
+        })
+        return filteredBookings
+     }
 
 
     return (
@@ -33,7 +47,7 @@ export default function Trades() {
                     </div>
                     <TradeCalendar 
                     setSelectedBooking={setSelectedBooking}
-                    bookings={bookings}/>
+                    bookingItems={bookingItems}/>
                     
 
                 </div>
