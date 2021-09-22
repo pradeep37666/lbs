@@ -34,13 +34,18 @@ export default function Home() {
   const formatSearchParams = () => {
     let string = ''
 
-    if (keywords) string = string.concat('?keyword='+  keywords)
+    if (keywords){
+       string = string.concat('?keyword='+  keywords)
+      }else{
+        string = string.concat('?keyword=')
+      }
     if (category) string = string.concat('&category=' + category)
     if (location) string = string.concat('&location=' + location)
     if (priceMin) string = string.concat('&minPrice=' + priceMin)
     if (priceMax) string = string.concat('&maxPrice=' + priceMax)
     if (rating) string = string.concat('&rating=' + rating)
-    if (delivery) string = string.concat('&delivery=' + delivery)
+    if (delivery === 'Available') {string = string.concat('&delivery=1')}
+    else{ string = string.concat('&delivery=0')}
 
     setSearchParams(string)
   }

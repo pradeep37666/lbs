@@ -67,11 +67,7 @@ export default function Search(props) {
   console.log('keyword', keyword);
 
   useEffect(() => {
-    const parsed = queryString.parse(location.search);
-    console.log(parsed);
-    let keyword ='';
-    keyword = parsed.keyword;
-    console.log('keyword', keyword);
+    
     Instance.get(`/items/search/${location.search}`).then((response) => {
       setSearchItems(response.data[0]);
       setLoading(false);

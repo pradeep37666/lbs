@@ -64,21 +64,27 @@ export default function SearchFilterBar({keyWord}) {
      
         let string ='';
         console.log(string)
-        if (keyWord) string = string.concat('?keyword='+keyWord)
+        if (keyWord) {
+            string = string.concat('?keyword='+keyWord)
+        }else{
+            string = string.concat('?keyword=')
+        }
         if (Category) string = string.concat('&category='+Category);
         if (PriceMax) string = string.concat('&maxPrice=' + PriceMax);
         if (PriceMin) string = string.concat('&minPrice='+ PriceMin)
         if (Rating) string = string.concat('&rating=' + Rating)
+        if (Delivery) {string = string.concat('&delivery=1')}
+        else{ string = string.concat('&delivery=0')}
         console.log(string)
         history.replace(`/search/${string}`);
-        //history.push({ pathname: `/search/${string}`});
+  
       }  
 
     const handleFilterClick = (filter) => {
         if(ActiveFilter === filter)
         {
-            setActiveFilter('none')}
-        else{
+            setActiveFilter('none')
+        }  else{
         setActiveFilter(filter);
         }
         console.log(filter,': clicked')
@@ -214,7 +220,7 @@ export default function SearchFilterBar({keyWord}) {
                     <div className="DeliveryFlex">
                         <button className={`DeliveryButton ${Delivery ? '' : 'DeliveryButtonInactive'}`} onClick={() => setDelivery(true)}>Yes</button>
                         <button className={`DeliveryButton ${Delivery ? 'DeliveryButtonInactive' : ''}`} onClick={() => setDelivery(false)}>No</button>
-                        <button className="FilterButtonSave" onClick={() => setActiveFilter('none')}>Save</button>
+                        <button className="FilterButtonSave" onClick={() =>{setActiveFilter('none');handleSubmitFilterChange();}}>Save</button>
                     </div>
                     
                 </div>
