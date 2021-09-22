@@ -1,92 +1,93 @@
 .SearchMainContainer {
-    width: 70%;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
+  width: 70%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  margin-bottom: 28%;
 }
 
 .SearchSortFlex {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    margin: 2em 0 .5em 0;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin: 2em 0 0.5em 0;
 }
 
 .SortArrow {
-    height: 15px;
-    padding: 3px;
-    margin-left: .5em;
+  height: 15px;
+  padding: 3px;
+  margin-left: 0.5em;
 }
 
-
 .SortSection:hover {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .PagesText {
-    color: #626262;
-    font-size: 25px;
-    font-weight: bold;
-    margin-bottom: .5em;
+  color: #626262;
+  font-size: 25px;
+  font-weight: bold;
+  margin-bottom: 0.5em;
 }
 
 .PaginationSection {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    margin-bottom: 4em;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin-bottom: 4em;
 }
 
 .PaginationFlex {
-    display: flex;
-    align-items: center;
-    user-select: none;
+  display: flex;
+  align-items: center;
+  user-select: none;
 }
 
 .PaginationArrow {
-    width: 35px;
-    height: 35px;
-    background-color: #ac172c;
-    border-radius: 10px;
-    color: #FFF;
-    font-size: 25px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 0 .5em;
+  width: 35px;
+  height: 35px;
+  background-color: #ac172c;
+  border-radius: 10px;
+  color: #fff;
+  font-size: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 0.5em;
 }
 
 .PaginationPage {
-    height: 50px;
-    width: 50px;
-    background-color: rgba(226, 226, 226, 0.59);
-    font-size: 30px;
-    margin: 0 .2em;
-    font-weight: bold;
-    color: #a5a5a5;
-    border-radius: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  height: 50px;
+  width: 50px;
+  background-color: rgba(226, 226, 226, 0.59);
+  font-size: 30px;
+  margin: 0 0.2em;
+  font-weight: bold;
+  color: #a5a5a5;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.PaginationArrow:hover, .PaginationPage:hover {
-    cursor: pointer;
+.PaginationArrow:hover,
+.PaginationPage:hover {
+  cursor: pointer;
 }
 
 .PaginationPageActive {
-    background-color: #f2e8d3;
-    border: 2px solid #33384f;
-    color: #33384f;
+  background-color: #f2e8d3;
+  border: 2px solid #33384f;
+  color: #33384f;
 }
 
 .SuggestedItemsSection {
-    margin: 1em 0;
+  margin: 1em 0;
 }
 
 .SearchMainText {
-    font-size: 20px;
-    color: #626262;
-    font-weight: bold;
-    position: relative;
+  font-size: 20px;
+  color: #626262;
+  font-weight: bold;
+  position: relative;
 }

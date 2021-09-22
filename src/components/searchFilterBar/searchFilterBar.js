@@ -15,6 +15,7 @@ import {ReactComponent as StarFilled} from './../../assets/Icons/StarFilled.svg'
 import { withStyles } from '@material-ui/core/styles';
 import Slider from '@material-ui/core/Slider';
 import GoogleMapReact from 'google-map-react';
+import { useHistory } from 'react-router';
 
 const LocationSlider = withStyles({
     root: {
@@ -41,16 +42,17 @@ const LocationSlider = withStyles({
     },
   })(Slider);
 
-export default function SearchFilterBar() {
+export default function SearchFilterBar({keyWord}) {
+    const history = useHistory();
     const [ActiveFilter, setActiveFilter] = useState('none');
-    const [Category, setCategory] = useState('none');
+    const [Category, setCategory] = useState();
     const [PostCode, setPostCode] = useState();
     const [SearchRadius, setSearchRadius] = useState(10);
     const [PriceMin, setPriceMin] = useState();
     const [PriceMax, setPriceMax] = useState();
-    const [Rating, setRating] = useState(1);
+    const [Rating, setRating] = useState();
     const [Delivery, setDelivery] = useState(false);
-
+   
     const defaultProps = {
         center: {
         lat: -27.481009,
@@ -58,9 +60,28 @@ export default function SearchFilterBar() {
         },
         zoom: 15
       };
+      const handleSubmitFilterChange = () => {
+     
+        let string ='';
+        console.log(string)
+        if (keyWord) string = string.concat('?keyword='+keyWord)
+        if (Category) string = string.concat('&category='+Category);
+        if (PriceMax) string = string.concat('&maxPrice=' + PriceMax);
+        if (PriceMin) string = string.concat('&minPrice='+ PriceMin)
+        if (Rating) string = string.concat('&rating=' + Rating)
+        console.log(string)
+        history.replace(`/search/${string}`);
+        //history.push({ pathname: `/search/${string}`});
+      }  
 
     const handleFilterClick = (filter) => {
+        if(ActiveFilter === filter)
+        {
+            setActiveFilter('none')}
+        else{
         setActiveFilter(filter);
+        }
+        console.log(filter,': clicked')
     }
 
     const handlePostcodeChange = (e) => {
@@ -98,7 +119,13 @@ export default function SearchFilterBar() {
                         <div className={`CategoryFilterDiv ${Category === 'Cleaning' ? 'CategoryFilterDivActive' : ''}`} onClick={() => {setCategory('Cleaning')}}><img src={CleaningIcon} alt="" className="CategoryFilterIcon"/>Cleaning</div>
                         <div className={`CategoryFilterDiv ${Category === 'Sporting' ? 'CategoryFilterDivActive' : ''}`} onClick={() => {setCategory('Sporting')}}><img src={SportingIcon} alt="" className="CategoryFilterIcon"/>Sporting</div>
                     </div>
-                    <button className="FilterButtonSave" onClick={() => setActiveFilter('none')}>Save</button>
+                    <button className="FilterButtonSave" onClick={() => {
+                        setActiveFilter('none'); 
+                      handleSubmitFilterChange()
+                        }}
+                        >
+                            Save
+                    </button>
                 </div>
             </div>
         )
@@ -150,7 +177,7 @@ export default function SearchFilterBar() {
                         </div>
                     </div>
                     <div className="SaveButtonFlex">
-                        <button className="FilterButtonSave" onClick={() => setActiveFilter('none')}>Save</button>
+                        <button className="FilterButtonSave" onClick={() =>{ setActiveFilter('none'); handleSubmitFilterChange()}}>Save</button>
                     </div>
                 </div>
             </div>
@@ -172,7 +199,7 @@ export default function SearchFilterBar() {
                     </div>
                 
                     <div className="SaveButtonFlex">
-                        <button className="FilterButtonSave" onClick={() => setActiveFilter('none')}>Save</button>
+                        <button className="FilterButtonSave" onClick={() => {setActiveFilter('none');handleSubmitFilterChange() }}>Save</button>
                     </div>
                 </div>
             </div>

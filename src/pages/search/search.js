@@ -46,8 +46,9 @@ const useStyles = makeStyles({
 })
 
 export default function Search(props) {
-  const searchParameters = props.location.pathname
-
+  
+  const location = useLocation();
+  const {searchParams} = useParams();
   const [searchItems, setSearchItems] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -57,17 +58,28 @@ export default function Search(props) {
   const NumSearchPages = Math.ceil(searchItems.length / 8);
 
   //format the url query so that it fits the search query
+  const queryString = require('query-string');
+  console.log(location.search);
+  const parsed = queryString.parse(location.search);
+  console.log(parsed);
+  let keyword ='';
+  keyword = parsed.keyword;
+  console.log('keyword', keyword);
 
   useEffect(() => {
-    Instance.get(`/items/search/?keyword=${searchParameters}`).then((response) => {
+    const parsed = queryString.parse(location.search);
+    console.log(parsed);
+    let keyword ='';
+    keyword = parsed.keyword;
+    console.log('keyword', keyword);
+    Instance.get(`/items/search/${location.search}`).then((response) => {
       setSearchItems(response.data[0]);
       setLoading(false);
     })
       .catch((error) => {
         console.log(error);
       })
-      console.log(searchParameters)
-  }, []);
+  }, [location.search]);
 
   const getSearchPages = () => {
     let content = [];
@@ -101,7 +113,7 @@ export default function Search(props) {
     }
     return content;
   }
-  console.log('trying git!')
+  
   const getSearchResultsMain = () => {
     return (
       <div>
@@ -129,12 +141,12 @@ export default function Search(props) {
   const classes = useStyles();
   return (
     <PageWrapper>
-      <SearchFilterBar />
+      <SearchFilterBar keyWord = {keyword} />
       {loading ? <div className="ItemPage__Loading__Container"><CircularProgress size={75} /></div>
         :
         <div className="SearchMainContainer">
           <div className="SearchSortFlex">
-            <div className="SearchMainText">Search results for: <span style={{ fontWeight: 'normal' }}>{searchParameters}</span></div>
+            <div className="SearchMainText">Search results for: <span style={{ fontWeight: 'normal' }}>{parsed.keyword}</span></div>
             <div className="SearchMainText">Sort by:
               <Select
                 onChange={handleChange}
@@ -170,7 +182,7 @@ export default function Search(props) {
             : <div>No results found, try searching with different options.</div>}
 
           <div className="SuggestedItemsSection">
-            <div className="SearchMainText">Suggested items outside your search for: <span style={{ fontWeight: 'normal' }}>{searchParameters}</span></div>
+            <div className="SearchMainText">Suggested items outside your search for: <span style={{ fontWeight: 'normal' }}>{parsed.keyword}</span></div>
 
             {searchItems.length > 0 ? <div className="ItemCardSection" style={{ padding: '1em .5em' }}>
               {/* Need the similar items backend for this section, placeholder first item from search for now */}

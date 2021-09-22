@@ -34,11 +34,11 @@ export default function Home() {
   const formatSearchParams = () => {
     let string = ''
 
-    if (keywords) string = string.concat('keywords=' + keywords)
+    if (keywords) string = string.concat('?keyword='+  keywords)
     if (category) string = string.concat('&category=' + category)
     if (location) string = string.concat('&location=' + location)
-    if (priceMin) string = string.concat('&min=' + priceMin)
-    if (priceMax) string = string.concat('&max=' + priceMax)
+    if (priceMin) string = string.concat('&minPrice=' + priceMin)
+    if (priceMax) string = string.concat('&maxPrice=' + priceMax)
     if (rating) string = string.concat('&rating=' + rating)
     if (delivery) string = string.concat('&delivery=' + delivery)
 
@@ -47,7 +47,7 @@ export default function Home() {
 
   const handleSubmit = () => {
     formatSearchParams()
-    
+    console.log('searchparameters',keywords)
   }
 
   useEffect(() => {
@@ -65,9 +65,10 @@ export default function Home() {
 
   useEffect(() => {
     if (searchParams) {
-      history.push(`/search/${searchParams}`)
+      history.replace(`/search/${searchParams}`)
+    
     } else if (searchParams === '') {
-      history.push(`/search/`)
+      history.replace(`/search/`)
     }
   }, [searchParams])
 
@@ -93,13 +94,13 @@ export default function Home() {
 
             <div className="PriceFilterSearch">
               <div className="PriceFilterContainer">
-                <SelectInput className="PriceFilterSelect" borders={false} label="$ Min" options={['','$10', '$20', '$30', '$40', '$50', '$60', '$70', '$80']} onChange={(e) => setPriceMin(e.target.value)}/>
+                <SelectInput className="PriceFilterSelect" borders={false} label="$ Min" options={['','10', '20', '30', '40', '50', '60', '70', '80']} onChange={(e) => setPriceMin(e.target.value)}/>
               </div>
 
               <div className="vl"/>
 
               <div className="PriceFilterContainer">
-                <SelectInput className="PriceFilterSelect" label="$ Max" options={['','$10', '$20', '$30', '$40', '$50', '$60', '$70', '$80']} onChange={(e) => setPriceMax(e.target.value)}/>
+                <SelectInput className="PriceFilterSelect" label="$ Max" options={['','10', '20', '30', '40', '50', '60', '70', '80']} onChange={(e) => setPriceMax(e.target.value)}/>
               </div>
 
             </div>
