@@ -2,8 +2,14 @@
   border: 1px solid black;
   width: 100%;
   overflow-x: auto;
+  overflow-y: auto;
+  max-height: 600px;
+  width: 100%;
 }
 
 .TradeCalendarDaysContainer {
   display: grid;
+}
+
+.TradeCalendarBookingsContainer {
 }

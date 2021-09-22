@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import getDateIndex from '../../util/getDateIndex'
 import './TradeCalendar.css'
 import TradeCalendarItem from './TradeCalendarItem'
+import getDateObject from '../../util/getDateObject'
 
 export default function TradeCalendar({ bookings, setSelectedBooking }) {
     const [currentDate, setCurrentDate] = useState()
@@ -63,8 +64,8 @@ export default function TradeCalendar({ bookings, setSelectedBooking }) {
         if(!totalDates) setTotalDates(dates.length)
         const arr = []
         for(let i=0; i<totalDates; i++){
-            arr.push(<span>{dates[i].getDate()}</span>)
-            arr.push(<span> </span>)
+            arr.push(<span style={{ borderRight: '1px solid black'}}>{dates[i].getDate()}</span>)
+            arr.push(<span style={{ borderRight: '1px solid black'}}> </span>)
             
         }
         return arr
@@ -74,17 +75,21 @@ export default function TradeCalendar({ bookings, setSelectedBooking }) {
         // })
     }
 
-
-    console.log((getDateIndex(new Date(currentYear, currentMonth + 1, 1)) * 2) +1)
+    // console.log('jan', new Date(currentYear, 0, 1))
+    // console.log((getDateIndex(new Date(currentYear, currentMonth, 23)) * 2) + 1)
+    // console.log(getDateObject(471))
     return (
         <>
             { currentYear && 
             <div className="TradeCalendarContainer" >
                 <div>
                     <span>{monthArray[currentMonth]}</span>
-                    <div className="TradeCalendarDaysContainer" style={{ display: 'grid', gridTemplateColumns: `repeat(${totalDates * 2}, 40px` }}>
+                    <div className="TradeCalendarDaysContainer" style={{ display: 'grid', gridTemplateColumns: `repeat(${totalDates * 2}, 40px)`, postion: 'sticky', top: 0 }}>
                     {renderDates()} 
-                    {bookings && renderBookings()}
+                    
+                    </div>
+                    <div className="TradeCalendarBookingsContainer" style={{ display: 'grid', gridTemplateColumns: `repeat(${totalDates * 2}, 40px)` }}>
+                        {bookings && renderBookings()}
                     </div>
                 </div>
                 

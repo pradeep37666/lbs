@@ -24,19 +24,19 @@ export default function Trades() {
 
     return (
         <PageWrapper>
-            <div className="UserShedWrapper">
-            <UserShedNav setAccountContent={setAccountContent} accountContent={accountContent}/>
+            <div className="TradesPageWrapper">
+                <UserShedNav setAccountContent={setAccountContent} accountContent={accountContent}/>
 
-            <div className="TradesContainer">
-                <div className="UserShed__Title">
-                    {accountContent}
+                <div className="TradesContainer">
+                    <div className="UserShed__Title">
+                        {accountContent}
+                    </div>
+                    <TradeCalendar 
+                    setSelectedBooking={setSelectedBooking}
+                    bookings={bookings}/>
+                    
+
                 </div>
-                <TradeCalendar 
-                setSelectedBooking={setSelectedBooking}
-                bookings={bookings}/>
-                
-
-            </div>
                 { selectedBooking && <TradeSidebar booking={selectedBooking} />}
             </div>
         </PageWrapper>

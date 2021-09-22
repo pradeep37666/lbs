@@ -49,22 +49,6 @@ export default function ItemOverview() {
         }
     }
     
-    // const calculatePrice = () => {
-    //     if(confirmedEnd.sameTimeSlot) return item.price
-    //     const days = getDateIndex(confirmedEnd.day) - getDateIndex(confirmedStart.day)
-    //     let timeSlots
-    //     if(confirmedStart?.am && confirmedEnd?.am || confirmedStart?.pm && confirmedEnd?.pm){
-    //         timeSlots = (days * 2) + 1
-    //     }
-    //     if(confirmedStart?.am && confirmedEnd?.pm){
-    //         timeSlots = (days + 1) * 2
-    //     }
-    //     if(confirmedStart?.pm && confirmedEnd?.am){
-    //         timeSlots = days * 2
-    //     }
-    //     return item.price * timeSlots 
-    // }
-
     const calculatePrice = () => {
         let discountTimeSlots = 0
         if(item.discount > 0) discountTimeSlots = calculateDiscountTimeSlots()
@@ -134,8 +118,11 @@ export default function ItemOverview() {
 
     const saveBooking = async () => {
         let deliveryOption = (deliverySelected && pickupSelected) ? 'both' : deliverySelected ? 'delivery' : 'pickup'
-        const startIndex = (getDateIndex(confirmedStart.day) * 2) + (confirmedStart.day?.am ? 2 : 1)
-        const endIndex = (getDateIndex(confirmedEnd.day) * 2) + (confirmedEnd.day?.am ? 2 : 1)
+        const startIndex = (getDateIndex(confirmedStart.day) * 2) + (confirmedStart?.am ? 1 : 2)
+        console.log('start day', confirmedStart)
+        console.log('start index', startIndex)
+        const endIndex = (getDateIndex(confirmedEnd.day) * 2) + (confirmedEnd?.am ? 1 : 2)
+        console.log('end index', endIndex)
         try{
             const { data, status } = await instance.post('booking/save', {
                 i_id: item.i_id,

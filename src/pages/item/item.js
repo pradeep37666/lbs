@@ -47,7 +47,6 @@ export default function Item() {
         ['Isaac Myers', '2', 'Enim aute incididunt proident Lorem id mollit. Occaecat do cillum magna sunt dolore non exercitation et anim enim. Et nulla nulla aute sint minim laborum ut cupidatat nulla fugiat aliqua laboris exercitation mollit. Labore consectetur culpa laboris fugiat velit eu laborum proident consectetur. Eu labore nisi velit velit irure laborum.'],
         ['Christian Zhou', '5', 'Minim pariatur occaecat Lorem et ea elit reprehenderit sunt commodo ex.'],
     ]
-    console.log(itemPictures)
 
     useEffect(() => {
         // update modal state if navigated to this screen after creating a booking
@@ -76,9 +75,7 @@ export default function Item() {
         
     const getItemOwner= async (item) => {
         setIsUserItem(false)
-
         const { data, status } = await Instance.get(`user/getOneUser?id=${item.u_id}`)
-        console.log('get one user', data)
         setItemOwner(data)
     
     }
@@ -145,7 +142,6 @@ export default function Item() {
         return MissingProfile
     }
 
-    console.log('owner', itemOwner)
     return (
         <PageWrapper>
             {ImageModal ? <ItemImageModal setModal={setImageModal} images={itemPictures} modal={ImageModal} /> : ''}

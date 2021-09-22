@@ -2,6 +2,7 @@ import React, { useContext } from 'react'
 import Arrow from '../../assets/Icons/Arrow'
 import { ApplicationContext } from '../../pages/application/Application'
 import getDateIndex from '../../util/getDateIndex'
+import getDateSuffix from '../../util/getDateSuffix'
 import './ApplicationFooter.css'
 
 export default function ApplicationFooter() {
@@ -14,34 +15,6 @@ export default function ApplicationFooter() {
         dispatch({ type: 'setConfirmedEnd', data: null})
         dispatch({ type: 'setConfirmedStart', data: null})
         dispatch({ type: 'setSelectedEnd', data: null})
-    }
-
-    const handleDate = (confirmedDate) => {
-        const date = confirmedDate.day.getDate()
-        const dateString = date.toString()
-        const lastChar = dateString.charAt(dateString.length - 1)
-
-        switch(lastChar){
-        case '1' : {
-            if(date > 10 && date < 20){
-                return date + 'th'
-            }
-            return date + 'st'
-        }
-        case '2' : {
-            if(date > 10 && date < 20){
-                return date + 'th'
-            }
-            return date + 'nd'
-        }
-        case '3' : {
-            if(date > 10 && date < 20){
-                return date + 'th'
-            }
-            return date + 'rd'
-        }
-        default : return date + 'th'
-        }
     }
 
     const handleClick = () => {
@@ -117,7 +90,7 @@ export default function ApplicationFooter() {
                         <span className="ApplicationFooterDay">{dayArray[confirmedStart.day.getDay()]}</span>
                     </div>
                     <div>
-                        <span>{ handleDate(confirmedStart)} </span> 
+                        <span>{ getDateSuffix(confirmedStart.day)} </span> 
                         <span>{ monthArray[confirmedStart.day.getMonth()]}</span>
                     </div>
                 </div>
@@ -131,7 +104,7 @@ export default function ApplicationFooter() {
                         <span className="ApplicationFooterDay">{dayArray[confirmedEnd.day.getDay()]}</span>
                     </div>
                     <div>
-                        <span>{handleDate(confirmedEnd)} </span>
+                        <span>{getDateSuffix(confirmedEnd.day)} </span>
                         <span>{ monthArray[confirmedEnd.day.getMonth()]}</span>
                     </div>
                 </div>

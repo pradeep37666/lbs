@@ -4,7 +4,7 @@ import './ApplicationItemCard.css'
 import CheckBox from '../checkBox/CheckBox'
 import getImage from '../../util/getImage'
 
-export default function ApplicationItemCard({ item, onClick, extra }) {
+export default function ApplicationItemCard({ item, onClick, extra, price }) {
     const [selected, setSelected] = useState()
     console.log('item', item)
     const pictures = item.pictures.split(',')
@@ -15,10 +15,10 @@ export default function ApplicationItemCard({ item, onClick, extra }) {
             <img placeholder="item image" src={getImage(pictures[0])} style={{ height: 70, width: 70, marginRight: 15}}></img>
             <div className="ApplicationItemDetailsContainer">
                 <span className="ApplicationItemCardHeader">{item.title}</span>
-                { extra && 
+                { price && 
                 <div>
                    <span className="ApplicationItemPrice">${item.price} </span> 
-                   <span className="ApplicationItemExtra">extra</span>
+                   
                 </div>}
                 <div className="ApplicationItemRatingContainer">
                     <span className="ApplicationItemRating">{item.rating}/5</span>
