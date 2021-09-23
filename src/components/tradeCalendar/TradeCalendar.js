@@ -32,7 +32,7 @@ export default function TradeCalendar({ bookingItems, setSelectedBooking }) {
         return days;
       }
 
-    const renderBookingItems = () => {
+    const renderBookingItemContainers = () => {
         
         return bookingItems.map(( bookingItem, index) => {
             return (
@@ -67,15 +67,12 @@ export default function TradeCalendar({ bookingItems, setSelectedBooking }) {
         if(!totalDates) setTotalDates(dates.length)
         const arr = []
         for(let i=0; i<totalDates; i++){
+            // arr.push(<span style={{ borderRight: '1px solid black', gridTemplateColumns}}>{dates[i].getDate()}</span>)
             arr.push(<span style={{ borderRight: '1px solid black'}}>{dates[i].getDate()}</span>)
             arr.push(<span style={{ borderRight: '1px solid black'}}> </span>)
             
         }
         return arr
-        // return dates.map((date, index ) => {
-        //     // console.log(date)
-        //     return (<span key={index}>{date.getDate()}</span>)
-        // })
     }
 
     // console.log('jan', new Date(currentYear, 0, 1))
@@ -85,14 +82,14 @@ export default function TradeCalendar({ bookingItems, setSelectedBooking }) {
         <>
             { currentYear && 
             <div className="TradeCalendarContainer" >
-                <div>
+                <div style={{ width: `${ (totalDates * 2) * 40 }px`}}>
                     <span>{monthArray[currentMonth]}</span>
                     <div className="TradeCalendarDaysContainer" style={{ display: 'grid', gridTemplateColumns: `repeat(${totalDates * 2}, 40px)`, postion: 'sticky', top: 0 }}>
                     {renderDates()} 
                     
                     </div>
                     
-                        {bookingItems && renderBookingItems()}
+                        {bookingItems && renderBookingItemContainers()}
                     
                 </div>
                 

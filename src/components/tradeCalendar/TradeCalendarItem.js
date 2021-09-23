@@ -4,7 +4,7 @@ import getDateObject from '../../util/getDateObject'
 import getImage from '../../util/getImage'
 import './TradeCalendarItem.css'
 
-export default function TradeCalendarItem({ booking, setSelectedBooking }) {
+export default function TradeCalendarItem({ booking, setSelectedBooking, row }) {
     const itemImages = booking.items_pictures.split(',')
     console.log(booking)
     // console.log(getDateObject(471))
@@ -16,7 +16,7 @@ export default function TradeCalendarItem({ booking, setSelectedBooking }) {
             setSelectedBooking(booking)
         }}
         className="TradeCalendarItem"
-        style={{ gridColumnStart: (booking.start_date - 426), gridColumnEnd: ((booking.end_date - 426) + 1)}}>
+        style={{ gridRowStart: row, gridColumnStart: (booking.start_date - 426), gridColumnEnd: ((booking.end_date - 426) + 1)}}>
             
             <div>
                 <span>{getDateObject(booking.start_date)?.morning ? '8:00am' : '1:00pm'}</span>

@@ -1,5 +1,5 @@
 const getDateObject = (dateIndex) => {
-
+    dateIndex -= 1
     const monthSlots = [62, 56, 62, 60, 62, 60, 62, 62, 60, 62, 60, 62];
     let i = 0
     while(dateIndex > monthSlots[i]){

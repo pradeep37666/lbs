@@ -1,3 +1,11 @@
 .TradeCalendarItemContainer {
   padding: 10px 5px;
 }
+
+.TradeCalendarItemDetails {
+  position: sticky;
+  left: 2rem;
+  display: flex;
+  width: max-content;
+  align-items: center;
+}

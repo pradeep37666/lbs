@@ -10,9 +10,24 @@ export default function TradeCalendarItemContainer({ bookingItem, setSelectedBoo
     const renderBookings = () => {
         
         return bookings.map(( booking, index) => {
+            const prevBookings = bookings.slice(0, index)
+            let row = 2
+            prevBookings.forEach(prevBooking => {
+                if(prevBooking.start_date <= booking.start_date && prevBooking.end_date >= booking.start_date){
+                    row ++
+                }
+                if(prevBooking.start_date === booking.start_date ){
+                    row ++
+                }
+                if(prevBooking.start_date <= booking.end_date && prevBooking.end_date >= booking.end_date){
+                    row++
+                }
+            })
+            
             return (
                 <TradeCalendarItem 
                 setSelectedBooking={setSelectedBooking}
+                row={row}
                 booking={booking} 
                 key={index} />
             )
@@ -20,13 +35,14 @@ export default function TradeCalendarItemContainer({ bookingItem, setSelectedBoo
     }
 
     return (
-        <div className="TradeCalendarItemContainer" style={{ display: 'grid', gridTemplateColumns: `repeat(${totalDates * 2}, 40px)`}} >
-            <div>
+        <div className="TradeCalendarItemContainer" style={{ display: 'grid', gridTemplateColumns: `repeat(${totalDates * 2}, 40px)`, gridTemplateRows: 'repeat(1, 50px)'}} >
+            <div className="TradeCalendarItemDetails" style={{ position: 'sticky', left: 10, gridRowStart: 1}}>
                <img 
                className="TradeCalendarItemPicture"
                src={getImage(itemImage)} />
+               <h3>{bookingItem.items_title}</h3>
             </div>
-            <h3>{bookingItem.items_title}</h3>
+            
             { renderBookings() }
         </div>
     )
