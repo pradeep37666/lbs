@@ -48,7 +48,7 @@ const useStyles = makeStyles({
 export default function Search(props) {
   
   const location = useLocation();
-  const {searchParams} = useParams();
+  
   const [searchItems, setSearchItems] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -67,7 +67,6 @@ export default function Search(props) {
   console.log('keyword', keyword);
 
   useEffect(() => {
-    
     Instance.get(`/items/search/${location.search}`).then((response) => {
       setSearchItems(response.data[0]);
       setLoading(false);
