@@ -40,7 +40,7 @@ export default function TradeCalendarItemContainer({ bookingItem, setSelectedBoo
                <img 
                className="TradeCalendarItemPicture"
                src={getImage(itemImage)} />
-               <h3>{bookingItem.items_title}</h3>
+               <span>{bookingItem.items_title}</span>
             </div>
             
             { renderBookings() }

@@ -5,10 +5,16 @@ import ApplicationItemCard from '../application/ApplicationItemCard'
 import Arrow from '../../assets/Icons/Arrow.js'
 import getDateSuffix from '../../util/getDateSuffix'
 import './TradeSidebar.css'
-import { CircularProgress } from '@material-ui/core'
+import { Avatar, CircularProgress } from '@material-ui/core'
+import getImage from '../../util/getImage'
+import useGlobalState from '../../util/useGlobalState'
+import RatingFiller from '../ratingFiller/ratingFiller'
 
 export default function TradeSidebar({ booking }) {
+    const { state } = useGlobalState()
+    const { user } = state
     const [item, setItem] = useState(null)
+    const [userDetails, setUserDetails] = useState()
     const [isLoading, setIsLoading] = useState(true)
 
     useEffect(() => {
@@ -18,6 +24,7 @@ export default function TradeSidebar({ booking }) {
                const { data, status } = await Instance.get(`items/findByIid?i_id=${booking.i_id}&u_id=${booking.u_id}`)
                 if(status !== 200) return 
                 setItem(data.item) 
+                getUserDetails()
             } catch(e) {
                 console.log(e)
             }
@@ -26,20 +33,33 @@ export default function TradeSidebar({ booking }) {
         getItemDetails()
     },[booking])
 
-    console.log(booking)
-    console.log(item)
-
+    const getUserDetails = async () => {
+        // console.log(booking)
+        // console.log(user)
+        const id = booking.io_id === user.id ? booking.u_id : booking.io_id
+        try{
+           const {data, status} = await Instance.get(`/user/getOneUser?id=${id}`)
+           if(status !== 200) return
+           
+           console.log(data)
+           setUserDetails(data)
+        } catch(err) {
+            console.log(err)
+        }
+        
+    }
 
     const beginDate = getDateObject(booking.start_date)
     const endDate = getDateObject(booking.end_date)
-    console.log(beginDate, endDate)
+
     const dayArray = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", ]
     const monthArray = ["January", "February", "March", "April","May", "June", "July", "August", "September", "October", "November", "December"]
+
     return (
         <div className="TradeSidebarContainer">
 
             { isLoading ? (
-                <CircularProgress color="#000" />
+                <CircularProgress />
             ) : (
             <>
                 <div className="TradeSidebarSection">
@@ -63,7 +83,7 @@ export default function TradeSidebar({ booking }) {
                     </div>
                 </div>
                 <div className="TradeSidebarSection">
-                    <span className="TradeSidebarHeading">Collect</span>
+                    <span className="TradeSidebarHeading">Dates</span>
                     <div className="ApplicationFooterDetailsContainer">
                         <div className="ApplicationFooterDetails">
                             <span className="ApplicationFooterDetailsHeader">Collect</span>
@@ -93,6 +113,21 @@ export default function TradeSidebar({ booking }) {
                     </div>
 
                 </div>
+                { userDetails &&
+                <div className="TradeSidebarSection">
+                    <span className="TradeSidebarHeading">Applicant Overview</span>
+                    <Avatar src={getImage(userDetails.avatar)} />
+                    <div className="TradeSidebarUserRatingContainer">
+                        <span>Lender:</span>
+                        <span> {userDetails.lender_rating}/5</span>
+                        <RatingFiller rating={userDetails.lender_rating}/>
+                    </div>
+                    <div className="TradeSidebarUserRatingContainer">
+                        <span>Lender: </span>
+                        <span>{userDetails.borrower_rating}/5</span>
+                        <RatingFiller rating={userDetails.borrower_rating}/>
+                    </div>
+                </div>}
             
             </>)}
         </div>

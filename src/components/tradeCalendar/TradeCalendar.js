@@ -5,7 +5,7 @@ import TradeCalendarItem from './TradeCalendarItem'
 import getDateObject from '../../util/getDateObject'
 import TradeCalendarItemContainer from './tradeCalendarItemContainer/TradeCalendarItemContainer'
 
-export default function TradeCalendar({ bookingItems, setSelectedBooking }) {
+export default function TradeCalendar({ borrowerBookingItems, lenderBookingItems, setSelectedBooking }) {
     const [currentDate, setCurrentDate] = useState()
     const [currentMonth, setCurrentMonth] = useState()
     const [currentYear, setCurrentYear] = useState()
@@ -32,7 +32,7 @@ export default function TradeCalendar({ bookingItems, setSelectedBooking }) {
         return days;
       }
 
-    const renderBookingItemContainers = () => {
+    const renderBookingItemContainers = (bookingItems) => {
         
         return bookingItems.map(( bookingItem, index) => {
             return (
@@ -89,7 +89,22 @@ export default function TradeCalendar({ bookingItems, setSelectedBooking }) {
                     
                     </div>
                     
-                        {bookingItems && renderBookingItemContainers()}
+                    {lenderBookingItems.length > 0 && 
+                    <>
+                        <div className="TradeCalendarItemDetails">
+                            <span className="TradeCalendarBorrowHeader">My Lends</span>
+                        </div>
+                        {renderBookingItemContainers(lenderBookingItems)}
+                    </>}
+                    
+
+                    {borrowerBookingItems.length > 0 && 
+                    <>
+                        <div className="TradeCalendarItemDetails">
+                            <span className="TradeCalendarBorrowHeader">My Borrows</span>
+                        </div>
+                        {renderBookingItemContainers(borrowerBookingItems)}
+                    </>}
                     
                 </div>
                 

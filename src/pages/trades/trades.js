@@ -9,18 +9,27 @@ import TradeSidebar from '../../components/TradeSidebar/TradeSidebar'
 export default function Trades() {
     const [accountContent, setAccountContent] = useState('Trades')
     const [selectedBooking, setSelectedBooking] = useState(null)
-    const [bookingItems, setBookingItems] = useState([])
+    const [lenderBookingItems, setLenderBookingItems] = useState([])
+    const [borrowerBookingItems, setBorrowerBookingItems] = useState([])
 
     useEffect(() => {
-        getBookings()
+        getLenderBookings()
+        getBorrowerBookings()
     },[])
 
-    const getBookings = async () => {
+    const getLenderBookings = async () => {
         const { data, status } = await Instance.get('booking/findByOwnerId')
         if(status !== 200) return
         const parsedBookings = parseBookings(data)
-        setBookingItems(parsedBookings)
+        setLenderBookingItems(parsedBookings)
      }
+
+    const getBorrowerBookings = async () => {
+        const { data, status } = await Instance.get('booking/findByUid')
+        if(status !== 200) return
+        const parsedBookings = parseBookings(data)
+        setBorrowerBookingItems(parsedBookings)
+    }
 
      const parseBookings = (bookings) => {
         const filteredBookings = []
@@ -47,9 +56,9 @@ export default function Trades() {
                     </div>
                     <TradeCalendar 
                     setSelectedBooking={setSelectedBooking}
-                    bookingItems={bookingItems}/>
-                    
-
+                    lenderBookingItems={lenderBookingItems}
+                    borrowerBookingItems={borrowerBookingItems}
+                    />
                 </div>
                 { selectedBooking && <TradeSidebar booking={selectedBooking} />}
             </div>

@@ -13,3 +13,9 @@
 
 .TradeCalendarBookingsContainer {
 }
+
+.TradeCalendarBorrowHeader {
+  font-size: 16px;
+  color: #33384f;
+  font-weight: bold;
+}
