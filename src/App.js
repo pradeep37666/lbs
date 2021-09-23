@@ -23,6 +23,7 @@ import {
 import reducer from './util/reducer'
 import instance from './util/axios';
 import { CometChat } from '@cometchat-pro/chat'
+import EditItemPage from './pages/editItem/EditItemPage';
 
 export const GlobalStateContext = React.createContext()
 
@@ -118,8 +119,11 @@ function App() {
       <Router>
         <ScrollToTop>
           <Route exact path="/" component={Home} />
+          
           <Route exact path="/item/:itemId" component={ItemPage} />
+          <Route exact path="/item/edit/:itemId" component={EditItemPage} />
           <Route exact path="/search/:searchParams?" component={SearchPage} />
+          
 
           <AuthRoute path="/user/trades" component={TradesPage} />
           <AuthRoute path="/user/messages" component={MessagesPage} />
