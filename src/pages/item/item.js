@@ -31,6 +31,7 @@ export default function Item() {
     // Pass in number of reviews from backend for use in review carousel + modal
     const params = useParams();
     const location = useLocation()
+
     const [modalVisible, setModalVisible] = useState()
     const [item, setItem] = useState();
     const [itemPictures, setItemPictures] = useState([])
@@ -182,6 +183,12 @@ export default function Item() {
         }
         return MissingProfile
     }
+    //------------------Temporary Function-------------//
+    const handleEdit =()=>{
+        
+        console.log(JSON.stringify(item, null,'\t'))
+    }
+    //-------------------------------------------------//
 
     console.log('owner', itemOwner)
     return (
@@ -220,7 +227,11 @@ export default function Item() {
                         </div>
                         
                         {(user && user.id === item.u_id) ?
-                            <button class="editButton">
+                            <button class="editButton" onClick={()=>{
+                             
+                                handleEdit();
+                                
+                                }}>
                                 Edit Item Details
                             </button>
                             :
