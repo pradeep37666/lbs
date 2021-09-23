@@ -18,6 +18,7 @@ export default function Home() {
 
   const [loading, setLoading] = useState(true);
   const [items, setItems] = useState([]);
+  const [suggestedItems, setSuggestedItems] =useState([])
   const [searchParams, setSearchParams] = useState(null)
   const history = useHistory()
 
@@ -66,6 +67,17 @@ export default function Home() {
     // handle error
     console.log(error);
   })
+
+  //For Suggested Items
+  Instance.get(`/items/search/?limit=4`).then((response) => {
+    setSuggestedItems(response.data[0]);
+    setLoading(false);
+  })
+  .catch((error) => {
+    // handle error
+    console.log(error);
+  })
+
   }, []);
 
   useEffect(() => {

@@ -52,6 +52,8 @@ export default function Search(props) {
   const [searchItems, setSearchItems] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  const [suggestedItems,setSuggestedItems] = useState([]);
+
   const [SearchPage, setSearchPage] = useState(1);
   const [SortBy, setSortBy] = useState('Nothing Selected');
 
@@ -74,6 +76,16 @@ export default function Search(props) {
       .catch((error) => {
         console.log(error);
       })
+
+       //For Suggested Items
+  Instance.get(`/items/search/?limit=4`).then((response) => {
+    setSuggestedItems(response.data[0]);
+    setLoading(false);
+  })
+  .catch((error) => {
+    // handle error
+    console.log(error);
+  })
   }, [location.search]);
 
   const getSearchPages = () => {
@@ -129,6 +141,15 @@ export default function Search(props) {
     )
   }
 
+  //mapping random items as suggested items in the search page
+  const randomItemsMapper = ()=>{
+    if(suggestedItems.length >0){
+      return suggestedItems.map((items)=>{
+      return <ItemCard item={items}/>
+      })
+    }
+  }
+
   const handleChange = (event) => {
     setSortBy(event.target.value);
   }
@@ -181,12 +202,12 @@ export default function Search(props) {
 
             {searchItems.length > 0 ? <div className="ItemCardSection" style={{ padding: '1em .5em' }}>
               {/* Need the similar items backend for this section, placeholder first item from search for now */}
-              <ItemCard item={searchItems[0]} />
-              <ItemCard item={searchItems[0]} />
-              <ItemCard item={searchItems[0]} />
-              <ItemCard item={searchItems[0]} />
+             
+              {randomItemsMapper(suggestedItems)}
             </div>
               : ''}
+
+
           </div>
         </div>
       }

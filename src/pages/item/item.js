@@ -186,7 +186,11 @@ export default function Item() {
     }
     //------------------Temporary Function-------------//
     const handleEdit =()=>{
-        history.push(`/item/edit/${item.i_id}`)
+        let string =''
+        string = string.concat('i_id='+item.i_id)
+        string = string.concat('&u_id='+item.u_id)
+        
+        history.replace(`/item/edit/${string}`)
         console.log(JSON.stringify(item, null,'\t'))
     }
     //-------------------------------------------------//
