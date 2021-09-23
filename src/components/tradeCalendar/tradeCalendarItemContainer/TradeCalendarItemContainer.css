@@ -1,5 +1,6 @@
 .TradeCalendarItemContainer {
   padding: 10px 5px;
+  border-bottom: 1px solid black;
 }
 
 .TradeCalendarItemDetails {

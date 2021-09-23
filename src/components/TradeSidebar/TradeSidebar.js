@@ -9,6 +9,7 @@ import { Avatar, CircularProgress } from '@material-ui/core'
 import getImage from '../../util/getImage'
 import useGlobalState from '../../util/useGlobalState'
 import RatingFiller from '../ratingFiller/ratingFiller'
+import MissingProfile from '../../assets/Icons/MissingProfileIcon.png'
 
 export default function TradeSidebar({ booking }) {
     const { state } = useGlobalState()
@@ -116,7 +117,7 @@ export default function TradeSidebar({ booking }) {
                 { userDetails &&
                 <div className="TradeSidebarSection">
                     <span className="TradeSidebarHeading">Applicant Overview</span>
-                    <Avatar src={getImage(userDetails.avatar)} />
+                    <Avatar src={userDetails.avatar ? getImage(userDetails.avatar) : MissingProfile} />
                     <div className="TradeSidebarUserRatingContainer">
                         <span>Lender:</span>
                         <span> {userDetails.lender_rating}/5</span>

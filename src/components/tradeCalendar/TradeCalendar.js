@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import getDateIndex from '../../util/getDateIndex'
 import './TradeCalendar.css'
 import TradeCalendarItem from './TradeCalendarItem'
@@ -6,6 +6,7 @@ import getDateObject from '../../util/getDateObject'
 import TradeCalendarItemContainer from './tradeCalendarItemContainer/TradeCalendarItemContainer'
 
 export default function TradeCalendar({ borrowerBookingItems, lenderBookingItems, setSelectedBooking }) {
+    const tradeCalendarRef = useRef()
     const [currentDate, setCurrentDate] = useState()
     const [currentMonth, setCurrentMonth] = useState()
     const [currentYear, setCurrentYear] = useState()
@@ -20,8 +21,17 @@ export default function TradeCalendar({ borrowerBookingItems, lenderBookingItems
         setCurrentDate(currentDate)
         setCurrentMonth(currentMonth)
         setCurrentYear(currentYear)
-    })
+        
+    },[])
 
+    useEffect(() => {
+        
+    },[tradeCalendarRef])
+
+    const autoScrollCalendar = () => {
+        if(currentDate < 7 || !tradeCalendarRef.current) return
+        tradeCalendarRef.current.scrollTo((((currentDate) * 2) - 8) * 50, 0)
+    }
     function getDaysInMonth(month, year) {
         var date = new Date(year, month, 1);
         var days = [];
@@ -33,7 +43,7 @@ export default function TradeCalendar({ borrowerBookingItems, lenderBookingItems
       }
 
     const renderBookingItemContainers = (bookingItems) => {
-        
+        autoScrollCalendar()
         return bookingItems.map(( bookingItem, index) => {
             return (
                 <TradeCalendarItemContainer
@@ -60,6 +70,7 @@ export default function TradeCalendar({ borrowerBookingItems, lenderBookingItems
         return dates.flat()
     }
 
+    const dayArray = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa", ]
 
     const renderDates = () => {
         if(!currentMonth || !currentYear || !currentDate) return
@@ -68,24 +79,25 @@ export default function TradeCalendar({ borrowerBookingItems, lenderBookingItems
         const arr = []
         for(let i=0; i<totalDates; i++){
             // arr.push(<span style={{ borderRight: '1px solid black', gridTemplateColumns}}>{dates[i].getDate()}</span>)
-            arr.push(<span style={{ borderRight: '1px solid black'}}>{dates[i].getDate()}</span>)
-            arr.push(<span style={{ borderRight: '1px solid black'}}> </span>)
+            arr.push(
+            <div className="TradeCalendarDayItem">
+                <span className="TradeCalendarDayItemName">{dayArray[dates[i].getDay()]}</span>
+                <span className="TradeCalendarDayItemDate">{dates[i].getDate()}</span>
+            </div>)
+            arr.push(<div className="TradeCalendarFillerItem"></div>)
             
         }
         return arr
     }
 
-    // console.log('jan', new Date(currentYear, 0, 1))
-    // console.log((getDateIndex(new Date(currentYear, currentMonth, 23)) * 2) + 1)
-    // console.log(getDateObject(471))
+  
     return (
         <>
             { currentYear && 
-            <div className="TradeCalendarContainer" >
-                <div style={{ width: `${ (totalDates * 2) * 40 }px`}}>
-                    <span>{monthArray[currentMonth]}</span>
-                    <div className="TradeCalendarDaysContainer" style={{ display: 'grid', gridTemplateColumns: `repeat(${totalDates * 2}, 40px)`, postion: 'sticky', top: 0 }}>
-                    {renderDates()} 
+            <div className="TradeCalendarContainer" ref={tradeCalendarRef} >
+                <div style={{ width: `${ (totalDates * 2) * 50 }px`}}>
+                    <div className="TradeCalendarDaysContainer" style={{ gridTemplateColumns: `repeat(${totalDates * 2}, 50px)` }}>
+                        {renderDates()} 
                     
                     </div>
                     

@@ -15,12 +15,15 @@ export default function TradeCalendarItemContainer({ bookingItem, setSelectedBoo
             prevBookings.forEach(prevBooking => {
                 if(prevBooking.start_date <= booking.start_date && prevBooking.end_date >= booking.start_date){
                     row ++
+                    return
                 }
                 if(prevBooking.start_date === booking.start_date ){
                     row ++
+                    return
                 }
                 if(prevBooking.start_date <= booking.end_date && prevBooking.end_date >= booking.end_date){
                     row++
+                    return
                 }
             })
             
@@ -29,13 +32,14 @@ export default function TradeCalendarItemContainer({ bookingItem, setSelectedBoo
                 setSelectedBooking={setSelectedBooking}
                 row={row}
                 booking={booking} 
-                key={index} />
+                key={index}
+                index={index} />
             )
         })
     }
 
     return (
-        <div className="TradeCalendarItemContainer" style={{ display: 'grid', gridTemplateColumns: `repeat(${totalDates * 2}, 40px)`, gridTemplateRows: 'repeat(1, 50px)'}} >
+        <div className="TradeCalendarItemContainer" style={{ display: 'grid', gridTemplateColumns: `repeat(${totalDates * 2}, 50px)`, gridTemplateRows: 'repeat(1, 50px)'}} >
             <div className="TradeCalendarItemDetails" style={{ position: 'sticky', left: 10, gridRowStart: 1}}>
                <img 
                className="TradeCalendarItemPicture"
