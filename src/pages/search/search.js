@@ -80,6 +80,7 @@ export default function Search(props) {
        //For Suggested Items
   Instance.get(`/items/search/?limit=4`).then((response) => {
     setSuggestedItems(response.data[0]);
+    console.log('Suggested Items : ',suggestedItems)
     setLoading(false);
   })
   .catch((error) => {

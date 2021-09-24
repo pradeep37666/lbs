@@ -156,6 +156,14 @@
   margin-left: 0.5em;
 }
 
+.RegistrationWrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
 .RatingLenderFlex {
   display: flex;
 }
