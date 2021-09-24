@@ -117,7 +117,11 @@ export default function TradeSidebar({ booking }) {
                 { userDetails &&
                 <div className="TradeSidebarSection">
                     <span className="TradeSidebarHeading">Applicant Overview</span>
-                    <Avatar src={userDetails.avatar ? getImage(userDetails.avatar) : MissingProfile} />
+                    <div>
+                        <Avatar src={userDetails.avatar ? getImage(userDetails.avatar) : MissingProfile} />
+                        <span>{userDetails.fullName}</span> 
+                    </div>
+                    
                     <div className="TradeSidebarUserRatingContainer">
                         <span>Lender:</span>
                         <span> {userDetails.lender_rating}/5</span>

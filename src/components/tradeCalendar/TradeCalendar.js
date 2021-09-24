@@ -25,13 +25,12 @@ export default function TradeCalendar({ borrowerBookingItems, lenderBookingItems
     },[])
 
     useEffect(() => {
-        
-    },[tradeCalendarRef])
-
-    const autoScrollCalendar = () => {
-        if(currentDate < 7 || !tradeCalendarRef.current) return
+        if(!tradeCalendarRef.current) return
+        if(currentDate < 7) return 
         tradeCalendarRef.current.scrollTo((((currentDate) * 2) - 8) * 50, 0)
-    }
+    },[tradeCalendarRef.current])
+
+   
     function getDaysInMonth(month, year) {
         var date = new Date(year, month, 1);
         var days = [];
@@ -43,7 +42,7 @@ export default function TradeCalendar({ borrowerBookingItems, lenderBookingItems
       }
 
     const renderBookingItemContainers = (bookingItems) => {
-        autoScrollCalendar()
+        
         return bookingItems.map(( bookingItem, index) => {
             return (
                 <TradeCalendarItemContainer
