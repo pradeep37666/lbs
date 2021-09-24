@@ -10,6 +10,7 @@ import getImage from '../../util/getImage'
 import useGlobalState from '../../util/useGlobalState'
 import RatingFiller from '../ratingFiller/ratingFiller'
 import MissingProfile from '../../assets/Icons/MissingProfileIcon.png'
+import TradeCalendarStatusPanel from '../tradeCalendar/tradeCalendarStatusPanel/TradeCalendarStatusPanel'
 
 export default function TradeSidebar({ booking }) {
     const { state } = useGlobalState()
@@ -73,6 +74,10 @@ export default function TradeSidebar({ booking }) {
                     item={item}/>
                 </div>
                 <div className="TradeSidebarSection">
+                    <TradeCalendarStatusPanel booking={booking} />
+
+                </div>
+                <div className="TradeSidebarSection">
                     <span className="TradeSidebarSubHeading">Itemised Costs</span>
                     <div className="TradeSidebarCostFlex">
                         <span>Cost for Item </span>
@@ -117,9 +122,9 @@ export default function TradeSidebar({ booking }) {
                 { userDetails &&
                 <div className="TradeSidebarSection">
                     <span className="TradeSidebarHeading">Applicant Overview</span>
-                    <div>
+                    <div className="TradeSidebarUserContainer">
                         <Avatar src={userDetails.avatar ? getImage(userDetails.avatar) : MissingProfile} />
-                        <span>{userDetails.fullName}</span> 
+                        <span className="TradeSidebarUserName">{userDetails.fullName}</span> 
                     </div>
                     
                     <div className="TradeSidebarUserRatingContainer">

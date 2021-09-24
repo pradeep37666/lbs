@@ -89,6 +89,7 @@ export default function TradeCalendar({ borrowerBookingItems, lenderBookingItems
         return arr
     }
 
+    
   
     return (
         <>
@@ -97,7 +98,7 @@ export default function TradeCalendar({ borrowerBookingItems, lenderBookingItems
                 <div style={{ width: `${ (totalDates * 2) * 50 }px`}}>
                     <div className="TradeCalendarDaysContainer" style={{ gridTemplateColumns: `repeat(${totalDates * 2}, 50px)` }}>
                         {renderDates()} 
-                    
+                        
                     </div>
                     
                     {lenderBookingItems.length > 0 && 

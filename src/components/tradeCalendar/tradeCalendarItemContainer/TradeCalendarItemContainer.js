@@ -33,7 +33,8 @@ export default function TradeCalendarItemContainer({ bookingItem, setSelectedBoo
                 row={row}
                 booking={booking} 
                 key={index}
-                index={index} />
+                index={index} 
+                />
             )
         })
     }
@@ -42,16 +43,14 @@ export default function TradeCalendarItemContainer({ bookingItem, setSelectedBoo
         return Array(totalDates * 2).fill(null).map((value, index) => {
             return (
             <div 
-            style={{ gridRowStart: 1, gridRowEnd: 5, gridColumnStart: (index + 1), gridColumnEnd: ( index + 2), borderLeft: '1px solid #dedede', zIndex: 1}}
-            >
-                
-            </div>)
+            style={{ gridRowStart: 2, gridRowEnd: 5, gridColumnStart: (index + 1), gridColumnEnd: ( index + 2), borderLeft: '1px solid #dedede', zIndex: 1}}
+            />)
         })
     }
 
     return (
         <div className="TradeCalendarItemContainer" style={{ display: 'grid', gridTemplateColumns: `repeat(${totalDates * 2}, 50px)`, gridTemplateRows: 'repeat(1, 50px)'}} >
-            <div className="TradeCalendarItemDetails" style={{ position: 'sticky', left: 10, gridRowStart: 1}}>
+            <div className="TradeCalendarItemDetails" style={{ position: 'sticky', left: 10, gridRowStart: 1, zIndex: 50}}>
                <img 
                className="TradeCalendarItemPicture"
                src={getImage(itemImage)} />
