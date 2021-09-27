@@ -61,7 +61,7 @@ export default function TradeSidebar({ booking }) {
         <div className="TradeSidebarContainer">
 
             { isLoading ? (
-                <CircularProgress />
+                <CircularProgress style={{ justifySelf: 'center', alignSelf: 'center'}}/>
             ) : (
             <>
                 <div className="TradeSidebarSection">

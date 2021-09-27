@@ -9,16 +9,27 @@
 .TradeCalendarDaysContainer {
   display: grid;
   background-color: #ededed;
-  border-radius: 10px;
 }
 .TradeCalendarDayItem {
-  padding: 1rem 0;
-  border-left: 1px solid black;
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
+  align-items: center;
+  margin-right: -0.5rem;
 }
-
+.TradeCalendarCurrentDay {
+  font-size: 22px;
+  font-weight: bold;
+  color: #33384f;
+  background: #e9d8b4;
+  padding: 5px 10px;
+  border-radius: 50%;
+}
+.TradeCalendarDayItemContainer {
+  display: flex;
+  padding: 1rem 0;
+  justify-content: flex-end;
+  border-left: 1px solid #dedede;
+}
 .TradeCalendarDayItemName {
   font-size: 12px;
   color: #a8a8a8;

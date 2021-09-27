@@ -1,6 +1,5 @@
 .TradeCalendarItem {
-  border: 1px solid #33384f;
-  border-radius: 5px;
+  border-radius: 15px;
   cursor: pointer;
   margin: 0.2rem 0;
   height: max-content;
@@ -20,4 +19,13 @@
   background-color: #33384f;
   padding: 0.5rem;
   color: white;
+  border-radius: 10px;
+}
+.TradeCalendarItemBorrow {
+  display: flex;
+  align-items: center;
+  background-color: #e9d8b4;
+  padding: 0.5rem;
+  color: #33384f;
+  border-radius: 10px;
 }

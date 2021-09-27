@@ -24,3 +24,8 @@
   display: flex;
   justify-content: space-around;
 }
+.TradeStatusContainer {
+  padding: 25px 0;
+  border-radius: 10px;
+  background-color: #ededed;
+}

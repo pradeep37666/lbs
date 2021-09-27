@@ -1,5 +1,4 @@
 .TradeCalendarItemContainer {
-  padding: 0px 5px;
   border-bottom: 1px solid #dedede;
 }
 
@@ -7,6 +6,10 @@
   position: sticky;
   left: 2rem;
   display: flex;
-  width: max-content;
+
+  grid-column-start: 1;
+  grid-row-start: 1;
+  z-index: 50;
   align-items: center;
+  width: max-content;
 }

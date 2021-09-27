@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import Instance from '../../../util/axios'
+import useGlobalState from '../../../util/useGlobalState'
 import './TradeCalendarStatusPanel.css'
 
 export default function TradeCalendarStatusPanel({ booking }) {
     const [status, setStatus] = useState()
+    const { state } = useGlobalState()
+    const { user } = state
+    const isOwner = booking.io_id === user.id
     console.log(booking)
     useEffect(() => {
         setStatus(booking.status)
@@ -23,7 +27,7 @@ export default function TradeCalendarStatusPanel({ booking }) {
                 return 'two'
             }
             case 3 : {
-                return 'three'
+                return statusThree()
             }
             case 4 : {
                 return 'four'
@@ -40,10 +44,10 @@ export default function TradeCalendarStatusPanel({ booking }) {
         }
     }
 
-    const updateBooking = async () => {
+    const approveBooking = async () => {
         try{
             const newBooking = booking
-            newBooking.status = 1
+            newBooking.status = 3
             const { data, status} = await Instance.put('/booking/update', newBooking)
             console.log(data,status)
         } catch(err) {
@@ -54,22 +58,36 @@ export default function TradeCalendarStatusPanel({ booking }) {
     const statusOne = () => {
         return (
             <div className="TradeStatusButtonContainer">
-                <div className="TradeStatusDeclineButton ">
-                    <span>Decline</span>
-                </div>
-                <div className="TradeStatusApproveButton" onClick={updateBooking}>
-                    <span>Approve</span>
+                { isOwner ? (
+                    <>
+                        <div className="TradeStatusDeclineButton ">
+                            <span>Decline</span>
+                        </div>
+                        <div className="TradeStatusApproveButton" onClick={approveBooking}>
+                            <span>Approve</span>
+                        </div> 
+                    </>
+                ) : (
+                    <div>
+                        <span>Application sent, the item owner has 24 hours to respond</span>
+                    </div>
+                )}
+            </div>
+        )
+    }
+
+    const statusThree = () =>{
+        return (
+            <div className="TradeStatusButtonContainer">
+                <div>
+                    <span>Get the product ready to be borrowed by </span>
                 </div>
             </div>
         )
     }
     return (
-        <div>
-            <div>
+        <div className="TradeStatusContainer">
                 {renderStatusPanel()}
-                {booking.items_title}
-            </div>
-
         </div>
     )
 }
