@@ -3,11 +3,11 @@ import { useLocation, useParams } from "react-router";
 import Banner from "../../components/bannerText/bannerText";
 import PageWrapper from "../../components/pageWrapper/pageWrapper";
 import Instance from "../../util/axios";
-import BasicDetails from "../postitem/PostItemContent/BasicDetails";
+
 import CategorySelect from "../../components/categorySelect/categorySelect";
-import { Button } from "@material-ui/core";
+
 import "./editItem.css";
-import ItemPicture from "../postitem/PostItemContent/ItemPictures";
+
 import IconButton from "@material-ui/core/IconButton";
 import AddIcon from "@material-ui/icons/Add";
 import RemoveIcon from "@material-ui/icons/Remove";
@@ -165,7 +165,7 @@ function EditItemPage(props) {
               <input
                 type="text"
                 className="LoginInput"
-                placeholder={titleText}
+                placeholder={title}
                 onBlur={(e) => setTitle(e.target.value)}
               />
               {/* Item Category */}
@@ -222,19 +222,33 @@ function EditItemPage(props) {
                     incentivise mid week trading
                   </div>
                   <div>
-                    <div
-                      className="LoginHeader"
-                      style={{ width: "45%", flexDirection: "row" }}
-                    >
-                      <input
-                        type="number"
-                        min="1"
-                        step="any"
-                        placeholder={discount}
-                        className="LoginInput"
-                        onBlur={(e) => setDiscount(parseInt(e.target.value))}
-                      />
-                      <div>Off Peak Discount Rate</div>
+                    <div style={{ display: "flex" }}>
+                      <div
+                        style={{
+                          width: "20%",
+                          display: "flex",
+                          flex: 2,
+                          marginRight: "10%",
+                        }}
+                      >
+                        <input
+                          type="number"
+                          min="1"
+                          step="any"
+                          placeholder={discount}
+                          className="LoginInput"
+                          onBlur={(e) => setDiscount(parseInt(e.target.value))}
+                        />
+                      </div>
+                      <div
+                        className="LoginText"
+                        style={{
+                          marginTop: "3%",
+                          flex: 3,
+                        }}
+                      >
+                        Off Peak Discount Rate
+                      </div>
                     </div>
                   </div>
                 </div>
