@@ -306,7 +306,7 @@ export default function Item() {
                         <div className="ItemDetailsHeader">Location</div>
                         <div className="MapContainer">
                             <GoogleMapReact
-                                bootstrapURLKeys={{ key: 'AIzaSyB98s0INvtxhs22OxCOEIjE_--kb54qhlQ' }}
+                                bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_API_KEY }}
                                 defaultCenter={defaultProps.center}
                                 defaultZoom={defaultProps.zoom}
                             >
