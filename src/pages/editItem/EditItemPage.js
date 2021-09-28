@@ -3,9 +3,15 @@ import { useLocation, useParams } from "react-router";
 import Banner from "../../components/bannerText/bannerText";
 import PageWrapper from "../../components/pageWrapper/pageWrapper";
 import Instance from "../../util/axios";
-
+import {
+  handleAddress,
+  handleCity,
+  handleCountry,
+  handleState,
+} from "../../util/UserValidation";
+import ValidationPopup from "../../components/ValidationPopup/ValidationPopup";
 import CategorySelect from "../../components/categorySelect/categorySelect";
-
+import useGlobalState from "../../util/useGlobalState";
 import "./editItem.css";
 
 import IconButton from "@material-ui/core/IconButton";
@@ -26,7 +32,7 @@ function EditItemPage(props) {
   const [pictures, setPictures] = useState([]);
   const [description, setDescription] = useState();
   const [price, setPrice] = useState();
-  const [rating, setRating] = useState();
+
   const [discount, setDiscount] = useState();
   const [deliveryPrice, setDeliveryPrice] = useState();
   const [available, setAvailable] = useState();
@@ -44,8 +50,41 @@ function EditItemPage(props) {
   let [newImage, setNewImage] = useState([]);
   let [updatedImage, setUpdatedImage] = useState([]);
 
-  const [validated, setValidated] = useState(false);
-  const [page, setPage] = useState("Basic Details");
+  //---------------------------------Location-------------------------------------//
+
+  const [addressValidation, setAddressValidation] = useState("");
+  const [cityValidation, setCityValidation] = useState("");
+  const [countryValidation, setCountryValidation] = useState("");
+  const [stateValidation, setStateValidation] = useState("");
+
+  const showValidation = (field) => {
+    switch (field) {
+      case "address":
+        return addressValidation.length > 0 ? false : true;
+      case "city":
+        return cityValidation.length > 0 && addressValidation.length === 0
+          ? false
+          : true;
+      case "country":
+        return countryValidation.length > 0 &&
+          addressValidation.length === 0 &&
+          cityValidation.length === 0
+          ? false
+          : true;
+      case "state":
+        return stateValidation.length > 0 &&
+          addressValidation.length === 0 &&
+          cityValidation.length === 0 &&
+          countryValidation.length === 0
+          ? false
+          : true;
+      default:
+        return;
+    }
+  };
+
+  //----------------------------------------------------------------------------------------------------------//
+
   const queryString = require("query-string");
   const params = useParams();
   let newPictures = [];
@@ -54,6 +93,7 @@ function EditItemPage(props) {
   let itemId = parsed.i_id;
   let userId = parsed.u_id;
 
+  //used this method to add preview to the images received from the server
   const dbImageConverter = () => {
     newPictures = pictures.map((picture, i) => {
       if (picture.preview) {
@@ -65,7 +105,6 @@ function EditItemPage(props) {
           raw: picture,
           id: i + 1,
         });
-
         setPictures(newPictures);
       }
     });
@@ -83,16 +122,24 @@ function EditItemPage(props) {
         setPrice(response.data.item.price);
         setDeliveryPrice(response.data.item.deliveryPrice);
         setDiscount(response.data.item.discount);
+        setAddress(response.data.item.address);
+        setCity(response.data.item.city);
+        setCountry(response.data.item.country);
+        setState(response.data.item.state);
+        setLat(response.data.item.lat);
+        setLng(response.data.item.lng);
 
         setUpdatedImage(response.data.item.pictures.split(","));
         setPictures(response.data.item.pictures.split(","));
 
         setItem(response.data.item);
+        console.log("address : >", address, city, country, state);
         setLoading(false);
       })
       .catch((error) => {
         console.log(error);
       });
+    dbImageConverter();
   }, [params]);
 
   //----------------------Picture Container Functionality------------------//
@@ -192,6 +239,13 @@ function EditItemPage(props) {
       }
     }
     setNewImage(newPictures);
+    setUpdatedImage("");
+    setUpdatedImage([...updatedImage, pictures]);
+    setUpdatedImage([...updatedImage, newImage]);
+    console.log(
+      "to be uploaded after deletion : ",
+      JSON.stringify(updatedImage)
+    );
   };
   //-------------------------------------------------------------------------//
 
@@ -300,6 +354,91 @@ function EditItemPage(props) {
                   </div>
                 </div>
               </Fade>
+            </div>
+            {/* Item Location */}
+            <div className="AccountSettings__Container">
+              <div className="AccountSettings__Title">Item Location</div>
+
+              <div className="LoginHeader LoginHeader--NoMargin">Address</div>
+              <div className="LoginInputValidationContainer">
+                <input
+                  type="text"
+                  placeholder={address}
+                  className="LoginInput"
+                  onBlur={(e) =>
+                    handleAddress(e, setAddress, setAddressValidation)
+                  }
+                />
+                <div
+                  className={`triangleLeft ${
+                    showValidation("address") ? "" : "ValidationTextHide"
+                  }`}
+                />
+                <ValidationPopup
+                  errorText={addressValidation}
+                  errorHeader="Invalid Address"
+                  hide={showValidation("address")}
+                />
+              </div>
+              <div className="LoginHeader LoginHeader--NoMargin">City</div>
+              <div className="LoginInputValidationContainer">
+                <input
+                  type="text"
+                  placeholder={city}
+                  className="LoginInput"
+                  onBlur={(e) => handleCity(e, setCity, setCityValidation)}
+                />
+                <div
+                  className={`triangleLeft ${
+                    showValidation("city") ? "" : "ValidationTextHide"
+                  }`}
+                />
+                <ValidationPopup
+                  errorText={cityValidation}
+                  errorHeader="Invalid City"
+                  hide={showValidation("city")}
+                />
+              </div>
+              <div className="LoginHeader LoginHeader--NoMargin">Country</div>
+              <div className="LoginInputValidationContainer">
+                <input
+                  type="text"
+                  placeholder={country}
+                  className="LoginInput"
+                  onBlur={(e) =>
+                    handleCountry(e, setCountry, setCountryValidation)
+                  }
+                />
+                <div
+                  className={`triangleLeft ${
+                    showValidation("country") ? "" : "ValidationTextHide"
+                  }`}
+                />
+                <ValidationPopup
+                  errorText={countryValidation}
+                  errorHeader="Invalid Country"
+                  hide={showValidation("country")}
+                />
+              </div>
+              <div className="LoginHeader LoginHeader--NoMargin">State</div>
+              <div className="LoginInputValidationContainer">
+                <input
+                  type="text"
+                  placeholder={state}
+                  className="LoginInput"
+                  onBlur={(e) => handleState(e, setState, setStateValidation)}
+                />
+                <div
+                  className={`triangleLeft ${
+                    showValidation("state") ? "" : "ValidationTextHide"
+                  }`}
+                />
+                <ValidationPopup
+                  errorText={stateValidation}
+                  errorHeader="Invalid State"
+                  hide={showValidation("state")}
+                />
+              </div>
             </div>
           </div>
         </div>
