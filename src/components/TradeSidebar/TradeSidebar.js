@@ -36,8 +36,6 @@ export default function TradeSidebar({ booking }) {
     },[booking])
 
     const getUserDetails = async () => {
-        // console.log(booking)
-        // console.log(user)
         const id = booking.io_id === user.id ? booking.u_id : booking.io_id
         try{
            const {data, status} = await Instance.get(`/user/getOneUser?id=${id}`)

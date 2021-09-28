@@ -15,7 +15,7 @@ export default function ItemOverview() {
     const { state, dispatch } = useContext(ApplicationContext)
     const globalState = useGlobalState()
     const user  = globalState.state.user
-    const { page, item, confirmedEnd, confirmedStart, deliverySelected, pickupSelected } = state
+    const { page, item, confirmedEnd, confirmedStart, deliverySelected, pickupSelected, currentYear } = state
 
     const history = useHistory()
     const dayArray = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
@@ -119,17 +119,15 @@ export default function ItemOverview() {
     const saveBooking = async () => {
         let deliveryOption = (deliverySelected && pickupSelected) ? 'both' : deliverySelected ? 'delivery' : 'pickup'
         const startIndex = (getDateIndex(confirmedStart.day) * 2) + (confirmedStart?.am ? 1 : 2)
-        console.log('start day', confirmedStart)
-        console.log('start index', startIndex)
         const endIndex = (getDateIndex(confirmedEnd.day) * 2) + (confirmedEnd?.am ? 1 : 2)
-        console.log('end index', endIndex)
         try{
             const { data, status } = await instance.post('booking/save', {
                 i_id: item.i_id,
                 io_id: item.u_id,
                 deliveryOption,
                 startDate: startIndex,
-                endDate: endIndex
+                endDate: endIndex,
+                year: currentYear
             })
             sendEnquiry(item)
             history.push({ 

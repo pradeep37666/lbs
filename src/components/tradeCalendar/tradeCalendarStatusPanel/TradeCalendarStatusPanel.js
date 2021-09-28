@@ -6,30 +6,32 @@ import StatusOne from './StatusOne'
 import StatusTwo from './StatusTwo'
 import StatusZero from './StatusZero'
 import StatusThree from './StatusThree'
+import getDateObject from '../../../util/getDateObject'
 
 export default function TradeCalendarStatusPanel({ booking, userDetails }) {
     const [status, setStatus] = useState()
     const { state } = useGlobalState()
     const { user } = state
     const isOwner = booking.io_id === user.id
+    console.log(booking)
     useEffect(() => {
         setStatus(booking.status)
     },[booking])
 
     const renderStatusPanel = () => {
+        if(status === 0){
+            return <StatusZero updateBookingStatus={updateBookingStatus} booking={booking}/>
+        }
+        checkTimeslot()
         switch(status){
-            case 0 : {
-                return <StatusZero updateBookingStatus={updateBookingStatus} booking={booking}/>
-                break
-            }
             case 1 : {
-                return <StatusOne isOwner={isOwner} updateBookingStatus={updateBookingStatus} />
+                return <StatusOne isOwner={isOwner} updateBookingStatus={updateBookingStatus} booking={booking} />
             }
             case 2 : {
                 return <StatusTwo isOwner={isOwner} updateBookingStatus={updateBookingStatus} booking={booking}/>
             }
             case 3 : {
-                return <StatusThree isOwner={isOwner} updateBookingStatus={updateBookingStatus} booking={booking} />
+                return <StatusThree isOwner={isOwner} updateBookingStatus={updateBookingStatus} booking={booking} userDetails={userDetails} />
             }
             case 4 : {
                 return 'four'
@@ -46,9 +48,14 @@ export default function TradeCalendarStatusPanel({ booking, userDetails }) {
         }
     }
 
+    const checkTimeslot = () => {
+        // const startSlot= getDateObject(booking.start_date)
+        // startSlot.date.setTime
+    }
+
     const updateBookingStatus = async (newStatus) => {
         try{
-            const newBooking = {b_id: booking.b_id, status: newStatus, type: isOwner ? 'lender' : 'borrower'}
+            const newBooking = {b_id: booking.b_id, status: newStatus}
             const { data, status} = await Instance.put('/booking/update', newBooking)
             console.log(data,status)
             if(status === 200){
@@ -60,35 +67,9 @@ export default function TradeCalendarStatusPanel({ booking, userDetails }) {
         
     }
     
-
-    const statusTwo = () => {
-        return(
-            <div className="TradeStatusButtonContainer">
-                { isOwner ? (
-                    <div>
-                        status two
-                    </div>
-                ) : (
-                    <div>
-                        status two borrower
-                    </div>
-                )}
-            </div>
-        )
-    }
-
-    const statusThree = () =>{
-        return (
-            <div className="TradeStatusButtonContainer">
-                <div>
-                    <span>Get the product ready to be borrowed by </span>
-                    <span>{userDetails.fullName}</span>
-                </div>
-            </div>
-        )
-    }
     return (
         <div className="TradeStatusContainer">
+                
                 {renderStatusPanel()}
         </div>
     )

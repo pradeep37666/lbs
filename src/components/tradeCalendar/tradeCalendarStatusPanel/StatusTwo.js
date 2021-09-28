@@ -8,7 +8,7 @@ export default function StatusTwo({ isOwner, updateBookingStatus, booking }) {
         <div >
                 { isOwner ? (
                     <div className="TradeStatusButtonContainer">
-                        <span>You have asked for new times from this user</span>
+                        <span>2 You have asked for new times from this user</span>
                     </div>
                 ) : (
                     < >
@@ -17,7 +17,7 @@ export default function StatusTwo({ isOwner, updateBookingStatus, booking }) {
                             <div className="TradeStatusDeclineButton" onClick={() => updateBookingStatus(0)}>
                                 <span>Cancel</span>
                             </div>
-                            <div className="TradeStatusApproveButton" onClick={() => history.push(`/item/${itemId}/application`)}>
+                            <div className="TradeStatusApproveButton" onClick={() => {history.push(`/item/${itemId}/application`)}}>
                                 <span>Apply Again</span>
                             </div>
                         </div>
