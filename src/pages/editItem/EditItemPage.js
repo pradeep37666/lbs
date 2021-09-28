@@ -21,9 +21,9 @@ import { makeStyles } from "@material-ui/styles";
 import getImage from "../../util/getImage.js";
 import LBSSwitch from "../../components/LBSSwitch/LBSSwitch";
 import { Fade } from "@material-ui/core";
+import { Modal, Button } from "@material-ui/core";
 
 function EditItemPage(props) {
-  const [item, setItem] = useState();
   const [loading, setLoading] = useState();
   const [titleText, setTitleText] = useState();
   //declaration for all the infromation we get from the server
@@ -46,6 +46,13 @@ function EditItemPage(props) {
   const [created, setCreated] = useState();
   const [updated, setUpdated] = useState();
   const [isDiscount, setIsDiscount] = useState(false);
+  //--------modal for displaying the edit button dialogue-------//
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+  //-----------------------------------------------------------//
 
   let [newImage, setNewImage] = useState([]);
   let [updatedImage, setUpdatedImage] = useState([]);
@@ -252,7 +259,7 @@ function EditItemPage(props) {
     <PageWrapper>
       <Banner textBold="Editing Item" textNormal={titleText} />
       <div className="ItemMainWrapper">
-        <div className="ItemInfoWrapper">
+        <div className="ItemInfoWrapper" style={{ minWidth: 400 }}>
           {/* Div for Item Details */}
           <div className="RegistrationWrapper">
             <div
@@ -442,7 +449,7 @@ function EditItemPage(props) {
           </div>
         </div>
 
-        <div className="ItemPicturesWrapper">
+        <div className="ItemPicturesWrapper" style={{ minWidth: 400 }}>
           {/* Div for Pictures from the database */}
           <div
             className="LoginMain"
@@ -526,6 +533,41 @@ function EditItemPage(props) {
               className="LoginInput"
               onChange={(e) => setDeliveryPrice(parseInt(e.target.value))}
             />
+          </div>
+          {/* Div for Availability Option and Deletion of Item */}
+          <div className="LoginMain LoginMainNoMarg" style={{ width: "100%" }}>
+            <div className="LoginHeader">Other Options</div>
+            <div className="ItemButtons">
+              <button className="ButtonAvailability" style={{ width: "57%" }}>
+                <div className="ItemButtonFlex">Edit Item Availability</div>
+              </button>
+              <button
+                className="SearchButtonLarge"
+                onClick={handleShow}
+                style={{ width: "57%" }}
+              >
+                <div className="ItemButtonFlex">Delete Item</div>
+              </button>
+              <Modal
+                show={show}
+                onHide={handleClose}
+                backdrop="static"
+                keyboard={false}
+              >
+                <Modal.Header closeButton>
+                  <Modal.Title>Modal title</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                  Do You want to delete the Item from Database?
+                </Modal.Body>
+                <Modal.Footer>
+                  <Button variant="secondary" onClick={handleClose}>
+                    Close
+                  </Button>
+                  <Button variant="primary">Understood</Button>
+                </Modal.Footer>
+              </Modal>
+            </div>
           </div>
         </div>
       </div>
