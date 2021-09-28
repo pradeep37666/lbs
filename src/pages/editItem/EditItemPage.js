@@ -11,7 +11,6 @@ import {
 } from "../../util/UserValidation";
 import ValidationPopup from "../../components/ValidationPopup/ValidationPopup";
 import CategorySelect from "../../components/categorySelect/categorySelect";
-import useGlobalState from "../../util/useGlobalState";
 import "./editItem.css";
 
 import IconButton from "@material-ui/core/IconButton";
@@ -21,7 +20,12 @@ import { makeStyles } from "@material-ui/styles";
 import getImage from "../../util/getImage.js";
 import LBSSwitch from "../../components/LBSSwitch/LBSSwitch";
 import { Fade } from "@material-ui/core";
-import { Modal, Button } from "@material-ui/core";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import Dialog from "@material-ui/core/Dialog";
+import Button from "@material-ui/core/Button";
 
 function EditItemPage(props) {
   const [loading, setLoading] = useState();
@@ -47,10 +51,15 @@ function EditItemPage(props) {
   const [updated, setUpdated] = useState();
   const [isDiscount, setIsDiscount] = useState(false);
   //--------modal for displaying the edit button dialogue-------//
-  const [show, setShow] = useState(false);
+  const [open, setOpen] = useState(false);
 
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   //-----------------------------------------------------------//
 
@@ -146,7 +155,7 @@ function EditItemPage(props) {
         console.log(error);
       });
     dbImageConverter();
-  }, []);
+  }, [params, open]);
 
   //----------------------Picture Container Functionality------------------//
   const useStyles = makeStyles({
@@ -543,30 +552,27 @@ function EditItemPage(props) {
               </button>
               <button
                 className="SearchButtonLarge"
-                onClick={handleShow}
+                onClick={handleClickOpen}
                 style={{ width: "57%" }}
               >
                 <div className="ItemButtonFlex">Delete Item</div>
               </button>
-              <Modal
-                show={show}
-                onHide={handleClose}
-                backdrop="static"
-                keyboard={false}
-              >
-                <Modal.Header closeButton>
-                  <Modal.Title>Modal title</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                  Do You want to delete the Item from Database?
-                </Modal.Body>
-                <Modal.Footer>
-                  <Button variant="secondary" onClick={handleClose}>
+              <Dialog open={open} onClose={handleClose}>
+                <DialogTitle>Delete {title}?</DialogTitle>
+                <DialogContent>
+                  <DialogContentText>
+                    Are you sure you want to remove {title} from YourShed?
+                  </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick={handleClose} color="primary">
                     Close
                   </Button>
-                  <Button variant="primary">Understood</Button>
-                </Modal.Footer>
-              </Modal>
+                  <Button onClick={handleClose} color="secondary" autoFocus>
+                    Yes
+                  </Button>
+                </DialogActions>
+              </Dialog>
             </div>
           </div>
         </div>
