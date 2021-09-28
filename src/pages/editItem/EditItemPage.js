@@ -132,7 +132,6 @@ function EditItemPage(props) {
         setUpdatedImage(response.data.item.pictures.split(","));
         setPictures(response.data.item.pictures.split(","));
 
-        setItem(response.data.item);
         console.log("address : >", address, city, country, state);
         setLoading(false);
       })
@@ -140,7 +139,7 @@ function EditItemPage(props) {
         console.log(error);
       });
     dbImageConverter();
-  }, [params]);
+  }, []);
 
   //----------------------Picture Container Functionality------------------//
   const useStyles = makeStyles({
@@ -227,6 +226,7 @@ function EditItemPage(props) {
       }
     }
     setPictures(newPictures);
+    setUpdatedImage(pictures);
   };
   //handling the deletion of images received from add button
   const newPictureHandleDelete = (id) => {
@@ -239,8 +239,7 @@ function EditItemPage(props) {
       }
     }
     setNewImage(newPictures);
-    setUpdatedImage("");
-    setUpdatedImage([...updatedImage, pictures]);
+    setUpdatedImage(pictures);
     setUpdatedImage([...updatedImage, newImage]);
     console.log(
       "to be uploaded after deletion : ",
