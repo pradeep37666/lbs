@@ -74,7 +74,7 @@ export default function TradeSidebar({ booking }) {
                     item={item}/>
                 </div>
                 <div className="TradeSidebarSection">
-                    <TradeCalendarStatusPanel booking={booking} />
+                    <TradeCalendarStatusPanel booking={booking} userDetails={userDetails}/>
 
                 </div>
                 <div className="TradeSidebarSection">
