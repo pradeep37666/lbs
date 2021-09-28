@@ -5,7 +5,7 @@ import './TradeCalendarItemContainer.css'
 import userEvent from '@testing-library/user-event'
 import useGlobalState from '../../../util/useGlobalState'
 
-export default function TradeCalendarItemContainer({ bookingItem, setSelectedBooking, totalDates, header}) {
+export default function TradeCalendarItemContainer({ bookingItem, setSelectedBooking, totalDates, header, currentMonth, currentYear}) {
     const { state } = useGlobalState()
     const { user } = state
     const bookings = bookingItem.bookings
@@ -38,6 +38,8 @@ export default function TradeCalendarItemContainer({ bookingItem, setSelectedBoo
                 booking={booking} 
                 key={index}
                 index={index} 
+                currentMonth={currentMonth}
+                currentYear={currentYear}
                 />
             )
         })

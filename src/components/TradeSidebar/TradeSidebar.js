@@ -78,14 +78,22 @@ export default function TradeSidebar({ booking }) {
 
                 </div>
                 <div className="TradeSidebarSection">
-                    <span className="TradeSidebarSubHeading">Itemised Costs</span>
+                    <div className="TradeSidebarSubHeading">
+                        <span >Itemised Costs</span>
+                    </div>
+                    
                     <div className="TradeSidebarCostFlex">
                         <span>Cost for Item </span>
-                        <span>${ item.price * ((booking.end_date - booking.start_date) + 1)}</span>
+                        <span className="ItemOverviewPrice">${ item.price * ((booking.end_date - booking.start_date) + 1)}</span>
                     </div>
-                    <div className="TradeSidebarCostFlex">
+                    <div className="TradeSidebarCostFlex" style={{ borderBottom: '1px solid #31364c'}}>
                         <span>Item Delivery </span>
-                        <span>${item.deliveryPrice}</span>
+                        <span className="ItemOverviewPrice">${item.deliveryPrice}</span>
+                    </div>
+                    <div className="TradeSidebarCostFlex" style={{ marginTop: '1rem'}}>
+                        <span>Total Price</span>
+                        <span className="ItemOverviewPrice">${ (item.price * ((booking.end_date - booking.start_date) + 1) + item.deliveryPrice)}</span>
+
                     </div>
                 </div>
                 <div className="TradeSidebarSection">
@@ -119,24 +127,39 @@ export default function TradeSidebar({ booking }) {
                     </div>
 
                 </div>
+                <div className="TradeSidebarSection">
+                    <span className="TradeSidebarHeading">Delivery Location</span>
+                </div>
                 { userDetails &&
                 <div className="TradeSidebarSection">
-                    <span className="TradeSidebarHeading">Applicant Overview</span>
-                    <div className="TradeSidebarUserContainer">
-                        <Avatar src={userDetails.avatar ? getImage(userDetails.avatar) : MissingProfile} />
-                        <span className="TradeSidebarUserName">{userDetails.fullName}</span> 
+                    <div className="TradeSidebarHeading">
+                      <span >Applicant Overview</span>  
                     </div>
                     
-                    <div className="TradeSidebarUserRatingContainer">
-                        <span>Lender:</span>
-                        <span> {userDetails.lender_rating}/5</span>
-                        <RatingFiller rating={userDetails.lender_rating}/>
+
+                    <div className="TradeSidebarUserContainer">
+                        <div className="TradeSidebarUserAvatar">
+                            <Avatar sizes='' src={userDetails.avatar ? getImage(userDetails.avatar) : MissingProfile} />
+                        </div>
+                        
+                        <div>
+                            <span className="TradeSidebarUserName">{userDetails.fullName}</span> 
+                            <div className="TradeSidebarUserRatingContainer">
+                            <span>Lender:</span>
+                            <span> {userDetails.lender_rating}/5</span>
+                            <RatingFiller rating={userDetails.lender_rating}/>
+                        </div>
+                        <div className="TradeSidebarUserRatingContainer">
+                            <span>Lender: </span>
+                            <span>{userDetails.borrower_rating}/5</span>
+                            <RatingFiller rating={userDetails.borrower_rating}/>
+                        </div>
+
+                        </div>
+                        
                     </div>
-                    <div className="TradeSidebarUserRatingContainer">
-                        <span>Lender: </span>
-                        <span>{userDetails.borrower_rating}/5</span>
-                        <RatingFiller rating={userDetails.borrower_rating}/>
-                    </div>
+                    
+                    
                 </div>}
             
             </>)}

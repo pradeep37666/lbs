@@ -21,8 +21,12 @@
   font-weight: bold;
   color: #33384f;
   background: #e9d8b4;
-  padding: 5px 10px;
-  border-radius: 50%;
+  height: 40px;
+  width: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 20px;
 }
 .TradeCalendarDayItemContainer {
   display: flex;

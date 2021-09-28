@@ -52,6 +52,8 @@ export default function TradeCalendar({ borrowerBookingItems, lenderBookingItems
                 bookingItem={bookingItem} 
                 key={index} 
                 totalDates={totalDates}
+                currentMonth={currentMonth}
+                currentYear={currentYear}
                 />
             )
         })
@@ -84,7 +86,10 @@ export default function TradeCalendar({ borrowerBookingItems, lenderBookingItems
             <div className="TradeCalendarDayItemContainer" style={ dates[i] && { borderWidth: 1 }} key={i}>
                 <div className="TradeCalendarDayItem">
                     <span className="TradeCalendarDayItemName">{dayArray[dates[i].getDay()]}</span>
-                    <span className={isCurrentDay ? 'TradeCalendarCurrentDay' : "TradeCalendarDayItemDate"}>{dates[i].getDate()}</span>  
+                    <div className={isCurrentDay ? 'TradeCalendarCurrentDay' : "TradeCalendarDayItemDate"}>
+                        <span>{dates[i].getDate()}</span>  
+                    </div>
+                    
                 </div>
             </div>)
             arr.push(<div className="TradeCalendarFillerItem"></div>)

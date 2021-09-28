@@ -2,6 +2,7 @@
   display: flex;
   flex-direction: column;
   padding: 0 1rem;
+  border-left: 1px solid #d6d6d6;
   width: 30%;
 }
 
@@ -9,11 +10,13 @@
   font-size: 20px;
   color: #33384f;
   font-weight: bold;
+  margin-bottom: 20px;
 }
 
 .TradeSidebarCostFlex {
   display: flex;
   justify-content: space-between;
+  padding-bottom: 0.4rem;
 }
 
 .TradeSidebarSection {
@@ -26,6 +29,7 @@
   font-size: 22px;
   color: #33384f;
   font-weight: bold;
+  margin-bottom: 10px;
 }
 
 .TradeSidebarUserRatingContainer {
@@ -40,4 +44,8 @@
 }
 .TradeSidebarUserContainer {
   display: flex;
+  align-items: center;
+}
+.TradeSidebarUserAvatar {
+  margin-right: 1rem;
 }
