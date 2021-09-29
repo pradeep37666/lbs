@@ -62,10 +62,10 @@ export default function MapsAutocomplete(props) {
         debounce: 500,
     })
 
-    const [value, setValue] = useState('')
+    const [value, setValue] = useState(props.defaultLocation ? props.defaultLocation : '')
     const [showResults, setShowResults] = useState(true)
-    const [lat, setLat] = useState('')
-    const [lng, setLng] = useState('')
+    const [lat, setLat] = useState(props.defaultLat ? props.defaultLat : '')
+    const [lng, setLng] = useState(props.defaultLng ? props.defaultLng : '')
     const [place, setPlace] = useState('')
     const [mapProps, setMapProps] = useState({
         center: {

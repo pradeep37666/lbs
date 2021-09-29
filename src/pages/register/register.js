@@ -13,7 +13,7 @@ import Instance from '../../util/axios';
 import { useHistory } from 'react-router-dom';
 import useGlobalState from '../../util/useGlobalState';
 import { CometChat } from '@cometchat-pro/chat';
-
+import getSuburb from '../../util/getSuburb';
 
 export default function Register() {
     const { dispatch } = useGlobalState()
@@ -54,32 +54,34 @@ export default function Register() {
 
     const registerUser = async () => {
         const userDetails = {
-                fullName: fullName,
-                email: email,
-                avatar: image.raw,
-                mobile: phoneNumber,
-                address: address.description,
-                lat: address.lat,
-                lng: address.lng,
-                bsb: bsb,
-                account_number: accNumber,
-                available: availability,
-                password: password,
-            }
+            fullName: fullName,
+            email: email,
+            avatar: image ? image.raw : '',
+            mobile: phoneNumber,
+            address: address ? address.description : '',
+            suburb: address.terms ? getSuburb(address.terms) : '',
+            lat: address ? address.lat : 0,
+            lng: address ? address.lng : 0,
+            bsb: bsb ? bsb : '',
+            account_number: accNumber ? accNumber : '',
+            available: availability,
+            password: password,
+        }
         const formData = new FormData()
         Object.keys(userDetails).forEach(key => {
             formData.append(key, userDetails[key])
         })
         
-        try{
+        try {
             const response = await Instance.post('/auth/signUp', formData)
+            console.log(response)
             if(response.status === 201) {
                 dispatch({ type: 'setUser', data: response.data.user})
                 registerCometChat(response.data.user)
                 localStorage.setItem('token', response.data.token.accessToken)
             }
         } catch(e) {
-            console.log(e)
+            console.log(e.response)
             history.push({pathname: '/login'})
             alert("an error occurred during registration, please try again")
         }
@@ -135,7 +137,8 @@ export default function Register() {
                 } else setValidated(false)
                 break
             case 'Availability':
-                console.log(availability)
+                console.log(getSuburb(address.terms))
+                console.log(address)
                 if (availability !== '00000000000000') {
                     setValidated(true)
                 } else setValidated(false)

@@ -8,6 +8,7 @@ import Instance from '../../../util/axios'
 import { ReactComponent as Logo } from '../../../assets/Logos/LogoRed.svg';
 import { useHistory } from 'react-router'
 import useGlobalState from '../../../util/useGlobalState'
+import getSuburb from '../../../util/getSuburb'
 
 export default function UpgradeLender() {
     const dispatch = useGlobalState().dispatch
@@ -54,7 +55,7 @@ export default function UpgradeLender() {
             account_number: accNumber ? accNumber : user.account_number,
             bsb: bsb ? bsb : user.bsb,
             address: address ? address.description : user.address,
-            suburb: address ? address.terms[2] + ' ' + address.terms[3] : user.suburb,
+            suburb: address.terms ? getSuburb(address.terms) : user.suburb,
             lat: address ? address.lat : user.lat,
             lng: address ? address.lng : user.lng,
             available: availability ? availability : user.available
@@ -125,6 +126,7 @@ export default function UpgradeLender() {
                 } else setValidated(false)
                 break
             case 'Availability':
+                console.log(getSuburb(address.terms))
                 if (availability !== '00000000000000') {
                     setValidated(true)
                 } else setValidated(false)

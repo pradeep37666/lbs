@@ -11,14 +11,14 @@ import Complete from './PostItemContent/Complete'
 import useGlobalState from '../../util/useGlobalState'
 import Instance from '../../util/axios'
 import { useHistory } from 'react-router'
-import Geocode from 'react-geocode'
+import getSuburb from '../../util/getSuburb'
 
 export default function PostItem() {
     const { state } = useGlobalState()
     const { user } = state
     const history = useHistory()
     
-    const [page, setPage] = useState('Item Location') 
+    const [page, setPage] = useState('Basic Details') 
     const [validated, setValidated] = useState(false)
 
     const [title, setTitle] = useState('')
@@ -44,6 +44,9 @@ export default function PostItem() {
 
     const createItem = async () => {
         // api call to post the images to the server, should return a key for each image and then we'll use that key in the items/save api
+        let suburb
+        address.terms ? suburb = getSuburb(address.terms) : suburb = user.suburb
+
         const itemDetails = {
             title: title,
             category: category,
@@ -53,11 +56,12 @@ export default function PostItem() {
             deliveryPrice: delivery,
             discount: discount,
             available: availability,
-            lat: address.lat,
-            lng: address.lng,
-            address: address.description,
-            // suburb: address.terms[2] + ' ' + address.terms[3]
+            lat: address.lat ? address.lat : user.lat,
+            lng: address.lng ? address.lng : user.lng,
+            address: address.description ? address.description : user.address,
+            suburb: suburb
         }
+        console.log(itemDetails)
         const formData = new FormData()
         for (let key in itemDetails) {
             if (key === 'files') {
@@ -78,7 +82,6 @@ export default function PostItem() {
             }
         } catch (e) {
             console.log(e.response)
-            console.log(e.response.error.message)
         }
     }
 
@@ -138,7 +141,7 @@ export default function PostItem() {
                 title={title}
                 picture={pictures[0]}
                 price={price}
-                city={address.terms[2]}
+                city={address.terms ? getSuburb(address.terms) : user.suburb}
                 category={category} 
                 delivery={delivery}
                 itemID={itemID}             
