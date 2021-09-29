@@ -113,39 +113,6 @@ export default function PostItem() {
             console.log(e.response)
             console.log(e.response.error.message)
         }
-        // Instance.post('/items/save', {
-        //     title: title,
-        //     category: category,
-        //     // pictures: pictures,
-        //     description: description,
-        //     price: price,
-        //     deliveryPrice: delivery,
-        //     discount: discount,
-        //     available: availability,
-        //     lat: lat,
-        //     lng: lng,
-        //     address: address,
-        //     city: city,
-        //     country: country,
-        //     state: stateL
-        // })
-        // .then((response) => {
-        //     console.log(response.data)
-        //     if (response.status === 201) {
-        //         uploadImages()
-        //         setItemID(response.data.i_id)
-        //     } else {
-        //         alert("an error occurred creating your item, please try again")
-        //         // history.go(0)
-        //     }
-        // })
-        // .catch((error) => {
-        //     console.log(error.response)
-        //     console.log(error.message)
-        //     console.log(error.data)
-        //     // history.go(0)
-        //     alert("an error occurred creating your item, please try again")
-        // })
     }
 
     const uploadImages = async () => {        

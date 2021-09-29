@@ -6,6 +6,7 @@ import getImage from '../../util/getImage'
 import './TradeCalendarItem.css'
 import useGlobalState from '../../util/useGlobalState'
 import getDateIndex from '../../util/getDateIndex'
+import stripes from '../../assets/Images/CancelledStripes.png'
 
 export default function TradeCalendarItem({ booking, setSelectedBooking, row, currentMonth, currentYear }) {
     const { state, dispatch } = useGlobalState()
@@ -36,7 +37,7 @@ export default function TradeCalendarItem({ booking, setSelectedBooking, row, cu
         className="TradeCalendarItem"
         style={{ gridRowStart: row, gridColumnStart: (booking.start_date - currentMonthDateIndex), gridColumnEnd: ((booking.end_date - currentMonthDateIndex) + 1)}}>
             
-            <div style={ sameTimeSlot ? { flexDirection: 'column'} : null } className={getCalendarItemClass()}>
+            <div style={{ flexDirection: sameTimeSlot ? 'column' : null , backgroundImage: isCancelled ? `url(${stripes})` : null}} className={getCalendarItemClass()}>
                 <span>{getDateObject(booking.start_date)?.morning ? '8am' : '1pm'}</span>
                 <Arrow vertical={sameTimeSlot} width={40} height={20}/>
                 <span>{getDateObject(booking.end_date)?.morning ? '12pm' : '5pm'}</span>
