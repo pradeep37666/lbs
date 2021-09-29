@@ -27,8 +27,11 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import Dialog from "@material-ui/core/Dialog";
 import Button from "@material-ui/core/Button";
 import Availability from "../../components/FormComponents/Availability";
+import { Link } from "react-router-dom";
+import { useHistory } from "react-router";
 
 function EditItemPage(props) {
+  const history = useHistory();
   const [loading, setLoading] = useState();
   const [titleText, setTitleText] = useState();
   //declaration for all the infromation we get from the server
@@ -163,9 +166,17 @@ function EditItemPage(props) {
 
   //-------------------------Deleting Items from Database-------------//
   const handleItemDeletion = () => {
-    alert(
-      `Item ${title}, having id : ${itemId} removed from YourShed successfully!`
-    );
+    // alert(
+    //   `Item ${title}, having id : ${itemId} removed from YourShed successfully!`
+    // );
+    Instance.post(`/items/delete?i_id=${itemId}`)
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log("Error : ", error);
+      });
+    history.push(`/user/your_shed`);
   };
 
   //------------------------------------------------------------------//
@@ -358,8 +369,8 @@ function EditItemPage(props) {
                 </div>
               </Fade>
             </div>
-            {/* Item Location */}
-            <div className="AccountSettings__Container">
+            {/* Item Location commented out for further changes */}
+            {/* <div className="AccountSettings__Container">
               <div className="AccountSettings__Title">Item Location</div>
 
               <div className="LoginHeader LoginHeader--NoMargin">Address</div>
@@ -442,7 +453,7 @@ function EditItemPage(props) {
                   hide={showValidation("state")}
                 />
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
 
