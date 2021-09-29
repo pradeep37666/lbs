@@ -183,7 +183,7 @@ export default function Search(props) {
           <CircularProgress size={75} />
         </div>
       ) : (
-        <div className="SearchMainContainer" style={{ marginBottom: "35%" }}>
+        <div className="SearchMainContainer" style={{ marginBottom: "20%" }}>
           <div className="SearchSortFlex">
             <div className="SearchMainText">
               Search results for:{" "}
