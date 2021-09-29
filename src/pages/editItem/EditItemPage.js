@@ -26,6 +26,7 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import Dialog from "@material-ui/core/Dialog";
 import Button from "@material-ui/core/Button";
+import Availability from "../../components/FormComponents/Availability";
 
 function EditItemPage(props) {
   const [loading, setLoading] = useState();
@@ -40,6 +41,7 @@ function EditItemPage(props) {
   const [discount, setDiscount] = useState();
   const [deliveryPrice, setDeliveryPrice] = useState();
   const [available, setAvailable] = useState();
+
   const [lat, setLat] = useState();
   const [lng, setLng] = useState();
   const [address, setAddress] = useState();
@@ -50,9 +52,17 @@ function EditItemPage(props) {
   const [created, setCreated] = useState();
   const [updated, setUpdated] = useState();
   const [isDiscount, setIsDiscount] = useState(false);
+
   //--------modal for displaying the edit button dialogue-------//
   const [open, setOpen] = useState(false);
+  const [editAvailabilityOpen, setEditAvailabilityOpen] = useState(false);
 
+  const handleOpenEditAvailability = () => {
+    setEditAvailabilityOpen(true);
+  };
+  const handleCloseEditAvailability = () => {
+    setEditAvailabilityOpen(false);
+  };
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -61,18 +71,19 @@ function EditItemPage(props) {
     setOpen(false);
   };
 
-  //-----------------------------------------------------------//
+  //--------------------------------------------------------------//
 
   let [newImage, setNewImage] = useState([]);
   let [updatedImage, setUpdatedImage] = useState([]);
 
-  //---------------------------------Location-------------------------------------//
+  //-----------------Location-------------------------------------//
 
   const [addressValidation, setAddressValidation] = useState("");
   const [cityValidation, setCityValidation] = useState("");
   const [countryValidation, setCountryValidation] = useState("");
   const [stateValidation, setStateValidation] = useState("");
 
+  //validation for Location entry like the city, street and state
   const showValidation = (field) => {
     switch (field) {
       case "address":
@@ -99,7 +110,7 @@ function EditItemPage(props) {
     }
   };
 
-  //----------------------------------------------------------------------------------------------------------//
+  //--------------------------------------------------------------//
 
   const queryString = require("query-string");
   const params = useParams();
@@ -109,22 +120,6 @@ function EditItemPage(props) {
   let itemId = parsed.i_id;
   let userId = parsed.u_id;
 
-  //used this method to add preview to the images received from the server
-  const dbImageConverter = () => {
-    newPictures = pictures.map((picture, i) => {
-      if (picture.preview) {
-        console.log("Modified data on Pictures ", JSON.stringify(newPictures));
-        return;
-      } else {
-        newPictures.push({
-          preview: picture,
-          raw: picture,
-          id: i + 1,
-        });
-        setPictures(newPictures);
-      }
-    });
-  };
   useEffect(() => {
     //returning data from the server
     Instance.get(`/items/findByIid/?i_id=${itemId}&u_id=${userId}`)
@@ -144,19 +139,36 @@ function EditItemPage(props) {
         setState(response.data.item.state);
         setLat(response.data.item.lat);
         setLng(response.data.item.lng);
+        setAvailable(response.data.item.available);
 
         setUpdatedImage(response.data.item.pictures.split(","));
-        setPictures(response.data.item.pictures.split(","));
+        setPictures(structurePictures(response.data.item.pictures.split(",")));
 
-        console.log("address : >", address, city, country, state);
         setLoading(false);
+        console.log(pictures);
       })
       .catch((error) => {
         console.log(error);
       });
-    dbImageConverter();
+    // dbImageConverter();
   }, [params, open]);
 
+  //checking the values received from the server
+  useEffect(() => {
+    console.log("Availability => ", available);
+    console.log("address : >", address, city, country, state);
+    console.log("Pictures :> ", pictures);
+    console.log("New Availability :", available);
+  }, [pictures, available, address]);
+
+  //-------------------------Deleting Items from Database-------------//
+  const handleItemDeletion = () => {
+    alert(
+      `Item ${title}, having id : ${itemId} removed from YourShed successfully!`
+    );
+  };
+
+  //------------------------------------------------------------------//
   //----------------------Picture Container Functionality------------------//
   const useStyles = makeStyles({
     button: {
@@ -200,35 +212,28 @@ function EditItemPage(props) {
     return i;
   };
 
-  const findNewPictureID = () => {
-    var indices = [];
-    newImage.forEach((picture) => {
-      indices[picture["id"]] = true;
-    });
-    for (var i = 1, l = indices.length; i < l; i++) {
-      if (indices[i] === undefined) {
-        break;
-      }
+  const handleChange = (e) => {
+    if (e.target.files.length) {
+      let updatedPictures = [
+        ...pictures,
+        {
+          preview: URL.createObjectURL(e.target.files[0]),
+          raw: e.target.files[0],
+          id: findNextID(),
+        },
+      ];
+      setPictures(updatedPictures);
     }
-    return i;
   };
 
-  const handleChange = (e) => {
-    //setting the array to get new images added to the database images as well
-    // this image array is used to update the image field on the server
-    dbImageConverter();
-    //setting the array for new image adding to show in the image section
-    if (e.target.files.length) {
-      let newPictures = newImage.map((picture) => picture);
-      newPictures.push({
-        preview: URL.createObjectURL(e.target.files[0]),
-        raw: e.target.files[0],
-        id: findNewPictureID(),
-      });
-      setNewImage(newPictures);
-      setUpdatedImage([...updatedImage, newPictures]);
-      console.log("Images to be uploaded : ", JSON.stringify(updatedImage));
-    }
+  const structurePictures = (dbPictures) => {
+    const newPictures = dbPictures.map((picture, i) => {
+      return {
+        url: picture,
+        id: i + 1,
+      };
+    });
+    return newPictures;
   };
 
   const handleDelete = (id) => {
@@ -242,26 +247,9 @@ function EditItemPage(props) {
       }
     }
     setPictures(newPictures);
-    setUpdatedImage(pictures);
   };
   //handling the deletion of images received from add button
-  const newPictureHandleDelete = (id) => {
-    var newPictures = [];
-    for (var i = 0; i < newImage.length; i++) {
-      var pic = newImage[i];
 
-      if (pic.id !== id) {
-        newPictures.push(pic);
-      }
-    }
-    setNewImage(newPictures);
-    setUpdatedImage(pictures);
-    setUpdatedImage([...updatedImage, newImage]);
-    console.log(
-      "to be uploaded after deletion : ",
-      JSON.stringify(updatedImage)
-    );
-  };
   //-------------------------------------------------------------------------//
 
   return (
@@ -477,30 +465,19 @@ function EditItemPage(props) {
                       <RemoveIcon className={classes.icon} />
                     </IconButton>
 
-                    <img
-                      src={getImage(picture.preview)}
-                      alt=""
-                      className="ProfilePicturePreview"
-                    />
-                  </div>
-                );
-              })}
-              {newImage.map((picture) => {
-                return (
-                  <div className="PostItem__ItemPictures__Preview">
-                    <IconButton
-                      aria-label="delete"
-                      className={classes.buttonDelete}
-                      onClick={() => newPictureHandleDelete(picture.id)}
-                    >
-                      <RemoveIcon className={classes.icon} />
-                    </IconButton>
-
-                    <img
-                      src={picture.preview}
-                      alt=""
-                      className="ProfilePicturePreview"
-                    />
+                    {picture.preview ? (
+                      <img
+                        src={picture.preview}
+                        alt=""
+                        className="ProfilePicturePreview"
+                      />
+                    ) : (
+                      <img
+                        src={getImage(picture.url)}
+                        alt=""
+                        className="ProfilePicturePreview"
+                      />
+                    )}
                   </div>
                 );
               })}
@@ -547,9 +524,29 @@ function EditItemPage(props) {
           <div className="LoginMain LoginMainNoMarg" style={{ width: "100%" }}>
             <div className="LoginHeader">Other Options</div>
             <div className="ItemButtons">
-              <button className="ButtonAvailability" style={{ width: "57%" }}>
+              <button
+                className="ButtonAvailability"
+                onClick={handleOpenEditAvailability}
+                style={{ width: "57%" }}
+              >
                 <div className="ItemButtonFlex">Edit Item Availability</div>
               </button>
+              <Dialog
+                open={editAvailabilityOpen}
+                onClose={handleCloseEditAvailability}
+              >
+                <DialogTitle>Update {title} Availability</DialogTitle>
+                <DialogContent>
+                  <DialogContentText>
+                    <Availability
+                      setAvailability={setAvailable}
+                      addEditButtons
+                      getAvailability={available}
+                      handleDiscardChanges={() => handleCloseEditAvailability()}
+                    />
+                  </DialogContentText>
+                </DialogContent>
+              </Dialog>
               <button
                 className="SearchButtonLarge"
                 onClick={handleClickOpen}
@@ -568,7 +565,14 @@ function EditItemPage(props) {
                   <Button onClick={handleClose} color="primary">
                     Close
                   </Button>
-                  <Button onClick={handleClose} color="secondary" autoFocus>
+                  <Button
+                    onClick={() => {
+                      handleClose();
+                      handleItemDeletion();
+                    }}
+                    color="secondary"
+                    autoFocus
+                  >
                     Yes
                   </Button>
                 </DialogActions>
