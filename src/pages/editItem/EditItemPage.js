@@ -170,7 +170,7 @@ function EditItemPage(props) {
     //   `Item ${title}, having id : ${itemId} removed from YourShed successfully!`
     // );
     try {
-      Instance.post(`/items/delete?i_id=${itemId}`)
+      Instance.delete(`/items/delete?i_id=${itemId}`)
         .then((response) => {
           console.log(response);
         })
@@ -301,7 +301,7 @@ function EditItemPage(props) {
               <input
                 type="text"
                 className="LoginInput"
-                placeholder={title}
+                value={title}
                 onBlur={(e) => setTitle(e.target.value)}
               />
               {/* Item Category */}
@@ -317,7 +317,7 @@ function EditItemPage(props) {
               <textarea
                 rows="10"
                 maxLength="254"
-                placeholder={description}
+                value={description}
                 className="LoginInput PostItem__TextArea"
                 onChange={(e) => setDescription(e.target.value)}
               />
@@ -338,7 +338,7 @@ function EditItemPage(props) {
                 type="number"
                 min="1"
                 step="any"
-                placeholder={price}
+                value={price}
                 className="LoginInput"
                 onBlur={(e) => setPrice(parseInt(e.target.value))}
               />
@@ -371,7 +371,7 @@ function EditItemPage(props) {
                           type="number"
                           min="1"
                           step="any"
-                          placeholder={discount}
+                          value={discount}
                           className="LoginInput"
                           onBlur={(e) => setDiscount(parseInt(e.target.value))}
                         />
@@ -547,7 +547,7 @@ function EditItemPage(props) {
               type="number"
               min="1"
               step="any"
-              placeholder={deliveryPrice}
+              value={deliveryPrice}
               className="LoginInput"
               onChange={(e) => setDeliveryPrice(parseInt(e.target.value))}
             />
