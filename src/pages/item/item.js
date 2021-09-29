@@ -10,7 +10,6 @@ import Category from './../../assets/Icons/CategoriesIcon.svg';
 import { ReactComponent as Profile } from './../../assets/Icons/UserCircle.svg';
 import Calendar from './../../assets/Icons/HangingCalendar.svg';
 import Geocode from 'react-geocode'
-import MapMarker from '../../components/mapMarker/mapMarker.js';
 
 import { ReactComponent as StarFilled } from './../../assets/Icons/StarFilled.svg';
 import { Link } from 'react-router-dom';
@@ -26,7 +25,6 @@ import getImage from '../../util/getImage.js';
 
 import { Avatar } from '@material-ui/core';
 import MissingProfile from '../../assets/Icons/MissingProfileIcon.png'
-import googleMapReact from 'google-map-react';
 
 export default function Item() {
     const { state } = useGlobalState()
@@ -97,7 +95,7 @@ export default function Item() {
     }, [params.itemId]);
 
     useEffect(() => {
-        if (item) {
+        if (item && item.suburb) {
             Geocode.setApiKey(process.env.REACT_APP_GOOGLE_API_KEY)
             Geocode.setLanguage('en')
             Geocode.setRegion('au')
@@ -355,9 +353,10 @@ export default function Item() {
                             </GoogleMapReact> 
                             : ''}
                             
-                            <div className="PickupLocationText">Pickup location around {item.suburb}</div>
-                            <div className="PickupLocationTextLight">Enquire about the item to acquire location</div>
+                            
                         </div>
+                        <div className="PickupLocationText">Pickup location around {item.suburb}</div>
+                        <div className="PickupLocationTextLight">Enquire about the item to acquire location</div>
                     </div>
                 </div>
             }

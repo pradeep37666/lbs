@@ -281,6 +281,7 @@
 .PickupLocationTextLight {
   font-size: 18px;
   color: #c7c7c7c7;
+  margin-bottom: 1em;
 }
 
 .MapContainer {
