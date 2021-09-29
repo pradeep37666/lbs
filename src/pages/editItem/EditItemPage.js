@@ -169,14 +169,18 @@ function EditItemPage(props) {
     // alert(
     //   `Item ${title}, having id : ${itemId} removed from YourShed successfully!`
     // );
-    Instance.post(`/items/delete?i_id=${itemId}`)
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((error) => {
-        console.log("Error : ", error);
-      });
-    history.push(`/user/your_shed`);
+    try {
+      Instance.post(`/items/delete?i_id=${itemId}`)
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => {
+          console.log("Error : ", error);
+        });
+      history.push(`/user/your_shed`);
+    } catch (error) {
+      console.log("Error while Deleting : ", error);
+    }
   };
 
   //------------------------------------------------------------------//
@@ -262,10 +266,27 @@ function EditItemPage(props) {
   //handling the deletion of images received from add button
 
   //-------------------------------------------------------------------------//
-
+  const applyChanges = () => {
+    alert(
+      `Here is the list of al the changes made! 
+      
+      Title -> ${title},
+      Category -> ${category}, 
+      Description -> ${description}, 
+      Item's Price -> $${price}, 
+      Discount -> ${discount}%, 
+      Delivery or Pickup Cost -> $${deliveryPrice},
+      !!!`
+    );
+  };
   return (
     <PageWrapper>
-      <Banner textBold="Editing Item" textNormal={titleText} />
+      <Banner
+        textBold="Editing Item"
+        textNormal={titleText}
+        button={"Apply Changes"}
+        buttonClick={() => applyChanges()}
+      />
       <div className="ItemMainWrapper">
         <div className="ItemInfoWrapper" style={{ minWidth: 400 }}>
           {/* Div for Item Details */}
