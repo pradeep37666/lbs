@@ -15,6 +15,7 @@ import {ReactComponent as StarFilled} from './../../assets/Icons/StarFilled.svg'
 import { withStyles } from '@material-ui/core/styles';
 import Slider from '@material-ui/core/Slider';
 import GoogleMapReact from 'google-map-react';
+import MapsAutocomplete from '../mapsAutocomplete/MapsAutocomplete';
 
 const LocationSlider = withStyles({
     root: {
@@ -44,7 +45,7 @@ const LocationSlider = withStyles({
 export default function SearchFilterBar() {
     const [ActiveFilter, setActiveFilter] = useState('none');
     const [Category, setCategory] = useState('none');
-    const [PostCode, setPostCode] = useState();
+    const [Address, setAddress] = useState();
     const [SearchRadius, setSearchRadius] = useState(10);
     const [PriceMin, setPriceMin] = useState();
     const [PriceMax, setPriceMax] = useState();
@@ -63,11 +64,11 @@ export default function SearchFilterBar() {
         setActiveFilter(filter);
     }
 
-    const handlePostcodeChange = (e) => {
-        let postcode = e.target.validity.valid ? e.target.value : PostCode;
-        postcode = postcode.slice(0, 4);
-        setPostCode(postcode);
-    }
+    // const handlePostcodeChange = (e) => {
+    //     let postcode = e.target.validity.valid ? e.target.value : PostCode;
+    //     postcode = postcode.slice(0, 4);
+    //     setPostCode(postcode);
+    // }
 
     const handlePriceMinChange = (e) => {
         let price = e.target.validity.valid ? e.target.value : PriceMin;
@@ -109,25 +110,16 @@ export default function SearchFilterBar() {
             <div className="FilterPopout FilterPopoutLoc" onClick={(e) => e.stopPropagation()}>
                 <hr className="hl hlPopout"/>
                 <div className="MainBodyPopout">
-                    <div className="PostcodeText">Postcode</div>
-                    <div className="PostcodeFlex">
-                    <input type="text" pattern="[0-9]*" value={PostCode} className="PostcodeInput" placeholder="4000" onChange={(e) => handlePostcodeChange(e)}/>
-                    <button className="FilterButtonSave" onClick={() => setActiveFilter('none')}>Save</button>
-                    </div>
+
+                    <MapsAutocomplete setAddress={setAddress} small/>
                     <div className="PostcodeText">Search radius</div>
-                    <div className="SearchRadiusText">Set the neighbourhood where you want to search.</div>
                     <div className="LocationSliderFlex">
                         <LocationSlider aria-label="search radius" defaultValue={10} max={20} min={2} onChange={(e, val) => setSearchRadius(val)}/>
                         <div className="SearchRadiusValue">{SearchRadius}km</div>
                     </div>
-                    <div className="MapContainerSmall">
-                        <GoogleMapReact
-                        bootstrapURLKeys={{ key: 'AIzaSyB98s0INvtxhs22OxCOEIjE_--kb54qhlQ' }}
-                        defaultCenter={defaultProps.center}
-                        defaultZoom={defaultProps.zoom}
-                        >
-                        </GoogleMapReact>
-                    </div>
+
+                    <button className="FilterButtonSave" onClick={() => setActiveFilter('none')}>Save</button>
+
                 </div>
             </div>
         )

@@ -9,6 +9,8 @@ import Delivery from './../../assets/Icons/DeliveryIcon.svg';
 import Category from './../../assets/Icons/CategoriesIcon.svg';
 import { ReactComponent as Profile } from './../../assets/Icons/UserCircle.svg';
 import Calendar from './../../assets/Icons/HangingCalendar.svg';
+import Geocode from 'react-geocode'
+import MapMarker from '../../components/mapMarker/mapMarker.js';
 
 import { ReactComponent as StarFilled } from './../../assets/Icons/StarFilled.svg';
 import { Link } from 'react-router-dom';
@@ -24,6 +26,7 @@ import getImage from '../../util/getImage.js';
 
 import { Avatar } from '@material-ui/core';
 import MissingProfile from '../../assets/Icons/MissingProfileIcon.png'
+import googleMapReact from 'google-map-react';
 
 export default function Item() {
     const { state } = useGlobalState()
@@ -38,6 +41,7 @@ export default function Item() {
     const [isUserItem, setIsUserItem] = useState(false)
     const [itemOwner, setItemOwner] = useState(null)
     const [loading, setLoading] = useState(true);
+    const [approx, setApprox] = useState(null)
 
     const reviewSamples = [
         ['Blake Dude', '4', 'Cillum nulla cupidatat aute pariatur ad sit tempor consectetur amet culpa labore deserunt sunt. Veniam eiusmod sunt incididunt ullamco fugiat reprehenderit labore. Ipsum irure culpa veniam velit. Elit dolore cillum nulla nulla do nulla Lorem ullamco.'],
@@ -48,7 +52,6 @@ export default function Item() {
         ['Isaac Myers', '2', 'Enim aute incididunt proident Lorem id mollit. Occaecat do cillum magna sunt dolore non exercitation et anim enim. Et nulla nulla aute sint minim laborum ut cupidatat nulla fugiat aliqua laboris exercitation mollit. Labore consectetur culpa laboris fugiat velit eu laborum proident consectetur. Eu labore nisi velit velit irure laborum.'],
         ['Christian Zhou', '5', 'Minim pariatur occaecat Lorem et ea elit reprehenderit sunt commodo ex.'],
     ]
-    console.log(itemPictures)
 
     useEffect(() => {
         // update modal state if navigated to this screen after creating a booking
@@ -89,7 +92,35 @@ export default function Item() {
                 })
         }
 
+        
+
     }, [params.itemId]);
+
+    useEffect(() => {
+        if (item) {
+            Geocode.setApiKey(process.env.REACT_APP_GOOGLE_API_KEY)
+            Geocode.setLanguage('en')
+            Geocode.setRegion('au')
+            Geocode.setLocationType('ROOFTOP')
+            Geocode.enableDebug(false)
+    
+            Geocode.fromAddress(item.suburb)
+                .then((response) => {
+                    console.log(response)
+                    setApprox({
+                        center: {
+                            lat: response.results[0].geometry.location.lat,
+                            lng: response.results[0].geometry.location.lng
+                        }
+                    })
+                })
+                .catch((error) => {
+                    console.log(error.response)
+                    alert('There was an issue processing this address, please try again')
+                })
+        }
+        
+    }, [item])
 
     const getItemOwner = async (item) => {
         setIsUserItem(false)
@@ -205,10 +236,9 @@ export default function Item() {
                                 : ''}
 
                         </div>
-                        {/* each LDCIconContainer Div had its own LocationDeliveryCategory div, check this */}
                         <div className="LocationDeliveryCategory">
                             <div className="LDCIconContainer"><img src={Location} alt="" className="LDCIcon" /></div>
-                            {item.city}
+                            {item.suburb}
                         </div>
                         <div className="LocationDeliveryCategory">
                             <div className="LDCIconContainer"><img src={Delivery} alt="" className="LDCIcon" style={{ height: '22px' }} /></div>
@@ -305,27 +335,32 @@ export default function Item() {
 
                         <div className="ItemDetailsHeader">Location</div>
                         <div className="MapContainer">
+                            {approx ? 
                             <GoogleMapReact
-                                bootstrapURLKeys={{ key: 'AIzaSyB98s0INvtxhs22OxCOEIjE_--kb54qhlQ' }}
-                                defaultCenter={defaultProps.center}
-                                defaultZoom={defaultProps.zoom}
+                                bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_API_KEY }}
+                                center={approx ? approx.center : defaultProps.center}
+                                zoom={defaultProps.zoom}
+                                onGoogleApiLoaded={({ map, maps }) => 
+                                new maps.Circle({
+                                    strokeColor: '#03a5fc',
+                                    strokeOpacity: 0.8,
+                                    strokeWeight: 2,
+                                    fillColor: '#03a5fc',
+                                    fillOpacity: 0.3,
+                                    map,
+                                    center: approx.center,
+                                    radius: 600,
+                                })}
                             >
-                                <Marker lat={item.lat} lng={item.lng} />
-                            </GoogleMapReact>
-                            <div className="PickupLocationText">Pickup location around Kangaroo Point</div>
+                            </GoogleMapReact> 
+                            : ''}
+                            
+                            <div className="PickupLocationText">Pickup location around {item.suburb}</div>
                             <div className="PickupLocationTextLight">Enquire about the item to acquire location</div>
                         </div>
-
                     </div>
-
                 </div>
             }
         </PageWrapper>
-    )
-}
-
-function Marker() {
-    return (
-        <div style={{ width: "39px", height: "39px", borderRadius: "50%", background: "#B03B4B", border: "3px solid #F6EFE6" }}></div>
     )
 }
