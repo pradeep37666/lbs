@@ -14,7 +14,7 @@ export default function Verification(props) {
                 <input type='text' placeholder='12345678' className="LoginInput" />
 
                 <button className="LoginFormButton" onClick={() => {
-                    props.setValidated(false)
+                    // props.setValidated(false)
                     props.handleNextPage('Bank Details')
                     }}>Next</button>
                 </div>

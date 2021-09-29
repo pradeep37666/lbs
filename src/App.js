@@ -28,11 +28,11 @@ import { loadStripe } from '@stripe/stripe-js';
 
 export const GlobalStateContext = React.createContext()
 
-// Can populate this inital state object with whatever we like
 const initialState = {}
 
+const stripe = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY)
+
 function App() {
-  const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY)
   const [state, dispatch] = useReducer(reducer, initialState)
   const [loadingUser, setLoadingUser] = useState(true)
   const { user } = state
@@ -66,7 +66,6 @@ function App() {
       }
     );
   }
-
 
   function AuthRoute({ component: Component, ...rest }) {
     return (
@@ -105,7 +104,7 @@ function App() {
   }
 
   return (
-    <Elements stripe={stripePromise}>
+    <Elements stripe={stripe}>
       <GlobalStateContext.Provider value={{ state, dispatch }}>
         {loadingUser ? '' : 
         

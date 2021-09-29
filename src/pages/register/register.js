@@ -27,11 +27,7 @@ export default function Register() {
     const [lender, setLender] = useState(false)
     const [image, setImage] = useState()
 
-    // Stripe details
-    const [cardName, setCardName] = useState("")
-    const [cardNumber, setCardNumber] = useState("")
-    const [expiry, setExpiry] = useState("")
-    const [ccv, setCcv] = useState("")
+    const [paymentMethod, setPaymentMethod] = useState()
 
     const [accNumber, setAccNumber] = useState("")
     const [bsb, setBsb] = useState("")
@@ -127,15 +123,15 @@ export default function Register() {
             case 'Verification':
                 break
             case 'Bank Details':
-                if (!lender) {
-                    if (cardName && cardNumber && expiry && ccv) {
-                        setValidated(true)
-                    } else setValidated(false)
-                } else {
-                    if (cardName && cardNumber && expiry && ccv && accNumber && bsb) {
-                        setValidated(true)
-                    } else setValidated(false)
-                }
+                // if (!lender) {
+                //     if (cardName && cardNumber && expiry && ccv) {
+                //         setValidated(true)
+                //     } else setValidated(false)
+                // } else {
+                //     if (cardName && cardNumber && expiry && ccv && accNumber && bsb) {
+                //         setValidated(true)
+                //     } else setValidated(false)
+                // }
                 break
             case 'Location Details':
                 if (address && city && country && state) {
@@ -159,7 +155,8 @@ export default function Register() {
             default:
                 return '';
         }
-    }, [page, fullName, email, phoneNumber, password, confirmPassword, cardName, cardNumber, expiry, ccv, accNumber, bsb,  lender, address, city, country, state, availability, tc])
+    }, [page, fullName, email, phoneNumber, password, confirmPassword,  accNumber, bsb,  lender, address, city, country, state, availability, tc])
+    // cardName, cardNumber, expiry, ccv,
 
     const getComplete = () => {
         return (
@@ -206,10 +203,7 @@ export default function Register() {
                 validated={validated}
                 handleNextPage={handleNextPage}
                 lender={lender}
-                setCardName={setCardName}
-                setCardNumber={setCardNumber}
-                setExpiry={setExpiry}
-                setCcv={setCcv}
+                setPaymentMethod={setPaymentMethod}
                 setAccNumber={setAccNumber}
                 setBsb={setBsb}
                 setValidated={setValidated}

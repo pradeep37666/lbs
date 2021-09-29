@@ -56,7 +56,7 @@ export default function AccountSettings() {
                 </div>
 
                 <EditAccountDetails />
-
+                
 
             </div>
 
