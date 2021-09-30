@@ -288,7 +288,7 @@ function EditItemPage(props) {
         buttonClick={() => applyChanges()}
       />
       <div className="ItemMainWrapper">
-        <div className="ItemInfoWrapper" style={{ minWidth: 400 }}>
+        <div className="ItemInfoWrapper">
           {/* Div for Item Details */}
           <div className="RegistrationWrapper">
             <div
@@ -301,7 +301,7 @@ function EditItemPage(props) {
               <input
                 type="text"
                 className="LoginInput"
-                value={title}
+                defaultValue={title}
                 onBlur={(e) => setTitle(e.target.value)}
               />
               {/* Item Category */}
@@ -317,7 +317,7 @@ function EditItemPage(props) {
               <textarea
                 rows="10"
                 maxLength="254"
-                value={description}
+                defaultValue={description}
                 className="LoginInput PostItem__TextArea"
                 onChange={(e) => setDescription(e.target.value)}
               />
@@ -338,7 +338,7 @@ function EditItemPage(props) {
                 type="number"
                 min="1"
                 step="any"
-                value={price}
+                defaultValue={price}
                 className="LoginInput"
                 onBlur={(e) => setPrice(parseInt(e.target.value))}
               />
@@ -371,7 +371,7 @@ function EditItemPage(props) {
                           type="number"
                           min="1"
                           step="any"
-                          value={discount}
+                          defaultValue={discount}
                           className="LoginInput"
                           onBlur={(e) => setDiscount(parseInt(e.target.value))}
                         />
@@ -478,7 +478,7 @@ function EditItemPage(props) {
           </div>
         </div>
 
-        <div className="ItemPicturesWrapper" style={{ minWidth: 400 }}>
+        <div className="ItemPicturesWrapper">
           {/* Div for Pictures from the database */}
           <div
             className="LoginMain"
@@ -547,7 +547,7 @@ function EditItemPage(props) {
               type="number"
               min="1"
               step="any"
-              value={deliveryPrice}
+              defaultValue={deliveryPrice}
               className="LoginInput"
               onChange={(e) => setDeliveryPrice(parseInt(e.target.value))}
             />
