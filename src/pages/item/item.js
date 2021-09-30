@@ -17,7 +17,7 @@ import { StarOutline } from '@material-ui/icons';
 
 import GoogleMapReact from 'google-map-react';
 import Instance from '../../util/axios';
-import { useParams, useLocation } from 'react-router';
+import { useParams, useLocation, useHistory } from 'react-router';
 import useGlobalState from "../../util/useGlobalState"
 import CircularProgress from '@material-ui/core/CircularProgress';
 import ApplicationModal from '../../components/applicationModal/ApplicationModal'
@@ -25,6 +25,8 @@ import getImage from '../../util/getImage.js';
 
 import { Avatar } from '@material-ui/core';
 import MissingProfile from '../../assets/Icons/MissingProfileIcon.png'
+
+import { isMobile } from 'react-device-detect'
 
 export default function Item() {
     const { state } = useGlobalState()
@@ -40,6 +42,7 @@ export default function Item() {
     const [itemOwner, setItemOwner] = useState(null)
     const [loading, setLoading] = useState(true);
     const [approx, setApprox] = useState(null)
+    const history = useHistory()
 
     const reviewSamples = [
         ['Blake Dude', '4', 'Cillum nulla cupidatat aute pariatur ad sit tempor consectetur amet culpa labore deserunt sunt. Veniam eiusmod sunt incididunt ullamco fugiat reprehenderit labore. Ipsum irure culpa veniam velit. Elit dolore cillum nulla nulla do nulla Lorem ullamco.'],
@@ -254,9 +257,16 @@ export default function Item() {
                             :
                             <div className="ItemButtons">
                                 <button className="ButtonAvailability"><div className="ItemButtonFlex"><img src={Calendar} alt="" />Availability</div></button>
-                                <Link to={`/item/${params.itemId}/application`}>
-                                    <button className="ButtonApply"><div className="ItemButtonFlex"><Profile fill='#ffffff' />Apply Now</div></button>
-                                </Link>
+                                
+                                    <button 
+                                    onClick={() => history.push(`/item/${params.itemId}/application`)}
+                                    className="ButtonApply">
+                                        <div className="ItemButtonFlex">
+                                            <Profile fill='#ffffff' />
+                                            Apply Now
+                                        </div>
+                                    </button>
+                                
 
                                 <button className="ButtonFavourite" onClick={handleFavourite} style={{ padding: '.5em 1em' }}>{favourited ? <StarFilled fill='#ffffff' /> : <StarOutline fill='#ffffff' />}</button>
                             </div>
@@ -306,6 +316,31 @@ export default function Item() {
                         <button className="ViewReviewsButton" onClick={() => setReviewModal(true)}>View all Reviews</button>
 
                         <hr className='hr' />
+                        { isMobile && 
+                        <>
+                            <div className="ItemDetailsHeader">Location</div>
+                            <div className="MapContainer">
+                                {approx &&
+                                <GoogleMapReact
+                                bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_API_KEY }}
+                                center={approx ? approx.center : defaultProps.center}
+                                zoom={defaultProps.zoom}
+                                onGoogleApiLoaded={({ map, maps }) => 
+                                new maps.Circle({
+                                    strokeColor: '#03a5fc',
+                                    strokeOpacity: 0.8,
+                                    strokeWeight: 2,
+                                    fillColor: '#03a5fc',
+                                    fillOpacity: 0.3,
+                                    map,
+                                    center: approx.center,
+                                    radius: 600,
+                                })} />
+                                }
+                            </div>
+                            <div className="PickupLocationText">Pickup location around {item.suburb}</div>
+                            <div className="PickupLocationTextLight">Enquire about the item to acquire location</div>
+                        </>}
                     </div>
 
                     <div className="ItemPicturesWrapper">
@@ -332,10 +367,12 @@ export default function Item() {
                             }
                         </div>
 
-                        <div className="ItemDetailsHeader">Location</div>
-                        <div className="MapContainer">
-                            {approx ? 
-                            <GoogleMapReact
+                       { !isMobile && 
+                        <>
+                            <div className="ItemDetailsHeader">Location</div>
+                            <div className="MapContainer">
+                                {approx &&
+                                <GoogleMapReact
                                 bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_API_KEY }}
                                 center={approx ? approx.center : defaultProps.center}
                                 zoom={defaultProps.zoom}
@@ -349,15 +386,12 @@ export default function Item() {
                                     map,
                                     center: approx.center,
                                     radius: 600,
-                                })}
-                            >
-                            </GoogleMapReact> 
-                            : ''}
-                            
-                            
-                        </div>
-                        <div className="PickupLocationText">Pickup location around {item.suburb}</div>
-                        <div className="PickupLocationTextLight">Enquire about the item to acquire location</div>
+                                })} />
+                                }
+                            </div>
+                            <div className="PickupLocationText">Pickup location around {item.suburb}</div>
+                            <div className="PickupLocationTextLight">Enquire about the item to acquire location</div>
+                        </>}
                     </div>
                 </div>
             }

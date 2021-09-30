@@ -81,10 +81,16 @@ export default function Home() {
           <div className="SearchSectionTitle">Let's Find Your Next Borrow</div>
           <div className="SearchSectionFilters">
             <div className="SearchFiltersRowFlex">
-              <TextInput width="35%" label="Keywords" fontSize="20px" onChange={(e) => setKeywords(e.target.value)}/>
-              <CategorySelect width="35%" label="Category" setCategory={setCategory}/>
+              <div className="SearchInputContainer">
+                <TextInput width="100%" label="Keywords" fontSize="20px" onChange={(e) => setKeywords(e.target.value)}/>
+              </div>
+              <div className="SearchInputContainer">
+                <CategorySelect width="100%" label="Category" setCategory={setCategory}/>
+              </div>
+              <div style={{ width: '25%', minWidth: '9rem'}}>
+                <TextInput width="100%" label="Location / Postcode" fontSize="20px" onChange={(e) => setLocation(e.target.value)}/>
+              </div>
               
-              <TextInput width="25%" label="Location / Postcode" fontSize="20px" onChange={(e) => setLocation(e.target.value)}/>
             </div>
 
             <hr className="DividingLine"/>
@@ -103,11 +109,12 @@ export default function Home() {
               </div>
 
             </div>
-
-            <RatingSelect width="25%" label="Minimum Rating" fontSize="20px" onChange={(e) => setRating(e.target.value)}/>
-
-            <SelectInput width="25%" label="Delivery" borders={true} fontSize="20px" options={['' , 'Available', 'Unavailable']} onChange={(e) => setDelivery(e.target.value)}/>
-
+            <div style={{ width: '25%', minWidth: '9rem'}}>
+              <RatingSelect width="100%" label="Minimum Rating" fontSize="20px" onChange={(e) => setRating(e.target.value)}/>
+            </div>
+            <div style={{ width: '25%', minWidth: '9rem'}}>
+              <SelectInput width="100%" label="Delivery" borders={true} fontSize="20px" options={['' , 'Available', 'Unavailable']} onChange={(e) => setDelivery(e.target.value)}/>
+            </div>
             </div>
 
           </div>
