@@ -314,14 +314,15 @@ export default function Item() {
                             {itemPictures[1] &&
                                 <div className="SecondaryItemImageDiv ImageModalDiv">
                                     <img src={getImage(itemPictures[1])} alt="" className="SecondaryItemImage" style={{ borderRadius: "0 0 0 15px" }} />
+                                    { !itemPictures[2] &&
                                     <div className="NavyOverlay">
                                         <button className="ImageModalButton" onClick={() => setImageModal(true)}>View All</button>
-                                    </div>
+                                    </div>}
                                 </div>
                             }
                             {itemPictures[2] &&
                                 <div className="SecondaryItemImageDiv ImageModalDiv">
-                                    <img src={' '} alt="" className="SecondaryItemImage OpenModalImage" style={{ borderRadius: "0 0 15px 0" }} />
+                                    <img src={getImage(itemPictures[2])} alt="" className="SecondaryItemImage OpenModalImage" style={{ borderRadius: "0 0 15px 0" }} />
                                     {itemPictures[3] &&
                                         <div className="NavyOverlay">
                                             <button className="ImageModalButton" onClick={() => setImageModal(true)}>View All</button>
