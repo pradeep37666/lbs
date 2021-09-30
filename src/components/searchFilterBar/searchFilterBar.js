@@ -91,7 +91,7 @@ export default function SearchFilterBar({ keyWord }) {
 
   useEffect(() => {
     handleSubmitFilterChange();
-  }, [Delivery, Category, Rating, PriceMax, PriceMin]);
+  }, [Delivery, Category, Rating]);
 
   const handlePostcodeChange = (e) => {
     let postcode = e.target.validity.valid ? e.target.value : PostCode;
@@ -164,7 +164,7 @@ export default function SearchFilterBar({ keyWord }) {
               BBQ
             </div>
             <div
-              className={`CategoryFilterDiv ${
+              className={`CategoryFiltzzzerDiv ${
                 Category === "Office" ? "CategoryFilterDivActive" : ""
               }`}
               onClick={() => {

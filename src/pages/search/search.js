@@ -49,6 +49,12 @@ export default function Search(props) {
   const location = useLocation();
 
   const [searchItems, setSearchItems] = useState([]);
+
+  const [priceAscending, setPriceAscending] = useState([]);
+  const [priceDescending, setPriceDescending] = useState([]);
+  const [ratingAscending, setRatingAscending] = useState([]);
+  const [ratingDescending, setRatingDescending] = useState([]);
+
   const [loading, setLoading] = useState(true);
 
   const [suggestedItems, setSuggestedItems] = useState([]);
@@ -70,6 +76,8 @@ export default function Search(props) {
     Instance.get(`/items/search/${location.search}`)
       .then((response) => {
         setSearchItems(response.data[0]);
+        setPriceAscending(response.data[0]);
+        setPriceDescending(response.data[0]);
         setLoading(false);
       })
       .catch((error) => {
@@ -161,6 +169,33 @@ export default function Search(props) {
     );
   };
 
+  const sortPriceLowToHigh = () => {
+    priceAscending.sort(function (a, b) {
+      return a.price - b.price;
+    });
+    console.log("Sorted Items Price Low to High -", priceAscending);
+  };
+
+  const sortPriceHighToLow = () => {
+    priceDescending.sort(function (a, b) {
+      return b.price - a.price;
+    });
+    console.log("Sorted Items Price High to Low -", priceDescending);
+  };
+
+  const sortRatingLowToHigh = () => {
+    ratingAscending.sort(function (a, b) {
+      return a.rating - b.rating;
+    });
+    console.log("Sorted Items Rating Low to High -", ratingAscending);
+  };
+  const sortRatingHighToLow = () => {
+    ratingDescending.sort(function (a, b) {
+      return b.rating - a.rating;
+    });
+    console.log("Sorted Items Rating High to Low -", ratingDescending);
+  };
+
   //mapping random items as suggested items in the search page
   const randomItemsMapper = () => {
     if (suggestedItems.length > 0) {
@@ -213,18 +248,32 @@ export default function Search(props) {
                 }}
               >
                 <MenuItem value="Nothing Selected" style={{ display: "none" }}>
-                  Nothing Selected
+                  {SortBy}
                 </MenuItem>
-                <MenuItem value="Price - Low to High">
+                <MenuItem
+                  value="Price - Low to High"
+                  onClick={() => {
+                    sortPriceLowToHigh();
+                  }}
+                >
                   Price - Low to High
                 </MenuItem>
-                <MenuItem value="Price - High to Low">
+                <MenuItem
+                  value="Price - High to Low"
+                  onClick={() => sortPriceHighToLow()}
+                >
                   Price - High to Low
                 </MenuItem>
-                <MenuItem value="Rating - Low to High">
+                <MenuItem
+                  value="Rating - Low to High"
+                  onClick={() => sortRatingLowToHigh()}
+                >
                   Rating - Low to High
                 </MenuItem>
-                <MenuItem value="Rating - High to Low">
+                <MenuItem
+                  value="Rating - High to Low"
+                  onClick={() => sortRatingHighToLow()}
+                >
                   Rating - High to Low
                 </MenuItem>
               </Select>

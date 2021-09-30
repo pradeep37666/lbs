@@ -1,240 +1,242 @@
 .SearchFilterBar {
-    border-bottom: 2px solid #ac172c;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  border-bottom: 2px solid #ac172c;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .SearchFilterBarFlex {
-    display: flex;
-    justify-content: space-between;
-    width: 70%;
-    padding: 2em 0;
-    font-size: 20px;
-    user-select: none;
+  display: flex;
+  justify-content: space-between;
+  width: 70%;
+  padding: 2em 0;
+  font-size: 20px;
+  user-select: none;
 }
 
 .SearchFilterText:hover {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .FilterActive {
-    font-size: 30px;
-    font-weight: bold;
+  font-size: 30px;
+  font-weight: bold;
 }
 
 .FilterContainer {
-    position: relative;
+  position: relative;
+  min-width: 25%;
+  text-align: center;
 }
 
 .FilterPopout {
-    position: absolute;
-    top: 79px;
-    border: 2px solid #ac172c;
-    border-top: none;
-    border-radius: 0 0 15px 15px;
-    background-color: #FFF;
-    z-index: 10;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
+  position: absolute;
+  top: 79px;
+  border: 2px solid #ac172c;
+  border-top: none;
+  border-radius: 0 0 15px 15px;
+  background-color: #fff;
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
 .FilterPopoutCat {
-    min-width: 600px;
-    left: -20px;
+  min-width: 600px;
+  left: -20px;
 }
 
 .FilterPopoutLoc {
-    min-width: 450px;
-    left: -60px;
+  min-width: 450px;
+  left: -60px;
 }
 
 .FilterPopoutPrice {
-    min-width: 400px;
-    left: -150px;
+  min-width: 400px;
+  left: -150px;
 }
 
 .FilterPopoutRating {
-    min-width: 350px;
-    left: -120px;
+  min-width: 350px;
+  left: -120px;
 }
 
 .FilterPopoutDel {
-    min-width: 450px;
-    left: -200px;
+  min-width: 450px;
+  left: -200px;
 }
 
 .hlPopout {
-    margin-top: 0;
-    margin-bottom: 1em;
-    width: 80%;
+  margin-top: 0;
+  margin-bottom: 1em;
+  width: 80%;
 }
 
 .MainBodyPopout {
-    padding: 0 2em 2em 2em;
-    width: 90%;
-    font-size: 14px;
+  padding: 0 2em 2em 2em;
+  width: 90%;
+  font-size: 14px;
 }
 
 .CategoryFiltersFlex {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
 }
 
 .CategoryFilterDiv {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 10px;
-    padding: .5em 1em;
-    background-color: #FFF;
-    border: 1px solid #c7c7c7;
-    margin: 0 1em 1em 0;
-    height: 3.5em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  padding: 0.5em 1em;
+  background-color: #fff;
+  border: 1px solid #c7c7c7;
+  margin: 0 1em 1em 0;
+  height: 3.5em;
 }
 
 .CategoryFilterDivActive {
-    border: 2px solid #9e1e29;
+  border: 2px solid #9e1e29;
 }
 
 .CategoryFilterDiv:hover {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .CategoryFilterIcon {
-    max-height: 30px;
-    margin-right: .5em;
+  max-height: 30px;
+  margin-right: 0.5em;
 }
 
 .FilterButtonSave {
-    font-family: "DMSans", sans-serif;
-    font-size: 20px;
-    color: #FFF;
-    padding: .7em 2em;
-    border-radius: 10px;
-    border: none;
-    outline: none;
-    background-color: #ac172c;
+  font-family: "DMSans", sans-serif;
+  font-size: 20px;
+  color: #fff;
+  padding: 0.7em 2em;
+  border-radius: 10px;
+  border: none;
+  outline: none;
+  background-color: #ac172c;
 }
 
 .PostcodeFlex {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 2em;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 2em;
 }
 
 .PostcodeText {
-    font-size: 18px;
-    color: #33384f;
-    font-weight: bold;
-    margin-bottom: .5em;
+  font-size: 18px;
+  color: #33384f;
+  font-weight: bold;
+  margin-bottom: 0.5em;
 }
 
 .SearchRadiusText {
-    font-size: 16px;
+  font-size: 16px;
 }
 
 .PostcodeInput {
-    font-size: 20px;
-    font-family: 'DMSans', sans-serif;
-    font-weight: bold;
-    text-align: center;
-    border: 1px solid #c7c7c7;
-    border-radius: 10px;
-    width: 50%;
+  font-size: 20px;
+  font-family: "DMSans", sans-serif;
+  font-weight: bold;
+  text-align: center;
+  border: 1px solid #c7c7c7;
+  border-radius: 10px;
+  width: 50%;
 }
 
 .PostcodeInput:focus {
-    outline: none;
+  outline: none;
 }
 
 .LocationSliderFlex {
-    display: flex;
-    align-self: center;
+  display: flex;
+  align-self: center;
 }
 
 .SearchRadiusValue {
-    margin-left: 1em;
-    font-size: 17px;
+  margin-left: 1em;
+  font-size: 17px;
 }
 
 .MapContainerSmall {
-    width: 100%;
-    height: 250px;
+  width: 100%;
+  height: 250px;
 }
 
 .MinMaxFlex {
-    display: flex;
-    justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
 }
 
 .MinMaxHeader {
-    width: 100%;
-    margin-left: 1em;
-    margin-bottom: .5em;
-    font-size: 16px;
+  width: 100%;
+  margin-left: 1em;
+  margin-bottom: 0.5em;
+  font-size: 16px;
 }
 
 .PriceInput {
-    font-size: 20px;
-    font-family: 'DMSans', sans-serif;
-    font-weight: bold;
-    text-align: center;
-    border: 1px solid #c7c7c7;
-    border-radius: 10px;
-    width: 90%;
-    padding: .5em 0.5em;
-    text-align: left;
+  font-size: 20px;
+  font-family: "DMSans", sans-serif;
+  font-weight: bold;
+  text-align: center;
+  border: 1px solid #c7c7c7;
+  border-radius: 10px;
+  width: 90%;
+  padding: 0.5em 0.5em;
+  text-align: left;
 }
 
 .PriceInput:focus {
-    outline: none;
+  outline: none;
 }
 
 .SaveButtonFlex {
-    display: flex;
-    justify-content: center;
-    margin-top: 1em;
+  display: flex;
+  justify-content: center;
+  margin-top: 1em;
 }
 
 .DeliveryFlex {
-    display: flex;
-    justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
 }
 
 .DeliveryButton {
-    padding: 1em;
-    color: #e9d8b4;
-    background-color: #ac172c;
-    border: 1px solid #ac172c;
-    font-size: 20px;
-    font-weight: bold;
-    border-radius: 10px;
-    width: 100px;
+  padding: 1em;
+  color: #e9d8b4;
+  background-color: #ac172c;
+  border: 1px solid #ac172c;
+  font-size: 20px;
+  font-weight: bold;
+  border-radius: 10px;
+  width: 100px;
 }
 
 .DeliveryButtonInactive {
-    background-color: #FFF;
-    font-weight: normal;
-    color: #000;
+  background-color: #fff;
+  font-weight: normal;
+  color: #000;
 }
 
 .StarsFlex {
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
 }
 
 .RatingFilterHeader {
-    display: flex;
-    justify-content: center;
-    font-size: 20px;
-    margin-bottom: 1em;
+  display: flex;
+  justify-content: center;
+  font-size: 20px;
+  margin-bottom: 1em;
 }
 
 .StarClick:hover {
-    cursor: pointer;
+  cursor: pointer;
 }
