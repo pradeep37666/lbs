@@ -6,7 +6,8 @@ import getImage from '../../util/getImage'
 import './TradeCalendarItem.css'
 import useGlobalState from '../../util/useGlobalState'
 import getDateIndex from '../../util/getDateIndex'
-import stripes from '../../assets/Images/CancelledStripes.png'
+import LendStripes from '../../assets/Images/LendStripes.png'
+import BorrowStripes from '../../assets/Images/BorrowStripes.png'
 
 export default function TradeCalendarItem({ booking, setSelectedBooking, row, currentMonth, currentYear }) {
     const { state, dispatch } = useGlobalState()
@@ -22,7 +23,7 @@ export default function TradeCalendarItem({ booking, setSelectedBooking, row, cu
     const getCalendarItemClass = () => {
 
         if(isCancelled){
-            return 'TradeCalendarItemCancelled'
+            return isLend ? 'TradeCalendarItemLendCancelled' : 'TradeCalendarItemBorrowCancelled'
         }
         if(isConfirmed){
             return isLend ? "TradeCalendarItemLend" : "TradeCalendarItemBorrow"
@@ -30,6 +31,10 @@ export default function TradeCalendarItem({ booking, setSelectedBooking, row, cu
         return 'TradeCalendarItemPending'
     }
     
+    const getBackgroundImage = () => {
+        if(!isCancelled) return null
+        return isLend ? `url(${LendStripes})` : `url(${BorrowStripes})`
+    }
     return (
         <div 
         onClick={() => {
@@ -41,7 +46,7 @@ export default function TradeCalendarItem({ booking, setSelectedBooking, row, cu
         className="TradeCalendarItem"
         style={{ gridRowStart: row, gridColumnStart: (booking.start_date - currentMonthDateIndex), gridColumnEnd: ((booking.end_date - currentMonthDateIndex) + 1)}}>
             
-            <div style={{ flexDirection: sameTimeSlot ? 'column' : null , backgroundImage: isCancelled ? `url(${stripes})` : null, backgroundSize: 'auto'}} className={getCalendarItemClass()}>
+            <div style={{ flexDirection: sameTimeSlot ? 'column' : null , backgroundImage: getBackgroundImage(), backgroundSize: 'auto'}} className={getCalendarItemClass()}>
                 <span>{getDateObject(booking.start_date)?.morning ? '8am' : '1pm'}</span>
                 <Arrow vertical={sameTimeSlot} width={40} height={20}/>
                 <span>{getDateObject(booking.end_date)?.morning ? '12pm' : '5pm'}</span>

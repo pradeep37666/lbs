@@ -40,12 +40,21 @@
   border-radius: 10px;
 }
 
-.TradeCalendarItemCancelled {
+.TradeCalendarItemLendCancelled {
   display: flex;
   align-items: center;
   padding: 0.5rem;
-  background-color: white;
-  color: #33384f;
+  background-color: #33384f;
+  color: white;
   border: 1px solid #33384f;
+  border-radius: 10px;
+}
+
+.TradeCalendarItemBorrowCancelled {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem;
+  background-color: #e9d8b4;
+  color: #33384f;
   border-radius: 10px;
 }
