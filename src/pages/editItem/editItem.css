@@ -1,0 +1,347 @@
+@media only screen and (max-width: 940px) {
+  .example {
+    background: green;
+  }
+  .ItemMainWrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 4em;
+  }
+  .ItemInfoWrapper {
+    min-width: 100%;
+    font-family: "DMSans", sans-serif;
+  }
+  .ItemPicturesWrapper {
+    min-width: 100%;
+  }
+}
+@media only screen and (max-width: 1127px) {
+  .FilterPopoutDel {
+    min-width: 200px;
+    left: -90px;
+  }
+}
+.ItemMainWrapper {
+  display: flex;
+  justify-content: space-between;
+  width: 70%;
+  margin-top: 4em;
+}
+
+.ItemInfoWrapper {
+  width: 45%;
+  font-family: "DMSans", sans-serif;
+}
+
+.ItemPicturesWrapper {
+  width: 45%;
+}
+
+.ItemName {
+  font-size: 40px;
+  font-weight: bold;
+}
+
+.ItemPriceFlex {
+  display: flex;
+}
+
+.ItemRateDiscountFlex {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding-left: 1em;
+  padding-top: 0.5em;
+}
+
+.ItemPriceTextBig {
+  font-size: 70px;
+  color: #33384f;
+}
+
+.ItemRateTextBig {
+  font-size: 34px;
+  color: #58554e;
+}
+
+.ItemDiscountText {
+  font-size: 18px;
+  color: #ac172c;
+}
+
+.LocationDeliveryCategory {
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 1em;
+}
+
+.LDCIconContainer {
+  margin-right: 2em;
+  display: flex;
+  justify-content: center;
+  width: 1em;
+}
+
+.LDCIcon {
+  height: 30px;
+}
+
+.DeliveryFeeText {
+  color: #c7c7c7;
+}
+
+.ItemButtons {
+  display: flex;
+}
+
+.ItemButtons button {
+  padding: 0.5em;
+  border-radius: 10px;
+  outline: none;
+  font-family: "DMSans", sans-serif;
+  font-size: 18px;
+  margin-right: 10px;
+}
+
+.ItemButtonFlex {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 1.5em;
+  align-items: center;
+}
+
+.ItemButtons img {
+  height: 30px;
+}
+
+.ButtonAvailability {
+  border: 1px solid #33384f;
+  background-color: #ffffff;
+  width: 40%;
+}
+
+.ButtonApply {
+  background-color: #33384f;
+  border: none;
+  color: #ffffff;
+  width: 80%;
+}
+
+.ButtonFavourite {
+  background-color: #b43b4c;
+  border: none;
+}
+
+.hr {
+  border: 1px solid #ebebeb;
+  margin: 35px 0;
+}
+
+.ItemDetailsHeader {
+  font-weight: bold;
+  font-size: 25px;
+  color: #33384f;
+  margin-bottom: 0.5em;
+}
+
+.ItemDetailsFlex {
+  display: flex;
+  justify-content: space-between;
+  font-size: 18px;
+  width: 80%;
+  margin-bottom: 1em;
+  font-weight: bold;
+}
+
+.ItemDetailsFlex div {
+  font-weight: normal;
+}
+
+.ProductRatingRow {
+  display: flex;
+  justify-content: space-between;
+  font-size: 20px;
+  width: 70%;
+}
+
+.RatingHeader {
+  font-weight: bold;
+}
+
+.RatingStarFlex {
+  display: flex;
+  align-items: center;
+}
+
+.StarIconRating {
+  height: 18px;
+  margin-left: 0.5em;
+}
+
+.RegistrationWrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.RatingLenderFlex {
+  display: flex;
+}
+
+.ProfileIcon {
+  height: 50px;
+  width: 50px;
+  margin-right: 0.5em;
+}
+
+.ReviewCardSection {
+  display: flex;
+  justify-content: space-between;
+  margin: 1em 0;
+}
+
+.ViewReviewsButton {
+  width: 100%;
+  border: 1px solid #b03b4b;
+  padding: 1em;
+  text-align: center;
+  font-size: 14px;
+  border-radius: 10px;
+  background-color: #ffffff;
+  font-family: "DMSans", sans-serif;
+}
+
+.ReviewCarousel {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1em;
+}
+
+.ReviewButtonFlex {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Old versions of Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none;
+}
+
+.ReviewButtonFlex:hover {
+  cursor: pointer;
+}
+
+.ReviewCarousel div {
+  height: 16px;
+  width: 16px;
+  border-radius: 50%;
+  margin: 0 0.2em;
+  color: #ffffff;
+}
+
+.ReviewPageInactive {
+  border: 1px solid #ac172c;
+}
+
+.ReviewPageActive {
+  background-color: #ac172c;
+}
+
+.MainItemImage {
+  width: 100%;
+  border-radius: 30px 30px 0 0;
+  margin-bottom: 1em;
+}
+
+.SecondaryImageFlexContainer {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 2em;
+}
+
+.SecondaryItemImageDiv {
+  width: 48%;
+}
+
+.SecondaryItemImage {
+  width: 100%;
+  display: block;
+}
+
+.ImageModalDiv {
+  position: relative;
+}
+
+.ImageModalButton {
+  width: 45%;
+  color: #fff;
+  border-radius: 10px;
+  background-color: #ac172c;
+  padding: 1em;
+  border: none;
+  outline: none;
+  font-family: "DMSans", sans-serif;
+}
+
+.NavyOverlay {
+  position: absolute;
+  background-color: rgba(20, 25, 31, 0.5);
+  border-radius: 0 0 15px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  top: 0;
+}
+.NavyOverlayMain {
+  border-radius: 30px;
+}
+
+.PickupLocationText {
+  font-size: 18px;
+  font-weight: bold;
+  margin: 0.5em 0;
+}
+
+.PickupLocationTextLight {
+  font-size: 18px;
+  color: #c7c7c7c7;
+}
+
+.MapContainer {
+  height: 400px;
+  width: 100%;
+}
+
+.Hide {
+  visibility: hidden;
+}
+.marker {
+  width: 39px;
+  height: 39px;
+  border-radius: 50%;
+  background: "#B03B4B";
+}
+.editButton {
+  width: 100%;
+  background-color: #33384f;
+  border: none;
+  color: #fff;
+  font-size: 18px;
+  padding: 0.5em;
+  border-radius: 10px;
+  outline: none;
+  font-family: "DMSans", sans-serif;
+  font-size: 18px;
+}
+.ItemPage__Loading__Container {
+  margin: 5em 0;
+}
