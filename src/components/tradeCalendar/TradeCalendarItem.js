@@ -29,15 +29,19 @@ export default function TradeCalendarItem({ booking, setSelectedBooking, row, cu
         }
         return 'TradeCalendarItemPending'
     }
+    
     return (
         <div 
         onClick={() => {
+            console.log(getDateIndex(new Date(2021,10,1)) * 2)
+            console.log(currentMonthDateIndex)
+            console.log(booking.start_date - currentMonthDateIndex)
             setSelectedBooking(booking)
         }}
         className="TradeCalendarItem"
         style={{ gridRowStart: row, gridColumnStart: (booking.start_date - currentMonthDateIndex), gridColumnEnd: ((booking.end_date - currentMonthDateIndex) + 1)}}>
             
-            <div style={{ flexDirection: sameTimeSlot ? 'column' : null , backgroundImage: isCancelled ? `url(${stripes})` : null}} className={getCalendarItemClass()}>
+            <div style={{ flexDirection: sameTimeSlot ? 'column' : null , backgroundImage: isCancelled ? `url(${stripes})` : null, backgroundSize: 'auto'}} className={getCalendarItemClass()}>
                 <span>{getDateObject(booking.start_date)?.morning ? '8am' : '1pm'}</span>
                 <Arrow vertical={sameTimeSlot} width={40} height={20}/>
                 <span>{getDateObject(booking.end_date)?.morning ? '12pm' : '5pm'}</span>
