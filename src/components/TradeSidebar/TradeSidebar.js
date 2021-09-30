@@ -12,7 +12,7 @@ import RatingFiller from '../ratingFiller/ratingFiller'
 import MissingProfile from '../../assets/Icons/MissingProfileIcon.png'
 import TradeCalendarStatusPanel from '../tradeCalendar/tradeCalendarStatusPanel/TradeCalendarStatusPanel'
 
-export default function TradeSidebar({ booking }) {
+export default function TradeSidebar({ booking, getBookings }) {
     const { state } = useGlobalState()
     const { user } = state
     const [item, setItem] = useState(null)
@@ -72,7 +72,7 @@ export default function TradeSidebar({ booking }) {
                     item={item}/>
                 </div>
                 <div className="TradeSidebarSection">
-                    <TradeCalendarStatusPanel booking={booking} userDetails={userDetails}/>
+                    <TradeCalendarStatusPanel getBookings={getBookings} booking={booking} userDetails={userDetails}/>
 
                 </div>
                 <div className="TradeSidebarSection">

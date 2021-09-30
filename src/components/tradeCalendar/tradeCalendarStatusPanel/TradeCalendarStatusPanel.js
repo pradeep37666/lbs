@@ -8,7 +8,7 @@ import StatusZero from './StatusZero'
 import StatusThree from './StatusThree'
 import getDateObject from '../../../util/getDateObject'
 
-export default function TradeCalendarStatusPanel({ booking, userDetails }) {
+export default function TradeCalendarStatusPanel({ booking, userDetails, getBookings }) {
     const [status, setStatus] = useState()
     const { state } = useGlobalState()
     const { user } = state
@@ -60,6 +60,7 @@ export default function TradeCalendarStatusPanel({ booking, userDetails }) {
             console.log(data,status)
             if(status === 200){
                 setStatus(newStatus)
+                getBookings()
             }
         } catch(err) {
             console.log(err)

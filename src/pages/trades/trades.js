@@ -13,9 +13,13 @@ export default function Trades() {
     const [borrowerBookingItems, setBorrowerBookingItems] = useState([])
 
     useEffect(() => {
+        getBookings()
+    },[])
+
+    const getBookings = () => {
         getLenderBookings()
         getBorrowerBookings()
-    },[])
+    }
 
     const getLenderBookings = async () => {
         const { data, status } = await Instance.get('booking/findByOwnerId')
@@ -60,7 +64,7 @@ export default function Trades() {
                     borrowerBookingItems={borrowerBookingItems}
                     />
                 </div>
-                { selectedBooking && <TradeSidebar booking={selectedBooking} />}
+                { selectedBooking && <TradeSidebar getBookings={getBookings} booking={selectedBooking} />}
             </div>
         </PageWrapper>
     )
