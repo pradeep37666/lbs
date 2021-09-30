@@ -29,6 +29,7 @@ import Button from "@material-ui/core/Button";
 import Availability from "../../components/FormComponents/Availability";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router";
+import BorrowerRater from "../../components/rateBorrower/BorrowerRater";
 
 function EditItemPage(props) {
   const history = useHistory();
@@ -289,6 +290,8 @@ function EditItemPage(props) {
       />
       <div className="ItemMainWrapper">
         <div className="ItemInfoWrapper">
+          {/* Testing for Borrower Rating */}
+          <BorrowerRater />
           {/* Div for Item Details */}
           <div className="RegistrationWrapper">
             <div

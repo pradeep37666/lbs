@@ -22,7 +22,7 @@
   color: white;
   width: 50%;
   margin: auto;
-  line-height: 1.08;;
+  line-height: 1.08;
   margin-bottom: 10px;
 }
 
@@ -40,13 +40,13 @@
 }
 
 .DividingLine {
-  border: solid 1px #FFFFFF;
+  border: solid 1px #ffffff;
   opacity: 0.3;
 }
 
 .PriceFilterSearch {
   width: 45%;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   border-radius: 15px;
   border: 2px solid #95272f;
   display: flex;
@@ -86,9 +86,9 @@
   border: none;
   outline: none;
   border-radius: 10px;
-  padding: .6em 2em;
+  padding: 0.6em 2em;
   font-family: "DMSans", sans-serif;
-  color: #FFFFFF;
+  color: #ffffff;
   width: max-content;
   font-size: 24px;
 }
@@ -150,7 +150,7 @@
   padding: 1em;
   margin-right: 20px;
   border-radius: 10px;
-  color: #FFFFFF;
+  color: #ffffff;
   background-repeat: no-repeat;
 }
 
