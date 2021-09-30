@@ -164,7 +164,7 @@ export default function SearchFilterBar({ keyWord }) {
               BBQ
             </div>
             <div
-              className={`CategoryFiltzzzerDiv ${
+              className={`CategoryFilterDiv ${
                 Category === "Office" ? "CategoryFilterDivActive" : ""
               }`}
               onClick={() => {
