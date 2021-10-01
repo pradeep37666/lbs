@@ -83,3 +83,6 @@
   font-size: 15px;
   width: 100%;
 }
+.checkbox {
+  border: 1px solid #ac172c;
+}

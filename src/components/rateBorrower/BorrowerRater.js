@@ -7,7 +7,7 @@ import { ReactComponent as StarOutline } from "./../../assets/Icons/StarOutline.
 import { ReactComponent as StarFilled } from "./../../assets/Icons/StarFilled.svg";
 
 function BorrowerRater(props) {
-  const [comment, setComment] = useState();
+  const [comment, setComment] = useState("");
   const [Rating, setRating] = useState();
 
   const useStyles = makeStyles({
@@ -131,7 +131,10 @@ function BorrowerRater(props) {
       <div className="ItemButtons" style={{ justifyContent: "center" }}>
         <button
           className="SearchButtonLarge"
-          onClick={() => props.handleClick()}
+          onClick={() => {
+            console.log("Rating -", Rating);
+            console.log("Details -", comment);
+          }}
           style={{ width: "auto" }}
         >
           <div className="ItemButtonFlex">Submit Review</div>

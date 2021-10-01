@@ -7,7 +7,7 @@ import { ReactComponent as StarOutline } from "./../../assets/Icons/StarOutline.
 import { ReactComponent as StarFilled } from "./../../assets/Icons/StarFilled.svg";
 
 function LenderRater(props) {
-  const [comment, setComment] = useState();
+  const [comment, setComment] = useState("");
   const [lenderRating, setLenderRating] = useState();
   const [productRating, setProductRating] = useState();
 
@@ -203,6 +203,7 @@ function LenderRater(props) {
             // props.handleClick();
             console.log("Lender Rating => ", lenderRating);
             console.log("Product Rating ->", productRating);
+            console.log("Details -", comment);
           }}
           style={{ width: "auto" }}
         >

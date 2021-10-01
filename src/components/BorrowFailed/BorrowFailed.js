@@ -7,7 +7,7 @@ import { makeStyles } from "@material-ui/styles";
 import Checkbox from "@material-ui/core/Checkbox";
 
 function BorrowFailed(props) {
-  const [comment, setComment] = useState();
+  const [comment, setComment] = useState("");
   //states for the reason to borrow failure
   const [lenderFailedToArrive, setLenderFailedToArrive] = useState("");
   const [lenderRefuse, setLenderRefuse] = useState("");
@@ -38,12 +38,12 @@ function BorrowFailed(props) {
     },
     root: {
       "&:hover": {
-        backgroundColor: "transparent",
+        backgroundColor: "#B43B4C",
       },
     },
     checkboxicon: {
       borderRadius: 5,
-      borderColor: "#ac172c",
+      border: "1px solid #ac172c",
       width: 25,
       height: 25,
       boxShadow:
@@ -69,8 +69,8 @@ function BorrowFailed(props) {
         "linear-gradient(180deg,hsla(0,0%,100%,.1),hsla(0,0%,100%,0))",
       "&:before": {
         display: "block",
-        width: 25,
-        height: 25,
+        width: 23,
+        height: 23,
         backgroundImage:
           "url(\"data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath" +
           " fill-rule='evenodd' clip-rule='evenodd' d='M12 5c-.28 0-.53.11-.71.29L7 9.59l-2.29-2.3a1.003 " +
@@ -128,7 +128,7 @@ function BorrowFailed(props) {
       </div>
       <div className="BorrowerHeader">Fail Reason :&nbsp;</div>
       <div className="BorrowerText" style={{ marginTop: "-.5%" }}>
-        Why has your borrow failed?
+        Why has your Borrow failed?
       </div>
       {/* LENDER HAS FAILED TO ARRIVE */}
       <div className="CheckboxFlex">
@@ -221,11 +221,14 @@ function BorrowFailed(props) {
           onClick={() => {
             //  props.handleClick();
             console.log("Extra Details ->", comment);
-            console.log("Checked ->", lenderFailedToArrive);
-            console.log("Checked ->", lenderRefuse);
-            console.log("Checked ->", lenderEmergency);
-            console.log("Checked ->", unknownReason);
-            console.log("Checked ->", other);
+            console.log(
+              "Reasons for Borrow Failure ->",
+              lenderFailedToArrive,
+              lenderRefuse,
+              lenderEmergency,
+              unknownReason,
+              other
+            );
           }}
           style={{ width: "auto" }}
         >

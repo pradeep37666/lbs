@@ -295,9 +295,9 @@ function EditItemPage(props) {
         <div className="ItemInfoWrapper">
           {/* Testing for Borrower Rating */}
           <LendingFailed />
-          <BorrowFailed />
+
           <LenderRater />
-          <BorrowerRater />
+
           {/* Div for Item Details */}
           <div className="RegistrationWrapper">
             <div
@@ -488,6 +488,8 @@ function EditItemPage(props) {
         </div>
 
         <div className="ItemPicturesWrapper">
+          <BorrowFailed />
+          <BorrowerRater />
           {/* Div for Pictures from the database */}
           <div
             className="LoginMain"
