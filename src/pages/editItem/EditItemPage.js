@@ -33,6 +33,8 @@ import BorrowerRater from "../../components/rateBorrower/BorrowerRater";
 import LenderRater from "../../components/rateLender/rateLender";
 import BorrowFailed from "../../components/BorrowFailed/BorrowFailed";
 import LendingFailed from "../../components/LendingFailed/LendingFailed";
+import CancelBorrow from "../../components/cancelborrow/cancelborrow";
+import BorrowCancelled from "../../components/borrowcancelled/BorrowCancelled";
 
 function EditItemPage(props) {
   const history = useHistory();
@@ -294,6 +296,7 @@ function EditItemPage(props) {
       <div className="ItemMainWrapper">
         <div className="ItemInfoWrapper">
           {/* Testing for Borrower Rating */}
+          <CancelBorrow />
           <LendingFailed />
 
           <LenderRater />
@@ -488,6 +491,7 @@ function EditItemPage(props) {
         </div>
 
         <div className="ItemPicturesWrapper">
+          <BorrowCancelled />
           <BorrowFailed />
           <BorrowerRater />
           {/* Div for Pictures from the database */}
