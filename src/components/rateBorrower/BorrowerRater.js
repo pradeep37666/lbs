@@ -49,8 +49,8 @@ function BorrowerRater(props) {
         </div>
       </div>
       <div className="BorrowerText">
-        Here, You can use this component to give ratings and to comment out the
-        experience you had during the borrowing session!
+        Here, You can give ratings to the Borrower also, you can comment the
+        details about the Borrower and the Lending experience.
       </div>
       <div className="BorrowerHeader">
         Borrower Rating :&nbsp;
