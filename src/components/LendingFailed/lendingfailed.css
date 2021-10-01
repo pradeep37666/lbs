@@ -74,3 +74,12 @@
 .BorrowerRatingText {
   color: #c7c7c7;
 }
+
+.CheckboxFlex {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  margin-top: -1%;
+  font-size: 15px;
+  width: 100%;
+}

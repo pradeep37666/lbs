@@ -122,6 +122,7 @@ function BorrowerRater(props) {
       <textarea
         rows="10"
         maxLength="254"
+        placeholder="Your comments on the Lending Experience."
         defaultValue={props.BorrowerRating}
         className="LoginInput PostItem__TextArea"
         onChange={(e) => setComment(e.target.value)}

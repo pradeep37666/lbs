@@ -30,6 +30,9 @@ import Availability from "../../components/FormComponents/Availability";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router";
 import BorrowerRater from "../../components/rateBorrower/BorrowerRater";
+import LenderRater from "../../components/rateLender/rateLender";
+import BorrowFailed from "../../components/BorrowFailed/BorrowFailed";
+import LendingFailed from "../../components/LendingFailed/LendingFailed";
 
 function EditItemPage(props) {
   const history = useHistory();
@@ -291,6 +294,9 @@ function EditItemPage(props) {
       <div className="ItemMainWrapper">
         <div className="ItemInfoWrapper">
           {/* Testing for Borrower Rating */}
+          <LendingFailed />
+          <BorrowFailed />
+          <LenderRater />
           <BorrowerRater />
           {/* Div for Item Details */}
           <div className="RegistrationWrapper">
