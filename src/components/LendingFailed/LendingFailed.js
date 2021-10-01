@@ -15,6 +15,13 @@ function LendingFailed(props) {
   const [unknownReason, setUnknownReason] = useState("");
   const [other, setOther] = useState("");
 
+  const REASONS = {
+    ARRIVALFAILURE: "Borrower Has Failed To Arrive",
+    REFUSAL: "Borrower refuses to give item",
+    EMERGENCY: "Borrower had an emergency to attend",
+    UNKNOWN: "Unknown Reason",
+    OTHER: "Other",
+  };
   const useStyles = makeStyles({
     button: {
       backgroundColor: "#B43B4C",
@@ -39,7 +46,7 @@ function LendingFailed(props) {
     root: {
       borderColor: "yellow",
       "&:hover": {
-        backgroundColor: "#B43B4C",
+        backgroundColor: "#ac171787",
       },
     },
     checkboxicon: {
@@ -88,28 +95,27 @@ function LendingFailed(props) {
   //when lender fails to arrive
   const handleLenderFailedToArrive = () => {
     if (lenderFailedToArrive === "")
-      setLenderFailedToArrive("Borrower Has Failed To Arrive");
+      setLenderFailedToArrive(REASONS.ARRIVALFAILURE);
     else setLenderFailedToArrive("");
   };
   //when lender refuses to give the item
   const handleLenderRefusal = () => {
-    if (lenderRefuse === "") setLenderRefuse("Borrower refuses to return item");
+    if (lenderRefuse === "") setLenderRefuse(REASONS.REFUSAL);
     else setLenderRefuse("");
   };
   //when lender has emergency to attend
   const handleLenderEmergency = () => {
-    if (lenderEmergency === "")
-      setLenderEmergency("Borrower had an emergency to attend");
+    if (lenderEmergency === "") setLenderEmergency(REASONS.EMERGENCY);
     else setLenderEmergency("");
   };
   //for unknown reason
   const handleUnknownReason = () => {
-    if (unknownReason === "") setUnknownReason("Unknown Reason");
+    if (unknownReason === "") setUnknownReason(REASONS.UNKNOWN);
     else setUnknownReason("");
   };
   //for other reason
   const handleOther = () => {
-    if (other === "") setOther("Other");
+    if (other === "") setOther(REASONS.OTHER);
     else setOther("");
   };
 
@@ -144,7 +150,7 @@ function LendingFailed(props) {
           icon={<span className={classes.checkboxicon} />}
           inputProps={{ "aria-label": "decorative checkbox" }}
         />
-        <div>Borrower Has Failed To Arrive</div>
+        <div>{REASONS.ARRIVALFAILURE}</div>
       </div>
       {/* LENDER REFUSES TO GIVE THE ITEM */}
       <div className="CheckboxFlex">
@@ -159,7 +165,7 @@ function LendingFailed(props) {
           icon={<span className={classes.checkboxicon} />}
           inputProps={{ "aria-label": "decorative checkbox" }}
         />
-        <div>Borrower refuses to return item </div>
+        <div>{REASONS.REFUSAL} </div>
       </div>
       {/* LENDER HAS EMERGENCY TO ATTEND */}
       <div className="CheckboxFlex">
@@ -174,7 +180,7 @@ function LendingFailed(props) {
           icon={<span className={classes.checkboxicon} />}
           inputProps={{ "aria-label": "decorative checkbox" }}
         />
-        <div>Borrower had an emergency to attend </div>
+        <div>{REASONS.EMERGENCY}</div>
       </div>
       {/* UNKNOWN REASON */}
       <div className="CheckboxFlex">
@@ -189,7 +195,7 @@ function LendingFailed(props) {
           icon={<span className={classes.checkboxicon} />}
           inputProps={{ "aria-label": "decorative checkbox" }}
         />
-        <div>Unknown Reason </div>
+        <div>{REASONS.UNKNOWN}</div>
       </div>
       {/* OTHER */}
       <div className="CheckboxFlex">
@@ -204,7 +210,7 @@ function LendingFailed(props) {
           icon={<span className={classes.checkboxicon} />}
           inputProps={{ "aria-label": "decorative checkbox" }}
         />
-        <div>Other</div>
+        <div>{REASONS.OTHER}</div>
       </div>
       {/* Extra Details*/}
       <div className="BorrowerHeader">Extra Details</div>

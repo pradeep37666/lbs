@@ -7,6 +7,14 @@ import { makeStyles } from "@material-ui/styles";
 import Checkbox from "@material-ui/core/Checkbox";
 
 function BorrowFailed(props) {
+  const REASONS = {
+    ARRIVALFAILURE: "Lender Has Failed To Arrive",
+    REFUSAL: "Lender refuses to give item",
+    EMERGENCY: "Lender had an emergency to attend",
+    UNKNOWN: "Unknown Reason",
+    OTHER: "Other",
+  };
+
   const [comment, setComment] = useState("");
   //states for the reason to borrow failure
   const [lenderFailedToArrive, setLenderFailedToArrive] = useState("");
@@ -38,7 +46,7 @@ function BorrowFailed(props) {
     },
     root: {
       "&:hover": {
-        backgroundColor: "#B43B4C",
+        backgroundColor: "#ac171787",
       },
     },
     checkboxicon: {
@@ -87,28 +95,27 @@ function BorrowFailed(props) {
   //when lender fails to arrive
   const handleLenderFailedToArrive = () => {
     if (lenderFailedToArrive === "")
-      setLenderFailedToArrive("Lender Has Failed To Arrive");
+      setLenderFailedToArrive(REASONS.ARRIVALFAILURE);
     else setLenderFailedToArrive("");
   };
   //when lender refuses to give the item
   const handleLenderRefusal = () => {
-    if (lenderRefuse === "") setLenderRefuse("Lender refuses to give item");
+    if (lenderRefuse === "") setLenderRefuse(REASONS.REFUSAL);
     else setLenderRefuse("");
   };
   //when lender has emergency to attend
   const handleLenderEmergency = () => {
-    if (lenderEmergency === "")
-      setLenderEmergency("Lender had an emergency to attend");
+    if (lenderEmergency === "") setLenderEmergency(REASONS.EMERGENCY);
     else setLenderEmergency("");
   };
   //for unknown reason
   const handleUnknownReason = () => {
-    if (unknownReason === "") setUnknownReason("Unknown Reason");
+    if (unknownReason === "") setUnknownReason(REASONS.UNKNOWN);
     else setUnknownReason("");
   };
   //for other reason
   const handleOther = () => {
-    if (other === "") setOther("Other");
+    if (other === "") setOther(REASONS.OTHER);
     else setOther("");
   };
 
@@ -143,7 +150,7 @@ function BorrowFailed(props) {
           icon={<span className={classes.checkboxicon} />}
           inputProps={{ "aria-label": "decorative checkbox" }}
         />
-        <div>Lender Has Failed To Arrive</div>
+        <div>{REASONS.ARRIVALFAILURE}</div>
       </div>
       {/* LENDER REFUSES TO GIVE THE ITEM */}
       <div className="CheckboxFlex">
@@ -158,7 +165,7 @@ function BorrowFailed(props) {
           icon={<span className={classes.checkboxicon} />}
           inputProps={{ "aria-label": "decorative checkbox" }}
         />
-        <div>Lender refuses to give item </div>
+        <div>{REASONS.REFUSAL}</div>
       </div>
       {/* LENDER HAS EMERGENCY TO ATTEND */}
       <div className="CheckboxFlex">
@@ -173,7 +180,7 @@ function BorrowFailed(props) {
           icon={<span className={classes.checkboxicon} />}
           inputProps={{ "aria-label": "decorative checkbox" }}
         />
-        <div>Lender had an emergency to attend </div>
+        <div>{REASONS.EMERGENCY}</div>
       </div>
       {/* UNKNOWN REASON */}
       <div className="CheckboxFlex">
@@ -188,7 +195,7 @@ function BorrowFailed(props) {
           icon={<span className={classes.checkboxicon} />}
           inputProps={{ "aria-label": "decorative checkbox" }}
         />
-        <div>Unknown Reason </div>
+        <div>{REASONS.UNKNOWN}</div>
       </div>
       {/* OTHER */}
       <div className="CheckboxFlex">
@@ -203,7 +210,7 @@ function BorrowFailed(props) {
           icon={<span className={classes.checkboxicon} />}
           inputProps={{ "aria-label": "decorative checkbox" }}
         />
-        <div>Other</div>
+        <div>{REASONS.OTHER}</div>
       </div>
       {/* Extra Details*/}
       <div className="BorrowerHeader">Extra Details</div>

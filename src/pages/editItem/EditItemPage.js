@@ -539,7 +539,10 @@ function EditItemPage(props) {
               }}
               onChange={(e) => handleChange(e)}
             />
-            <div className="PostItem__ItemPictures__Add__Container">
+            <div
+              className="PostItem__ItemPictures__Add__Container"
+              style={{ marginBottom: "-15%" }}
+            >
               <IconButton
                 aria-label="delete"
                 className={classes.button}
