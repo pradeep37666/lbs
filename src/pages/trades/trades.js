@@ -66,9 +66,13 @@ export default function Trades() {
                     borrowerBookingItems={borrowerBookingItems}
                     />
                 </div>
+                { isMobile ? (
                 <SwipeableDrawer anchor='right' open={selectedBooking} onClose={() => setSelectedBooking(null)}>
                     { selectedBooking && <TradeSidebar getBookings={getBookings} booking={selectedBooking} />}
                 </SwipeableDrawer>
+                ) : (
+                     selectedBooking && <TradeSidebar getBookings={getBookings} booking={selectedBooking} />
+                )}
                 
             </div>
         </PageWrapper>
