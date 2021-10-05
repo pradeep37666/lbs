@@ -35,12 +35,15 @@ export default function TradeCalendarItem({ booking, setSelectedBooking, row, cu
         if(!isCancelled) return null
         return isLend ? `url(${LendStripes})` : `url(${BorrowStripes})`
     }
+    // console.log(booking)
     return (
         <div 
         onClick={() => {
-            console.log(getDateIndex(new Date(2021,10,1)) * 2)
+            // console.log(getDateIndex(new Date(2021,10,1)) * 2)
             console.log(currentMonthDateIndex)
+            console.log(booking.start_date)
             console.log(booking.start_date - currentMonthDateIndex)
+            console.log(booking)
             setSelectedBooking(booking)
         }}
         className="TradeCalendarItem"
