@@ -10,3 +10,18 @@
   flex-direction: row;
   width: 100%;
 }
+.MessagesHeading {
+  /* font-size: 30px; */
+  font-size: calc(1.1vw + 1.3rem);
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+@media only screen and (max-width: 495px) {
+  .UserCardContainer {
+    width: 90%;
+    margin-right: 0;
+  }
+  .ContentContainer {
+    justify-content: center;
+  }
+}

@@ -5,6 +5,8 @@ import {ReactComponent as ShowPassword} from './../../assets/Icons/ShowPassword.
 import LBSSwitch from '../LBSSwitch/LBSSwitch.js';
 import ValidationPopup from '../ValidationPopup/ValidationPopup.js';
 import { handleFullName, handleEmail, handlePhoneNumber, handlePassword, handlePasswordConfirm } from '../../util/UserValidation'
+import { isMobile } from 'react-device-detect';
+import { Fade } from '@material-ui/core';
 
 export default function BasicDetails(props) {
 
@@ -57,23 +59,25 @@ export default function BasicDetails(props) {
                     <div className="LoginHeader">Full Name</div>
                     <div className="LoginInputValidationContainer">
                         <input type='text' placeholder='Jane Doe' className="LoginInput" onBlur={(e) => handleFullName(e, props.setFullName, setNameValidation)}/>
-                        <div className={`triangleLeft ${showValidation("name") ? '' : 'ValidationTextHide'}`} />
-                        <ValidationPopup errorText={nameValidation} errorHeader='Invalid Full Name' hide={showValidation("name")}/>
+                        {!isMobile && <div className={`triangleLeft ${showValidation("name") ? '' : 'ValidationTextShow'}`} />}
+                        {/* <Fade timeout={500} in={!showValidation('name')} unmountOnExit mountOnEnter> */}
+                        { !showValidation("name") && <ValidationPopup errorText={nameValidation} errorHeader='Invalid Full Name' hide={showValidation("name")}/>}
+                        {/* </Fade> */}
                     </div>
                     
 
                     <div className="LoginHeader">Email</div>
                     <div className="LoginInputValidationContainer">
                         <input type='text' placeholder='JaneDoe@DoeJane.com' className="LoginInput" onBlur={(e) => handleEmail(e, props.setEmail, setEmailValidation)}/>
-                        <div className={`triangleLeft ${showValidation("email") ? '' : 'ValidationTextHide'}`} />
-                        <ValidationPopup errorText={emailValidation} errorHeader='Invalid Email' hide={showValidation("email")}/>
+                        { !isMobile && <div className={`triangleLeft ${showValidation("email") ? '' : 'ValidationTextShow'}`} />}
+                        { !showValidation('email') && <ValidationPopup errorText={emailValidation} errorHeader='Invalid Email' hide={showValidation("email")}/>}
                     </div>
 
                     <div className="LoginHeader">Phone Number</div>
                     <div className="LoginInputValidationContainer">
                         <input type='text' placeholder='+61456789012' className="LoginInput" onBlur={(e) => handlePhoneNumber(e, props.setPhoneNumber, setPhoneValidation)}/>
-                        <div className={`triangleLeft ${showValidation("phone") ? '' : 'ValidationTextHide'}`} />
-                        <ValidationPopup errorText={phoneValidation} errorHeader='Invalid Phone Number' hide={showValidation("phone")}/>
+                        { !isMobile && <div className={`triangleLeft ${showValidation("phone") ? '' : 'ValidationTextShow'}`} />}
+                        { !showValidation('phone') && <ValidationPopup errorText={phoneValidation} errorHeader='Invalid Phone Number' hide={showValidation("phone")}/>}
                     </div>
 
                     <div className="LoginHeader">Profile Picture</div>
@@ -103,8 +107,8 @@ export default function BasicDetails(props) {
                         <input type={showPassword ? 'text' : 'password'} className="LoginInput" onBlur={(e) => handlePassword(e, props.setPassword, setPasswordValidation)}></input>
                         <ShowPassword className="ShowPasswordIcon" onClick={() => setShowPassword(!showPassword)}/>
                     </div>
-                        <div className={`triangleLeft ${showValidation("password") ? '' : 'ValidationTextHide'}`} />
-                        <ValidationPopup errorText={passwordValidation} errorHeader='Invalid Password' hide={showValidation("password")}/>
+                        { !isMobile && <div className={`triangleLeft ${showValidation("password") ? '' : 'ValidationTextShow'}`} />}
+                        { !showValidation('password') && <ValidationPopup errorText={passwordValidation} errorHeader='Invalid Password' hide={showValidation("password")}/>}
                     </div>
 
                     <div className="LoginHeader">Confirm Password</div>
@@ -113,8 +117,8 @@ export default function BasicDetails(props) {
                         <input type={showConfirmPassword ? 'text' : 'password'} className="LoginInput" onBlur={(e) => handlePasswordConfirm(e, props.setConfirmPassword, setConfirmPasswordValidation, props.password)}/>
                         <ShowPassword className="ShowPasswordIcon" onClick={() => setShowConfirmPassword(!showConfirmPassword)}/>
                     </div>
-                    <div className={`triangleLeft ${showValidation("confirmPassword") ? '' : 'ValidationTextHide'}`} />
-                        <ValidationPopup errorText={confirmPasswordValidation} errorHeader='Invalid Password' hide={showValidation("confirmPassword")}/>
+                        { !isMobile && <div className={`triangleLeft ${showValidation("confirmPassword") ? '' : 'ValidationTextShow'}`} />}
+                        { !showValidation('confirmPassword') && <ValidationPopup errorText={confirmPasswordValidation} errorHeader='Invalid Password' hide={showValidation("confirmPassword")}/>}
                     </div>
 
                     </div>

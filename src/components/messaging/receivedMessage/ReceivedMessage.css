@@ -34,3 +34,15 @@
   display: flex;
   align-items: center;
 }
+
+@media only screen and (max-width: 495px) {
+  .ReceivedMessageTextContainer {
+    width: 85%;
+  }
+  .ReceivedMessageImageContainer {
+    width: 15%;
+  }
+  .ReceivedMessageTriangle {
+    left: calc(15% - 8px);
+  }
+}

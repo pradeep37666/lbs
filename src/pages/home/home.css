@@ -18,7 +18,7 @@
 }
 
 .SearchSectionTitle {
-  font-size: 60px;
+  font-size: calc(2.8vw + 2rem);
   font-weight: bold;
   color: white;
   width: 50%;
@@ -152,7 +152,7 @@
 }
 
 .CategoryImageDiv {
-  min-width: 180px;
+  min-width: 170px;
   min-height: 300px;
   flex: 0 1 22%;
   padding: 1em;
@@ -167,7 +167,8 @@
 }
 
 .CategoryTitle {
-  font-size: 40px;
+  font-size: calc(1.2vw + 1.1rem);
+  text-align: center;
   font-weight: bold;
 }
 

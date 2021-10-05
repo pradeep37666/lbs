@@ -6,6 +6,7 @@ import PageWrapper from '../../components/pageWrapper/pageWrapper'
 import UserShedNav from '../../components/UserShedNav/UserShedNav'
 import instance from '../../util/axios';
 import ItemCard from '../../components/itemCard/itemCard';
+import { isMobile } from 'react-device-detect';
 
 export default function Yourshed() {
 
@@ -23,7 +24,7 @@ useEffect(()=>{
     return (
         <PageWrapper>
             <div className="UserShedWrapper">
-            <UserShedNav setAccountContent={setAccountContent} accountContent={accountContent}/>
+            { !isMobile && <UserShedNav setAccountContent={setAccountContent} accountContent={accountContent}/>}
 
             <div className="UserShed__MainContent">
                 <div className="UserShed__Title">

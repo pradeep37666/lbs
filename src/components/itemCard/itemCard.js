@@ -36,7 +36,8 @@ export default function itemCard(props) {
         </div>
 
         <div className="RatingSection">
-          {item.rating}/5 <div className="RatingStars">
+          <span className="ItemRateText">{item.rating}/5</span>
+          <div className="RatingStars">
             <StarFilled fill='#E9D8B4' className="StarIcon"/>
             {item.rating >= 2 ? <StarFilled fill='#E9D8B4' className="StarIcon"/> : <StarOutline className="StarIcon"/>}
             {item.rating >= 3 ? <StarFilled fill='#E9D8B4' className="StarIcon"/> : <StarOutline className="StarIcon"/>}

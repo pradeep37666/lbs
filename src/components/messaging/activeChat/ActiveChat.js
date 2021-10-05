@@ -12,8 +12,11 @@ import {ReactComponent as StarFilled} from '../../../assets/Icons/StarFilled.svg
 import getImage from '../../../util/getImage'
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import ScrollToBottom from 'react-scroll-to-bottom'
+import { ArrowLeft } from '@material-ui/icons'
+import Arrow from '../../../assets/Icons/Arrow'
+import { isMobile } from 'react-device-detect'
 
-export default function ActiveChat({ activeChatUser, messages, setMessages, getConversations }) {
+export default function ActiveChat({ activeChatUser, setActiveChatUser, messages, setMessages, getConversations }) {
     const messageEndRef = useRef(null)
     const { state, dispatch } = useGlobalState()
     const { user } = state
@@ -103,16 +106,19 @@ export default function ActiveChat({ activeChatUser, messages, setMessages, getC
                 
             )
         })
-        // if(messagesArray.length > 0){
-        //     messagesArray.push(<div>aaaa</div>)
-        // }
-        // return messagesArray
     }
 
     return (
         <div className="ActiveChatContainer">
             {!isLoading &&
             <div className="ActiveChatHeader">
+                { isMobile && 
+                <Arrow 
+                onClick={() => setActiveChatUser(null)}
+                rotation={180} 
+                width={40} 
+                height={40}
+                />}
                 <div className="ActiveChatHeaderUser">
                     <Avatar src={activeUserDetails && activeUserDetails.avatar ? getImage(activeUserDetails.avatar) : MissingProfile}/>
                     <span className="ActiveChatHeaderText">{activeChatUser.name}</span>
