@@ -16,8 +16,8 @@
 .SearchFilterBarFlex {
   display: flex;
   justify-content: space-between;
-  width: 70%;
-  padding: 2em 0;
+  width: 100%;
+  padding: 2em 6em;
   font-size: 20px;
   user-select: none;
 }
@@ -69,7 +69,7 @@
 
 .FilterContainer {
   position: relative;
-  min-width: 25%;
+  min-width: 15%;
   text-align: center;
 }
 
