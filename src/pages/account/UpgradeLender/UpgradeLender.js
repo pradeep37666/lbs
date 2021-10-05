@@ -8,6 +8,7 @@ import Instance from '../../../util/axios'
 import { ReactComponent as Logo } from '../../../assets/Logos/LogoRed.svg';
 import { useHistory } from 'react-router'
 import useGlobalState from '../../../util/useGlobalState'
+import getSuburb from '../../../util/getSuburb'
 
 export default function UpgradeLender() {
     const dispatch = useGlobalState().dispatch
@@ -22,10 +23,6 @@ export default function UpgradeLender() {
     const [bsb, setBsb] = useState("")
 
     const [address, setAddress] = useState("")
-    const [city, setCity] = useState("")
-    const [country, setCountry] = useState("")
-    const [state, setState] = useState("")
-
     const [availability, setAvailability] = useState('00000000000000')
 
     const [validated, setValidated] = useState(false)
@@ -57,10 +54,10 @@ export default function UpgradeLender() {
         const data = {
             account_number: accNumber ? accNumber : user.account_number,
             bsb: bsb ? bsb : user.bsb,
-            address: address ? address : user.address,
-            city: city ? city : user.city,
-            country: country ? country : user.country,
-            state: state ? state : user.state,
+            address: address ? address.description : user.address,
+            suburb: address.terms ? getSuburb(address.terms) : user.suburb,
+            lat: address ? address.lat : user.lat,
+            lng: address ? address.lng : user.lng,
             available: availability ? availability : user.available
         }
 
@@ -71,9 +68,9 @@ export default function UpgradeLender() {
                 newData.account_number = data.account_number
                 newData.bsb = data.bsb
                 newData.address = data.address
-                newData.city = data.city
-                newData.country = data.country
-                newData.state = data.state
+                newData.suburb = data.suburb
+                newData.lat = data.lat
+                newData.lng = data.lng
                 newData.available = data.available
                 dispatch({ type: 'setUser', data: newData })
             })
@@ -100,9 +97,6 @@ export default function UpgradeLender() {
                     validated={validated}
                     handleNextPage={handleNextPage}
                     setAddress={setAddress}
-                    setCity={setCity}
-                    setCountry={setCountry}
-                    setState={setState}
                 />
             case 'Availability':
                 return <Availability
@@ -127,11 +121,12 @@ export default function UpgradeLender() {
                 } else setValidated(false)
                 break
             case 'Location Details':
-                if (address && city && country && state) {
+                if (address) {
                     setValidated(true)
                 } else setValidated(false)
                 break
             case 'Availability':
+                console.log(getSuburb(address.terms))
                 if (availability !== '00000000000000') {
                     setValidated(true)
                 } else setValidated(false)
@@ -139,7 +134,7 @@ export default function UpgradeLender() {
             default:
                 return '';
         }
-    }, [page, accNumber, bsb, address, city, country, state, availability])
+    }, [page, accNumber, bsb, address, availability])
 
     return (
         <PageWrapper>

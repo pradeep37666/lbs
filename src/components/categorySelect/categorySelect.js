@@ -76,7 +76,7 @@ export default function CategorySelect(props) {
   }
   //used while editing the item to preselect the category and then change it according to the user
 
-  const defaultValue = props.value ? props.value : "Imran Ali";
+  const defaultValue = props.value ? props.value : "";
 
   
   return (
