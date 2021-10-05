@@ -5,6 +5,8 @@ import UserShedNav from '../../components/UserShedNav/UserShedNav'
 import Instance from '../../util/axios'
 import TradeCalendar from '../../components/tradeCalendar/TradeCalendar'
 import TradeSidebar from '../../components/TradeSidebar/TradeSidebar'
+import { isMobile } from 'react-device-detect'
+import { SwipeableDrawer } from '@material-ui/core'
 
 export default function Trades() {
     const [accountContent, setAccountContent] = useState('Trades')
@@ -52,7 +54,7 @@ export default function Trades() {
     return (
         <PageWrapper>
             <div className="TradesPageWrapper">
-                <UserShedNav setAccountContent={setAccountContent} accountContent={accountContent}/>
+                { !isMobile && <UserShedNav setAccountContent={setAccountContent} accountContent={accountContent}/>}
 
                 <div className="TradesContainer">
                     <div className="UserShed__Title">
@@ -64,7 +66,10 @@ export default function Trades() {
                     borrowerBookingItems={borrowerBookingItems}
                     />
                 </div>
-                { selectedBooking && <TradeSidebar getBookings={getBookings} booking={selectedBooking} />}
+                <SwipeableDrawer anchor='right' open={selectedBooking} onClose={() => setSelectedBooking(null)}>
+                    { selectedBooking && <TradeSidebar getBookings={getBookings} booking={selectedBooking} />}
+                </SwipeableDrawer>
+                
             </div>
         </PageWrapper>
     )
