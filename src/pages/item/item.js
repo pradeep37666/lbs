@@ -17,7 +17,7 @@ import { StarOutline } from '@material-ui/icons';
 
 import GoogleMapReact from 'google-map-react';
 import Instance from '../../util/axios';
-import { useParams, useLocation } from 'react-router';
+import { useParams, useLocation, useHistory } from 'react-router';
 import useGlobalState from "../../util/useGlobalState"
 import CircularProgress from '@material-ui/core/CircularProgress';
 import ApplicationModal from '../../components/applicationModal/ApplicationModal'
@@ -32,6 +32,7 @@ export default function Item() {
     // Pass in number of reviews from backend for use in review carousel + modal
     const params = useParams();
     const location = useLocation()
+    const history = useHistory()
 
     const [modalVisible, setModalVisible] = useState()
     const [item, setItem] = useState();
@@ -214,7 +215,11 @@ export default function Item() {
     }
     //------------------Temporary Function-------------//
     const handleEdit =()=>{
+        let string =''
+        string = string.concat('i_id='+item.i_id)
+        string = string.concat('&u_id='+item.u_id)
         
+        history.replace(`/item/edit/${string}`)
         console.log(JSON.stringify(item, null,'\t'))
     }
     //-------------------------------------------------//

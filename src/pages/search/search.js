@@ -219,14 +219,14 @@ export default function Search(props) {
           <CircularProgress size={75} />
         </div>
       ) : (
-        <div className="SearchMainContainer" style={{ marginBottom: "20%" }}>
+        <div className="SearchMainContainer" style={{ marginBottom: "2%" }}>
           <div className="SearchSortFlex">
             <div className="SearchMainText">
               Search results for:{" "}
               <span style={{ fontWeight: "normal" }}>{parsed.keyword}</span>
             </div>
             {/* commented out sort results, future version */}
-            {/* <div className="SearchMainText">
+            <div className="SearchMainText">
               Sort by:
               <Select
                 onChange={handleChange}
@@ -279,7 +279,7 @@ export default function Search(props) {
                   Rating - High to Low
                 </MenuItem>
               </Select>
-            </div> */}
+            </div>
           </div>
 
           {searchItems.length > 0 ? (
