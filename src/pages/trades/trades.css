@@ -8,3 +8,9 @@
   margin: 2em 0;
   padding: 0 0 0 2%;
 }
+
+@media only screen and (max-width: 495px) {
+  .TradesContainer {
+    width: 100%;
+  }
+}
