@@ -80,12 +80,11 @@ function EditItemPage(props) {
   //seperating the userid and the item id from the parameters using the query string function
   const parsed = queryString.parse(params.itemId);
   let itemId = parsed.i_id;
-  let userId = parsed.u_id;
 
   useEffect(() => {
     //returning data from the server
     setLoading(true)
-    Instance.get(`/items/findByIid/?i_id=${itemId}&u_id=${userId}`)
+    Instance.get(`/items/findByIid/?i_id=${itemId}`)
       .then((response) => {
         setTitleText(response.data.item.title);
 
@@ -111,14 +110,10 @@ function EditItemPage(props) {
       .catch((error) => {
         console.log(error);
       });
-    // dbImageConverter();
   }, [params, open]);
 
   //-------------------------Deleting Items from Database-------------//
   const handleItemDeletion = () => {
-    // alert(
-    //   `Item ${title}, having id : ${itemId} removed from YourShed successfully!`
-    // );
     try {
       Instance.delete(`/items/delete?i_id=${itemId}`)
         .then((response) => {
