@@ -49,7 +49,6 @@ function App() {
         return
       })
       .catch((e) => console.log(e))
-    setLoadingUser(false)
   }, [])
 
   const setupCometChat = () => {

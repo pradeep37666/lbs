@@ -73,6 +73,7 @@ export default function Search(props) {
   keyword = parsed.keyword;
 
   useEffect(() => {
+    setLoading(true)
     Instance.get(`/items/search/${location.search}`)
       .then((response) => {
         setSearchItems(response.data[0]);
@@ -199,8 +200,8 @@ export default function Search(props) {
   //mapping random items as suggested items in the search page
   const randomItemsMapper = () => {
     if (suggestedItems.length > 0) {
-      return suggestedItems.map((items) => {
-        return <ItemCard item={items} />;
+      return suggestedItems.map((items, index) => {
+        return <ItemCard item={items} key={index}/>;
       });
     }
   };
@@ -224,7 +225,8 @@ export default function Search(props) {
               Search results for:{" "}
               <span style={{ fontWeight: "normal" }}>{parsed.keyword}</span>
             </div>
-            <div className="SearchMainText">
+            {/* commented out sort results, future version */}
+            {/* <div className="SearchMainText">
               Sort by:
               <Select
                 onChange={handleChange}
@@ -277,7 +279,7 @@ export default function Search(props) {
                   Rating - High to Low
                 </MenuItem>
               </Select>
-            </div>
+            </div> */}
           </div>
 
           {searchItems.length > 0 ? (
