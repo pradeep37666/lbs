@@ -1,0 +1,39 @@
+.TradeStatusDeclineButton {
+  border: 1px solid #33384f;
+  background-color: white;
+  border-radius: 10px;
+  color: #33384f;
+  width: 45%;
+  display: flex;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0.3rem 0;
+}
+.TradeStatusApproveButton {
+  border: 1px solid black;
+  background-color: #33384f;
+  border-radius: 10px;
+  color: #ededed;
+  width: 45%;
+  display: flex;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0.3rem 0;
+}
+.TradeStatusButtonContainer {
+  display: flex;
+  justify-content: space-around;
+}
+.TradeStatusContainer {
+  padding: 25px 0;
+  border-radius: 10px;
+  background-color: #ededed;
+}
+
+.TradeStatusContentContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0.5rem;
+  text-align: center;
+}

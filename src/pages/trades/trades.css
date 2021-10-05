@@ -1,0 +1,10 @@
+.TradesContainer {
+  width: 60%;
+}
+
+.TradesPageWrapper {
+  width: 100%;
+  display: flex;
+  margin: 2em 0;
+  padding: 0 0 0 2%;
+}

@@ -125,9 +125,7 @@ export default function Item() {
 
     const getItemOwner = async (item) => {
         setIsUserItem(false)
-
         const { data, status } = await Instance.get(`user/getOneUser?id=${item.u_id}`)
-        console.log('get one user', data)
         setItemOwner(data)
 
     }
@@ -215,7 +213,6 @@ export default function Item() {
         return MissingProfile
     }
 
-    console.log('owner', itemOwner)
     return (
         <PageWrapper>
             {ImageModal ? <ItemImageModal setModal={setImageModal} images={itemPictures} modal={ImageModal} /> : ''}

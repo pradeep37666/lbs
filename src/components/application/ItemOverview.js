@@ -15,7 +15,7 @@ export default function ItemOverview() {
     const { state, dispatch } = useContext(ApplicationContext)
     const globalState = useGlobalState()
     const user  = globalState.state.user
-    const { page, item, confirmedEnd, confirmedStart, deliverySelected, pickupSelected } = state
+    const { page, item, confirmedEnd, confirmedStart, deliverySelected, pickupSelected, currentYear } = state
 
     const history = useHistory()
     const dayArray = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
@@ -49,22 +49,6 @@ export default function ItemOverview() {
         }
     }
     
-    // const calculatePrice = () => {
-    //     if(confirmedEnd.sameTimeSlot) return item.price
-    //     const days = getDateIndex(confirmedEnd.day) - getDateIndex(confirmedStart.day)
-    //     let timeSlots
-    //     if(confirmedStart?.am && confirmedEnd?.am || confirmedStart?.pm && confirmedEnd?.pm){
-    //         timeSlots = (days * 2) + 1
-    //     }
-    //     if(confirmedStart?.am && confirmedEnd?.pm){
-    //         timeSlots = (days + 1) * 2
-    //     }
-    //     if(confirmedStart?.pm && confirmedEnd?.am){
-    //         timeSlots = days * 2
-    //     }
-    //     return item.price * timeSlots 
-    // }
-
     const calculatePrice = () => {
         let discountTimeSlots = 0
         if(item.discount > 0) discountTimeSlots = calculateDiscountTimeSlots()
@@ -134,15 +118,16 @@ export default function ItemOverview() {
 
     const saveBooking = async () => {
         let deliveryOption = (deliverySelected && pickupSelected) ? 'both' : deliverySelected ? 'delivery' : 'pickup'
-        const startIndex = (getDateIndex(confirmedStart.day) * 2) + (confirmedStart.day?.am ? 2 : 1)
-        const endIndex = (getDateIndex(confirmedEnd.day) * 2) + (confirmedEnd.day?.am ? 2 : 1)
+        const startIndex = (getDateIndex(confirmedStart.day) * 2) + (confirmedStart?.am ? 1 : 2)
+        const endIndex = (getDateIndex(confirmedEnd.day) * 2) + (confirmedEnd?.am ? 1 : 2)
         try{
             const { data, status } = await instance.post('booking/save', {
                 i_id: item.i_id,
                 io_id: item.u_id,
                 deliveryOption,
                 startDate: startIndex,
-                endDate: endIndex
+                endDate: endIndex,
+                year: currentYear
             })
             sendEnquiry(item)
             history.push({ 
