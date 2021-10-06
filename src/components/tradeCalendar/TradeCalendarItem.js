@@ -35,23 +35,44 @@ export default function TradeCalendarItem({ booking, setSelectedBooking, row, cu
         if(!isCancelled) return null
         return isLend ? `url(${LendStripes})` : `url(${BorrowStripes})`
     }
-    // console.log(booking)
+    
+    const getBookingStartPosition = () => {
+        if(booking.start_date <= currentMonthDateIndex){
+            return 1
+        }
+        return booking.start_date - currentMonthDateIndex
+    }
+
+    const getBookingEndPosition = () => {
+         return (booking.end_date - currentMonthDateIndex) + 1
+    }
+
+    const isVertical = () => {
+        if(booking.start_date <= currentMonthDateIndex && booking.end_date - currentMonthDateIndex === 1){
+            return true
+        }
+        if(sameTimeSlot){
+            return true
+        }
+        return false
+    }
     return (
         <div 
         onClick={() => {
-            // console.log(getDateIndex(new Date(2021,10,1)) * 2)
-            console.log(currentMonthDateIndex)
-            console.log(booking.start_date)
-            console.log(booking.start_date - currentMonthDateIndex)
-            console.log(booking)
+            console.log(getDateIndex(new Date(2021,0,1)) * 2)
+            // console.log(currentMonthDateIndex)
+            // console.log(booking.start_date)
+            // console.log(booking.start_date - currentMonthDateIndex)
+            // console.log(booking.end_date)
+            // console.log(booking)
             setSelectedBooking(booking)
         }}
         className="TradeCalendarItem"
-        style={{ gridRowStart: row, gridColumnStart: (booking.start_date - currentMonthDateIndex), gridColumnEnd: ((booking.end_date - currentMonthDateIndex) + 1)}}>
+        style={{ gridRowStart: row, gridColumnStart: getBookingStartPosition(), gridColumnEnd: getBookingEndPosition()}}>
             
-            <div style={{ flexDirection: sameTimeSlot ? 'column' : null , backgroundImage: getBackgroundImage(), backgroundSize: 'auto'}} className={getCalendarItemClass()}>
+            <div style={{ flexDirection: isVertical() ? 'column' : null , backgroundImage: getBackgroundImage(), backgroundSize: 'auto'}} className={getCalendarItemClass()}>
                 <span>{getDateObject(booking.start_date)?.morning ? '8am' : '1pm'}</span>
-                <Arrow vertical={sameTimeSlot} width={40} height={20}/>
+                <Arrow vertical={isVertical()} width={40} height={20}/>
                 <span>{getDateObject(booking.end_date)?.morning ? '12pm' : '5pm'}</span>
             </div>
         </div>

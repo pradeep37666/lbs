@@ -7,7 +7,7 @@ const getDateObject = (dateIndex) => {
         i++
     }
     const date = new Date()
-    date.setMonth(i + 1)
+    date.setMonth(i)
     const day = ( dateIndex ) / 2
     // console.log('day', day)
     date.setDate(day)

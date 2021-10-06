@@ -120,6 +120,11 @@ export default function ItemOverview() {
         let deliveryOption = (deliverySelected && pickupSelected) ? 'both' : deliverySelected ? 'delivery' : 'pickup'
         const startIndex = (getDateIndex(confirmedStart.day) * 2) + (confirmedStart?.am ? 1 : 2)
         const endIndex = (getDateIndex(confirmedEnd.day) * 2) + (confirmedEnd?.am ? 1 : 2)
+        // console.log('end index: ', endIndex)
+        // console.log('start index: ', startIndex)
+
+        // console.log('nov 1', getDateIndex(new Date(2021, 10, 1)))
+        // console.log('final number for morning', ((getDateIndex(new Date(2021, 10, 1)) * 2) + 1))
         try{
             const { data, status } = await instance.post('booking/save', {
                 i_id: item.i_id,
