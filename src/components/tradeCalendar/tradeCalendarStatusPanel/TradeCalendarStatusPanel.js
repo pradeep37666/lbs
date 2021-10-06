@@ -25,7 +25,7 @@ export default function TradeCalendarStatusPanel({ booking, userDetails, getBook
         checkTimeslot()
         switch(status){
             case 1 : {
-                return <StatusOne isOwner={isOwner} updateBookingStatus={updateBookingStatus} booking={booking} />
+                return <StatusOne isOwner={isOwner} updateBookingStatus={updateBookingStatus} booking={booking} approveBooking={approveBooking}/>
             }
             case 2 : {
                 return <StatusTwo isOwner={isOwner} updateBookingStatus={updateBookingStatus} booking={booking}/>
@@ -51,6 +51,16 @@ export default function TradeCalendarStatusPanel({ booking, userDetails, getBook
     const checkTimeslot = () => {
         // const startSlot= getDateObject(booking.start_date)
         // startSlot.date.setTime
+    }
+
+    const approveBooking = async () => {
+        try{
+            const { data, status} = await Instance.get(`/booking/approve?b_id=${booking.b_id}`)
+            console.log(data,status)
+            getBookings()
+        } catch(err) {
+            console.log(err.response)
+        }
     }
 
     const updateBookingStatus = async (newStatus) => {

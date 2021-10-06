@@ -2,18 +2,9 @@ import React, { useState } from 'react'
 import Application from '../../../pages/application/Application'
 import Instance from '../../../util/axios'
 
-export default function StatusOne({ isOwner, updateBookingStatus, booking }) {
+export default function StatusOne({ isOwner, updateBookingStatus, booking, approveBooking }) {
     const [cancelPressed, setCancelPressed] = useState(false)
-
-
-    const approveBooking = async () => {
-        try{
-            const { data, status} = await Instance.get(`/booking/approve?b_id=${booking.b_id}`)
-            console.log(data,status)
-        } catch(err) {
-            console.log(err.response)
-        }
-    }
+    
     return (
         <>
             { isOwner ? (
@@ -42,7 +33,7 @@ export default function StatusOne({ isOwner, updateBookingStatus, booking }) {
                 ) 
                 
             ) : (
-                    <div>
+                    <div className="TradeStatusContentContainer">
                         <span>Application sent, the item owner has 24 hours to respond</span>
                         <div className="TradeStatusDeclineButton" onClick={() => updateBookingStatus(0)}>
                             <span>Cancel Borrow</span>

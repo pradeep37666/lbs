@@ -71,7 +71,7 @@ export default function AvailabilityCalendar({ month, year }) {
                 <span className="CalendarYear">{year}</span>
             </div>
            
-            <div >
+            <div>
                 <div className="CalendarRow">
                     {dayArray.map((day, index) => {
                         return <div className="CalendarItemDayName" key={index}>{day}</div>

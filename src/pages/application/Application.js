@@ -28,8 +28,6 @@ export default function Application() {
     const { page, item, confirmedStart } = state
     const { itemId } = useParams()
 
-    
-
     useEffect(() => {
         const getItem = async () => {
             const { data, status } = await instance.get(`/items/findByIid?i_id=${itemId}`)
@@ -38,6 +36,7 @@ export default function Application() {
             dispatch({ type: 'setItem', data: data.item})
             dispatch({ type: 'setItemAvailability', data: data.item.available})
             dispatch({ type: 'setYearAvailability', data: data.yearAvailability})
+            console.log(data.yearAvailability)
         }
         getItem()
 

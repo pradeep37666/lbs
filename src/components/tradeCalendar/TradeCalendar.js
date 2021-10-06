@@ -83,7 +83,6 @@ export default function TradeCalendar({ borrowerBookingItems, lenderBookingItems
         const arr = []
         for(let i=0; i<totalDates; i++){
             const isCurrentDay = dates[i].getMonth() === currentMonth && dates[i].getDate() === currentDate
-            console.log(dates[i].getDate())
             arr.push(
             <div className="TradeCalendarDayItemContainer" style={ dates[i] && { borderWidth: 1, position: 'relative' }} key={i}>
                 { dates[i].getDate() === 1 &&
