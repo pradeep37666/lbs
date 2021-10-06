@@ -120,8 +120,10 @@ export default function ItemOverview() {
         let deliveryOption = (deliverySelected && pickupSelected) ? 'both' : deliverySelected ? 'delivery' : 'pickup'
         const startIndex = (getDateIndex(confirmedStart.day) * 2) + (confirmedStart?.am ? 1 : 2)
         const endIndex = (getDateIndex(confirmedEnd.day) * 2) + (confirmedEnd?.am ? 1 : 2)
+        confirmedStart.day.setHours(confirmedStart?.am ? 6 : 11)
+        
         try{
-            const { data, status } = await instance.post('booking/save', {
+            const { data, status } = await instance.post(`booking/save/${confirmedStart.day.getTime()}`, {
                 i_id: item.i_id,
                 io_id: item.u_id,
                 deliveryOption,
