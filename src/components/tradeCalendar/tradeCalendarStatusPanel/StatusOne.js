@@ -11,7 +11,7 @@ export default function StatusOne({ isOwner, updateBookingStatus, booking }) {
             const { data, status} = await Instance.get(`/booking/approve?b_id=${booking.b_id}`)
             console.log(data,status)
         } catch(err) {
-            console.log(err)
+            console.log(err.response)
         }
     }
     return (
