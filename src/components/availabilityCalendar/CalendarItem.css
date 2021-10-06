@@ -94,3 +94,9 @@
 .CalendarItemText {
   font-size: 21px;
 }
+
+@media only screen and (max-width: 495px) {
+  .CalendarItem {
+    padding: 0.5rem 0px;
+  }
+}

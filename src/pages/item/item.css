@@ -34,7 +34,7 @@
 
 .ItemPriceTextBig {
   /* font-size: 70px; */
-  font-size: calc(1.5vw + 3rem);
+  font-size: calc(1.6vw + 1.8rem);
   color: #33384f;
 }
 

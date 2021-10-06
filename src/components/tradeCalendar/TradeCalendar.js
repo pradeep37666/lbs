@@ -84,8 +84,9 @@ export default function TradeCalendar({ borrowerBookingItems, lenderBookingItems
         const arr = []
         for(let i=0; i<totalDates; i++){
             const isCurrentDay = dates[i].getMonth() === currentMonth && dates[i].getDate() === currentDate
+            console.log(i)
             arr.push(
-            <div className="TradeCalendarDayItemContainer" style={ dates[i] && { borderWidth: 1 }} key={i}>
+            <div className="TradeCalendarDayItemContainer" style={{ gridColumnStart: (i * 2) + 1, gridColumnEnd: (i * 2) + 3 }} key={i}>
                 
                 <div className="TradeCalendarDayItem">
                     <span className="TradeCalendarDayItemName">{dayArray[dates[i].getDay()]}</span>
@@ -95,7 +96,7 @@ export default function TradeCalendar({ borrowerBookingItems, lenderBookingItems
                     
                 </div>
             </div>)
-            arr.push(<div className="TradeCalendarFillerItem"></div>)
+            // arr.push(<div className="TradeCalendarFillerItem"></div>)
             
         }
         return arr

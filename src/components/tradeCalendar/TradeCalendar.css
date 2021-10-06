@@ -17,7 +17,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-right: -0.5rem;
+  /* margin-right: -0.5rem; */
 }
 .TradeCalendarCurrentDay {
   font-size: 22px;
@@ -34,7 +34,7 @@
 .TradeCalendarDayItemContainer {
   display: flex;
   padding: 1rem 0;
-  justify-content: flex-end;
+  justify-content: center;
   border-left: 1px solid #dedede;
 }
 .TradeCalendarDayItemName {

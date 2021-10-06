@@ -5,7 +5,7 @@ export default function StatusTwo({ isOwner, updateBookingStatus, booking }) {
     const itemId = booking.i_id
     const history = useHistory()
     return (
-        <div >
+        <div className="TradeStatusContentContainer">
                 { isOwner ? (
                     <div className="TradeStatusButtonContainer">
                         <span>2 You have asked for new times from this user</span>

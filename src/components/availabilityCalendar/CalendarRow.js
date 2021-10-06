@@ -159,7 +159,7 @@ export default function CalendarRow({ days, isCurrentMonth }) {
     }
     return (
         <div className="CalendarRowErrorContainer">
-            <ValidationPopup errorText={'error'} errorHeader='Invalid Time Slot' hide={errorHidden}/>
+            {!errorHidden && <ValidationPopup errorText={'error'} errorHeader='Invalid Time Slot' hide={errorHidden}/>}
             <div className={`CalendarRow ${expanded && 'CalendarRowExpanded'}`}>
                 { days.map((day, index) => {
                     return (

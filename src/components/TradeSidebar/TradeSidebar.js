@@ -99,7 +99,7 @@ export default function TradeSidebar({ booking, getBookings }) {
                     <div className="ApplicationFooterDetailsContainer">
                         <div className="ApplicationFooterDetails">
                             <span className="ApplicationFooterDetailsHeader">Collect</span>
-                            <div>
+                            <div style={{ textAlign: 'center'}}>
                                 <span className="ApplicationFooterTime">{beginDate?.morning ? '8:00am' : '1:00pm'} </span>
                                 <span className="ApplicationFooterDay">{dayArray[beginDate.date.getDay()]}</span>
                             </div>
@@ -113,7 +113,7 @@ export default function TradeSidebar({ booking, getBookings }) {
                         </div>
                         <div className="ApplicationFooterDetails">
                             <span className="ApplicationFooterDetailsHeader">Return</span>
-                            <div>
+                            <div style={{ textAlign: 'center' }}>
                                 <span className="ApplicationFooterTime">{endDate?.morning ? '12:00pm' : '5:00pm'} </span>
                                 <span className="ApplicationFooterDay">{dayArray[endDate.date.getDay()]}</span>
                             </div>
