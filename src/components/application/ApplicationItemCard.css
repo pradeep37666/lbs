@@ -36,3 +36,10 @@
   padding-bottom: 0.2rem;
   padding-top: 0.2rem;
 }
+
+.ApplicationItemImage {
+  height: 70px;
+  width: 70px;
+  margin-right: 15px;
+  object-fit: cover;
+}

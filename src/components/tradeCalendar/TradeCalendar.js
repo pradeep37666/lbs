@@ -5,6 +5,7 @@ import TradeCalendarItem from './TradeCalendarItem'
 import getDateObject from '../../util/getDateObject'
 import TradeCalendarItemContainer from './tradeCalendarItemContainer/TradeCalendarItemContainer'
 import compareDates from '../../util/compareDates'
+import { isMobile } from 'react-device-detect'
 
 export default function TradeCalendar({ borrowerBookingItems, lenderBookingItems, setSelectedBooking }) {
     const tradeCalendarRef = useRef()
@@ -82,8 +83,12 @@ export default function TradeCalendar({ borrowerBookingItems, lenderBookingItems
         const arr = []
         for(let i=0; i<totalDates; i++){
             const isCurrentDay = dates[i].getMonth() === currentMonth && dates[i].getDate() === currentDate
+            console.log(dates[i].getDate())
             arr.push(
-            <div className="TradeCalendarDayItemContainer" style={ dates[i] && { borderWidth: 1 }} key={i}>
+            <div className="TradeCalendarDayItemContainer" style={ dates[i] && { borderWidth: 1, position: 'relative' }} key={i}>
+                { dates[i].getDate() === 1 &&
+                    <span style={{ position: 'absolute', top: 0 }}>{monthArray[dates[i].getMonth()]}</span>
+                }
                 <div className="TradeCalendarDayItem">
                     <span className="TradeCalendarDayItemName">{dayArray[dates[i].getDay()]}</span>
                     <div className={isCurrentDay ? 'TradeCalendarCurrentDay' : "TradeCalendarDayItemDate"}>

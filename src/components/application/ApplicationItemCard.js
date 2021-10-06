@@ -10,7 +10,7 @@ export default function ApplicationItemCard({ item, onClick, extra, price }) {
 
     return (
         <div className="ApplicationItemCardContainer">
-            <img placeholder="item image" src={getImage(pictures[0])} style={{ height: 70, width: 70, marginRight: 15}}></img>
+            <img placeholder="item image" src={getImage(pictures[0])} className="ApplicationItemImage"></img>
             <div className="ApplicationItemDetailsContainer">
                 <span className="ApplicationItemCardHeader">{item.title}</span>
                 { price && 
