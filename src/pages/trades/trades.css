@@ -13,4 +13,7 @@
   .TradesContainer {
     width: 100%;
   }
+  .TradesPageWrapper {
+    margin: 0.5em 0;
+  }
 }

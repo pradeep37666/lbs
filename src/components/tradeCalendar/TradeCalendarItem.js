@@ -8,7 +8,7 @@ import useGlobalState from '../../util/useGlobalState'
 import getDateIndex from '../../util/getDateIndex'
 import LendStripes from '../../assets/Images/LendStripes.png'
 import BorrowStripes from '../../assets/Images/BorrowStripes.png'
-
+import { isMobile } from 'react-device-detect'
 export default function TradeCalendarItem({ booking, setSelectedBooking, row, currentMonth, currentYear }) {
     const { state, dispatch } = useGlobalState()
     const { user } = state
@@ -48,7 +48,7 @@ export default function TradeCalendarItem({ booking, setSelectedBooking, row, cu
             
             <div style={{ flexDirection: sameTimeSlot ? 'column' : null , backgroundImage: getBackgroundImage(), backgroundSize: 'auto'}} className={getCalendarItemClass()}>
                 <span>{getDateObject(booking.start_date)?.morning ? '8am' : '1pm'}</span>
-                <Arrow vertical={sameTimeSlot} width={40} height={20}/>
+                <Arrow vertical={sameTimeSlot} width={ isMobile ? 20 : 40} height={ isMobile ? 10: 20}/>
                 <span>{getDateObject(booking.end_date)?.morning ? '12pm' : '5pm'}</span>
             </div>
         </div>

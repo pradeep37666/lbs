@@ -5,6 +5,7 @@ import TradeCalendarItem from './TradeCalendarItem'
 import getDateObject from '../../util/getDateObject'
 import TradeCalendarItemContainer from './tradeCalendarItemContainer/TradeCalendarItemContainer'
 import compareDates from '../../util/compareDates'
+import { isMobile } from 'react-device-detect'
 
 export default function TradeCalendar({ borrowerBookingItems, lenderBookingItems, setSelectedBooking }) {
     const tradeCalendarRef = useRef()
@@ -12,7 +13,7 @@ export default function TradeCalendar({ borrowerBookingItems, lenderBookingItems
     const [currentMonth, setCurrentMonth] = useState()
     const [currentYear, setCurrentYear] = useState()
     const [totalDates, setTotalDates] = useState()
-    const monthArray = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+    
 
     useEffect(() => {
         const today = new Date()
@@ -74,6 +75,7 @@ export default function TradeCalendar({ borrowerBookingItems, lenderBookingItems
     }
 
     const dayArray = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa", ]
+    const monthArray = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
 
     const renderDates = () => {
         if(!currentMonth || !currentYear || !currentDate) return
@@ -84,6 +86,7 @@ export default function TradeCalendar({ borrowerBookingItems, lenderBookingItems
             const isCurrentDay = dates[i].getMonth() === currentMonth && dates[i].getDate() === currentDate
             arr.push(
             <div className="TradeCalendarDayItemContainer" style={ dates[i] && { borderWidth: 1 }} key={i}>
+                
                 <div className="TradeCalendarDayItem">
                     <span className="TradeCalendarDayItemName">{dayArray[dates[i].getDay()]}</span>
                     <div className={isCurrentDay ? 'TradeCalendarCurrentDay' : "TradeCalendarDayItemDate"}>
@@ -102,8 +105,8 @@ export default function TradeCalendar({ borrowerBookingItems, lenderBookingItems
         <>
             { currentYear && 
             <div className="TradeCalendarContainer" ref={tradeCalendarRef} >
-                <div style={{ width: `${ (totalDates * 2) * 50 }px`}}>
-                    <div className="TradeCalendarDaysContainer" style={{ gridTemplateColumns: `repeat(${totalDates * 2}, 50px)` }}>
+                <div style={{ width: `${ (totalDates * 2) *( isMobile ? 25 : 50)}px`}}>
+                    <div className="TradeCalendarDaysContainer" style={{ gridTemplateColumns: `repeat(${totalDates * 2}, ${ isMobile ? 25 : 50}px)` }}>
                         {renderDates()} 
                     </div>
                     
