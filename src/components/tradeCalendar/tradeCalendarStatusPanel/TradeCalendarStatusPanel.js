@@ -6,7 +6,11 @@ import StatusOne from './StatusOne'
 import StatusTwo from './StatusTwo'
 import StatusZero from './StatusZero'
 import StatusThree from './StatusThree'
+import StatusFour from './StatusFour'
+import StatusFive from './StatusFive'
+import Pickup from './Pickup'
 import getDateObject from '../../../util/getDateObject'
+import StatusSix from './StatusSix'
 
 export default function TradeCalendarStatusPanel({ booking, userDetails, getBookings }) {
     const [status, setStatus] = useState()
@@ -22,7 +26,8 @@ export default function TradeCalendarStatusPanel({ booking, userDetails, getBook
         if(status === 0){
             return <StatusZero updateBookingStatus={updateBookingStatus} booking={booking}/>
         }
-        checkTimeslot()
+        const isHourBefore = checkIfHourBefore()
+        if(isHourBefore && status === 3) return <Pickup isOwner={isOwner} updateBookingStatus={updateBookingStatus} booking={booking} userDetails={userDetails}/>
         switch(status){
             case 1 : {
                 return <StatusOne isOwner={isOwner} updateBookingStatus={updateBookingStatus} booking={booking} approveBooking={approveBooking}/>
@@ -34,13 +39,13 @@ export default function TradeCalendarStatusPanel({ booking, userDetails, getBook
                 return <StatusThree isOwner={isOwner} updateBookingStatus={updateBookingStatus} booking={booking} userDetails={userDetails} />
             }
             case 4 : {
-                return 'four'
+                return <StatusFour isOwner={isOwner} updateBookingStatus={updateBookingStatus} booking={booking} userDetails={userDetails}/>
             }
             case 5 : {
-                return 'five'
+                return <StatusFive isOwner={isOwner} updateBookingStatus={updateBookingStatus} booking={booking} userDetails={userDetails}/>
             }
             case 6 : {
-                return 'six'
+                return <StatusSix isOwner={isOwner} updateBookingStatus={updateBookingStatus} booking={booking} userDetails={userDetails}/>
             }
             default : {
                 return 'default'
@@ -48,9 +53,23 @@ export default function TradeCalendarStatusPanel({ booking, userDetails, getBook
         }
     }
 
-    const checkTimeslot = () => {
-        // const startSlot= getDateObject(booking.start_date)
-        // startSlot.date.setTime
+    const checkIfHourBefore = () => {
+        const startSlot = getDateObject(booking.start_date)
+        console.log(startSlot)
+        if(startSlot?.morning){
+            startSlot.date.setHours(9, 0, 0) 
+        } else{
+            startSlot.date.setHours(14, 0, 0) 
+        }
+        const now = new Date()
+        now.setDate(8)
+        const oneHour = 60 * 60 * 1000
+
+        if(startSlot.date.getTime() - oneHour < now.getTime()){
+            return true
+        }
+        return false
+        
     }
 
     const approveBooking = async () => {
