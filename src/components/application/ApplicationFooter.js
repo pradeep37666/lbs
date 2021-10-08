@@ -3,11 +3,14 @@ import Arrow from '../../assets/Icons/Arrow'
 import { ApplicationContext } from '../../pages/application/Application'
 import getDateIndex from '../../util/getDateIndex'
 import getDateSuffix from '../../util/getDateSuffix'
+import useGlobalState from '../../util/useGlobalState'
 import './ApplicationFooter.css'
 
 export default function ApplicationFooter() {
+    const globalState = useGlobalState().state
+    const { user } = globalState
     const  { state, dispatch, handleNextPage } = useContext(ApplicationContext)
-    const { page, item, confirmedStart, confirmedEnd, deliverySelected, pickupSelected } = state
+    const { page, item, confirmedStart, confirmedEnd, deliverySelected, pickupSelected, address } = state
     const dayArray = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
     const monthArray = ["January", "February", "March", "April","May", "June", "July", "August", "September", "October", "November", "December"]
 
@@ -20,7 +23,12 @@ export default function ApplicationFooter() {
     const handleClick = () => {
         let route
         if(page === 'ItemAvailability') route = 'ItemOptions'
-        if(page === 'ItemOptions') route = 'ItemOverview'
+        if(page === 'ItemOptions') {
+            if(!address && !user?.address ){
+                return
+            }
+            route = 'ItemOverview'
+        }
         if(page === 'ItemOverview') route = 'ItemAvailability'
         handleNextPage(route)
     }
