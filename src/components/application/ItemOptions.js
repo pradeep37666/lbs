@@ -6,12 +6,16 @@ import CheckBox from '../checkBox/CheckBox'
 import ApplicationItemCard from './ApplicationItemCard'
 import getDateIndex from '../../util/getDateIndex'
 import './ItemOptions.css'
+import MapsAutocomplete from '../mapsAutocomplete/MapsAutocomplete'
+import useGlobalState from '../../util/useGlobalState'
 
 export default function ItemOptions({ handleNextPage }) {
     const { state, dispatch } = useContext(ApplicationContext)
     const [isLoading, setIsLoading] = useState(false)
     const [userItems, setUserItems] = useState(['a'])
     const { item, deliverySelected, confirmedStart, confirmedEnd, pickupSelected, currentYear } = state
+
+    const [address, setAddress] = useState('')
 
     // Code for getting related items
     // useEffect(() => {
@@ -43,6 +47,12 @@ export default function ItemOptions({ handleNextPage }) {
     //     })
     // }
 
+    const getMap = () => {
+        // if (user.address && (deliverySelected || pickupSelected)) return <MapsAutocomplete setAddress={setAddress} defaultLocation={user.address} defaultLat={user.lat} defaultLng={user.lng}/>
+        if (deliverySelected || pickupSelected) return <MapsAutocomplete setAddress={setAddress}/>
+        else return
+    }
+
     return (
         <div className="OptionsContainer">
             <div className="OptionsItemHeaderContainer">
@@ -71,6 +81,8 @@ export default function ItemOptions({ handleNextPage }) {
                     />  
                 </div> 
             </div>
+
+            {getMap()}
             
             {/* <div className="AdditionalItemsMainContainer">
                <div>

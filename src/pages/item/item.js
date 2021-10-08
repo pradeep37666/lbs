@@ -34,6 +34,8 @@ export default function Item() {
     // Pass in number of reviews from backend for use in review carousel + modal
     const params = useParams();
     const location = useLocation()
+    const history = useHistory()
+
     const [modalVisible, setModalVisible] = useState()
     const [item, setItem] = useState();
     const [itemPictures, setItemPictures] = useState([])
@@ -42,7 +44,6 @@ export default function Item() {
     const [itemOwner, setItemOwner] = useState(null)
     const [loading, setLoading] = useState(true);
     const [approx, setApprox] = useState(null)
-    const history = useHistory()
 
     const reviewSamples = [
         ['Blake Dude', '4', 'Cillum nulla cupidatat aute pariatur ad sit tempor consectetur amet culpa labore deserunt sunt. Veniam eiusmod sunt incididunt ullamco fugiat reprehenderit labore. Ipsum irure culpa veniam velit. Elit dolore cillum nulla nulla do nulla Lorem ullamco.'],
@@ -212,6 +213,16 @@ export default function Item() {
         }
         return MissingProfile
     }
+    //------------------Temporary Function-------------//
+    const handleEdit =()=>{
+        let string =''
+        string = string.concat('i_id='+item.i_id)
+        // string = string.concat('&u_id='+item.u_id)
+        
+        history.push(`/item/edit/${string}`)
+        console.log(JSON.stringify(item, null,'\t'))
+    }
+    //-------------------------------------------------//
 
     return (
         <PageWrapper>
@@ -248,7 +259,11 @@ export default function Item() {
                         </div>
                         
                         {(user && user.id === item.u_id) ?
-                            <button class="editButton">
+                            <button class="editButton" onClick={()=>{
+                             
+                                handleEdit();
+                                
+                                }}>
                                 Edit Item Details
                             </button>
                             :

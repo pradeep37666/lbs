@@ -11,6 +11,7 @@ import getImage from '../../util/getImage';
 
 export default function itemCard(props) {
   const item = props.item;
+  
   const itemPictures = item.pictures?.split(',')
   return (
     <div className="ItemCard">
@@ -26,7 +27,7 @@ export default function itemCard(props) {
         <div className="StatusLocationSection">
           <div className="StatusLocationSection" style={{paddingRight: '30px'}}>
             <img src={DeliveryIcon} alt={item.city} className="ItemCardIcon"/>
-            {item.deliveryOption === 'delivery' ? 'Available' : 'Unavailable'}
+            {item.deliveryPrice > 0 ? 'Available' : 'Unavailable'}
           </div>
 
           <div className="StatusLocationSection">

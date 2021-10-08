@@ -1,4 +1,4 @@
-import { React, useState} from 'react';
+import { React, useEffect, useState} from 'react';
 import { makeStyles, withStyles } from '@material-ui/styles';
 import './categorySelect.css';
 import Select from '@material-ui/core/Select';
@@ -64,15 +64,21 @@ const useStyles = makeStyles({
   }) 
 })
 
+
 export default function CategorySelect(props) {
+ 
   const classes = useStyles(props)
   const [category, setCategory] = useState("")
-
+  
   const handleChange = (event) => {
     setCategory(event.target.value)
     props.setCategory(event.target.value)
   }
+  //used while editing the item to preselect the category and then change it according to the user
 
+  const defaultValue = props.value ? props.value : "";
+
+  
   return (
     <div className={`${classes.inputDiv}`}>
       <label className={`${classes.inputLabel}`}>{props.label}</label>
@@ -80,7 +86,7 @@ export default function CategorySelect(props) {
       onChange={handleChange} 
       input={<BootstrapInput />} className={`SelectInput ${props.thinBorder ? 'SelectInput--Thin' : ''} ${classes.select}`}
       IconComponent={ArrowDown}
-      value={category}
+      value={category === '' ? defaultValue : category}
       MenuProps={{
         anchorOrigin: {
           vertical: -22,
@@ -99,7 +105,8 @@ export default function CategorySelect(props) {
       <label className={`${classes.inputLabel}`}>{props.label}</label>
       <div className="DropDownTitle">{category}</div>
       <hr className="hl"/>
-      <MenuItem value=""><div className="CatIconContainer"></div></MenuItem>
+     
+      <MenuItem value={props.value ? defaultValue : ''}><div className="CatIconContainer"></div>{props.value ? defaultValue :''}</MenuItem> 
       <MenuItem value="Painting"><div className="CatIconContainer"><PaintingIcon  className="CategoryDDIcon"/></div>Painting</MenuItem>
       <MenuItem value="Office"><div className="CatIconContainer"><OfficeIcon className="CategoryDDIcon"/></div>Office</MenuItem>
       <MenuItem value="Tools"><div className="CatIconContainer"><HammerIcon fill='#ac172c' className="CategoryDDIcon"/></div>Tools</MenuItem>

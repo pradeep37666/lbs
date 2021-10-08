@@ -19,7 +19,12 @@ export default function Header() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    history.push(`/search/${searchText}`);
+  
+   let string =''
+   if(searchText) string = string.concat('?keyword='+searchText)
+   console.log(string)
+   history.replace(`/search/${string}`);
+    //history.replace(`/search?keyword=${searchText}`);
   }
 
   useEffect(() => {

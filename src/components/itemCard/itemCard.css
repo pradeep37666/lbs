@@ -19,12 +19,6 @@
   min-height: 66px;
 }
 
-.ItemNameText:hover {
-  overflow: visible;
-  white-space: normal;
-  display: block;
-}
-
 .ItemPriceText {
   font-size: calc(1vw + 1.3rem);
   margin-top: 0.5rem;
