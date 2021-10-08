@@ -72,6 +72,12 @@ const applicationReducer = (state, action) => {
                 currentYear: action.data
             }
         }
+        case 'setAddress' : {
+            return {
+                ...state,
+                address: action.data
+            }
+        }
         default : {
             return state
         }

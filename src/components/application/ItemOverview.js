@@ -15,7 +15,7 @@ export default function ItemOverview() {
     const { state, dispatch } = useContext(ApplicationContext)
     const globalState = useGlobalState()
     const user  = globalState.state.user
-    const { page, item, confirmedEnd, confirmedStart, deliverySelected, pickupSelected } = state
+    const { page, item, confirmedEnd, confirmedStart, deliverySelected, pickupSelected, address, currentYear } = state
 
     const history = useHistory()
     const dayArray = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
@@ -136,13 +136,24 @@ export default function ItemOverview() {
         let deliveryOption = (deliverySelected && pickupSelected) ? 'both' : deliverySelected ? 'delivery' : 'pickup'
         const startIndex = (getDateIndex(confirmedStart.day) * 2) + (confirmedStart.day?.am ? 2 : 1)
         const endIndex = (getDateIndex(confirmedEnd.day) * 2) + (confirmedEnd.day?.am ? 2 : 1)
+        confirmedStart.day.setHours(confirmedStart?.am ? 6 : 11)
+        console.log({
+            i_id: item.i_id,
+            io_id: item.u_id,
+            deliveryOption,
+            startDate: startIndex,
+            endDate: endIndex,
+            address: address ? address : user.address
+        })
         try{
-            const { data, status } = await instance.post('booking/save', {
+            const { data, status } = await instance.post(`booking/save/${confirmedStart.day.getTime()}`, {
                 i_id: item.i_id,
                 io_id: item.u_id,
                 deliveryOption,
                 startDate: startIndex,
-                endDate: endIndex
+                endDate: endIndex,
+                year: currentYear,
+                address: address ? address : user.address
             })
             sendEnquiry(item)
             history.push({ 
@@ -150,7 +161,7 @@ export default function ItemOverview() {
                 state: {bookingCreated: true, price: calculatePrice()}
             })
         } catch(e) {
-            console.log(e.response.error.message)
+            console.log(e.response)
         }
         
     }
