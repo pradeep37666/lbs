@@ -8,8 +8,8 @@
 
 .HeaderBarSticky {
   position: -webkit-sticky; /* Safari */
-	position: sticky;
-	top: 0%;
+  position: sticky;
+  top: 0%;
   z-index: 100;
   animation: FadeIn 0.4s;
 }
@@ -28,13 +28,13 @@
 .LoginWrapper {
   display: flex;
   align-items: center;
-  width: 12%;
+
   margin-right: 2em;
 }
 
 .HeaderSearchDiv {
   position: relative;
-  max-height: '74px';
+  max-height: 74px;
   width: 100%;
   margin: 0 25px 0 0;
 }
@@ -46,4 +46,17 @@
 .SearchForm {
   width: 100%;
   display: flex;
+}
+
+@media only screen and (max-width: 495px) {
+  .SearchWrapper {
+    width: 60%;
+  }
+  .HeaderLogo {
+    max-width: 3.5em;
+    margin: 1rem;
+  }
+  .LoginWrapper {
+    margin-right: 1.5rem;
+  }
 }

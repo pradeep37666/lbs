@@ -1,0 +1,15 @@
+.TradeCalendarItemContainer {
+  border-bottom: 1px solid #dedede;
+}
+
+.TradeCalendarItemDetails {
+  position: sticky;
+  left: 2rem;
+  display: flex;
+
+  grid-column-start: 1;
+  grid-row-start: 1;
+  z-index: 50;
+  align-items: center;
+  width: max-content;
+}

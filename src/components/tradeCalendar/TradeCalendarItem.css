@@ -1,0 +1,62 @@
+.TradeCalendarItem {
+  border-radius: 15px;
+  cursor: pointer;
+  margin: 0.2rem 0;
+  height: max-content;
+  z-index: 50;
+  font-size: calc(0.4vw + 0.5rem);
+}
+
+.TradeCalendarItemPicture {
+  width: 50px;
+  height: 50px;
+  border: 1px solid black;
+  border-radius: 5px;
+  margin-right: 0.5rem;
+}
+
+.TradeCalendarItemLend {
+  display: flex;
+  align-items: center;
+  background-color: #33384f;
+  padding: 0.5rem;
+  color: white;
+  border-radius: 10px;
+}
+.TradeCalendarItemBorrow {
+  display: flex;
+  align-items: center;
+  background-color: #e9d8b4;
+  padding: 0.5rem;
+  color: #33384f;
+  border-radius: 10px;
+}
+.TradeCalendarItemPending {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem;
+  color: #33384f;
+  background-color: white;
+  border: 1px solid #33384f;
+  border-radius: 10px;
+}
+
+.TradeCalendarItemLendCancelled {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem;
+  background-color: #33384f;
+  color: white;
+  border: 1px solid #33384f;
+  border-radius: 10px;
+  flex-wrap: wrap;
+}
+
+.TradeCalendarItemBorrowCancelled {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem;
+  background-color: #e9d8b4;
+  color: #33384f;
+  border-radius: 10px;
+}

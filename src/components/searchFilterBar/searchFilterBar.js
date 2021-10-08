@@ -82,9 +82,13 @@ export default function SearchFilterBar({ keyWord }) {
     }
   }
 
-  useEffect(() => {
-    handleSubmitFilterChange();
-  }, [Delivery, Category, Rating]);
+  // use effect below resets the search when you first get to the page, e.g. from filters on home page
+  // we need to make it research whenever one of the filters is changed, butr without the useeffect as that will always fire at the start
+  // and wipe whatever filters we had already set on the home page
+
+  // useEffect(() => {
+  //   handleSubmitFilterChange();
+  // }, [Delivery, Category, Rating]);
 
   const handlePriceMinChange = (e) => {
     let price = e.target.validity.valid ? e.target.value : PriceMin

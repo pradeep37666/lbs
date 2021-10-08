@@ -49,22 +49,6 @@ export default function ItemOverview() {
         }
     }
     
-    // const calculatePrice = () => {
-    //     if(confirmedEnd.sameTimeSlot) return item.price
-    //     const days = getDateIndex(confirmedEnd.day) - getDateIndex(confirmedStart.day)
-    //     let timeSlots
-    //     if(confirmedStart?.am && confirmedEnd?.am || confirmedStart?.pm && confirmedEnd?.pm){
-    //         timeSlots = (days * 2) + 1
-    //     }
-    //     if(confirmedStart?.am && confirmedEnd?.pm){
-    //         timeSlots = (days + 1) * 2
-    //     }
-    //     if(confirmedStart?.pm && confirmedEnd?.am){
-    //         timeSlots = days * 2
-    //     }
-    //     return item.price * timeSlots 
-    // }
-
     const calculatePrice = () => {
         let discountTimeSlots = 0
         if(item.discount > 0) discountTimeSlots = calculateDiscountTimeSlots()

@@ -83,8 +83,7 @@ export default function CalendarItem({day, index, onClick, isCurrentMonth }) {
             <div 
             onClick={handleClick}
             className={`
-            ItemCircle 
-            
+            ItemCircle  
             ${confirmedEnd && compareDates(confirmedEnd.day, day) && 'ItemCircleConfirmed'}
             ${selected && compareDates(selected, day) && 'ItemCircleSelected'}
             ${confirmedStart && compareDates(confirmedStart.day, day) && 'ItemCircleConfirmed'} 

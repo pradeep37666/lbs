@@ -1,98 +1,104 @@
 .ApplicationFooter {
-    position: sticky;
-    background-color: white;
-    width: 100%;
-    margin-bottom: 10px;
-    bottom: 10px;
-    display: flex;
-    justify-content: center;
-    border-top: 3px solid #ac172c;
-    border-bottom: 3px solid #ac172c;
-    padding-top: 10px;
-    padding-bottom: 10px;
+  position: sticky;
+  background-color: white;
+  width: 100%;
+  margin-bottom: 10px;
+  bottom: 10px;
+  display: flex;
+  justify-content: center;
+  border-top: 3px solid #ac172c;
+  border-bottom: 3px solid #ac172c;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 
 .ApplicationFooterContainer {
-    width: 45%;
-    max-width: 400px;
+  width: 45%;
+  max-width: 400px;
 }
 .ApplicationFooterDetailsContainer {
-    display: flex;
-    justify-content: space-between;
-    padding-top: 8px;
-    padding-bottom: 8px;
+  display: flex;
+  justify-content: space-between;
+  padding-top: 8px;
+  padding-bottom: 8px;
 }
 .ApplicationFooterButtonContainer {
-    display: flex;
-    justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
 }
 .ApplicationFooterClearButton {
-    cursor: pointer;
-    border: 1px solid #ac172c;
-    border-radius: 10px;
-    min-width: 45%;
-    display: flex;
-    justify-content: center;
-    max-height: 40px;
-    align-items: center;
+  cursor: pointer;
+  border: 1px solid #ac172c;
+  border-radius: 10px;
+  min-width: 45%;
+  display: flex;
+  justify-content: center;
+  max-height: 40px;
+  align-items: center;
 }
 .ApplicationFooterLargeNextButton {
-    width: 100%;
+  width: 100%;
 }
 .ApplicationFooterClearRemoved {
-    display: none
+  display: none;
 }
 .ApplicationFooterNextButton {
-    cursor: pointer;
-    background-color: #ac172c;
-    color: white;
-    border-radius: 10px;
-    min-width: 45%;
-    max-height: 40px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  cursor: pointer;
+  background-color: #ac172c;
+  color: white;
+  border-radius: 10px;
+  min-width: 45%;
+  max-height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .ApplicationFooterPriceContainer {
-    display: flex;
-    justify-content: space-between;
-    font-size: large;
-    border-bottom: 1px solid #dedede;
-    padding-bottom: 8px;
+  display: flex;
+  justify-content: space-between;
+  font-size: large;
+  border-bottom: 1px solid #dedede;
+  padding-bottom: 8px;
 }
 .ApplicationFooterDetails {
-    min-width: 45%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+  min-width: 45%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 .ApplicationFooterTime {
-    color: #ac172c;
-    font-size: 16px;
-    font-weight: bold;
+  color: #ac172c;
+  font-size: 16px;
+  font-weight: bold;
 }
 
 .ApplciationFooterArrow {
-    color: #ac172c;
-    font-size: 35px;
+  color: #ac172c;
+  font-size: 35px;
 }
 .ApplicationFooterArrowContainer {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 .ApplicatonFooterPrice {
-    font-size: 20px;
-    font-weight: bold;
-    color: #33384f;
+  font-size: 20px;
+  font-weight: bold;
+  color: #33384f;
 }
 .ApplicationFooterDetailsHeader {
-    color: #33384f;
-    font-size: 17px;
-    font-weight: bold;
+  color: #33384f;
+  font-size: 17px;
+  font-weight: bold;
 }
 .ApplicationFooterDay {
-    font-weight: bold;
-    font-size: 16px;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+@media only screen and (max-width: 495px) {
+  .ApplicationFooterContainer {
+    width: 90%;
+  }
 }

@@ -89,21 +89,21 @@ export default function EditAccountDetails(props) {
             <div className="LoginInputValidationContainer">
                 <input type='text' placeholder='Jane Doe' defaultValue={name} className="LoginInput" onBlur={(e) => handleFullName(e, setName, setNameValidation)} />
                 <div className={`triangleLeft ${showValidation("name") ? '' : 'ValidationTextHide'}`} />
-                <ValidationPopup errorText={nameValidation} errorHeader='Invalid Full Name' hide={showValidation("name")} />
+                { !showValidation('name') && <ValidationPopup errorText={nameValidation} errorHeader='Invalid Full Name' hide={showValidation("name")} />}
             </div>
 
             <div className="AccountSettings__UpdateHeader">Email</div>
             <div className="LoginInputValidationContainer">
                 <input type='text' placeholder='JaneDoe@DoeJane.com' defaultValue={email} className="LoginInput" onBlur={(e) => handleEmail(e, setEmail, setEmailValidation)} />
                 <div className={`triangleLeft ${showValidation("email") ? '' : 'ValidationTextHide'}`} />
-                <ValidationPopup errorText={emailValidation} errorHeader='Invalid Email' hide={showValidation("email")} />
+                { !showValidation('email') && <ValidationPopup errorText={emailValidation} errorHeader='Invalid Email' hide={showValidation("email")} />}
             </div>
 
             <div className="AccountSettings__UpdateHeader">Phone Number</div>
             <div className="LoginInputValidationContainer">
                 <input type='text' placeholder='+61456789012' defaultValue={phone} className="LoginInput" onBlur={(e) => handlePhoneNumber(e, setPhone, setPhoneValidation)} />
                 <div className={`triangleLeft ${showValidation("phone") ? '' : 'ValidationTextHide'}`} />
-                <ValidationPopup errorText={phoneValidation} errorHeader='Invalid Phone Number' hide={showValidation("phone")} />
+                { !showValidation('phone') && <ValidationPopup errorText={phoneValidation} errorHeader='Invalid Phone Number' hide={showValidation("phone")} />}
             </div>
 
             <div className="AccountSettings__UpdateHeader">Profile Picture</div>

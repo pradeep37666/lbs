@@ -1,56 +1,63 @@
 .VerificationText__Main {
-    background-color: #f7e7e9;
-    border-radius: 10px;
-    padding: .7em;
-    font-size: 18px;
-    position: absolute;
-    user-select: none;
-    left: 106%;
-    top: 0%;
-    width: fit-content;
-    max-width: 300px;
-    opacity: 0;
+  background-color: #f7e7e9;
+  border-radius: 10px;
+  padding: 0.7em;
+  font-size: 18px;
+  position: absolute;
+  user-select: none;
+  left: 106%;
+  top: 0%;
+  width: fit-content;
+  max-width: 300px;
+  opacity: 0;
 }
 
 .ValidationPopup__Container {
-    position: relative;
+  position: relative;
 }
 
 .ValidationPopup__Header {
-    color: #ac172c;
-    font-weight: bold;
+  color: #ac172c;
+  font-weight: bold;
 }
-
 
 /* Triangle marker styles */
 
 .triangleLeft {
-	position: absolute;
-	background-color: #f7e7e9;
-	text-align: left;
-    left: 105%;
-    top: 35%;
-    opacity: 0;
+  position: absolute;
+  background-color: #f7e7e9;
+  text-align: left;
+  left: 105%;
+  top: 35%;
+  opacity: 0;
 }
 .triangleLeft:before,
 .triangleLeft:after {
-	content: '';
-	position: absolute;
-	background-color: inherit;
+  content: "";
+  position: absolute;
+  background-color: inherit;
 }
 .triangleLeft,
 .triangleLeft:before,
 .triangleLeft:after {
-	width:  1em;
-	height: 1em;
-	border-top-right-radius: 30%;
+  width: 1em;
+  height: 1em;
+  border-top-right-radius: 30%;
 }
 .triangleLeft {
-	transform: rotate(90deg) skewX(-30deg) scale(1,.866);
+  transform: rotate(90deg) skewX(-30deg) scale(1, 0.866);
 }
 .triangleLeft:before {
-	transform: rotate(-135deg) skewX(-45deg) scale(1.414,.707) translate(0,-50%);
+  transform: rotate(-135deg) skewX(-45deg) scale(1.414, 0.707)
+    translate(0, -50%);
 }
 .triangleLeft:after {
-	transform: rotate(135deg) skewY(-45deg) scale(.707,1.414) translate(50%);
+  transform: rotate(135deg) skewY(-45deg) scale(0.707, 1.414) translate(50%);
+}
+
+@media only screen and (max-width: 495px) {
+  .VerificationText__Main {
+    position: static;
+    margin: 1rem 0;
+  }
 }

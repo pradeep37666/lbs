@@ -7,6 +7,7 @@ import TermsConditions from './TermsConditions/TermsConditions'
 import Availability from './Availability/Availability'
 import Instance from '../../util/axios'
 import useGlobalState from '../../util/useGlobalState'
+import { isMobile } from 'react-device-detect'
 
 export default function Account() {
     const { state, dispatch } = useGlobalState()
@@ -60,7 +61,7 @@ export default function Account() {
     return (
         <PageWrapper>
             <div className="UserShedWrapper">
-                <UserShedNav setAccountContent={setAccountContent} accountContent={accountContent} />
+                { !isMobile && <UserShedNav setAccountContent={setAccountContent} accountContent={accountContent} />}
 
                 <div className="UserShed__MainContent">
                     <div className="UserShed__Title">

@@ -91,7 +91,7 @@ export default function EditPaymentDetails() {
             <div className="LoginInputValidationContainer">
                 <input type='text' placeholder='Jane Doe' className="LoginInput" onBlur={(e) => handleCardName(e, setCardName, setCardNameValidation)} />
                 <div className={`triangleLeft ${showValidation("cardName") ? '' : 'ValidationTextHide'}`} />
-                <ValidationPopup errorText={cardNameValidation} errorHeader='Invalid Card Name' hide={showValidation("cardName")} />
+                { !showValidation('cardName') && <ValidationPopup errorText={cardNameValidation} errorHeader='Invalid Card Name' hide={showValidation("cardName")} />}
             </div>
 
 
@@ -99,7 +99,7 @@ export default function EditPaymentDetails() {
             <div className="LoginInputValidationContainer">
                 <input type='text' placeholder='1234 5678 9010 1112' className="LoginInput" onBlur={(e) => handleCardNumber(e, setCardNumber, setCardNumberValidation)} />
                 <div className={`triangleLeft ${showValidation("cardNum") ? '' : 'ValidationTextHide'}`} />
-                <ValidationPopup errorText={cardNumberValidation} errorHeader='Invalid Card Number' hide={showValidation("cardNum")} />
+                { !showValidation('cardNum') && <ValidationPopup errorText={cardNumberValidation} errorHeader='Invalid Card Number' hide={showValidation("cardNum")} />}
             </div>
 
             <div className="ExpiryCCVFlex">
@@ -112,9 +112,9 @@ export default function EditPaymentDetails() {
                     <input type='text' placeholder='000' className="LoginInput" onBlur={(e) => handleCcv(e, setCcv, setCcvValidation)} />
                 </div>
                 <div className={`triangleLeft ${showValidation("expiry") ? '' : 'ValidationTextHide'}`} />
-                <ValidationPopup errorText={expiryValidation} errorHeader='Invalid Expiry Date' hide={showValidation("expiry")} />
+                { !showValidation('expiry') && <ValidationPopup errorText={expiryValidation} errorHeader='Invalid Expiry Date' hide={showValidation("expiry")} />}
                 <div className={`triangleLeft ${showValidation("ccv") ? '' : 'ValidationTextHide'}`} />
-                <ValidationPopup errorText={ccvValidation} errorHeader='Invalid ccv' hide={showValidation("ccv")} />
+                { !showValidation('ccv') && <ValidationPopup errorText={ccvValidation} errorHeader='Invalid ccv' hide={showValidation("ccv")} />}
             </div>
 
             {user.bsb ?
@@ -130,7 +130,7 @@ export default function EditPaymentDetails() {
 
                         <input type='text' placeholder='1234 5678' defaultValue={accNumber} className="LoginInput" onBlur={(e) => handleAccNumber(e, setAccNumber, setAccNumberValidation)} />
                         <div className={`triangleLeft ${showValidation("accNum") ? '' : 'ValidationTextHide'}`} />
-                        <ValidationPopup errorText={accNumberValidation} errorHeader='Invalid Account Number' hide={showValidation("accNum")} />
+                        { !showValidation('accNum') && <ValidationPopup errorText={accNumberValidation} errorHeader='Invalid Account Number' hide={showValidation("accNum")} />}
                     </div>
 
                     <div className="LoginHeader" style={{ marginBottom: '0' }}>BSB</div>
@@ -138,7 +138,7 @@ export default function EditPaymentDetails() {
 
                         <input type='text' placeholder='123-456' defaultValue={bsb} className="LoginInput" onBlur={(e) => handleBsb(e, setBsb, setBsbValidation)} />
                         <div className={`triangleLeft ${showValidation("bsb") ? '' : 'ValidationTextHide'}`} />
-                        <ValidationPopup errorText={bsbValidation} errorHeader='Invalid BSB' hide={showValidation("bsb")} />
+                        { !showValidation('bsb') && <ValidationPopup errorText={bsbValidation} errorHeader='Invalid BSB' hide={showValidation("bsb")} />}
                     </div>
 
                 </div>

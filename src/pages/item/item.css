@@ -15,7 +15,8 @@
 }
 
 .ItemName {
-  font-size: 40px;
+  /* font-size: 40px; */
+  font-size: calc(1.2vw + 1.8rem);
   font-weight: bold;
 }
 
@@ -32,7 +33,8 @@
 }
 
 .ItemPriceTextBig {
-  font-size: 70px;
+  /* font-size: 70px; */
+  font-size: calc(1.6vw + 1.8rem);
   color: #33384f;
 }
 
@@ -84,7 +86,7 @@
 .ItemButtonFlex {
   display: flex;
   justify-content: space-between;
-  padding: 0 1.5em;
+  padding: 0 5%;
   align-items: center;
 }
 
@@ -315,4 +317,39 @@
 }
 .ItemPage__Loading__Container {
   margin: 5em 0;
+}
+
+@media only screen and (max-width: 495px) {
+  .ItemMainWrapper {
+    width: 100%;
+    flex-direction: column-reverse;
+    align-items: center;
+  }
+  .ItemPicturesWrapper {
+    width: 80%;
+  }
+  .ItemInfoWrapper {
+    width: 90%;
+  }
+  .ItemButtons {
+    flex-direction: column;
+  }
+  .ButtonApply {
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+  .ButtonFavourite {
+    width: 80%;
+    align-self: center;
+  }
+  .ButtonAvailability {
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+  .ProductRatingRow {
+    width: 100%;
+  }
+  .ItemName {
+    text-align: center;
+  }
 }

@@ -42,3 +42,9 @@
   right: 7.5rem;
   top: 1.5rem;
 }
+
+@media only screen and (max-width: 495px) {
+  .CalendarRow {
+    grid-template-columns: repeat(7, 50px);
+  }
+}

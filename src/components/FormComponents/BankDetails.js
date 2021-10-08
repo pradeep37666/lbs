@@ -55,7 +55,7 @@ export default function BankDetails(props) {
                 <div className="LoginInputValidationContainer">
                     <input type='text' placeholder='Jane Doe' className="LoginInput" onBlur={(e) => handleCardName(e, props.setCardName, setNameValidation)} />
                     <div className={`triangleLeft ${showValidation("name") ? '' : 'ValidationTextHide'}`} />
-                    <ValidationPopup errorText={nameValidation} errorHeader='Invalid Card Name' hide={showValidation("name")}/>
+                   { !showValidation('name') && <ValidationPopup errorText={nameValidation} errorHeader='Invalid Card Name' hide={showValidation("name")}/>}
                 </div>
 
 
@@ -63,7 +63,7 @@ export default function BankDetails(props) {
                 <div className="LoginInputValidationContainer">
                     <input type='text' placeholder='1234 5678 9010 1112' className="LoginInput" onBlur={(e) => handleCardNumber(e, props.setCardNumber, setCardNumberValidation)}/>
                     <div className={`triangleLeft ${showValidation("cardNum") ? '' : 'ValidationTextHide'}`} />
-                    <ValidationPopup errorText={cardNumberValidation} errorHeader='Invalid Card Number' hide={showValidation("cardNum")}/>
+                    { !showValidation('cardNum') && <ValidationPopup errorText={cardNumberValidation} errorHeader='Invalid Card Number' hide={showValidation("cardNum")}/>}
                 </div>
 
                 <div className="ExpiryCCVFlex">
@@ -76,9 +76,9 @@ export default function BankDetails(props) {
                         <input type='text' placeholder='000' className="LoginInput" onBlur={(e) => handleCcv(e, props.setCcv, setCcvValidation)}/>
                     </div>
                     <div className={`triangleLeft ${showValidation("expiry") ? '' : 'ValidationTextHide'}`} />
-                    <ValidationPopup errorText={expiryValidation} errorHeader='Invalid Expiry Date' hide={showValidation("expiry")}/>
+                    { !showValidation('expiry') && <ValidationPopup errorText={expiryValidation} errorHeader='Invalid Expiry Date' hide={showValidation("expiry")}/>}
                     <div className={`triangleLeft ${showValidation("ccv") ? '' : 'ValidationTextHide'}`} />
-                    <ValidationPopup errorText={ccvValidation} errorHeader='Invalid ccv' hide={showValidation("ccv")}/>
+                    { !showValidation('ccv') && <ValidationPopup errorText={ccvValidation} errorHeader='Invalid ccv' hide={showValidation("ccv")}/>}
                 </div>
                 {!props.lender ?
                 <button className={`LoginFormButton ${!props.validated ? 'ButtonDisabled' : ''}`} disabled={!props.validated} onClick={() => props.handleNextPage('Terms & Conditions')}>Next</button>
