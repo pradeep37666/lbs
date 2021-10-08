@@ -49,9 +49,9 @@ export default function ApplicationFooter() {
         price = (weekendTimeSlots * item.price) + (discountTimeSlots * (item.price * (1 - item.discount / 100)))
         // Dont' calculate delivery and pickup if the user is looking at the calendar
         if(page === 'ItemAvailability' && !confirmedEnd.sameTimeSlot){
-            return price
+            return price.toFixed(2)
         }
-        return price + ( (deliverySelected ? item.deliveryPrice : 0) + (pickupSelected ? item.deliveryPrice : 0))
+        return (price + ( (deliverySelected ? item.deliveryPrice : 0) + (pickupSelected ? item.deliveryPrice : 0))).toFixed(2)
     }
 
     const calculateDiscount = () => {
