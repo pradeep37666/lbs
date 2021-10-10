@@ -84,9 +84,9 @@ export default function TradeCalendar({ borrowerBookingItems, lenderBookingItems
         for(let i=0; i<totalDates; i++){
             const isCurrentDay = dates[i].getMonth() === currentMonth && dates[i].getDate() === currentDate
             arr.push(
-            <div className="TradeCalendarDayItemContainer" style={ dates[i] && { borderWidth: 1, position: 'relative' }} key={i}>
+            <div className="TradeCalendarDayItemContainer" style={ dates[i] && { borderWidth: 1, position: 'relative',}} key={i}>
                 { dates[i].getDate() === 1 &&
-                    <span style={{ position: 'absolute', top: 0 }}>{monthArray[dates[i].getMonth()]}</span>
+                    <span style={{ position: 'absolute', top: -15, left: 5}}>{monthArray[dates[i].getMonth()]}</span>
                 }
                 <div className="TradeCalendarDayItem">
                     <span className="TradeCalendarDayItemName">{dayArray[dates[i].getDay()]}</span>

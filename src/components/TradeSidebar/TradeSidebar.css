@@ -49,3 +49,8 @@
 .TradeSidebarUserAvatar {
   margin-right: 1rem;
 }
+
+.TradeSidebarLocationContainer {
+  flex-direction: column;
+  display: flex;
+}

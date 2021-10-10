@@ -138,7 +138,7 @@ export default function ItemOverview() {
                 state: {bookingCreated: true, price: calculatePrice()}
             })
         } catch(e) {
-            console.log(e.response.error.message)
+            console.log(e)
         }
         
     }
