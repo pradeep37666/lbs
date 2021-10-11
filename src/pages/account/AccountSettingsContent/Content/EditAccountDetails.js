@@ -132,7 +132,7 @@ export default function EditAccountDetails(props) {
 
             <div className="HL" />
 
-            <div className="AccountSettings__SyncButtonFlex">
+            {/* <div className="AccountSettings__SyncButtonFlex">
                 <div className="AccountSettings__UserName AccountSettings__SyncButton__Text">Sync Trade Dates with Calendar</div>
                 <div><LBSSwitch set={setSync} text='On' /></div>
             </div>
@@ -141,7 +141,7 @@ export default function EditAccountDetails(props) {
                 <p>If you would like to sync you Little Big Shed calendar dates with your personal calendar, turn this on.</p>
                 <p>If you want to keep these details seperate, keep this turned off.</p>
 
-            </div>
+            </div> */}
 
             <div className="AccountSettings__ButtonFlex">
                 <button className="LoginFormButton AccountSettings__SaveButton" onClick={() => updateBasicDetails()}>Save Changes</button>
