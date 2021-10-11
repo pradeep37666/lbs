@@ -12,6 +12,7 @@ import { Link } from 'react-router-dom'
 import useGlobalState from '../../util/useGlobalState'
 import getImage from '../../util/getImage'
 import { Avatar } from '@material-ui/core'
+import { isMobile } from 'react-device-detect'
 
 export default function UserButton() {
     const { state } = useGlobalState()
@@ -24,9 +25,16 @@ export default function UserButton() {
         <div className="UserButton__Container">
             <button className={`UserButton ${menuOpen ? 'UserButton--Active' : ''}`} onClick={() => setMenuOpen(!menuOpen)}>
 
-                <Avatar src={`${!user.avatar ? MissingProfile : getImage(user.avatar)}`} className="UserButton_ProfilePicture" alt="ProfilePicture" />
+                <Avatar 
+                src={`${!user.avatar ? MissingProfile : getImage(user.avatar)}`} 
+                className="UserButton_ProfilePicture" 
+                alt="ProfilePicture" 
+                />
 
-                <div className="UserButton__FirstName">{firstName}</div>
+                {!isMobile && 
+                <div className="UserButton__FirstName">
+                    {firstName}
+                </div>}
 
                 <KeyboardArrowDownIcon />
 

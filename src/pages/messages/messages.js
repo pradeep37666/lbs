@@ -9,6 +9,7 @@ import { Facebook } from 'react-content-loader'
 import { ClickAwayListener } from '@material-ui/core'
 import useGlobalState from '../../util/useGlobalState'
 import Instance from '../../util/axios'
+import { isMobile } from 'react-device-detect'
 
 export default function Messages() {
     const { state } = useGlobalState()
@@ -93,24 +94,20 @@ export default function Messages() {
 
     const renderSkeletons = () => {
         const array = Array(5).fill()
-        return array.map((skeleton, index) => <Facebook key={index} />)
+        return array.map((skeleton, index) => <Facebook key={index} style={{ height: 110}}  />)
     }
     return (
         <PageWrapper>
             <ClickAwayListener onClickAway={() => setPopupOpen(false)}>
             <div className="UserShedWrapper">
-            <UserShedNav setAccountContent={setAccountContent} accountContent={accountContent}/>
+            { !isMobile && <UserShedNav setAccountContent={setAccountContent} accountContent={accountContent}/>}
             <div className="ContentContainer">
-                {/* <div className="UserShed__Title">
-                    {accountContent}
-                </div> */}
                 <div className="UserCardContainer">
-
                     { isLoading ? (
                         renderSkeletons()
                     ):(
                         <>
-                            <h1>Messages</h1>
+                            <span className="MessagesHeading">Messages</span>
                             {renderCards()}
                         </>   
                     )}
@@ -118,6 +115,7 @@ export default function Messages() {
                 { activeChatUser && 
                 <ActiveChat 
                 activeChatUser={activeChatUser} 
+                setActiveChatUser={setActiveChatUser}
                 messages={messages} 
                 setMessages={setMessages}
                 getConversations={getConversations}

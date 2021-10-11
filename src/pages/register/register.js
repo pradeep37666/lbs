@@ -13,7 +13,7 @@ import Instance from '../../util/axios';
 import { useHistory } from 'react-router-dom';
 import useGlobalState from '../../util/useGlobalState';
 import { CometChat } from '@cometchat-pro/chat';
-
+import getSuburb from '../../util/getSuburb';
 
 export default function Register() {
     const { dispatch } = useGlobalState()
@@ -21,7 +21,6 @@ export default function Register() {
     const [fullName, setFullName] = useState("")
     const [email, setEmail] = useState("")
     const [phoneNumber, setPhoneNumber] = useState("")
-    const [profilePicture, setProfilePicture] = useState("")
     const [password, setPassword] = useState("")
     const [confirmPassword, setConfirmPassword] = useState("")
     const [lender, setLender] = useState(false)
@@ -33,9 +32,6 @@ export default function Register() {
     const [bsb, setBsb] = useState("")
     
     const [address, setAddress] = useState("")
-    const [city, setCity] = useState("")
-    const [country, setCountry] = useState("")
-    const [state, setState] = useState("")
 
     const [availability, setAvailability] = useState('00000000000000')
 
@@ -51,32 +47,26 @@ export default function Register() {
         setPage(newPage)
         window.scrollTo(0, 0)
     }
-    useEffect(() => {
-        console.log(image, 'image')
-    }, [image])
 
     const registerUser = async () => {
         const userDetails = {
-                fullName: fullName,
-                email: email,
-                avatar: image ? image.raw : null,
-                mobile: phoneNumber,
-                address: address,
-                city: city,
-                country: country,
-                state: state,
-                bsb: bsb,
-                account_number: accNumber,
-                available: availability,
-                password: password,
-            }
+            fullName: fullName,
+            email: email,
+            avatar: image ? image.raw : '',
+            mobile: phoneNumber,
+            address: address ? address.description : '',
+            suburb: address.terms ? getSuburb(address.terms) : '',
+            lat: address ? address.lat : 0,
+            lng: address ? address.lng : 0,
+            bsb: bsb ? bsb : '',
+            account_number: accNumber ? accNumber : '',
+            available: availability,
+            password: password,
+        }
         const formData = new FormData()
         Object.keys(userDetails).forEach(key => {
             formData.append(key, userDetails[key])
         })
-        // if(image){
-        //     formData.append('avatar', image.raw)
-        // }
         try{
             const { data, status } = await Instance.post('/auth/signUp', formData)
             if(status === 201) {
@@ -141,18 +131,19 @@ export default function Register() {
                 // }
                 break
             case 'Location Details':
-                if (address && city && country && state) {
+                if (address) {
                     setValidated(true)
                 } else setValidated(false)
                 break
             case 'Availability':
-                console.log(availability)
+                console.log(getSuburb(address.terms))
+                console.log(address)
                 if (availability !== '00000000000000') {
                     setValidated(true)
                 } else setValidated(false)
                 break
             case 'Terms & Conditions':
-                console.log(email, fullName, profilePicture, phoneNumber, address, city, country, state, bsb, accNumber, availability, password)
+                console.log(address)
                 if (tc) {
                     setValidated(true)
                 } else setValidated(false)
@@ -162,7 +153,8 @@ export default function Register() {
             default:
                 return '';
         }
-    }, [page, fullName, email, phoneNumber, password, confirmPassword,  accNumber, bsb,  lender, address, city, country, state, availability, tc])
+    }, [page, fullName, email, phoneNumber, password, confirmPassword,  accNumber, bsb,  lender, address, , availability, tc])
+    // city, country, state
 
     const getComplete = () => {
         return (
@@ -220,9 +212,6 @@ export default function Register() {
                 validated={validated}
                 handleNextPage={handleNextPage}
                 setAddress={setAddress}
-                setCity={setCity}
-                setCountry={setCountry}
-                setState={setState}
                 />
             case 'Availability':
                 return <Availability 

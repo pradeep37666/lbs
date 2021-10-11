@@ -14,8 +14,10 @@ export default function CalendarItem({day, index, onClick, isCurrentMonth }) {
     const {selected, currentDate, confirmedStart, confirmedEnd, yearAvailability, itemAvailability } = state
 
     useEffect(() => {
+        
         if(!yearAvailability) return
         const { availability, booked } = getAvailability(day, itemAvailability, yearAvailability)
+        console.log(day, availability, booked)
         setAvailability(availability)
         setBooked(booked)
         if(day.getDate() < currentDate && isCurrentMonth) {
@@ -83,8 +85,7 @@ export default function CalendarItem({day, index, onClick, isCurrentMonth }) {
             <div 
             onClick={handleClick}
             className={`
-            ItemCircle 
-            
+            ItemCircle  
             ${confirmedEnd && compareDates(confirmedEnd.day, day) && 'ItemCircleConfirmed'}
             ${selected && compareDates(selected, day) && 'ItemCircleSelected'}
             ${confirmedStart && compareDates(confirmedStart.day, day) && 'ItemCircleConfirmed'} 

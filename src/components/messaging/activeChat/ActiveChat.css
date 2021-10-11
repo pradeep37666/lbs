@@ -24,6 +24,7 @@
   justify-content: flex-end;
   position: relative;
   overflow: auto;
+  background-color: white;
 }
 .ActiveChatHeader {
   background-color: white;
@@ -60,4 +61,18 @@
   height: 100%;
   display: flex;
   flex-direction: column;
+}
+
+@media only screen and (max-width: 495px) {
+  .ActiveChatContainer {
+    position: absolute;
+    width: 100%;
+  }
+  .ActiveChatHeaderUser {
+    margin-left: 0.5rem;
+  }
+  .ActiveChatInputContainer {
+    width: 95%;
+    align-self: center;
+  }
 }

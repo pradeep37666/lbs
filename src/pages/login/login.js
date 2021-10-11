@@ -8,6 +8,7 @@ import { useHistory } from 'react-router-dom';
 import ValidationPopup from '../../components/ValidationPopup/ValidationPopup';
 import useGlobalState from '../../util/useGlobalState';
 import { CometChat } from '@cometchat-pro/chat';
+import { isMobile } from 'react-device-detect';
 
 export default function Login() {
     const { dispatch } = useGlobalState()
@@ -31,7 +32,6 @@ export default function Login() {
                 // Add user to global state
                 dispatch({ type: 'setUser', data: response.data.user })
                 localStorage.setItem('token', response.data.token.accessToken)
-                console.log('aaaaa')
                 await cometChatLogin(response.data.user)
                 setLoginValidation("")
                 history.push({ pathname: '/' })
@@ -40,11 +40,6 @@ export default function Login() {
             setLoginValidation("An error occurred whilst logging in, please try again")
             console.log(error) 
         }
-        
-        
-        
-               
-            
     }
 
     const cometChatLogin = async (user) => {
@@ -74,7 +69,7 @@ export default function Login() {
                     }} />
                     <div className="LoginInputValidationContainer">
                         <button type='submit' disabled={!email || !password} className={`LoginFormButton ${!email || !password ? 'ButtonDisabled' : ''}`}>Log in</button>
-                        <div className={`triangleLeft ${loginValidation.length === 0 ? '' : 'ValidationTextHide'}`} />
+                        { !isMobile && <div className={`triangleLeft ${loginValidation.length === 0 ? '' : 'ValidationTextHide'}`} />}
                         <ValidationPopup errorText={loginValidation} errorHeader='Invalid Login Details' hide={loginValidation.length === 0} />
                     </div>
                 </form>

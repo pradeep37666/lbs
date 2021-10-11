@@ -12,7 +12,7 @@ import RatingFiller from '../ratingFiller/ratingFiller'
 import MissingProfile from '../../assets/Icons/MissingProfileIcon.png'
 import TradeCalendarStatusPanel from '../tradeCalendar/tradeCalendarStatusPanel/TradeCalendarStatusPanel'
 
-export default function TradeSidebar({ booking }) {
+export default function TradeSidebar({ booking, getBookings }) {
     const { state } = useGlobalState()
     const { user } = state
     const [item, setItem] = useState(null)
@@ -72,7 +72,7 @@ export default function TradeSidebar({ booking }) {
                     item={item}/>
                 </div>
                 <div className="TradeSidebarSection">
-                    <TradeCalendarStatusPanel booking={booking} userDetails={userDetails}/>
+                    <TradeCalendarStatusPanel getBookings={getBookings} booking={booking} userDetails={userDetails}/>
 
                 </div>
                 <div className="TradeSidebarSection">
@@ -99,7 +99,7 @@ export default function TradeSidebar({ booking }) {
                     <div className="ApplicationFooterDetailsContainer">
                         <div className="ApplicationFooterDetails">
                             <span className="ApplicationFooterDetailsHeader">Collect</span>
-                            <div>
+                            <div style={{ textAlign: 'center'}}>
                                 <span className="ApplicationFooterTime">{beginDate?.morning ? '8:00am' : '1:00pm'} </span>
                                 <span className="ApplicationFooterDay">{dayArray[beginDate.date.getDay()]}</span>
                             </div>
@@ -113,7 +113,7 @@ export default function TradeSidebar({ booking }) {
                         </div>
                         <div className="ApplicationFooterDetails">
                             <span className="ApplicationFooterDetailsHeader">Return</span>
-                            <div>
+                            <div style={{ textAlign: 'center' }}>
                                 <span className="ApplicationFooterTime">{endDate?.morning ? '12:00pm' : '5:00pm'} </span>
                                 <span className="ApplicationFooterDay">{dayArray[endDate.date.getDay()]}</span>
                             </div>
@@ -126,7 +126,10 @@ export default function TradeSidebar({ booking }) {
 
                 </div>
                 <div className="TradeSidebarSection">
-                    <span className="TradeSidebarHeading">Delivery Location</span>
+                    <div className="TradeSidebarLocationContainer">
+                        <span className="TradeSidebarHeading">Delivery Location</span>
+                        <span>{booking.address}</span>
+                    </div>
                 </div>
                 { userDetails &&
                 <div className="TradeSidebarSection">

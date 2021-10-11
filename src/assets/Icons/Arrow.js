@@ -1,9 +1,9 @@
 import React from 'react'
 
-export default function Arrow({ height, width, vertical }) {
+export default function Arrow({ rotation, width, height, onClick }) {
     return (
-        <div style={vertical ? { transform: 'rotate(90deg)'} : null }>
-            <svg xmlns="http://www.w3.org/2000/svg" width={width ? width : "100%"} height={height ? height : "100%"} viewBox="0 0 144 92">
+        <div style={ rotation ? { transform: `rotate(${rotation}deg`} : null } onClick={onClick ? onClick : null}>
+            <svg xmlns="http://www.w3.org/2000/svg" width={ width ? width : "100%"} height={ height ? height : "100%"} viewBox="0 0 144 92">
             {/* <defs>
                 <clipPath id="clip-Arrow">
                 <rect width="144" height="92"/>

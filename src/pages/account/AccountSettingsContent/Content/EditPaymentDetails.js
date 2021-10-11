@@ -193,7 +193,7 @@ export default function EditPaymentDetails() {
 
                         <input type='text' placeholder='1234 5678' defaultValue={accNumber} className="LoginInput" onBlur={(e) => handleAccNumber(e, setAccNumber, setAccNumberValidation)} />
                         <div className={`triangleLeft ${showValidation("accNum") ? '' : 'ValidationTextHide'}`} />
-                        <ValidationPopup errorText={accNumberValidation} errorHeader='Invalid Account Number' hide={showValidation("accNum")} />
+                        { !showValidation('accNum') && <ValidationPopup errorText={accNumberValidation} errorHeader='Invalid Account Number' hide={showValidation("accNum")} />}
                     </div>
 
                     <div className="LoginHeader" style={{ marginBottom: '0' }}>BSB</div>
@@ -201,7 +201,7 @@ export default function EditPaymentDetails() {
 
                         <input type='text' placeholder='123-456' defaultValue={bsb} className="LoginInput" onBlur={(e) => handleBsb(e, setBsb, setBsbValidation)} />
                         <div className={`triangleLeft ${showValidation("bsb") ? '' : 'ValidationTextHide'}`} />
-                        <ValidationPopup errorText={bsbValidation} errorHeader='Invalid BSB' hide={showValidation("bsb")} />
+                        { !showValidation('bsb') && <ValidationPopup errorText={bsbValidation} errorHeader='Invalid BSB' hide={showValidation("bsb")} />}
                     </div>
 
                 </div>

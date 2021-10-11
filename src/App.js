@@ -25,6 +25,7 @@ import instance from './util/axios';
 import { CometChat } from '@cometchat-pro/chat'
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
+import EditItemPage from './pages/editItem/EditItemPage';
 
 export const GlobalStateContext = React.createContext()
 
@@ -48,6 +49,7 @@ function App() {
       .then(({ data }) => {
         dispatch({ type: 'setUser', data })
         setLoadingUser(false)
+        return
       })
       .catch((e) => console.log(e))
   }, [])

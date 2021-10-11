@@ -2,19 +2,22 @@
   width: 100%;
   overflow-x: auto;
   overflow-y: auto;
-  height: max-content;
+  max-height: 70vh;
   width: 100%;
 }
 
 .TradeCalendarDaysContainer {
   display: grid;
   background-color: #ededed;
+  position: sticky;
+  top: 0;
+  z-index: 60;
 }
 .TradeCalendarDayItem {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-right: -0.5rem;
+  /* margin-right: -0.5rem; */
 }
 .TradeCalendarCurrentDay {
   font-size: 22px;
@@ -30,8 +33,8 @@
 }
 .TradeCalendarDayItemContainer {
   display: flex;
-  padding: 1rem 0;
-  justify-content: flex-end;
+  padding: 0.5rem 0;
+  justify-content: center;
   border-left: 1px solid #dedede;
 }
 .TradeCalendarDayItemName {
@@ -43,11 +46,19 @@
   font-weight: bold;
   color: #33384f;
 }
-.TradeCalendarBookingsContainer {
-}
 
 .TradeCalendarBorrowHeader {
   font-size: 16px;
   color: #33384f;
+  font-weight: bold;
+}
+
+.TradeCalendarMonthLabel {
+  /* { position: 'absolute', top: -10, left: 5} */
+  position: absolute;
+  top: -25px;
+  left: 5px;
+  color: #33384f;
+  font-size: 21px;
   font-weight: bold;
 }

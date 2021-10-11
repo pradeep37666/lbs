@@ -66,6 +66,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  text-align: center;
 }
 .ApplicationFooterTime {
   color: #ac172c;
@@ -95,4 +96,10 @@
 .ApplicationFooterDay {
   font-weight: bold;
   font-size: 16px;
+}
+
+@media only screen and (max-width: 495px) {
+  .ApplicationFooterContainer {
+    width: 90%;
+  }
 }

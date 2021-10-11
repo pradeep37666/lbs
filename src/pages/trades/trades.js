@@ -5,6 +5,8 @@ import UserShedNav from '../../components/UserShedNav/UserShedNav'
 import Instance from '../../util/axios'
 import TradeCalendar from '../../components/tradeCalendar/TradeCalendar'
 import TradeSidebar from '../../components/TradeSidebar/TradeSidebar'
+import { isMobile } from 'react-device-detect'
+import { SwipeableDrawer } from '@material-ui/core'
 
 export default function Trades() {
     const [accountContent, setAccountContent] = useState('Trades')
@@ -13,9 +15,13 @@ export default function Trades() {
     const [borrowerBookingItems, setBorrowerBookingItems] = useState([])
 
     useEffect(() => {
+        getBookings()
+    },[])
+
+    const getBookings = () => {
         getLenderBookings()
         getBorrowerBookings()
-    },[])
+    }
 
     const getLenderBookings = async () => {
         const { data, status } = await Instance.get('booking/findByOwnerId')
@@ -47,8 +53,8 @@ export default function Trades() {
 
     return (
         <PageWrapper>
-            <div className="TradesPageWrapper">
-                <UserShedNav setAccountContent={setAccountContent} accountContent={accountContent}/>
+            <div className="UserShedWrapper">
+                { !isMobile && <UserShedNav setAccountContent={setAccountContent} accountContent={accountContent}/>}
 
                 <div className="TradesContainer">
                     <div className="UserShed__Title">
@@ -60,7 +66,14 @@ export default function Trades() {
                     borrowerBookingItems={borrowerBookingItems}
                     />
                 </div>
-                { selectedBooking && <TradeSidebar booking={selectedBooking} />}
+                { isMobile ? (
+                <SwipeableDrawer anchor='right' open={selectedBooking} onClose={() => setSelectedBooking(null)}>
+                    { selectedBooking && <TradeSidebar getBookings={getBookings} booking={selectedBooking} />}
+                </SwipeableDrawer>
+                ) : (
+                     selectedBooking && <TradeSidebar getBookings={getBookings} booking={selectedBooking} />
+                )}
+                
             </div>
         </PageWrapper>
     )

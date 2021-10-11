@@ -4,17 +4,21 @@ import Logo from './../../assets/Logos/LBS_Logo_Flat_Red.jpg';
 import GoogleButton from '../../assets/Images/GooglePlayButton.png';
 import AppleButton from '../../assets/Images/AppStoreButton.png';
 import { SvgIcon } from '@material-ui/core';
+import { isMobile } from 'react-device-detect'
 
 export default function Footer() {
   return (
     <div className="Footer">
       <div className="FooterBar Advert">
         <div className="FooterWrapper">
-          <div><img src={Logo} alt="logo" className="FooterLogo" /></div>
-          <div className="TextWrapper">
-            <div className="LargeText">Little Big Shed in your Pocket!</div>
-            <div className="RegularText">Download our mobile app to borrow and lend, where ever you are!</div>
+          <div className="LogoTextContainer">
+            { !isMobile && <img src={Logo} alt="logo" className="FooterLogo" />}
+            <div className="TextWrapper">
+              <div className="LargeText">Little Big Shed in your Pocket!</div>
+              <div className="RegularText">Download our mobile app to borrow and lend, where ever you are!</div>
+            </div>
           </div>
+          
           <div className="AppButtonsSection">
             <img src={AppleButton} alt="Google Play" className="AppButton" />
             <img src={GoogleButton} alt="Google Play" className="AppButton" />
@@ -24,7 +28,7 @@ export default function Footer() {
       </div>
 
       <div className="FooterBar Links">
-        <div className="FooterWrapper" style={{ justifyContent: "space-around" }}>
+        <div className="LinkWrapper" style={{ justifyContent: "space-around" }}>
           <div>
             <div className="LinkHeader">Account</div>
             <div className="LinkText">

@@ -3,11 +3,14 @@ import Arrow from '../../assets/Icons/Arrow'
 import { ApplicationContext } from '../../pages/application/Application'
 import getDateIndex from '../../util/getDateIndex'
 import getDateSuffix from '../../util/getDateSuffix'
+import useGlobalState from '../../util/useGlobalState'
 import './ApplicationFooter.css'
 
 export default function ApplicationFooter() {
+    const globalState = useGlobalState().state
+    const { user } = globalState
     const  { state, dispatch, handleNextPage } = useContext(ApplicationContext)
-    const { page, item, confirmedStart, confirmedEnd, deliverySelected, pickupSelected } = state
+    const { page, item, confirmedStart, confirmedEnd, deliverySelected, pickupSelected, address } = state
     const dayArray = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
     const monthArray = ["January", "February", "March", "April","May", "June", "July", "August", "September", "October", "November", "December"]
 
@@ -20,7 +23,12 @@ export default function ApplicationFooter() {
     const handleClick = () => {
         let route
         if(page === 'ItemAvailability') route = 'ItemOptions'
-        if(page === 'ItemOptions') route = 'ItemOverview'
+        if(page === 'ItemOptions') {
+            if(!address && !user?.address ){
+                return
+            }
+            route = 'ItemOverview'
+        }
         if(page === 'ItemOverview') route = 'ItemAvailability'
         handleNextPage(route)
     }
@@ -49,9 +57,9 @@ export default function ApplicationFooter() {
         price = (weekendTimeSlots * item.price) + (discountTimeSlots * (item.price * (1 - item.discount / 100)))
         // Dont' calculate delivery and pickup if the user is looking at the calendar
         if(page === 'ItemAvailability' && !confirmedEnd.sameTimeSlot){
-            return price
+            return price.toFixed(2)
         }
-        return price + ( (deliverySelected ? item.deliveryPrice : 0) + (pickupSelected ? item.deliveryPrice : 0))
+        return (price + ( (deliverySelected ? item.deliveryPrice : 0) + (pickupSelected ? item.deliveryPrice : 0))).toFixed(2)
     }
 
     const calculateDiscount = () => {

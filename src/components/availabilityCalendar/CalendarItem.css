@@ -94,3 +94,12 @@
 .CalendarItemText {
   font-size: 21px;
 }
+
+@media only screen and (max-width: 495px) {
+  .CalendarItem {
+    padding: 0rem 0px;
+    margin: 0.5rem 0;
+  }
+  .ItemApplicationPeriodStart {
+  }
+}

@@ -7,6 +7,7 @@ import UserButton from '../UserButton/UserButton';
 import { Link } from 'react-router-dom';
 import { useHistory } from 'react-router';
 import useGlobalState from '../../util/useGlobalState';
+import { isMobile } from 'react-device-detect'
 
 export default function Header() {
 
@@ -18,7 +19,12 @@ export default function Header() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    history.push(`/search/${searchText}`);
+  
+   let string =''
+   if(searchText) string = string.concat('?keyword='+searchText)
+   console.log(string)
+   history.replace(`/search/${string}`);
+    //history.replace(`/search?keyword=${searchText}`);
   }
 
   useEffect(() => {
@@ -52,7 +58,10 @@ export default function Header() {
 
   return (
     <div className={`HeaderBar ${HeaderSticky ? 'HeaderBarSticky' : ''}`}>
-      <Link to="/"><img src={Logo} alt="Logo" className="HeaderLogo" /></Link>
+      
+      <Link to="/">
+        <img src={Logo} alt="Logo" className="HeaderLogo" />
+      </Link>
 
 
       <div className="SearchWrapper">
@@ -60,7 +69,7 @@ export default function Header() {
           <div className='HeaderSearchDiv'>
             <input type='text' placeholder="Search for stuff" className='TextInput HeaderSearchInput' style={{ padding: '1em 0.6em' }} value={searchText} onChange={(e) => setSearchText(e.target.value)}></input>
           </div>
-          <Search height="16px" />
+          { !isMobile && <Search height="16px" />}
         </form>
 
       </div>
