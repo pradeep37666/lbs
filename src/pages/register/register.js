@@ -59,7 +59,7 @@ export default function Register() {
         const userDetails = {
                 fullName: fullName,
                 email: email,
-                avatar: image.raw,
+                avatar: image ? image.raw : null,
                 mobile: phoneNumber,
                 address: address,
                 city: city,
@@ -74,22 +74,29 @@ export default function Register() {
         Object.keys(userDetails).forEach(key => {
             formData.append(key, userDetails[key])
         })
-        
+        // if(image){
+        //     formData.append('avatar', image.raw)
+        // }
         try{
-            const response = await Instance.post('/auth/signUp', formData)
-            if(response.status === 201) {
-                dispatch({ type: 'setUser', data: response.data.user})
-                registerCometChat(response.data.user)
-                localStorage.setItem('token', response.data.token.accessToken)
+            const { data, status } = await Instance.post('/auth/signUp', formData)
+            if(status === 201) {
+                dispatch({ type: 'setUser', data: data.user})
+                localStorage.setItem('token', data.token.accessToken)
+                await createStripeCustomer()
+                await registerCometChat(data.user)
             }
         } catch(e) {
-            console.log(e)
+            console.log(e.response.data)
             history.push({pathname: '/login'})
             alert("an error occurred during registration, please try again")
         }
         
     }
 
+    const createStripeCustomer = async () => {
+        const { data, status } = await Instance.get('/stripe/createCustomer')
+        console.log('create stripe customer', data, status)
+    }
     const registerCometChat = async (userObj) => {
         console.log('in comet chat', userObj)
         const newUser = new CometChat.User(userObj.id)
@@ -156,7 +163,6 @@ export default function Register() {
                 return '';
         }
     }, [page, fullName, email, phoneNumber, password, confirmPassword,  accNumber, bsb,  lender, address, city, country, state, availability, tc])
-    // cardName, cardNumber, expiry, ccv,
 
     const getComplete = () => {
         return (
