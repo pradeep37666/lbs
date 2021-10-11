@@ -33,7 +33,7 @@
 }
 .TradeCalendarDayItemContainer {
   display: flex;
-  padding: 1rem 0;
+  padding: 0.5rem 0;
   justify-content: center;
   border-left: 1px solid #dedede;
 }
@@ -46,11 +46,19 @@
   font-weight: bold;
   color: #33384f;
 }
-.TradeCalendarBookingsContainer {
-}
 
 .TradeCalendarBorrowHeader {
   font-size: 16px;
   color: #33384f;
+  font-weight: bold;
+}
+
+.TradeCalendarMonthLabel {
+  /* { position: 'absolute', top: -10, left: 5} */
+  position: absolute;
+  top: -25px;
+  left: 5px;
+  color: #33384f;
+  font-size: 21px;
   font-weight: bold;
 }

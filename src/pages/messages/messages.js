@@ -94,7 +94,7 @@ export default function Messages() {
 
     const renderSkeletons = () => {
         const array = Array(5).fill()
-        return array.map((skeleton, index) => <Facebook key={index} />)
+        return array.map((skeleton, index) => <Facebook key={index} style={{ height: 110}}  />)
     }
     return (
         <PageWrapper>

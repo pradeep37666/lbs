@@ -34,6 +34,7 @@ export default function TradeCalendarStatusPanel({ booking, userDetails, getBook
             booking={booking}
             updateBookingStatus={updateBookingStatus}
             isOwner={isOwner}
+            userDetails={userDetails}
             />)
         }
         const isHourBefore = isPickupTime()
