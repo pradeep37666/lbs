@@ -1,7 +1,4 @@
 @media only screen and (max-width: 940px) {
-  .example {
-    background: green;
-  }
   .EditItemMainWrapper {
     display: flex;
     flex-direction: column;
