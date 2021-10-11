@@ -29,7 +29,7 @@ export default function TradeCalendar({ borrowerBookingItems, lenderBookingItems
     useEffect(() => {
         if(!tradeCalendarRef.current) return
         if(currentDate < 7) return 
-        tradeCalendarRef.current.scrollTo((((currentDate) * 2) - 8) * 50, 0)
+        tradeCalendarRef.current.scrollTo((((currentDate) * 2) - 8) * (isMobile ? 25 : 50), 0)
     },[tradeCalendarRef.current])
 
    

@@ -103,7 +103,6 @@ export default function SearchFilterBar({ keyWord }) {
     setPriceMax(price)
   }
 
-
   const getCategoryPopout = () => {
     return (
       <div

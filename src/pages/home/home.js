@@ -172,25 +172,33 @@ export default function Home() {
         <div className="MainContentHeader">Helpful Categories</div>
         <div className="CategoryCardSection">
 
-          <div className="CategoryImageDiv Automotive">
+          <div 
+          onClick={() => history.push('/search?category=automotive')}
+          className="CategoryImageDiv Automotive">
             <div className="CategoryTitle">Automotive</div>
             <div className="CategoryItemTotal">21,056 Items</div>
             <CarIcon fill="#FFF" className="CategoryIcon" style={{ height: '22px'}} />
           </div>
 
-          <div className="CategoryImageDiv Gardening">
+          <div 
+          onClick={() => history.push('/search?category=mowing')}
+          className="CategoryImageDiv Gardening">
             <div className="CategoryTitle">Gardening</div>
             <div className="CategoryItemTotal">16,702 Items</div>
             <img src={WateringCanIcon} alt="" className="CategoryIcon" style={{ height: '28px'}} />
           </div>
 
-          <div className="CategoryImageDiv HandTools">
+          <div 
+          onClick={() => history.push('/search?category=tools')}
+          className="CategoryImageDiv HandTools">
             <div className="CategoryTitle">Hand Tools</div>
             <div className="CategoryItemTotal">12,334 Items</div>
             <HammerIcon fill="#FFF" className="CategoryIcon"/>
           </div>
 
-          <div className="CategoryImageDiv PowerTools">
+          <div 
+          onClick={() => history.push('/search?category=Power%20Tools')}
+          className="CategoryImageDiv PowerTools">
             <div className="CategoryTitle">Power Tools</div>
             <div className="CategoryItemTotal">4,586 Items</div>
             <DrillIcon fill="#FFF" className="CategoryIcon"/>
