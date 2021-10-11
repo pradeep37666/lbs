@@ -25,6 +25,10 @@ export default function EditPaymentDetails() {
     const [accNumber, setAccNumber] = useState(user.account_number)
     const [bsb, setBsb] = useState(user.bsb)
 
+    useEffect(async () => {
+        const res = await Instance.get('/stripe/getCreditCards')
+        console.log(res)
+    })
     // const showValidation = (field) => {
     //     switch (field) {
     //         case 'cardName':
@@ -85,10 +89,10 @@ export default function EditPaymentDetails() {
     const CARD_ELEMENT_OPTIONS = {
         style: {
           base: {
-            color: "#32325d",
+            color: "black",
             fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
             fontSmoothing: "antialiased",
-            fontSize: "22px",
+            fontSize: "20px",
             "::placeholder": {
               color: "#aab7c4",
             },
@@ -108,14 +112,21 @@ export default function EditPaymentDetails() {
         setIsLoading(true)
         try{
             const cardNumber = elements.getElement(CardNumberElement)
-            const res = await stripe.createPaymentMethod({
+            const { paymentMethod, error } = await stripe.createPaymentMethod({
                 type: 'card',
                 card: cardNumber,
                 billing_details: {
                     name: cardName
                 }
             })
-            console.log(res)
+            if(error){
+                setIsLoading(false)
+                return
+            }
+            const { data, status } = await Instance.post('/stripe/addCreditCard', {
+                paymentMethodId: paymentMethod.id
+            })
+            console.log(data,status)
         } catch(err) {
 
         }
