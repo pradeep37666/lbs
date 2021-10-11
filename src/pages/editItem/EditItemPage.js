@@ -83,7 +83,7 @@ function EditItemPage(props) {
 
   useEffect(() => {
     //returning data from the server
-    setLoading(true)
+    setLoading(true);
     Instance.get(`/items/findByIid/?i_id=${itemId}`)
       .then((response) => {
         setTitleText(response.data.item.title);
@@ -232,13 +232,13 @@ function EditItemPage(props) {
         button={"Apply Changes"}
         buttonClick={() => applyChanges()}
       />
-      {loading ? <div className="ItemPage__Loading__Container"><CircularProgress size={75} /></div>
-
-
-        :
-        <div className="ItemMainWrapper">
-          <div className="ItemInfoWrapper">
-
+      {loading ? (
+        <div className="ItemPage__Loading__Container">
+          <CircularProgress size={75} />
+        </div>
+      ) : (
+        <div className="EditItemMainWrapper">
+          <div className="EditItemInfoWrapper">
             {/* Div for Item Details */}
             <div className="RegistrationWrapper">
               <div
@@ -323,7 +323,9 @@ function EditItemPage(props) {
                             step="any"
                             defaultValue={discount}
                             className="LoginInput"
-                            onBlur={(e) => setDiscount(parseInt(e.target.value))}
+                            onBlur={(e) =>
+                              setDiscount(parseInt(e.target.value))
+                            }
                           />
                         </div>
                         <div
@@ -341,14 +343,21 @@ function EditItemPage(props) {
                 </Fade>
               </div>
               {/* TODO  */}
-              <div className="LoginMain LoginMainNoMarg" style={{ width: "100%" }}>
-                <MapsAutocomplete setAddress={setAddress} defaultLocation={address} defaultLat={lat} defaultLng={lng} />
+              <div
+                className="LoginMain LoginMainNoMarg"
+                style={{ width: "100%" }}
+              >
+                <MapsAutocomplete
+                  setAddress={setAddress}
+                  defaultLocation={address}
+                  defaultLat={lat}
+                  defaultLng={lng}
+                />
               </div>
-
             </div>
           </div>
 
-          <div className="ItemPicturesWrapper">
+          <div className="EditItemPicturesWrapper">
             {/* <BorrowCancelled />
           <BorrowFailed />
           <BorrowerRater /> */}
@@ -361,7 +370,10 @@ function EditItemPage(props) {
               <div className="PostItem__ItemPictures__Container">
                 {pictures.map((picture, index) => {
                   return (
-                    <div className="PostItem__ItemPictures__Preview" key={index}>
+                    <div
+                      className="PostItem__ItemPictures__Preview"
+                      key={index}
+                    >
                       <IconButton
                         aria-label="delete"
                         className={classes.buttonDelete}
@@ -411,11 +423,14 @@ function EditItemPage(props) {
               </div>
             </div>
             {/* Div for Item Delivery and Pickup */}
-            <div className="LoginMain LoginMainNoMarg" style={{ width: "100%" }}>
+            <div
+              className="LoginMain LoginMainNoMarg"
+              style={{ width: "100%" }}
+            >
               <div className="LoginHeader">Item Delivery & Pickup</div>
               <div className="LoginText">
-                You can provide an optional delivery service of your item to help
-                your borrowers out.
+                You can provide an optional delivery service of your item to
+                help your borrowers out.
               </div>
 
               <div className="LoginHeader">Price ($)</div>
@@ -429,7 +444,10 @@ function EditItemPage(props) {
               />
             </div>
             {/* Div for Availability Option and Deletion of Item */}
-            <div className="LoginMain LoginMainNoMarg" style={{ width: "100%" }}>
+            <div
+              className="LoginMain LoginMainNoMarg"
+              style={{ width: "100%" }}
+            >
               <div className="LoginHeader">Other Options</div>
               <div className="ItemButtons">
                 <button
@@ -450,7 +468,9 @@ function EditItemPage(props) {
                         setAvailability={setAvailable}
                         addEditButtons
                         getAvailability={available}
-                        handleDiscardChanges={() => handleCloseEditAvailability()}
+                        handleDiscardChanges={() =>
+                          handleCloseEditAvailability()
+                        }
                       />
                     </DialogContentText>
                   </DialogContent>
@@ -489,8 +509,7 @@ function EditItemPage(props) {
             </div>
           </div>
         </div>
-      }
-
+      )}
     </PageWrapper>
   );
 }
