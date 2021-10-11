@@ -43,7 +43,8 @@ export default function Home() {
     if (priceMax) string = string.concat("&maxPrice=" + priceMax)
     if (priceMin) string = string.concat("&minPrice=" + priceMin)
     if (rating) string = string.concat("&rating=" + rating)
-    if (delivery) {
+    if (delivery === '') {}
+    else if (delivery) {
       string = string.concat("&delivery=1")
     } else {
       string = string.concat("&delivery=0")
@@ -183,7 +184,7 @@ export default function Home() {
           <div 
           onClick={() => history.push('/search?category=mowing')}
           className="CategoryImageDiv Gardening">
-            <div className="CategoryTitle">Gardening</div>
+            <div className="CategoryTitle">Mowing</div>
             <div className="CategoryItemTotal">16,702 Items</div>
             <img src={WateringCanIcon} alt="" className="CategoryIcon" style={{ height: '28px'}} />
           </div>
