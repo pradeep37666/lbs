@@ -87,12 +87,12 @@ export default function CalendarRow({ days, isCurrentMonth }) {
 
     const validateTimeSlots = ({ am }) => {
         const startIndex = getDateIndex(confirmedStart.day)
-
+        console.log(confirmedStart.day, startIndex * 2)
         const endIndex = getDateIndex(selected)
         // console.log("morning start" ,confirmedStart?.am, )
         // console.log("morning end", confirmedEnd?.am )
-        const timeSlot = yearAvailability.slice((startIndex * 2) - (confirmedStart?.am ? 2 : 1), (endIndex * 2) - (am ? 2 : 1))
-        console.log(timeSlot)
+        const timeSlot = yearAvailability.slice((startIndex * 2) + (confirmedStart?.am ? 1 : 2), (endIndex * 2) + (am ? 2 : 3))
+        console.log('timeslot', timeSlot)
         if(timeSlot.indexOf('0') > -1) { 
             setExpanded(false)
             setErrorHidden(false)
