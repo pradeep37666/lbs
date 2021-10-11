@@ -84,9 +84,11 @@ export default function TradeCalendar({ borrowerBookingItems, lenderBookingItems
         const arr = []
         for(let i=0; i<totalDates; i++){
             const isCurrentDay = dates[i].getMonth() === currentMonth && dates[i].getDate() === currentDate
-            console.log(i)
             arr.push(
-            <div className="TradeCalendarDayItemContainer" style={{ gridColumnStart: (i * 2) + 1, gridColumnEnd: (i * 2) + 3 }} key={i}>
+            <div className="TradeCalendarDayItemContainer" style={{ gridColumnStart: (i * 2) + 1, gridColumnEnd: (i * 2) + 3, position: 'relative' }} key={i}>
+                { dates[i].getDate() === 1 &&
+                    <span className="TradeCalendarMonthLabel">{monthArray[dates[i].getMonth()]}</span>
+                }
                 
                 <div className="TradeCalendarDayItem">
                     <span className="TradeCalendarDayItemName">{dayArray[dates[i].getDay()]}</span>
@@ -107,7 +109,7 @@ export default function TradeCalendar({ borrowerBookingItems, lenderBookingItems
             { currentYear && 
             <div className="TradeCalendarContainer" ref={tradeCalendarRef} >
                 <div style={{ width: `${ (totalDates * 2) *( isMobile ? 25 : 50)}px`}}>
-                    <div className="TradeCalendarDaysContainer" style={{ gridTemplateColumns: `repeat(${totalDates * 2}, ${ isMobile ? 25 : 50}px)` }}>
+                    <div className="TradeCalendarDaysContainer" style={{ gridTemplateColumns: `repeat(${totalDates * 2}, ${ isMobile ? 25 : 50}px)`, paddingTop: 35 }}>
                         {renderDates()} 
                     </div>
                     

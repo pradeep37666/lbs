@@ -126,7 +126,10 @@ export default function TradeSidebar({ booking, getBookings }) {
 
                 </div>
                 <div className="TradeSidebarSection">
-                    <span className="TradeSidebarHeading">Delivery Location</span>
+                    <div className="TradeSidebarLocationContainer">
+                        <span className="TradeSidebarHeading">Delivery Location</span>
+                        <span>{booking.address}</span>
+                    </div>
                 </div>
                 { userDetails &&
                 <div className="TradeSidebarSection">

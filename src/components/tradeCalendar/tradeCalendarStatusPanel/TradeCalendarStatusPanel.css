@@ -23,6 +23,7 @@
 .TradeStatusButtonContainer {
   display: flex;
   justify-content: space-around;
+  width: 100%;
 }
 .TradeStatusContainer {
   padding: 25px 0;

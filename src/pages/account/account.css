@@ -2,8 +2,8 @@
   width: 100%;
   display: flex;
   margin: 2em 0;
-  padding: 0 10% 0 10%;
-  min-height: 500px;
+  padding: 0 2% 0 2%;
+  min-height: 65vh;
 }
 
 .UserShed__Title {
@@ -21,10 +21,10 @@
 }
 
 @media screen and (max-width: 1300px) {
-  .UserShedWrapper {
+  /* .UserShedWrapper {
     padding: 0 2% 0 2%;
     margin: 1rem 0;
-  }
+  } */
   .UserShed__Title {
     margin: 0.4rem;
   }

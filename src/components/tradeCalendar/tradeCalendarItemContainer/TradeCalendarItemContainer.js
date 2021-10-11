@@ -50,7 +50,8 @@ export default function TradeCalendarItemContainer({ bookingItem, setSelectedBoo
         return Array(totalDates * 2).fill(null).map((value, index) => {
             return (
             <div 
-            style={{ gridRowStart: 1, gridRowEnd: 5, gridColumnStart: (index + 1), gridColumnEnd: ( index + 2), borderLeft: '1px solid #dedede', zIndex: 1}}
+            key={index}
+            style={{ gridRowStart: 1, gridRowEnd: 8, gridColumnStart: (index + 1), gridColumnEnd: ( index + 2), borderLeft: '1px solid #dedede', zIndex: 1}}
             />)
         })
     }

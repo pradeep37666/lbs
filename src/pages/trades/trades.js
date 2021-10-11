@@ -53,7 +53,7 @@ export default function Trades() {
 
     return (
         <PageWrapper>
-            <div className="TradesPageWrapper">
+            <div className="UserShedWrapper">
                 { !isMobile && <UserShedNav setAccountContent={setAccountContent} accountContent={accountContent}/>}
 
                 <div className="TradesContainer">

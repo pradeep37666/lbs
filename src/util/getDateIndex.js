@@ -13,15 +13,16 @@ return (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
  * @param day
  */
 const getDateIndex = (dateObj) => {
+    // console.log('in func', dateObj)
     const year = dateObj.getYear()
     const month = dateObj.getMonth()
     const date = dateObj.getDate()
 
     let days = date;
-
+    // console.log('days', days)
     //Month days
     const monthDays = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-    for (let i = 0; i < month - 1; i++) {
+    for (let i = 0; i < month ; i++) {
         //the month index need minus 1
         days += monthDays[i];
     }
