@@ -41,7 +41,6 @@
   border-radius: 15px;
   width: 50%;
   height: max-content;
-
   max-width: 600px;
   padding: 3em 2em;
   position: relative;
@@ -62,4 +61,11 @@
 .ApplicationModalButtonText {
   color: white;
   font-size: 15px;
+}
+
+@media only screen and (max-width: 495px) {
+  .ApplicationModalMain {
+    width: 90%;
+    padding: 2em 1em;
+  }
 }
