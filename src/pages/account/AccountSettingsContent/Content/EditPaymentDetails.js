@@ -25,10 +25,10 @@ export default function EditPaymentDetails() {
     const [accNumber, setAccNumber] = useState(user.account_number)
     const [bsb, setBsb] = useState(user.bsb)
 
-    useEffect(async () => {
-        const res = await Instance.get('/stripe/getCreditCards')
-        console.log(res)
-    })
+    // useEffect(async () => {
+    //     const res = await Instance.get('/stripe/getCreditCards')
+    //     console.log(res)
+    // })
     // const showValidation = (field) => {
     //     switch (field) {
     //         case 'cardName':
