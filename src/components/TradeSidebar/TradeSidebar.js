@@ -12,7 +12,7 @@ import RatingFiller from '../ratingFiller/ratingFiller'
 import MissingProfile from '../../assets/Icons/MissingProfileIcon.png'
 import TradeCalendarStatusPanel from '../tradeCalendar/tradeCalendarStatusPanel/TradeCalendarStatusPanel'
 
-export default function TradeSidebar({ booking, getBookings, setReportModalVisible }) {
+export default function TradeSidebar({ booking, getBookings, setReportModalVisible, setReviewModalVisible }) {
     const { state } = useGlobalState()
     const { user } = state
     const [item, setItem] = useState(null)
@@ -72,7 +72,13 @@ export default function TradeSidebar({ booking, getBookings, setReportModalVisib
                     item={item}/>
                 </div>
                 <div className="TradeSidebarSection">
-                    <TradeCalendarStatusPanel getBookings={getBookings} booking={booking} userDetails={userDetails} setReportModalVisible={setReportModalVisible}/>
+                    <TradeCalendarStatusPanel 
+                    getBookings={getBookings} 
+                    booking={booking} 
+                    userDetails={userDetails} 
+                    setReportModalVisible={setReportModalVisible}
+                    setReviewModalVisible={setReviewModalVisible}
+                    />
 
                 </div>
                 <div className="TradeSidebarSection">

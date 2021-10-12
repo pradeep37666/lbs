@@ -45,7 +45,7 @@
 .TradeCalendarItemLendCancelled {
   display: flex;
   align-items: center;
-  padding: 0.5rem;
+  padding: 0.5rem 0;
   background-color: #33384f;
   color: white;
   border: 1px solid #33384f;

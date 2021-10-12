@@ -20,16 +20,7 @@ export default function TradeCalendarItem({ booking, setSelectedBooking, row, cu
     const isCancelled = booking.status === 0
     const sameTimeSlot = booking.start_date === booking.end_date
     console.log(sameTimeSlot, 'timeslot')
-    const getCalendarItemClass = () => {
-
-        if(isCancelled){
-            return isLend ? 'TradeCalendarItemLendCancelled' : 'TradeCalendarItemBorrowCancelled'
-        }
-        if(isConfirmed){
-            return isLend ? "TradeCalendarItemLend" : "TradeCalendarItemBorrow"
-        }
-        return 'TradeCalendarItemPending'
-    }
+    
     
     const getBackgroundImage = () => {
         if(!isCancelled) return null
@@ -56,6 +47,17 @@ export default function TradeCalendarItem({ booking, setSelectedBooking, row, cu
         }
         return false
     }
+
+    const getCalendarItemClass = () => {
+        if(isCancelled){
+            return isLend ? 'TradeCalendarItemLendCancelled' : 'TradeCalendarItemBorrowCancelled'
+        }
+        if(isConfirmed){
+            return isLend ? "TradeCalendarItemLend" : "TradeCalendarItemBorrow"
+        }
+        return 'TradeCalendarItemPending'
+    }
+
     return (
         <div 
         onClick={() => {
@@ -65,7 +67,9 @@ export default function TradeCalendarItem({ booking, setSelectedBooking, row, cu
         className="TradeCalendarItem"
         style={{ gridRowStart: row, gridColumnStart: getBookingStartPosition(), gridColumnEnd: getBookingEndPosition()}}>
             
-            <div style={{ flexDirection: isVertical() ? 'column' : null , backgroundImage: getBackgroundImage(), backgroundSize: 'auto'}} className={getCalendarItemClass()}>
+            <div 
+            style={{ flexDirection: isVertical() ? 'column' : null , backgroundImage: getBackgroundImage(), backgroundSize: 'auto', padding: sameTimeSlot ? '0.5rem 0' : '0.5rem'}} 
+            className={getCalendarItemClass()}>
                 <span>{getDateObject(booking.start_date)?.morning ? '8am' : '1pm'}</span>
                 <Arrow rotation={sameTimeSlot ? 90 : 0} width={ isMobile ? 20 : 40} height={ isMobile ? 10: 20}/>
                 <span>{getDateObject(booking.end_date)?.morning ? '12pm' : '5pm'}</span>

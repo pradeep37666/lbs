@@ -14,7 +14,6 @@ export default function TradeCalendar({ borrowerBookingItems, lenderBookingItems
     const [currentYear, setCurrentYear] = useState()
     const [totalDates, setTotalDates] = useState()
     
-
     useEffect(() => {
         const today = new Date()
         const currentDate = today.getDate()
@@ -97,9 +96,7 @@ export default function TradeCalendar({ borrowerBookingItems, lenderBookingItems
                     </div>
                     
                 </div>
-            </div>)
-            // arr.push(<div className="TradeCalendarFillerItem"></div>)
-            
+            </div>)            
         }
         return arr
     }

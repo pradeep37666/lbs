@@ -10,11 +10,14 @@ import { SwipeableDrawer } from '@material-ui/core'
 import TradeFailed from '../../components/TradeFailed/TradeFailed'
 import userEvent from '@testing-library/user-event'
 import useGlobalState from '../../util/useGlobalState'
+import ReviewModal from '../../components/reviewModal/reviewModal'
+import ReviewTrade from '../../components/ReviewTrade/ReviewTrade'
 
 export default function Trades() {
     const { state } = useGlobalState()
     const { user } = state
     const [reportModalVisible, setReportModalVisible] = useState(false)
+    const [reviewModalVisible, setReviewModalVisible] = useState(true)
     const [accountContent, setAccountContent] = useState('Trades')
     const [selectedBooking, setSelectedBooking] = useState(null)
     const [lenderBookingItems, setLenderBookingItems] = useState([])
@@ -60,8 +63,11 @@ export default function Trades() {
     return (
         <PageWrapper>
             { reportModalVisible &&  
-              <TradeFailed onClick={() => setReportModalVisible(false)} isLender={selectedBooking.io_id === user.id} />  
-
+                <TradeFailed onClick={() => setReportModalVisible(false)} isLender={selectedBooking.io_id === user.id} />  
+            }
+            { reviewModalVisible && 
+                <ReviewTrade onClick={() => setReviewModalVisible(false)}  />
+                // isLender={selectedBooking.io_id === user.id}
             }
             <div className="UserShedWrapper">
                 { !isMobile && <UserShedNav setAccountContent={setAccountContent} accountContent={accountContent}/>}
@@ -82,7 +88,7 @@ export default function Trades() {
                     { selectedBooking && <TradeSidebar getBookings={getBookings} booking={selectedBooking} />}
                 </SwipeableDrawer>
                 ) : (
-                     selectedBooking && <TradeSidebar getBookings={getBookings} booking={selectedBooking} setReportModalVisible={setReportModalVisible}/>
+                     selectedBooking && <TradeSidebar getBookings={getBookings} booking={selectedBooking} setReportModalVisible={setReportModalVisible} setReviewModalVisible={setReviewModalVisible}/>
                 )}
                 
             </div>
