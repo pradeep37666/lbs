@@ -50,9 +50,9 @@ export default function AccountSettings() {
 
                 </div>
 
-                <div className="AccountSettings__Container">
+                {/* <div className="AccountSettings__Container">
                     <div className="AccountSettings__Title">Badge Collection</div>
-                </div>
+                </div> */}
 
                 <EditAccountDetails />
 

@@ -43,15 +43,15 @@ const LocationSlider = withStyles({
 })(Slider);
 
 export default function SearchFilterBar({ keyWord }) {
-  const history = useHistory();
-  const [Delivery, setDelivery] = useState(false);
-  const [ActiveFilter, setActiveFilter] = useState("none");
-  const [Category, setCategory] = useState("");
-  const [Address, setAddress] = useState();
-  const [SearchRadius, setSearchRadius] = useState(10);
-  const [PriceMin, setPriceMin] = useState();
-  const [PriceMax, setPriceMax] = useState();
-  const [Rating, setRating] = useState();
+  const history = useHistory()
+  const [Delivery, setDelivery] = useState('')
+  const [ActiveFilter, setActiveFilter] = useState("none")
+  const [Category, setCategory] = useState("")
+  const [Address, setAddress] = useState()
+  const [SearchRadius, setSearchRadius] = useState(10)
+  const [PriceMin, setPriceMin] = useState()
+  const [PriceMax, setPriceMax] = useState()
+  const [Rating, setRating] = useState()
 
   const handleSubmitFilterChange = () => {
     let string = "";
@@ -61,18 +61,19 @@ export default function SearchFilterBar({ keyWord }) {
     } else {
       string = string.concat("?keyword=");
     }
-    if (Category) string = string.concat("&category=" + Category);
-    if (PriceMax) string = string.concat("&maxPrice=" + PriceMax);
-    if (PriceMin) string = string.concat("&minPrice=" + PriceMin);
-    if (Rating) string = string.concat("&rating=" + Rating);
-    if (Delivery) {
-      string = string.concat("&delivery=1");
+    if (Category) string = string.concat("&category=" + Category)
+    if (PriceMax) string = string.concat("&maxPrice=" + PriceMax)
+    if (PriceMin) string = string.concat("&minPrice=" + PriceMin)
+    if (Rating) string = string.concat("&rating=" + Rating)
+    if (Delivery === '') {}
+    else if (Delivery) {
+      string = string.concat("&delivery=1")
     } else {
       string = string.concat("&delivery=0");
     }
 
-    history.replace(`/search/${string}`);
-  };
+    history.push(`/search/${string}`)
+  }
 
   const handleFilterClick = (filter) => {
     if (ActiveFilter === filter) {
@@ -86,9 +87,9 @@ export default function SearchFilterBar({ keyWord }) {
   // we need to make it research whenever one of the filters is changed, butr without the useeffect as that will always fire at the start
   // and wipe whatever filters we had already set on the home page
 
-  // useEffect(() => {
-  //   handleSubmitFilterChange();
-  // }, [Delivery, Category, Rating]);
+  useEffect(() => {
+    handleSubmitFilterChange();
+  }, [Delivery, Category, Rating]);
 
   const handlePriceMinChange = (e) => {
     let price = e.target.validity.valid ? e.target.value : PriceMin;

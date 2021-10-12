@@ -38,7 +38,7 @@ useEffect(()=>{
                     { items.map((item, i) => {
                     return <ItemCard item={item} key={i}/>
                     })}
-                    <div className="ItemCard" >
+                    <div className="ItemCard" style={{ justifyContent: 'flex-start'}}>
                         <Link className="addItemBox" to="/postitem">
                             +
                         </Link>
