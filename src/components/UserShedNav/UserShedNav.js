@@ -11,6 +11,7 @@ import { Link } from 'react-router-dom'
 import { useHistory } from 'react-router-dom'
 import useGlobalState from '../../util/useGlobalState'
 import { CometChat } from '@cometchat-pro/chat'
+import { isMobile } from 'react-device-detect'
 
 export default function UserShedNav(props) {
 
@@ -66,6 +67,7 @@ export default function UserShedNav(props) {
                     Account
                 </div>
             </Link>
+            
 
             {activeMain === 'account' ?
                 <div>
