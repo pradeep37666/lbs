@@ -17,7 +17,7 @@ export default function Trades() {
     const { state } = useGlobalState()
     const { user } = state
     const [reportModalVisible, setReportModalVisible] = useState(false)
-    const [reviewModalVisible, setReviewModalVisible] = useState(true)
+    const [reviewModalVisible, setReviewModalVisible] = useState(false)
     const [accountContent, setAccountContent] = useState('Trades')
     const [selectedBooking, setSelectedBooking] = useState(null)
     const [lenderBookingItems, setLenderBookingItems] = useState([])
