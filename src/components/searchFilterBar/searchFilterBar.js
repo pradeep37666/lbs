@@ -1,21 +1,21 @@
-import React, { useEffect, useState } from "react"
-import "./searchFilterBar.css"
-import { ReactComponent as CarIcon } from "./../../assets/Icons/AutomotiveIcon.svg"
-import BBQIcon from "./../../assets/Icons/BBQIcon.svg"
-import CleaningIcon from "./../../assets/Icons/CleaningIcon.svg"
-import CreativeIcon from "./../../assets/Icons/CreativeIcon.svg"
-import { ReactComponent as DrillIcon } from "./../../assets/Icons/DrillIcon.svg"
-import { ReactComponent as HammerIcon } from "./../../assets/Icons/HammerIcon.svg"
-import OfficeIcon from "./../../assets/Icons/OfficeIcon.svg"
-import PaintingIcon from "./../../assets/Icons/PaintingIcon.svg"
-import SportingIcon from "./../../assets/Icons/SportingIcon.svg"
-import MowingIcon from "./../../assets/Icons/MowingIcon.svg"
-import { ReactComponent as StarOutline } from "./../../assets/Icons/StarOutline.svg"
-import { ReactComponent as StarFilled } from "./../../assets/Icons/StarFilled.svg"
-import { withStyles } from "@material-ui/core/styles"
-import Slider from "@material-ui/core/Slider"
-import { useHistory } from "react-router"
-import MapsAutocomplete from '../mapsAutocomplete/MapsAutocomplete'
+import React, { useEffect, useState } from "react";
+import "./searchFilterBar.css";
+import CarIcon from "./../../assets/Icons/AutomotiveIcon.svg";
+import BBQIcon from "./../../assets/Icons/BBQIcon.svg";
+import CleaningIcon from "./../../assets/Icons/CleaningIcon.svg";
+import CreativeIcon from "./../../assets/Icons/CreativeIcon.svg";
+import DrillIcon from "./../../assets/Icons/DrillIcon.svg";
+import HammerIcon from "./../../assets/Icons/HammerIcon.svg";
+import OfficeIcon from "./../../assets/Icons/OfficeIcon.svg";
+import PaintingIcon from "./../../assets/Icons/PaintingIcon.svg";
+import SportingIcon from "./../../assets/Icons/SportingIcon.svg";
+import MowingIcon from "./../../assets/Icons/MowingIcon.svg";
+import { ReactComponent as StarOutline } from "./../../assets/Icons/StarOutline.svg";
+import { ReactComponent as StarFilled } from "./../../assets/Icons/StarFilled.svg";
+import { withStyles } from "@material-ui/core/styles";
+import Slider from "@material-ui/core/Slider";
+import { useHistory } from "react-router";
+import MapsAutocomplete from "../mapsAutocomplete/MapsAutocomplete";
 
 const LocationSlider = withStyles({
   root: {
@@ -40,7 +40,7 @@ const LocationSlider = withStyles({
   rail: {
     height: 3,
   },
-})(Slider)
+})(Slider);
 
 export default function SearchFilterBar({ keyWord }) {
   const history = useHistory()
@@ -54,12 +54,12 @@ export default function SearchFilterBar({ keyWord }) {
   const [Rating, setRating] = useState()
 
   const handleSubmitFilterChange = () => {
-    let string = ""
+    let string = "";
 
     if (keyWord) {
-      string = string.concat("?keyword=" + keyWord)
+      string = string.concat("?keyword=" + keyWord);
     } else {
-      string = string.concat("?keyword=")
+      string = string.concat("?keyword=");
     }
     if (Category) string = string.concat("&category=" + Category)
     if (PriceMax) string = string.concat("&maxPrice=" + PriceMax)
@@ -69,7 +69,7 @@ export default function SearchFilterBar({ keyWord }) {
     else if (Delivery) {
       string = string.concat("&delivery=1")
     } else {
-      string = string.concat("&delivery=0")
+      string = string.concat("&delivery=0");
     }
 
     history.push(`/search/${string}`)
@@ -77,11 +77,11 @@ export default function SearchFilterBar({ keyWord }) {
 
   const handleFilterClick = (filter) => {
     if (ActiveFilter === filter) {
-      setActiveFilter("none")
+      setActiveFilter("none");
     } else {
-      setActiveFilter(filter)
+      setActiveFilter(filter);
     }
-  }
+  };
 
   // use effect below resets the search when you first get to the page, e.g. from filters on home page
   // we need to make it research whenever one of the filters is changed, butr without the useeffect as that will always fire at the start
@@ -92,17 +92,49 @@ export default function SearchFilterBar({ keyWord }) {
   }, [Delivery, Category, Rating]);
 
   const handlePriceMinChange = (e) => {
-    let price = e.target.validity.valid ? e.target.value : PriceMin
-    price = price.slice(0, 4)
-    setPriceMin(price)
-  }
-
+    let price = e.target.validity.valid ? e.target.value : PriceMin;
+    price = price.slice(0, 4);
+    setPriceMin(price);
+  };
 
   const handlePriceMaxChange = (e) => {
-    let price = e.target.validity.valid ? e.target.value : PriceMax
-    price = price.slice(0, 4)
-    setPriceMax(price)
-  }
+    let price = e.target.validity.valid ? e.target.value : PriceMax;
+    price = price.slice(0, 4);
+    setPriceMax(price);
+  };
+
+  const categories = [
+    { name: "Tools", icon: HammerIcon },
+    { name: "Painting", icon: PaintingIcon },
+    { name: "BBQ", icon: BBQIcon },
+    { name: "Office", icon: OfficeIcon },
+    { name: "Creative", icon: CreativeIcon },
+    { name: "Power Tools", icon: DrillIcon },
+    { name: "Automotive", icon: CarIcon },
+    { name: "Mowing", icon: MowingIcon },
+    { name: "Cleaning", icon: CleaningIcon },
+    { name: "Sporting", icon: SportingIcon },
+  ];
+
+  const renderCategories = () => {
+    return categories.map((category, index) => {
+      return (
+        <div
+          className={`CategoryFilterDiv ${
+            Category === category.name ? "CategoryFilterDivActive" : ""
+          }`}
+          onClick={() => {
+            setCategory(category.name);
+            handleSubmitFilterChange();
+            console.log("Category Clicked : ", Category);
+          }}
+        >
+          <img src={category.icon} alt="" className="CategoryFilterIcon" />
+          {category.name}
+        </div>
+      );
+    });
+  };
 
   const getCategoryPopout = () => {
     return (
@@ -112,156 +144,43 @@ export default function SearchFilterBar({ keyWord }) {
       >
         <hr className="hl hlPopout" />
         <div className="MainBodyPopout">
-          <div className="CategoryFiltersFlex">
-            <div
-              className={`CategoryFilterDiv ${Category === "Tools" ? "CategoryFilterDivActive" : ""
-                }`}
-              onClick={() => {
-                setCategory("Tools")
-                handleSubmitFilterChange()
-                console.log("Category Clicked : ", Category)
-              }}
-            >
-              <HammerIcon
-                fill="#ac172c"
-                alt=""
-                className="CategoryFilterIcon"
-              />
-              Tools
-            </div>
-            <div
-              className={`CategoryFilterDiv ${Category === "Painting" ? "CategoryFilterDivActive" : ""
-                }`}
-              onClick={() => {
-                setCategory("Painting")
-                handleSubmitFilterChange()
-                console.log("Category Clicked : ", Category)
-              }}
-            >
-              <img src={PaintingIcon} alt="" className="CategoryFilterIcon" />
-              Painting
-            </div>
-            <div
-              className={`CategoryFilterDiv ${Category === "BBQ" ? "CategoryFilterDivActive" : ""
-                }`}
-              onClick={() => {
-                setCategory("BBQ")
-                handleSubmitFilterChange()
-                console.log("Category Clicked : ", Category)
-              }}
-            >
-              <img src={BBQIcon} alt="" className="CategoryFilterIcon" />
-              BBQ
-            </div>
-            <div
-              className={`CategoryFilterDiv ${Category === "Office" ? "CategoryFilterDivActive" : ""
-                }`}
-              onClick={() => {
-                setCategory("Office")
-                handleSubmitFilterChange()
-                console.log("Category Clicked : ", Category)
-              }}
-            >
-              <img src={OfficeIcon} alt="" className="CategoryFilterIcon" />
-              Office
-            </div>
-            <div
-              className={`CategoryFilterDiv ${Category === "Creative" ? "CategoryFilterDivActive" : ""
-                }`}
-              onClick={() => {
-                setCategory("Creative")
-                handleSubmitFilterChange()
-                console.log("Category Clicked : ", Category)
-              }}
-            >
-              <img src={CreativeIcon} alt="" className="CategoryFilterIcon" />
-              Creative
-            </div>
-            <div
-              className={`CategoryFilterDiv ${Category === "Power Tools" ? "CategoryFilterDivActive" : ""
-                }`}
-              onClick={() => {
-                setCategory("Power Tools")
-                handleSubmitFilterChange()
-                console.log("Category Clicked : ", Category)
-              }}
-            >
-              <DrillIcon fill="#ac172c" alt="" className="CategoryFilterIcon" />
-              Power Tools
-            </div>
-            <div
-              className={`CategoryFilterDiv ${Category === "Automotive" ? "CategoryFilterDivActive" : ""
-                }`}
-              onClick={() => {
-                setCategory("Automotive")
-                handleSubmitFilterChange()
-                console.log("Category Clicked : ", Category)
-              }}
-            >
-              <CarIcon fill="#ac172c" alt="" className="CategoryFilterIcon" />
-              Automotive
-            </div>
-            <div
-              className={`CategoryFilterDiv ${Category === "Mowing" ? "CategoryFilterDivActive" : ""
-                }`}
-              onClick={() => {
-                setCategory("Mowing")
-                handleSubmitFilterChange()
-                console.log("Category Clicked : ", Category)
-              }}
-            >
-              <img src={MowingIcon} alt="" className="CategoryFilterIcon" />
-              Mowing
-            </div>
-            <div
-              className={`CategoryFilterDiv ${Category === "Cleaning" ? "CategoryFilterDivActive" : ""
-                }`}
-              onClick={() => {
-                setCategory("Cleaning")
-                handleSubmitFilterChange()
-                console.log("Category Clicked : ", Category)
-              }}
-            >
-              <img src={CleaningIcon} alt="" className="CategoryFilterIcon" />
-              Cleaning
-            </div>
-            <div
-              className={`CategoryFilterDiv ${Category === "Sporting" ? "CategoryFilterDivActive" : ""
-                }`}
-              onClick={() => {
-                setCategory("Sporting")
-                handleSubmitFilterChange()
-                console.log("Category Clicked : ", Category)
-              }}
-            >
-              <img src={SportingIcon} alt="" className="CategoryFilterIcon" />
-              Sporting
-            </div>
-          </div>
+          <div className="CategoryFiltersFlex">{renderCategories()}</div>
         </div>
       </div>
-    )
-  }
+    );
+  };
 
   const getLocationPopout = () => {
     return (
-      <div className="FilterPopout FilterPopoutLoc" onClick={(e) => e.stopPropagation()}>
+      <div
+        className="FilterPopout FilterPopoutLoc"
+        onClick={(e) => e.stopPropagation()}
+      >
         <hr className="hl hlPopout" />
         <div className="MainBodyPopout">
-
           <MapsAutocomplete setAddress={setAddress} small />
           <div className="PostcodeText">Search radius</div>
           <div className="LocationSliderFlex">
-            <LocationSlider aria-label="search radius" defaultValue={10} max={20} min={2} onChange={(e, val) => setSearchRadius(val)} />
+            <LocationSlider
+              aria-label="search radius"
+              defaultValue={10}
+              max={20}
+              min={2}
+              onChange={(e, val) => setSearchRadius(val)}
+            />
             <div className="SearchRadiusValue">{SearchRadius}km</div>
           </div>
 
-          <button className="FilterButtonSave" onClick={() => setActiveFilter('none')}>Save</button>
-
+          <button
+            className="FilterButtonSave"
+            onClick={() => setActiveFilter("none")}
+          >
+            Save
+          </button>
         </div>
       </div>
-    )
-  }
+    );
+  };
 
   const getPricePopout = () => {
     return (
@@ -300,8 +219,8 @@ export default function SearchFilterBar({ keyWord }) {
             <button
               className="FilterButtonSave"
               onClick={() => {
-                setActiveFilter("none")
-                handleSubmitFilterChange()
+                setActiveFilter("none");
+                handleSubmitFilterChange();
               }}
             >
               Save
@@ -309,8 +228,8 @@ export default function SearchFilterBar({ keyWord }) {
           </div>
         </div>
       </div>
-    )
-  }
+    );
+  };
 
   const getRatingPopout = () => {
     return (
@@ -334,8 +253,8 @@ export default function SearchFilterBar({ keyWord }) {
                 className="StarIcon StarClick"
                 fill="#E9D8B4"
                 onClick={() => {
-                  setRating(2)
-                  handleSubmitFilterChange()
+                  setRating(2);
+                  handleSubmitFilterChange();
                 }}
               />
             ) : (
@@ -349,8 +268,8 @@ export default function SearchFilterBar({ keyWord }) {
                 className="StarIcon StarClick"
                 fill="#E9D8B4"
                 onClick={() => {
-                  setRating(3)
-                  handleSubmitFilterChange()
+                  setRating(3);
+                  handleSubmitFilterChange();
                 }}
               />
             ) : (
@@ -364,8 +283,8 @@ export default function SearchFilterBar({ keyWord }) {
                 className="StarIcon StarClick"
                 fill="#E9D8B4"
                 onClick={() => {
-                  setRating(4)
-                  handleSubmitFilterChange()
+                  setRating(4);
+                  handleSubmitFilterChange();
                 }}
               />
             ) : (
@@ -379,8 +298,8 @@ export default function SearchFilterBar({ keyWord }) {
                 className="StarIcon StarClick"
                 fill="#E9D8B4"
                 onClick={() => {
-                  setRating(5)
-                  handleSubmitFilterChange()
+                  setRating(5);
+                  handleSubmitFilterChange();
                 }}
               />
             ) : (
@@ -392,8 +311,8 @@ export default function SearchFilterBar({ keyWord }) {
           </div>
         </div>
       </div>
-    )
-  }
+    );
+  };
 
   const getDeliveryPopout = () => {
     return (
@@ -405,19 +324,21 @@ export default function SearchFilterBar({ keyWord }) {
         <div className="MainBodyPopout">
           <div className="DeliveryFlex">
             <button
-              className={`DeliveryButton ${Delivery ? "" : "DeliveryButtonInactive"
-                }`}
+              className={`DeliveryButton ${
+                Delivery ? "" : "DeliveryButtonInactive"
+              }`}
               onClick={() => {
-                setDelivery(true)
+                setDelivery(true);
               }}
             >
               Yes
             </button>
             <button
-              className={`DeliveryButton ${Delivery ? "DeliveryButtonInactive" : ""
-                }`}
+              className={`DeliveryButton ${
+                Delivery ? "DeliveryButtonInactive" : ""
+              }`}
               onClick={() => {
-                setDelivery(false)
+                setDelivery(false);
               }}
             >
               No
@@ -425,9 +346,8 @@ export default function SearchFilterBar({ keyWord }) {
           </div>
         </div>
       </div>
-    )
-  }
-
+    );
+  };
 
   return (
     <div className="SearchFilterBar">
@@ -437,8 +357,9 @@ export default function SearchFilterBar({ keyWord }) {
           className="FilterContainer"
         >
           <span
-            className={`SearchFilterText ${ActiveFilter === "Category" ? "FilterActive" : ""
-              }`}
+            className={`SearchFilterText ${
+              ActiveFilter === "Category" ? "FilterActive" : ""
+            }`}
           >
             Category
           </span>
@@ -449,8 +370,9 @@ export default function SearchFilterBar({ keyWord }) {
           className="FilterContainer"
         >
           <span
-            className={`SearchFilterText ${ActiveFilter === "Location" ? "FilterActive" : ""
-              }`}
+            className={`SearchFilterText ${
+              ActiveFilter === "Location" ? "FilterActive" : ""
+            }`}
           >
             Location/Postcode
           </span>
@@ -461,8 +383,9 @@ export default function SearchFilterBar({ keyWord }) {
           className="FilterContainer"
         >
           <span
-            className={`SearchFilterText ${ActiveFilter === "Price" ? "FilterActive" : ""
-              }`}
+            className={`SearchFilterText ${
+              ActiveFilter === "Price" ? "FilterActive" : ""
+            }`}
           >
             Price
           </span>
@@ -473,8 +396,9 @@ export default function SearchFilterBar({ keyWord }) {
           className="FilterContainer"
         >
           <span
-            className={`SearchFilterText ${ActiveFilter === "Rating" ? "FilterActive" : ""
-              }`}
+            className={`SearchFilterText ${
+              ActiveFilter === "Rating" ? "FilterActive" : ""
+            }`}
           >
             Rating
           </span>
@@ -485,8 +409,9 @@ export default function SearchFilterBar({ keyWord }) {
           className="FilterContainer"
         >
           <span
-            className={`SearchFilterText ${ActiveFilter === "Delivery" ? "FilterActive" : ""
-              }`}
+            className={`SearchFilterText ${
+              ActiveFilter === "Delivery" ? "FilterActive" : ""
+            }`}
           >
             Delivery
           </span>
@@ -494,5 +419,5 @@ export default function SearchFilterBar({ keyWord }) {
         </div>
       </div>
     </div>
-  )
+  );
 }
