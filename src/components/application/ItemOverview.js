@@ -118,8 +118,8 @@ export default function ItemOverview() {
 
     const saveBooking = async () => {
         let deliveryOption = (deliverySelected && pickupSelected) ? 'both' : deliverySelected ? 'delivery' : 'pickup'
-        const startIndex = (getDateIndex(confirmedStart.day) * 2) + (confirmedStart.day?.am ? 2 : 1)
-        const endIndex = (getDateIndex(confirmedEnd.day) * 2) + (confirmedEnd.day?.am ? 2 : 1)
+        const startIndex = (getDateIndex(confirmedStart.day) * 2) + (confirmedStart?.am ? 1 : 2)
+        const endIndex = (getDateIndex(confirmedEnd.day) * 2) + (confirmedEnd?.am ? 1 : 2)
         confirmedStart.day.setHours(confirmedStart?.am ? 6 : 11)
         console.log({
             i_id: item.i_id,
@@ -231,7 +231,7 @@ export default function ItemOverview() {
                     </div>
                     <div className="ItemOverviewItemContainer">
                         <p>Total Price</p>
-                        <span className="ItemOverviewPrice">${ calculatePrice() + calculateBorrowOptions()}</span>
+                        <span className="ItemOverviewPrice">${(calculatePrice() + calculateBorrowOptions()).toFixed(2)}</span>
                     </div>
                     <div className="ItemOverviewItemContainer">
                         <span className="ApplicationOverviewSubHeader">Dates</span>

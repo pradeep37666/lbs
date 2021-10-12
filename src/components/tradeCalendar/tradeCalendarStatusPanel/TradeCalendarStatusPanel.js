@@ -13,7 +13,7 @@ import getDateObject from '../../../util/getDateObject'
 import StatusSix from './StatusSix'
 import DropOff from './DropOff'
 
-export default function TradeCalendarStatusPanel({ booking, userDetails, getBookings }) {
+export default function TradeCalendarStatusPanel({ booking, userDetails, getBookings, setReportModalVisible }) {
     const [status, setStatus] = useState()
     const { state } = useGlobalState()
     const { user } = state
@@ -38,7 +38,7 @@ export default function TradeCalendarStatusPanel({ booking, userDetails, getBook
             />)
         }
         const isHourBefore = isPickupTime()
-        if(isHourBefore && status === 3) return <Pickup isOwner={isOwner} updateBookingStatus={updateBookingStatus} booking={booking} userDetails={userDetails}/>
+        if(isHourBefore || status === 3) return <Pickup isOwner={isOwner} updateBookingStatus={updateBookingStatus} booking={booking} userDetails={userDetails} setReportModalVisible={setReportModalVisible}/>
         switch(status){
             case 1 : {
                 return <StatusOne isOwner={isOwner} updateBookingStatus={updateBookingStatus} booking={booking} approveBooking={approveBooking}/>

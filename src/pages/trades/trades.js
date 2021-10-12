@@ -7,8 +7,14 @@ import TradeCalendar from '../../components/tradeCalendar/TradeCalendar'
 import TradeSidebar from '../../components/TradeSidebar/TradeSidebar'
 import { isMobile } from 'react-device-detect'
 import { SwipeableDrawer } from '@material-ui/core'
+import TradeFailed from '../../components/TradeFailed/TradeFailed'
+import userEvent from '@testing-library/user-event'
+import useGlobalState from '../../util/useGlobalState'
 
 export default function Trades() {
+    const { state } = useGlobalState()
+    const { user } = state
+    const [reportModalVisible, setReportModalVisible] = useState(false)
     const [accountContent, setAccountContent] = useState('Trades')
     const [selectedBooking, setSelectedBooking] = useState(null)
     const [lenderBookingItems, setLenderBookingItems] = useState([])
@@ -53,6 +59,10 @@ export default function Trades() {
 
     return (
         <PageWrapper>
+            { reportModalVisible &&  
+              <TradeFailed onClick={() => setReportModalVisible(false)} isLender={selectedBooking.io_id === user.id} />  
+
+            }
             <div className="UserShedWrapper">
                 { !isMobile && <UserShedNav setAccountContent={setAccountContent} accountContent={accountContent}/>}
 
@@ -60,6 +70,7 @@ export default function Trades() {
                     <div className="UserShed__Title">
                         {accountContent}
                     </div>
+                   
                     <TradeCalendar 
                     setSelectedBooking={setSelectedBooking}
                     lenderBookingItems={lenderBookingItems}
@@ -71,10 +82,11 @@ export default function Trades() {
                     { selectedBooking && <TradeSidebar getBookings={getBookings} booking={selectedBooking} />}
                 </SwipeableDrawer>
                 ) : (
-                     selectedBooking && <TradeSidebar getBookings={getBookings} booking={selectedBooking} />
+                     selectedBooking && <TradeSidebar getBookings={getBookings} booking={selectedBooking} setReportModalVisible={setReportModalVisible}/>
                 )}
                 
             </div>
         </PageWrapper>
     )
 }
+

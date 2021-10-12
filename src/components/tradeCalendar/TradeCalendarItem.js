@@ -19,7 +19,7 @@ export default function TradeCalendarItem({ booking, setSelectedBooking, row, cu
     const isConfirmed = booking.status > 2
     const isCancelled = booking.status === 0
     const sameTimeSlot = booking.start_date === booking.end_date
-
+    console.log(sameTimeSlot, 'timeslot')
     const getCalendarItemClass = () => {
 
         if(isCancelled){
@@ -60,11 +60,6 @@ export default function TradeCalendarItem({ booking, setSelectedBooking, row, cu
         <div 
         onClick={() => {
             console.log(getDateIndex(new Date(2021,0,1)) * 2)
-            // console.log(currentMonthDateIndex)
-            // console.log(booking.start_date)
-            // console.log(booking.start_date - currentMonthDateIndex)
-            // console.log(booking.end_date)
-            // console.log(booking)
             setSelectedBooking(booking)
         }}
         className="TradeCalendarItem"
@@ -72,7 +67,7 @@ export default function TradeCalendarItem({ booking, setSelectedBooking, row, cu
             
             <div style={{ flexDirection: isVertical() ? 'column' : null , backgroundImage: getBackgroundImage(), backgroundSize: 'auto'}} className={getCalendarItemClass()}>
                 <span>{getDateObject(booking.start_date)?.morning ? '8am' : '1pm'}</span>
-                <Arrow vertical={sameTimeSlot} width={ isMobile ? 20 : 40} height={ isMobile ? 10: 20}/>
+                <Arrow rotation={sameTimeSlot ? 90 : 0} width={ isMobile ? 20 : 40} height={ isMobile ? 10: 20}/>
                 <span>{getDateObject(booking.end_date)?.morning ? '12pm' : '5pm'}</span>
             </div>
         </div>
