@@ -28,7 +28,7 @@ export default function TradeCalendarStatusPanel({ booking, userDetails, getBook
             return <StatusZero updateBookingStatus={updateBookingStatus} booking={booking}/>
         }
         const dropOff = isDropoffTime()
-        if(dropOff || status == 3){
+        if(dropOff && status >= 3){
             return (
             <DropOff 
             booking={booking}

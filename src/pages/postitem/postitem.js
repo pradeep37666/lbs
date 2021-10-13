@@ -70,6 +70,7 @@ export default function PostItem() {
             }
             formData.append(key, itemDetails[key])
         }
+        
         try {
             const response = await Instance.post('/items/save', formData)
             console.log(response.data)

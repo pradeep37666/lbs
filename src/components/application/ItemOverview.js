@@ -118,6 +118,9 @@ export default function ItemOverview() {
 
     const saveBooking = async () => {
         let deliveryOption = (deliverySelected && pickupSelected) ? 'both' : deliverySelected ? 'delivery' : 'pickup'
+        if(!deliverySelected && !pickupSelected) {
+            deliveryOption = 'none'
+        }
         const startIndex = (getDateIndex(confirmedStart.day) * 2) + (confirmedStart?.am ? 1 : 2)
         const endIndex = (getDateIndex(confirmedEnd.day) * 2) + (confirmedEnd?.am ? 1 : 2)
         confirmedStart.day.setHours(confirmedStart?.am ? 6 : 11)

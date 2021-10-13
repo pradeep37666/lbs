@@ -48,7 +48,7 @@ export default function TradeSidebar({ booking, getBookings, setReportModalVisib
         }
         
     }
-
+    console.log(booking)
     const beginDate = getDateObject(booking.start_date)
     const endDate = getDateObject(booking.end_date)
 

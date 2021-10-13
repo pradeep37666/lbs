@@ -200,6 +200,11 @@
   margin: 10px 0 0 5px;
   max-height: 30px;
 }
+@media only screen and (max-width: 1180px) {
+  .SearchSectionWrapper {
+    width: 75%;
+  }
+}
 
 @media only screen and (max-width: 495px) {
   .SearchSectionWrapper {
