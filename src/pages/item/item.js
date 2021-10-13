@@ -346,7 +346,7 @@ export default function Item() {
                                     fillOpacity: 0.3,
                                     map,
                                     center: approx.center,
-                                    radius: 600,
+                                    radius: 1000,
                                 })} />
                                 }
                             </div>

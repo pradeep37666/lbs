@@ -16,6 +16,8 @@ import { withStyles } from "@material-ui/core/styles";
 import Slider from "@material-ui/core/Slider";
 import { useHistory } from "react-router";
 import MapsAutocomplete from "../mapsAutocomplete/MapsAutocomplete";
+import { useLocation } from "react-router";
+import Geocode from 'react-geocode'
 
 const LocationSlider = withStyles({
   root: {
@@ -43,15 +45,23 @@ const LocationSlider = withStyles({
 })(Slider);
 
 export default function SearchFilterBar({ keyWord }) {
+
+  const location = useLocation();
+
+  const queryString = require("query-string");
+
+  const parsed = queryString.parse(location.search);
+
   const history = useHistory()
-  const [Delivery, setDelivery] = useState('')
+  const [Delivery, setDelivery] = useState(parsed?.delivery ?? 'Both')
   const [ActiveFilter, setActiveFilter] = useState("none")
-  const [Category, setCategory] = useState("")
-  const [Address, setAddress] = useState()
+  const [Category, setCategory] = useState(parsed?.category ?? '')
+  const [Address, setAddress] = useState('')
   const [SearchRadius, setSearchRadius] = useState(10)
-  const [PriceMin, setPriceMin] = useState()
-  const [PriceMax, setPriceMax] = useState()
-  const [Rating, setRating] = useState()
+  const [PriceMin, setPriceMin] = useState(parsed?.minPrice ?? '')
+  const [PriceMax, setPriceMax] = useState(parsed?.maxPrice ?? '')
+  const [Rating, setRating] = useState(parsed?.rating ?? '')
+  const [updateLocation, setUpdateLocation] = useState(false)
 
   const handleSubmitFilterChange = () => {
     let string = "";
@@ -62,16 +72,16 @@ export default function SearchFilterBar({ keyWord }) {
       string = string.concat("?keyword=");
     }
     if (Category) string = string.concat("&category=" + Category)
+    if (Address) string = string.concat(`&lat=${Address.lat}&lng=${Address.lng}&distance=${SearchRadius}`)
     if (PriceMax) string = string.concat("&maxPrice=" + PriceMax)
     if (PriceMin) string = string.concat("&minPrice=" + PriceMin)
     if (Rating) string = string.concat("&rating=" + Rating)
-    if (Delivery === '') {}
-    else if (Delivery) {
+    if (Delivery === 'Both') { }
+    else if (Delivery === true) {
       string = string.concat("&delivery=1")
     } else {
       string = string.concat("&delivery=0");
     }
-
     history.push(`/search/${string}`)
   }
 
@@ -87,9 +97,40 @@ export default function SearchFilterBar({ keyWord }) {
   // we need to make it research whenever one of the filters is changed, butr without the useeffect as that will always fire at the start
   // and wipe whatever filters we had already set on the home page
 
+  const getGeoLocation = (input) => {
+    Geocode.setApiKey(process.env.REACT_APP_GOOGLE_API_KEY)
+    Geocode.setLanguage('en')
+    Geocode.setRegion('au')
+    Geocode.setLocationType('ROOFTOP')
+    Geocode.enableDebug(false)
+
+    Geocode.fromAddress(input)
+      .then((response) => {
+        if (response.results[0].geometry.location.lat) {
+          setAddress({
+            lat: response.results[0].geometry.location.lat,
+            lng: response.results[0].geometry.location.lng
+          })
+        }
+      })
+      .catch((error) => {
+        // if theres an error with the geocode we don't say anything
+        // console.log(error.response)
+        // alert('There was an issue processing this address, please try again')
+      })
+  }
+
   useEffect(() => {
+    if (parsed.location) {
+      getGeoLocation(parsed.location)
+    }
+  }, [])
+
+  useEffect(() => {
+    if (Delivery === '1') setDelivery(true)
+    if (Delivery === '0') setDelivery(false)
     handleSubmitFilterChange();
-  }, [Delivery, Category, Rating]);
+  }, [Delivery, Category, Rating, Address, updateLocation]);
 
   const handlePriceMinChange = (e) => {
     let price = e.target.validity.valid ? e.target.value : PriceMin;
@@ -120,11 +161,11 @@ export default function SearchFilterBar({ keyWord }) {
     return categories.map((category, index) => {
       return (
         <div
-          className={`CategoryFilterDiv ${
-            Category === category.name ? "CategoryFilterDivActive" : ""
-          }`}
+          className={`CategoryFilterDiv ${Category === category.name ? "CategoryFilterDivActive" : ""
+            }`}
           onClick={() => {
-            setCategory(category.name);
+            if (Category === category.name) setCategory('')
+            else setCategory(category.name);
             handleSubmitFilterChange();
             console.log("Category Clicked : ", Category);
           }}
@@ -173,7 +214,10 @@ export default function SearchFilterBar({ keyWord }) {
 
           <button
             className="FilterButtonSave"
-            onClick={() => setActiveFilter("none")}
+            onClick={() => {
+              setUpdateLocation(!updateLocation)
+              setActiveFilter("none")
+            }}
           >
             Save
           </button>
@@ -324,21 +368,19 @@ export default function SearchFilterBar({ keyWord }) {
         <div className="MainBodyPopout">
           <div className="DeliveryFlex">
             <button
-              className={`DeliveryButton ${
-                Delivery ? "" : "DeliveryButtonInactive"
-              }`}
+              className={`DeliveryButton ${Delivery === true ? "" : "DeliveryButtonInactive"
+                }`}
               onClick={() => {
-                setDelivery(true);
+                Delivery !== true ? setDelivery(true) : setDelivery('Both')
               }}
             >
               Yes
             </button>
             <button
-              className={`DeliveryButton ${
-                Delivery ? "DeliveryButtonInactive" : ""
-              }`}
+              className={`DeliveryButton ${Delivery === false ? "" : "DeliveryButtonInactive"
+                }`}
               onClick={() => {
-                setDelivery(false);
+                Delivery !== false ? setDelivery(false) : setDelivery('Both')
               }}
             >
               No
@@ -357,9 +399,8 @@ export default function SearchFilterBar({ keyWord }) {
           className="FilterContainer"
         >
           <span
-            className={`SearchFilterText ${
-              ActiveFilter === "Category" ? "FilterActive" : ""
-            }`}
+            className={`SearchFilterText ${ActiveFilter === "Category" ? "FilterActive" : ""
+              }`}
           >
             Category
           </span>
@@ -370,9 +411,8 @@ export default function SearchFilterBar({ keyWord }) {
           className="FilterContainer"
         >
           <span
-            className={`SearchFilterText ${
-              ActiveFilter === "Location" ? "FilterActive" : ""
-            }`}
+            className={`SearchFilterText ${ActiveFilter === "Location" ? "FilterActive" : ""
+              }`}
           >
             Location/Postcode
           </span>
@@ -383,9 +423,8 @@ export default function SearchFilterBar({ keyWord }) {
           className="FilterContainer"
         >
           <span
-            className={`SearchFilterText ${
-              ActiveFilter === "Price" ? "FilterActive" : ""
-            }`}
+            className={`SearchFilterText ${ActiveFilter === "Price" ? "FilterActive" : ""
+              }`}
           >
             Price
           </span>
@@ -396,9 +435,8 @@ export default function SearchFilterBar({ keyWord }) {
           className="FilterContainer"
         >
           <span
-            className={`SearchFilterText ${
-              ActiveFilter === "Rating" ? "FilterActive" : ""
-            }`}
+            className={`SearchFilterText ${ActiveFilter === "Rating" ? "FilterActive" : ""
+              }`}
           >
             Rating
           </span>
@@ -409,9 +447,8 @@ export default function SearchFilterBar({ keyWord }) {
           className="FilterContainer"
         >
           <span
-            className={`SearchFilterText ${
-              ActiveFilter === "Delivery" ? "FilterActive" : ""
-            }`}
+            className={`SearchFilterText ${ActiveFilter === "Delivery" ? "FilterActive" : ""
+              }`}
           >
             Delivery
           </span>

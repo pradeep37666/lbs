@@ -22,6 +22,7 @@ import Button from "@material-ui/core/Button";
 import Availability from "../../components/FormComponents/Availability";
 import { useHistory } from "react-router";
 import { CircularProgress } from "@material-ui/core";
+import getSuburb from "../../util/getSuburb";
 
 function EditItemPage(props) {
   const history = useHistory();
@@ -41,12 +42,8 @@ function EditItemPage(props) {
   const [lat, setLat] = useState();
   const [lng, setLng] = useState();
   const [address, setAddress] = useState();
-  const [city, setCity] = useState();
-  const [country, setCountry] = useState();
-  const [state, setState] = useState();
-  const [isDeleted, setIsDeleted] = useState();
-  const [created, setCreated] = useState();
-  const [updated, setUpdated] = useState();
+  const [suburb, setSuburb] = useState();
+
   const [isDiscount, setIsDiscount] = useState(false);
 
   //--------modal for displaying the edit button dialogue-------//
@@ -95,9 +92,7 @@ function EditItemPage(props) {
         setDeliveryPrice(response.data.item.deliveryPrice);
         setDiscount(response.data.item.discount);
         setAddress(response.data.item.address);
-        setCity(response.data.item.city);
-        setCountry(response.data.item.country);
-        setState(response.data.item.state);
+        setSuburb(response.data.item.suburb);
         setLat(response.data.item.lat);
         setLng(response.data.item.lng);
         setAvailable(response.data.item.available);
@@ -208,22 +203,36 @@ function EditItemPage(props) {
     }
     setPictures(newPictures);
   };
-  //handling the deletion of images received from add button
 
-  //-------------------------------------------------------------------------//
   const applyChanges = () => {
-    alert(
-      `Here is the list of al the changes made! 
-      
-      Title -> ${title},
-      Category -> ${category}, 
-      Description -> ${description}, 
-      Item's Price -> $${price}, 
-      Discount -> ${discount}%, 
-      Delivery or Pickup Cost -> $${deliveryPrice},
-      !!!`
-    );
-  };
+
+    let newSuburb
+    address.terms ? newSuburb = getSuburb(address.terms) : newSuburb = suburb
+    
+    Instance.put('/items/update', {
+      i_id: itemId,
+      title: title,
+      category: category,
+      description: description,
+      price: price,
+      deliveryPrice: deliveryPrice,
+      discount: discount,
+      available: available,
+      lat: address.lat ? address.lat : lat,
+      lng: address.lng ? address.lng : lng,
+      address: address.description ? address.description : address,
+      suburb: newSuburb 
+    })
+    .then((response) => {
+      console.log(response)
+      if (response.status === 200) history.push(`/item/${itemId}`)
+    })
+    .catch((error) => {
+      console.log(error.response)
+    })
+  }
+
+
   return (
     <PageWrapper>
       <Banner
@@ -342,7 +351,6 @@ function EditItemPage(props) {
                   </div>
                 </Fade>
               </div>
-              {/* TODO  */}
               <div
                 className="LoginMain LoginMainNoMarg"
                 style={{ width: "100%" }}
@@ -358,10 +366,6 @@ function EditItemPage(props) {
           </div>
 
           <div className="EditItemPicturesWrapper">
-            {/* <BorrowCancelled />
-          <BorrowFailed />
-          <BorrowerRater /> */}
-            {/* Div for Pictures from the database */}
             <div
               className="LoginMain"
               style={{ width: "100%", marginTop: "0.5%" }}
@@ -461,7 +465,6 @@ function EditItemPage(props) {
                   open={editAvailabilityOpen}
                   onClose={handleCloseEditAvailability}
                 >
-                  <DialogTitle>Update {title} Availability</DialogTitle>
                   <DialogContent>
                     <DialogContentText>
                       <Availability

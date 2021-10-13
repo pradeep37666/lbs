@@ -28,6 +28,8 @@ export default function Home() {
   const [priceMax, setPriceMax] = useState("");
   const [rating, setRating] = useState("");
   const [delivery, setDelivery] = useState("");
+  const [lat, setLat] = useState('')
+  const [lng, setLng] = useState('')
 
   const numItems = 8;
 
@@ -41,20 +43,19 @@ export default function Home() {
     }
     if (category) string = string.concat("&category=" + category)
     if (priceMax) string = string.concat("&maxPrice=" + priceMax)
+    if (location) string = string.concat("&location=" + location)
     if (priceMin) string = string.concat("&minPrice=" + priceMin)
     if (rating) string = string.concat("&rating=" + rating)
     if (delivery === '') {}
-    else if (delivery) {
+    else if (delivery === 'Available') {
       string = string.concat("&delivery=1")
     } else {
       string = string.concat("&delivery=0")
     }
-    console.log(string)
     history.push(`/search/${string}`)
   }
 
   const handleSubmit = () => {
-    console.log(keywords, category, location, priceMin, priceMax, rating, delivery)
     formatSearchParams();
   };
 
@@ -83,14 +84,6 @@ export default function Home() {
       });
   }, []);
 
-  // useEffect(() => {
-  //   if (searchParams) {
-  //     history.push(`/search/${searchParams}`);
-  //   } else if (searchParams === "") {
-  //     history.push(`/search/`);
-  //   }
-  // }, [searchParams]);
-
   return (
     <PageWrapper>
 
@@ -108,7 +101,7 @@ export default function Home() {
                 <CategorySelect width="100%" label="Category" setCategory={setCategory}/>
               </div>
               <div style={{ width: '25%', minWidth: '9rem'}}>
-                <TextInput width="100%" label="Location / Postcode" fontSize="20px" onChange={(e) => setLocation(e.target.value)}/>
+                <TextInput width="100%" label="Location" fontSize="20px" onChange={(e) => setLocation(e.target.value)}/>
               </div>
               
             </div>

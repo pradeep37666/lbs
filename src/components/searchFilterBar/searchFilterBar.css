@@ -99,12 +99,12 @@
 
 .FilterPopoutPrice {
   min-width: 400px;
-  left: -150px;
+  left: -15%;
 }
 
 .FilterPopoutRating {
   min-width: 350px;
-  left: -120px;
+  left: -12%;
 }
 
 .FilterPopoutDel {

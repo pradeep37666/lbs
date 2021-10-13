@@ -19,12 +19,21 @@ export default function Header() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-  
-   let string =''
-   if(searchText) string = string.concat('?keyword='+searchText)
-   console.log(string)
-   history.replace(`/search/${string}`);
-    //history.replace(`/search?keyword=${searchText}`);
+    let string = ''
+    // if we're already on the search page, we want to add the keyword to whatever filters we have already set
+    if (history.location.pathname === '/search/') {
+      const queryString = history.location.search
+      const endIndex = queryString.indexOf('&')
+      if (endIndex === -1) {
+        if (searchText) string = string.concat('?keyword=' + searchText)
+      } else {
+        if (searchText) string = string.concat('?keyword=' + searchText + queryString.substring(endIndex, queryString.length))
+      }
+    }
+    else {
+      if (searchText) string = string.concat('?keyword=' + searchText)
+    }
+    history.replace(`/search/${string}`);
   }
 
   useEffect(() => {
