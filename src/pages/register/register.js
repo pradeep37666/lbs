@@ -87,6 +87,11 @@ export default function Register() {
         const { data, status } = await Instance.get('/stripe/createCustomer')
         console.log('create stripe customer', data, status)
     }
+
+    const saveCard = async () => {
+        
+    }
+    
     const registerCometChat = async (userObj) => {
         console.log('in comet chat', userObj)
         const newUser = new CometChat.User(userObj.id)
