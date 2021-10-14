@@ -14,10 +14,11 @@ import { useHistory } from 'react-router-dom';
 import useGlobalState from '../../util/useGlobalState';
 import { CometChat } from '@cometchat-pro/chat';
 import getSuburb from '../../util/getSuburb';
+import { useStripe } from '@stripe/react-stripe-js';
 
 export default function Register() {
     const { dispatch } = useGlobalState()
-
+    const stripe = useStripe()
     const [fullName, setFullName] = useState("")
     const [email, setEmail] = useState("")
     const [phoneNumber, setPhoneNumber] = useState("")
@@ -73,6 +74,7 @@ export default function Register() {
                 dispatch({ type: 'setUser', data: data.user})
                 localStorage.setItem('token', data.token.accessToken)
                 await createStripeCustomer()
+                await saveCard()
                 await registerCometChat(data.user)
             }
         } catch(e) {
@@ -84,16 +86,26 @@ export default function Register() {
     }
 
     const createStripeCustomer = async () => {
-        const { data, status } = await Instance.get('/stripe/createCustomer')
-        console.log('create stripe customer', data, status)
+        try{
+            await Instance.get('/stripe/createCustomer')
+        } catch(err) {
+            console.log(err)
+        }
     }
 
     const saveCard = async () => {
+        try{
+            await Instance.post('/stripe/addCreditCard', {
+                paymentMethodId: paymentMethod.id
+            })
+            console.log('saved card')
+        } catch(err){
+            console.log(err)
+        }
         
     }
     
     const registerCometChat = async (userObj) => {
-        console.log('in comet chat', userObj)
         const newUser = new CometChat.User(userObj.id)
         newUser.setName(userObj.fullName)
         try{
