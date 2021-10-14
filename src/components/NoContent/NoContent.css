@@ -1,0 +1,45 @@
+.NoContentButton {
+  cursor: pointer;
+  background-color: #ac172c;
+  color: white;
+  border-radius: 10px;
+  padding: 1.4rem 1rem;
+  font-size: 1.2rem;
+  width: max-content;
+  max-height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.NoContentLogo {
+  margin: 1rem;
+  max-width: 5rem;
+}
+
+.NoContentContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  padding: 0 1rem;
+}
+.NoContentText {
+}
+.NoContentTextContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 1rem 0;
+  text-align: center;
+}
+.NoContentHeaderText {
+  font-weight: bold;
+  font-size: 25px;
+  color: #33384f;
+  margin-bottom: 0.6rem;
+}
+.NoContentImage {
+  max-width: 26rem;
+  width: 80%;
+  margin-bottom: 2rem;
+}
