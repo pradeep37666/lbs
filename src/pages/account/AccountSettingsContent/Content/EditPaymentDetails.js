@@ -15,12 +15,13 @@ export default function EditPaymentDetails() {
     const history = useHistory()
 
     const [isLoading, setIsLoading] = useState(false)
+    const [isCardLoading, setIsCardLoading] = useState(true)
     const [cardNumber, setCardNumber] = useState()
     const [cardExpiry, setCardExpiry] = useState()
     const [cardCvc, setCardCvc] = useState()
     const [cardName, setCardName] = useState()
     const [cardNameError, setCardNameError] = useState(false)
-
+    const [userCard, setUserCard] = useState()
 
     const [accNumber, setAccNumber] = useState(user.account_number)
     const [bsb, setBsb] = useState(user.bsb)
@@ -82,6 +83,23 @@ export default function EditPaymentDetails() {
     // }
 
     useEffect(() => {
+        getSavedCard()
+    }, [])
+
+    const getSavedCard = async () => {
+        try{
+            const { data, status } = await Instance.get('/stripe/getCreditCards')
+            const userCard = data.data[0]
+            setUserCard(userCard)
+        } catch(err){
+            console.log(err)
+        } finally { 
+            setIsCardLoading(false)
+        }
+        
+    }
+
+    useEffect(() => {
         if(!cardName) return
         setCardNameError(false)
     }, [cardName])
@@ -137,52 +155,70 @@ export default function EditPaymentDetails() {
     return (
         <div className="AccountSettings__Container">
             <div className="AccountSettings__Title">Payment Details</div>
-            <div className="AccountSettings__UserName">Card Details</div>
-            <div className="AccountSettings__BodyText">We need these details to make a successful trade between 2 parties.</div>
+            { isCardLoading ? (
+                <CircularProgress />
+                
+            ) : (
+                userCard ? (
+                    <div>
+                        <span>Your preferred payment method. You can update this below</span>
+                        <div className="AccountSettings__SavedCard">
+                            <span>Card</span>
+                            <span>XXXX XXXX XXXX {userCard.card.last4}</span>
+                        </div>
+                    </div>
+                ) : (
+                    <>
+                    <div className="AccountSettings__UserName">Card Details</div>
+                    <div className="AccountSettings__BodyText">We need these details to make a successful trade between 2 parties.</div>
 
 
-            <div className="LoginHeader LoginHeader--NoMargin">Name on Card</div>
-            <div className="LoginInputValidationContainer">
-                <input type='text' placeholder='Name on Card' className="LoginInput" onChange={(e) => setCardName(e.target.value)} />
-                <div className={`triangleLeft ${!cardNameError ? '' : 'ValidationTextHide'}`} /> 
-                <ValidationPopup errorText={"Please enter a card name"} errorHeader='Invalid Card Name' hide={!cardNameError} />
-            </div>
+                    <div className="LoginHeader LoginHeader--NoMargin">Name on Card</div>
+                    <div className="LoginInputValidationContainer">
+                        <input type='text' placeholder='Name on Card' className="LoginInput" onChange={(e) => setCardName(e.target.value)} />
+                        <div className={`triangleLeft ${!cardNameError ? '' : 'ValidationTextHide'}`} /> 
+                        <ValidationPopup errorText={"Please enter a card name"} errorHeader='Invalid Card Name' hide={!cardNameError} />
+                    </div>
 
 
-             <div className="LoginHeader LoginHeader--NoMargin">Number on Card</div>
-            <div className="LoginInputValidationContainer">
-                <CardNumberElement 
-                className="LoginInput" 
-                onChange={cardNumberObj => setCardNumber(cardNumberObj)} 
-                options={CARD_ELEMENT_OPTIONS}
-                />
-                <div className={`triangleLeft ${!cardNumber?.error ? '' : 'ValidationTextHide'}`} /> 
-                <ValidationPopup errorText={cardNumber?.error?.message} errorHeader='Invalid Card Number' hide={!cardNumber?.error} />
-            </div>
-            <div className="ExpiryCCVFlex">
-                <div className="LoginHeader">Expiry</div>
-                <div className="LoginHeader">CCV</div>
-            </div>
-            <div className="LoginInputValidationContainer">
-                <div className="ExpiryCCVFlex">
-                    <CardExpiryElement
-                    className="LoginInput" 
-                    onChange={cardExpiryObj => setCardExpiry(cardExpiryObj)} 
-                    options={CARD_ELEMENT_OPTIONS}
-                    />
-                    <CardCvcElement
-                    className="LoginInput" 
-                    onChange={cardCvcObj => setCardCvc(cardCvcObj)} 
-                    options={CARD_ELEMENT_OPTIONS}
-                    />
-                    
-                </div>
-                <div className={`triangleLeft ${!cardExpiry?.error ? '' : 'ValidationTextHide'}`} />
-                <ValidationPopup errorText={cardExpiry?.error?.message} errorHeader='Invalid Expiry Date' hide={!cardExpiry?.error} />
-                <div className={`triangleLeft ${!cardCvc?.error ? '' : 'ValidationTextHide'}`} />
-                <ValidationPopup errorText={cardCvc?.error?.message} errorHeader='Invalid CCV' hide={!cardCvc?.error} />
+                    <div className="LoginHeader LoginHeader--NoMargin">Number on Card</div>
+                    <div className="LoginInputValidationContainer">
+                        <CardNumberElement 
+                        className="LoginInput" 
+                        onChange={cardNumberObj => setCardNumber(cardNumberObj)} 
+                        options={CARD_ELEMENT_OPTIONS}
+                        />
+                        <div className={`triangleLeft ${!cardNumber?.error ? '' : 'ValidationTextHide'}`} /> 
+                        <ValidationPopup errorText={cardNumber?.error?.message} errorHeader='Invalid Card Number' hide={!cardNumber?.error} />
+                    </div>
+                    <div className="ExpiryCCVFlex">
+                        <div className="LoginHeader">Expiry</div>
+                        <div className="LoginHeader">CCV</div>
+                    </div>
+                    <div className="LoginInputValidationContainer">
+                        <div className="ExpiryCCVFlex">
+                            <CardExpiryElement
+                            className="LoginInput" 
+                            onChange={cardExpiryObj => setCardExpiry(cardExpiryObj)} 
+                            options={CARD_ELEMENT_OPTIONS}
+                            />
+                            <CardCvcElement
+                            className="LoginInput" 
+                            onChange={cardCvcObj => setCardCvc(cardCvcObj)} 
+                            options={CARD_ELEMENT_OPTIONS}
+                            />
+                            
+                        </div>
+                        <div className={`triangleLeft ${!cardExpiry?.error ? '' : 'ValidationTextHide'}`} />
+                        <ValidationPopup errorText={cardExpiry?.error?.message} errorHeader='Invalid Expiry Date' hide={!cardExpiry?.error} />
+                        <div className={`triangleLeft ${!cardCvc?.error ? '' : 'ValidationTextHide'}`} />
+                        <ValidationPopup errorText={cardCvc?.error?.message} errorHeader='Invalid CCV' hide={!cardCvc?.error} />
 
-            </div>
+                    </div> 
+                </>
+                )
+                
+            )}
 
 
 

@@ -93,6 +93,14 @@
   font-weight: bold;
   color: #33384f;
 }
+.AccountSettings__SavedCard {
+  border: 1px solid #ac172c;
+  display: flex;
+  flex-direction: column;
+  color: #33384f;
+  padding: 1rem;
+  border-radius: 10px;
+}
 
 .AccountSettings__SyncButton__Text {
   width: 50%;
