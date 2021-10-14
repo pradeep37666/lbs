@@ -123,14 +123,15 @@ export default function ItemOverview() {
         }
         const startIndex = (getDateIndex(confirmedStart.day) * 2) + (confirmedStart?.am ? 1 : 2)
         const endIndex = (getDateIndex(confirmedEnd.day) * 2) + (confirmedEnd?.am ? 1 : 2)
-        confirmedStart.day.setHours(confirmedStart?.am ? 6 : 11)
+        confirmedStart.day.setHours(confirmedStart?.am ? 6 : 12)
         console.log({
             i_id: item.i_id,
             io_id: item.u_id,
             deliveryOption,
             startDate: startIndex,
             endDate: endIndex,
-            address: address ? address : user.address
+            address: address ? address : user.address,
+            price: calculatePrice()
         })
         try{
             const { data, status } = await instance.post(`booking/save/${confirmedStart.day.getTime()}`, {
