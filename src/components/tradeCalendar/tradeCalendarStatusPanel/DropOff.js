@@ -26,22 +26,32 @@ export default function DropOff({ booking, isOwner, updateBookingStatus,  userDe
                             <div className="TradeStatusDeclineButton" onClick={() => setNoPressed(true)}>
                                 <span>No</span>
                             </div>
-                            <div className="TradeStatusApproveButton" onClick={() => setReviewModalVisible(true)}>
+                            <div className="TradeStatusApproveButton" onClick={() => {
+                                updateBookingStatus(7)
+                                setReviewModalVisible(true)
+                            }}>
                                 <span>Yes</span>
                             </div>
                         </div>
                     </>
                 )
            ) : (
-                userDetails && 
-                <>
-                    <span>Item returned, thank you for borrowing this item with Little Big Shed.</span>
-                    <div className="TradeStatusButtonContainer">
-                        <div className="TradeStatusApproveButton" onClick={() => setReviewModalVisible(true)}>
-                            <span>Rate Lender</span>
+                userDetails && booking.status !== 7 ? (
+                    <>
+                        <span>Your item is due today. Please check that it's in the same condition as when you borrowed it.</span>
+                    </>
+                ) : (
+                     <>
+                        <span>Item returned, thank you for borrowing this item with Little Big Shed.</span>
+                        <div className="TradeStatusButtonContainer">
+                            <div className="TradeStatusApproveButton" onClick={() => setReviewModalVisible(true)}>
+                                <span>Rate Lender</span>
+                            </div>
                         </div>
-                    </div>
-                </>
+                    </>
+                )
+
+               
            ) }
         </div>
     )

@@ -11,6 +11,7 @@ import StatusFive from './StatusFive'
 import Pickup from './Pickup'
 import getDateObject from '../../../util/getDateObject'
 import StatusSix from './StatusSix'
+import StatusSeven from './StatusSeven'
 import DropOff from './DropOff'
 
 export default function TradeCalendarStatusPanel({ booking, userDetails, getBookings, setReportModalVisible, setReviewModalVisible }) {
@@ -26,6 +27,9 @@ export default function TradeCalendarStatusPanel({ booking, userDetails, getBook
     const renderStatusPanel = () => {
         if(status === 0){
             return <StatusZero updateBookingStatus={updateBookingStatus} booking={booking}/>
+        }
+        if( status === 7){
+            return <StatusSeven booking={booking} isOwner={isOwner} />
         }
         const dropOff = isDropoffTime()
         if(dropOff && status >= 3){
@@ -77,7 +81,7 @@ export default function TradeCalendarStatusPanel({ booking, userDetails, getBook
         const now = new Date()
         const oneHour = 60 * 60 * 1000
 
-        if(startSlot.date.getTime() - oneHour < now.getTime()){
+        if((startSlot.date.getTime() - oneHour) < now.getTime()){
             return true
         }
         return false

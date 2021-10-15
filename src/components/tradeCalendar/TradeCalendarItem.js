@@ -61,7 +61,7 @@ export default function TradeCalendarItem({ booking, setSelectedBooking, row, cu
     return (
         <div 
         onClick={() => {
-            console.log(getDateIndex(new Date(2021,0,1)) * 2)
+            console.log(booking)
             setSelectedBooking(booking)
         }}
         className="TradeCalendarItem"
