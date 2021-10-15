@@ -15,7 +15,6 @@ export default function TermsConditions(props) {
             {/* This is where we will submit all the form data, if user successfully registered takes us to the complete page */}
             <button className={`LoginFormButton ${!props.validated ? 'ButtonDisabled' : ''}`} disabled={!props.validated} onClick={() => {
                 props.registerUser()
-                props.handleNextPage('Complete!')
             }}>Next</button>
                 </div>
             </div>

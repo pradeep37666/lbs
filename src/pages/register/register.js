@@ -15,6 +15,7 @@ import useGlobalState from '../../util/useGlobalState';
 import { CometChat } from '@cometchat-pro/chat';
 import getSuburb from '../../util/getSuburb';
 import { useStripe } from '@stripe/react-stripe-js';
+import { CircularProgress } from '@material-ui/core';
 
 export default function Register() {
     const { dispatch } = useGlobalState()
@@ -26,6 +27,7 @@ export default function Register() {
     const [confirmPassword, setConfirmPassword] = useState("")
     const [lender, setLender] = useState(false)
     const [image, setImage] = useState()
+   
 
     const [paymentMethod, setPaymentMethod] = useState()
 
@@ -76,6 +78,7 @@ export default function Register() {
                 await createStripeCustomer()
                 await saveCard()
                 await registerCometChat(data.user)
+                handleNextPage('Complete!')
             }
         } catch(e) {
             console.log(e.response.data)
@@ -182,8 +185,10 @@ export default function Register() {
                 <div className="LoginHeader">Account Created</div>
                 <div className="LoginText">You have successfully created your Little Big Shed account and are now ready to start borrowing!</div>
 
-                <button className="LoginFormButton" onClick={() => history.push({pathname: '/user/account'})}>Continue</button>
-
+                
+                    <button className="LoginFormButton" onClick={() => history.push({pathname: '/user/account'})}>
+                        Continue
+                    </button>
                 </div>
             </div>
         )

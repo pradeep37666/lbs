@@ -3,7 +3,7 @@ import {ReactComponent as Logo} from './../../assets/Logos/LogoRed.svg';
 import ValidationPopup from '../ValidationPopup/ValidationPopup';
 import { handleCardName, handleCardNumber, handleExpiry, handleCcv, handleAccNumber, handleBsb } from '../../util/UserValidation'
 import { CardNumberElement, CardCvcElement, CardExpiryElement, useStripe, useElements } from '@stripe/react-stripe-js';
-
+import { CircularProgress } from '@material-ui/core';
 
 export default function BankDetails(props) {
     const [nameValidation, setNameValidation] = useState("")
@@ -152,9 +152,12 @@ export default function BankDetails(props) {
                 <ValidationPopup errorText={cardCvc?.error?.message} errorHeader='Invalid CCV' hide={!cardCvc?.error} />
 
             </div>
-                {!props.lender ?
-                <button className={`LoginFormButton ${!props.validated ? 'ButtonDisabled' : ''}`} disabled={!props.validated} onClick={createPaymentMethod}>Next</button>
-                : ''
+                {!props.lender &&
+                    isLoading ? (
+                        <CircularProgress color="inherit" />
+                    ) : (
+                        <button className={`LoginFormButton ${!props.validated ? 'ButtonDisabled' : ''}`} disabled={!props.validated} onClick={createPaymentMethod}>Next</button>
+                    )
                 }
                 </div>
                 
@@ -185,7 +188,16 @@ export default function BankDetails(props) {
                     <div className={`triangleLeft ${showValidation("bsb") ? '' : 'ValidationTextHide'}`} />
                     <ValidationPopup errorText={bsbValidation} errorHeader='Invalid BSB' hide={showValidation("bsb")}/>
                 </div>
-                <button className={`LoginFormButton ${!props.validated ? 'ButtonDisabled' : ''}`} disabled={!props.validated} onClick={props.handleNextPage('Location Details')}>Next</button>
+                {   isLoading ? (
+                    <CircularProgress color="inherit" />
+                ) : (
+                    <button 
+                    className={`LoginFormButton ${!props.validated ? 'ButtonDisabled' : ''}`} 
+                    disabled={!props.validated} 
+                    onClick={props.handleNextPage('Location Details')}>
+                        Next
+                    </button>
+                )}
                 </div>
                 : ''
                 }
