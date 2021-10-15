@@ -12,7 +12,6 @@ import Calendar from './../../assets/Icons/HangingCalendar.svg';
 import Geocode from 'react-geocode'
 
 import { ReactComponent as StarFilled } from './../../assets/Icons/StarFilled.svg';
-import { Link } from 'react-router-dom';
 import { StarOutline } from '@material-ui/icons';
 
 import GoogleMapReact from 'google-map-react';
@@ -27,6 +26,7 @@ import { Avatar } from '@material-ui/core';
 import MissingProfile from '../../assets/Icons/MissingProfileIcon.png'
 
 import { isMobile } from 'react-device-detect'
+import AvailabilityModal from '../../components/AvailabilityModal/AvailabilityModal.js';
 
 export default function Item() {
     const { state } = useGlobalState()
@@ -44,6 +44,11 @@ export default function Item() {
     const [itemOwner, setItemOwner] = useState(null)
     const [loading, setLoading] = useState(true);
     const [approx, setApprox] = useState(null)
+    const [ReviewPage, setReviewPage] = useState(1)
+    const [ImageModal, setImageModal] = useState(false)
+    const [ReviewModal, setReviewModal] = useState(false)
+    const [availabilityModalVisible, setAvailabilityModalVisible] = useState(false)
+    const [availability, setAvailability] = useState()
 
     const reviewSamples = [
         ['Blake Dude', '4', 'Cillum nulla cupidatat aute pariatur ad sit tempor consectetur amet culpa labore deserunt sunt. Veniam eiusmod sunt incididunt ullamco fugiat reprehenderit labore. Ipsum irure culpa veniam velit. Elit dolore cillum nulla nulla do nulla Lorem ullamco.'],
@@ -65,6 +70,7 @@ export default function Item() {
             Instance.get(`/items/findByIid/?i_id=${params.itemId}&u_id=${user.id}`)
                 .then((response) => {
                     setItem(response.data.item);
+                    setAvailability(response.data.yearAvailability)
                     setLoading(false);
                     setFavourited(response.data.liked)
                     console.log(response)
@@ -78,24 +84,20 @@ export default function Item() {
                     setIsUserItem(true)
                 })
                 .catch((error) => {
-                    // handle error
                     console.log(error);
                 })
         } else {
             Instance.get(`/items/findByIid/?i_id=${params.itemId}`)
                 .then((response) => {
                     setItem(response.data.item)
+                    setAvailability(response.data.yearAvailability)
                     setLoading(false)
                     setItemPictures(response.data.item.pictures.split(','))
                 })
                 .catch((error) => {
-                    // handle error
                     console.log(error)
                 })
         }
-
-        
-
     }, [params.itemId]);
 
     useEffect(() => {
@@ -132,10 +134,6 @@ export default function Item() {
     }
 
     const NumReviewPages = Math.ceil(reviewSamples.length / 2)
-
-    const [ReviewPage, setReviewPage] = useState(1)
-    const [ImageModal, setImageModal] = useState(false)
-    const [ReviewModal, setReviewModal] = useState(false)
 
     const getReviewPages = () => {
 
@@ -226,8 +224,14 @@ export default function Item() {
 
     return (
         <PageWrapper>
-            {ImageModal ? <ItemImageModal setModal={setImageModal} images={itemPictures} modal={ImageModal} /> : ''}
-            {ReviewModal ? <ItemReviewModal setModal={setReviewModal} modal={ReviewModal} reviews={reviewSamples} /> : ''}
+            {ImageModal && <ItemImageModal setModal={setImageModal} images={itemPictures} modal={ImageModal} /> }
+            {ReviewModal && <ItemReviewModal setModal={setReviewModal} modal={ReviewModal} reviews={reviewSamples} /> }
+            { availabilityModalVisible && item && 
+            <AvailabilityModal 
+            item={item}
+            onClick={() => setAvailabilityModalVisible(false)}
+            availability={availability}
+            />}
             {loading ? <div className="ItemPage__Loading__Container"><CircularProgress size={75} /></div>
 
                 :
@@ -268,18 +272,21 @@ export default function Item() {
                             </button>
                             :
                             <div className="ItemButtons">
-                                <button className="ButtonAvailability"><div className="ItemButtonFlex"><img src={Calendar} alt="" />Availability</div></button>
+                                <button className="ButtonAvailability" onClick={() => setAvailabilityModalVisible(true)}>
+                                    <div className="ItemButtonFlex">
+                                        <img src={Calendar} alt="" />
+                                        Availability
+                                    </div>
+                                </button>
                                 
-                                    <button 
-                                    onClick={() => history.push(`/item/${params.itemId}/application`)}
-                                    className="ButtonApply">
-                                        <div className="ItemButtonFlex">
-                                            <Profile fill='#ffffff' />
-                                            Apply Now
-                                        </div>
-                                    </button>
-                                
-
+                                <button 
+                                onClick={() => history.push(`/item/${params.itemId}/application`)}
+                                className="ButtonApply">
+                                    <div className="ItemButtonFlex">
+                                        <Profile fill='#ffffff' />
+                                        Apply Now
+                                    </div>
+                                </button>
                                 <button className="ButtonFavourite" onClick={handleFavourite} style={{ padding: '.5em 1em' }}>{favourited ? <StarFilled fill='#ffffff' /> : <StarOutline fill='#ffffff' />}</button>
                             </div>
 
@@ -346,7 +353,7 @@ export default function Item() {
                                     fillOpacity: 0.3,
                                     map,
                                     center: approx.center,
-                                    radius: 600,
+                                    radius: 1000,
                                 })} />
                                 }
                             </div>

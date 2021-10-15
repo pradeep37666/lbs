@@ -6,7 +6,6 @@ import LBSSwitch from '../LBSSwitch/LBSSwitch.js';
 import ValidationPopup from '../ValidationPopup/ValidationPopup.js';
 import { handleFullName, handleEmail, handlePhoneNumber, handlePassword, handlePasswordConfirm } from '../../util/UserValidation'
 import { isMobile } from 'react-device-detect';
-import { Fade } from '@material-ui/core';
 
 export default function BasicDetails(props) {
 
@@ -18,8 +17,6 @@ export default function BasicDetails(props) {
 
     const [showPassword, setShowPassword] = useState(false)
     const [showConfirmPassword, setShowConfirmPassword] = useState(false)
-
-    // const [image, setImage] = useState(  )
 
     const showValidation = (field) => {
         switch (field) {
@@ -60,9 +57,7 @@ export default function BasicDetails(props) {
                     <div className="LoginInputValidationContainer">
                         <input type='text' placeholder='Jane Doe' className="LoginInput" onBlur={(e) => handleFullName(e, props.setFullName, setNameValidation)}/>
                         {!isMobile && <div className={`triangleLeft ${showValidation("name") ? '' : 'ValidationTextShow'}`} />}
-                        {/* <Fade timeout={500} in={!showValidation('name')} unmountOnExit mountOnEnter> */}
                         { !showValidation("name") && <ValidationPopup errorText={nameValidation} errorHeader='Invalid Full Name' hide={showValidation("name")}/>}
-                        {/* </Fade> */}
                     </div>
                     
 
@@ -91,8 +86,22 @@ export default function BasicDetails(props) {
                         </div>
                     <input type="file" id="selectFile" style={{ display: "none" }} onChange={(e) => handleChange(e)} />
                     <button className="LoginFormButton UploadButton" onClick={() => document.getElementById('selectFile').click()}>Upload</button>
-                    
 
+                    </div>
+
+                    <div className="LoginHeader">Date of Birth</div>
+
+                    <div className='Register__DOB__Container'>
+                        <div className="DOBHeader">Day</div>
+                        <div className="DOBHeader">Month</div>
+                        <div className="DOBHeader">Year</div>
+                    </div>
+
+                    <div className='Register__DOB__Container'>
+                    {/* onBlur={(e) => handlePhoneNumber(e, props.setPhoneNumber, setPhoneValidation)} */}
+                        <input type='text' placeholder='Day' className="DOBInput" />
+                        <input type='text' placeholder='Month' className="DOBInput" />
+                        <input type='text' placeholder='Year' className="DOBInput" />
                     </div>
 
                     </div>

@@ -51,11 +51,14 @@ export default function UpgradeLender() {
 
     const submitUpgrade = () => {
 
+        let suburb
+        address.address_components ? suburb = getSuburb(address.address_components) : suburb = user.suburb
+        
         const data = {
             account_number: accNumber ? accNumber : user.account_number,
             bsb: bsb ? bsb : user.bsb,
-            address: address ? address.description : user.address,
-            suburb: address.terms ? getSuburb(address.terms) : user.suburb,
+            address: address.formatted_address ? address.formatted_address : user.address,
+            suburb: suburb,
             lat: address ? address.lat : user.lat,
             lng: address ? address.lng : user.lng,
             available: availability ? availability : user.available
@@ -126,7 +129,6 @@ export default function UpgradeLender() {
                 } else setValidated(false)
                 break
             case 'Availability':
-                console.log(getSuburb(address.terms))
                 if (availability !== '00000000000000') {
                     setValidated(true)
                 } else setValidated(false)

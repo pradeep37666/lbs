@@ -82,7 +82,7 @@ export default function Search(props) {
         setLoading(false);
       })
       .catch((error) => {
-        console.log(error);
+        console.log(error.response);
       });
 
     //For Suggested Items
@@ -225,7 +225,6 @@ export default function Search(props) {
               Search results for:{" "}
               <span style={{ fontWeight: "normal" }}>{parsed.keyword}</span>
             </div>
-            {/* commented out sort results, future version */}
             <div className="SearchMainText">
               Sort by:
               <Select

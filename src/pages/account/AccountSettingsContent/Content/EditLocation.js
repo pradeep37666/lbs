@@ -13,9 +13,12 @@ export default function EditLocation() {
 
   const updateLocationDetails = () => {
 
+    let suburb
+    address.address_components ? suburb = getSuburb(address.address_components) : suburb = user.suburb
+
     const data = {
-      address: address ? address.description : user.address,
-      suburb: address.terms ? getSuburb(address.terms) : user.suburb,
+      address: address.formatted_address ? address.formatted_address : user.address,
+      suburb: suburb,
     }
     Instance.put('user/update', data)
       .then((response) => {

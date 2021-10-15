@@ -1,14 +1,15 @@
 import React, { useState } from 'react'
 
-export default function Pickup({ isOwner, userDetails, updateBookingStatus, booking }) {
+export default function Pickup({ isOwner, userDetails, updateBookingStatus, booking, setReportModalVisible }) {
     const [noPressed, setNoPressed] = useState(false)
-    
+    if(!userDetails){
+        return ''
+    }
     console.log(booking)
     console.log(userDetails)
-    
     return (
         <div className="TradeStatusContentContainer">
-            { isOwner && userDetails ? (
+            { isOwner ? (
                  noPressed ? (
                     <>
                         <span>Would you like to send a report?</span>
@@ -16,7 +17,7 @@ export default function Pickup({ isOwner, userDetails, updateBookingStatus, book
                             <div className="TradeStatusDeclineButton">
                                 <span>No</span>
                             </div>
-                            <div className="TradeStatusApproveButton" onClick={() => updateBookingStatus(2)}>
+                            <div className="TradeStatusApproveButton" onClick={() => setReportModalVisible(true)}>
                                 <span>Yes</span>
                             </div>
                         </div>
@@ -36,19 +37,32 @@ export default function Pickup({ isOwner, userDetails, updateBookingStatus, book
                     </>
                 )
            ) : (
-                userDetails && 
-                <>
-                    <span>Has {userDetails.fullName} successfully provided you the item?</span>
-                    <div className="TradeStatusButtonContainer">
-                    
-                        <div className="TradeStatusDeclineButton" onClick={() => updateBookingStatus(0)}>
-                            <span>No</span>
+                 noPressed ? (
+                    <>
+                        <span>Would you like to send a report?</span>
+                        <div className="TradeStatusButtonContainer">
+                            <div className="TradeStatusDeclineButton">
+                                <span>No</span>
+                            </div>
+                            <div className="TradeStatusApproveButton" onClick={() => setReportModalVisible(true)}>
+                                <span>Yes</span>
+                            </div>
                         </div>
-                        <div className="TradeStatusApproveButton" onClick={() => updateBookingStatus(4)}>
-                            <span>Yes</span>
+                    </>
+                ) : (
+                    <>
+                        <span>Has {userDetails.fullName} successfully provided you the item?</span>
+                        <div className="TradeStatusButtonContainer">
+                        
+                            <div className="TradeStatusDeclineButton" onClick={() => setNoPressed(true)}>
+                                <span>No</span>
+                            </div>
+                            <div className="TradeStatusApproveButton" onClick={() => updateBookingStatus(4)}>
+                                <span>Yes</span>
+                            </div>
                         </div>
-                    </div>
-                </>
+                    </>
+                )
            ) }
         </div>
     )

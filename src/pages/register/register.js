@@ -52,13 +52,16 @@ export default function Register() {
     }
 
     const registerUser = async () => {
+        let suburb
+        address.address_components ? suburb = getSuburb(address.address_components) : suburb = ''
+
         const userDetails = {
             fullName: fullName,
             email: email,
             avatar: image ? image.raw : '',
             mobile: phoneNumber,
-            address: address ? address.description : '',
-            suburb: address.terms ? getSuburb(address.terms) : '',
+            address: address ? address.formatted_address : '',
+            suburb: suburb,
             lat: address ? address.lat : 0,
             lng: address ? address.lng : 0,
             bsb: bsb ? bsb : '',
@@ -156,14 +159,11 @@ export default function Register() {
                 } else setValidated(false)
                 break
             case 'Availability':
-                console.log(getSuburb(address.terms))
-                console.log(address)
                 if (availability !== '00000000000000') {
                     setValidated(true)
                 } else setValidated(false)
                 break
             case 'Terms & Conditions':
-                console.log(address)
                 if (tc) {
                     setValidated(true)
                 } else setValidated(false)

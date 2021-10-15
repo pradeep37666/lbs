@@ -1,21 +1,23 @@
-import React, { useEffect, useState } from "react"
-import "./searchFilterBar.css"
-import { ReactComponent as CarIcon } from "./../../assets/Icons/AutomotiveIcon.svg"
-import BBQIcon from "./../../assets/Icons/BBQIcon.svg"
-import CleaningIcon from "./../../assets/Icons/CleaningIcon.svg"
-import CreativeIcon from "./../../assets/Icons/CreativeIcon.svg"
-import { ReactComponent as DrillIcon } from "./../../assets/Icons/DrillIcon.svg"
-import { ReactComponent as HammerIcon } from "./../../assets/Icons/HammerIcon.svg"
-import OfficeIcon from "./../../assets/Icons/OfficeIcon.svg"
-import PaintingIcon from "./../../assets/Icons/PaintingIcon.svg"
-import SportingIcon from "./../../assets/Icons/SportingIcon.svg"
-import MowingIcon from "./../../assets/Icons/MowingIcon.svg"
-import { ReactComponent as StarOutline } from "./../../assets/Icons/StarOutline.svg"
-import { ReactComponent as StarFilled } from "./../../assets/Icons/StarFilled.svg"
-import { withStyles } from "@material-ui/core/styles"
-import Slider from "@material-ui/core/Slider"
-import { useHistory } from "react-router"
-import MapsAutocomplete from '../mapsAutocomplete/MapsAutocomplete'
+import React, { useEffect, useState } from "react";
+import "./searchFilterBar.css";
+import CarIcon from "./../../assets/Icons/AutomotiveIcon.svg";
+import BBQIcon from "./../../assets/Icons/BBQIcon.svg";
+import CleaningIcon from "./../../assets/Icons/CleaningIcon.svg";
+import CreativeIcon from "./../../assets/Icons/CreativeIcon.svg";
+import DrillIcon from "./../../assets/Icons/DrillIcon.svg";
+import HammerIcon from "./../../assets/Icons/HammerIcon.svg";
+import OfficeIcon from "./../../assets/Icons/OfficeIcon.svg";
+import PaintingIcon from "./../../assets/Icons/PaintingIcon.svg";
+import SportingIcon from "./../../assets/Icons/SportingIcon.svg";
+import MowingIcon from "./../../assets/Icons/MowingIcon.svg";
+import { ReactComponent as StarOutline } from "./../../assets/Icons/StarOutline.svg";
+import { ReactComponent as StarFilled } from "./../../assets/Icons/StarFilled.svg";
+import { withStyles } from "@material-ui/core/styles";
+import Slider from "@material-ui/core/Slider";
+import { useHistory } from "react-router";
+import MapsAutocomplete from "../mapsAutocomplete/MapsAutocomplete";
+import { useLocation } from "react-router";
+import Geocode from 'react-geocode'
 
 const LocationSlider = withStyles({
   root: {
@@ -40,68 +42,140 @@ const LocationSlider = withStyles({
   rail: {
     height: 3,
   },
-})(Slider)
+})(Slider);
 
 export default function SearchFilterBar({ keyWord }) {
+
+  const location = useLocation();
+
+  const queryString = require("query-string");
+
+  const parsed = queryString.parse(location.search);
+
   const history = useHistory()
-  const [Delivery, setDelivery] = useState(false)
+  const [Delivery, setDelivery] = useState(parsed?.delivery ?? 'Both')
   const [ActiveFilter, setActiveFilter] = useState("none")
-  const [Category, setCategory] = useState("")
-  const [Address, setAddress] = useState()
+  const [Category, setCategory] = useState(parsed?.category ?? '')
+  const [Address, setAddress] = useState('')
   const [SearchRadius, setSearchRadius] = useState(10)
-  const [PriceMin, setPriceMin] = useState()
-  const [PriceMax, setPriceMax] = useState()
-  const [Rating, setRating] = useState()
+  const [PriceMin, setPriceMin] = useState(parsed?.minPrice ?? '')
+  const [PriceMax, setPriceMax] = useState(parsed?.maxPrice ?? '')
+  const [Rating, setRating] = useState(parsed?.rating ?? '')
+  const [updateLocation, setUpdateLocation] = useState(false)
 
   const handleSubmitFilterChange = () => {
-    let string = ""
+    let string = "";
 
     if (keyWord) {
-      string = string.concat("?keyword=" + keyWord)
+      string = string.concat("?keyword=" + keyWord);
     } else {
-      string = string.concat("?keyword=")
+      string = string.concat("?keyword=");
     }
     if (Category) string = string.concat("&category=" + Category)
+    if (Address) string = string.concat(`&lat=${Address.lat}&lng=${Address.lng}&distance=${SearchRadius}`)
     if (PriceMax) string = string.concat("&maxPrice=" + PriceMax)
     if (PriceMin) string = string.concat("&minPrice=" + PriceMin)
     if (Rating) string = string.concat("&rating=" + Rating)
-    if (Delivery) {
+    if (Delivery === 'Both') { }
+    else if (Delivery === true) {
       string = string.concat("&delivery=1")
     } else {
-      string = string.concat("&delivery=0")
+      string = string.concat("&delivery=0");
     }
-
-    history.replace(`/search/${string}`)
+    history.push(`/search/${string}`)
   }
 
   const handleFilterClick = (filter) => {
     if (ActiveFilter === filter) {
-      setActiveFilter("none")
+      setActiveFilter("none");
     } else {
-      setActiveFilter(filter)
+      setActiveFilter(filter);
     }
-  }
+  };
 
   // use effect below resets the search when you first get to the page, e.g. from filters on home page
   // we need to make it research whenever one of the filters is changed, butr without the useeffect as that will always fire at the start
   // and wipe whatever filters we had already set on the home page
 
-  // useEffect(() => {
-  //   handleSubmitFilterChange();
-  // }, [Delivery, Category, Rating]);
+  const getGeoLocation = (input) => {
+    Geocode.setApiKey(process.env.REACT_APP_GOOGLE_API_KEY)
+    Geocode.setLanguage('en')
+    Geocode.setRegion('au')
+    Geocode.setLocationType('ROOFTOP')
+    Geocode.enableDebug(false)
+
+    Geocode.fromAddress(input)
+      .then((response) => {
+        if (response.results[0].geometry.location.lat) {
+          setAddress({
+            lat: response.results[0].geometry.location.lat,
+            lng: response.results[0].geometry.location.lng
+          })
+        }
+      })
+      .catch((error) => {
+        // if theres an error with the geocode we don't say anything
+        // console.log(error.response)
+        // alert('There was an issue processing this address, please try again')
+      })
+  }
+
+  useEffect(() => {
+    if (parsed.location) {
+      getGeoLocation(parsed.location)
+    }
+  }, [])
+
+  useEffect(() => {
+    if (Delivery === '1') setDelivery(true)
+    if (Delivery === '0') setDelivery(false)
+    handleSubmitFilterChange();
+  }, [Delivery, Category, Rating, Address, updateLocation]);
 
   const handlePriceMinChange = (e) => {
-    let price = e.target.validity.valid ? e.target.value : PriceMin
-    price = price.slice(0, 4)
-    setPriceMin(price)
-  }
-
+    let price = e.target.validity.valid ? e.target.value : PriceMin;
+    price = price.slice(0, 4);
+    setPriceMin(price);
+  };
 
   const handlePriceMaxChange = (e) => {
-    let price = e.target.validity.valid ? e.target.value : PriceMax
-    price = price.slice(0, 4)
-    setPriceMax(price)
-  }
+    let price = e.target.validity.valid ? e.target.value : PriceMax;
+    price = price.slice(0, 4);
+    setPriceMax(price);
+  };
+
+  const categories = [
+    { name: "Tools", icon: HammerIcon },
+    { name: "Painting", icon: PaintingIcon },
+    { name: "BBQ", icon: BBQIcon },
+    { name: "Office", icon: OfficeIcon },
+    { name: "Creative", icon: CreativeIcon },
+    { name: "Power Tools", icon: DrillIcon },
+    { name: "Automotive", icon: CarIcon },
+    { name: "Mowing", icon: MowingIcon },
+    { name: "Cleaning", icon: CleaningIcon },
+    { name: "Sporting", icon: SportingIcon },
+  ];
+
+  const renderCategories = () => {
+    return categories.map((category, index) => {
+      return (
+        <div
+          className={`CategoryFilterDiv ${Category === category.name ? "CategoryFilterDivActive" : ""
+            }`}
+          onClick={() => {
+            if (Category === category.name) setCategory('')
+            else setCategory(category.name);
+            handleSubmitFilterChange();
+            console.log("Category Clicked : ", Category);
+          }}
+        >
+          <img src={category.icon} alt="" className="CategoryFilterIcon" />
+          {category.name}
+        </div>
+      );
+    });
+  };
 
   const getCategoryPopout = () => {
     return (
@@ -111,156 +185,46 @@ export default function SearchFilterBar({ keyWord }) {
       >
         <hr className="hl hlPopout" />
         <div className="MainBodyPopout">
-          <div className="CategoryFiltersFlex">
-            <div
-              className={`CategoryFilterDiv ${Category === "Tools" ? "CategoryFilterDivActive" : ""
-                }`}
-              onClick={() => {
-                setCategory("Tools")
-                handleSubmitFilterChange()
-                console.log("Category Clicked : ", Category)
-              }}
-            >
-              <HammerIcon
-                fill="#ac172c"
-                alt=""
-                className="CategoryFilterIcon"
-              />
-              Tools
-            </div>
-            <div
-              className={`CategoryFilterDiv ${Category === "Painting" ? "CategoryFilterDivActive" : ""
-                }`}
-              onClick={() => {
-                setCategory("Painting")
-                handleSubmitFilterChange()
-                console.log("Category Clicked : ", Category)
-              }}
-            >
-              <img src={PaintingIcon} alt="" className="CategoryFilterIcon" />
-              Painting
-            </div>
-            <div
-              className={`CategoryFilterDiv ${Category === "BBQ" ? "CategoryFilterDivActive" : ""
-                }`}
-              onClick={() => {
-                setCategory("BBQ")
-                handleSubmitFilterChange()
-                console.log("Category Clicked : ", Category)
-              }}
-            >
-              <img src={BBQIcon} alt="" className="CategoryFilterIcon" />
-              BBQ
-            </div>
-            <div
-              className={`CategoryFilterDiv ${Category === "Office" ? "CategoryFilterDivActive" : ""
-                }`}
-              onClick={() => {
-                setCategory("Office")
-                handleSubmitFilterChange()
-                console.log("Category Clicked : ", Category)
-              }}
-            >
-              <img src={OfficeIcon} alt="" className="CategoryFilterIcon" />
-              Office
-            </div>
-            <div
-              className={`CategoryFilterDiv ${Category === "Creative" ? "CategoryFilterDivActive" : ""
-                }`}
-              onClick={() => {
-                setCategory("Creative")
-                handleSubmitFilterChange()
-                console.log("Category Clicked : ", Category)
-              }}
-            >
-              <img src={CreativeIcon} alt="" className="CategoryFilterIcon" />
-              Creative
-            </div>
-            <div
-              className={`CategoryFilterDiv ${Category === "Power Tools" ? "CategoryFilterDivActive" : ""
-                }`}
-              onClick={() => {
-                setCategory("Power Tools")
-                handleSubmitFilterChange()
-                console.log("Category Clicked : ", Category)
-              }}
-            >
-              <DrillIcon fill="#ac172c" alt="" className="CategoryFilterIcon" />
-              Power Tools
-            </div>
-            <div
-              className={`CategoryFilterDiv ${Category === "Automotive" ? "CategoryFilterDivActive" : ""
-                }`}
-              onClick={() => {
-                setCategory("Automotive")
-                handleSubmitFilterChange()
-                console.log("Category Clicked : ", Category)
-              }}
-            >
-              <CarIcon fill="#ac172c" alt="" className="CategoryFilterIcon" />
-              Automotive
-            </div>
-            <div
-              className={`CategoryFilterDiv ${Category === "Mowing" ? "CategoryFilterDivActive" : ""
-                }`}
-              onClick={() => {
-                setCategory("Mowing")
-                handleSubmitFilterChange()
-                console.log("Category Clicked : ", Category)
-              }}
-            >
-              <img src={MowingIcon} alt="" className="CategoryFilterIcon" />
-              Mowing
-            </div>
-            <div
-              className={`CategoryFilterDiv ${Category === "Cleaning" ? "CategoryFilterDivActive" : ""
-                }`}
-              onClick={() => {
-                setCategory("Cleaning")
-                handleSubmitFilterChange()
-                console.log("Category Clicked : ", Category)
-              }}
-            >
-              <img src={CleaningIcon} alt="" className="CategoryFilterIcon" />
-              Cleaning
-            </div>
-            <div
-              className={`CategoryFilterDiv ${Category === "Sporting" ? "CategoryFilterDivActive" : ""
-                }`}
-              onClick={() => {
-                setCategory("Sporting")
-                handleSubmitFilterChange()
-                console.log("Category Clicked : ", Category)
-              }}
-            >
-              <img src={SportingIcon} alt="" className="CategoryFilterIcon" />
-              Sporting
-            </div>
-          </div>
+          <div className="CategoryFiltersFlex">{renderCategories()}</div>
         </div>
       </div>
-    )
-  }
+    );
+  };
 
   const getLocationPopout = () => {
     return (
-      <div className="FilterPopout FilterPopoutLoc" onClick={(e) => e.stopPropagation()}>
+      <div
+        className="FilterPopout FilterPopoutLoc"
+        onClick={(e) => e.stopPropagation()}
+      >
         <hr className="hl hlPopout" />
         <div className="MainBodyPopout">
-
           <MapsAutocomplete setAddress={setAddress} small />
           <div className="PostcodeText">Search radius</div>
           <div className="LocationSliderFlex">
-            <LocationSlider aria-label="search radius" defaultValue={10} max={20} min={2} onChange={(e, val) => setSearchRadius(val)} />
+            <LocationSlider
+              aria-label="search radius"
+              defaultValue={10}
+              max={20}
+              min={2}
+              onChange={(e, val) => setSearchRadius(val)}
+            />
             <div className="SearchRadiusValue">{SearchRadius}km</div>
           </div>
 
-          <button className="FilterButtonSave" onClick={() => setActiveFilter('none')}>Save</button>
-
+          <button
+            className="FilterButtonSave"
+            onClick={() => {
+              setUpdateLocation(!updateLocation)
+              setActiveFilter("none")
+            }}
+          >
+            Save
+          </button>
         </div>
       </div>
-    )
-  }
+    );
+  };
 
   const getPricePopout = () => {
     return (
@@ -299,8 +263,8 @@ export default function SearchFilterBar({ keyWord }) {
             <button
               className="FilterButtonSave"
               onClick={() => {
-                setActiveFilter("none")
-                handleSubmitFilterChange()
+                setActiveFilter("none");
+                handleSubmitFilterChange();
               }}
             >
               Save
@@ -308,8 +272,8 @@ export default function SearchFilterBar({ keyWord }) {
           </div>
         </div>
       </div>
-    )
-  }
+    );
+  };
 
   const getRatingPopout = () => {
     return (
@@ -333,8 +297,8 @@ export default function SearchFilterBar({ keyWord }) {
                 className="StarIcon StarClick"
                 fill="#E9D8B4"
                 onClick={() => {
-                  setRating(2)
-                  handleSubmitFilterChange()
+                  setRating(2);
+                  handleSubmitFilterChange();
                 }}
               />
             ) : (
@@ -348,8 +312,8 @@ export default function SearchFilterBar({ keyWord }) {
                 className="StarIcon StarClick"
                 fill="#E9D8B4"
                 onClick={() => {
-                  setRating(3)
-                  handleSubmitFilterChange()
+                  setRating(3);
+                  handleSubmitFilterChange();
                 }}
               />
             ) : (
@@ -363,8 +327,8 @@ export default function SearchFilterBar({ keyWord }) {
                 className="StarIcon StarClick"
                 fill="#E9D8B4"
                 onClick={() => {
-                  setRating(4)
-                  handleSubmitFilterChange()
+                  setRating(4);
+                  handleSubmitFilterChange();
                 }}
               />
             ) : (
@@ -378,8 +342,8 @@ export default function SearchFilterBar({ keyWord }) {
                 className="StarIcon StarClick"
                 fill="#E9D8B4"
                 onClick={() => {
-                  setRating(5)
-                  handleSubmitFilterChange()
+                  setRating(5);
+                  handleSubmitFilterChange();
                 }}
               />
             ) : (
@@ -391,8 +355,8 @@ export default function SearchFilterBar({ keyWord }) {
           </div>
         </div>
       </div>
-    )
-  }
+    );
+  };
 
   const getDeliveryPopout = () => {
     return (
@@ -404,19 +368,19 @@ export default function SearchFilterBar({ keyWord }) {
         <div className="MainBodyPopout">
           <div className="DeliveryFlex">
             <button
-              className={`DeliveryButton ${Delivery ? "" : "DeliveryButtonInactive"
+              className={`DeliveryButton ${Delivery === true ? "" : "DeliveryButtonInactive"
                 }`}
               onClick={() => {
-                setDelivery(true)
+                Delivery !== true ? setDelivery(true) : setDelivery('Both')
               }}
             >
               Yes
             </button>
             <button
-              className={`DeliveryButton ${Delivery ? "DeliveryButtonInactive" : ""
+              className={`DeliveryButton ${Delivery === false ? "" : "DeliveryButtonInactive"
                 }`}
               onClick={() => {
-                setDelivery(false)
+                Delivery !== false ? setDelivery(false) : setDelivery('Both')
               }}
             >
               No
@@ -424,9 +388,8 @@ export default function SearchFilterBar({ keyWord }) {
           </div>
         </div>
       </div>
-    )
-  }
-
+    );
+  };
 
   return (
     <div className="SearchFilterBar">
@@ -493,5 +456,5 @@ export default function SearchFilterBar({ keyWord }) {
         </div>
       </div>
     </div>
-  )
+  );
 }

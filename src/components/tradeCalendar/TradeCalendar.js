@@ -14,7 +14,6 @@ export default function TradeCalendar({ borrowerBookingItems, lenderBookingItems
     const [currentYear, setCurrentYear] = useState()
     const [totalDates, setTotalDates] = useState()
     
-
     useEffect(() => {
         const today = new Date()
         const currentDate = today.getDate()
@@ -27,8 +26,10 @@ export default function TradeCalendar({ borrowerBookingItems, lenderBookingItems
     },[])
 
     useEffect(() => {
+        console.log('a')
         if(!tradeCalendarRef.current) return
-        if(currentDate < 7) return 
+        if(currentDate < 7) return
+        console.log('b')
         tradeCalendarRef.current.scrollTo((((currentDate) * 2) - 8) * (isMobile ? 25 : 50), 0)
     },[tradeCalendarRef.current])
 
@@ -97,9 +98,7 @@ export default function TradeCalendar({ borrowerBookingItems, lenderBookingItems
                     </div>
                     
                 </div>
-            </div>)
-            // arr.push(<div className="TradeCalendarFillerItem"></div>)
-            
+            </div>)            
         }
         return arr
     }

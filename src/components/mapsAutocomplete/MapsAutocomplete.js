@@ -67,6 +67,8 @@ export default function MapsAutocomplete(props) {
     const [lat, setLat] = useState(props.defaultLat ? props.defaultLat : '')
     const [lng, setLng] = useState(props.defaultLng ? props.defaultLng : '')
     const [place, setPlace] = useState('')
+    const [mapInstance, setMapInstance] = useState('')
+    const [googleInstance, setGoogleInstance] = useState('')
     const [mapProps, setMapProps] = useState({
         center: {
             lat: -25.6091,
@@ -105,30 +107,46 @@ export default function MapsAutocomplete(props) {
     const selectAddress = (place) => {
         setShowResults(false)
         setValue(place.description)
-        checkCoords(place.description)
+        getPlaceDetails(place)
         setPlace(place)
     }
 
-    const checkCoords = async (place) => {
-        Geocode.setApiKey(process.env.REACT_APP_GOOGLE_API_KEY)
-        Geocode.setLanguage('en')
-        Geocode.setRegion('au')
-        Geocode.setLocationType('ROOFTOP')
-        Geocode.enableDebug(false)
+    const getPlaceDetails = async (place) => {
+        var request = {
+            placeId: place.place_id,
+            fields: ['formatted_address', 'geometry', 'address_components']
+        }
 
-        Geocode.fromAddress(place)
-        .then((response) => {
-            if (response.results[0].address_components.length >= 6) {
-                setLat(response.results[0].geometry.location.lat)
-                setLng(response.results[0].geometry.location.lng)
-            } else {
-                alert('There was an issue processing this address, please try again')
+        const service = new googleInstance.places.PlacesService(mapInstance)
+        service.getDetails(request, callback)
+
+        function callback(place, status) {
+            if (status == googleInstance.places.PlacesServiceStatus.OK) {
+                setPlace(place)
+                setLat(place.geometry.location.lat())
+                setLng(place.geometry.location.lng())
             }
-        })
-        .catch((error) => {
-            console.log(error.response)
-            alert('There was an issue processing this address, please try again')
-        })
+        }
+        // Geocode.setApiKey(process.env.REACT_APP_GOOGLE_API_KEY)
+        // Geocode.setLanguage('en')
+        // Geocode.setRegion('au')
+        // Geocode.setLocationType('ROOFTOP')
+        // Geocode.enableDebug(false)
+
+        // Geocode.fromAddress(place)
+        // .then((response) => {
+        //     console.log(response)
+        //     if (response.results[0].address_components.length >= 6) {
+        //         setLat(response.results[0].geometry.location.lat)
+        //         setLng(response.results[0].geometry.location.lng)
+        //     } else {
+        //         alert('There was an issue processing this address, please try again')
+        //     }
+        // })
+        // .catch((error) => {
+        //     console.log(error.response)
+        //     alert('There was an issue processing this address, please try again')
+        // })
     }
 
     useEffect(() => {
@@ -143,10 +161,12 @@ export default function MapsAutocomplete(props) {
             })
 
             const selectedPlace = {
-                ...place,
+                address_components: place.address_components,
+                formatted_address: place.formatted_address,
                 lat: lat,
                 lng: lng
             }
+            console.log(selectedPlace)
             props.setAddress(selectedPlace)
         }
         
@@ -157,9 +177,17 @@ export default function MapsAutocomplete(props) {
 
             <div className="MapContainer" style={{ height: props.small ? '150px' : '400px'}}>
                 <GoogleMapReact
-                    bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_API_KEY }}
+                    bootstrapURLKeys={{ 
+                        key: process.env.REACT_APP_GOOGLE_API_KEY,
+                        libraries: ['places']
+                    }}
                     center={mapProps.center}
                     zoom={mapProps.zoom}
+                    onGoogleApiLoaded={({ map, maps }) => { 
+                        setGoogleInstance(maps)
+                        setMapInstance(map)
+                    }}
+                    yesIWantToUseGoogleMapApiInternals={true}
                 >
                     <MapMarker 
                     lat={lat}

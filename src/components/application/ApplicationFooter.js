@@ -24,7 +24,7 @@ export default function ApplicationFooter() {
         let route
         if(page === 'ItemAvailability') route = 'ItemOptions'
         if(page === 'ItemOptions') {
-            if( (deliverySelected || pickupSelected) && (!address && !user?.address) ){
+            if((deliverySelected || pickupSelected) && (!address && !user?.address) ){
                 return
             }
             route = 'ItemOverview'

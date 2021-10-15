@@ -29,6 +29,7 @@
 
 .UserShedNav__Icon {
   margin-right: 1em;
+  min-width: 3rem;
 }
 
 .LogoutButton {

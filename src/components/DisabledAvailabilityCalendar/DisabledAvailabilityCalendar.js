@@ -1,15 +1,15 @@
 import React, { useContext} from 'react'
-import './AvailabilityCalendar.css'
-import CalendarItem from './CalendarItem';
-import CalendarRow from './CalendarRow';
-import { ApplicationContext } from '../../pages/application/Application';
+
+import DisabledCalendarItem from './DisabledCalendarItem';
+import DisabledCalendarRow from './DisabledCalendarRow';
+import { ApplicationContext } from '../AvailabilityModal/AvailabilityModal'
 
 
-export default function AvailabilityCalendar({ month, year, }) {
+export default function DisabledAvailabilityCalendar({ month, year, }) {
 
     const { state } = useContext(ApplicationContext)
     const { currentMonth, currentYear } = state
-
+    console.log('state', state)
     function getDaysInMonth(month, year) {
         var date = new Date(year, month, 1);
         var days = [];
@@ -24,6 +24,7 @@ export default function AvailabilityCalendar({ month, year, }) {
     const days = getDaysInMonth(month, year)
 
     const renderRows = () => {
+        console.log('=====')
         const rows = []
         let rowDays = []
         for(let i = 0; i < days.length; i++){
@@ -31,7 +32,7 @@ export default function AvailabilityCalendar({ month, year, }) {
             // add a new row when there are 7 days in the rowDays array
             if(days[i].getDay() === 6){
                 rows.push(
-                    <CalendarRow 
+                    <DisabledCalendarRow 
                     key={i}
                     isCurrentMonth={currentMonth === month}
                     days={rowDays}
@@ -43,7 +44,7 @@ export default function AvailabilityCalendar({ month, year, }) {
             // add a last row if there are now enough days to make a new week
             if(i + 1 === days.length){
                 rows.push(
-                <CalendarRow 
+                <DisabledCalendarRow 
                 key={i}
                 days={rowDays} 
                 isCurrentMonth={currentMonth === month}

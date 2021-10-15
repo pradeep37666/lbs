@@ -49,13 +49,13 @@
 .TradeSidebarUserAvatar {
   margin-right: 1rem;
 }
+.TradeSidebarLocationContainer {
+  flex-direction: column;
+  display: flex;
+}
 
 @media only screen and (max-width: 495px) {
   .TradeSidebarContainer {
     width: 300px;
-  }
-  .TradeSidebarLocationContainer {
-    flex-direction: column;
-    display: flex;
   }
 }

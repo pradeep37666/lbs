@@ -22,6 +22,7 @@ import Button from "@material-ui/core/Button";
 import Availability from "../../components/FormComponents/Availability";
 import { useHistory } from "react-router";
 import { CircularProgress } from "@material-ui/core";
+import getSuburb from "../../util/getSuburb";
 
 function EditItemPage(props) {
   const history = useHistory();
@@ -41,17 +42,16 @@ function EditItemPage(props) {
   const [lat, setLat] = useState();
   const [lng, setLng] = useState();
   const [address, setAddress] = useState();
-  const [city, setCity] = useState();
-  const [country, setCountry] = useState();
-  const [state, setState] = useState();
-  const [isDeleted, setIsDeleted] = useState();
-  const [created, setCreated] = useState();
-  const [updated, setUpdated] = useState();
+  const [suburb, setSuburb] = useState();
+
   const [isDiscount, setIsDiscount] = useState(false);
 
   //--------modal for displaying the edit button dialogue-------//
   const [open, setOpen] = useState(false);
   const [editAvailabilityOpen, setEditAvailabilityOpen] = useState(false);
+
+  const [deletedImages, setDeletedImages] = useState([])
+  const [newImages, setNewImages] = useState([])
 
   const handleOpenEditAvailability = () => {
     setEditAvailabilityOpen(true);
@@ -67,13 +67,6 @@ function EditItemPage(props) {
     setOpen(false);
   };
 
-  //--------------------------------------------------------------//
-
-  let [newImage, setNewImage] = useState([]);
-  let [updatedImage, setUpdatedImage] = useState([]);
-
-  //--------------------------------------------------------------//
-
   const queryString = require("query-string");
   const params = useParams();
   let newPictures = [];
@@ -83,7 +76,7 @@ function EditItemPage(props) {
 
   useEffect(() => {
     //returning data from the server
-    setLoading(true)
+    setLoading(true);
     Instance.get(`/items/findByIid/?i_id=${itemId}`)
       .then((response) => {
         setTitleText(response.data.item.title);
@@ -95,14 +88,12 @@ function EditItemPage(props) {
         setDeliveryPrice(response.data.item.deliveryPrice);
         setDiscount(response.data.item.discount);
         setAddress(response.data.item.address);
-        setCity(response.data.item.city);
-        setCountry(response.data.item.country);
-        setState(response.data.item.state);
+        setSuburb(response.data.item.suburb);
         setLat(response.data.item.lat);
         setLng(response.data.item.lng);
         setAvailable(response.data.item.available);
 
-        setUpdatedImage(response.data.item.pictures.split(","));
+        // setUpdatedImage(response.data.item.pictures.split(","));
         setPictures(structurePictures(response.data.item.pictures.split(",")));
 
         setLoading(false);
@@ -181,7 +172,12 @@ function EditItemPage(props) {
           raw: e.target.files[0],
           id: findNextID(),
         },
-      ];
+      ]
+      setNewImages(newImages => [...newImages, {
+          preview: URL.createObjectURL(e.target.files[0]),
+          raw: e.target.files[0],
+          id: findNextID(),
+      }])
       setPictures(updatedPictures);
     }
   };
@@ -204,26 +200,56 @@ function EditItemPage(props) {
 
       if (pic.id !== id) {
         newPictures.push(pic);
+      } else {
+        if (pic.url) setDeletedImages(deletedImages => [...deletedImages, pic.url])
+        else setNewImages(newImages.filter(({id}) => id !== pic.id))
       }
     }
     setPictures(newPictures);
   };
-  //handling the deletion of images received from add button
 
-  //-------------------------------------------------------------------------//
   const applyChanges = () => {
-    alert(
-      `Here is the list of al the changes made! 
-      
-      Title -> ${title},
-      Category -> ${category}, 
-      Description -> ${description}, 
-      Item's Price -> $${price}, 
-      Discount -> ${discount}%, 
-      Delivery or Pickup Cost -> $${deliveryPrice},
-      !!!`
-    );
-  };
+
+    let newSuburb
+    address.address_components ? newSuburb = getSuburb(address.address_components) : newSuburb = suburb
+
+    const newItemDetails = {
+      i_id: itemId,
+      title: title,
+      category: category,
+      description: description,
+      newImages: newImages,
+      deletedImages: deletedImages.join(),
+      price: price,
+      deliveryPrice: deliveryPrice,
+      discount: discount,
+      available: available,
+      lat: address.lat ? address.lat : lat,
+      lng: address.lng ? address.lng : lng,
+      address: address.formatted_address ? address.formatted_address : address,
+      suburb: newSuburb,
+    }
+
+    const formData = new FormData()
+    for (let key in newItemDetails) {
+      if (key === 'newImages') {
+        newImages.forEach((item) => formData.append('newImages', item.raw))
+        continue
+      }
+      formData.append(key, newItemDetails[key])
+    }
+    
+    Instance.put('/items/update', formData)
+    .then((response) => {
+      console.log(response)
+      if (response.status === 200) history.push(`/item/${itemId}`)
+    })
+    .catch((error) => {
+      console.log(error.response)
+    })
+  }
+
+
   return (
     <PageWrapper>
       <Banner
@@ -232,13 +258,13 @@ function EditItemPage(props) {
         button={"Apply Changes"}
         buttonClick={() => applyChanges()}
       />
-      {loading ? <div className="ItemPage__Loading__Container"><CircularProgress size={75} /></div>
-
-
-        :
-        <div className="ItemMainWrapper">
-          <div className="ItemInfoWrapper">
-
+      {loading ? (
+        <div className="ItemPage__Loading__Container">
+          <CircularProgress size={75} />
+        </div>
+      ) : (
+        <div className="EditItemMainWrapper">
+          <div className="EditItemInfoWrapper">
             {/* Div for Item Details */}
             <div className="RegistrationWrapper">
               <div
@@ -323,7 +349,9 @@ function EditItemPage(props) {
                             step="any"
                             defaultValue={discount}
                             className="LoginInput"
-                            onBlur={(e) => setDiscount(parseInt(e.target.value))}
+                            onBlur={(e) =>
+                              setDiscount(parseInt(e.target.value))
+                            }
                           />
                         </div>
                         <div
@@ -340,19 +368,21 @@ function EditItemPage(props) {
                   </div>
                 </Fade>
               </div>
-              {/* TODO  */}
-              <div className="LoginMain LoginMainNoMarg" style={{ width: "100%" }}>
-                <MapsAutocomplete setAddress={setAddress} defaultLocation={address} defaultLat={lat} defaultLng={lng} />
+              <div
+                className="LoginMain LoginMainNoMarg"
+                style={{ width: "100%" }}
+              >
+                <MapsAutocomplete
+                  setAddress={setAddress}
+                  defaultLocation={address}
+                  defaultLat={lat}
+                  defaultLng={lng}
+                />
               </div>
-
             </div>
           </div>
 
-          <div className="ItemPicturesWrapper">
-            {/* <BorrowCancelled />
-          <BorrowFailed />
-          <BorrowerRater /> */}
-            {/* Div for Pictures from the database */}
+          <div className="EditItemPicturesWrapper">
             <div
               className="LoginMain"
               style={{ width: "100%", marginTop: "0.5%" }}
@@ -361,7 +391,10 @@ function EditItemPage(props) {
               <div className="PostItem__ItemPictures__Container">
                 {pictures.map((picture, index) => {
                   return (
-                    <div className="PostItem__ItemPictures__Preview" key={index}>
+                    <div
+                      className="PostItem__ItemPictures__Preview"
+                      key={index}
+                    >
                       <IconButton
                         aria-label="delete"
                         className={classes.buttonDelete}
@@ -411,11 +444,14 @@ function EditItemPage(props) {
               </div>
             </div>
             {/* Div for Item Delivery and Pickup */}
-            <div className="LoginMain LoginMainNoMarg" style={{ width: "100%" }}>
+            <div
+              className="LoginMain LoginMainNoMarg"
+              style={{ width: "100%" }}
+            >
               <div className="LoginHeader">Item Delivery & Pickup</div>
               <div className="LoginText">
-                You can provide an optional delivery service of your item to help
-                your borrowers out.
+                You can provide an optional delivery service of your item to
+                help your borrowers out.
               </div>
 
               <div className="LoginHeader">Price ($)</div>
@@ -429,7 +465,10 @@ function EditItemPage(props) {
               />
             </div>
             {/* Div for Availability Option and Deletion of Item */}
-            <div className="LoginMain LoginMainNoMarg" style={{ width: "100%" }}>
+            <div
+              className="LoginMain LoginMainNoMarg"
+              style={{ width: "100%" }}
+            >
               <div className="LoginHeader">Other Options</div>
               <div className="ItemButtons">
                 <button
@@ -443,14 +482,15 @@ function EditItemPage(props) {
                   open={editAvailabilityOpen}
                   onClose={handleCloseEditAvailability}
                 >
-                  <DialogTitle>Update {title} Availability</DialogTitle>
                   <DialogContent>
                     <DialogContentText>
                       <Availability
                         setAvailability={setAvailable}
                         addEditButtons
                         getAvailability={available}
-                        handleDiscardChanges={() => handleCloseEditAvailability()}
+                        handleDiscardChanges={() =>
+                          handleCloseEditAvailability()
+                        }
                       />
                     </DialogContentText>
                   </DialogContent>
@@ -489,8 +529,7 @@ function EditItemPage(props) {
             </div>
           </div>
         </div>
-      }
-
+      )}
     </PageWrapper>
   );
 }

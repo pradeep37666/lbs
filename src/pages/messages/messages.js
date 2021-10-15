@@ -6,14 +6,17 @@ import { CometChat } from '@cometchat-pro/chat'
 import UserCard from '../../components/messaging/userCard/UserCard'
 import ActiveChat from '../../components/messaging/activeChat/ActiveChat'
 import { Facebook } from 'react-content-loader'
-import { ClickAwayListener } from '@material-ui/core'
+import { CircularProgress, ClickAwayListener } from '@material-ui/core'
 import useGlobalState from '../../util/useGlobalState'
 import Instance from '../../util/axios'
 import { isMobile } from 'react-device-detect'
+import NoContent from '../../components/NoContent/NoContent'
+import { useHistory } from 'react-router'
 
 export default function Messages() {
     const { state } = useGlobalState()
     const { user } = state
+    const history = useHistory()
     const [accountContent, setAccountContent] = useState('Messages')
     const [messages, setMessages] = useState(null)
     const [isLoading, setIsLoading] = useState(true)
@@ -45,7 +48,6 @@ export default function Messages() {
            let conversationRequest = new CometChat.ConversationsRequestBuilder().setLimit(10).build()
             const conversations = await conversationRequest.fetchNext()
             setConversations(conversations) 
-            console.log(conversations)
             setIsLoading(false)
         } catch(e) {
             console.log(e)
@@ -92,36 +94,44 @@ export default function Messages() {
         })
     }
 
-    const renderSkeletons = () => {
-        const array = Array(5).fill()
-        return array.map((skeleton, index) => <Facebook key={index} style={{ height: 110}}  />)
-    }
     return (
         <PageWrapper>
             <ClickAwayListener onClickAway={() => setPopupOpen(false)}>
             <div className="UserShedWrapper">
-            { !isMobile && <UserShedNav setAccountContent={setAccountContent} accountContent={accountContent}/>}
-            <div className="ContentContainer">
-                <div className="UserCardContainer">
+                { !isMobile && <UserShedNav setAccountContent={setAccountContent} accountContent={accountContent}/>}
+                <div className="ContentContainer" style={ isLoading ? { display: 'flex', justifyContent: 'center', alignItems: 'center'} : null}>
                     { isLoading ? (
-                        renderSkeletons()
-                    ):(
-                        <>
-                            <span className="MessagesHeading">Messages</span>
-                            {renderCards()}
-                        </>   
-                    )}
-                </div>
-                { activeChatUser && 
-                <ActiveChat 
-                activeChatUser={activeChatUser} 
-                setActiveChatUser={setActiveChatUser}
-                messages={messages} 
-                setMessages={setMessages}
-                getConversations={getConversations}
-                />}
+                        <CircularProgress 
+                        color="inherit"
+                        />
+                    ) : (
+                        conversations.length === 0 ? (
+                            <NoContent 
+                            header="No Active Conversations"
+                            text="You currently do not have any active conversations, borrow or lend an item to start messaging other users"
+                            buttonText="Search for an item"
+                            onButtonClick={() => history.push('/searchf')}
+                            />
+                        ) : (
+                            <>
+                                <div className="UserCardContainer">
+                                    <span className="MessagesHeading">Messages</span>
+                                    {renderCards()}
+                                </div>
+                                { activeChatUser && 
+                                <ActiveChat 
+                                activeChatUser={activeChatUser} 
+                                setActiveChatUser={setActiveChatUser}
+                                messages={messages} 
+                                setMessages={setMessages}
+                                getConversations={getConversations}
+                                />}
+                            </>
+                        )
+                       
+                        )}
 
-             </div>
+                </div>
 
              </div>
              </ClickAwayListener>

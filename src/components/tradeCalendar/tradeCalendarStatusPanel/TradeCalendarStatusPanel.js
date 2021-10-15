@@ -11,14 +11,15 @@ import StatusFive from './StatusFive'
 import Pickup from './Pickup'
 import getDateObject from '../../../util/getDateObject'
 import StatusSix from './StatusSix'
+import StatusSeven from './StatusSeven'
 import DropOff from './DropOff'
 
-export default function TradeCalendarStatusPanel({ booking, userDetails, getBookings }) {
+export default function TradeCalendarStatusPanel({ booking, userDetails, getBookings, setReportModalVisible, setReviewModalVisible }) {
     const [status, setStatus] = useState()
     const { state } = useGlobalState()
     const { user } = state
     const isOwner = booking.io_id === user.id
-    console.log(booking)
+
     useEffect(() => {
         setStatus(booking.status)
     },[booking])
@@ -26,6 +27,9 @@ export default function TradeCalendarStatusPanel({ booking, userDetails, getBook
     const renderStatusPanel = () => {
         if(status === 0){
             return <StatusZero updateBookingStatus={updateBookingStatus} booking={booking}/>
+        }
+        if( status === 7){
+            return <StatusSeven booking={booking} isOwner={isOwner} />
         }
         const dropOff = isDropoffTime()
         if(dropOff && status >= 3){
@@ -35,10 +39,12 @@ export default function TradeCalendarStatusPanel({ booking, userDetails, getBook
             updateBookingStatus={updateBookingStatus}
             isOwner={isOwner}
             userDetails={userDetails}
+            setReviewModalVisible={setReviewModalVisible}
+            setReportModalVisible={setReportModalVisible}
             />)
         }
         const isHourBefore = isPickupTime()
-        if(isHourBefore && status === 3) return <Pickup isOwner={isOwner} updateBookingStatus={updateBookingStatus} booking={booking} userDetails={userDetails}/>
+        if(isHourBefore && status === 3) return <Pickup isOwner={isOwner} updateBookingStatus={updateBookingStatus} booking={booking} userDetails={userDetails} setReportModalVisible={setReportModalVisible}/>
         switch(status){
             case 1 : {
                 return <StatusOne isOwner={isOwner} updateBookingStatus={updateBookingStatus} booking={booking} approveBooking={approveBooking}/>
@@ -70,12 +76,12 @@ export default function TradeCalendarStatusPanel({ booking, userDetails, getBook
         if(startSlot?.morning){
             startSlot.date.setHours(8, 0, 0) 
         } else{
-            startSlot.date.setHours(14, 0, 0) 
+            startSlot.date.setHours(13, 0, 0) 
         }
         const now = new Date()
         const oneHour = 60 * 60 * 1000
 
-        if(startSlot.date.getTime() - oneHour < now.getTime()){
+        if((startSlot.date.getTime() - oneHour) < now.getTime()){
             return true
         }
         return false

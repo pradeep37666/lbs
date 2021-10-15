@@ -12,7 +12,7 @@ export default function bannerText(props) {
       </div>
       {props.button ? (
         <button
-          class="editButton"
+          className="editButton"
           style={{ width: "15%", marginLeft: "30%" }}
           onClick={() => {
             props.buttonClick();

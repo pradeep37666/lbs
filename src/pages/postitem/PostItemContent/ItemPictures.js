@@ -85,9 +85,9 @@ export default function ItemPictures(props) {
         </div>
 
         <div className="PostItem__ItemPictures__Container">
-          {props.pictures.map((picture) => {
+          {props.pictures.map((picture, index) => {
             return (
-              <div className="PostItem__ItemPictures__Preview">
+              <div className="PostItem__ItemPictures__Preview" key={index}>
                 <IconButton
                   aria-label="delete"
                   className={classes.buttonDelete}

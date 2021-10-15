@@ -8,9 +8,9 @@ import RatingSelect from "../../components/ratingSelect/ratingSelect.js";
 import SearchIcon from "../../assets/Icons/SearchIcon.svg";
 import ItemCard from "../../components/itemCard/itemCard";
 import WateringCanIcon from "../../assets/Icons/GardeningIcon.svg";
-import { ReactComponent as HammerIcon } from "../../assets/Icons/HammerIcon.svg";
-import { ReactComponent as CarIcon } from "../../assets/Icons/AutomotiveIcon.svg";
-import { ReactComponent as DrillIcon } from "../../assets/Icons/DrillIcon.svg";
+import HammerIcon from "../../assets/Icons/HammerIcon.js";
+import CarIcon from "../../assets/Icons/CarIcon.js";
+import DrillIcon from "../../assets/Icons/DrillIcon.js";
 import Instance from "../../util/axios";
 import { useHistory } from "react-router";
 
@@ -28,6 +28,8 @@ export default function Home() {
   const [priceMax, setPriceMax] = useState("");
   const [rating, setRating] = useState("");
   const [delivery, setDelivery] = useState("");
+  const [lat, setLat] = useState('')
+  const [lng, setLng] = useState('')
 
   const numItems = 8;
 
@@ -41,19 +43,19 @@ export default function Home() {
     }
     if (category) string = string.concat("&category=" + category)
     if (priceMax) string = string.concat("&maxPrice=" + priceMax)
+    if (location) string = string.concat("&location=" + location)
     if (priceMin) string = string.concat("&minPrice=" + priceMin)
     if (rating) string = string.concat("&rating=" + rating)
-    if (delivery) {
+    if (delivery === '') {}
+    else if (delivery === 'Available') {
       string = string.concat("&delivery=1")
     } else {
       string = string.concat("&delivery=0")
     }
-    console.log(string)
     history.push(`/search/${string}`)
   }
 
   const handleSubmit = () => {
-    console.log(keywords, category, location, priceMin, priceMax, rating, delivery)
     formatSearchParams();
   };
 
@@ -82,14 +84,6 @@ export default function Home() {
       });
   }, []);
 
-  // useEffect(() => {
-  //   if (searchParams) {
-  //     history.push(`/search/${searchParams}`);
-  //   } else if (searchParams === "") {
-  //     history.push(`/search/`);
-  //   }
-  // }, [searchParams]);
-
   return (
     <PageWrapper>
 
@@ -107,7 +101,7 @@ export default function Home() {
                 <CategorySelect width="100%" label="Category" setCategory={setCategory}/>
               </div>
               <div style={{ width: '25%', minWidth: '9rem'}}>
-                <TextInput width="100%" label="Location / Postcode" fontSize="20px" onChange={(e) => setLocation(e.target.value)}/>
+                <TextInput width="100%" label="Location" fontSize="20px" onChange={(e) => setLocation(e.target.value)}/>
               </div>
               
             </div>
@@ -177,13 +171,13 @@ export default function Home() {
           className="CategoryImageDiv Automotive">
             <div className="CategoryTitle">Automotive</div>
             <div className="CategoryItemTotal">21,056 Items</div>
-            <CarIcon fill="#FFF" className="CategoryIcon" style={{ height: '22px'}} />
+            <CarIcon fill="#fff"/>
           </div>
 
           <div 
           onClick={() => history.push('/search?category=mowing')}
           className="CategoryImageDiv Gardening">
-            <div className="CategoryTitle">Gardening</div>
+            <div className="CategoryTitle">Mowing</div>
             <div className="CategoryItemTotal">16,702 Items</div>
             <img src={WateringCanIcon} alt="" className="CategoryIcon" style={{ height: '28px'}} />
           </div>
@@ -193,7 +187,7 @@ export default function Home() {
           className="CategoryImageDiv HandTools">
             <div className="CategoryTitle">Hand Tools</div>
             <div className="CategoryItemTotal">12,334 Items</div>
-            <HammerIcon fill="#FFF" className="CategoryIcon"/>
+            <HammerIcon fill="#fff" className="CategoryIcon"/>
           </div>
 
           <div 
@@ -201,7 +195,7 @@ export default function Home() {
           className="CategoryImageDiv PowerTools">
             <div className="CategoryTitle">Power Tools</div>
             <div className="CategoryItemTotal">4,586 Items</div>
-            <DrillIcon fill="#FFF" className="CategoryIcon"/>
+            <DrillIcon  fill="#fff" />
           </div>
 
         </div>
