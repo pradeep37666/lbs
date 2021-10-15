@@ -41,6 +41,7 @@
   display: flex;
   align-items: center;
   width: 100%;
+  margin-bottom: .5em;
 }
 
 .ProfilePictureCircle {
@@ -122,10 +123,37 @@
 
 .ValidationTextShow {
   opacity: 100% !important;
-  /* transition: 0.6s; */
 }
 
 .LoginInputValidationContainer {
   position: relative;
   width: 100%;
+}
+
+.Register__DOB__Container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.DOBInput {
+  width: 30%;
+  padding: 0.7em;
+  border-radius: 10px;
+  border: 1px solid #ac172c;
+  margin-bottom: 1em;
+  outline: none;
+  font-family: "DMSans", sans-serif;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.DOBHeader {
+  width: 30%;
+  margin-bottom: .5em;
+  margin-left: .5em;
+  color: #33384f;
+  font-size: 14px;
+  font-weight: bold;
 }

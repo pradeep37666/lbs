@@ -45,7 +45,7 @@ export default function PostItem() {
     const createItem = async () => {
         // api call to post the images to the server, should return a key for each image and then we'll use that key in the items/save api
         let suburb
-        address.terms ? suburb = getSuburb(address.terms) : suburb = user.suburb
+        address.address_components ? suburb = getSuburb(address.address_components) : suburb = user.suburb
 
         const itemDetails = {
             title: title,
@@ -58,7 +58,7 @@ export default function PostItem() {
             available: availability,
             lat: address.lat ? address.lat : user.lat,
             lng: address.lng ? address.lng : user.lng,
-            address: address.description ? address.description : user.address,
+            address: address.formatted_address ? address.formatted_address : user.address,
             suburb: suburb
         }
         console.log(itemDetails)

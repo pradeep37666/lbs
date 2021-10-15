@@ -70,7 +70,7 @@ export default function TradeCalendarStatusPanel({ booking, userDetails, getBook
         if(startSlot?.morning){
             startSlot.date.setHours(8, 0, 0) 
         } else{
-            startSlot.date.setHours(14, 0, 0) 
+            startSlot.date.setHours(13, 0, 0) 
         }
         const now = new Date()
         const oneHour = 60 * 60 * 1000

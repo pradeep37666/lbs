@@ -12,7 +12,6 @@ import Calendar from './../../assets/Icons/HangingCalendar.svg';
 import Geocode from 'react-geocode'
 
 import { ReactComponent as StarFilled } from './../../assets/Icons/StarFilled.svg';
-import { Link } from 'react-router-dom';
 import { StarOutline } from '@material-ui/icons';
 
 import GoogleMapReact from 'google-map-react';

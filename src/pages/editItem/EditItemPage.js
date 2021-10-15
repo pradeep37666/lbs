@@ -50,6 +50,9 @@ function EditItemPage(props) {
   const [open, setOpen] = useState(false);
   const [editAvailabilityOpen, setEditAvailabilityOpen] = useState(false);
 
+  const [deletedImages, setDeletedImages] = useState([])
+  const [newImages, setNewImages] = useState([])
+
   const handleOpenEditAvailability = () => {
     setEditAvailabilityOpen(true);
   };
@@ -63,13 +66,6 @@ function EditItemPage(props) {
   const handleClose = () => {
     setOpen(false);
   };
-
-  //--------------------------------------------------------------//
-
-  let [newImage, setNewImage] = useState([]);
-  let [updatedImage, setUpdatedImage] = useState([]);
-
-  //--------------------------------------------------------------//
 
   const queryString = require("query-string");
   const params = useParams();
@@ -97,7 +93,7 @@ function EditItemPage(props) {
         setLng(response.data.item.lng);
         setAvailable(response.data.item.available);
 
-        setUpdatedImage(response.data.item.pictures.split(","));
+        // setUpdatedImage(response.data.item.pictures.split(","));
         setPictures(structurePictures(response.data.item.pictures.split(",")));
 
         setLoading(false);
@@ -176,7 +172,12 @@ function EditItemPage(props) {
           raw: e.target.files[0],
           id: findNextID(),
         },
-      ];
+      ]
+      setNewImages(newImages => [...newImages, {
+          preview: URL.createObjectURL(e.target.files[0]),
+          raw: e.target.files[0],
+          id: findNextID(),
+      }])
       setPictures(updatedPictures);
     }
   };
@@ -199,6 +200,9 @@ function EditItemPage(props) {
 
       if (pic.id !== id) {
         newPictures.push(pic);
+      } else {
+        if (pic.url) setDeletedImages(deletedImages => [...deletedImages, pic.url])
+        else setNewImages(newImages.filter(({id}) => id !== pic.id))
       }
     }
     setPictures(newPictures);
@@ -207,22 +211,35 @@ function EditItemPage(props) {
   const applyChanges = () => {
 
     let newSuburb
-    address.terms ? newSuburb = getSuburb(address.terms) : newSuburb = suburb
-    
-    Instance.put('/items/update', {
+    address.address_components ? newSuburb = getSuburb(address.address_components) : newSuburb = suburb
+
+    const newItemDetails = {
       i_id: itemId,
       title: title,
       category: category,
       description: description,
+      newImages: newImages,
+      deletedImages: deletedImages.join(),
       price: price,
       deliveryPrice: deliveryPrice,
       discount: discount,
       available: available,
       lat: address.lat ? address.lat : lat,
       lng: address.lng ? address.lng : lng,
-      address: address.description ? address.description : address,
-      suburb: newSuburb 
-    })
+      address: address.formatted_address ? address.formatted_address : address,
+      suburb: newSuburb,
+    }
+
+    const formData = new FormData()
+    for (let key in newItemDetails) {
+      if (key === 'newImages') {
+        newImages.forEach((item) => formData.append('newImages', item.raw))
+        continue
+      }
+      formData.append(key, newItemDetails[key])
+    }
+    
+    Instance.put('/items/update', formData)
     .then((response) => {
       console.log(response)
       if (response.status === 200) history.push(`/item/${itemId}`)
