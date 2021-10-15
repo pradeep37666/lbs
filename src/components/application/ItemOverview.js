@@ -141,7 +141,8 @@ export default function ItemOverview() {
                 startDate: startIndex,
                 endDate: endIndex,
                 year: currentYear,
-                address: address ? address : user.address
+                address: address ? address : user.address,
+                price: calculatePrice()
             })
             sendEnquiry(item)
             history.push({ 
