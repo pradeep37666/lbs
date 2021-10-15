@@ -23,15 +23,17 @@ import {
 import reducer from './util/reducer'
 import instance from './util/axios';
 import { CometChat } from '@cometchat-pro/chat'
+import { Elements } from '@stripe/react-stripe-js';
+import { loadStripe } from '@stripe/stripe-js';
 import EditItemPage from './pages/editItem/EditItemPage';
 
 export const GlobalStateContext = React.createContext()
 
-// Can populate this inital state object with whatever we like
 const initialState = {}
 
-function App() {
+const stripe = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY)
 
+function App() {
   const [state, dispatch] = useReducer(reducer, initialState)
   const [loadingUser, setLoadingUser] = useState(true)
   const { user } = state
@@ -53,7 +55,6 @@ function App() {
   }, [])
 
   const setupCometChat = () => {
-    console.log('a')
     const appId = process.env.REACT_APP_CHAT_APP_ID
     let cometChatSettings = new CometChat.AppSettingsBuilder().subscribePresenceForAllUsers().setRegion('us').build();
     console.log('settings', cometChatSettings)
@@ -66,14 +67,7 @@ function App() {
         console.log("Initialization failed with error:", error);
       }
     );
-    // const user = new CometChat.User('d5953d29-7b59-4ae7-b1e6-038b0adc13e2')
-
-    // user.setName('George Hawkins')
-    // CometChat.createUser(user, process.env.REACT_APP_CHAT_AUTH_KEY)
-    // .then(user => console.log("created comet chat user", user))
-    // .catch(err => console.log(err))
   }
-
 
   function AuthRoute({ component: Component, ...rest }) {
     return (
@@ -112,41 +106,40 @@ function App() {
   }
 
   return (
-    <GlobalStateContext.Provider value={{ state, dispatch }}>
-      {loadingUser ? '' : 
-      
-      <Router>
-        <ScrollToTop>
-          <Route exact path="/" component={Home} />
-          
-          <Route exact path="/item/:itemId" component={ItemPage} />
-          <Route exact path="/item/edit/:itemId" component={EditItemPage} />
-          <Route exact path="/search/:searchParams?" component={SearchPage} />
-          
+    <Elements stripe={stripe}>
+      <GlobalStateContext.Provider value={{ state, dispatch }}>
+        {loadingUser ? '' : 
+        
+        <Router>
+          <ScrollToTop>
+            <Route exact path="/" component={Home} />
+            <Route exact path="/item/:itemId" component={ItemPage} />
+            <Route exact path="/search/:searchParams?" component={SearchPage} />
 
-          <AuthRoute path="/user/trades" component={TradesPage} />
-          <AuthRoute path="/user/messages" component={MessagesPage} />
-          <AuthRoute path="/user/your_shed" component={YourshedPage} />
-          <AuthRoute path="/user/favourites" component={FavouritesPage} />
-          <AuthRoute path="/user/account" component={AccountPage} />
-          <AuthRoute path="/user/update_password" component={UpdatePassword} />
-          {/* if the user is already a lender they should be unable to access the upgrade to lender page */}
-          <RedirectBecomeLender path="/user/upgrade_to_lender" component={UpgradeLender} />
-          <AuthRoute path="/item/:itemId/application" component={Application} />
+            <AuthRoute path="/user/trades" component={TradesPage} />
+            <AuthRoute path="/user/messages" component={MessagesPage} />
+            <AuthRoute path="/user/your_shed" component={YourshedPage} />
+            <AuthRoute path="/user/favourites" component={FavouritesPage} />
+            <AuthRoute path="/user/account" component={AccountPage} />
+            <AuthRoute path="/user/update_password" component={UpdatePassword} />
+            {/* if the user is already a lender they should be unable to access the upgrade to lender page */}
+            <RedirectBecomeLender path="/user/upgrade_to_lender" component={UpgradeLender} />
+            <AuthRoute path="/item/:itemId/application" component={Application} />
 
-          {/* post an item */}
-          <AuthRoute path="/postitem" component={PostItem}/>
+            {/* post an item */}
+            <AuthRoute path="/postitem" component={PostItem}/>
 
-          {/* Routes for login/register should redirect to user page if user is logged in */}
-          <AuthRedirectRoute path="/login" component={LoginPage} />
-          <AuthRedirectRoute path="/register" component={RegisterPage} />
-        </ScrollToTop>
+            {/* Routes for login/register should redirect to user page if user is logged in */}
+            <AuthRedirectRoute path="/login" component={LoginPage} />
+            <AuthRedirectRoute path="/register" component={RegisterPage} />
+          </ScrollToTop>
 
-      </Router>
+        </Router>
 
-      }
-      
-    </GlobalStateContext.Provider>
+        }
+        
+      </GlobalStateContext.Provider>
+    </Elements>
   );
 }
 

@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {ReactComponent as Logo} from './../../assets/Logos/LogoRed.svg';
 import ValidationPopup from '../ValidationPopup/ValidationPopup';
 import { handleCardName, handleCardNumber, handleExpiry, handleCcv, handleAccNumber, handleBsb } from '../../util/UserValidation'
+import { CardNumberElement, CardCvcElement, CardExpiryElement, useStripe, useElements } from '@stripe/react-stripe-js';
+import { CircularProgress } from '@material-ui/core';
 
 export default function BankDetails(props) {
-
     const [nameValidation, setNameValidation] = useState("")
     const [cardNumberValidation, setCardNumberValidation] = useState("")
     const [expiryValidation, setExpiryValidation] = useState("")
@@ -12,6 +13,22 @@ export default function BankDetails(props) {
 
     const [accNumberValidation, setAccNumberValidation] = useState("")
     const [bsbValidation, setBsbValidation] = useState("")
+
+
+    const [isLoading, setIsLoading] = useState(false)
+    const [cardNumber, setCardNumber] = useState()
+    const [cardExpiry, setCardExpiry] = useState()
+    const [cardCvc, setCardCvc] = useState()
+    const [cardName, setCardName] = useState()
+    const [cardNameError, setCardNameError] = useState(false)
+
+    const stripe = useStripe()
+    const elements = useElements()
+
+    useEffect(() => {
+        if(!cardName) return
+        setCardNameError(false)
+    }, [cardName])
 
     const showValidation = (field) => {
         switch (field) {
@@ -32,57 +49,115 @@ export default function BankDetails(props) {
         }
     }
 
+    const CARD_ELEMENT_OPTIONS = {
+        style: {
+          base: {
+            color: "#32325d",
+            fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
+            fontSmoothing: "antialiased",
+            fontSize: "22px",
+            "::placeholder": {
+              color: "#aab7c4",
+            },
+          },
+          invalid: {
+            color: "#fa755a",
+            iconColor: "#fa755a",
+          },
+        },
+      };
+
+      const createPaymentMethod = async () => {
+        if(!cardName) {
+            setCardNameError(true) 
+            return
+        }
+        setIsLoading(true)
+        try{
+            const cardNumber = elements.getElement(CardNumberElement)
+            const {error, paymentMethod} = await stripe.createPaymentMethod({
+                type: 'card',
+                card: cardNumber,
+                billing_details: {
+                    name: cardName
+                }
+            })
+            if(error) return
+            setIsLoading(false)
+            props.setPaymentMethod(paymentMethod)
+            props.handleNextPage('Terms & Conditions')
+        } catch(err) {
+            setIsLoading(false)
+        }
+        
+        
+    }
+
     return (
         <div className="RegistrationWrapper">
                 <div className="LoginMain">
-                <Logo height='50px' width='50px' style={{marginBottom: '.5em'}}/>
+                    <Logo height='50px' width='50px' style={{marginBottom: '.5em'}}/>
 
-                <div className="LoginHeader">Payment Details</div>
-                <div className="LoginText">If you would like to share your shed with users, Little big shed will need to know your payment and banking details to allow you to send and receive money for Little Big Shed trades.
-                </div>
+                    <div className="LoginHeader">Payment Details</div>
+                    <div className="LoginText">If you would like to share your shed with users, Little big shed will need to know your payment and banking details to allow you to send and receive money for Little Big Shed trades.</div>
 
-                <div className="LoginText">However if you only want to borrow items from other users, we will only need your card details.</div>
+                    <div className="LoginText">However if you only want to borrow items from other users, we will only need your card details.</div>
 
                 </div>
 
                 {!props.isUpgrade ? 
-                
+
                 <div className="LoginMain LoginMainNoMarg">
                 <div className="LoginHeader">Card Details</div>
                 <div className="LoginText">We need these details to make a successful trade between 2 parties.</div>
-
                 <div className="LoginHeader LoginHeader--NoMargin">Name on Card</div>
-                <div className="LoginInputValidationContainer">
-                    <input type='text' placeholder='Jane Doe' className="LoginInput" onBlur={(e) => handleCardName(e, props.setCardName, setNameValidation)} />
-                    <div className={`triangleLeft ${showValidation("name") ? '' : 'ValidationTextHide'}`} />
-                   { !showValidation('name') && <ValidationPopup errorText={nameValidation} errorHeader='Invalid Card Name' hide={showValidation("name")}/>}
-                </div>
+            <div className="LoginInputValidationContainer">
+                <input type='text' placeholder='Name on Card' className="LoginInput" onChange={(e) => setCardName(e.target.value)} />
+                <div className={`triangleLeft ${!cardNameError ? '' : 'ValidationTextHide'}`} /> 
+                <ValidationPopup errorText={"Please enter a card name"} errorHeader='Invalid Card Name' hide={!cardNameError} />
+            </div>
 
 
-                <div className="LoginHeader LoginHeader--NoMargin">Number on Card</div>
-                <div className="LoginInputValidationContainer">
-                    <input type='text' placeholder='1234 5678 9010 1112' className="LoginInput" onBlur={(e) => handleCardNumber(e, props.setCardNumber, setCardNumberValidation)}/>
-                    <div className={`triangleLeft ${showValidation("cardNum") ? '' : 'ValidationTextHide'}`} />
-                    { !showValidation('cardNum') && <ValidationPopup errorText={cardNumberValidation} errorHeader='Invalid Card Number' hide={showValidation("cardNum")}/>}
-                </div>
-
+             <div className="LoginHeader LoginHeader--NoMargin">Number on Card</div>
+            <div className="LoginInputValidationContainer">
+                <CardNumberElement 
+                className="LoginInput" 
+                onChange={cardNumberObj => setCardNumber(cardNumberObj)} 
+                options={CARD_ELEMENT_OPTIONS}
+                />
+                <div className={`triangleLeft ${!cardNumber?.error ? '' : 'ValidationTextHide'}`} /> 
+                <ValidationPopup errorText={cardNumber?.error?.message} errorHeader='Invalid Card Number' hide={!cardNumber?.error} />
+            </div>
+            <div className="ExpiryCCVFlex">
+                <div className="LoginHeader">Expiry</div>
+                <div className="LoginHeader">CCV</div>
+            </div>
+            <div className="LoginInputValidationContainer">
                 <div className="ExpiryCCVFlex">
-                    <div className="LoginHeader">Expiry</div>
-                    <div className="LoginHeader">CCV</div>
+                    <CardExpiryElement
+                    className="LoginInput" 
+                    onChange={cardExpiryObj => setCardExpiry(cardExpiryObj)} 
+                    options={CARD_ELEMENT_OPTIONS}
+                    />
+                    <CardCvcElement
+                    className="LoginInput" 
+                    onChange={cardCvcObj => setCardCvc(cardCvcObj)} 
+                    options={CARD_ELEMENT_OPTIONS}
+                    />
+                    
                 </div>
-                <div className="LoginInputValidationContainer">
-                    <div className="ExpiryCCVFlex">
-                        <input type='text' placeholder='MM/YY' className="LoginInput" style={{marginRight: '.5em'}} onBlur={(e) => handleExpiry(e, props.setExpiry, setExpiryValidation)} />
-                        <input type='text' placeholder='000' className="LoginInput" onBlur={(e) => handleCcv(e, props.setCcv, setCcvValidation)}/>
-                    </div>
-                    <div className={`triangleLeft ${showValidation("expiry") ? '' : 'ValidationTextHide'}`} />
-                    { !showValidation('expiry') && <ValidationPopup errorText={expiryValidation} errorHeader='Invalid Expiry Date' hide={showValidation("expiry")}/>}
-                    <div className={`triangleLeft ${showValidation("ccv") ? '' : 'ValidationTextHide'}`} />
-                    { !showValidation('ccv') && <ValidationPopup errorText={ccvValidation} errorHeader='Invalid ccv' hide={showValidation("ccv")}/>}
-                </div>
-                {!props.lender ?
-                <button className={`LoginFormButton ${!props.validated ? 'ButtonDisabled' : ''}`} disabled={!props.validated} onClick={() => props.handleNextPage('Terms & Conditions')}>Next</button>
-                : ''
+                <div className={`triangleLeft ${!cardExpiry?.error ? '' : 'ValidationTextHide'}`} />
+                <ValidationPopup errorText={cardExpiry?.error?.message} errorHeader='Invalid Expiry Date' hide={!cardExpiry?.error} />
+                <div className={`triangleLeft ${!cardCvc?.error ? '' : 'ValidationTextHide'}`} />
+                <ValidationPopup errorText={cardCvc?.error?.message} errorHeader='Invalid CCV' hide={!cardCvc?.error} />
+
+            </div>
+                {!props.lender &&
+                    isLoading ? (
+                        <CircularProgress color="inherit" />
+                    ) : (
+                        <button className={`LoginFormButton ${!props.validated ? 'ButtonDisabled' : ''}`} disabled={!props.validated} onClick={createPaymentMethod}>Next</button>
+                    )
                 }
                 </div>
                 
@@ -113,8 +188,16 @@ export default function BankDetails(props) {
                     <div className={`triangleLeft ${showValidation("bsb") ? '' : 'ValidationTextHide'}`} />
                     <ValidationPopup errorText={bsbValidation} errorHeader='Invalid BSB' hide={showValidation("bsb")}/>
                 </div>
-                {/* on this button we need to check the stripe details first (during register but not upgrade to lender), if we're all good then can move to next page */}
-                <button className={`LoginFormButton ${!props.validated ? 'ButtonDisabled' : ''}`} disabled={!props.validated} onClick={() => props.handleNextPage('Location Details')}>Next</button>
+                {   isLoading ? (
+                    <CircularProgress color="inherit" />
+                ) : (
+                    <button 
+                    className={`LoginFormButton ${!props.validated ? 'ButtonDisabled' : ''}`} 
+                    disabled={!props.validated} 
+                    onClick={props.handleNextPage('Location Details')}>
+                        Next
+                    </button>
+                )}
                 </div>
                 : ''
                 }

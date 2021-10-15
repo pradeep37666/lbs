@@ -14,10 +14,12 @@ import { useHistory } from 'react-router-dom';
 import useGlobalState from '../../util/useGlobalState';
 import { CometChat } from '@cometchat-pro/chat';
 import getSuburb from '../../util/getSuburb';
+import { useStripe } from '@stripe/react-stripe-js';
+import { CircularProgress } from '@material-ui/core';
 
 export default function Register() {
     const { dispatch } = useGlobalState()
-
+    const stripe = useStripe()
     const [fullName, setFullName] = useState("")
     const [email, setEmail] = useState("")
     const [phoneNumber, setPhoneNumber] = useState("")
@@ -25,12 +27,9 @@ export default function Register() {
     const [confirmPassword, setConfirmPassword] = useState("")
     const [lender, setLender] = useState(false)
     const [image, setImage] = useState()
+   
 
-    // Stripe details
-    const [cardName, setCardName] = useState("")
-    const [cardNumber, setCardNumber] = useState("")
-    const [expiry, setExpiry] = useState("")
-    const [ccv, setCcv] = useState("")
+    const [paymentMethod, setPaymentMethod] = useState()
 
     const [accNumber, setAccNumber] = useState("")
     const [bsb, setBsb] = useState("")
@@ -74,25 +73,45 @@ export default function Register() {
         Object.keys(userDetails).forEach(key => {
             formData.append(key, userDetails[key])
         })
-        
-        try {
-            const response = await Instance.post('/auth/signUp', formData)
-            console.log(response)
-            if(response.status === 201) {
-                dispatch({ type: 'setUser', data: response.data.user})
-                registerCometChat(response.data.user)
-                localStorage.setItem('token', response.data.token.accessToken)
+        try{
+            const { data, status } = await Instance.post('/auth/signUp', formData)
+            if(status === 201) {
+                dispatch({ type: 'setUser', data: data.user})
+                localStorage.setItem('token', data.token.accessToken)
+                await createStripeCustomer()
+                await saveCard()
+                await registerCometChat(data.user)
+                handleNextPage('Complete!')
             }
         } catch(e) {
-            console.log(e.response)
+            console.log(e.response.data)
             history.push({pathname: '/login'})
             alert("an error occurred during registration, please try again")
         }
         
     }
 
+    const createStripeCustomer = async () => {
+        try{
+            await Instance.get('/stripe/createCustomer')
+        } catch(err) {
+            console.log(err)
+        }
+    }
+
+    const saveCard = async () => {
+        try{
+            await Instance.post('/stripe/addCreditCard', {
+                paymentMethodId: paymentMethod.id
+            })
+            console.log('saved card')
+        } catch(err){
+            console.log(err)
+        }
+        
+    }
+    
     const registerCometChat = async (userObj) => {
-        console.log('in comet chat', userObj)
         const newUser = new CometChat.User(userObj.id)
         newUser.setName(userObj.fullName)
         try{
@@ -124,15 +143,15 @@ export default function Register() {
             case 'Verification':
                 break
             case 'Bank Details':
-                if (!lender) {
-                    if (cardName && cardNumber && expiry && ccv) {
-                        setValidated(true)
-                    } else setValidated(false)
-                } else {
-                    if (cardName && cardNumber && expiry && ccv && accNumber && bsb) {
-                        setValidated(true)
-                    } else setValidated(false)
-                }
+                // if (!lender) {
+                //     if (cardName && cardNumber && expiry && ccv) {
+                //         setValidated(true)
+                //     } else setValidated(false)
+                // } else {
+                //     if (cardName && cardNumber && expiry && ccv && accNumber && bsb) {
+                //         setValidated(true)
+                //     } else setValidated(false)
+                // }
                 break
             case 'Location Details':
                 if (address) {
@@ -154,7 +173,8 @@ export default function Register() {
             default:
                 return '';
         }
-    }, [page, fullName, email, phoneNumber, password, confirmPassword, cardName, cardNumber, expiry, ccv, accNumber, bsb,  lender, address, availability, tc])
+    }, [page, fullName, email, phoneNumber, password, confirmPassword,  accNumber, bsb,  lender, address, , availability, tc])
+    // city, country, state
 
     const getComplete = () => {
         return (
@@ -165,8 +185,10 @@ export default function Register() {
                 <div className="LoginHeader">Account Created</div>
                 <div className="LoginText">You have successfully created your Little Big Shed account and are now ready to start borrowing!</div>
 
-                <button className="LoginFormButton" onClick={() => history.push({pathname: '/user/account'})}>Continue</button>
-
+                
+                    <button className="LoginFormButton" onClick={() => history.push({pathname: '/user/account'})}>
+                        Continue
+                    </button>
                 </div>
             </div>
         )
@@ -201,10 +223,7 @@ export default function Register() {
                 validated={validated}
                 handleNextPage={handleNextPage}
                 lender={lender}
-                setCardName={setCardName}
-                setCardNumber={setCardNumber}
-                setExpiry={setExpiry}
-                setCcv={setCcv}
+                setPaymentMethod={setPaymentMethod}
                 setAccNumber={setAccNumber}
                 setBsb={setBsb}
                 setValidated={setValidated}

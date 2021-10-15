@@ -9,6 +9,7 @@ import EditLocation from './Content/EditLocation'
 import useGlobalState from '../../../util/useGlobalState'
 import { Avatar } from '@material-ui/core'
 import getImage from '../../../util/getImage'
+import { CardElement } from '@stripe/react-stripe-js'
 
 export default function AccountSettings() {
     const { state, dispatch } = useGlobalState()
@@ -50,12 +51,13 @@ export default function AccountSettings() {
 
                 </div>
 
+
                 {/* <div className="AccountSettings__Container">
                     <div className="AccountSettings__Title">Badge Collection</div>
                 </div> */}
 
                 <EditAccountDetails />
-
+                
 
             </div>
 

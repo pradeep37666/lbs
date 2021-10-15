@@ -1,121 +1,259 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useHistory } from 'react-router'
 import Instance from '../../../../util/axios';
 import { handleCardName, handleCardNumber, handleExpiry, handleCcv, handleAccNumber, handleBsb } from '../../../../util/UserValidation'
 import ValidationPopup from '../../../../components/ValidationPopup/ValidationPopup';
 import useGlobalState from '../../../../util/useGlobalState';
+import { CardCvcElement, CardElement, CardExpiryElement, CardNumberElement, useElements, useStripe } from '@stripe/react-stripe-js';
+import { CircularProgress, Typography } from '@material-ui/core';
+import TrashCan from '../../../../assets/Icons/TrashCan';
 
 export default function EditPaymentDetails() {
     const { state, dispatch } = useGlobalState()
     const { user } = state
-
+    const elements = useElements()
+    const stripe = useStripe()
     const history = useHistory()
 
-    const [cardNameValidation, setCardNameValidation] = useState("")
-    const [cardNumberValidation, setCardNumberValidation] = useState("")
-    const [expiryValidation, setExpiryValidaiton] = useState("")
-    const [ccvValidation, setCcvValidation] = useState("")
-
-    const [accNumberValidation, setAccNumberValidation] = useState("")
-    const [bsbValidation, setBsbValidation] = useState("")
-
-    const [cardName, setCardName] = useState()
+    const [isLoading, setIsLoading] = useState(false)
+    const [isCardLoading, setIsCardLoading] = useState(true)
     const [cardNumber, setCardNumber] = useState()
-    const [expiry, setExpiry] = useState()
-    const [ccv, setCcv] = useState()
+    const [cardExpiry, setCardExpiry] = useState()
+    const [cardCvc, setCardCvc] = useState()
+    const [cardName, setCardName] = useState()
+    const [cardNameError, setCardNameError] = useState(false)
+    const [userCard, setUserCard] = useState()
 
     const [accNumber, setAccNumber] = useState(user.account_number)
     const [bsb, setBsb] = useState(user.bsb)
 
-    const showValidation = (field) => {
-        switch (field) {
-            case 'cardName':
-                return (cardNameValidation.length > 0) ? false : true
-            case 'cardNum':
-                return (cardNumberValidation.length > 0 && cardNameValidation.length === 0) ? false : true
-            case 'expiry':
-                return (expiryValidation.length > 0 && cardNameValidation.length === 0 && cardNumberValidation.length === 0) ? false : true
-            case 'ccv':
-                return (ccvValidation.length > 0 && cardNameValidation.length === 0 && cardNumberValidation.length === 0 && expiryValidation.length === 0) ? false : true
-            case 'accNum':
-                return (accNumberValidation.length > 0) ? false : true
-            case 'bsb':
-                return (bsbValidation.length > 0 && accNumberValidation.length === 0) ? false : true
-            default:
+    // useEffect(async () => {
+    //     const res = await Instance.get('/stripe/getCreditCards')
+    //     console.log(res)
+    // })
+    // const showValidation = (field) => {
+    //     switch (field) {
+    //         case 'cardName':
+    //             return (cardNameValidation.length > 0) ? false : true
+    //         case 'cardNum':
+    //             return (cardNumberValidation.length > 0 && cardNameValidation.length === 0) ? false : true
+    //         case 'expiry':
+    //             return (expiryValidation.length > 0 && cardNameValidation.length === 0 && cardNumberValidation.length === 0) ? false : true
+    //         case 'ccv':
+    //             return (ccvValidation.length > 0 && cardNameValidation.length === 0 && cardNumberValidation.length === 0 && expiryValidation.length === 0) ? false : true
+    //         case 'accNum':
+    //             return (accNumberValidation.length > 0) ? false : true
+    //         case 'bsb':
+    //             return (bsbValidation.length > 0 && accNumberValidation.length === 0) ? false : true
+    //         default:
+    //             return
+    //     }
+    // }
+
+    // const updateBankDetails = () => {
+    //     const stripeData = {
+    //         cardName: cardName,
+    //         cardNumber: cardNumber,
+    //         expiry: expiry,
+    //         ccv: ccv
+    //     }
+
+    //     // update stripe details
+    //     // in stripe update make sure refresh (history.go(0)) if we wont be updating the bank details
+
+    //     if (user.bsb) {
+    //         const data = {
+    //             account_number: accNumber ? accNumber : user.account_number,
+    //             bsb: bsb ? bsb : user.bsb
+    //         }
+
+    //         Instance.put('user/update', data)
+    //             .then((response) => {
+    //                 console.log(response)
+    //                 let newData = user
+    //                 newData.account_number = data.account_number
+    //                 newData.bsb = data.bsb
+    //                 dispatch({ type: 'setUser', data: newData })
+    //                 history.go(0)
+    //             })
+    //             .catch((error) => {
+    //                 console.log(error)
+    //             })
+    //     }
+
+    // }
+
+    useEffect(() => {
+        getSavedCard()
+    }, [])
+
+    const getSavedCard = async () => {
+        try{
+            const { data, status } = await Instance.get('/stripe/getCreditCards')
+            const userCard = data.data[0]
+            setUserCard(userCard)
+        } catch(err){
+            console.log(err)
+        } finally { 
+            setIsCardLoading(false)
+        }
+        
+    }
+
+    useEffect(() => {
+        if(!cardName) return
+        setCardNameError(false)
+    }, [cardName])
+
+    const CARD_ELEMENT_OPTIONS = {
+        style: {
+          base: {
+            color: "black",
+            fontFamily: '"DMSans", sans-serif',
+            fontSmoothing: "antialiased",
+            fontSize: "20px",
+            "::placeholder": {
+              color: "#aab7c4",
+            },
+          },
+          invalid: {
+            color: "#fa755a",
+            iconColor: "#fa755a",
+          },
+        },
+      };
+
+    const createPaymentMethod = async () => {
+        if(!cardName) {
+            setCardNameError(true) 
+            return
+        }
+        setIsLoading(true)
+        try{
+            const cardNumber = elements.getElement(CardNumberElement)
+            const { paymentMethod, error } = await stripe.createPaymentMethod({
+                type: 'card',
+                card: cardNumber,
+                billing_details: {
+                    name: cardName
+                }
+            })
+            if(error){
+                setIsLoading(false)
                 return
-        }
-    }
-
-    const updateBankDetails = () => {
-        const stripeData = {
-            cardName: cardName,
-            cardNumber: cardNumber,
-            expiry: expiry,
-            ccv: ccv
-        }
-
-        // update stripe details
-        // in stripe update make sure refresh (history.go(0)) if we wont be updating the bank details
-
-        if (user.bsb) {
-            const data = {
-                account_number: accNumber ? accNumber : user.account_number,
-                bsb: bsb ? bsb : user.bsb
             }
+            const { data, status } = await Instance.post('/stripe/addCreditCard', {
+                paymentMethodId: paymentMethod.id
+            })
+            await getSavedCard()
+        } catch(err) {
 
-            Instance.put('user/update', data)
-                .then((response) => {
-                    console.log(response)
-                    let newData = user
-                    newData.account_number = data.account_number
-                    newData.bsb = data.bsb
-                    dispatch({ type: 'setUser', data: newData })
-                    history.go(0)
-                })
-                .catch((error) => {
-                    console.log(error)
-                })
         }
-
+        setIsLoading(false)
     }
 
+    const deleteCard = async () => {
+        setIsCardLoading(true)
+        try{
+            const { data, status } = await Instance.delete(`/stripe/deleteCreditCard?paymentMethodId=${userCard.id}`)
+            if(status !== 200) return
+            setUserCard(null)
+
+        } catch(err){
+            console.log(err.response)
+        } finally{
+            setIsCardLoading(false)
+        }
+        
+    }
     return (
         <div className="AccountSettings__Container">
             <div className="AccountSettings__Title">Payment Details</div>
-            <div className="AccountSettings__UserName">Card Details</div>
-            <div className="AccountSettings__BodyText">We need these details to make a successful trade between 2 parties.</div>
+            { isCardLoading ? (
+                <CircularProgress color="inherit" />
+                
+            ) : (
+                userCard ? (
+                    <div>
+                        <span>Your preferred payment method. You can update this below</span>
+                        <div className="AccountSettings__SavedCard">
+                            <div style={{ display: 'flex', flexDirection: 'column'}}>
+                                <span>Card</span>
+                                <span>XXXX XXXX XXXX {userCard.card.last4}</span>
+                            </div>
+                            <TrashCan 
+                            onClick={() => deleteCard()}
+                            style={{ position: 'absolute', right: 10, cursor: 'pointer' }}
+                            />
+                        </div>
+                    </div>
+                ) : (
+                        <>
+                        <div className="AccountSettings__UserName">Card Details</div>
+                        <div className="AccountSettings__BodyText">We need these details to make a successful trade between 2 parties.</div>
 
-            {/* pull default values from stripe once setup */}
 
-            <div className="LoginHeader LoginHeader--NoMargin">Name on Card</div>
-            <div className="LoginInputValidationContainer">
-                <input type='text' placeholder='Jane Doe' className="LoginInput" onBlur={(e) => handleCardName(e, setCardName, setCardNameValidation)} />
-                <div className={`triangleLeft ${showValidation("cardName") ? '' : 'ValidationTextHide'}`} />
-                { !showValidation('cardName') && <ValidationPopup errorText={cardNameValidation} errorHeader='Invalid Card Name' hide={showValidation("cardName")} />}
-            </div>
+                        <div className="LoginHeader LoginHeader--NoMargin">Name on Card</div>
+                        <div className="LoginInputValidationContainer">
+                            <input type='text' placeholder='Name on Card' className="LoginInput" onChange={(e) => setCardName(e.target.value)} />
+                            <div className={`triangleLeft ${!cardNameError ? '' : 'ValidationTextHide'}`} /> 
+                            <ValidationPopup errorText={"Please enter a card name"} errorHeader='Invalid Card Name' hide={!cardNameError} />
+                        </div>
 
 
-            <div className="LoginHeader LoginHeader--NoMargin">Number on Card</div>
-            <div className="LoginInputValidationContainer">
-                <input type='text' placeholder='1234 5678 9010 1112' className="LoginInput" onBlur={(e) => handleCardNumber(e, setCardNumber, setCardNumberValidation)} />
-                <div className={`triangleLeft ${showValidation("cardNum") ? '' : 'ValidationTextHide'}`} />
-                { !showValidation('cardNum') && <ValidationPopup errorText={cardNumberValidation} errorHeader='Invalid Card Number' hide={showValidation("cardNum")} />}
-            </div>
+                        <div className="LoginHeader LoginHeader--NoMargin">Number on Card</div>
+                        <div className="LoginInputValidationContainer">
+                            <CardNumberElement 
+                            className="LoginInput" 
+                            onChange={cardNumberObj => setCardNumber(cardNumberObj)} 
+                            options={CARD_ELEMENT_OPTIONS}
+                            />
+                            <div className={`triangleLeft ${!cardNumber?.error ? '' : 'ValidationTextHide'}`} /> 
+                            <ValidationPopup errorText={cardNumber?.error?.message} errorHeader='Invalid Card Number' hide={!cardNumber?.error} />
+                        </div>
+                        <div className="ExpiryCCVFlex">
+                            <div className="LoginHeader">Expiry</div>
+                            <div className="LoginHeader">CCV</div>
+                        </div>
+                        <div className="LoginInputValidationContainer">
+                            <div className="ExpiryCCVFlex">
+                                <CardExpiryElement
+                                className="LoginInput" 
+                                onChange={cardExpiryObj => setCardExpiry(cardExpiryObj)} 
+                                options={CARD_ELEMENT_OPTIONS}
+                                />
+                                <CardCvcElement
+                                className="LoginInput" 
+                                onChange={cardCvcObj => setCardCvc(cardCvcObj)} 
+                                options={CARD_ELEMENT_OPTIONS}
+                                />
+                                
+                            </div>
+                            <div className={`triangleLeft ${!cardExpiry?.error ? '' : 'ValidationTextHide'}`} />
+                            <ValidationPopup errorText={cardExpiry?.error?.message} errorHeader='Invalid Expiry Date' hide={!cardExpiry?.error} />
+                            <div className={`triangleLeft ${!cardCvc?.error ? '' : 'ValidationTextHide'}`} />
+                            <ValidationPopup errorText={cardCvc?.error?.message} errorHeader='Invalid CCV' hide={!cardCvc?.error} />
 
-            <div className="ExpiryCCVFlex">
-                <div className="LoginHeader">Expiry</div>
-                <div className="LoginHeader">CCV</div>
-            </div>
-            <div className="LoginInputValidationContainer">
-                <div className="ExpiryCCVFlex">
-                    <input type='text' placeholder='MM/YY' className="LoginInput" style={{ marginRight: '.5em' }} onBlur={(e) => handleExpiry(e, setExpiry, setExpiryValidaiton)} />
-                    <input type='text' placeholder='000' className="LoginInput" onBlur={(e) => handleCcv(e, setCcv, setCcvValidation)} />
-                </div>
-                <div className={`triangleLeft ${showValidation("expiry") ? '' : 'ValidationTextHide'}`} />
-                { !showValidation('expiry') && <ValidationPopup errorText={expiryValidation} errorHeader='Invalid Expiry Date' hide={showValidation("expiry")} />}
-                <div className={`triangleLeft ${showValidation("ccv") ? '' : 'ValidationTextHide'}`} />
-                { !showValidation('ccv') && <ValidationPopup errorText={ccvValidation} errorHeader='Invalid ccv' hide={showValidation("ccv")} />}
-            </div>
+                        </div> 
+
+                        <div className="AccountSettings__ButtonFlex">
+                            {   isLoading ? (
+                                <CircularProgress color="inherit" />
+                            ) : (
+                                <button className="LoginFormButton AccountSettings__SaveButton" onClick={() => createPaymentMethod()}>Save Changes</button>
+                            )}
+                        </div> 
+                    </>
+                )
+                
+            )}
+
+
+
+                    
+            
+            {/*
+            
 
             {user.bsb ?
                 <div>
@@ -143,11 +281,10 @@ export default function EditPaymentDetails() {
 
                 </div>
 
-                : ''}
+                : ''} */}
 
-            <div className="AccountSettings__ButtonFlex">
-                <button className="LoginFormButton AccountSettings__SaveButton" onClick={() => updateBankDetails()}>Save Changes</button>
-            </div>
+            
+            
 
         </div>
     )
