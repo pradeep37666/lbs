@@ -1,0 +1,18 @@
+.AvailabilityModalMain {
+  position: -webkit-sticky; /* Safari */
+  position: sticky;
+  top: 15%;
+  background-color: #fff;
+  color: #000;
+  max-height: 700px;
+  overflow-y: scroll;
+  border: 2px solid #9e1e29;
+  border-radius: 15px;
+  width: 50%;
+  max-width: 600px;
+  padding: 3em 2em;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

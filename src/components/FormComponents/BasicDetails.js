@@ -57,9 +57,7 @@ export default function BasicDetails(props) {
                     <div className="LoginInputValidationContainer">
                         <input type='text' placeholder='Jane Doe' className="LoginInput" onBlur={(e) => handleFullName(e, props.setFullName, setNameValidation)}/>
                         {!isMobile && <div className={`triangleLeft ${showValidation("name") ? '' : 'ValidationTextShow'}`} />}
-                        {/* <Fade timeout={500} in={!showValidation('name')} unmountOnExit mountOnEnter> */}
                         { !showValidation("name") && <ValidationPopup errorText={nameValidation} errorHeader='Invalid Full Name' hide={showValidation("name")}/>}
-                        {/* </Fade> */}
                     </div>
                     
 

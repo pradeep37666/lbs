@@ -8,9 +8,9 @@ import RatingSelect from "../../components/ratingSelect/ratingSelect.js";
 import SearchIcon from "../../assets/Icons/SearchIcon.svg";
 import ItemCard from "../../components/itemCard/itemCard";
 import WateringCanIcon from "../../assets/Icons/GardeningIcon.svg";
-import { ReactComponent as HammerIcon } from "../../assets/Icons/HammerIcon.svg";
-import { ReactComponent as CarIcon } from "../../assets/Icons/AutomotiveIcon.svg";
-import { ReactComponent as DrillIcon } from "../../assets/Icons/DrillIcon.svg";
+import HammerIcon from "../../assets/Icons/HammerIcon.js";
+import CarIcon from "../../assets/Icons/CarIcon.js";
+import DrillIcon from "../../assets/Icons/DrillIcon.js";
 import Instance from "../../util/axios";
 import { useHistory } from "react-router";
 
@@ -171,7 +171,7 @@ export default function Home() {
           className="CategoryImageDiv Automotive">
             <div className="CategoryTitle">Automotive</div>
             <div className="CategoryItemTotal">21,056 Items</div>
-            <CarIcon fill="#FFF" className="CategoryIcon" style={{ height: '22px'}} />
+            <CarIcon fill="#fff"/>
           </div>
 
           <div 
@@ -187,7 +187,7 @@ export default function Home() {
           className="CategoryImageDiv HandTools">
             <div className="CategoryTitle">Hand Tools</div>
             <div className="CategoryItemTotal">12,334 Items</div>
-            <HammerIcon fill="#FFF" className="CategoryIcon"/>
+            <HammerIcon fill="#fff" className="CategoryIcon"/>
           </div>
 
           <div 
@@ -195,7 +195,7 @@ export default function Home() {
           className="CategoryImageDiv PowerTools">
             <div className="CategoryTitle">Power Tools</div>
             <div className="CategoryItemTotal">4,586 Items</div>
-            <DrillIcon fill="#FFF" className="CategoryIcon"/>
+            <DrillIcon  fill="#fff" />
           </div>
 
         </div>

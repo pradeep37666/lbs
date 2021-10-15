@@ -12,7 +12,7 @@ import RatingFiller from '../ratingFiller/ratingFiller'
 import MissingProfile from '../../assets/Icons/MissingProfileIcon.png'
 import TradeCalendarStatusPanel from '../tradeCalendar/tradeCalendarStatusPanel/TradeCalendarStatusPanel'
 
-export default function TradeSidebar({ booking, getBookings }) {
+export default function TradeSidebar({ booking, getBookings, setReportModalVisible, setReviewModalVisible }) {
     const { state } = useGlobalState()
     const { user } = state
     const [item, setItem] = useState(null)
@@ -48,7 +48,7 @@ export default function TradeSidebar({ booking, getBookings }) {
         }
         
     }
-
+    console.log(booking)
     const beginDate = getDateObject(booking.start_date)
     const endDate = getDateObject(booking.end_date)
 
@@ -72,7 +72,13 @@ export default function TradeSidebar({ booking, getBookings }) {
                     item={item}/>
                 </div>
                 <div className="TradeSidebarSection">
-                    <TradeCalendarStatusPanel getBookings={getBookings} booking={booking} userDetails={userDetails}/>
+                    <TradeCalendarStatusPanel 
+                    getBookings={getBookings} 
+                    booking={booking} 
+                    userDetails={userDetails} 
+                    setReportModalVisible={setReportModalVisible}
+                    setReviewModalVisible={setReviewModalVisible}
+                    />
 
                 </div>
                 <div className="TradeSidebarSection">

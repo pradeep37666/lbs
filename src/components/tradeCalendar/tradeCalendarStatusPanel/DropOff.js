@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-export default function DropOff({ booking, isOwner, updateBookingStatus,  userDetails}) {
+export default function DropOff({ booking, isOwner, updateBookingStatus,  userDetails, setReviewModalVisible, setReportModalVisible}) {
     const [noPressed, setNoPressed] = useState()
 
     return (
@@ -13,7 +13,7 @@ export default function DropOff({ booking, isOwner, updateBookingStatus,  userDe
                             <div className="TradeStatusDeclineButton">
                                 <span>No</span>
                             </div>
-                            <div className="TradeStatusApproveButton" onClick={() => updateBookingStatus(2)}>
+                            <div className="TradeStatusApproveButton" onClick={() => setReportModalVisible(true)}>
                                 <span>Yes</span>
                             </div>
                         </div>
@@ -26,7 +26,7 @@ export default function DropOff({ booking, isOwner, updateBookingStatus,  userDe
                             <div className="TradeStatusDeclineButton" onClick={() => setNoPressed(true)}>
                                 <span>No</span>
                             </div>
-                            <div className="TradeStatusApproveButton" onClick={() => updateBookingStatus(5)}>
+                            <div className="TradeStatusApproveButton" onClick={() => setReviewModalVisible(true)}>
                                 <span>Yes</span>
                             </div>
                         </div>
@@ -37,7 +37,7 @@ export default function DropOff({ booking, isOwner, updateBookingStatus,  userDe
                 <>
                     <span>Item returned, thank you for borrowing this item with Little Big Shed.</span>
                     <div className="TradeStatusButtonContainer">
-                        <div className="TradeStatusApproveButton" onClick={() => null}>
+                        <div className="TradeStatusApproveButton" onClick={() => setReviewModalVisible(true)}>
                             <span>Rate Lender</span>
                         </div>
                     </div>

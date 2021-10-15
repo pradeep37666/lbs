@@ -57,11 +57,13 @@
   pointer-events: none;
   user-select: none;
 }
-
+.UserButtonLogout {
+  margin-top: 1rem;
+}
 .UserButton__Menu--Active {
   opacity: 100%;
   top: 80px;
-  z-index: 10;
+  z-index: 80;
 }
 
 .UserButton__Menu div {

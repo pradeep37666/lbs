@@ -13,12 +13,12 @@ import getDateObject from '../../../util/getDateObject'
 import StatusSix from './StatusSix'
 import DropOff from './DropOff'
 
-export default function TradeCalendarStatusPanel({ booking, userDetails, getBookings }) {
+export default function TradeCalendarStatusPanel({ booking, userDetails, getBookings, setReportModalVisible, setReviewModalVisible }) {
     const [status, setStatus] = useState()
     const { state } = useGlobalState()
     const { user } = state
     const isOwner = booking.io_id === user.id
-    console.log(booking)
+
     useEffect(() => {
         setStatus(booking.status)
     },[booking])
@@ -35,10 +35,12 @@ export default function TradeCalendarStatusPanel({ booking, userDetails, getBook
             updateBookingStatus={updateBookingStatus}
             isOwner={isOwner}
             userDetails={userDetails}
+            setReviewModalVisible={setReviewModalVisible}
+            setReportModalVisible={setReportModalVisible}
             />)
         }
         const isHourBefore = isPickupTime()
-        if(isHourBefore && status === 3) return <Pickup isOwner={isOwner} updateBookingStatus={updateBookingStatus} booking={booking} userDetails={userDetails}/>
+        if(isHourBefore && status === 3) return <Pickup isOwner={isOwner} updateBookingStatus={updateBookingStatus} booking={booking} userDetails={userDetails} setReportModalVisible={setReportModalVisible}/>
         switch(status){
             case 1 : {
                 return <StatusOne isOwner={isOwner} updateBookingStatus={updateBookingStatus} booking={booking} approveBooking={approveBooking}/>

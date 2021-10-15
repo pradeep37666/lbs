@@ -70,7 +70,7 @@ export default function Login() {
                     <div className="LoginInputValidationContainer">
                         <button type='submit' disabled={!email || !password} className={`LoginFormButton ${!email || !password ? 'ButtonDisabled' : ''}`}>Log in</button>
                         { !isMobile && <div className={`triangleLeft ${loginValidation.length === 0 ? '' : 'ValidationTextHide'}`} />}
-                        <ValidationPopup errorText={loginValidation} errorHeader='Invalid Login Details' hide={loginValidation.length === 0} />
+                        { loginValidation && <ValidationPopup errorText={loginValidation} errorHeader='Invalid Login Details' hide={loginValidation.length === 0} />}
                     </div>
                 </form>
                 <div className="LoginText">Forgot password?<span className="RetrieveLink"> Retrieve here</span></div>
