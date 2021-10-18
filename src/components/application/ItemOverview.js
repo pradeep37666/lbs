@@ -116,6 +116,7 @@ export default function ItemOverview() {
         return ((deliverySelected ? item.deliveryPrice : 0) + (pickupSelected ? item.deliveryPrice : 0))
     }
 
+
     const saveBooking = async () => {
         let deliveryOption = (deliverySelected && pickupSelected) ? 'both' : deliverySelected ? 'delivery' : 'pickup'
         if(!deliverySelected && !pickupSelected) {
@@ -142,7 +143,7 @@ export default function ItemOverview() {
                 endDate: endIndex,
                 year: currentYear,
                 address: address ? address : user.address,
-                price: calculatePrice()
+                price: calculatePrice() + calculateBorrowOptions()
             })
             sendEnquiry(item)
             history.push({ 

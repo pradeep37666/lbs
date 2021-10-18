@@ -90,13 +90,19 @@ export default function TradeSidebar({ booking, getBookings, setReportModalVisib
                         <span>Cost for Item </span>
                         <span className="ItemOverviewPrice">${ item.price * ((booking.end_date - booking.start_date) + 1)}</span>
                     </div>
-                    <div className="TradeSidebarCostFlex" style={{ borderBottom: '1px solid #31364c'}}>
+                    { booking.delivery_option === "delivery" || booking.delivery_option === "both" &&
+                    <div className="TradeSidebarCostFlex">
                         <span>Item Delivery </span>
                         <span className="ItemOverviewPrice">${item.deliveryPrice}</span>
-                    </div>
-                    <div className="TradeSidebarCostFlex" style={{ marginTop: '1rem'}}>
+                    </div>}
+                    { booking.delivery_option === "pickup" || booking.delivery_option === "both" &&
+                    <div className="TradeSidebarCostFlex">
+                        <span>Item Pickup </span>
+                        <span className="ItemOverviewPrice">${item.deliveryPrice}</span>
+                    </div>}
+                    <div className="TradeSidebarCostFlex" style={{ paddingTop: '1rem', borderTop: '1px solid #31364c'}}>
                         <span>Total Price</span>
-                        <span className="ItemOverviewPrice">${ (item.price * ((booking.end_date - booking.start_date) + 1) + item.deliveryPrice)}</span>
+                        <span className="ItemOverviewPrice">${ booking.price }</span>
 
                     </div>
                 </div>
@@ -131,12 +137,13 @@ export default function TradeSidebar({ booking, getBookings, setReportModalVisib
                     </div>
 
                 </div>
-                <div className="TradeSidebarSection">
+                { booking.delivery_option !== 'none' &&
+                 <div className="TradeSidebarSection">
                     <div className="TradeSidebarLocationContainer">
-                        <span className="TradeSidebarHeading">Delivery Location</span>
+                        <span className="TradeSidebarHeading">Delivery / Pickup Location</span>
                         <span>{booking.address}</span>
                     </div>
-                </div>
+                </div>}
                 { userDetails &&
                 <div className="TradeSidebarSection">
                     <div className="TradeSidebarHeading">

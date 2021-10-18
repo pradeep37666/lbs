@@ -19,7 +19,7 @@ export default function ApplicationFooter() {
         dispatch({ type: 'setConfirmedStart', data: null})
         dispatch({ type: 'setSelectedEnd', data: null})
     }
-
+    console.log('===', address)
     const handleClick = () => {
         let route
         if(page === 'ItemAvailability') route = 'ItemOptions'

@@ -15,7 +15,7 @@ export default function ItemOptions({ handleNextPage }) {
     const { user } = globalState
     const [isLoading, setIsLoading] = useState(false)
     const [userItems, setUserItems] = useState(['a'])
-    const { item, deliverySelected, confirmedStart, confirmedEnd, pickupSelected, currentYear, } = state
+    const { item, deliverySelected, confirmedStart, confirmedEnd, pickupSelected, currentYear, address } = state
 
     // Code for getting related items
     // useEffect(() => {
@@ -48,14 +48,15 @@ export default function ItemOptions({ handleNextPage }) {
     // }
 
     const setAddress = (addressObj) => {
-        dispatch({ type: 'setAddress', data: addressObj.description})
+        console.log('+++', addressObj)
+        dispatch({ type: 'setAddress', data: addressObj.formatted_address})
     }
     const getMap = () => {
         if (user.address && (deliverySelected || pickupSelected)) return <MapsAutocomplete setAddress={setAddress} defaultLocation={user.address} defaultLat={user.lat} defaultLng={user.lng}/>
         if (deliverySelected || pickupSelected) return <MapsAutocomplete setAddress={setAddress}/>
         else return
     }
-
+    console.log()
     return (
         <div className="OptionsContainer">
             <div className="OptionsItemHeaderContainer">
