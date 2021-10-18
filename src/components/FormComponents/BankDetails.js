@@ -85,7 +85,8 @@ export default function BankDetails(props) {
             if(error) return
             setIsLoading(false)
             props.setPaymentMethod(paymentMethod)
-            props.handleNextPage('Terms & Conditions')
+            if (props.lender) props.handleNextPage('Location Details')
+            else props.handleNextPage('Terms & Conditions')
         } catch(err) {
             setIsLoading(false)
         }

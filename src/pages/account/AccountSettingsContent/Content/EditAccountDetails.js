@@ -21,7 +21,7 @@ export default function EditAccountDetails(props) {
     const [emailValidation, setEmailValidation] = useState("")
     const [phoneValidation, setPhoneValidation] = useState("")
 
-    const [image, setImage] = useState({ preview: user.avatar, raw: '' })
+    const [image, setImage] = useState()
 
     const [name, setName] = useState(user.fullName)
     const [email, setEmail] = useState(user.email)
@@ -116,10 +116,12 @@ export default function EditAccountDetails(props) {
             <div className="AccountSettings__UpdateHeader">Profile Picture</div>
             <div className="ProfilePictureFlex">
                 <div className="ProfilePictureCircle" >
-                    {image.preview ?
-
-                        <img src={image.preview} alt="dummy" className="ProfilePicturePreview" />
-
+                    {(image || user.avatar) ?
+                        image ? (
+                            <img src={image.preview} alt="profile picture444" className="ProfilePicturePreview" />
+                        ) : (
+                            <img src={getImage(user.avatar)} alt="profile picture" className="ProfilePicturePreview" />
+                        )
                         : <CameraIcon className="CameraIcon" />}
                 </div>
                 <input type="file" id="selectFile" style={{ display: "none" }} onChange={(e) => handleChange(e)} />

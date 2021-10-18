@@ -128,7 +128,7 @@ export default function Register() {
             const User = await  CometChat.login(user.id, process.env.REACT_APP_CHAT_AUTH_KEY)
             console.log(User, 'logged into comet chat')
         } catch(e) {
-            console.log(e)
+            console.log('aaaaaa', e)
         }
     }
 
