@@ -49,7 +49,7 @@ export default function Item() {
     const [ReviewModal, setReviewModal] = useState(false)
     const [availabilityModalVisible, setAvailabilityModalVisible] = useState(false)
     const [availability, setAvailability] = useState()
-
+    console.log('item', item)
     const reviewSamples = [
         ['Blake Dude', '4', 'Cillum nulla cupidatat aute pariatur ad sit tempor consectetur amet culpa labore deserunt sunt. Veniam eiusmod sunt incididunt ullamco fugiat reprehenderit labore. Ipsum irure culpa veniam velit. Elit dolore cillum nulla nulla do nulla Lorem ullamco.'],
         ['Jake Friend', '3', 'Id sunt laboris ad adipisicing ullamco id elit deserunt deserunt ullamco aute enim tempor tempor.'],
@@ -59,7 +59,6 @@ export default function Item() {
         ['Isaac Myers', '2', 'Enim aute incididunt proident Lorem id mollit. Occaecat do cillum magna sunt dolore non exercitation et anim enim. Et nulla nulla aute sint minim laborum ut cupidatat nulla fugiat aliqua laboris exercitation mollit. Labore consectetur culpa laboris fugiat velit eu laborum proident consectetur. Eu labore nisi velit velit irure laborum.'],
         ['Christian Zhou', '5', 'Minim pariatur occaecat Lorem et ea elit reprehenderit sunt commodo ex.'],
     ]
-
     useEffect(() => {
         // update modal state if navigated to this screen after creating a booking
         const bookingCreated = location.state?.bookingCreated

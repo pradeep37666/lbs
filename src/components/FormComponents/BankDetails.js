@@ -52,12 +52,13 @@ export default function BankDetails(props) {
     const CARD_ELEMENT_OPTIONS = {
         style: {
           base: {
-            color: "#32325d",
-            fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
+            color: "black",
+            fontFamily: '"DMSans", sans-serif',
             fontSmoothing: "antialiased",
-            fontSize: "22px",
+            fontSize: "18px",
+            fontWeight: 'bold',
             "::placeholder": {
-              color: "#aab7c4",
+              color: "rgb(133,133,133)",
             },
           },
           invalid: {

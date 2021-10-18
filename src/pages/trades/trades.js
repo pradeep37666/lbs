@@ -14,6 +14,7 @@ import useGlobalState from '../../util/useGlobalState'
 import ReviewTrade from '../../components/ReviewTrade/ReviewTrade'
 import { useHistory } from 'react-router'
 import NoContent from '../../components/NoContent/NoContent'
+import ReviewLender from '../../components/reviewLender/ReviewLender'
 
 export default function Trades() {
     const { state } = useGlobalState()
@@ -65,14 +66,20 @@ export default function Trades() {
      }
 
     const noBookings = (lenderBookingItems.length === 0 && borrowerBookingItems.length === 0)
+    const isLender = selectedBooking?.io_id === user.id
     return (
         <PageWrapper>
             { reportModalVisible &&  
                 <TradeFailed onClick={() => setReportModalVisible(false)} isLender={selectedBooking.io_id === user.id} />  
             }
-            { reviewModalVisible && 
-                <ReviewTrade onClick={() => setReviewModalVisible(false)}  />
-                // isLender={selectedBooking.io_id === user.id}
+            { reviewModalVisible ? (
+                isLender ? (
+                    <ReviewTrade onClick={() => setReviewModalVisible(false)}  />
+                ) : (
+                    <ReviewLender onClick={() => setReviewModalVisible(false)} booking={selectedBooking}/>
+                )
+            ) : null
+                
             }
             <div className="UserShedWrapper">
                 { !isMobile && <UserShedNav setAccountContent={setAccountContent} accountContent={accountContent}/>}

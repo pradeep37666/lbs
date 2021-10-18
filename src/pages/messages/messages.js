@@ -12,6 +12,7 @@ import Instance from '../../util/axios'
 import { isMobile } from 'react-device-detect'
 import NoContent from '../../components/NoContent/NoContent'
 import { useHistory } from 'react-router'
+import ReviewLender from '../../components/reviewLender/ReviewLender'
 
 export default function Messages() {
     const { state } = useGlobalState()
@@ -93,7 +94,7 @@ export default function Messages() {
             )
         })
     }
-
+    // return <ReviewLender />
     return (
         <PageWrapper>
             <ClickAwayListener onClickAway={() => setPopupOpen(false)}>

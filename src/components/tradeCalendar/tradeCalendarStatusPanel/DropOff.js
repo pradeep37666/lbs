@@ -36,7 +36,8 @@ export default function DropOff({ booking, isOwner, updateBookingStatus,  userDe
                     </>
                 )
            ) : (
-                userDetails && booking.status !== 7 ? (
+                // userDetails && booking.status !== 7 ? (
+                userDetails && booking.status !== 1 ? (
                     <>
                         <span>Your item is due today. Please check that it's in the same condition as when you borrowed it.</span>
                     </>

@@ -13,6 +13,7 @@ export default function itemCard(props) {
   const item = props.item;
   
   const itemPictures = item.pictures?.split(',')
+  const itemSuburb = item.suburb.split(',')
   return (
     <div className="ItemCard">
       {/* new prop for image link to go here later */}
@@ -24,16 +25,23 @@ export default function itemCard(props) {
         <div className="ItemNameText">{item.title}</div>
         <div className="ItemPriceText">${item.price}</div>
 
-        <div className="StatusLocationSection">
-          <div className="StatusLocationSection" style={{paddingRight: '30px'}}>
+        <div className="StatusLocationSection" >
+          <div className="ItemCardIconContainer">
             <img src={DeliveryIcon} alt='' className="ItemCardIcon"/>
-            {item.deliveryPrice > 0 ? 'Available' : 'Unavailable'}
           </div>
+          {item.deliveryPrice > 0 ? 'Available' : 'Unavailable'}
+        </div>
 
-          <div className="StatusLocationSection">
+        <div className="StatusLocationSection">
+          <div className="ItemCardIconContainer" style={{ paddingLeft: 7 }}>
             <img src={LocationIcon} alt={item.suburb} className="ItemCardIcon"/>
-            {item.suburb}
           </div>
+          <div style={{ textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap'}}>
+            {itemSuburb[0]}
+          </div>
+          
+    
+          
         </div>
 
         <div className="RatingSection">

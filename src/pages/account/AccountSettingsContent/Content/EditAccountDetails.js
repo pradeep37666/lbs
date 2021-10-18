@@ -159,3 +159,7 @@ export default function EditAccountDetails(props) {
         </div>
     )
 }
+
+// /"i_id": 0,
+// "content": "string",
+// "rating": 0,

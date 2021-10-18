@@ -32,7 +32,8 @@ export default function TradeCalendarStatusPanel({ booking, userDetails, getBook
             return <StatusSeven booking={booking} isOwner={isOwner} />
         }
         const dropOff = isDropoffTime()
-        if(dropOff && status >= 3){
+        // if(dropOff && status >= 3){
+        if(dropOff || status >= 1){
             return (
             <DropOff 
             booking={booking}
