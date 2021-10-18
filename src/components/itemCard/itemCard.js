@@ -26,13 +26,13 @@ export default function itemCard(props) {
 
         <div className="StatusLocationSection">
           <div className="StatusLocationSection" style={{paddingRight: '30px'}}>
-            <img src={DeliveryIcon} alt={item.city} className="ItemCardIcon"/>
+            <img src={DeliveryIcon} alt='' className="ItemCardIcon"/>
             {item.deliveryPrice > 0 ? 'Available' : 'Unavailable'}
           </div>
 
           <div className="StatusLocationSection">
-            <img src={LocationIcon} alt={item.city} className="ItemCardIcon"/>
-            {item.city}
+            <img src={LocationIcon} alt={item.suburb} className="ItemCardIcon"/>
+            {item.suburb}
           </div>
         </div>
 
