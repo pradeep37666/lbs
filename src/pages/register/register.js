@@ -15,7 +15,6 @@ import useGlobalState from '../../util/useGlobalState';
 import { CometChat } from '@cometchat-pro/chat';
 import getSuburb from '../../util/getSuburb';
 import { useStripe } from '@stripe/react-stripe-js';
-import { CircularProgress } from '@material-ui/core';
 
 export default function Register() {
     const { dispatch } = useGlobalState()
