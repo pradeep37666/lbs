@@ -23,7 +23,7 @@ export default function Account() {
             case 'Terms & Conditions':
                 return <TermsConditions />
             case 'Support':
-                return 'uhhhh support'
+                return 'Support'
             default:
                 return 'account page'
         }
@@ -37,26 +37,26 @@ export default function Account() {
 
     // const user = GetUser()
 
-    useEffect(() => {
-        if (accountContent === 'Support') {
-            const data = {
-                account_number: '',
-                bsb: '',
-            }
+    // useEffect(() => {
+    //     if (accountContent === 'Support') {
+    //         const data = {
+    //             account_number: '',
+    //             bsb: '',
+    //         }
 
-            Instance.put('user/update', data)
-                .then((response) => {
-                    console.log(response)
-                    let newData = user
-                    newData.account_number = data.account_number
-                    newData.bsb = data.bsb
-                    dispatch({ type: 'setUser', data: newData })
-                })
-                .catch((error) => {
-                    console.log(error)
-                })
-        }
-    }, [accountContent])
+    //         Instance.put('user/update', data)
+    //             .then((response) => {
+    //                 console.log(response)
+    //                 let newData = user
+    //                 newData.account_number = data.account_number
+    //                 newData.bsb = data.bsb
+    //                 dispatch({ type: 'setUser', data: newData })
+    //             })
+    //             .catch((error) => {
+    //                 console.log(error)
+    //             })
+    //     }
+    // }, [accountContent])
 
     return (
         <PageWrapper>

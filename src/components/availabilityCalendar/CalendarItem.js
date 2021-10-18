@@ -58,13 +58,13 @@ export default function CalendarItem({day, index, onClick, isCurrentMonth }) {
             return 'ItemApplicationPeriodEnd'
         }
         if(selected && confirmedEnd.sameTimeSlot && compareDates(day, confirmedStart.day) && selected < confirmedStart.day) return ''
-        if( selected && compareDates(day,confirmedStart.day)) {
+        if( selected && compareDates(day, confirmedStart.day) && !compareDates(confirmedStart.day, confirmedEnd.day)) {
             return 'ItemApplicationPeriodStart'
         }
-        if( compareDates(day, confirmedStart.day)){
+        if( compareDates(day, confirmedStart.day) && !compareDates(confirmedStart.day, confirmedEnd.day)){
             return 'ItemApplicationPeriodStart'
         }
-        if(compareDates(day, confirmedEnd.day)){
+        if(compareDates(day, confirmedEnd.day) && !compareDates(confirmedStart.day, confirmedEnd.day)){
             return 'ItemApplicationPeriodEnd'
         }
     }

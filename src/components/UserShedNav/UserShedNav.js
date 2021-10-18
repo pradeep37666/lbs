@@ -47,12 +47,13 @@ export default function UserShedNav(props) {
                 </div>
             </Link>
 
+            { user.bsb &&
             <Link to='/user/your_shed'>
                 <div className={`UserShedNav__LinkFlex ${activeMain === 'your_shed' ? 'UserShedNav__LinkFlex--Active' : ''}`} onClick={() => setActiveMain('your_shed')}>
                     <YourShed height="50px" width="50px" className="UserShedNav__Icon" />
                     Your Shed
                 </div>
-            </Link>
+            </Link>}
 
             <Link to='/user/favourites'>
                 <div className={`UserShedNav__LinkFlex ${activeMain === 'favourites' ? 'UserShedNav__LinkFlex--Active' : ''}`} onClick={() => setActiveMain('favourites')}>

@@ -48,6 +48,7 @@ export default function EditAccountDetails(props) {
                 preview: URL.createObjectURL(e.target.files[0]),
                 raw: e.target.files[0]
             })
+            console.log(e.target.files[0])
         }
     }
 
@@ -57,23 +58,30 @@ export default function EditAccountDetails(props) {
         // fdata.append('file', image.raw)
 
         // image stuff
+        
 
-        const data = {
-            fullName: name ? name : user.fullName,
+        const userDetails = {
+            fullName: name ? name : user.fullName,  
             email: email ? email : user.email,
             mobile: phone ? phone : user.mobile,
             // avatar: image.raw ? image.raw : user.avatar, 
+            avatar: 'test'
         }
-
-        Instance.put('user/update', data)
+        console.log(userDetails)
+        const formData = new FormData()
+        for(let key in userDetails){
+            formData.append(key, userDetails[key])
+        }
+        console.log('form data', formData)
+        Instance.put('user/update', formData)
             .then((response) => {
-                console.log(response)
+                console.log('response', response)
                 let newData = user
-                newData.fullName = data.fullName
-                newData.email = data.email
-                newData.mobile = data.mobile
-                dispatch({ type: 'setUser', data: newData })
-                history.go(0)
+                newData.fullName = userDetails.fullName
+                newData.email = userDetails.email
+                newData.mobile = userDetails.mobile
+                // dispatch({ type: 'setUser', data: newData })
+                // history.go(0)
             })
             .catch((error) => {
                 console.log(error)
@@ -111,7 +119,7 @@ export default function EditAccountDetails(props) {
                 <div className="ProfilePictureCircle" >
                     {image.preview ?
 
-                        <img src={getImage(user.avatar)} alt="dummy" className="ProfilePicturePreview" />
+                        <img src={image.preview} alt="dummy" className="ProfilePicturePreview" />
 
                         : <CameraIcon className="CameraIcon" />}
                 </div>

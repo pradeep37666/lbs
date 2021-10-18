@@ -70,22 +70,26 @@ export default function UserButton() {
                                 Messages
                             </div>
                         </Link>
-                        <hr className="hr__UserMenu" />
+                        
 
-                        <Link to='/user/your_shed'>
-                            <div>
-                                <YourShed height="28px" width="50px"/>
-                                Your Shed
-                            </div>
-                        </Link>
-                        <hr className="hr__UserMenu" />
+                        { user.bsb &&
+                        <>
+                            <hr className="hr__UserMenu" />
+                            <Link to='/user/your_shed'>
+                                <div>
+                                    <YourShed height="28px" width="50px"/>
+                                    Your Shed
+                                </div>
+                            </Link>
+                            <hr className="hr__UserMenu" />
 
-                        <Link to='/postitem'>
-                            <div>
-                                <PostItem height="28px" width="50px"/>
-                                Post an Item
-                            </div>
-                        </Link>
+                            <Link to='/postitem'>
+                                <div>
+                                    <PostItem height="28px" width="50px"/>
+                                    Post an Item
+                                </div>
+                            </Link>
+                        </>}
                         <hr className="hr__UserMenu" />
 
                         <Link to='/user/favourites'>

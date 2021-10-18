@@ -110,7 +110,7 @@ export default function CalendarRow({ days, isCurrentMonth }) {
         if(confirmedStart && compareDates(selected, confirmedStart.day)){
             // Changing from morning to afternoon
             if(confirmedStart?.am && confirmedEnd){
-                dispatch({type: 'setConfirmedStart', data: { day: selected, pm: true}})
+                dispatch({type: 'setConfirmedEnd', data: { day: selected, pm: true}})
             }
             if(confirmedStart?.am){
                 console.log('aighsd')

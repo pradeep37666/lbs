@@ -47,6 +47,7 @@ function App() {
     setupCometChat()
     instance.get('/user/me')
       .then(({ data }) => {
+        console.log('user', data)
         dispatch({ type: 'setUser', data })
         setLoadingUser(false)
         return

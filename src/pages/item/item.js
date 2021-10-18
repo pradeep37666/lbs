@@ -274,7 +274,7 @@ export default function Item() {
                             <div className="ItemButtons">
                                 <button className="ButtonAvailability" onClick={() => setAvailabilityModalVisible(true)}>
                                     <div className="ItemButtonFlex">
-                                        <img src={Calendar} alt="" />
+                                        <img src={Calendar} alt="" style={{ marginRight: '0.5em'}}/>
                                         Availability
                                     </div>
                                 </button>
