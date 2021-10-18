@@ -33,13 +33,19 @@
   color: #33384f;
 }
 .AdditionalItemsMainContainer {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 .AdditionalItemsContainer {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    min-height: 200px;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 200px;
+  align-items: center;
+}
+
+@media only screen and (max-width: 495px) {
+  .OptionsContainer {
+    min-width: 90vw;
+  }
 }

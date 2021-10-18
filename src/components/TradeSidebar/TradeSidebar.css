@@ -1,7 +1,7 @@
 .TradeSidebarContainer {
   display: flex;
   flex-direction: column;
-  padding: 0 1rem;
+  padding: 1rem 1rem;
   border-left: 1px solid #d6d6d6;
   width: 30%;
 }

@@ -65,23 +65,21 @@ export default function EditAccountDetails(props) {
             email: email ? email : user.email,
             mobile: phone ? phone : user.mobile,
             // avatar: image.raw ? image.raw : user.avatar, 
-            avatar: 'test'
         }
-        console.log(userDetails)
-        const formData = new FormData()
-        for(let key in userDetails){
-            formData.append(key, userDetails[key])
-        }
-        console.log('form data', formData)
-        Instance.put('user/update', formData)
+        // const formData = new FormData()
+        // for(let key in userDetails){
+        //     formData.append(key, userDetails[key])
+        // }
+        // console.log('form data', formData)
+        Instance.put('user/update', userDetails)
             .then((response) => {
                 console.log('response', response)
                 let newData = user
                 newData.fullName = userDetails.fullName
                 newData.email = userDetails.email
                 newData.mobile = userDetails.mobile
-                // dispatch({ type: 'setUser', data: newData })
-                // history.go(0)
+                dispatch({ type: 'setUser', data: newData })
+                history.go(0)
             })
             .catch((error) => {
                 console.log(error)
