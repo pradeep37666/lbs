@@ -10,9 +10,6 @@ export default function LocationDetails(props) {
 
     const wipeState = () => {
         props.setAddress("")
-        props.setCity("")
-        props.setCountry("")
-        props.setState("")
     }
 
     return (

@@ -194,7 +194,8 @@ export default function BankDetails(props) {
                     <button 
                     className={`LoginFormButton ${!props.validated ? 'ButtonDisabled' : ''}`} 
                     disabled={!props.validated} 
-                    onClick={props.handleNextPage('Location Details')}>
+                    onClick={() => props.handleNextPage('Location Details')}
+                    >
                         Next
                     </button>
                 )}

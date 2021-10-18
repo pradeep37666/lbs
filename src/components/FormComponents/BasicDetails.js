@@ -89,20 +89,20 @@ export default function BasicDetails(props) {
 
                     </div>
 
-                    <div className="LoginHeader">Date of Birth</div>
+                    {/* <div className="LoginHeader">Date of Birth</div> */}
 
-                    <div className='Register__DOB__Container'>
+                    {/* <div className='Register__DOB__Container'>
                         <div className="DOBHeader">Day</div>
                         <div className="DOBHeader">Month</div>
                         <div className="DOBHeader">Year</div>
-                    </div>
+                    </div> */}
 
-                    <div className='Register__DOB__Container'>
-                    {/* onBlur={(e) => handlePhoneNumber(e, props.setPhoneNumber, setPhoneValidation)} */}
+                    {/* <div className='Register__DOB__Container'>
+                    {/* onBlur={(e) => handlePhoneNumber(e, props.setPhoneNumber, setPhoneValidation)} 
                         <input type='text' placeholder='Day' className="DOBInput" />
                         <input type='text' placeholder='Month' className="DOBInput" />
                         <input type='text' placeholder='Year' className="DOBInput" />
-                    </div>
+                    </div> */}
 
                     </div>
 
