@@ -92,6 +92,7 @@ export default function Item() {
                     setItem(response.data.item)
                     setAvailability(response.data.yearAvailability)
                     setLoading(false)
+                    getItemOwner(response.data.item)
                     setItemPictures(response.data.item.pictures.split(','))
                 })
                 .catch((error) => {
@@ -221,7 +222,8 @@ export default function Item() {
         console.log(JSON.stringify(item, null,'\t'))
     }
     //-------------------------------------------------//
-
+    console.log('user', user)
+    console.log('owner', itemOwner)
     return (
         <PageWrapper>
             {ImageModal && <ItemImageModal setModal={setImageModal} images={itemPictures} modal={ImageModal} /> }

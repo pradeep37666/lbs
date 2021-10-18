@@ -329,7 +329,7 @@
     width: 80%;
   }
   .ItemInfoWrapper {
-    width: 90%;
+    width: 100%;
   }
   .ItemButtons {
     flex-direction: column;
