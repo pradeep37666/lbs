@@ -110,7 +110,7 @@ export default function Messages() {
                             header="No Active Conversations"
                             text="You currently do not have any active conversations, borrow or lend an item to start messaging other users"
                             buttonText="Search for an item"
-                            onButtonClick={() => history.push('/searchf')}
+                            onButtonClick={() => history.push('/search')}
                             />
                         ) : (
                             <>

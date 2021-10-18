@@ -1,47 +1,46 @@
-
 .DayDotsFlex {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1em;
-    font-weight: bold;
-    font-size: 20px;
-    user-select: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1em;
+  font-weight: bold;
+  font-size: 20px;
+  user-select: none;
 }
 
 .DotsFlex {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 .AvailabilityDot {
-    height: 20px;
-    width: 20px;
-    border-radius: 50%;
-    background-color: #dedede;
-    margin-right: .5em;
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  background-color: #dedede;
+  margin-right: 0.5em;
 }
 
 .DotMorningActive {
-    background-color: #33384f;
+  background-color: #33384f;
 }
 
 .DotAfternoonActive {
-    background-color: #ac172c;
+  background-color: #33384f;
 }
 
 .DayInactive {
-    color: #adadad;
-    position: relative;
+  color: #adadad;
+  position: relative;
 }
 
 .DayActive {
-    color: #33384f;
+  color: #33384f;
 }
 
 .DayInactive:hover {
-    cursor: pointer;
-    color: #858585;
+  cursor: pointer;
+  color: #858585;
 }
 
 /* .SlotTriangle {
@@ -57,32 +56,33 @@
 /* Triangle marker styles */
 
 .triangle {
-	position: absolute;
-	background-color: #e9d8b4;
-	text-align: left;
-    left: 40%;
-    top: 120%;
+  position: absolute;
+  background-color: #e9d8b4;
+  text-align: left;
+  left: 40%;
+  top: 120%;
 }
 .triangle:before,
 .triangle:after {
-	content: '';
-	position: absolute;
-	background-color: inherit;
+  content: "";
+  position: absolute;
+  background-color: inherit;
 }
 .triangle,
 .triangle:before,
 .triangle:after {
-	width:  1em;
-	height: 1em;
-	border-top-right-radius: 30%;
+  width: 1em;
+  height: 1em;
+  border-top-right-radius: 30%;
 }
 
 .triangle {
-	transform: rotate(-60deg) skewX(-30deg) scale(1,.866);
+  transform: rotate(-60deg) skewX(-30deg) scale(1, 0.866);
 }
 .triangle:before {
-	transform: rotate(-135deg) skewX(-45deg) scale(1.414,.707) translate(0,-50%);
+  transform: rotate(-135deg) skewX(-45deg) scale(1.414, 0.707)
+    translate(0, -50%);
 }
 .triangle:after {
-	transform: rotate(135deg) skewY(-45deg) scale(.707,1.414) translate(50%);
+  transform: rotate(135deg) skewY(-45deg) scale(0.707, 1.414) translate(50%);
 }

@@ -1,67 +1,67 @@
 .PickerMain {
-    border-radius: 20px;
-    background-color: #e9d8b4;
-    width: 330px;
-    margin-bottom: 1em;
-    user-select: none;
+  border-radius: 20px;
+  background-color: #e9d8b4;
+  width: 330px;
+  margin-bottom: 1em;
+  user-select: none;
 }
 
 .PickerHeader {
-    display: flex;
-    justify-content: center;
-    font-size: 17px;
-    color: #33384f;
-    font-weight: bold;
-    padding: 1em 0;
+  display: flex;
+  justify-content: center;
+  font-size: 17px;
+  color: #33384f;
+  font-weight: bold;
+  padding: 1em 0;
 }
 
 .MorningAfternoonFlex {
-    display: flex;
-    justify-content: space-between;
-    padding: 0 1em 1em 1em;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 1em 1em 1em;
 }
 
 .TimeSlotDiv {
-    width: 48%;
-    background-color: #FFF;
-    border-radius: 20px;
-    padding: 0 1em;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    color: #33384f;
-    user-select: none;
+  width: 48%;
+  background-color: #fff;
+  border-radius: 20px;
+  padding: 0 1em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #33384f;
+  user-select: none;
 }
 
 .Pointer {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .TimeSlotDiv .DayText {
-    font-size: 17px;
-    font-weight: bold;
+  font-size: 17px;
+  font-weight: bold;
 }
 
 .TimeSlotDiv .TimeText {
-    font-size: 14px;
+  font-size: 14px;
 }
 
 .BackgroundMorning {
-    background-color: #33384F;
-    color: #FFF;
+  background-color: #33384f;
+  color: #fff;
 }
 
 .BackgroundAfternoon {
-    background-color: #AC172C;
-    color: #FFF;
+  background-color: #33384f;
+  color: #fff;
 }
 
 .MorningUnavailable {
-    background-color: rgb(211, 211, 211);
-    color: gray;
+  background-color: rgb(211, 211, 211);
+  color: gray;
 }
 .AfternoonUnavailable {
-    background-color: rgb(211, 211, 211);
-    color: gray;
-    cursor: default;
+  background-color: rgb(211, 211, 211);
+  color: gray;
+  cursor: default;
 }

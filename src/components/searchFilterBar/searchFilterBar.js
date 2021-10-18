@@ -161,6 +161,7 @@ export default function SearchFilterBar({ keyWord }) {
     return categories.map((category, index) => {
       return (
         <div
+        key={index}
           className={`CategoryFilterDiv ${Category === category.name ? "CategoryFilterDivActive" : ""
             }`}
           onClick={() => {
