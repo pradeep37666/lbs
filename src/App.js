@@ -131,7 +131,7 @@ function App() {
 
             {/* Routes for login/register should redirect to user page if user is logged in */}
             <AuthRedirectRoute path="/login" component={LoginPage} />
-            <AuthRedirectRoute path="/register" component={RegisterPage} />
+            <Route path="/register" component={RegisterPage} />
           </ScrollToTop>
 
         </Router>
