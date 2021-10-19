@@ -23,6 +23,8 @@ import Availability from "../../components/FormComponents/Availability";
 import { useHistory } from "react-router";
 import { CircularProgress } from "@material-ui/core";
 import getSuburb from "../../util/getSuburb";
+import queryString from 'query-string'
+
 
 function EditItemPage(props) {
   const history = useHistory();
@@ -31,7 +33,7 @@ function EditItemPage(props) {
   //declaration for all the infromation we get from the server
   const [title, setTitle] = useState();
   const [category, setCategory] = useState();
-  const [pictures, setPictures] = useState([]);
+  
   const [description, setDescription] = useState();
   const [price, setPrice] = useState();
 
@@ -50,6 +52,7 @@ function EditItemPage(props) {
   const [open, setOpen] = useState(false);
   const [editAvailabilityOpen, setEditAvailabilityOpen] = useState(false);
 
+  const [pictures, setPictures] = useState([]);
   const [deletedImages, setDeletedImages] = useState([])
   const [newImages, setNewImages] = useState([])
 
@@ -67,10 +70,8 @@ function EditItemPage(props) {
     setOpen(false);
   };
 
-  const queryString = require("query-string");
+
   const params = useParams();
-  let newPictures = [];
-  //seperating the userid and the item id from the parameters using the query string function
   const parsed = queryString.parse(params.itemId);
   let itemId = parsed.i_id;
 
@@ -208,7 +209,7 @@ function EditItemPage(props) {
     setPictures(newPictures);
   };
 
-  const applyChanges = () => {
+  const applyChanges = async () => {
 
     let newSuburb
     address.address_components ? newSuburb = getSuburb(address.address_components) : newSuburb = suburb
@@ -239,14 +240,16 @@ function EditItemPage(props) {
       formData.append(key, newItemDetails[key])
     }
     
-    Instance.put('/items/update', formData)
-    .then((response) => {
-      console.log(response)
-      if (response.status === 200) history.push(`/item/${itemId}`)
-    })
-    .catch((error) => {
-      console.log(error.response)
-    })
+    
+    try{
+      const { data, status } = await Instance.put('/items/update', formData)
+      console.log(data, status)
+
+    } catch(err) {
+
+    } finally{
+      
+    }
   }
 
 

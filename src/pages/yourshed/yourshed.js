@@ -7,14 +7,16 @@ import UserShedNav from '../../components/UserShedNav/UserShedNav'
 import instance from '../../util/axios';
 import ItemCard from '../../components/itemCard/itemCard';
 import { isMobile } from 'react-device-detect';
+import useGlobalState from '../../util/useGlobalState';
 
 export default function Yourshed() {
-
+    const { state } = useGlobalState()
+    const { user } = state
     const [accountContent, setAccountContent] = useState('Your Shed')
     const [items, setItems] = useState([]);
     const [loading, setLoading] = useState(true);
 useEffect(()=>{
-    instance.get('/items/findByUid')
+    instance.get(`/items/findByUid?u_id=${user.id}`)
       .then(({data} ) => {
         //console.log("response",data)
         setItems(data);

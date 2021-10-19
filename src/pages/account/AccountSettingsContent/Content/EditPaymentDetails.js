@@ -170,7 +170,9 @@ export default function EditPaymentDetails() {
         <div className="AccountSettings__Container">
             <div className="AccountSettings__Title">Payment Details</div>
             { isCardLoading ? (
-                <CircularProgress color="inherit" />
+                <div style={{ display: 'flex', justifyContent: 'center'}}>
+                    <CircularProgress color="inherit" />
+                </div>
                 
             ) : (
                 userCard ? (

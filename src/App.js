@@ -116,7 +116,7 @@ function App() {
             <Route exact path="/" component={Home} />
             <Route exact path="/item/:itemId" component={ItemPage} />
             <Route exact path="/search/:searchParams?" component={SearchPage} />
-
+            <AuthRoute exact path="/item/edit/:itemId" component={EditItemPage} />
             <AuthRoute path="/user/trades" component={TradesPage} />
             <AuthRoute path="/user/messages" component={MessagesPage} />
             <AuthRoute path="/user/your_shed" component={YourshedPage} />

@@ -28,6 +28,7 @@
 
 .ItemRateText {
   font-size: calc(0.6vw + 1rem);
+  width: 25%;
   height: min-content;
   color: #adadad;
 }
@@ -56,6 +57,7 @@
   margin-bottom: 50px;
   display: flex;
   align-items: center;
+  width: 100%;
 }
 
 .PreviewImage {

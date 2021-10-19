@@ -37,12 +37,8 @@ function ReviewLender({ onClick, isLender, booking }) {
 
   const submitReview = async () => {
     setIsLoading(true)
-    // console.log({
-    //     i_id: booking.i_id,
-    //     content: comment,
-    //     rating: productRating
-    // })
     try{
+        // const { data, status } = await Instance.post('l')
         const { data, status } = await Instance.post('/comments/save',{
             i_id: booking.i_id,
             content: comment,

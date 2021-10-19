@@ -34,7 +34,7 @@
 
 .ItemPriceTextBig {
   /* font-size: 70px; */
-  font-size: calc(1.6vw + 1.8rem);
+  font-size: calc(2.2vw + 2rem);
   color: #33384f;
 }
 
@@ -46,6 +46,9 @@
 .ItemDiscountText {
   font-size: 18px;
   color: #ac172c;
+  height: 50%;
+  display: flex;
+  flex-direction: column;
 }
 
 .LocationDeliveryCategory {
@@ -56,10 +59,8 @@
 }
 
 .LDCIconContainer {
-  margin-right: 2em;
   display: flex;
-  justify-content: center;
-  width: 1em;
+  width: 15%;
 }
 
 .LDCIcon {
@@ -86,7 +87,8 @@
 .ItemButtonFlex {
   display: flex;
   justify-content: space-between;
-  padding: 0 5%;
+  flex-wrap: wrap;
+  padding: 0 8%;
   align-items: center;
 }
 
@@ -104,12 +106,15 @@
   background-color: #33384f;
   border: none;
   color: #ffffff;
-  width: 80%;
+  width: 40%;
 }
 
 .ButtonFavourite {
   background-color: #b43b4c;
   border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .hr {
@@ -141,7 +146,7 @@
   display: flex;
   justify-content: space-between;
   font-size: 20px;
-  width: 70%;
+  width: 100%;
 }
 
 .RatingHeader {
@@ -317,6 +322,18 @@
 }
 .ItemPage__Loading__Container {
   margin: 5em 0;
+}
+.ItemPerSlotText {
+  color: #58554e;
+
+  font-size: calc(1.1vw + 1.2rem);
+  height: 50%;
+}
+
+@media only screen and (max-width: 1350px) {
+  .ItemButtonFlex {
+    flex-direction: column;
+  }
 }
 
 @media only screen and (max-width: 495px) {

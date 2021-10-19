@@ -8,13 +8,13 @@ import { useHistory } from 'react-router'
 import Instance from '../../../../util/axios';
 import { Link } from 'react-router-dom';
 import useGlobalState from '../../../../util/useGlobalState';
-import { Avatar } from '@material-ui/core';
+import { Avatar, CircularProgress } from '@material-ui/core';
 import getImage from '../../../../util/getImage';
 
 export default function EditAccountDetails(props) {
     const { state, dispatch } = useGlobalState()
     const { user } = state
-
+    const [isLoading, setIsLoading] = useState(false)
     const history = useHistory()
 
     const [nameValidation, setNameValidation] = useState("")
@@ -52,14 +52,8 @@ export default function EditAccountDetails(props) {
         }
     }
 
-    const updateBasicDetails = () => {
-
-        // var fdata = new FormData()
-        // fdata.append('file', image.raw)
-
-        // image stuff
-        
-
+    const updateBasicDetails = async () => {
+        setIsLoading(true)
         const userDetails = {
             fullName: name ? name : user.fullName,  
             email: email ? email : user.email,
@@ -68,24 +62,26 @@ export default function EditAccountDetails(props) {
         }
         const formData = new FormData()
         for(let key in userDetails){
-
             formData.append(key, userDetails[key])
         }
-        // console.log('form data', formData)
-        Instance.put('user/update', formData)
-            .then((response) => {
-                console.log('response', response)
-                let newData = user
-                newData.fullName = userDetails.fullName
-                newData.email = userDetails.email
-                newData.mobile = userDetails.mobile
-                dispatch({ type: 'setUser', data: newData })
-                history.go(0)
-            })
-            .catch((error) => {
-                console.log(error)
-            })
+        try{
+            const { data, status } = await Instance.put('user/update', formData)
+                        
+            console.log(data, status)
+            let newData = user
+            newData.fullName = userDetails.fullName
+            newData.email = userDetails.email
+            newData.mobile = userDetails.mobile
+            dispatch({ type: 'setUser', data: newData })
+            
+            // history.go(0)
 
+        } catch(err) {
+            console.log(err)
+        } finally {
+            setIsLoading(false)
+        }
+        
     }
 
     return (
@@ -153,13 +149,18 @@ export default function EditAccountDetails(props) {
             </div> */}
 
             <div className="AccountSettings__ButtonFlex">
-                <button className="LoginFormButton AccountSettings__SaveButton" onClick={() => updateBasicDetails()}>Save Changes</button>
+                { isLoading ? (
+                    <CircularProgress color="inherit" />
+                ) : (
+                    <button 
+                    className="LoginFormButton AccountSettings__SaveButton" 
+                    onClick={() => updateBasicDetails()}
+                    >
+                        Save Changes
+                    </button>
+                )}
             </div>
 
         </div>
     )
 }
-
-// /"i_id": 0,
-// "content": "string",
-// "rating": 0,

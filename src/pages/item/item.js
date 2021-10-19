@@ -12,7 +12,8 @@ import Calendar from './../../assets/Icons/HangingCalendar.svg';
 import Geocode from 'react-geocode'
 
 import { ReactComponent as StarFilled } from './../../assets/Icons/StarFilled.svg';
-import { StarOutline } from '@material-ui/icons';
+// import { StarOutline } from '@material-ui/icons';
+import StarOutline from '../../assets/Icons/StarOutline.js';
 
 import GoogleMapReact from 'google-map-react';
 import Instance from '../../util/axios';
@@ -44,21 +45,14 @@ export default function Item() {
     const [itemOwner, setItemOwner] = useState(null)
     const [loading, setLoading] = useState(true);
     const [approx, setApprox] = useState(null)
-    const [ReviewPage, setReviewPage] = useState(1)
+    const [reviewPage, setReviewPage] = useState(0)
     const [ImageModal, setImageModal] = useState(false)
-    const [ReviewModal, setReviewModal] = useState(false)
+    const [reviewModalOpen, setReviewModalOpen] = useState(false)
+    const [reviews, setReviews] = useState([])
     const [availabilityModalVisible, setAvailabilityModalVisible] = useState(false)
     const [availability, setAvailability] = useState()
     console.log('item', item)
-    const reviewSamples = [
-        ['Blake Dude', '4', 'Cillum nulla cupidatat aute pariatur ad sit tempor consectetur amet culpa labore deserunt sunt. Veniam eiusmod sunt incididunt ullamco fugiat reprehenderit labore. Ipsum irure culpa veniam velit. Elit dolore cillum nulla nulla do nulla Lorem ullamco.'],
-        ['Jake Friend', '3', 'Id sunt laboris ad adipisicing ullamco id elit deserunt deserunt ullamco aute enim tempor tempor.'],
-        ['Angela Owen', '4', 'Dolor ea consectetur eiusmod id pariatur nisi magna minim nostrud et est exercitation ipsum laboris.'],
-        ['Lara Nichols', '5', 'Ex aute do adipisicing proident adipisicing occaecat officia.'],
-        ['Sam Stuart', '1', 'Et proident consectetur mollit laborum ut aliquip voluptate laborum nostrud reprehenderit quis. Ad ex minim aliquip amet irure nostrud labore anim do ipsum aliquip ut consequat commodo. Dolor commodo veniam velit cupidatat deserunt irure aute consectetur consequat.'],
-        ['Isaac Myers', '2', 'Enim aute incididunt proident Lorem id mollit. Occaecat do cillum magna sunt dolore non exercitation et anim enim. Et nulla nulla aute sint minim laborum ut cupidatat nulla fugiat aliqua laboris exercitation mollit. Labore consectetur culpa laboris fugiat velit eu laborum proident consectetur. Eu labore nisi velit velit irure laborum.'],
-        ['Christian Zhou', '5', 'Minim pariatur occaecat Lorem et ea elit reprehenderit sunt commodo ex.'],
-    ]
+
     useEffect(() => {
         // update modal state if navigated to this screen after creating a booking
         const bookingCreated = location.state?.bookingCreated
@@ -72,7 +66,7 @@ export default function Item() {
                     setAvailability(response.data.yearAvailability)
                     setLoading(false);
                     setFavourited(response.data.liked)
-                    console.log(response)
+                    getItemReviews(response.data.item.i_id)
                     // Split picture string into an array and save
                     setItemPictures(response.data.item.pictures.split(','))
                     // Check if user owns the item
@@ -99,6 +93,16 @@ export default function Item() {
                 })
         }
     }, [params.itemId]);
+
+    const getItemReviews = async (id) => {
+        try{
+            const { data, status } = await Instance.get(`/comments/findByIid?i_id=${id}`)
+            console.log(data)
+            setReviews(data)
+        } catch(err){
+            console.log(err)
+        }
+    }
 
     useEffect(() => {
         if (item && item.suburb) {
@@ -133,22 +137,21 @@ export default function Item() {
 
     }
 
-    const NumReviewPages = Math.ceil(reviewSamples.length / 2)
+    const NumReviewPages = Math.ceil(reviews.length / 2)
 
     const getReviewPages = () => {
-
         let content = []
-        for (let i = 1; i < NumReviewPages + 1; i++) {
-            content.push(<div className={(ReviewPage === i) ? "ReviewPageActive" : "ReviewPageInactive"} key={i} />);
+        for (let i = 0; i < NumReviewPages; i++) {
+            content.push(<div className={(reviewPage === i) ? "ReviewPageActive" : "ReviewPageInactive"} key={i} />);
         }
         return content;
     }
 
     const handleReviewPageClick = (direction) => {
         if (direction === "forward") {
-            (ReviewPage === NumReviewPages) ? setReviewPage(1) : setReviewPage(ReviewPage + 1);
+            (reviewPage === NumReviewPages - 1) ? setReviewPage(0) : setReviewPage(reviewPage + 1);
         } else {
-            (ReviewPage === 1) ? setReviewPage(NumReviewPages) : setReviewPage(ReviewPage - 1);
+            (reviewPage === 0) ? setReviewPage(NumReviewPages - 1) : setReviewPage(reviewPage - 1);
         }
     }
     const handleFavourite = () => {
@@ -172,24 +175,12 @@ export default function Item() {
         }
     }
 
-    const getReviews = () => {
-        let content = [];
-        let currentReviews = [];
-        currentReviews.push(reviewSamples[ReviewPage * 2 - 2]);
-        //if we're on the last page
-        if (ReviewPage === NumReviewPages) {
-            //check if the number of reviews is even, if so there will be 2 on last page
-            if (reviewSamples.length % 2 === 0) currentReviews.push(reviewSamples[ReviewPage * 2 - 1]);
-        } else {
-            currentReviews.push(reviewSamples[ReviewPage * 2 - 1]);
-        }
-        currentReviews.map((review, i) => {
-            content.push(<ReviewCard posterName={review[0]} rating={review[1]} reviewText={review[2]} key={i} />);
-            return 0;
-        });
-        return content;
+    const renderReviews = () => {
+        const visibleReviews = reviews.slice(reviewPage * 2, (reviewPage * 2) + 2)
+        return visibleReviews.map((review, index) => {
+            return <ReviewCard review={review} key={index} />
+        })
     }
-
     const defaultProps = {
         center: {
             lat: -27.481009,
@@ -221,12 +212,19 @@ export default function Item() {
         console.log(JSON.stringify(item, null,'\t'))
     }
     //-------------------------------------------------//
-    console.log('user', user)
-    console.log('owner', itemOwner)
+
     return (
         <PageWrapper>
             {ImageModal && <ItemImageModal setModal={setImageModal} images={itemPictures} modal={ImageModal} /> }
-            {ReviewModal && <ItemReviewModal setModal={setReviewModal} modal={ReviewModal} reviews={reviewSamples} /> }
+            {reviewModalOpen && 
+            <ItemReviewModal 
+            setReviewModalOpen={setReviewModalOpen} 
+            modalOpen={reviewModalOpen} 
+            reviews={reviews} 
+            item={item}
+            isUserItem={isUserItem}
+            itemOwner={itemOwner}
+            />}
             { availabilityModalVisible && item && 
             <AvailabilityModal 
             item={item}
@@ -243,23 +241,30 @@ export default function Item() {
 
                         <div className="ItemPriceFlex">
                             <div className="ItemPriceTextBig">${item.price}</div>
-                            {item.discount > 0 ?
-                                <div className="ItemRateDiscountFlex">
-                                    <div className="ItemDiscountText">{item.discount}% off peak discount</div>
-                                </div>
-                                : ''}
+                         
+                            <div className="ItemRateDiscountFlex">
+                                <div className="ItemPerSlotText">Per Slot</div>
+                                { item.discount > 0 &&<div className="ItemDiscountText">{item.discount}% off peak discount</div>}
+                            </div>
+                               
 
                         </div>
-                        <div className="LocationDeliveryCategory">
-                            <div className="LDCIconContainer"><img src={Location} alt="" className="LDCIcon" /></div>
+                        <div className="LocationDeliveryCategory" style={{ marginTop: '0.6rem' }}>
+                            <div className="LDCIconContainer" style={{ paddingLeft: 6}}>
+                                <img src={Location} alt="" className="LDCIcon" />
+                            </div>
                             {item.suburb}
                         </div>
                         <div className="LocationDeliveryCategory">
-                            <div className="LDCIconContainer"><img src={Delivery} alt="" className="LDCIcon" style={{ height: '22px' }} /></div>
+                            <div className="LDCIconContainer">
+                                <img src={Delivery} alt="" className="LDCIcon" style={{ height: '22px' }} />
+                            </div>
                             {item.deliveryPrice > 0 ? 'Delivery Available' : 'Pickup only'}&nbsp;<span className={`${item.deliveryPrice > 0 ? '' : 'Hide'}`}>/</span><span className={`DeliveryFeeText ${item.deliveryPrice > 0 ? '' : 'Hide'}`}>&nbsp;${item.deliveryPrice} Delivery Fee</span>
                         </div>
                         <div className="LocationDeliveryCategory">
-                            <div className="LDCIconContainer"><img src={Category} alt="" className="LDCIcon" /></div>
+                            <div className="LDCIconContainer">
+                                <img src={Category} alt="" className="LDCIcon" />
+                            </div>
                             {item.category}
                         </div>
                         
@@ -288,7 +293,9 @@ export default function Item() {
                                         Apply Now
                                     </div>
                                 </button>
-                                <button className="ButtonFavourite" onClick={handleFavourite} style={{ padding: '.5em 1em' }}>{favourited ? <StarFilled fill='#ffffff' /> : <StarOutline fill='#ffffff' />}</button>
+                                <button className="ButtonFavourite" onClick={handleFavourite} style={{ padding: '.5em 1em' }}>
+                                    {favourited ? <StarFilled fill='#ffffff' /> : <StarOutline fill='#fff' />}
+                                </button>
                             </div>
 
                         }
@@ -323,17 +330,18 @@ export default function Item() {
                         </div>
 
                         <div className="ReviewCardSection">
-                            {getReviews()}
+                            { renderReviews() }
                         </div>
 
-                        {/* Carousel Selector */}
-                        <div className="ReviewCarousel">
-                            <div className="ReviewPageActive ReviewButtonFlex" onClick={() => handleReviewPageClick("backward")}>{"<"}</div>
-                            {getReviewPages()}
-                            <div className="ReviewPageActive ReviewButtonFlex" onClick={() => handleReviewPageClick("forward")}>{">"}</div>
-                        </div>
-
-                        <button className="ViewReviewsButton" onClick={() => setReviewModal(true)}>View all Reviews</button>
+                        { reviews.length > 0 &&
+                            <>
+                                <div className="ReviewCarousel">
+                                    <div className="ReviewPageActive ReviewButtonFlex" onClick={() => handleReviewPageClick("backward")}>{"<"}</div>
+                                    {getReviewPages()}
+                                    <div className="ReviewPageActive ReviewButtonFlex" onClick={() => handleReviewPageClick("forward")}>{">"}</div>
+                                </div>
+                                <button className="ViewReviewsButton" onClick={() => setReviewModalOpen(true)}>View all Reviews</button>
+                            </>}
 
                         <hr className='hr' />
                         { isMobile && 
@@ -369,10 +377,6 @@ export default function Item() {
                             {itemPictures[1] &&
                                 <div className="SecondaryItemImageDiv ImageModalDiv">
                                     <img src={getImage(itemPictures[1])} alt="" className="SecondaryItemImage" style={{ borderRadius: "0 0 0 15px" }} />
-                                    { !itemPictures[2] &&
-                                    <div className="NavyOverlay">
-                                        <button className="ImageModalButton" onClick={() => setImageModal(true)}>View All</button>
-                                    </div>}
                                 </div>
                             }
                             {itemPictures[2] &&
