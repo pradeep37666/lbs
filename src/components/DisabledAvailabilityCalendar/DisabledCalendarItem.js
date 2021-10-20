@@ -18,6 +18,7 @@ export default function DisabledCalendarItem({day, index, onClick, isCurrentMont
         const { availability, booked } = getAvailability(day, itemAvailability, yearAvailability)
         console.log(day, availability, booked)
         setAvailability(availability)
+        console.log(availability)
         setBooked(booked)
         if(day.getDate() < currentDate && isCurrentMonth) {
             setBooked({ am: true, pm: true })
