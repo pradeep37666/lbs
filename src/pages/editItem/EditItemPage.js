@@ -30,7 +30,6 @@ function EditItemPage(props) {
   const history = useHistory();
   const [loading, setLoading] = useState(true);
   const [titleText, setTitleText] = useState();
-  //declaration for all the infromation we get from the server
   const [title, setTitle] = useState();
   const [category, setCategory] = useState();
   
@@ -51,6 +50,7 @@ function EditItemPage(props) {
   //--------modal for displaying the edit button dialogue-------//
   const [open, setOpen] = useState(false);
   const [editAvailabilityOpen, setEditAvailabilityOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false)
 
   const [pictures, setPictures] = useState([]);
   const [deletedImages, setDeletedImages] = useState([])
@@ -76,7 +76,6 @@ function EditItemPage(props) {
   let itemId = parsed.i_id;
 
   useEffect(() => {
-    //returning data from the server
     setLoading(true);
     Instance.get(`/items/findByIid/?i_id=${itemId}`)
       .then((response) => {
@@ -102,25 +101,19 @@ function EditItemPage(props) {
       .catch((error) => {
         console.log(error);
       });
-  }, [params, open]);
+  }, [params]);
 
-  //-------------------------Deleting Items from Database-------------//
   const handleItemDeletion = () => {
-    try {
-      Instance.delete(`/items/delete?i_id=${itemId}`)
-        .then((response) => {
-          console.log(response);
-        })
-        .catch((error) => {
-          console.log("Error : ", error);
-        });
-      history.push(`/user/your_shed`);
-    } catch (error) {
-      console.log("Error while Deleting : ", error);
-    }
+    Instance.delete(`/items/delete?i_id=${itemId}`)
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log("Error : ", error);
+      });
+    history.push(`/user/your_shed`);
   };
 
-  //------------------------------------------------------------------//
   //----------------------Picture Container Functionality------------------//
   const useStyles = makeStyles({
     button: {
@@ -210,7 +203,6 @@ function EditItemPage(props) {
   };
 
   const applyChanges = async () => {
-
     let newSuburb
     address.address_components ? newSuburb = getSuburb(address.address_components) : newSuburb = suburb
 
@@ -239,16 +231,15 @@ function EditItemPage(props) {
       }
       formData.append(key, newItemDetails[key])
     }
-    
-    
+    setIsLoading(true)
     try{
       const { data, status } = await Instance.put('/items/update', formData)
-      console.log(data, status)
-
-    } catch(err) {
-
-    } finally{
       
+    } catch(err) {
+      console.log(err)
+    } finally{
+      setIsLoading(false)
+      history.push(`/item/${itemId}`)
     }
   }
 
@@ -260,10 +251,11 @@ function EditItemPage(props) {
         textNormal={titleText}
         button={"Apply Changes"}
         buttonClick={() => applyChanges()}
+        buttonLoading={isLoading}
       />
       {loading ? (
         <div className="ItemPage__Loading__Container">
-          <CircularProgress size={75} />
+          <CircularProgress size={75} color="inherit" />
         </div>
       ) : (
         <div className="EditItemMainWrapper">
@@ -288,6 +280,7 @@ function EditItemPage(props) {
                 <CategorySelect
                   width="100%"
                   label="Category"
+                  thinBorder
                   setCategory={setCategory}
                   value={category}
                 />
@@ -486,16 +479,13 @@ function EditItemPage(props) {
                   onClose={handleCloseEditAvailability}
                 >
                   <DialogContent>
-                    <DialogContentText>
-                      <Availability
-                        setAvailability={setAvailable}
-                        addEditButtons
-                        getAvailability={available}
-                        handleDiscardChanges={() =>
-                          handleCloseEditAvailability()
-                        }
-                      />
-                    </DialogContentText>
+                    <Availability
+                      style={{ width: '100%', marginTop: '1rem', }}
+                      setAvailability={setAvailable}
+                      addEditButtons
+                      getAvailability={available}
+                      handleDiscardChanges={() => handleCloseEditAvailability()}
+                    />
                   </DialogContent>
                 </Dialog>
                 <button
@@ -503,30 +493,38 @@ function EditItemPage(props) {
                   onClick={handleClickOpen}
                   style={{ width: "57%" }}
                 >
-                  <div className="ItemButtonFlex">Delete Item</div>
+                  <div>Delete Item</div>
                 </button>
-                <Dialog open={open} onClose={handleClose}>
-                  <DialogTitle>Delete {title}?</DialogTitle>
-                  <DialogContent>
-                    <DialogContentText>
-                      Are you sure you want to remove {title} from YourShed?
-                    </DialogContentText>
-                  </DialogContent>
-                  <DialogActions>
-                    <Button onClick={handleClose} color="primary">
-                      Close
-                    </Button>
-                    <Button
+                <Dialog 
+                open={open} 
+                onClose={handleClose}>
+                  <DialogContent className="DeleteModalContainer">
+                    <div className="DeleteModalTextContainer">
+                      <div className="DeleteModalHeading">Are you sure you want to delete this item?</div>
+                      
+                      <div className="DeleteModalText">This item will be permanently deleted from the Little Big Shed platform.</div>
+                      <div className="DeleteModalText">Are you sure you want to do this?</div>
+                    </div>
+                    <div className="ItemButtons" style={{ justifyContent: 'center', justifySelf: 'flex-end', height: '3.5rem' }}>
+                      <button
+                      className="ButtonAvailability"
+                      style={{ width: '25%'}}
+                      onClick={handleClose}
+                      >
+                        <div className="ItemButtonFlex">No, go back</div>
+                      </button>
+                      <button
+                      style={{ width: '25%'}}
+                      className="SearchButtonLarge"
                       onClick={() => {
                         handleClose();
                         handleItemDeletion();
-                      }}
-                      color="secondary"
-                      autoFocus
-                    >
-                      Yes
-                    </Button>
-                  </DialogActions>
+                      }}>
+                      Yes, Delete
+                      </button>
+                    </div>
+                      
+                  </DialogContent >
                 </Dialog>
               </div>
             </div>

@@ -93,7 +93,7 @@ export default function Availability(props) {
 
   return (
     <div className="RegistrationWrapper">
-      <div className="LoginMain">
+      <div className="LoginMain" style={props.style ? props.style : null }>
         <Logo height="50px" width="50px" style={{ marginBottom: ".5em" }} />
 
         <div className="LoginHeader">General Product Availability</div>
@@ -135,20 +135,14 @@ export default function Availability(props) {
           sundayM={sundayM}
           sundayA={sundayA}
         />
-        <div className="SkipNextButtonFlex">
+        <div className="SkipNextButtonFlex" style={props.style ? { justifyContent: 'center'} : null }>
           {props.addEditButtons ? (
             <>
               <div>
                 <button
                   style={{ marginBottom: "4%" }}
                   className={`LoginFormButton`}
-                  onClick={() => {
-                    console.log(
-                      "Hey This is the availability string : ",
-                      props.getAvailability
-                    );
-                    props.handleDiscardChanges();
-                  }}
+                  onClick={() => {props.handleDiscardChanges() }}
                 >
                   Save Availability
                 </button>
@@ -156,7 +150,6 @@ export default function Availability(props) {
                   className="LoginFormButton LoginFormButtonInverted"
                   onClick={() => {
                     props.handleDiscardChanges();
-                    console.log("Hey Imran");
                   }}
                   style={{ marginRight: ".5em" }}
                 >

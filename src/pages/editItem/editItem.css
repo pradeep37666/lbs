@@ -1,3 +1,24 @@
+.DeleteModalContainer {
+  border: 2px solid #ac172c;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.DeleteModalText {
+  font-size: 18px;
+  margin-bottom: 0.5rem;
+  text-align: center;
+}
+.DeleteModalHeading {
+  font-size: 24px;
+  text-align: center;
+  color: #33384f;
+  font-weight: bold;
+  margin-bottom: 0.5em;
+}
+.DeleteModalTextContainer {
+  margin-bottom: 1rem;
+}
 @media only screen and (max-width: 940px) {
   .EditItemMainWrapper {
     display: flex;
@@ -33,11 +54,4 @@
 }
 .EditItemPicturesWrapper {
   width: 45%;
-}
-.RegistrationWrapper {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
 }

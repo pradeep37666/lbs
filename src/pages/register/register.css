@@ -41,7 +41,7 @@
   display: flex;
   align-items: center;
   width: 100%;
-  margin-bottom: .5em;
+  margin-bottom: 0.5em;
 }
 
 .ProfilePictureCircle {
@@ -151,8 +151,8 @@
 
 .DOBHeader {
   width: 30%;
-  margin-bottom: .5em;
-  margin-left: .5em;
+  margin-bottom: 0.5em;
+  margin-left: 0.5em;
   color: #33384f;
   font-size: 14px;
   font-weight: bold;

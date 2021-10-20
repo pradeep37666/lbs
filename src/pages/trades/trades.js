@@ -39,17 +39,27 @@ export default function Trades() {
     }
 
     const getLenderBookings = async () => {
-        const { data, status } = await Instance.get('booking/findByOwnerId')
-        if(status !== 200) return
-        const parsedBookings = parseBookings(data)
-        setLenderBookingItems(parsedBookings)
+        try{
+            const { data, status } = await Instance.get('booking/findByOwnerId')
+            if(status !== 200) return
+            console.log(data)
+            const parsedBookings = parseBookings(data)
+            setLenderBookingItems(parsedBookings) 
+        } catch(err){
+            console.log(err)
+        }
      }
 
     const getBorrowerBookings = async () => {
-        const { data, status } = await Instance.get('booking/findByUid')
-        if(status !== 200) return
-        const parsedBookings = parseBookings(data)
-        setBorrowerBookingItems(parsedBookings)
+        try{
+            const { data, status } = await Instance.get('booking/findByUid')
+            if(status !== 200) return
+            console.log(data)
+            const parsedBookings = parseBookings(data)
+            setBorrowerBookingItems(parsedBookings)
+        } catch(err){
+            console.log(err)
+        }
     }
 
      const parseBookings = (bookings) => {

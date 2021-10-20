@@ -1,28 +1,34 @@
+import { CircularProgress } from "@material-ui/core";
 import React from "react";
 import "./bannerText.css";
 
-export default function bannerText(props) {
+export default function bannerText({ textBold, textNormal, button, buttonClick, buttonLoading }) {
   return (
     <div className="Banner">
       <div className="BannerText">
-        {props.textBold}
+        {textBold}
         <span className="BannerTextNormal">
-          &nbsp;-&nbsp;{props.textNormal}
+          &nbsp;-&nbsp;{textNormal}
         </span>
       </div>
-      {props.button ? (
-        <button
+      {button &&
+        buttonLoading ? (
+          <div style={{ width: '15%', marginLeft: '30%'}}>
+            <CircularProgress color="inherit" />
+          </div>
+          
+        ): (
+          <button
           className="editButton"
           style={{ width: "15%", marginLeft: "30%" }}
           onClick={() => {
-            props.buttonClick();
+            buttonClick();
           }}
         >
-          {props.button}
+          {button}
         </button>
-      ) : (
-        ""
-      )}
+        )
+      }
     </div>
   );
 }

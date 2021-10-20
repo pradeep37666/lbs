@@ -51,8 +51,8 @@ export default function Item() {
     const [reviews, setReviews] = useState([])
     const [availabilityModalVisible, setAvailabilityModalVisible] = useState(false)
     const [availability, setAvailability] = useState()
-    console.log('item', item)
 
+    console.log(item)
     useEffect(() => {
         // update modal state if navigated to this screen after creating a booking
         const bookingCreated = location.state?.bookingCreated
