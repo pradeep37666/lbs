@@ -30,6 +30,7 @@ export default function AccountSettings() {
             })
     }, [])
 
+    console.log('user', user)
     return (
         <div className="AccountSettings__FlexMain">
             <div className="AccountSettings__Main">

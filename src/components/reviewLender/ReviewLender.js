@@ -1,12 +1,16 @@
 import React, { useState } from "react";
-import { CircularProgress, IconButton } from "@material-ui/core";
+import { CircularProgress, DialogContent, IconButton } from "@material-ui/core";
 import { Close } from "@material-ui/icons";
 import { makeStyles } from "@material-ui/styles";
 import { ReactComponent as StarOutline } from "./../../assets/Icons/StarOutline.svg";
 import { ReactComponent as StarFilled } from "./../../assets/Icons/StarFilled.svg";
 import Instance from "../../util/axios";
+import useGlobalState from "../../util/useGlobalState";
+import { Dialog } from "@material-ui/core";
 
-function ReviewLender({ onClick, isLender, booking }) {
+function ReviewLender({ onClick, isLender, booking, open }) {
+  const { state } = useGlobalState()
+  const { user } = state
   const [comment, setComment] = useState("");
   const [lenderRating, setLenderRating] = useState(5);
   const [productRating, setProductRating] = useState(5)
@@ -38,21 +42,43 @@ function ReviewLender({ onClick, isLender, booking }) {
   const submitReview = async () => {
     setIsLoading(true)
     try{
-        // const { data, status } = await Instance.post('l')
+        const res = await Instance.post('/lenderRating/save',{
+            b_id: user.id,
+            l_id: booking.io_id,
+            rating: lenderRating
+        })
+        console.log('rating', res)
         const { data, status } = await Instance.post('/comments/save',{
             i_id: booking.i_id,
             content: comment,
             rating: productRating
         })
         console.log(data, status)
-
+        await updateBookingStatus(8)
     } catch(err){
         console.log(err)
     } finally{
         setIsLoading(false)
+        onClick()
     }
 
   }
+  
+  const updateBookingStatus = async (newStatus) => {
+    try{
+        const newBooking = {b_id: booking.b_id, status: newStatus}
+        const { data, status} = await Instance.put('/booking/update', newBooking)
+        console.log(data,status)
+        if(status === 200){
+            // setStatus(newStatus)
+            // getBookings()
+        }
+    } catch(err) {
+        console.log(err)
+    }
+    
+}
+
   const renderLenderStars = () => {
       const starArray = new Array(5).fill(null)
       return starArray.map(( item, index) => {
@@ -92,9 +118,12 @@ function ReviewLender({ onClick, isLender, booking }) {
     })
   }
   const classes = useStyles()
+
   return (
-    <div className="ApplicationModalWrapper" onClick={onClick}>
-        <div className="BorrowerMain" onClick={(e) => e.stopPropagation()}>
+      <Dialog 
+      onClose={onClick}
+      open={open}>
+        <DialogContent className="BorrowerMain">
             <div className="BorrowerHeaderContent">
                 <div className="BorrowerHeader" style={{ justifyContent: "center" }}>
                     Trade Complete
@@ -117,7 +146,7 @@ function ReviewLender({ onClick, isLender, booking }) {
             <div className="BorrowerStarsFlex" style={{ paddingTop: 15}}>
                 { renderProductStars() }
             </div>
-            <div className="BorrowerHeader">{ isLender ? 'Borrower' : 'Lender'} Comments</div>
+            <div className="BorrowerHeader">Product Comments</div>
             <textarea
             rows="10"
             maxLength="254"
@@ -139,8 +168,9 @@ function ReviewLender({ onClick, isLender, booking }) {
                     </button>
                 )}
             </div>
-        </div>
-    </div>
+        </DialogContent>
+      </Dialog>
+    
   );
 }
 

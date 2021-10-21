@@ -1,14 +1,19 @@
 import React, { useState } from "react";
-import "./ReviewTrade.css";
-import { IconButton } from "@material-ui/core";
+import "./ReviewBorrower.css";
+import { CircularProgress, Dialog, DialogContent, IconButton } from "@material-ui/core";
 import { Close } from "@material-ui/icons";
 import { makeStyles } from "@material-ui/styles";
 import { ReactComponent as StarOutline } from "./../../assets/Icons/StarOutline.svg";
 import { ReactComponent as StarFilled } from "./../../assets/Icons/StarFilled.svg";
+import Instance from "../../util/axios";
+import useGlobalState from "../../util/useGlobalState";
 
-function ReviewTrade({ onClick, isLender }) {
+function ReviewBorrower({ onClick, isLender, booking, open }) {
+  const { state } = useGlobalState()
+  const { user } = state
   const [comment, setComment] = useState("");
-  const [Rating, setRating] = useState();
+  const [borrowerRating, setBorrowerRating] = useState(5);
+  const [isLoading, setIsLoading] = useState(false)
 
   const useStyles = makeStyles({
     button: {
@@ -35,12 +40,30 @@ function ReviewTrade({ onClick, isLender }) {
 
   const classes = useStyles();
 
+  const reviewBorrower = async () => {
+    setIsLoading(true)
+    try{
+      const { data, status } = await Instance.post('/borrowerRating/save', {
+          b_id: booking.u_id,
+          l_id: user.id,
+          rating: borrowerRating
+      })
+      console.log(data, status)
+    } catch(err) {
+      console.log(err)
+    } finally{
+      setIsLoading(false)
+      onClick()
+    }
+  }
   return (
-    <div className="ApplicationModalWrapper" onClick={onClick}>
-      <div className="BorrowerMain" onClick={(e) => e.stopPropagation()}>
+    <Dialog 
+    onClose={onClick}
+    open={open}>
+      <DialogContent className="BorrowerMain">
         <div className="BorrowerHeaderContent">
           <div className="BorrowerHeader" style={{ justifyContent: "center" }}>
-            Rate Experience
+            Rate Borrower
           </div>
 
           <div onClick={onClick}>
@@ -50,99 +73,91 @@ function ReviewTrade({ onClick, isLender }) {
           </div>
         </div>
         <div className="BorrowerText">
-          Here, You can give ratings to the { isLender ? 'Borrower' : 'Lender'} also, you can comment the
-          details about the { isLender ? 'Borrower' : 'Lender'} and the { isLender ? 'Borrowing' : 'Lending'} experience.
+          Here, You can give ratings to the Borrower also, you can comment the
+          details about the Borrower and the { isLender ? 'Borrowing' : 'Lending'} experience.
         </div>
         <div className="BorrowerHeader">
-          { isLender ? 'Borrower ' : 'Lender ' }Rating :&nbsp;
+        Borrower Rating :&nbsp;
           <div className="RatingFilterHeader">
-            {Rating} Star{Rating === 1 ? "" : "s"}
+            {borrowerRating} Star{borrowerRating === 1 ? "" : "s"}
           </div>
         </div>
         <div className="BorrowerStarsFlex">
           <StarFilled
             className="BorrowerStarIcon StarClick"
             fill="#E9D8B4"
-            onClick={() => setRating(1)}
+            onClick={() => setBorrowerRating(1)}
           />
-          {Rating >= 2 ? (
+          {borrowerRating >= 2 ? (
             <StarFilled
               className="BorrowerStarIcon StarClick"
               fill="#E9D8B4"
-              onClick={() => setRating(2)}
+              onClick={() => setBorrowerRating(2)}
             />
           ) : (
             <StarOutline
               className="BorrowerStarIcon StarClick"
-              onClick={() => setRating(2)}
+              onClick={() => setBorrowerRating(2)}
             />
           )}
-          {Rating >= 3 ? (
+          {borrowerRating >= 3 ? (
             <StarFilled
               className="BorrowerStarIcon StarClick"
               fill="#E9D8B4"
-              onClick={() => setRating(3)}
+              onClick={() => setBorrowerRating(3)}
             />
           ) : (
             <StarOutline
               className="BorrowerStarIcon StarClick"
-              onClick={() => setRating(3)}
+              onClick={() => setBorrowerRating(3)}
             />
           )}
-          {Rating >= 4 ? (
+          {borrowerRating >= 4 ? (
             <StarFilled
               className="BorrowerStarIcon StarClick"
               fill="#E9D8B4"
-              onClick={() => setRating(4)}
+              onClick={() => setBorrowerRating(4)}
             />
           ) : (
             <StarOutline
               className="BorrowerStarIcon StarClick"
-              onClick={() => setRating(4)}
+              onClick={() => setBorrowerRating(4)}
             />
           )}
-          {Rating >= 5 ? (
+          {borrowerRating >= 5 ? (
             <StarFilled
               className="BorrowerStarIcon StarClick"
               fill="#E9D8B4"
-              onClick={() => setRating(5)}
+              onClick={() => setBorrowerRating(5)}
             />
           ) : (
             <StarOutline
               className="BorrowerStarIcon StarClick"
-              onClick={() => setRating(5)}
+              onClick={() => setBorrowerRating(5)}
             />
           )}
         </div>
         <div style={{ width: "100%" }}>
           <span class="BorrowerRatingText ">&nbsp;Click Your Desired Rating</span>
         </div>
-
-        {/* Item Description */}
-        <div className="BorrowerHeader">{ isLender ? 'Borrower' : 'Lender'} Comments</div>
-        <textarea
-          rows="10"
-          maxLength="254"
-          placeholder={`Your comments on the ${ isLender ? 'Borrowing' : 'Lending'} Experience.`}
-          className="LoginInput PostItem__TextArea"
-          onChange={(e) => setComment(e.target.value)}
-        />
-        {/* Submit Borrower Review Button */}
-        <div className="ItemButtons" style={{ justifyContent: "center" }}>
-          <button
+        <div className="ItemButtons" style={{ justifyContent: "center", minHeight: "4rem" }}>
+          { isLoading ? (
+            <CircularProgress color="inherit"/>
+          ) : (
+            <button
             className="SearchButtonLarge"
-            onClick={() => {
-              console.log("Rating -", Rating);
-              console.log("Details -", comment);
-            }}
-            style={{ width: "auto" }}
-          >
-            <div className="ItemButtonFlex">Submit Review</div>
-          </button>
+            onClick={reviewBorrower}
+            style={{ width: "auto", marginTop: '1.5rem' }}
+            >
+              <div className="ItemButtonFlex">Submit Rating</div>
+            </button>
+          )}
         </div>
-      </div>
-    </div>
+        </DialogContent>
+      </Dialog>
+    
   );
 }
 
-export default ReviewTrade;
+
+export default ReviewBorrower;

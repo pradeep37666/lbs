@@ -164,7 +164,7 @@ export default function TradeSidebar({ booking, getBookings, setReportModalVisib
                             <RatingFiller rating={userDetails.lender_rating}/>
                         </div>
                         <div className="TradeSidebarUserRatingContainer">
-                            <span>Lender: </span>
+                            <span>Borrower: </span>
                             <span>{userDetails.borrower_rating}/5</span>
                             <RatingFiller rating={userDetails.borrower_rating}/>
                         </div>

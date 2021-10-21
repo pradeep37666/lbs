@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import "./TradeFailed.css";
 import clsx from "clsx";
-import { IconButton } from "@material-ui/core";
+import { Dialog, DialogContent, IconButton } from "@material-ui/core";
 import { Close } from "@material-ui/icons";
 import { makeStyles } from "@material-ui/styles";
 import Checkbox from "@material-ui/core/Checkbox";
 
-function TradeFailed({ onClick, isLender }) {
+function TradeFailed({ onClick, isLender, open }) {
   const REASONS = {
     ARRIVALFAILURE: `${isLender ? 'Borrower' : 'Lender'} Has Failed To Arrive`,
     REFUSAL: `${isLender ? 'Borrower' : 'Lender'} refuses to give item`,
@@ -122,8 +122,11 @@ function TradeFailed({ onClick, isLender }) {
   const classes = useStyles();
 
   return (
-    <div className="ApplicationModalWrapper" onClick={onClick}>
-        <div className="BorrowerMain" onClick={(e) => e.stopPropagation() }>
+    <Dialog
+    open={open}
+    onClose={onClick}
+    >
+      <DialogContent className="BorrowerMain">
           <div className="BorrowerHeaderContent">
             <div className="BorrowerHeader" style={{ justifyContent: "center" }}>
               {isLender ? "Lend Failed" : "Borrow Failed" }
@@ -241,8 +244,8 @@ function TradeFailed({ onClick, isLender }) {
               <div className="ItemButtonFlex">Submit Report</div>
             </button>
           </div>
-        </div>
-    </div>
+        </DialogContent>
+      </Dialog>
   );
 }
 

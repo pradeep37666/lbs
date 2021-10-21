@@ -10,8 +10,8 @@
   top: 15%;
   background-color: #fff;
   position: relative;
-  border-radius: 20px;
-  border: 1px solid #ac172c;
+  /* border-radius: 20px; */
+  /* border: 1px solid #ac172c; */
   display: flex;
   flex-direction: column;
   align-items: center;

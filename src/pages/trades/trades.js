@@ -11,7 +11,7 @@ import TradeFailed from '../../components/TradeFailed/TradeFailed'
 import userEvent from '@testing-library/user-event'
 import useGlobalState from '../../util/useGlobalState'
 
-import ReviewTrade from '../../components/ReviewTrade/ReviewTrade'
+import ReviewBorrower from '../../components/ReviewBorrower/ReviewBorrower'
 import { useHistory } from 'react-router'
 import NoContent from '../../components/NoContent/NoContent'
 import ReviewLender from '../../components/reviewLender/ReviewLender'
@@ -79,18 +79,20 @@ export default function Trades() {
     const isLender = selectedBooking?.io_id === user.id
     return (
         <PageWrapper>
-            { reportModalVisible &&  
-                <TradeFailed onClick={() => setReportModalVisible(false)} isLender={selectedBooking.io_id === user.id} />  
+            { selectedBooking &&  
+                <TradeFailed 
+                open={reportModalVisible}
+                onClick={() => setReportModalVisible(false)} 
+                isLender={selectedBooking.io_id === user.id} />  
             }
-            { reviewModalVisible ? (
-                isLender ? (
-                    <ReviewTrade onClick={() => setReviewModalVisible(false)}  />
-                ) : (
-                    <ReviewLender onClick={() => setReviewModalVisible(false)} booking={selectedBooking}/>
-                )
-            ) : null
-                
-            }
+            <ReviewLender 
+            open={reviewModalVisible && !isLender}
+            onClick={() => setReviewModalVisible(false)} 
+            booking={selectedBooking}/>
+            <ReviewBorrower 
+            open={reviewModalVisible && isLender}
+            onClick={() => setReviewModalVisible(false)}  
+            booking={selectedBooking} />
             <div className="UserShedWrapper">
                 { !isMobile && <UserShedNav setAccountContent={setAccountContent} accountContent={accountContent}/>}
 

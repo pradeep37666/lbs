@@ -5,16 +5,15 @@
 }
 
 .BorrowerMain {
-  border-radius: 20px;
-  border: 1px solid #ac172c;
+  border: 2px solid #ac172c;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   padding: 2em;
   width: 100%;
-  min-width: 350px;
-  margin: 4em 0 2em 0;
+  min-width: 550px;
+  margin: 0;
 }
 
 .BorrowerHeader {

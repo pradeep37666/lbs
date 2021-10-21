@@ -38,7 +38,7 @@ export default function Item() {
     const location = useLocation()
     const history = useHistory()
 
-    const [modalVisible, setModalVisible] = useState()
+    const [modalVisible, setModalVisible] = useState(false)
     const [item, setItem] = useState();
     const [itemPictures, setItemPictures] = useState([])
     const [favourited, setFavourited] = useState(false)
@@ -53,7 +53,7 @@ export default function Item() {
     const [availabilityModalVisible, setAvailabilityModalVisible] = useState(false)
     const [availability, setAvailability] = useState()
 
-    console.log(item)
+
     useEffect(() => {
         // update modal state if navigated to this screen after creating a booking
         const bookingCreated = location.state?.bookingCreated
@@ -239,7 +239,7 @@ export default function Item() {
 
                 :
                 <div className="ItemMainWrapper">
-                    {modalVisible && <ApplicationModal item={item} onClick={handleModalClick} />}
+                    <ApplicationModal item={item} onClick={handleModalClick} open={modalVisible} />
                     <div className="ItemInfoWrapper">
                         <div className="ItemName">{item.title}</div>
 
