@@ -22,12 +22,13 @@ import useGlobalState from "../../util/useGlobalState"
 import CircularProgress from '@material-ui/core/CircularProgress';
 import ApplicationModal from '../../components/applicationModal/ApplicationModal'
 import getImage from '../../util/getImage.js';
-
+import NoContent2 from '../../assets/Images/NoContent2.png'
 import { Avatar } from '@material-ui/core';
 import MissingProfile from '../../assets/Icons/MissingProfileIcon.png'
 
 import { isMobile } from 'react-device-detect'
 import AvailabilityModal from '../../components/AvailabilityModal/AvailabilityModal.js';
+import NoReviews from '../../components/NoReviews/NoReviews.js';
 
 export default function Item() {
     const { state } = useGlobalState()
@@ -177,6 +178,9 @@ export default function Item() {
 
     const renderReviews = () => {
         const visibleReviews = reviews.slice(reviewPage * 2, (reviewPage * 2) + 2)
+        if(visibleReviews.length === 0){
+            return <NoReviews />
+        }
         return visibleReviews.map((review, index) => {
             return <ReviewCard review={review} key={index} />
         })

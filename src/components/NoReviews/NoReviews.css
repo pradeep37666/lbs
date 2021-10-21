@@ -1,0 +1,17 @@
+.NoReviewsContainer {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.NoReviewsHeader {
+  font-size: 25px;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  color: #33384f;
+}
+
+.NoReviewsText {
+  margin-bottom: 2rem;
+}
