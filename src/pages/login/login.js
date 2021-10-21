@@ -9,36 +9,34 @@ import ValidationPopup from '../../components/ValidationPopup/ValidationPopup';
 import useGlobalState from '../../util/useGlobalState';
 import { CometChat } from '@cometchat-pro/chat';
 import { isMobile } from 'react-device-detect';
+import { CircularProgress } from '@material-ui/core';
 
 export default function Login() {
     const { dispatch } = useGlobalState()
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const history = useHistory()
+    const [isLoading, setIsLoading] = useState(false)
 
     const [loginValidation, setLoginValidation] = useState("")
 
     const handleSubmit = async (e) => {
+        setIsLoading(true)
         try{
             e.preventDefault()
             const response = await Instance.post('/auth/signIn', {
                 email: email,
                 password: password
             })
-            // Only log in if details are correct
-            if (response.status === 404) {
-                setLoginValidation("Incorrect username or password, please try again")
-            } else if (response.status === 201) {
-                // Add user to global state
-                dispatch({ type: 'setUser', data: response.data.user })
-                localStorage.setItem('token', response.data.token.accessToken)
-                await cometChatLogin(response.data.user)
-                setLoginValidation("")
-                history.push({ pathname: '/' })
-            }
+            await cometChatLogin(response.data.user)
+            setLoginValidation("")
+            localStorage.setItem('token', response.data.token.accessToken)
+            dispatch({ type: 'setUser', data: response.data.user })
+            // return
         }catch(error){
             setLoginValidation("An error occurred whilst logging in, please try again")
-            console.log(error) 
+        } finally{
+            setIsLoading(false)
         }
     }
 
@@ -47,7 +45,7 @@ export default function Login() {
             const User = await  CometChat.login(user.id, process.env.REACT_APP_CHAT_AUTH_KEY)
             console.log(User, 'logged into comet chat')
         } catch(e) {
-            console.log(e)
+            throw new Error
         }
     }
 
@@ -67,13 +65,20 @@ export default function Login() {
                         setLoginValidation("")
                         setPassword(e.target.value)
                     }} />
-                    <div className="LoginInputValidationContainer">
-                        <button type='submit' disabled={!email || !password} className={`LoginFormButton ${!email || !password ? 'ButtonDisabled' : ''}`}>Log in</button>
-                        { !isMobile && <div className={`triangleLeft ${loginValidation.length === 0 ? '' : 'ValidationTextHide'}`} />}
-                        { loginValidation && <ValidationPopup errorText={loginValidation} errorHeader='Invalid Login Details' hide={loginValidation.length === 0} />}
+                    <div className="LoginInputValidationContainer" style={isLoading ? { display: 'flex', justifyContent: 'center', height: 'max-content'} : null}>
+                        {   isLoading ? (
+                            <CircularProgress color="inherit" />
+                        ) : (
+                            <>
+                                <button type='submit' disabled={!email || !password} className={`LoginFormButton ${!email || !password ? 'ButtonDisabled' : ''}`}>Log in</button>
+                                { !isMobile && <div className={`triangleLeft ${loginValidation.length === 0 ? '' : 'ValidationTextHide'}`} /> }
+                                { loginValidation && <ValidationPopup errorText={loginValidation} errorHeader='Invalid Login Details' hide={loginValidation.length === 0} /> }
+                            </>
+                        )
+                            }
                     </div>
                 </form>
-                <div className="LoginText">Forgot password?<span className="RetrieveLink"> Retrieve here</span></div>
+                <div className="LoginText" style={{ marginTop: '1rem' }}>Forgot password?<span className="RetrieveLink"> Retrieve here</span></div>
                 <Link to='/register' style={{ width: '100%' }}>
                     <button className="LoginFormButton LoginFormButtonInverted">Create Account</button>
                 </Link>

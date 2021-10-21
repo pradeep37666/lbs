@@ -33,7 +33,6 @@ import NoReviews from '../../components/NoReviews/NoReviews.js';
 export default function Item() {
     const { state } = useGlobalState()
     const { user } = state
-    // Pass in number of reviews from backend for use in review carousel + modal
     const params = useParams();
     const location = useLocation()
     const history = useHistory()
@@ -52,7 +51,6 @@ export default function Item() {
     const [reviews, setReviews] = useState([])
     const [availabilityModalVisible, setAvailabilityModalVisible] = useState(false)
     const [availability, setAvailability] = useState()
-
 
     useEffect(() => {
         // update modal state if navigated to this screen after creating a booking

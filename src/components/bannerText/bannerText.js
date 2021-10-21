@@ -11,7 +11,7 @@ export default function bannerText({ textBold, textNormal, button, buttonClick, 
           &nbsp;-&nbsp;{textNormal}
         </span>
       </div>
-      {button &&
+      {button ? (
         buttonLoading ? (
           <div style={{ width: '15%', marginLeft: '30%'}}>
             <CircularProgress color="inherit" />
@@ -23,11 +23,12 @@ export default function bannerText({ textBold, textNormal, button, buttonClick, 
           style={{ width: "15%", marginLeft: "30%" }}
           onClick={() => {
             buttonClick();
-          }}
-        >
-          {button}
-        </button>
+            }}
+          >
+            {button}
+          </button>
         )
+      ) : null
       }
     </div>
   );

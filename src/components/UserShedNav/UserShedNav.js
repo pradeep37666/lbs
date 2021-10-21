@@ -28,7 +28,7 @@ export default function UserShedNav(props) {
         dispatch({ type: 'setUser', data: null })
         const res = await CometChat.logout()
         console.log('log out from comet chat', res)
-        history.push({ pathname: '/' })
+        // history.push({ pathname: '/' })
     }
 
     return (

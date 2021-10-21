@@ -111,9 +111,10 @@ export default function EditPaymentDetails() {
             color: "black",
             fontFamily: '"DMSans", sans-serif',
             fontSmoothing: "antialiased",
-            fontSize: "20px",
+            fontSize: "18px",
+            fontWeight: 'bold',
             "::placeholder": {
-              color: "#aab7c4",
+              color: "rgb(133,133,133)",
             },
           },
           invalid: {
@@ -122,6 +123,7 @@ export default function EditPaymentDetails() {
           },
         },
       };
+
 
     const createPaymentMethod = async () => {
         if(!cardName) {
@@ -156,6 +158,7 @@ export default function EditPaymentDetails() {
         setIsCardLoading(true)
         try{
             const { data, status } = await Instance.delete(`/stripe/deleteCreditCard?paymentMethodId=${userCard.id}`)
+            console.log(data,status)
             if(status !== 200) return
             setUserCard(null)
 

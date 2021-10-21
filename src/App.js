@@ -21,11 +21,11 @@ import {
   Redirect
 } from "react-router-dom";
 import reducer from './util/reducer'
-import instance from './util/axios';
 import { CometChat } from '@cometchat-pro/chat'
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 import EditItemPage from './pages/editItem/EditItemPage';
+import Instance from './util/axios';
 
 export const GlobalStateContext = React.createContext()
 
@@ -45,15 +45,19 @@ function App() {
       return
     } 
     setupCometChat()
-    instance.get('/user/me')
-      .then(({ data }) => {
-        console.log('user', data)
-        dispatch({ type: 'setUser', data })
-        setLoadingUser(false)
-        return
-      })
-      .catch((e) => console.log(e))
+    getCurrentUser()
   }, [])
+
+  const getCurrentUser = async () => {
+    try{
+      const { data } = await Instance.get('/user/me')
+      dispatch({ type: 'setUser', data })
+    } catch(err) {
+      localStorage.removeItem('token')
+    } finally {
+      setLoadingUser(false)
+    }
+  }
 
   const setupCometChat = () => {
     const appId = process.env.REACT_APP_CHAT_APP_ID
