@@ -10,7 +10,7 @@ export default function ApplicationFooter() {
     const globalState = useGlobalState().state
     const { user } = globalState
     const  { state, dispatch, handleNextPage } = useContext(ApplicationContext)
-    const { page, item, confirmedStart, confirmedEnd, deliverySelected, pickupSelected, address } = state
+    const { page, item, confirmedStart, confirmedEnd, deliverySelected, pickupSelected, address, currentYear } = state
     const dayArray = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
     const monthArray = ["January", "February", "March", "April","May", "June", "July", "August", "September", "October", "November", "December"]
 
@@ -35,34 +35,60 @@ export default function ApplicationFooter() {
 
     const calculatePrice = () => {
         let discountTimeSlots = 0
-        if(item.discount > 0) discountTimeSlots = calculateDiscount()
+        if(item.discount > 0) discountTimeSlots = getDiscountTimeSlots()
         let price
         if(confirmedEnd.sameTimeSlot) {
             price = item.price 
-            // + ( (deliverySelected ? item.deliveryPrice : 0) + (pickupSelected ? item.deliveryPrice : 0))
         }
-        //const days = confirmedEnd.day.getDate() - confirmedStart.day.getDate()
-        const days = getDateIndex(confirmedEnd.day) - getDateIndex(confirmedStart.day)
-        let totalTimeSlots
-        if(confirmedStart?.am && confirmedEnd?.am || confirmedStart?.pm && confirmedEnd?.pm){
-            totalTimeSlots = (days * 2) + 1
-        }
-        if(confirmedStart?.am && confirmedEnd?.pm){
-            totalTimeSlots = (days + 1) * 2
-        }
-        if(confirmedStart?.pm && confirmedEnd?.am){
-            totalTimeSlots = days * 2
-        }
+        const startIndex =  getDateIndex(confirmedStart.day) 
+        const endIndex = getDateIndex(confirmedEnd.day)
+        const totalDays = (endIndex - startIndex >= 0) ? endIndex - startIndex : getYearCrossoverDays(startIndex, endIndex)
+
+        const totalTimeSlots = getTotalTimeSlots(totalDays)
         const weekendTimeSlots = totalTimeSlots - discountTimeSlots
         price = (weekendTimeSlots * item.price) + (discountTimeSlots * (item.price * (1 - item.discount / 100)))
+        
         // Dont' calculate delivery and pickup if the user is looking at the calendar
         if(page === 'ItemAvailability' && !confirmedEnd.sameTimeSlot){
             return price.toFixed(2)
         }
-        return (price + ( (deliverySelected ? item.deliveryPrice : 0) + (pickupSelected ? item.deliveryPrice : 0))).toFixed(2)
+        return (price + getCostOfExtras()).toFixed(2)
     }
 
-    const calculateDiscount = () => {
+    const getTotalTimeSlots = (totalDays) => {
+        if(confirmedStart?.am && confirmedEnd?.am || confirmedStart?.pm && confirmedEnd?.pm){
+            return (totalDays * 2) + 1
+        }
+        if(confirmedStart?.am && confirmedEnd?.pm){
+            return (totalDays + 1) * 2
+        }
+        if(confirmedStart?.pm && confirmedEnd?.am){
+            return totalDays * 2
+        }
+    }
+
+    const getCostOfExtras = () => {
+        let costOfExtras = 0
+        if(deliverySelected){
+            costOfExtras += item.deliveryPrice
+        } 
+        if(pickupSelected){
+            costOfExtras += item.deliveryPrice 
+        }
+        return costOfExtras
+
+    }
+    const getYearCrossoverDays = (startIndex, endIndex) => {
+        console.log(startIndex, endIndex)
+        const nextYear = currentYear + 1
+        const isLeapYear = (nextYear % 4 === 0 && nextYear % 100 !== 0) || nextYear % 400 === 0;
+        const nextYearsDays = isLeapYear ? 366 : 365
+        
+        const crossoverDays = nextYearsDays - startIndex
+        return crossoverDays + endIndex
+    }
+
+    const getDiscountTimeSlots = () => {
         const startDay = new Date(confirmedStart.day.getFullYear(), confirmedStart.day.getMonth(), confirmedStart.day.getDate())
         let timeSlots = 0
         while(startDay <= confirmedEnd.day) {

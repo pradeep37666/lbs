@@ -60,7 +60,7 @@ export default function AvailabilityCalendar({ month, year, }) {
             return <span className="CalendarCurrentYearLabel">{currentYear}</span>
         }
         if(monthArray[month] === 'January'){
-            return <span>{currentYear + 1}</span>
+            return <span className="CalendarCurrentYearLabel">{currentYear + 1}</span>
         }
     }
 

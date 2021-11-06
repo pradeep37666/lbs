@@ -12,11 +12,18 @@ export default function ItemAvailability({ handleNextPage }) {
     const renderMonths = () => {
         const months = Array(3).fill(null)
         return months.map((item, index) => {
+            let calendarMonth = currentMonth + index
+            let calendarYear = currentYear
+
+            if(calendarMonth > 11) {
+                calendarMonth -= 12
+                calendarYear += 1
+            }
             return (
             <AvailabilityCalendar 
             key={index}
-            month={currentMonth + index} 
-            year={currentYear}
+            month={calendarMonth} 
+            year={calendarYear}
             />
         )})
     }
