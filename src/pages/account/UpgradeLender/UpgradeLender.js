@@ -16,7 +16,9 @@ export default function UpgradeLender() {
     const { user } = globalState
 
     const history = useHistory()
-
+    const [dayOfBirth, setDayOfBirth] = useState()
+    const [monthOfBirth, setMonthOfBirth] = useState()
+    const [yearOfBirth, setYearOfBirth] = useState()
     const [page, setPage] = useState('Bank Details')
 
     const [accNumber, setAccNumber] = useState("")
@@ -50,7 +52,8 @@ export default function UpgradeLender() {
     }
 
     const submitUpgrade = () => {
-
+        // createStripeAccount()
+        // return
         let suburb
         address.address_components ? suburb = getSuburb(address.address_components) : suburb = user.suburb
         
@@ -83,12 +86,45 @@ export default function UpgradeLender() {
 
     }
 
+    const createStripeAccount = async () => {
+        const stripeData = {
+            u_id: user.id,
+            email: user.email,
+            bsb,
+            accountNumber: accNumber,
+            day: dayOfBirth,
+            month: monthOfBirth,
+            year: yearOfBirth,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            country: address.address_components[5].short_name,
+            state: address.address_components[4].short_name,
+            city:   address.address_components[3].long_name,
+            postal_code: address.address_components[6].long_name,
+        }
+        console.log('stripe data', stripeData)
+        console.log('user', user)
+        try{
+            const { data, status } = await Instance.post('/stripe/createAccount', stripeData)
+            console.log(data,status)
+        } catch(err) {
+            console.log(err.response)
+        }
+        
+    }
+
     const renderSwitch = () => {
         switch (page) {
             case 'Bank Details':
                 return <BankDetails
                     validated={validated}
                     handleNextPage={handleNextPage}
+                    dayOfBirth={dayOfBirth}
+                    monthOfBirth={monthOfBirth}
+                    yearOfBirth={yearOfBirth}
+                    setDayOfBirth={setDayOfBirth}
+                    setMonthOfBirth={setMonthOfBirth}
+                    setYearOfBirth={setYearOfBirth}
                     setAccNumber={setAccNumber}
                     setBsb={setBsb}
                     setValidated={setValidated}

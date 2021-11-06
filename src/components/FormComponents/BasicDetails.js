@@ -4,12 +4,14 @@ import {ReactComponent as CameraIcon} from './../../assets/Icons/CameraIcon.svg'
 import {ReactComponent as ShowPassword} from './../../assets/Icons/ShowPassword.svg';
 import LBSSwitch from '../LBSSwitch/LBSSwitch.js';
 import ValidationPopup from '../ValidationPopup/ValidationPopup.js';
-import { handleFullName, handleEmail, handlePhoneNumber, handlePassword, handlePasswordConfirm } from '../../util/UserValidation'
+import { handleFullName, handleEmail, handlePhoneNumber, handlePassword, handlePasswordConfirm, handleFirstName, handleLastName } from '../../util/UserValidation'
 import { isMobile } from 'react-device-detect';
 
 export default function BasicDetails(props) {
 
     const [nameValidation, setNameValidation] = useState("")
+    const [firstNameValidation, setFirstNameValidation] = useState('')
+    const [lastNameValidation, setLastNameValidation] = useState('')
     const [emailValidation, setEmailValidation] = useState("")
     const [phoneValidation, setPhoneValidation] = useState("")
     const [passwordValidation, setPasswordValidation] = useState("")
@@ -22,6 +24,10 @@ export default function BasicDetails(props) {
         switch (field) {
             case 'name':
                 return (nameValidation.length > 0) ?  false : true 
+            case 'firstName':
+                return (firstNameValidation.length > 0) ?  false : true 
+            case 'lastName':
+                return (lastNameValidation.length > 0) ?  false : true 
             case 'email':
                 return (emailValidation.length > 0 && nameValidation.length === 0) ? false : true
             case 'phone':
@@ -53,11 +59,40 @@ export default function BasicDetails(props) {
                     <div className="LoginHeader">Basic Details</div>
                     <div className="LoginText">Log in or create an account to start sharing and borrowing from Little Big Shed.</div>
 
-                    <div className="LoginHeader">Full Name</div>
+                    {/* <div className="LoginHeader">Full Name</div>
                     <div className="LoginInputValidationContainer">
-                        <input type='text' placeholder='Jane Doe' className="LoginInput" onBlur={(e) => handleFullName(e, props.setFullName, setNameValidation)}/>
+                        <input 
+                        type='text' 
+                        placeholder='Jane Doe' 
+                        className="LoginInput" 
+                        
+                        onBlur={(e) => handleFullName(e, props.setFullName, setNameValidation)}/>
                         {!isMobile && <div className={`triangleLeft ${showValidation("name") ? '' : 'ValidationTextShow'}`} />}
                         { !showValidation("name") && <ValidationPopup errorText={nameValidation} errorHeader='Invalid Full Name' hide={showValidation("name")}/>}
+                    </div> */}
+
+                    <div className="LoginHeader">First Name</div>
+                    <div className="LoginInputValidationContainer">
+                        <input 
+                        type='text' 
+                        placeholder='Jane' 
+                        className="LoginInput" 
+                        onChange={e => props.setFirstName(e.target.value)}
+                        onBlur={(e) => handleFirstName(e, props.setFirstName, setFirstNameValidation)}/>
+                        {!isMobile && <div className={`triangleLeft ${showValidation("firstName") ? '' : 'ValidationTextShow'}`} />}
+                        { !showValidation("firstName") && <ValidationPopup errorText={firstNameValidation} errorHeader='Invalid First Name' hide={showValidation("firstName")}/>}
+                    </div>
+
+                    <div className="LoginHeader">Last Name</div>
+                    <div className="LoginInputValidationContainer">
+                        <input 
+                        type='text' 
+                        placeholder='Doe' 
+                        className="LoginInput" 
+                        onChange={e => props.setLastName(e.target.value)}
+                        onBlur={(e) => handleLastName(e, props.setLastName, setLastNameValidation)}/>
+                        {!isMobile && <div className={`triangleLeft ${showValidation("lastName") ? '' : 'ValidationTextShow'}`} />}
+                        { !showValidation("lastName") && <ValidationPopup errorText={lastNameValidation} errorHeader='Invalid Last Name' hide={showValidation("lastName")}/>}
                     </div>
                     
 

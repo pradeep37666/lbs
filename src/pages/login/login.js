@@ -20,7 +20,15 @@ export default function Login() {
 
     const [loginValidation, setLoginValidation] = useState("")
 
+    const setupCometChat = async () => {
+        const appId = process.env.REACT_APP_CHAT_APP_ID
+        let cometChatSettings = new CometChat.AppSettingsBuilder().subscribePresenceForAllUsers().setRegion('us').build();
+        const res = await CometChat.init(appId, cometChatSettings)
+      }
+
+
     const handleSubmit = async (e) => {
+        await setupCometChat()
         setIsLoading(true)
         try{
             e.preventDefault()
@@ -28,12 +36,14 @@ export default function Login() {
                 email: email,
                 password: password
             })
+            console.log(response)
             await cometChatLogin(response.data.user)
             setLoginValidation("")
             localStorage.setItem('token', response.data.token.accessToken)
             dispatch({ type: 'setUser', data: response.data.user })
             // return
         }catch(error){
+            console.log(error)
             setLoginValidation("An error occurred whilst logging in, please try again")
         } finally{
             setIsLoading(false)
@@ -41,10 +51,12 @@ export default function Login() {
     }
 
     const cometChatLogin = async (user) => {
+        console.log(user)
         try{
             const User = await  CometChat.login(user.id, process.env.REACT_APP_CHAT_AUTH_KEY)
             console.log(User, 'logged into comet chat')
         } catch(e) {
+            console.log('a', e)
             throw new Error
         }
     }

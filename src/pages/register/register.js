@@ -20,6 +20,8 @@ export default function Register() {
     const { dispatch } = useGlobalState()
     const stripe = useStripe()
     const [fullName, setFullName] = useState("")
+    const [firstName, setFirstName] = useState()
+    const [lastName, setLastName] = useState()
     const [email, setEmail] = useState("")
     const [phoneNumber, setPhoneNumber] = useState("")
     const [password, setPassword] = useState("")
@@ -32,7 +34,12 @@ export default function Register() {
 
     const [accNumber, setAccNumber] = useState("")
     const [bsb, setBsb] = useState("")
-    
+
+    const [dayOfBirth, setDayOfBirth] = useState()
+
+    const [monthOfBirth, setMonthOfBirth] = useState()
+    const [yearOfBirth, setYearOfBirth] = useState()
+
     const [address, setAddress] = useState("")
 
     const [availability, setAvailability] = useState('00000000000000')
@@ -40,6 +47,7 @@ export default function Register() {
     const [tc, setTC] = useState(false)
 
     const [page, setPage] = useState('Basic Details')
+    // 'Basic Details'
 
     const [validated, setValidated] = useState(false)
 
@@ -50,46 +58,78 @@ export default function Register() {
         window.scrollTo(0, 0)
     }
 
-    const registerUser = async () => {
+    const getUserDetails = () => {
         let suburb
         address.address_components ? suburb = getSuburb(address.address_components) : suburb = ''
 
         const userDetails = {
-            fullName: fullName,
             email: email,
+            fullName: `${firstName} ${lastName}`,
             avatar: image ? image.raw : '',
             mobile: phoneNumber,
-            address: address ? address.formatted_address : '',
+            address: address ? address.formatted_address.split(',')[0] : '',
+            line1: address ? address.formatted_address.split(',')[0] : '',
             suburb: suburb,
             lat: address ? address.lat : 0,
             lng: address ? address.lng : 0,
             bsb: bsb ? bsb : '',
-            account_number: accNumber ? accNumber : '',
+            account_number: accNumber ? accNumber + '' : '',
             available: availability,
             password: password,
         }
+        if(lender){
+            Object.assign(userDetails, {
+                day: dayOfBirth,
+                month: monthOfBirth,
+                year: yearOfBirth,
+                firstName: firstName,
+                lastName: lastName,
+                country: address.address_components[5].short_name,
+                state: address.address_components[4].short_name,
+                city:   address.address_components[3].long_name,
+                postal_code: address.address_components[6].long_name,
+
+            })
+        }
+        return userDetails
+    }
+
+    const setupCometChat = async () => {
+        const appId = process.env.REACT_APP_CHAT_APP_ID
+        let cometChatSettings = new CometChat.AppSettingsBuilder().subscribePresenceForAllUsers().setRegion('us').build();
+        await CometChat.init(appId, cometChatSettings)
+      }
+
+    const registerUser = async () => {
+        await setupCometChat()
+        const userDetails = getUserDetails()
+        console.log('address', address)
+        console.log('details', userDetails)
+
         const formData = new FormData()
         Object.keys(userDetails).forEach(key => {
             formData.append(key, userDetails[key])
         })
         try{
-            const { data, status } = await Instance.post('/auth/signUp', formData)
+            // const { data, status } = await Instance.post('/auth/signUp', formData)
+            const { data, status } = await Instance.post(lender ? '/auth/lenderSignUp' : '/auth/signUp', formData)
+            console.log('response', data, status)
             if(status === 201) {
                 dispatch({ type: 'setUser', data: data.user})
                 localStorage.setItem('token', data.token.accessToken)
-                await createStripeCustomer()
+                // await createStripeCustomer()
                 await saveCard()
                 await registerCometChat(data.user)
                 handleNextPage('Complete!')
             }
         } catch(e) {
-            console.log(e.response.data)
-            history.push({pathname: '/login'})
+            console.log(e.response)
+            // history.push({pathname: '/login'})
             alert("an error occurred during registration, please try again")
         }
         
     }
-
+    
     const createStripeCustomer = async () => {
         try{
             await Instance.get('/stripe/createCustomer')
@@ -135,22 +175,21 @@ export default function Register() {
     useEffect(() => {
         switch (page) {
             case 'Basic Details':
-                if (fullName && email && phoneNumber && password && password === confirmPassword) {
+                if (firstName && lastName && email && phoneNumber && password && password === confirmPassword) {
                     setValidated(true)
                 } else setValidated(false)
                 break
             case 'Verification':
                 break
             case 'Bank Details':
-                // if (!lender) {
-                //     if (cardName && cardNumber && expiry && ccv) {
-                //         setValidated(true)
-                //     } else setValidated(false)
-                // } else {
-                //     if (cardName && cardNumber && expiry && ccv && accNumber && bsb) {
-                //         setValidated(true)
-                //     } else setValidated(false)
-                // }
+                if(lender){
+                    console.log('in')
+                    if(dayOfBirth && monthOfBirth && yearOfBirth && accNumber && bsb){
+                        setValidated(true)
+                    } else {
+                        setValidated(false)
+                    }
+                }
                 break
             case 'Location Details':
                 if (address) {
@@ -172,7 +211,7 @@ export default function Register() {
             default:
                 return '';
         }
-    }, [page, fullName, email, phoneNumber, password, confirmPassword,  accNumber, bsb,  lender, address, , availability, tc])
+    }, [page, firstName, lastName, email, phoneNumber, password, confirmPassword, dayOfBirth, monthOfBirth, yearOfBirth, accNumber, bsb,  lender, address, , availability, tc])
     // city, country, state
 
     const getComplete = () => {
@@ -200,6 +239,8 @@ export default function Register() {
                 validated={validated}
                 handleNextPage={handleNextPage}
                 setFullName={setFullName}
+                setFirstName={setFirstName}
+                setLastName={setLastName}
                 setEmail={setEmail}
                 setPhoneNumber={setPhoneNumber}
                 setPassword={setPassword}
@@ -225,6 +266,12 @@ export default function Register() {
                 setPaymentMethod={setPaymentMethod}
                 setAccNumber={setAccNumber}
                 setBsb={setBsb}
+                dayOfBirth={dayOfBirth}
+                monthOfBirth={monthOfBirth}
+                yearOfBirth={yearOfBirth}
+                setDayOfBirth={setDayOfBirth}
+                setMonthOfBirth={setMonthOfBirth}
+                setYearOfBirth={setYearOfBirth}
                 setValidated={setValidated}
                 isUpgrade={false}
                 />

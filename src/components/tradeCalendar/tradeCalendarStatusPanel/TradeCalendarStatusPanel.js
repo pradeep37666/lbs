@@ -25,6 +25,7 @@ export default function TradeCalendarStatusPanel({ booking, userDetails, getBook
     },[booking])
 
     const renderStatusPanel = () => {
+        return <Pickup isOwner={isOwner} updateBookingStatus={updateBookingStatus} booking={booking} userDetails={userDetails} setReportModalVisible={setReportModalVisible}/>
         if(status === 0){
             return <StatusZero updateBookingStatus={updateBookingStatus} booking={booking}/>
         }

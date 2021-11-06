@@ -58,7 +58,7 @@ export default function EditAccountDetails(props) {
             fullName: name ? name : user.fullName,  
             email: email ? email : user.email,
             mobile: phone ? phone : user.mobile,
-            avatar: image.raw ? image.raw : '', 
+            avatar: image ? image.raw : '', 
         }
         const formData = new FormData()
         for(let key in userDetails){

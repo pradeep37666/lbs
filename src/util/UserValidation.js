@@ -17,6 +17,60 @@ export const handleFullName = (e, setName, setValidation) => {
     }
 }
 
+export const handleFirstName = (e, setFirstName, setValidation) => {
+    const firstName = e.target.value
+
+    if(firstName.length === 0) {
+        setValidation('First name is required')
+        return
+    }
+    setValidation('')
+}
+
+export const handleLastName = (e, setLirstName, setValidation) => {
+    const lastName = e.target.value
+
+    if(lastName.length === 0) {
+        setValidation('Last name is required')
+        return
+    }
+    setValidation('')
+}
+
+export const handleDayOfBirth = (e, setDayOfBirth, setValidation) => {
+    const dayOfBirth = e.target.value
+
+    if((dayOfBirth < 1) || (dayOfBirth > 31)){
+        setDayOfBirth('')
+        setValidation('Day of birth is invalid')
+        return
+    } 
+    setValidation('')
+}
+
+export const handleMonthOfBirth = (e, setMonthOfBirth, setValidation) => {
+    const monthOfBirth = e.target.value
+
+    if((monthOfBirth < 1) || (monthOfBirth > 12)){
+        setMonthOfBirth('')
+        setValidation('Month is invalid')
+        return
+    } 
+    setValidation('')
+}
+
+export const handleYearOfBirth = (e, setYearOfBirth, setValidation) => {
+    const yearOfBirth = e.target.value
+    console.log('year', yearOfBirth)
+    const now = new Date()
+    const currentYear = now.getFullYear()
+    if((yearOfBirth < (currentYear - 150)) || (yearOfBirth > currentYear)){ 
+        setYearOfBirth('')
+        setValidation('Year is invalid')
+        return
+    } 
+    setValidation('')
+}
 export const handleEmail = (e, setEmail, setValidation) => {
     let emailInput = e.target.value;
 
@@ -157,7 +211,7 @@ export const handleAccNumber = (e, setAccNumber, setValidation) => {
     if (accNumberInput.length === 0) {
         setAccNumber("")
         setValidation("Account number is required")
-    } else if (/\b\d{8}\b/.test(accNumberInput)) {
+    } else if (/\b\d{9}\b/.test(accNumberInput)) {
         setAccNumber(accNumberInput)
         setValidation("")
     } else {

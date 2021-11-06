@@ -20,7 +20,7 @@ export default function Trades() {
     const { state } = useGlobalState()
     const { user } = state
     const history = useHistory()
-    const [reportModalVisible, setReportModalVisible] = useState(false)
+    const [reportModalVisible, setReportModalVisible] = useState(true)
     const [reviewModalVisible, setReviewModalVisible] = useState(false)
     const [accountContent, setAccountContent] = useState('Trades')
     const [selectedBooking, setSelectedBooking] = useState(null)
@@ -83,7 +83,11 @@ export default function Trades() {
                 <TradeFailed 
                 open={reportModalVisible}
                 onClick={() => setReportModalVisible(false)} 
-                isLender={selectedBooking.io_id === user.id} />  
+                isLender={selectedBooking.io_id === user.id} 
+                booking={selectedBooking}
+                getBookings={getBookings}
+                setReportModalVisible={setReportModalVisible}
+                />  
             }
             <ReviewLender 
             open={reviewModalVisible && !isLender}

@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import {ReactComponent as Logo} from './../../assets/Logos/LogoRed.svg';
 import ValidationPopup from '../ValidationPopup/ValidationPopup';
-import { handleCardName, handleCardNumber, handleExpiry, handleCcv, handleAccNumber, handleBsb } from '../../util/UserValidation'
+import { handleAccNumber, handleBsb, handleDayOfBirth, handleMonthOfBirth, handleYearOfBirth } from '../../util/UserValidation'
 import { CardNumberElement, CardCvcElement, CardExpiryElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import { CircularProgress } from '@material-ui/core';
+import UserButton from '../UserButton/UserButton';
 
 export default function BankDetails(props) {
     const [nameValidation, setNameValidation] = useState("")
@@ -14,6 +15,9 @@ export default function BankDetails(props) {
     const [accNumberValidation, setAccNumberValidation] = useState("")
     const [bsbValidation, setBsbValidation] = useState("")
 
+    const [dayOfBirthValidation, setDayOfBirthValidation] = useState('')
+    const [monthOfBirthValidation, setMonthOfBirthValidation] = useState('')
+    const [yearOfBirthValidation, setYearOfBirthValidation] = useState('')
 
     const [isLoading, setIsLoading] = useState(false)
     const [cardNumber, setCardNumber] = useState()
@@ -44,6 +48,12 @@ export default function BankDetails(props) {
                 return (accNumberValidation.length > 0) ?  false : true
             case 'bsb':
                 return (bsbValidation.length > 0 && accNumberValidation.length === 0) ? false : true
+            case 'dayOfBirth' :
+                return (dayOfBirthValidation.length > 0) ?  false : true
+            case 'monthOfBirth' :
+                return (monthOfBirthValidation.length > 0 && !(dayOfBirthValidation.length > 0)) ?  false : true
+            case 'yearOfBirth' : 
+                return ((yearOfBirthValidation.length > 0 ) && (monthOfBirthValidation.length === 0)) ?  false : true
             default:
                 return
         }
@@ -93,6 +103,25 @@ export default function BankDetails(props) {
         }
         
         
+    }
+
+    const checkDateOfBirth = () => {
+        const now = new Date()
+        const userDob = new Date(props.yearOfBirth, props.monthOfBirth, props.dayOfBirth)
+        const cutoffDate = now.setFullYear(now.getFullYear() - 13)
+        return userDob < cutoffDate
+    }
+
+    const handleNextButtonClick = () => {
+        const isOverThirteen = checkDateOfBirth()
+        console.log('over thirteen', isOverThirteen)
+        if(!isOverThirteen) return 
+        console.log()
+        if(props.isUpgrade){
+            props.handleNextPage('Location Details')
+            return
+        }
+        createPaymentMethod()
     }
 
     return (
@@ -154,55 +183,96 @@ export default function BankDetails(props) {
                 <ValidationPopup errorText={cardCvc?.error?.message} errorHeader='Invalid CCV' hide={!cardCvc?.error} />
 
             </div>
-                {!props.lender &&
+                {!props.lender ? (
                     isLoading ? (
                         <CircularProgress color="inherit" />
                     ) : (
                         <button className={`LoginFormButton ${!props.validated ? 'ButtonDisabled' : ''}`} disabled={!props.validated} onClick={createPaymentMethod}>Next</button>
                     )
+                ) : null
+                    
                 }
                 </div>
                 
                 
                 : ''}
 
-                
-
-                {props.lender ?
+                {props.lender &&
                 <div className="LoginMain LoginMainNoMarg">
+                     <div className="LoginHeader">Date of Birth</div> 
 
-                <div className="LoginHeader">Bank Deposit Details</div>
-                <div className="LoginText">Bank details will allow you to upgrade to a lender account.</div>
+                    <div className='Register__DOB__Container'>
+                        <div className="DOBHeader">Day</div>
+                        <div className="DOBHeader">Month</div>
+                        <div className="DOBHeader">Year</div>
+                    </div>
 
-                <div className="LoginHeader LoginHeader--NoMargin">Account Number</div>
-                <div className="LoginInputValidationContainer">
 
-                    <input type='text' placeholder='1234 5678' className="LoginInput" onBlur={(e) => handleAccNumber(e, props.setAccNumber, setAccNumberValidation)}/>
-                    <div className={`triangleLeft ${showValidation("accNum") ? '' : 'ValidationTextHide'}`} />
-                    <ValidationPopup errorText={accNumberValidation} errorHeader='Invalid Account Number' hide={showValidation("accNum")}/>
+                    <div className="LoginInputValidationContainer">
+                        <div className='Register__DOB__Container'>
+                            {/* onBlur={(e) => handlePhoneNumber(e, props.setPhoneNumber, setPhoneValidation)}  */}
+                            
+                            <input 
+                            onChange={e => props.setDayOfBirth(e.target.value)}
+                            onBlur={e => handleDayOfBirth(e, props.setDayOfBirth, setDayOfBirthValidation)}
+                            type='number' 
+                            value={props.dayOfBirth}
+                            placeholder='Day' 
+                            className="DOBInput" />
+                            <input 
+                            onChange={e => props.setMonthOfBirth(e.target.value)}
+                            onBlur={e => handleMonthOfBirth(e, props.setMonthOfBirth, setMonthOfBirthValidation)}
+                            value={props.monthOfBirth}
+                            type='number' 
+                            placeholder='Month' 
+                            className="DOBInput" />
+                            <input 
+                            onChange={e => props.setYearOfBirth(e.target.value)}
+                            onBlur={e => handleYearOfBirth(e, props.setYearOfBirth, setYearOfBirthValidation)}
+                            value={props.yearOfBirth}
+                            type='number' 
+                            placeholder='Year' 
+                            className="DOBInput" />
+                        </div>
+                        <div className={`triangleLeft ${showValidation("dayOfBirth") ? '' : 'ValidationTextHide'}`} />
+                        <ValidationPopup errorText={dayOfBirthValidation} errorHeader='Invalid DOB' hide={showValidation('dayOfBirth')}/>
+                        <div className={`triangleLeft ${showValidation("monthOfBirth") ? '' : 'ValidationTextHide'}`} />
+                        <ValidationPopup errorText={monthOfBirthValidation} errorHeader='Invalid DOB' hide={showValidation('monthOfBirth')}/>
+                        <div className={`triangleLeft ${showValidation("yearOfBirth") ? '' : 'ValidationTextHide'}`} />
+                        <ValidationPopup errorText={yearOfBirthValidation} errorHeader='Invalid Year' hide={showValidation('yearOfBirth')}/>
+                           
+                    </div> 
+                    <div className="LoginHeader">Bank Deposit Details</div>
+                    <div className="LoginText">Bank details will allow you to upgrade to a lender account.</div>
+
+                    <div className="LoginHeader LoginHeader--NoMargin">Account Number</div>
+                    <div className="LoginInputValidationContainer">
+
+                        <input type='text' placeholder='1234 5678' className="LoginInput" onBlur={(e) => handleAccNumber(e, props.setAccNumber, setAccNumberValidation)}/>
+                        <div className={`triangleLeft ${showValidation("accNum") ? '' : 'ValidationTextHide'}`} />
+                        <ValidationPopup errorText={accNumberValidation} errorHeader='Invalid Account Number' hide={showValidation("accNum")}/>
+                    </div>
+
+
+                    <div className="LoginHeader LoginHeader--NoMargin">BSB</div>
+                    <div className="LoginInputValidationContainer">
+
+                        <input type='text' placeholder='123-456' className="LoginInput" onBlur={(e) => handleBsb(e, props.setBsb, setBsbValidation)}/>
+                        <div className={`triangleLeft ${showValidation("bsb") ? '' : 'ValidationTextHide'}`} />
+                        <ValidationPopup errorText={bsbValidation} errorHeader='Invalid BSB' hide={showValidation("bsb")}/>
+                    </div>
+                    {   isLoading ? (
+                        <CircularProgress color="inherit" />
+                    ) : (
+                        <button 
+                        className={`LoginFormButton ${!props.validated ? 'ButtonDisabled' : ''}`} 
+                        disabled={!props.validated} 
+                        onClick={handleNextButtonClick}
+                        >
+                            Next
+                        </button>
+                    )}
                 </div>
-
-
-                <div className="LoginHeader LoginHeader--NoMargin">BSB</div>
-                <div className="LoginInputValidationContainer">
-
-                    <input type='text' placeholder='123-456' className="LoginInput" onBlur={(e) => handleBsb(e, props.setBsb, setBsbValidation)}/>
-                    <div className={`triangleLeft ${showValidation("bsb") ? '' : 'ValidationTextHide'}`} />
-                    <ValidationPopup errorText={bsbValidation} errorHeader='Invalid BSB' hide={showValidation("bsb")}/>
-                </div>
-                {   isLoading ? (
-                    <CircularProgress color="inherit" />
-                ) : (
-                    <button 
-                    className={`LoginFormButton ${!props.validated ? 'ButtonDisabled' : ''}`} 
-                    disabled={!props.validated} 
-                    onClick={() => props.handleNextPage('Location Details')}
-                    >
-                        Next
-                    </button>
-                )}
-                </div>
-                : ''
                 }
 
             </div>

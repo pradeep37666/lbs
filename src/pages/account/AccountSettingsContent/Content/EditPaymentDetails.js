@@ -149,7 +149,8 @@ export default function EditPaymentDetails() {
             })
             await getSavedCard()
         } catch(err) {
-
+            console.log('a')
+            console.log(err.response)
         }
         setIsLoading(false)
     }

@@ -1,12 +1,17 @@
 import React, { useEffect, useState } from "react";
 import "./TradeFailed.css";
 import clsx from "clsx";
-import { Dialog, DialogContent, IconButton } from "@material-ui/core";
+import { CircularProgress, Dialog, DialogContent, IconButton } from "@material-ui/core";
 import { Close } from "@material-ui/icons";
 import { makeStyles } from "@material-ui/styles";
 import Checkbox from "@material-ui/core/Checkbox";
+import Instance from '../../util/axios'
+import userEvent from "@testing-library/user-event";
+import useGlobalState from "../../util/useGlobalState";
 
-function TradeFailed({ onClick, isLender, open }) {
+function TradeFailed({ onClick, isLender, open, booking, getBookings, setReportModalVisible }) {
+  const { state } = useGlobalState()
+  const { user } = state
   const REASONS = {
     ARRIVALFAILURE: `${isLender ? 'Borrower' : 'Lender'} Has Failed To Arrive`,
     REFUSAL: `${isLender ? 'Borrower' : 'Lender'} refuses to give item`,
@@ -14,14 +19,9 @@ function TradeFailed({ onClick, isLender, open }) {
     UNKNOWN: `Unknown Reason`,
     OTHER: "Other",
   };
-
+  const [isLoading, setIsLoading] = useState(false)
   const [comment, setComment] = useState("");
-  //states for the reason to borrow failure
-  const [lenderFailedToArrive, setLenderFailedToArrive] = useState("");
-  const [lenderRefuse, setLenderRefuse] = useState("");
-  const [lenderEmergency, setLenderEmergency] = useState("");
-  const [unknownReason, setUnknownReason] = useState("");
-  const [other, setOther] = useState("");
+  const [reason, setReason] = useState("Arrival");
 
   const useStyles = makeStyles({
     button: {
@@ -91,42 +91,47 @@ function TradeFailed({ onClick, isLender, open }) {
     },
   });
 
-  //event for checkbox
-  //when lender fails to arrive
-  const handleLenderFailedToArrive = () => {
-    if (lenderFailedToArrive === "")
-      setLenderFailedToArrive(REASONS.ARRIVALFAILURE);
-    else setLenderFailedToArrive("");
-  };
-  //when lender refuses to give the item
-  const handleLenderRefusal = () => {
-    if (lenderRefuse === "") setLenderRefuse(REASONS.REFUSAL);
-    else setLenderRefuse("");
-  };
-  //when lender has emergency to attend
-  const handleLenderEmergency = () => {
-    if (lenderEmergency === "") setLenderEmergency(REASONS.EMERGENCY);
-    else setLenderEmergency("");
-  };
-  //for unknown reason
-  const handleUnknownReason = () => {
-    if (unknownReason === "") setUnknownReason(REASONS.UNKNOWN);
-    else setUnknownReason("");
-  };
-  //for other reason
-  const handleOther = () => {
-    if (other === "") setOther(REASONS.OTHER);
-    else setOther("");
-  };
-
+  const submitReport = async () => {
+    setIsLoading(true)
+    try{
+      const { data, status } = await Instance.post('/report', {
+        b_id: booking.b_id,
+        reason,
+        detail: comment,
+        ro_id: user.id
+      })
+      await updateBookingStatus(0)
+      setReportModalVisible(false)
+    } catch(err){
+      console.log(err)
+    } finally {
+      setIsLoading(false)
+      
+    }
+  }
   const classes = useStyles();
+
+  const updateBookingStatus = async (newStatus) => {
+    try{
+        const newBooking = {b_id: booking.b_id, status: newStatus}
+        const { data, status} = await Instance.put('/booking/update', newBooking)
+        console.log(data,status)
+        if(status === 200){
+            // setStatus(newStatus)
+            getBookings()
+        }
+    } catch(err) {
+        console.log(err)
+    }
+    
+}
 
   return (
     <Dialog
     open={open}
     onClose={onClick}
     >
-      <DialogContent className="BorrowerMain">
+      <DialogContent className="BorrowerMain" >
           <div className="BorrowerHeaderContent">
             <div className="BorrowerHeader" style={{ justifyContent: "center" }}>
               {isLender ? "Lend Failed" : "Borrow Failed" }
@@ -145,11 +150,12 @@ function TradeFailed({ onClick, isLender, open }) {
             <Checkbox
               className={classes.root}
               disableRipple
+              checked={reason === 'Arrival'}
               color="default"
               checkedIcon={
                 <span className={clsx(classes.checkboxicon, classes.checkedIcon)} />
               }
-              onChange={handleLenderFailedToArrive}
+              onChange={() => setReason('Arrival')}
               icon={<span className={classes.checkboxicon} />}
               inputProps={{ "aria-label": "decorative checkbox" }}
             />
@@ -160,10 +166,11 @@ function TradeFailed({ onClick, isLender, open }) {
               className={classes.root}
               disableRipple
               color="default"
+              checked={ reason === "Refusal"}
               checkedIcon={
                 <span className={clsx(classes.checkboxicon, classes.checkedIcon)} />
               }
-              onChange={handleLenderRefusal}
+              onChange={() => setReason("Refusal")}
               icon={<span className={classes.checkboxicon} />}
               inputProps={{ "aria-label": "decorative checkbox" }}
             />
@@ -175,10 +182,11 @@ function TradeFailed({ onClick, isLender, open }) {
               className={classes.root}
               disableRipple
               color="default"
+              checked={ reason === "Emergency" }
               checkedIcon={
                 <span className={clsx(classes.checkboxicon, classes.checkedIcon)} />
               }
-              onChange={handleLenderEmergency}
+              onChange={() => setReason("Emergency")}
               icon={<span className={classes.checkboxicon} />}
               inputProps={{ "aria-label": "decorative checkbox" }}
             />
@@ -190,10 +198,11 @@ function TradeFailed({ onClick, isLender, open }) {
               className={classes.root}
               disableRipple
               color="default"
+              checked={ reason === 'Unknown'}
               checkedIcon={
                 <span className={clsx(classes.checkboxicon, classes.checkedIcon)} />
               }
-              onChange={handleUnknownReason}
+              onChange={() => setReason("Unknown")}
               icon={<span className={classes.checkboxicon} />}
               inputProps={{ "aria-label": "decorative checkbox" }}
             />
@@ -204,11 +213,12 @@ function TradeFailed({ onClick, isLender, open }) {
             <Checkbox
               className={classes.root}
               disableRipple
+              checked={ reason === "Other" }
               color="default"
               checkedIcon={
                 <span className={clsx(classes.checkboxicon, classes.checkedIcon)} />
               }
-              onChange={handleOther}
+              onChange={() => setReason("Other")}
               icon={<span className={classes.checkboxicon} />}
               inputProps={{ "aria-label": "decorative checkbox" }}
             />
@@ -225,24 +235,18 @@ function TradeFailed({ onClick, isLender, open }) {
           />
           {/* Submit Borrower Review Button */}
           <div className="ItemButtons" style={{ justifyContent: "center" }}>
-            <button
+
+            { isLoading ? (
+              <CircularProgress color="inherit"/>
+            ) : (
+              <button
               className="SearchButtonLarge"
-              onClick={() => {
-                //  props.handleClick();
-                console.log("Extra Details ->", comment);
-                console.log(
-                  "Reasons for Borrow Failure ->",
-                  lenderFailedToArrive,
-                  lenderRefuse,
-                  lenderEmergency,
-                  unknownReason,
-                  other
-                );
-              }}
+              onClick={submitReport}
               style={{ width: "auto" }}
-            >
-              <div className="ItemButtonFlex">Submit Report</div>
-            </button>
+              >
+                <div className="ItemButtonFlex">Submit Report</div>
+              </button>
+            )}
           </div>
         </DialogContent>
       </Dialog>

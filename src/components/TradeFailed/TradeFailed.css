@@ -4,25 +4,6 @@
   width: 100%;
 }
 
-.BorrowerMain {
-  position: -webkit-sticky; /* Safari */
-  position: sticky;
-  top: 15%;
-  background-color: #fff;
-  position: relative;
-  /* border-radius: 20px; */
-  /* border: 1px solid #ac172c; */
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 2em;
-  width: 60%;
-  height: max-content;
-  min-width: 350px;
-  max-width: 800px;
-  margin: 4em 0 2em 0;
-}
-
 .BorrowerHeader {
   color: #33384f;
   font-size: 20px;
