@@ -13,11 +13,9 @@ const getAvailability = (dateObj, itemAvailabilityString, yearAvailabilityString
     } else {
         dayIndex = day
     }
-    console.log(dayIndex)
-    console.log(dateObj)
     const amBooked = yearAvailabilityString[(yearIndex * 2) + 1] === '0'
     const pmBooked = yearAvailabilityString[(yearIndex * 2) + 2] === '0'
-    console.log(itemAvailabilityString)
+
     const amAvailable = itemAvailabilityString[(dayIndex * 2) - 2]
     const pmAvailable = itemAvailabilityString[(dayIndex * 2) - 1]
 

@@ -17,7 +17,6 @@ export default function CalendarItem({day, index, onClick, isCurrentMonth }) {
         
         if(!yearAvailability) return
         const { availability, booked } = getAvailability(day, itemAvailability, yearAvailability)
-        console.log(day, availability, booked)
         setAvailability(availability)
         setBooked(booked)
         if(day.getDate() < currentDate && isCurrentMonth) {
@@ -27,14 +26,14 @@ export default function CalendarItem({day, index, onClick, isCurrentMonth }) {
         
     useEffect(() => {
         // Clicking outside of the set start and end period
-        if(confirmedStart && !confirmedEnd?.sameTimeSlot && selected > confirmedEnd.day) return
+        if(confirmedStart && !confirmedEnd?.sameTimeSlot && selected > confirmedEnd.dateObj) return
         // Colors the days in between the set start and end points
-        if(confirmedStart && !confirmedEnd?.sameTimeSlot && day > confirmedStart.day && day < confirmedEnd.day){
+        if(confirmedStart && !confirmedEnd?.sameTimeSlot && day > confirmedStart.dateObj && day < confirmedEnd.dateObj){
             setIsApplicationPeriod(true)
             return
         }
         // Start is set with no end point
-        if(confirmedStart && selected && day < selected && day > confirmedStart.day){
+        if(confirmedStart && selected && day < selected && day > confirmedStart.dateObj){
             setIsApplicationPeriod(true)
             return
         }
@@ -51,23 +50,23 @@ export default function CalendarItem({day, index, onClick, isCurrentMonth }) {
     const handleApplicationPeriodLogic = () => {
         if(!confirmedStart ) return ''
         if(!selected && confirmedEnd.sameTimeSlot) return ''
-        if(!selected && !confirmedEnd.sameTimeSlot && !compareDates(day, confirmedStart.day) && !compareDates(day, confirmedEnd.day) ) return ''
-        if(selected && compareDates(selected, confirmedStart.day) && confirmedEnd.sameTimeSlot) return ''
-        if(selected && !confirmedEnd.sameTimeSlot && compareDates(day, selected) && !compareDates(day,confirmedStart.day) && !compareDates(day,confirmedEnd.day)) return ''
-        if( selected && !compareDates(selected, confirmedStart.day) && compareDates(day, selected) && (selected > confirmedStart.day)){
+        if(!selected && !confirmedEnd.sameTimeSlot && !compareDates(day, confirmedStart.dateObj) && !compareDates(day, confirmedEnd.dateObj) ) return ''
+        if(selected && compareDates(selected, confirmedStart.dateObj) && confirmedEnd.sameTimeSlot) return ''
+        if(selected && !confirmedEnd.sameTimeSlot && compareDates(day, selected) && !compareDates(day,confirmedStart.dateObj) && !compareDates(day,confirmedEnd.dateObj)) return ''
+        if( selected && !compareDates(selected, confirmedStart.dateObj) && compareDates(day, selected) && (selected > confirmedStart.dateObj)){
             return 'ItemApplicationPeriodEnd'
         }
-        if(selected && confirmedEnd.sameTimeSlot && compareDates(day, confirmedStart.day) && selected < confirmedStart.day) return ''
-        if(selected && compareDates(day, confirmedStart.day) && selected > confirmedStart.day){
+        if(selected && confirmedEnd.sameTimeSlot && compareDates(day, confirmedStart.dateObj) && selected < confirmedStart.dateObj) return ''
+        if(selected && compareDates(day, confirmedStart.dateObj) && selected > confirmedStart.dateObj){
             return "ItemApplicationPeriodStart"
         }
-        if( selected && compareDates(day, confirmedStart.day) && !compareDates(confirmedStart.day, confirmedEnd.day)) {
+        if( selected && compareDates(day, confirmedStart.dateObj) && !compareDates(confirmedStart.dateObj, confirmedEnd.dateObj)) {
             return 'ItemApplicationPeriodStart'
         }
-        if( compareDates(day, confirmedStart.day) && !compareDates(confirmedStart.day, confirmedEnd.day)){
+        if( compareDates(day, confirmedStart.dateObj) && !compareDates(confirmedStart.dateObj, confirmedEnd.dateObj)){
             return 'ItemApplicationPeriodStart'
         }
-        if(compareDates(day, confirmedEnd.day) && !compareDates(confirmedStart.day, confirmedEnd.day)){
+        if(compareDates(day, confirmedEnd.dateObj) && !compareDates(confirmedStart.dateObj, confirmedEnd.dateObj)){
             return 'ItemApplicationPeriodEnd'
         }
     }
@@ -89,9 +88,9 @@ export default function CalendarItem({day, index, onClick, isCurrentMonth }) {
             onClick={handleClick}
             className={`
             ItemCircle  
-            ${confirmedEnd && compareDates(confirmedEnd.day, day) && 'ItemCircleConfirmed'}
+            ${confirmedEnd && compareDates(confirmedEnd.dateObj, day) && 'ItemCircleConfirmed'}
             ${selected && compareDates(selected, day) && 'ItemCircleSelected'}
-            ${confirmedStart && compareDates(confirmedStart.day, day) && 'ItemCircleConfirmed'} 
+            ${confirmedStart && compareDates(confirmedStart.dateObj, day) && 'ItemCircleConfirmed'} 
             ${currentDate === day.getDate() && isCurrentMonth && 'ItemCurrentDay'}
             ${handleUnavailableLogic() ? 'ItemUnavailable' : 'Pointer'}`}
             >

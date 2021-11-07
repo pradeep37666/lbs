@@ -9,13 +9,11 @@ import './ItemOptions.css'
 import MapsAutocomplete from '../mapsAutocomplete/MapsAutocomplete'
 import useGlobalState from '../../util/useGlobalState'
 
-export default function ItemOptions({ handleNextPage }) {
+export default function ItemOptions() {
     const { state, dispatch } = useContext(ApplicationContext)
     const globalState = useGlobalState().state
     const { user } = globalState
-    const [isLoading, setIsLoading] = useState(false)
-    const [userItems, setUserItems] = useState(['a'])
-    const { item, deliverySelected, confirmedStart, confirmedEnd, pickupSelected, currentYear, address } = state
+    const { item, address, bookingPriceCalculator, deliverySelected, pickupSelected } = state
 
     // Code for getting related items
     // useEffect(() => {
@@ -48,7 +46,6 @@ export default function ItemOptions({ handleNextPage }) {
     // }
 
     const setAddress = (addressObj) => {
-        console.log('+++', addressObj)
         dispatch({ type: 'setAddress', data: addressObj.formatted_address})
     }
     const getMap = () => {
@@ -56,7 +53,17 @@ export default function ItemOptions({ handleNextPage }) {
         if (deliverySelected || pickupSelected) return <MapsAutocomplete setAddress={setAddress}/>
         else return
     }
-    console.log()
+
+    const handleDeliveryBoxClick = () => {
+        dispatch({ type: 'setDeliverySelected', data: !deliverySelected})
+        bookingPriceCalculator.setDeliverySelected(!deliverySelected)
+    }
+
+    const handlePickupBoxClick = () => {
+        dispatch({ type: 'setPickupSelected', data: !pickupSelected})
+        bookingPriceCalculator.setPickupSelected(!pickupSelected)
+    }
+
     return (
         <div className="OptionsContainer">
             <div className="OptionsItemHeaderContainer">
@@ -71,7 +78,7 @@ export default function ItemOptions({ handleNextPage }) {
                     </div>
                     <CheckBox 
                     checked={deliverySelected} 
-                    onClick={() => dispatch({type: 'setDeliverySelected', data: !deliverySelected})}
+                    onClick={handleDeliveryBoxClick}
                     /> 
                 </div>
                 <div className="OptionsItemContainer">
@@ -81,7 +88,7 @@ export default function ItemOptions({ handleNextPage }) {
                     </div>
                     <CheckBox 
                     checked={pickupSelected} 
-                    onClick={() => dispatch({type: 'setPickupSelected', data: !pickupSelected})}
+                    onClick={handlePickupBoxClick}
                     />  
                 </div> 
             </div>

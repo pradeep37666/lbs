@@ -46,18 +46,18 @@ export default function CalendarRow({ days, isCurrentMonth }) {
     }
     
     const handleMorningClick = () => {
-        if(confirmedStart && !compareDates(selected, confirmedStart.day)){
+        if(confirmedStart && !compareDates(selected, confirmedStart.dateObj)){
             const valid = validateTimeSlots({ am: true})
             if(!valid) return 
         }
         // morning has already been selected
-        if(confirmedStart && compareDates(selected, confirmedStart.day)){
+        if(confirmedStart && compareDates(selected, confirmedStart.dateObj)){
             // Changing from afternoon to morning
             if(confirmedStart?.pm && confirmedEnd){
-                dispatch({type: 'setConfirmedStart', data: { day: selected, am: true}})
+                dispatch({type: 'setConfirmedStart', data: { dateObj: selected, timeslot: 'morning', am: true}})
             }
             if(confirmedStart?.pm){
-                dispatch({ type: 'setConfirmedEnd', data: { day: selected, am: true}})
+                dispatch({ type: 'setConfirmedEnd', data: { dateObj: selected, timeslot: 'morning', am: true}})
                 return
             }
             // Clicking on the same time period, clear everything
@@ -66,28 +66,28 @@ export default function CalendarRow({ days, isCurrentMonth }) {
             dispatch({type: 'setConfirmedEnd', data: null})
             return
         }
-        if(confirmedStart && selected < confirmedStart.day && confirmedEnd.sameTimeSlot){
-            dispatch({ type: 'setConfirmedStart', data: { day: selected, am: true }})
-            dispatch({ type: 'setConfirmedEnd', data: {day: selected, am: true, sameTimeSlot: true} })
+        if(confirmedStart && selected < confirmedStart.dateObj && confirmedEnd.sameTimeSlot){
+            dispatch({ type: 'setConfirmedStart', data: { dateObj: selected, timeslot: 'morning',am: true }})
+            dispatch({ type: 'setConfirmedEnd', data: {dateObj: selected, timeslot: 'morning',am: true, sameTimeSlot: true} })
             return
         }
-        if(confirmedStart && selected < confirmedStart.day ){
-            dispatch({type: 'setConfirmedStart', data: { day: selected, am: true}})
+        if(confirmedStart && selected < confirmedStart.dateObj ){
+            dispatch({type: 'setConfirmedStart', data: { dateObj: selected,timeslot: 'morning', am: true}})
             return 
         }
         // Start has already been selected, set end point
         if(confirmedStart){
-            dispatch({type: 'setConfirmedEnd', data: { day: selected, am: true}})
+            dispatch({type: 'setConfirmedEnd', data: { dateObj: selected,timeslot: 'morning', am: true}})
             return
         }
         // No start selected, set start point
-        dispatch({type: 'setConfirmedStart', data: { day: selected, am: true}})
-        dispatch({type: 'setConfirmedEnd', data: { day: selected, am: true, sameTimeSlot: true}})
+        dispatch({type: 'setConfirmedStart', data: { dateObj: selected,timeslot: 'morning', am: true}})
+        dispatch({type: 'setConfirmedEnd', data: { dateObj: selected,timeslot: 'morning', am: true, sameTimeSlot: true}})
     }
 
     const validateTimeSlots = ({ am }) => {
-        const startIndex = getDateIndex(confirmedStart.day)
-        console.log(confirmedStart.day, startIndex * 2)
+        const startIndex = getDateIndex(confirmedStart.dateObj)
+        console.log(confirmedStart.dateObj, startIndex * 2)
         const endIndex = getDateIndex(selected)
         // console.log("morning start" ,confirmedStart?.am, )
         // console.log("morning end", confirmedEnd?.am )
@@ -102,19 +102,19 @@ export default function CalendarRow({ days, isCurrentMonth }) {
     }
 
     const handleAfternoonClick = () => {
-        if(confirmedStart && !compareDates(selected, confirmedStart.day)){
+        if(confirmedStart && !compareDates(selected, confirmedStart.dateObj)){
             const valid = validateTimeSlots({ am: false})
             if(!valid) return 
         }
         // Afternoon has already been selected
-        if(confirmedStart && compareDates(selected, confirmedStart.day)){
+        if(confirmedStart && compareDates(selected, confirmedStart.dateObj)){
             // Changing from morning to afternoon
             if(confirmedStart?.am && confirmedEnd){
-                dispatch({type: 'setConfirmedEnd', data: { day: selected, pm: true}})
+                dispatch({type: 'setConfirmedEnd', data: { dateObj: selected, timeslot: 'afternoon', pm: true}})
             }
             if(confirmedStart?.am){
                 console.log('aighsd')
-                dispatch({type: 'setConfirmedEnd', data: { day: selected, pm: true}})
+                dispatch({type: 'setConfirmedEnd', data: { dateObj: selected,timeslot: 'afternoon', pm: true}})
                 return
             }
             // Clicking on the same time period, clear everything
@@ -123,26 +123,26 @@ export default function CalendarRow({ days, isCurrentMonth }) {
             dispatch({type: 'setConfirmedEnd', data: null})
             return
         }
-        if(confirmedStart && selected < confirmedStart.day && confirmedEnd.sameTimeSlot){
-            dispatch({ type: 'setConfirmedStart', data: { day: selected, pm: true }})
-            dispatch({ type: 'setConfirmedEnd', data: {day: selected, pm: true, sameTimeSlot: true} })
+        if(confirmedStart && selected < confirmedStart.dateObj && confirmedEnd.sameTimeSlot){
+            dispatch({ type: 'setConfirmedStart', data: { dateObj: selected, timeslot: 'afternoon',pm: true }})
+            dispatch({ type: 'setConfirmedEnd', data: {dateObj: selected, timeslot: 'afternoon',pm: true, sameTimeSlot: true} })
             return
         }
-        if(confirmedStart && selected < confirmedStart.day){
-            dispatch({type: 'setConfirmedStart', data: { day: selected, pm: true}})
+        if(confirmedStart && selected < confirmedStart.dateObj){
+            dispatch({type: 'setConfirmedStart', data: { dateObj: selected, timeslot: 'afternoon',pm: true}})
             return 
         }
         if(confirmedStart){
-            dispatch({type: 'setConfirmedEnd', data: { day: selected, pm: true}})
+            dispatch({type: 'setConfirmedEnd', data: { dateObj: selected,timeslot: 'afternoon', pm: true}})
             return
         }
-        dispatch({type: 'setConfirmedStart', data: { day: selected, pm: true }})
-        dispatch({type: 'setConfirmedEnd', data: { day: selected, pm: true, sameTimeSlot: true}})
+        dispatch({type: 'setConfirmedStart', data: { dateObj: selected,timeslot: 'afternoon', pm: true }})
+        dispatch({type: 'setConfirmedEnd', data: { dateObj: selected, timeslot: 'afternoon',pm: true, sameTimeSlot: true}})
     }
     
     const handleMorningLogic = () => {
-        if(confirmedStart && selected && compareDates(selected, confirmedStart.day) && confirmedStart?.am
-        || confirmedEnd && selected && compareDates(selected, confirmedEnd.day) && confirmedEnd?.am){
+        if(confirmedStart && selected && compareDates(selected, confirmedStart.dateObj) && confirmedStart?.am
+        || confirmedEnd && selected && compareDates(selected, confirmedEnd.dateObj) && confirmedEnd?.am){
             setMorningActive(true)
             return
         }
@@ -150,8 +150,8 @@ export default function CalendarRow({ days, isCurrentMonth }) {
     }
 
     const handleAfternoonLogic = () => {
-        if(confirmedStart && selected && compareDates(selected, confirmedStart.day) && confirmedStart?.pm 
-        || confirmedEnd && selected && compareDates(selected, confirmedEnd.day) && confirmedEnd?.pm){
+        if(confirmedStart && selected && compareDates(selected, confirmedStart.dateObj) && confirmedStart?.pm 
+        || confirmedEnd && selected && compareDates(selected, confirmedEnd.dateObj) && confirmedEnd?.pm){
             setAfternoonActive(true)
             return
         }

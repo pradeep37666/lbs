@@ -9,6 +9,7 @@ import instance from '../../util/axios'
 import ApplicationFooter from '../../components/application/ApplicationFooter'
 import applicationReducer from '../../util/applicationReducer'
 import './application.css'
+import BookingPriceCalculator from '../../util/BookingPriceCalculator'
 
 export const ApplicationContext = React.createContext()
 
@@ -25,9 +26,17 @@ const initialState = {
 }
 export default function Application() {
     const [state, dispatch] = useReducer(applicationReducer, initialState)
-    const { page, item, confirmedStart } = state
+    const { page, item, confirmedStart, confirmedEnd, bookingPriceCalculator } = state
     const { itemId } = useParams()
 
+    useEffect(() => {
+        if(!confirmedStart || !confirmedEnd) return
+        dispatch({ 
+            type: 'setBookingPriceCalculator', 
+            data: new BookingPriceCalculator(item.price, item.discount, item.deliveryPrice, confirmedStart, confirmedEnd)
+        })
+    }, [confirmedStart, confirmedEnd])
+    console.log(bookingPriceCalculator)
     useEffect(() => {
         const getItem = async () => {
             const { data, status } = await instance.get(`/items/findByIid?i_id=${itemId}`)

@@ -78,6 +78,12 @@ const applicationReducer = (state, action) => {
                 address: action.data
             }
         }
+        case 'setBookingPriceCalculator' : {
+            return {
+                ...state,
+                bookingPriceCalculator: action.data
+            }
+        }
         default : {
             return state
         }

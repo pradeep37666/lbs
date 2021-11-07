@@ -15,14 +15,14 @@ export default function ItemOverview() {
     const { state, dispatch } = useContext(ApplicationContext)
     const globalState = useGlobalState()
     const user  = globalState.state.user
-    const { page, item, confirmedEnd, confirmedStart, deliverySelected, pickupSelected, address, currentYear } = state
+    const { item, confirmedEnd, confirmedStart, deliverySelected, pickupSelected, address, currentYear, bookingPriceCalculator } = state
 
     const history = useHistory()
     const dayArray = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
     const monthArray = ["January", "February", "March", "April","May", "June", "July", "August", "September", "October", "November", "December"]
 
-    const handleDate = (confirmedDate) => {
-        const date = confirmedDate.day.getDate()
+    const getDateSuffix = (confirmedDate) => {
+        const date = confirmedDate.dateObj.getDate()
         const dateString = date.toString()
         const lastChar = dateString.charAt(dateString.length - 1)
 
@@ -49,93 +49,21 @@ export default function ItemOverview() {
         }
     }
     
-    const calculatePrice = () => {
-        let discountTimeSlots = 0
-        if(item.discount > 0) discountTimeSlots = calculateDiscountTimeSlots()
-        let price
-        if(confirmedEnd.sameTimeSlot) {
-            price = item.price 
-        }
-        const days = getDateIndex(confirmedEnd.day) - getDateIndex(confirmedStart.day)
-        let totalTimeSlots
-        if(confirmedStart?.am && confirmedEnd?.am || confirmedStart?.pm && confirmedEnd?.pm){
-            totalTimeSlots = (days * 2) + 1
-        }
-        if(confirmedStart?.am && confirmedEnd?.pm){
-            totalTimeSlots = (days + 1) * 2
-        }
-        if(confirmedStart?.pm && confirmedEnd?.am){
-            totalTimeSlots = days * 2
-        }
-        const weekendTimeSlots = totalTimeSlots - discountTimeSlots
-        price = (weekendTimeSlots * item.price) + (discountTimeSlots * (item.price * (1 - item.discount / 100)))
-        return price 
-    }
-
-    const calculateTotalPrice = () => {
-        let price
-        if(confirmedEnd.sameTimeSlot) {
-            price = item.price 
-        }
-        const days = getDateIndex(confirmedEnd.day) - getDateIndex(confirmedStart.day)
-        let totalTimeSlots
-        if(confirmedStart?.am && confirmedEnd?.am || confirmedStart?.pm && confirmedEnd?.pm){
-            totalTimeSlots = (days * 2) + 1
-        }
-        if(confirmedStart?.am && confirmedEnd?.pm){
-            totalTimeSlots = (days + 1) * 2
-        }
-        if(confirmedStart?.pm && confirmedEnd?.am){
-            totalTimeSlots = days * 2
-        }
-        price = item.price * totalTimeSlots
-        return price
-    }
-
-    const calculateDiscountTimeSlots = () => {
-        const startDay = new Date(confirmedStart.day.getFullYear(), confirmedStart.day.getMonth(), confirmedStart.day.getDate())
-        let timeSlots = 0
-        while(startDay <= confirmedEnd.day) {
-            const day = startDay.getDay()
-            const date = startDay.getDate()
-            if( day > 0 && day < 6 ){
-                timeSlots += 2
-            }
-            startDay.setDate(date + 1)
-        }
-        if(confirmedStart?.pm && isWeekday(confirmedStart.day)) timeSlots -= 1
-        if(confirmedEnd?.am && isWeekday(confirmedEnd.day)) timeSlots -= 1
-        return timeSlots
-    }
-    
-    const isWeekday = (dateObj) => {
-        const day = dateObj.getDay()
-        return day > 0 && day < 6
-    } 
-    const calculateBorrowOptions = () => {
-        return ((deliverySelected ? item.deliveryPrice : 0) + (pickupSelected ? item.deliveryPrice : 0))
-    }
-
-
     const saveBooking = async () => {
+
         let deliveryOption = (deliverySelected && pickupSelected) ? 'both' : deliverySelected ? 'delivery' : 'pickup'
         if(!deliverySelected && !pickupSelected) {
             deliveryOption = 'none'
         }
-        const startIndex = (getDateIndex(confirmedStart.day) * 2) + (confirmedStart?.am ? 1 : 2)
-        const endIndex = (getDateIndex(confirmedEnd.day) * 2) + (confirmedEnd?.am ? 1 : 2)
-        confirmedStart.day.setHours(confirmedStart?.am ? 6 : 12)
-        console.log({
-            i_id: item.i_id,
-            io_id: item.u_id,
-            deliveryOption,
-            startDate: startIndex,
-            endDate: endIndex,
-            address: address ? address : user.address,
-            price: calculatePrice()
-        })
+        const startIndex = (getDateIndex(confirmedStart.dateObj) * 2) + (confirmedStart.timeslot === 'morning' ? 1 : 2)
+        const endIndex = (getDateIndex(confirmedEnd.dateObj) * 2) + (confirmedEnd.timeslot === 'morning' ? 1 : 2)
+        confirmedStart.dateObj.setHours(confirmedStart?.am ? 6 : 12)
+        
+        const price = bookingPriceCalculator.getTotalPrice()
+
+
         try{
-            const { data, status } = await instance.post(`booking/save/${confirmedStart.day.getTime()}`, {
+            await instance.post(`booking/save/${confirmedStart.dateObj.getTime()}`, {
                 i_id: item.i_id,
                 io_id: item.u_id,
                 deliveryOption,
@@ -143,12 +71,12 @@ export default function ItemOverview() {
                 endDate: endIndex,
                 year: currentYear,
                 address: address ? address : user.address,
-                price: calculatePrice() + calculateBorrowOptions()
+                price
             })
             sendEnquiry(item)
             history.push({ 
                 pathname: `/item/${item.i_id}`, 
-                state: {bookingCreated: true, price: calculatePrice()}
+                state: { bookingCreated: true, price }
             })
         } catch(e) {
             console.log(e.response)
@@ -212,12 +140,12 @@ export default function ItemOverview() {
                     <span className="ApplicationOverviewSubHeader">Itemised Costs</span>
                     <div className="ItemOverviewItemContainer">
                         <p>Cost for items</p>
-                        <span className="ItemOverviewPrice">${calculateTotalPrice()}</span>
+                        <span className="ItemOverviewPrice">${bookingPriceCalculator.getPriceWithoutExtras()}</span>
                     </div>
                     <div className="ItemOverviewBorrowContainer">
                         <div className="ItemOverviewItemContainer">
                             <p>Borrow options total</p>
-                            <span className="ItemOverviewPrice">${calculateBorrowOptions()}</span>
+                            <span className="ItemOverviewPrice">${bookingPriceCalculator.getPriceOfExtras()}</span>
                         </div>
                         { deliverySelected && 
                         <div className="ItemOverviewItemContainer">
@@ -232,12 +160,12 @@ export default function ItemOverview() {
                     </div>
                     <div className="ItemOverviewItemContainer">
                         <span className="ItemOverviewSmallText">Off Peak Discount </span>
-                        <span className="ItemOverviewSmallText">-${calculateDiscountTimeSlots() * item.price * (item.discount / 100)}</span>
+                        <span className="ItemOverviewSmallText">-${bookingPriceCalculator.getOffPeakDiscount()}</span>
 
                     </div>
                     <div className="ItemOverviewItemContainer">
                         <p>Total Price</p>
-                        <span className="ItemOverviewPrice">${(calculatePrice() + calculateBorrowOptions()).toFixed(2)}</span>
+                        <span className="ItemOverviewPrice">${bookingPriceCalculator.getTotalPrice()}</span>
                     </div>
                     <div className="ItemOverviewItemContainer">
                         <span className="ApplicationOverviewSubHeader">Dates</span>
@@ -253,11 +181,11 @@ export default function ItemOverview() {
                         <p>Collect</p>
                         <div>
                             <span className="ApplicationFooterTime">{confirmedStart?.am ? '8:00am' : '1:00pm'} </span>
-                            <span>{dayArray[confirmedStart.day.getDay()]}</span>
+                            <span>{dayArray[confirmedStart.dateObj.getDay()]}</span>
                         </div>
                         <div>
-                            <span>{ handleDate(confirmedStart)} </span>
-                            <span>{ monthArray[confirmedStart.day.getMonth()]}</span>
+                            <span>{ getDateSuffix(confirmedStart) } </span>
+                            <span>{ monthArray[confirmedStart.dateObj.getMonth()]}</span>
                         </div>
                     </div>
                     <div className="ApplicationFooterArrowContainer">
@@ -267,11 +195,11 @@ export default function ItemOverview() {
                         <p>Return</p>
                         <div>
                             <span className="ApplicationFooterTime">{confirmedEnd?.am ? '12:00pm' : '5:00pm'} </span>
-                            <span>{dayArray[confirmedEnd.day.getDay()]}</span>
+                            <span>{dayArray[confirmedEnd.dateObj.getDay()]}</span>
                         </div>
                         <div>
-                            <span>{handleDate(confirmedEnd)} </span>
-                            <span>{ monthArray[confirmedEnd.day.getMonth()]} </span>
+                            <span>{ getDateSuffix(confirmedEnd) } </span>
+                            <span>{ monthArray[confirmedEnd.dateObj.getMonth()]} </span>
                         </div>
                     </div>
                     
