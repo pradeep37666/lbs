@@ -244,6 +244,7 @@ export default function Register() {
                 setLastName={setLastName}
                 setEmail={setEmail}
                 setPhoneNumber={setPhoneNumber}
+                phoneNumber={phoneNumber}
                 setPassword={setPassword}
                 password={password}
                 confirmPassword={confirmPassword}
@@ -256,6 +257,7 @@ export default function Register() {
             case 'Verification':
                 return <Verification 
                 validated={validated}
+                phoneNumber={phoneNumber}
                 handleNextPage={handleNextPage}
                 setValidated={setValidated}
                 />

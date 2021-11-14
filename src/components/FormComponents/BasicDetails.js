@@ -44,7 +44,10 @@ export default function BasicDetails(props) {
 
     const sendVerificationCode = async () => {
         try{
-            // const { data, status } = await Instance.get(`/auth/getVerificationCode?email=${props.email}`)
+            console.log(props.phoneNumber)
+            const { data, status } = await Instance.get(`/auth/getVerificationCodeToMobile?mobile=${props.phoneNumber}`)
+            console.log(data,status)
+
 
             props.handleNextPage('Verification')
         } catch(err) {
