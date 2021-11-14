@@ -75,6 +75,7 @@ export default function Trades() {
         return filteredBookings
      }
 
+
     const noBookings = (lenderBookingItems.length === 0 && borrowerBookingItems.length === 0)
     const isLender = selectedBooking?.io_id === user.id
     return (
@@ -90,8 +91,9 @@ export default function Trades() {
                 />  
             }
             <ReviewLender 
-            open={reviewModalVisible && !isLender}
-            onClick={() => setReviewModalVisible(false)} 
+            // open={reviewModalVisible && !isLender}
+            open={reviewModalVisible}
+            setReviewModalVisible={setReviewModalVisible}
             booking={selectedBooking}/>
             <ReviewBorrower 
             open={reviewModalVisible && isLender}
@@ -113,7 +115,7 @@ export default function Trades() {
                         ) : (
                             <>
                                 <div className="UserShed__Title">
-                                    {accountContent}
+                                    Trades
                                 </div>
                         
                                 <TradeCalendar 

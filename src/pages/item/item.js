@@ -271,7 +271,7 @@ export default function Item() {
                         </div>
                         
                         {(user && user.id === item.u_id) ?
-                            <button class="editButton" onClick={()=>{
+                            <button className="editButton" onClick={()=>{
                              
                                 handleEdit();
                                 

@@ -7,6 +7,7 @@ import useGlobalState from '../../../../util/useGlobalState';
 import { CardCvcElement, CardElement, CardExpiryElement, CardNumberElement, useElements, useStripe } from '@stripe/react-stripe-js';
 import { CircularProgress, Typography } from '@material-ui/core';
 import TrashCan from '../../../../assets/Icons/TrashCan';
+import Application from '../../../application/Application';
 
 export default function EditPaymentDetails() {
     const { state, dispatch } = useGlobalState()
@@ -85,6 +86,7 @@ export default function EditPaymentDetails() {
 
     useEffect(() => {
         getSavedCard()
+        getStripeDetails()
     }, [])
 
     const getSavedCard = async () => {
@@ -100,6 +102,15 @@ export default function EditPaymentDetails() {
         
     }
 
+    const getStripeDetails = async () => {
+        try{
+            const { data, status } = await Instance.get('/stripe/me')
+            console.log('stripe me', data)
+        } catch(err) {
+            console.log(err)
+        }
+    }
+
     useEffect(() => {
         if(!cardName) return
         setCardNameError(false)
@@ -112,7 +123,6 @@ export default function EditPaymentDetails() {
             fontFamily: '"DMSans", sans-serif',
             fontSmoothing: "antialiased",
             fontSize: "18px",
-            fontWeight: 'bold',
             "::placeholder": {
               color: "rgb(133,133,133)",
             },
@@ -144,12 +154,11 @@ export default function EditPaymentDetails() {
                 setIsLoading(false)
                 return
             }
-            const { data, status } = await Instance.post('/stripe/addCreditCard', {
+            await Instance.post('/stripe/addCreditCard', {
                 paymentMethodId: paymentMethod.id
             })
             await getSavedCard()
         } catch(err) {
-            console.log('a')
             console.log(err.response)
         }
         setIsLoading(false)

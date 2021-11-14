@@ -6,6 +6,7 @@ import LBSSwitch from '../LBSSwitch/LBSSwitch.js';
 import ValidationPopup from '../ValidationPopup/ValidationPopup.js';
 import { handleFullName, handleEmail, handlePhoneNumber, handlePassword, handlePasswordConfirm, handleFirstName, handleLastName } from '../../util/UserValidation'
 import { isMobile } from 'react-device-detect';
+import Instance from '../../util/axios';
 
 export default function BasicDetails(props) {
 
@@ -38,6 +39,16 @@ export default function BasicDetails(props) {
                 return (confirmPasswordValidation.length > 0 && passwordValidation.length === 0) ? false : true
             default:
                 return
+        }
+    }
+
+    const sendVerificationCode = async () => {
+        try{
+            // const { data, status } = await Instance.get(`/auth/getVerificationCode?email=${props.email}`)
+
+            props.handleNextPage('Verification')
+        } catch(err) {
+            console.log(err)
         }
     }
 
@@ -105,7 +116,7 @@ export default function BasicDetails(props) {
 
                     <div className="LoginHeader">Phone Number</div>
                     <div className="LoginInputValidationContainer">
-                        <input type='text' placeholder='+61456789012' className="LoginInput" onBlur={(e) => handlePhoneNumber(e, props.setPhoneNumber, setPhoneValidation)}/>
+                        <input type='text' placeholder='0456789012' className="LoginInput" onBlur={(e) => handlePhoneNumber(e, props.setPhoneNumber, setPhoneValidation)}/>
                         { !isMobile && <div className={`triangleLeft ${showValidation("phone") ? '' : 'ValidationTextShow'}`} />}
                         { !showValidation('phone') && <ValidationPopup errorText={phoneValidation} errorHeader='Invalid Phone Number' hide={showValidation("phone")}/>}
                     </div>
@@ -119,25 +130,10 @@ export default function BasicDetails(props) {
                     
                         : <CameraIcon className="CameraIcon"/>}
                         </div>
-                    <input type="file" id="selectFile" style={{ display: "none" }} onChange={(e) => handleChange(e)} />
-                    <button className="LoginFormButton UploadButton" onClick={() => document.getElementById('selectFile').click()}>Upload</button>
+                        <input type="file" id="selectFile" style={{ display: "none" }} onChange={(e) => handleChange(e)} />
+                        <button className="LoginFormButton UploadButton" onClick={() => document.getElementById('selectFile').click()}>Upload</button>
 
                     </div>
-
-                    {/* <div className="LoginHeader">Date of Birth</div> */}
-
-                    {/* <div className='Register__DOB__Container'>
-                        <div className="DOBHeader">Day</div>
-                        <div className="DOBHeader">Month</div>
-                        <div className="DOBHeader">Year</div>
-                    </div> */}
-
-                    {/* <div className='Register__DOB__Container'>
-                    {/* onBlur={(e) => handlePhoneNumber(e, props.setPhoneNumber, setPhoneValidation)} 
-                        <input type='text' placeholder='Day' className="DOBInput" />
-                        <input type='text' placeholder='Month' className="DOBInput" />
-                        <input type='text' placeholder='Year' className="DOBInput" />
-                    </div> */}
 
                     </div>
 
@@ -177,7 +173,13 @@ export default function BasicDetails(props) {
                     <div className="LoginText">If you would like to share items on Little Big Shed we need some extra details off you.</div>
                     <div className="LoginText">These details allow us to send you payments for successful lends and help borrowers find your items</div>
 
-                    <button className={`LoginFormButton ${!props.validated ? 'ButtonDisabled' : ''}`} disabled={!props.validated} onClick={() => props.handleNextPage('Verification')}>Next</button>
+                    <button 
+                    className={`LoginFormButton ${!props.validated ? 'ButtonDisabled' : ''}`} 
+                    disabled={!props.validated} 
+                    onClick={sendVerificationCode}
+                    >
+                        Next
+                    </button>
                     </div>
             </div>
     )

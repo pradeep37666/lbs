@@ -8,7 +8,7 @@ import Instance from "../../util/axios";
 import useGlobalState from "../../util/useGlobalState";
 import { Dialog } from "@material-ui/core";
 
-function ReviewLender({ onClick, isLender, booking, open }) {
+function ReviewLender({ setReviewModalVisible, isLender, booking, open }) {
   const { state } = useGlobalState()
   const { user } = state
   const [comment, setComment] = useState("");
@@ -55,11 +55,12 @@ function ReviewLender({ onClick, isLender, booking, open }) {
         })
         console.log(data, status)
         await updateBookingStatus(8)
+        setReviewModalVisible(false)
     } catch(err){
         console.log(err)
     } finally{
         setIsLoading(false)
-        onClick()
+        setReviewModalVisible(false)
     }
 
   }
@@ -68,7 +69,7 @@ function ReviewLender({ onClick, isLender, booking, open }) {
     try{
         const newBooking = {b_id: booking.b_id, status: newStatus}
         const { data, status} = await Instance.put('/booking/update', newBooking)
-        console.log(data,status)
+        console.log('update booking', data,status)
         if(status === 200){
             // setStatus(newStatus)
             // getBookings()
@@ -121,14 +122,18 @@ function ReviewLender({ onClick, isLender, booking, open }) {
 
   return (
       <Dialog 
-      onClose={onClick}
+      onClose={() => setReviewModalVisible(false)}
       open={open}>
         <DialogContent className="BorrowerMain">
             <div className="BorrowerHeaderContent">
                 <div className="BorrowerHeader" style={{ justifyContent: "center" }}>
                     Trade Complete
                 </div>
-                <IconButton aria-label="delete" className={classes.button} onClick={onClick}>
+                <IconButton 
+                aria-label="delete" 
+                className={classes.button} 
+                onClick={() => setReviewModalVisible(false)}
+                >
                     <Close className={classes.icon} />
                 </IconButton>
                 
@@ -155,7 +160,7 @@ function ReviewLender({ onClick, isLender, booking, open }) {
             className="LoginInput PostItem__TextArea"
             onChange={(e) => setComment(e.target.value)}
             />
-            <div className="ItemButtons" style={{ justifyContent: "center" }}>
+            <div className="ItemButtons" style={{ justifyContent: "center", minHeight: 70 }}>
                 { isLoading ? (
                     <CircularProgress color="inherit" />
                 ) : (

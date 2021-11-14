@@ -13,6 +13,7 @@ import getDateObject from '../../../util/getDateObject'
 import StatusSix from './StatusSix'
 import StatusSeven from './StatusSeven'
 import DropOff from './DropOff'
+import StatusEight from './StatusEight'
 
 export default function TradeCalendarStatusPanel({ booking, userDetails, getBookings, setReportModalVisible, setReviewModalVisible }) {
     const [status, setStatus] = useState()
@@ -25,7 +26,7 @@ export default function TradeCalendarStatusPanel({ booking, userDetails, getBook
     },[booking])
 
     const renderStatusPanel = () => {
-        return <Pickup isOwner={isOwner} updateBookingStatus={updateBookingStatus} booking={booking} userDetails={userDetails} setReportModalVisible={setReportModalVisible}/>
+        // return <Pickup isOwner={isOwner} updateBookingStatus={updateBookingStatus} booking={booking} userDetails={userDetails} setReportModalVisible={setReportModalVisible}/>
         if(status === 0){
             return <StatusZero updateBookingStatus={updateBookingStatus} booking={booking}/>
         }
@@ -33,8 +34,8 @@ export default function TradeCalendarStatusPanel({ booking, userDetails, getBook
             return <StatusSeven booking={booking} isOwner={isOwner} />
         }
         const dropOff = isDropoffTime()
-        // if(dropOff && status >= 3){
-        if(dropOff || status >= 1){
+        if(dropOff && status >= 3){
+        // if(dropOff || status >= 1){
             return (
             <DropOff 
             booking={booking}
@@ -65,6 +66,9 @@ export default function TradeCalendarStatusPanel({ booking, userDetails, getBook
             }
             case 6 : {
                 return <StatusSix isOwner={isOwner} updateBookingStatus={updateBookingStatus} booking={booking} userDetails={userDetails}/>
+            }
+            case 8 : {
+                return <StatusEight isOwner={isOwner} />
             }
             default : {
                 return 'default'

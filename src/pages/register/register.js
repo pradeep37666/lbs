@@ -65,6 +65,8 @@ export default function Register() {
         const userDetails = {
             email: email,
             fullName: `${firstName} ${lastName}`,
+            firstName,
+            lastName,
             avatar: image ? image.raw : '',
             mobile: phoneNumber,
             address: address ? address.formatted_address.split(',')[0] : '',
@@ -111,7 +113,6 @@ export default function Register() {
             formData.append(key, userDetails[key])
         })
         try{
-            // const { data, status } = await Instance.post('/auth/signUp', formData)
             const { data, status } = await Instance.post(lender ? '/auth/lenderSignUp' : '/auth/signUp', formData)
             console.log('response', data, status)
             if(status === 201) {

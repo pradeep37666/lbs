@@ -52,7 +52,7 @@ export default function UpgradeLender() {
     }
 
     const submitUpgrade = () => {
-        // createStripeAccount()
+        createStripeAccount()
         // return
         let suburb
         address.address_components ? suburb = getSuburb(address.address_components) : suburb = user.suburb
@@ -92,11 +92,12 @@ export default function UpgradeLender() {
             email: user.email,
             bsb,
             accountNumber: accNumber,
-            day: dayOfBirth,
-            month: monthOfBirth,
-            year: yearOfBirth,
+            day: parseInt(dayOfBirth),
+            month: parseInt(monthOfBirth),
+            year: parseInt(yearOfBirth),
             firstName: user.firstName,
             lastName: user.lastName,
+            line1: address.address_components[0].long_name + ' ' + address.address_components[1].long_name,
             country: address.address_components[5].short_name,
             state: address.address_components[4].short_name,
             city:   address.address_components[3].long_name,
@@ -106,7 +107,7 @@ export default function UpgradeLender() {
         console.log('user', user)
         try{
             const { data, status } = await Instance.post('/stripe/createAccount', stripeData)
-            console.log(data,status)
+            console.log('stripe', data, status)
         } catch(err) {
             console.log(err.response)
         }

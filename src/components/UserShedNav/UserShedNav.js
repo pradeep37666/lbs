@@ -80,8 +80,6 @@ export default function UserShedNav(props) {
                     </div>
 
                     <div className="HL" />
-                    {console.log(user)}
-
                     {!user.bsb ?
                         <Link to='/user/upgrade_to_lender'>
                             <div>
