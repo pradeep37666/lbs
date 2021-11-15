@@ -90,7 +90,16 @@ export default function Login() {
                             }
                     </div>
                 </form>
-                <div className="LoginText" style={{ marginTop: '1rem' }}>Forgot password?<span className="RetrieveLink"> Retrieve here</span></div>
+                <Link to="/forgotpassword">
+                    <div 
+                    className="LoginText" 
+                    style={{ marginTop: '1rem' }} 
+                    onClick={() => history}
+                    >
+                        Forgot password?
+                        <span className="RetrieveLink"> Retrieve here</span>
+                    </div>
+                </Link>
                 <Link to='/register' style={{ width: '100%' }}>
                     <button className="LoginFormButton LoginFormButtonInverted">Create Account</button>
                 </Link>

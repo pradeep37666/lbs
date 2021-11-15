@@ -26,6 +26,7 @@ import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 import EditItemPage from './pages/editItem/EditItemPage';
 import Instance from './util/axios';
+import ForgotPassword from './pages/ForgotPassword/ForgotPassword';
 
 export const GlobalStateContext = React.createContext()
 
@@ -120,6 +121,7 @@ function App() {
             <Route exact path="/" component={Home} />
             <Route exact path="/item/:itemId" component={ItemPage} />
             <Route exact path="/search/:searchParams?" component={SearchPage} />
+            <Route exact path="/forgotpassword" component={ForgotPassword} />
             <AuthRoute exact path="/item/edit/:itemId" component={EditItemPage} />
             <AuthRoute path="/user/trades" component={TradesPage} />
             <AuthRoute path="/user/messages" component={MessagesPage} />
