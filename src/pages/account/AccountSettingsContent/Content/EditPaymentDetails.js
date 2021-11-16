@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { useHistory } from 'react-router'
 import Instance from '../../../../util/axios';
-import { handleCardName, handleCardNumber, handleExpiry, handleCcv, handleAccNumber, handleBsb } from '../../../../util/UserValidation'
 import ValidationPopup from '../../../../components/ValidationPopup/ValidationPopup';
 import useGlobalState from '../../../../util/useGlobalState';
 import { CardCvcElement, CardElement, CardExpiryElement, CardNumberElement, useElements, useStripe } from '@stripe/react-stripe-js';
 import { CircularProgress, Typography } from '@material-ui/core';
 import TrashCan from '../../../../assets/Icons/TrashCan';
-import Application from '../../../application/Application';
 import ValidationTextInput from '../../../../components/FormComponents/ValidationTextInput';
+import Button from '../../../../components/Button/Button';
 
 export default function EditPaymentDetails() {
     const { state, dispatch } = useGlobalState()
@@ -16,8 +15,9 @@ export default function EditPaymentDetails() {
     const elements = useElements()
     const stripe = useStripe()
     const history = useHistory()
-
-    const [isLoading, setIsLoading] = useState(false)
+    const [isUpdateAccountLoading, setIsUpdateAccountLoading] = useState(false)
+    const [updateAccountError, setUpdateAccountError] = useState()
+    const [isCreateCardLoading, setIsCreateCardLoading] = useState(false)
     const [isCardLoading, setIsCardLoading] = useState(true)
     const [cardNumber, setCardNumber] = useState()
     const [cardExpiry, setCardExpiry] = useState()
@@ -85,7 +85,7 @@ export default function EditPaymentDetails() {
             setCardNameError(true) 
             return
         }
-        setIsLoading(true)
+        setIsCreateCardLoading(true)
         try{
             const cardNumber = elements.getElement(CardNumberElement)
             const { paymentMethod, error } = await stripe.createPaymentMethod({
@@ -96,7 +96,7 @@ export default function EditPaymentDetails() {
                 }
             })
             if(error){
-                setIsLoading(false)
+                setIsCreateCardLoading(false)
                 return
             }
             await Instance.post('/stripe/addCreditCard', {
@@ -106,7 +106,7 @@ export default function EditPaymentDetails() {
         } catch(err) {
             console.log(err.response)
         }
-        setIsLoading(false)
+        setIsCreateCardLoading(false)
     }
 
     const deleteCard = async () => {
@@ -130,6 +130,39 @@ export default function EditPaymentDetails() {
             // const { data, status } = Instan
         } catch(err) {
 
+        }
+    }
+
+    const createUpdateAccountToken = async () => {
+        setIsUpdateAccountLoading(true)
+        try{
+            const response = await stripe.createToken('bank_account', {
+                country: 'AU',
+                currency: 'aud',
+                routing_number: bsb,
+                account_number: accNumber,
+                account_holder_type: 'individual',
+                account_holder_name: user.fullName,
+            })
+            if(response.token){
+                setUpdateAccountError('')
+                return response.token
+            } else {
+                setUpdateAccountError('Invalid bsb or account number')
+            }
+        } catch(err){
+            setUpdateAccountError('Something went wrong')
+        } finally{
+            setIsUpdateAccountLoading(false)
+        }
+    }
+
+    const updateAccountDetails = async () => {
+        const token = await createUpdateAccountToken()
+        try{
+            // const { data, status } = await Instance.post('/')
+        } catch(err){
+            console.log(err)
         }
     }
     return (
@@ -206,7 +239,7 @@ export default function EditPaymentDetails() {
                             </div> 
 
                             <div className="AccountSettings__ButtonFlex">
-                                {   isLoading ? (
+                                {   isCreateCardLoading ? (
                                     <CircularProgress color="inherit" />
                                 ) : (
                                     <button className="LoginFormButton AccountSettings__SaveButton" onClick={() => createPaymentMethod()}>Save Changes</button>
@@ -236,7 +269,11 @@ export default function EditPaymentDetails() {
                 onChange={e => setBsb(e.target.value)}
                 placeholder="456-789"
                 />
-
+                <Button 
+                isLoading={isUpdateAccountLoading}
+                text="Update" 
+                errorMessage={updateAccountError}
+                onClick={updateAccountDetails}/>
             </div>
         </>
     )

@@ -25,7 +25,7 @@ export default function Button({ onClick, isDisabled, errorMessage, isLoading, t
             onClick={handleButtonClick}
             >
                 { isLoading ? (
-                    <CircularProgress color="#fff" size={20} />
+                    <CircularProgress color="inherit" size={20} />
                 ) : (
                     <div>
                         { text }
