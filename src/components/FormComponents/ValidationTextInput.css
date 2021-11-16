@@ -1,0 +1,24 @@
+.InLineErrorContainer {
+
+    padding: 0.7em;
+    font-size: 18px;
+    user-select: none;
+}
+.ValidationInputContainer {
+    margin-bottom: 1em;
+}
+.ValidationInput {
+    width: 100%;
+    padding: 0.7em;
+    border-radius: 10px;
+    border: 1px solid #ac172c;
+    outline: none;
+    font-family: "DMSans", sans-serif;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.ValidationInputErrorContainer {
+    background-color: #f7e7e9;
+    border-radius: 10px
+}

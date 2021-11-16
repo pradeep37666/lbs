@@ -1,45 +1,53 @@
-import React, { useState } from 'react'
-import ValidationPopup from '../../../../components/ValidationPopup/ValidationPopup'
-import { handleFullName, handleEmail, handlePhoneNumber } from '../../../../util/UserValidation'
+import React, { useState, useEffect } from 'react'
 import { ReactComponent as CameraIcon } from '../../../../assets/Icons/CameraIcon.svg';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import LBSSwitch from '../../../../components/LBSSwitch/LBSSwitch'
-import { useHistory } from 'react-router'
 import Instance from '../../../../util/axios';
 import { Link } from 'react-router-dom';
 import useGlobalState from '../../../../util/useGlobalState';
-import { Avatar, CircularProgress } from '@material-ui/core';
 import getImage from '../../../../util/getImage';
+import ValidationTextInput from '../../../../components/FormComponents/ValidationTextInput';
+import Button from '../../../../components/Button/Button';
+import { updateUserDetailsConstraints } from '../../../../util/validationConstraints';
+import { validate } from 'validate.js';
 
 export default function EditAccountDetails(props) {
     const { state, dispatch } = useGlobalState()
     const { user } = state
     const [isLoading, setIsLoading] = useState(false)
-    const history = useHistory()
-
-    const [nameValidation, setNameValidation] = useState("")
-    const [emailValidation, setEmailValidation] = useState("")
-    const [phoneValidation, setPhoneValidation] = useState("")
 
     const [image, setImage] = useState()
-
-    const [name, setName] = useState(user.fullName)
+    const [firstName, setFirstName] = useState(user.firstName)
+    const [lastName, setLastName] = useState(user.lastName)
     const [email, setEmail] = useState(user.email)
-    const [phone, setPhone] = useState(user.mobile)
+    const [phoneNumber, setPhoneNumber] = useState(user.mobile)
+    const [errorMessages, setErrorMessages] = useState({})
 
-    const [sync, setSync] = useState(false)
-
-    const showValidation = (field) => {
-        switch (field) {
-            case 'name':
-                return (nameValidation.length > 0) ? false : true
-            case 'email':
-                return (emailValidation.length > 0 && nameValidation.length === 0) ? false : true
-            case 'phone':
-                return (phoneValidation.length > 0 && nameValidation.length === 0 && emailValidation.length === 0) ? false : true
-            default:
+    useEffect(() => {
+        if(Object.keys(errorMessages).length > 0){
+            const valid = validateInputs()
+            if(valid){
+                setErrorMessages({})
                 return
+            }
         }
+    },[firstName, lastName, email, phoneNumber])
+
+    const getErrorMessage = (inputName) => {
+        if(Object.keys(errorMessages).length === 0) return null
+        for(const key in errorMessages){
+            if(Object.keys(errorMessages)[0] === inputName) return errorMessages[key][0]
+        }
+    }
+
+    const validateInputs = () => {
+        const validationErrors = validate({ firstName, lastName, email, phoneNumber }, updateUserDetailsConstraints)
+        if(validationErrors){
+            console.log('errors', validationErrors)
+            setErrorMessages(validationErrors)
+            return false
+        }
+        setErrorMessages({})
+        return true
     }
 
     const handleChange = (e) => {
@@ -53,11 +61,14 @@ export default function EditAccountDetails(props) {
     }
 
     const updateBasicDetails = async () => {
+        const valid = validateInputs()
+        if(!valid) return 
         setIsLoading(true)
         const userDetails = {
-            fullName: name ? name : user.fullName,  
-            email: email ? email : user.email,
-            mobile: phone ? phone : user.mobile,
+            firstName,
+            lastName,
+            email,
+            mobile: phoneNumber,
             avatar: image ? image.raw : '', 
         }
         const formData = new FormData()
@@ -65,19 +76,10 @@ export default function EditAccountDetails(props) {
             formData.append(key, userDetails[key])
         }
         try{
-            const { data, status } = await Instance.put('user/update', formData)
-                        
-            console.log(data, status)
-            let newData = user
-            newData.fullName = userDetails.fullName
-            newData.email = userDetails.email
-            newData.mobile = userDetails.mobile
-            dispatch({ type: 'setUser', data: newData })
-            
-            // history.go(0)
-
+            const { data } = await Instance.put('user/update', formData)
+            dispatch({ type: 'setUser', data })
         } catch(err) {
-            console.log(err)
+            console.log(err.response)
         } finally {
             setIsLoading(false)
         }
@@ -87,27 +89,38 @@ export default function EditAccountDetails(props) {
     return (
         <div className="AccountSettings__Container">
             <div className="AccountSettings__Title">Edit Account Details</div>
-
-            <div className="AccountSettings__UpdateHeader">Full Name</div>
-            <div className="LoginInputValidationContainer">
-                <input type='text' placeholder='Jane Doe' defaultValue={name} className="LoginInput" onBlur={(e) => handleFullName(e, setName, setNameValidation)} />
-                <div className={`triangleLeft ${showValidation("name") ? '' : 'ValidationTextHide'}`} />
-                { !showValidation('name') && <ValidationPopup errorText={nameValidation} errorHeader='Invalid Full Name' hide={showValidation("name")} />}
-            </div>
-
-            <div className="AccountSettings__UpdateHeader">Email</div>
-            <div className="LoginInputValidationContainer">
-                <input type='text' placeholder='JaneDoe@DoeJane.com' defaultValue={email} className="LoginInput" onBlur={(e) => handleEmail(e, setEmail, setEmailValidation)} />
-                <div className={`triangleLeft ${showValidation("email") ? '' : 'ValidationTextHide'}`} />
-                { !showValidation('email') && <ValidationPopup errorText={emailValidation} errorHeader='Invalid Email' hide={showValidation("email")} />}
-            </div>
-
-            <div className="AccountSettings__UpdateHeader">Phone Number</div>
-            <div className="LoginInputValidationContainer">
-                <input type='text' placeholder='+61456789012' defaultValue={phone} className="LoginInput" onBlur={(e) => handlePhoneNumber(e, setPhone, setPhoneValidation)} />
-                <div className={`triangleLeft ${showValidation("phone") ? '' : 'ValidationTextHide'}`} />
-                { !showValidation('phone') && <ValidationPopup errorText={phoneValidation} errorHeader='Invalid Phone Number' hide={showValidation("phone")} />}
-            </div>
+            <ValidationTextInput 
+            label="First Name"
+            onChange={e => setFirstName(e.target.value)}
+            value={firstName}
+            placeholder="John"
+            errorMessage={getErrorMessage('firstName')}
+            inLineError
+            />
+            <ValidationTextInput 
+            label="Last Name"
+            onChange={e => setLastName(e.target.value)}
+            value={lastName}
+            placeholder="Doe"
+            errorMessage={getErrorMessage('lastName')}
+            inLineError
+            />
+            <ValidationTextInput 
+            label="Email"
+            onChange={e => setEmail(e.target.value)}
+            value={email}
+            placeholder="John@Doe.com"
+            errorMessage={getErrorMessage('email')}
+            inLineError
+            />
+            <ValidationTextInput 
+            label="Phone Number"
+            onChange={e => setPhoneNumber(e.target.value)}
+            value={phoneNumber}
+            placeholder="0425678912"
+            errorMessage={getErrorMessage('phoneNumber')}
+            inLineError
+            />
 
             <div className="AccountSettings__UpdateHeader">Profile Picture</div>
             <div className="ProfilePictureFlex">
@@ -137,29 +150,11 @@ export default function EditAccountDetails(props) {
 
             <div className="HL" />
 
-            {/* <div className="AccountSettings__SyncButtonFlex">
-                <div className="AccountSettings__UserName AccountSettings__SyncButton__Text">Sync Trade Dates with Calendar</div>
-                <div><LBSSwitch set={setSync} text='On' /></div>
-            </div>
-
-            <div className="AccountSettings__BodyText">
-                <p>If you would like to sync you Little Big Shed calendar dates with your personal calendar, turn this on.</p>
-                <p>If you want to keep these details seperate, keep this turned off.</p>
-
-            </div> */}
-
-            <div className="AccountSettings__ButtonFlex">
-                { isLoading ? (
-                    <CircularProgress color="inherit" />
-                ) : (
-                    <button 
-                    className="LoginFormButton AccountSettings__SaveButton" 
-                    onClick={() => updateBasicDetails()}
-                    >
-                        Save Changes
-                    </button>
-                )}
-            </div>
+            <Button 
+            text="Save Changes"
+            onClick={updateBasicDetails}
+            isLoading={isLoading}
+            />
 
         </div>
     )

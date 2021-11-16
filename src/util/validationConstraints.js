@@ -88,3 +88,4 @@ const createValidationObject = (fields) => {
 export const loginConstraints = createValidationObject(['email', 'password'])
 export const registrationConstraints = createValidationObject([ 'firstName', 'lastName', 'email', 'phoneNumber', 'password', 'confirmPassword', ])
 export const newPasswordConstraints = createValidationObject([ 'password', 'confirmPassword' ])
+export const updateUserDetailsConstraints = createValidationObject(['firstName', 'lastName', 'email', 'phoneNumber',])

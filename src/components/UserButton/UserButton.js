@@ -13,14 +13,13 @@ import useGlobalState from '../../util/useGlobalState'
 import getImage from '../../util/getImage'
 import { Avatar } from '@material-ui/core'
 import { isMobile } from 'react-device-detect'
-import { ReactComponent as Logout } from '../../assets/Icons/LogoutIcon.svg'
 import { CometChat } from '@cometchat-pro/chat'
 import { useHistory } from 'react-router'
 
 export default function UserButton() {
     const { state, dispatch } = useGlobalState()
     const { user } = state
-    const firstName = user.fullName.split(" ")[0]
+    const firstName = user.firstName
     const history = useHistory()
 
     const [menuOpen, setMenuOpen] = useState(false)
@@ -29,7 +28,6 @@ export default function UserButton() {
         localStorage.removeItem('token')
         dispatch({ type: 'setUser', data: null })
         const res = await CometChat.logout()
-        console.log('log out from comet chat', res)
         history.push({ pathname: '/' })
     }
 
