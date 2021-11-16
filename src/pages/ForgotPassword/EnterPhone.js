@@ -1,8 +1,9 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import ValidationTextInput from '../../components/FormComponents/ValidationTextInput'
 import Instance from '../../util/axios'
 
 export default function EnterPhone({ setPhoneNumber, phoneNumber, setCurrentPage }) {
+    const [verificationError, setVerificationError] = useState()
 
     const sendVerificationCode = async () => {
         try{
@@ -10,7 +11,10 @@ export default function EnterPhone({ setPhoneNumber, phoneNumber, setCurrentPage
             console.log(data, status)
             setCurrentPage('EnterCode')
         } catch(err){
-            console.log(err)
+            console.log(err.response)
+            if(err.response.status === 400){
+                setVerificationError("Invalid Phone Number")
+            }
         }
     }
 
@@ -20,7 +24,11 @@ export default function EnterPhone({ setPhoneNumber, phoneNumber, setCurrentPage
                 <div className="LoginText">
                     Enter the phone number associated with your Little Big Shed Account to retieve a new password.
                 </div>
-                <ValidationTextInput label="Phone Number" onChange={e => setPhoneNumber(e.target.value)} />
+                <ValidationTextInput 
+                errorMessage={verificationError}
+                label="Phone Number" 
+                onChange={e => setPhoneNumber(e.target.value)} 
+                />
                 <div onClick={sendVerificationCode} style={{ width: '100%' }}>
                     <button className="LoginFormButton">Send</button>
                 </div>

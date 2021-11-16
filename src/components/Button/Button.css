@@ -1,0 +1,20 @@
+.ButtonContainer {
+  padding: 0.8em;
+  width: 100%;
+  background-color: #ac172c;
+  font-size: 15px;
+  color: #fff;
+  font-weight: bold;
+  border-radius: 10px;
+  border: none;
+  outline: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 3.2em;
+}
+
+.ButtonErrorContainer {
+  position: relative;
+  width: 100%;
+}

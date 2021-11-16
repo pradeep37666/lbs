@@ -2,7 +2,7 @@ import React, { useState } from "react"
 import ValidationPopup from '../ValidationPopup/ValidationPopup'
 // import ShowPasswordIcon from '../../assets/Icons/ShowPasswordIcon'
 
-export default function ValidationTextInput({ onChange, errorMessage, label, placeholder, passwordInput }) {
+export default function ValidationTextInput({ onChange, errorMessage, label, placeholder, passwordInput, errorHeader }) {
     const [isInputHidden, setIsInputHidden] = useState(true)
 
     return (
@@ -27,7 +27,7 @@ export default function ValidationTextInput({ onChange, errorMessage, label, pla
                     onChange={onChange}/>
                 )}
                 { errorMessage ? (
-                    <ValidationPopup errorText={errorMessage} hide={false} errorHeader={`Invalid ${label}`}/>
+                    <ValidationPopup errorText={errorMessage} hide={false} errorHeader={errorHeader ||  `Invalid ${label}`}/>
                 ) : null }
             </div>
         </div>

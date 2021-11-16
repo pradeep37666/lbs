@@ -7,14 +7,14 @@ import NewPassword from './NewPassword'
 
 export default function ForgotPassword() {
     const [phoneNumber, setPhoneNumber] = useState()
-    const [currentPage, setCurrentPage] = useState('NewPassword')
+    const [currentPage, setCurrentPage] = useState('EnterPhone')
    
     const renderPage = () => {
         switch(currentPage) {
             case 'EnterPhone' :
                 return <EnterPhone setPhoneNumber={setPhoneNumber} phoneNumber={phoneNumber} setCurrentPage={setCurrentPage} />
             case 'EnterCode' :
-                return <EnterCode phoneNumber={phoneNumber} />
+                return <EnterCode phoneNumber={phoneNumber} setCurrentPage={setCurrentPage} />
             case 'NewPassword' :
                 return <NewPassword />
         }  
@@ -24,12 +24,11 @@ export default function ForgotPassword() {
     return (
         <PageWrapper>
             <div className="ApplicationHeaderContainer">
-                <div>
-                    Retrieve Password
-                     - Basic Details
+                <div className="ItemDetails">
+
+                    <span className="ApplicationHeaderHeading">Retrieve Password </span>
+                    <span className="ApplicationHeaderSubheading"> - Basic Details</span>
                 </div>
-                
-                
             </div>
             { renderPage() }
         </PageWrapper>
