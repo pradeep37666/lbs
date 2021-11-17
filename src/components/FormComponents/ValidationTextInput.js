@@ -20,6 +20,7 @@ export default function ValidationTextInput({ onChange, errorMessage, label, pla
                             type={isInputHidden ? 'password' : 'text'}
                             placeholder={placeholder}
                             className="ValidationInput"
+                            value={value}
                             onChange={onChange}/>
                             {/* <ShowPasswordIcon onClick={() => setIsInputHidden(!isInputHidden)} /> */}
                         </div>
@@ -38,6 +39,7 @@ export default function ValidationTextInput({ onChange, errorMessage, label, pla
                 </div>
                 {errorMessage && inLineError ? (
                     <div className="InLineErrorContainer">
+                        <div className="ValidationPopup__Header">{errorHeader || `Invalid ${label}`}</div>
                         { errorMessage }
                     </div>
                 ) : null}

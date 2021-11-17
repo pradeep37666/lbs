@@ -1,4 +1,4 @@
-.ButtonContainer {
+.Button {
   padding: 0.8em;
   width: 100%;
   background-color: #ac172c;
@@ -15,6 +15,15 @@
 }
 
 .ButtonErrorContainer {
+  background-color: #f7e7e9;
+  border-radius: 10px
+}
+
+.ButtonContainer {
+  width: 100%
+}
+
+.ButtonValidationContainer {
   position: relative;
   width: 100%;
 }

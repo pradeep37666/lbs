@@ -67,7 +67,7 @@ export default function UpgradeLender() {
             available: availability ? availability : user.available
         }
 
-        Instance.put('user/update', data)
+        Instance.patch('user/update', data)
             .then((response) => {
                 console.log(response)
                 let newData = user

@@ -42,6 +42,7 @@ function App() {
   const token = localStorage.getItem('token')
 
   useEffect(() => {
+    console.log('firing')
     if (!token) {
       setLoadingUser(false)
       return
@@ -52,9 +53,12 @@ function App() {
 
   const getCurrentUser = async () => {
     try{
+      console.log('user going in', user)
+      console.log('token', token)
       const { data } = await Instance.get('/user/me')
       dispatch({ type: 'setUser', data })
     } catch(err) {
+      console.log('error loading user', err.response)
       localStorage.removeItem('token')
     } finally {
       setLoadingUser(false)

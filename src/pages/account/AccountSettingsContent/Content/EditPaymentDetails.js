@@ -8,6 +8,8 @@ import { CircularProgress, Typography } from '@material-ui/core';
 import TrashCan from '../../../../assets/Icons/TrashCan';
 import ValidationTextInput from '../../../../components/FormComponents/ValidationTextInput';
 import Button from '../../../../components/Button/Button';
+import cardElementOptions from '../../../../constants/cardElementOptions';
+import StripeAccountDetails from './StripeAccountDetails';
 
 export default function EditPaymentDetails() {
     const { state, dispatch } = useGlobalState()
@@ -15,8 +17,7 @@ export default function EditPaymentDetails() {
     const elements = useElements()
     const stripe = useStripe()
     const history = useHistory()
-    const [isUpdateAccountLoading, setIsUpdateAccountLoading] = useState(false)
-    const [updateAccountError, setUpdateAccountError] = useState()
+
     const [isCreateCardLoading, setIsCreateCardLoading] = useState(false)
     const [isCardLoading, setIsCardLoading] = useState(true)
     const [cardNumber, setCardNumber] = useState()
@@ -26,8 +27,7 @@ export default function EditPaymentDetails() {
     const [cardNameError, setCardNameError] = useState(false)
     const [userCard, setUserCard] = useState()
 
-    const [accNumber, setAccNumber] = useState(user.account_number)
-    const [bsb, setBsb] = useState(user.bsb)
+
 
     useEffect(() => {
         getSavedCard()
@@ -60,24 +60,6 @@ export default function EditPaymentDetails() {
         if(!cardName) return
         setCardNameError(false)
     }, [cardName])
-
-    const CARD_ELEMENT_OPTIONS = {
-        style: {
-          base: {
-            color: "black",
-            fontFamily: '"DMSans", sans-serif',
-            fontSmoothing: "antialiased",
-            fontSize: "18px",
-            "::placeholder": {
-              color: "rgb(133,133,133)",
-            },
-          },
-          invalid: {
-            color: "#fa755a",
-            iconColor: "#fa755a",
-          },
-        },
-      };
 
 
     const createPaymentMethod = async () => {
@@ -125,46 +107,8 @@ export default function EditPaymentDetails() {
         
     }
 
-    const getAccountDetails = async () => {
-        try{
-            // const { data, status } = Instan
-        } catch(err) {
+    
 
-        }
-    }
-
-    const createUpdateAccountToken = async () => {
-        setIsUpdateAccountLoading(true)
-        try{
-            const response = await stripe.createToken('bank_account', {
-                country: 'AU',
-                currency: 'aud',
-                routing_number: bsb,
-                account_number: accNumber,
-                account_holder_type: 'individual',
-                account_holder_name: user.fullName,
-            })
-            if(response.token){
-                setUpdateAccountError('')
-                return response.token
-            } else {
-                setUpdateAccountError('Invalid bsb or account number')
-            }
-        } catch(err){
-            setUpdateAccountError('Something went wrong')
-        } finally{
-            setIsUpdateAccountLoading(false)
-        }
-    }
-
-    const updateAccountDetails = async () => {
-        const token = await createUpdateAccountToken()
-        try{
-            // const { data, status } = await Instance.post('/')
-        } catch(err){
-            console.log(err)
-        }
-    }
     return (
         <>
             <div className="AccountSettings__Container">
@@ -208,7 +152,7 @@ export default function EditPaymentDetails() {
                                 <CardNumberElement 
                                 className="LoginInput" 
                                 onChange={cardNumberObj => setCardNumber(cardNumberObj)} 
-                                options={CARD_ELEMENT_OPTIONS}
+                                options={cardElementOptions}
                                 />
                                 <div className={`triangleLeft ${!cardNumber?.error ? '' : 'ValidationTextHide'}`} /> 
                                 <ValidationPopup errorText={cardNumber?.error?.message} errorHeader='Invalid Card Number' hide={!cardNumber?.error} />
@@ -222,12 +166,12 @@ export default function EditPaymentDetails() {
                                     <CardExpiryElement
                                     className="LoginInput" 
                                     onChange={cardExpiryObj => setCardExpiry(cardExpiryObj)} 
-                                    options={CARD_ELEMENT_OPTIONS}
+                                    options={cardElementOptions}
                                     />
                                     <CardCvcElement
                                     className="LoginInput" 
                                     onChange={cardCvcObj => setCardCvc(cardCvcObj)} 
-                                    options={CARD_ELEMENT_OPTIONS}
+                                    options={cardElementOptions}
                                     />
                                     
                                 </div>
@@ -239,42 +183,18 @@ export default function EditPaymentDetails() {
                             </div> 
 
                             <div className="AccountSettings__ButtonFlex">
-                                {   isCreateCardLoading ? (
-                                    <CircularProgress color="inherit" />
-                                ) : (
-                                    <button className="LoginFormButton AccountSettings__SaveButton" onClick={() => createPaymentMethod()}>Save Changes</button>
-                                )}
+                                <Button 
+                                onClick={createPaymentMethod}
+                                text="Save Card" 
+                                isLoading={isCreateCardLoading}/>
                             </div> 
+                            
                         </>
                     )
                     
                 )}
-            
-                
-
             </div>
-            <div className="AccountSettings__Container">
-
-                <div className="AccountSettings__UserName">Bank Details</div>
-                <div className="AccountSettings__BodyText">Bank details will allow you to upgrade to a lender account.</div>
-
-                <ValidationTextInput 
-                label="Account Number"
-                onChange={e => setAccNumber(e.target.value)}
-                placeholder="1234 5678"
-                />
-
-                <ValidationTextInput 
-                label="BSB" 
-                onChange={e => setBsb(e.target.value)}
-                placeholder="456-789"
-                />
-                <Button 
-                isLoading={isUpdateAccountLoading}
-                text="Update" 
-                errorMessage={updateAccountError}
-                onClick={updateAccountDetails}/>
-            </div>
+            <StripeAccountDetails />
         </>
     )
 }
