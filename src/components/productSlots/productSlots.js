@@ -15,18 +15,21 @@ export default function ProductSlots({ availability, setAvailability }) {
 
     const renderSlotDays = () => {
         const weekdays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+
         return Array(7).fill(null).map(( item, index )=> {
             const slotDay = weekdays[index]
             const morningIndex = index * 2
             const afternoonIndex = (index * 2) + 1
+
             return (
                 <SlotDay 
+                key={index}
                 day={slotDay}
                 open={openSlot === slotDay}
                 onClick={() => handleSlotClick(slotDay)}
                 morningSelected={availability[morningIndex]}
                 afternoonSelected={availability[afternoonIndex]}
-                onMorningClick={() => {
+                onMorningClick={() => { 
                     let newAvailability = [...availability]
                     newAvailability[morningIndex] = availability[morningIndex] ? 0 : 1
                     setAvailability(newAvailability)

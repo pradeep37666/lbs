@@ -7,11 +7,10 @@ import Button from '../Button/Button'
 
 export default function LocationDetails() {
     const { state, dispatch } = useContext(FormContext)
-    const { isLenderUpgrade } = state
+    const { isLenderUpgrade, address } = state
 
-    const globalState = useGlobalState().state
-    const { user } = globalState
-
+    const user = useGlobalState().state.user
+    console.log('====', address)
     return (
         <div className="RegistrationWrapper">
                 <div className="LoginMain">
@@ -45,6 +44,7 @@ export default function LocationDetails() {
                     <Button 
                     
                     text="Next"
+                    isDisabled={!address}
                     onClick={() => {
                         dispatch({ type: 'setCurrentPage', data: 'Availability' })
                     }}/>

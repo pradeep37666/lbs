@@ -20,10 +20,10 @@ const lenderUpgradeReducer = (state, action) => {
                 ...state,
                 address: action.data
             }
-        case 'setBsb' :
+        case 'setBSB' :
             return {
                 ...state,
-                bsb : action.data
+                BSB : action.data
             }
         case 'setAvailability' :
             return {

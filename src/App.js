@@ -3,13 +3,12 @@ import './App.css';
 import Home from './pages/home/home.js';
 import ItemPage from './pages/item/item.js';
 import SearchPage from './pages/search/search.js';
-// import LoginPage from './pages/login/Login.js';
 import Login from './pages/login/Login.js';
 import RegisterPage from './pages/register/register.js';
 import AccountPage from './pages/account/account.js';
 import PostItem from './pages/postitem/postitem';
 import TradesPage from './pages/trades/trades.js';
-import MessagesPage from './pages/messages/messages.js';
+import Messages from './pages/messages/Messages'
 import YourshedPage from './pages/yourshed/yourshed.js';
 import FavouritesPage from './pages/favourites/favourites.js';
 import UpgradeLender from './pages/account/UpgradeLender/UpgradeLender';
@@ -129,7 +128,7 @@ function App() {
             <Route exact path="/forgotpassword" component={ForgotPassword} />
             <AuthRoute exact path="/item/edit/:itemId" component={EditItemPage} />
             <AuthRoute path="/user/trades" component={TradesPage} />
-            <AuthRoute path="/user/messages" component={MessagesPage} />
+            <AuthRoute path="/user/messages" component={Messages} />
             <AuthRoute path="/user/your_shed" component={YourshedPage} />
             <AuthRoute path="/user/favourites" component={FavouritesPage} />
             <AuthRoute path="/user/account" component={AccountPage} />
