@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useReducer, createContext } from 'react'
 import PageWrapper from '../../../components/pageWrapper/pageWrapper'
 import Banner from '../../../components/bannerText/bannerText'
 import BankDetails from '../../../components/FormComponents/BankDetails'
@@ -9,9 +9,12 @@ import { ReactComponent as Logo } from '../../../assets/Logos/LogoRed.svg';
 import { useHistory } from 'react-router'
 import useGlobalState from '../../../util/useGlobalState'
 import getSuburb from '../../../util/getSuburb'
+import lenderUpgradeReducer from '../../../util/lenderUpgradeReducer'
+
+export const LenderUpgradeContext = createContext()
 
 export default function UpgradeLender() {
-    const dispatch = useGlobalState().dispatch
+    const globalDispatch = useGlobalState().dispatch
     const globalState = useGlobalState().state
     const { user } = globalState
 
@@ -33,6 +36,8 @@ export default function UpgradeLender() {
         setPage(newPage)
         window.scrollTo(0, 0)
     }
+
+    const { state, dispatch } = useReducer( lenderUpgradeReducer, {})
 
     const getComplete = () => {
         return (
@@ -78,7 +83,7 @@ export default function UpgradeLender() {
                 newData.lat = data.lat
                 newData.lng = data.lng
                 newData.available = data.available
-                dispatch({ type: 'setUser', data: newData })
+                globalDispatch({ type: 'setUser', data: newData })
             })
             .catch((error) => {
                 console.log(error)
@@ -118,7 +123,6 @@ export default function UpgradeLender() {
         switch (page) {
             case 'Bank Details':
                 return <BankDetails
-                    validated={validated}
                     handleNextPage={handleNextPage}
                     dayOfBirth={dayOfBirth}
                     monthOfBirth={monthOfBirth}
@@ -129,8 +133,8 @@ export default function UpgradeLender() {
                     setAccNumber={setAccNumber}
                     setBsb={setBsb}
                     setValidated={setValidated}
-                    isUpgrade={true}
-                    lender={true}
+                    isLenderUpgrade={true}
+                    lender
                 />
             case 'Location Details':
                 return <LocationDetails
@@ -176,11 +180,13 @@ export default function UpgradeLender() {
     }, [page, accNumber, bsb, address, availability])
 
     return (
-        <PageWrapper>
-            <Banner textBold='Lender Upgrade' textNormal={page} />
+        <LenderUpgradeContext value={{ state, dispatch }}>
+            <PageWrapper>
+                <Banner textBold='Lender Upgrade' textNormal={page} />
 
-            {renderSwitch()}
+                {renderSwitch()}
 
-        </PageWrapper>
+            </PageWrapper>
+        </LenderUpgradeContext>
     )
 }

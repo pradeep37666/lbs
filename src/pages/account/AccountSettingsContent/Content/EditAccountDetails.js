@@ -76,7 +76,7 @@ export default function EditAccountDetails(props) {
             formData.append(key, userDetails[key])
         }
         try{
-            const { data } = await Instance.put('user/update', formData)
+            const { data } = await Instance.patch('user/update', formData)
             dispatch({ type: 'setUser', data })
         } catch(err) {
             console.log(err.response)
