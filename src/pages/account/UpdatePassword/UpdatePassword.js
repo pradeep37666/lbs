@@ -83,12 +83,6 @@ export default function UpdatePassword() {
             if(Object.keys(errorMessages)[0] === inputName) return errorMessages[key][0]
         }
     }
-    // useEffect(() => {
-    //     if (newPassword && newPassword === confirmPassword) {
-    //         setValidated(true)
-    //     } else setValidated(false)
-    // }, [newPassword, confirmPassword])
-
 
     return (
         <PageWrapper>
@@ -109,6 +103,7 @@ export default function UpdatePassword() {
                     />
                     <div className="LoginText">Forgot password?<span className="RetrieveLink"> Retrieve here</span></div>
                     <Button 
+                    isDisabled={!currentPassword}
                     onClick={loginUser}
                     text="Next"
                     isLoading={isLoginLoading}
@@ -124,14 +119,15 @@ export default function UpdatePassword() {
                         <p>Create a new Little Big Shed password below.</p>
                         <p>Your password must include at least 8 characters, 1 number , 1 uppercase letter and a special character.</p>
                     </div>
+
                     <ValidationTextInput 
                     passwordInput
                     value={password}
                     errorMessage={getErrorMessage('password')}
                     onChange={e => setPassword(e.target.value)}
                     label="New Password"
-                    
                     />
+
                     <ValidationTextInput 
                     passwordInput
                     value={confirmPassword}
@@ -140,21 +136,19 @@ export default function UpdatePassword() {
                     errorMessage={getErrorMessage('confirmPassword')}
                     />
 
-                    {/* <button className={`LoginFormButton ${!validated ? 'ButtonDisabled' : ''}`} disabled={!validated ? true : false} onClick={() => updatePassword()}>Set New Password</button> */}
                     <Button 
+                    isDisabled={!password || !confirmPassword}
                     text="Update Password"
                     isLoading={isUpdateLoading}
                     onClick={updatePassword}
                     
                     />
-                    {showSuccess ? 
+                    {showSuccess && 
                     <div className="UpdatePassword__SuccessPopup"> 
                         <div className="LoginHeader">Success!</div>
                         <div className="UpdatePassword__Body">Your password has been successfully updated, you will now be redirected.</div>
                     </div> 
-                    
-                    
-                    : ''}
+                    }
                 </div>
             }
 
