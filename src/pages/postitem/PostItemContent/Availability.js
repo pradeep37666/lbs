@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { ReactComponent as Logo } from "../../../assets/Logos/LogoRed.svg";
-import ProductSlots from "../../../components/productSlots/productSlots";
+import ProductSlots from "../../../components/productSlots/ProductSlots";
 import useGlobalState from "../../../util/useGlobalState";
 
 export default function Availability(props) {

@@ -9,16 +9,11 @@ import cardElementOptions from '../../constants/cardElementOptions';
 import "react-datepicker/dist/react-datepicker.css";
 import ReactDatePicker from 'react-datepicker';
 import ValidationTextInput from './ValidationTextInput';
-import { LenderUpgradeContext } from '../../pages/account/UpgradeLender/UpgradeLender';
+import { FormContext } from '../../pages/account/UpgradeLender/UpgradeLender';
 
 export default function BankDetails(props) {
-    let state, dispatch
-    if(props.isLenderUpgrade){
-        state = useContext(LenderUpgradeContext).state
-        dispatch = useContext(LenderUpgradeContext).dispatch
-    }
-    const lenderUpgradeState = useContext(LenderUpgradeContext).state
-    const lenderUpgradeDispatch = useContext(LenderUpgradeContext).dispatch
+    const { state, dispatch } = useContext(FormContext)
+    // console.log(FormContext)
     const { accountNumber } = state
 
     const [nameValidation, setNameValidation] = useState("")
@@ -58,12 +53,6 @@ export default function BankDetails(props) {
                 return (accNumberValidation.length > 0) ?  false : true
             case 'bsb':
                 return (bsbValidation.length > 0 && accNumberValidation.length === 0) ? false : true
-            // case 'dayOfBirth' :
-            //     return (dayOfBirthValidation.length > 0) ?  false : true
-            // case 'monthOfBirth' :
-            //     return (monthOfBirthValidation.length > 0 && !(dayOfBirthValidation.length > 0)) ?  false : true
-            // case 'yearOfBirth' : 
-            //     return ((yearOfBirthValidation.length > 0 ) && (monthOfBirthValidation.length === 0)) ?  false : true
             default:
                 return
         }

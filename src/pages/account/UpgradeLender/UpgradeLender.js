@@ -11,9 +11,16 @@ import useGlobalState from '../../../util/useGlobalState'
 import getSuburb from '../../../util/getSuburb'
 import lenderUpgradeReducer from '../../../util/lenderUpgradeReducer'
 
-export const LenderUpgradeContext = createContext()
+export const FormContext = createContext()
 
 export default function UpgradeLender() {
+    const [state, dispatch] = useReducer(lenderUpgradeReducer, { 
+        isLenderUpgrade: true, 
+        currentPage: 'Location Details',
+    })
+
+    const { currentPage } = state
+
     const globalDispatch = useGlobalState().dispatch
     const globalState = useGlobalState().state
     const { user } = globalState
@@ -22,22 +29,13 @@ export default function UpgradeLender() {
     const [dayOfBirth, setDayOfBirth] = useState()
     const [monthOfBirth, setMonthOfBirth] = useState()
     const [yearOfBirth, setYearOfBirth] = useState()
-    const [page, setPage] = useState('Bank Details')
 
     const [accNumber, setAccNumber] = useState("")
     const [bsb, setBsb] = useState("")
 
     const [address, setAddress] = useState("")
-    const [availability, setAvailability] = useState('00000000000000')
-
-    const [validated, setValidated] = useState(false)
-
-    const handleNextPage = (newPage) => {
-        setPage(newPage)
-        window.scrollTo(0, 0)
-    }
-
-    const { state, dispatch } = useReducer( lenderUpgradeReducer, {})
+    const [availability, setAvailability] = useState(Array(14).fill(0))
+   
 
     const getComplete = () => {
         return (
@@ -108,8 +106,7 @@ export default function UpgradeLender() {
             city:   address.address_components[3].long_name,
             postal_code: address.address_components[6].long_name,
         }
-        console.log('stripe data', stripeData)
-        console.log('user', user)
+
         try{
             const { data, status } = await Instance.post('/stripe/createAccount', stripeData)
             console.log('stripe', data, status)
@@ -120,10 +117,9 @@ export default function UpgradeLender() {
     }
 
     const renderSwitch = () => {
-        switch (page) {
+        switch (currentPage) {
             case 'Bank Details':
                 return <BankDetails
-                    handleNextPage={handleNextPage}
                     dayOfBirth={dayOfBirth}
                     monthOfBirth={monthOfBirth}
                     yearOfBirth={yearOfBirth}
@@ -132,20 +128,14 @@ export default function UpgradeLender() {
                     setYearOfBirth={setYearOfBirth}
                     setAccNumber={setAccNumber}
                     setBsb={setBsb}
-                    setValidated={setValidated}
                     isLenderUpgrade={true}
                     lender
                 />
             case 'Location Details':
-                return <LocationDetails
-                    validated={validated}
-                    handleNextPage={handleNextPage}
-                    setAddress={setAddress}
-                />
+                return <LocationDetails />
             case 'Availability':
                 return <Availability
-                    validated={validated}
-                    handleNextPage={handleNextPage}
+                    availability={availability}
                     setAvailability={setAvailability}
                     isUpgrade={true}
                     submitUpgrade={submitUpgrade}
@@ -157,36 +147,14 @@ export default function UpgradeLender() {
         }
     }
 
-    useEffect(() => {
-        switch (page) {
-            case 'Bank Details':
-                if (accNumber && bsb) {
-                    setValidated(true)
-                } else setValidated(false)
-                break
-            case 'Location Details':
-                if (address) {
-                    setValidated(true)
-                } else setValidated(false)
-                break
-            case 'Availability':
-                if (availability !== '00000000000000') {
-                    setValidated(true)
-                } else setValidated(false)
-                break
-            default:
-                return '';
-        }
-    }, [page, accNumber, bsb, address, availability])
-
     return (
-        <LenderUpgradeContext value={{ state, dispatch }}>
+        <FormContext.Provider value={{ state, dispatch }}>
             <PageWrapper>
-                <Banner textBold='Lender Upgrade' textNormal={page} />
+                <Banner textBold='Lender Upgrade' textNormal={currentPage} />
 
-                {renderSwitch()}
+                { renderSwitch() }
 
             </PageWrapper>
-        </LenderUpgradeContext>
+        </FormContext.Provider>
     )
 }

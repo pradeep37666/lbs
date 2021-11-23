@@ -14,13 +14,28 @@
   min-height: 3.2em;
 }
 
+.ButtonInverted {
+  padding: 0.8em;
+  width: 100%;
+  background-color: white;
+  font-size: 15px;
+  color: #ac172c;
+  font-weight: bold;
+  border-radius: 10px;
+  border: 1px solid #ac172c;
+  outline: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 3.2em;
+}
 .ButtonErrorContainer {
   background-color: #f7e7e9;
-  border-radius: 10px
+  border-radius: 10px;
 }
 
 .ButtonContainer {
-  width: 100%
+  width: 100%;
 }
 
 .ButtonValidationContainer {
