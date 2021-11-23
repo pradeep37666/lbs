@@ -1,28 +1,19 @@
 import React, { useContext, useEffect, useState } from 'react';
 import {ReactComponent as Logo} from './../../assets/Logos/LogoRed.svg';
 import ValidationPopup from '../ValidationPopup/ValidationPopup';
-import { handleAccNumber, handleBsb,  } from '../../util/UserValidation'
 import { CardNumberElement, CardCvcElement, CardExpiryElement, useStripe, useElements } from '@stripe/react-stripe-js';
-import { CircularProgress } from '@material-ui/core';
-import UserButton from '../UserButton/UserButton';
+import { CircularProgress, createMuiTheme } from '@material-ui/core';
 import cardElementOptions from '../../constants/cardElementOptions';
-import "react-datepicker/dist/react-datepicker.css";
-import ReactDatePicker from 'react-datepicker';
 import ValidationTextInput from './ValidationTextInput';
 import { FormContext } from '../../pages/account/UpgradeLender/UpgradeLender';
+import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
+import MomentUtils from '@date-io/moment';
+import Button from '../Button/Button';
+import { ThemeProvider } from '@material-ui/styles';
 
 export default function BankDetails(props) {
     const { state, dispatch } = useContext(FormContext)
-    // console.log(FormContext)
-    const { accountNumber } = state
-
-    const [nameValidation, setNameValidation] = useState("")
-    const [cardNumberValidation, setCardNumberValidation] = useState("")
-    const [expiryValidation, setExpiryValidation] = useState("")
-    const [ccvValidation, setCcvValidation] = useState("")
-    const [dateOfBirth, setDateOfBirth] = useState(new Date())
-    const [accNumberValidation, setAccNumberValidation] = useState("")
-    const [bsbValidation, setBsbValidation] = useState("")
+    const { accountNumber, BSB, isLenderUpgrade, dateOfBirth } = state
 
     const [isLoading, setIsLoading] = useState(false)
     const [cardNumber, setCardNumber] = useState()
@@ -39,26 +30,7 @@ export default function BankDetails(props) {
         setCardNameError(false)
     }, [cardName])
 
-    const showValidation = (field) => {
-        switch (field) {
-            case 'name':
-                return (nameValidation.length > 0) ? false : true
-            case 'cardNum':
-                return (cardNumberValidation.length > 0 && nameValidation.length === 0) ? false : true
-            case 'expiry':
-                return (expiryValidation.length > 0 && nameValidation.length === 0 && cardNumberValidation.length === 0) ? false : true
-            case 'ccv':
-                return (ccvValidation.length > 0 && nameValidation.length === 0 && cardNumberValidation.length === 0 && expiryValidation.length === 0) ? false : true
-            case 'accNum':
-                return (accNumberValidation.length > 0) ?  false : true
-            case 'bsb':
-                return (bsbValidation.length > 0 && accNumberValidation.length === 0) ? false : true
-            default:
-                return
-        }
-    }
-
-      const createPaymentMethod = async () => {
+    const createPaymentMethod = async () => {
         if(!cardName) {
             setCardNameError(true) 
             return
@@ -81,8 +53,6 @@ export default function BankDetails(props) {
         } catch(err) {
             setIsLoading(false)
         }
-        
-        
     }
 
     const checkDateOfBirth = () => {
@@ -104,6 +74,13 @@ export default function BankDetails(props) {
         createPaymentMethod()
     }
 
+    const datePickerTheme = createMuiTheme({
+        palette: {
+            primary: {
+                main: '#ac172c'
+            }
+        }
+    })
     return (
         <div className="RegistrationWrapper">
                 <div className="LoginMain">
@@ -116,7 +93,7 @@ export default function BankDetails(props) {
 
                 </div>
 
-                {!props.isLenderUpgrade ? 
+                { !isLenderUpgrade ? 
 
                 <div className="LoginMain LoginMainNoMarg">
                 <div className="LoginHeader">Card Details</div>
@@ -163,109 +140,68 @@ export default function BankDetails(props) {
                 <ValidationPopup errorText={cardCvc?.error?.message} errorHeader='Invalid CCV' hide={!cardCvc?.error} />
 
             </div>
-                {!props.lender ? (
-                    isLoading ? (
-                        <CircularProgress color="inherit" />
-                    ) : (
-                        <button className={`LoginFormButton ${!props.validated ? 'ButtonDisabled' : ''}`} disabled={!props.validated} onClick={createPaymentMethod}>Next</button>
-                    )
-                ) : null
-                    
-                }
-                </div>
+            {!props.lender ? (
+                isLoading ? (
+                    <CircularProgress color="inherit" />
+                ) : (
+                    <button className={`LoginFormButton ${!props.validated ? 'ButtonDisabled' : ''}`} disabled={!props.validated} onClick={createPaymentMethod}>Next</button>
+                )
+            ) : null
                 
-                
-                : ''}
-
-                {props.isLenderUpgrade &&
-                <div className="LoginMain LoginMainNoMarg">
-                     <div className="LoginHeader">Date of Birth</div> 
-
-                    {/* <div className='Register__DOB__Container'>
-                        <div className="DOBHeader">Day</div>
-                        <div className="DOBHeader">Month</div>
-                        <div className="DOBHeader">Year</div>
-                    </div> */}
-
-
-                    {/* <div className="LoginInputValidationContainer">
-                        <div className='Register__DOB__Container'>
-                            
-                            <input 
-                            onChange={e => props.setDayOfBirth(e.target.value)}
-                            onBlur={e => handleDayOfBirth(e, props.setDayOfBirth, setDayOfBirthValidation)}
-                            type='number' 
-                            value={props.dayOfBirth}
-                            placeholder='Day' 
-                            className="DOBInput" />
-                            <input 
-                            onChange={e => props.setMonthOfBirth(e.target.value)}
-                            onBlur={e => handleMonthOfBirth(e, props.setMonthOfBirth, setMonthOfBirthValidation)}
-                            value={props.monthOfBirth}
-                            type='number' 
-                            placeholder='Month' 
-                            className="DOBInput" />
-                            <input 
-                            onChange={e => props.setYearOfBirth(e.target.value)}
-                            onBlur={e => handleYearOfBirth(e, props.setYearOfBirth, setYearOfBirthValidation)}
-                            value={props.yearOfBirth}
-                            type='number' 
-                            placeholder='Year' 
-                            className="DOBInput" />
-                        </div>
-                        <div className={`triangleLeft ${showValidation("dayOfBirth") ? '' : 'ValidationTextHide'}`} />
-                        <ValidationPopup errorText={dayOfBirthValidation} errorHeader='Invalid DOB' hide={showValidation('dayOfBirth')}/>
-                        <div className={`triangleLeft ${showValidation("monthOfBirth") ? '' : 'ValidationTextHide'}`} />
-                        <ValidationPopup errorText={monthOfBirthValidation} errorHeader='Invalid DOB' hide={showValidation('monthOfBirth')}/>
-                        <div className={`triangleLeft ${showValidation("yearOfBirth") ? '' : 'ValidationTextHide'}`} />
-                        <ValidationPopup errorText={yearOfBirthValidation} errorHeader='Invalid Year' hide={showValidation('yearOfBirth')}/>
-                           
-                    </div>  */}
-                    <div>
-                        <ReactDatePicker 
-                        customInput={<input style={{ padding: 10, borderRadius: 10}}/>}
-                        selected={dateOfBirth} 
-                        onSelect={newDate => setDateOfBirth(newDate)}
-                        dateFormat={'dd/MM/yyyy'}
-                        />
-                    </div>
-                    <div className="LoginHeader">Bank Deposit Details</div>
-                    <div className="LoginText">Bank details will allow you to upgrade to a lender account.</div>
-
-                    <div className="LoginHeader LoginHeader--NoMargin">Account Number</div>
-                    <div className="LoginInputValidationContainer">
-
-                        <input type='text' placeholder='1234 5678' className="LoginInput" onBlur={(e) => handleAccNumber(e, props.setAccNumber, setAccNumberValidation)}/>
-                        <div className={`triangleLeft ${showValidation("accNum") ? '' : 'ValidationTextHide'}`} />
-                        <ValidationPopup errorText={accNumberValidation} errorHeader='Invalid Account Number' hide={showValidation("accNum")}/>
-                    </div>
-                    <ValidationTextInput 
-                    label="Account Number"
-                    onChange={e => dispatch({ type: 'setAccountNumber', data: e.target.value })}
-                    value={accountNumber}
-                    />
-
-                    <div className="LoginHeader LoginHeader--NoMargin">BSB</div>
-                    <div className="LoginInputValidationContainer">
-
-                        <input type='text' placeholder='123-456' className="LoginInput" onBlur={(e) => handleBsb(e, props.setBsb, setBsbValidation)}/>
-                        <div className={`triangleLeft ${showValidation("bsb") ? '' : 'ValidationTextHide'}`} />
-                        <ValidationPopup errorText={bsbValidation} errorHeader='Invalid BSB' hide={showValidation("bsb")}/>
-                    </div>
-                    {   isLoading ? (
-                        <CircularProgress color="inherit" />
-                    ) : (
-                        <button 
-                        className={`LoginFormButton ${!props.validated ? 'ButtonDisabled' : ''}`} 
-                        disabled={!props.validated} 
-                        onClick={handleNextButtonClick}
-                        >
-                            Next
-                        </button>
-                    )}
-                </div>
-                }
-
+            }
             </div>
+            
+            
+            : ''}
+
+            { isLenderUpgrade &&
+            <div className="LoginMain LoginMainNoMarg">
+
+                <div className="LoginHeader">Date of Birth</div> 
+                <ThemeProvider theme={datePickerTheme}>
+                    <MuiPickersUtilsProvider utils={MomentUtils}>
+                        <KeyboardDatePicker
+                        disableToolbar
+                        variant="inline"
+                        format="DD/MM/yyyy"
+                        margin='normal'
+                        id="date-picker-inline"
+                        value={dateOfBirth}
+                        disableFuture
+                        onChange={(newDate) =>  dispatch({ type: 'setDateOfBirth', data: newDate})}
+                        onAccept={() => console.log('a')}
+                        style={{ width: '100%' }}
+                        views={['year', 'month', 'date']}
+                        KeyboardButtonProps={{
+                            'aria-label': 'change date',
+                        }}
+                        />
+                    </MuiPickersUtilsProvider>
+                </ThemeProvider>
+
+                <div className="LoginHeader">Bank Deposit Details</div>
+                <div className="LoginText">Bank details will allow you to upgrade to a lender account.</div>
+
+                <ValidationTextInput 
+                label="Account Number"
+                value={accountNumber}
+                placeholder="123 456 789"
+                onChange={e => dispatch({ type: 'setAccountNumber', data: e.target.value })}
+                />
+                <ValidationTextInput 
+                value={BSB}
+                placeholder="123 456"
+                onChange={e => dispatch({ type: 'setBSB', data: e.target.value})}
+                label="BSB"
+                />
+                <Button 
+                text="Next"
+                isDisabled={ !accountNumber || !BSB }
+                onClick={() => dispatch({ type: 'setCurrentPage', data: 'Location Details'})}
+                />
+            </div>
+            }
+
+        </div>
     )
 }

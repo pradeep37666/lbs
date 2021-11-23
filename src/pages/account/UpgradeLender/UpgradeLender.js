@@ -16,24 +16,18 @@ export const FormContext = createContext()
 export default function UpgradeLender() {
     const [state, dispatch] = useReducer(lenderUpgradeReducer, { 
         isLenderUpgrade: true, 
-        currentPage: 'Location Details',
+        currentPage: 'Bank Details',
+        dateOfBirth: new Date(1990, 1, 1), 
     })
 
-    const { currentPage } = state
+    const { currentPage, address, accountNumber, BSB, dateOfBirth } = state
 
     const globalDispatch = useGlobalState().dispatch
     const globalState = useGlobalState().state
     const { user } = globalState
 
     const history = useHistory()
-    const [dayOfBirth, setDayOfBirth] = useState()
-    const [monthOfBirth, setMonthOfBirth] = useState()
-    const [yearOfBirth, setYearOfBirth] = useState()
 
-    const [accNumber, setAccNumber] = useState("")
-    const [bsb, setBsb] = useState("")
-
-    const [address, setAddress] = useState("")
     const [availability, setAvailability] = useState(Array(14).fill(0))
    
 
@@ -56,81 +50,73 @@ export default function UpgradeLender() {
 
     const submitUpgrade = () => {
         createStripeAccount()
-        // return
-        let suburb
-        address.address_components ? suburb = getSuburb(address.address_components) : suburb = user.suburb
-        
-        const data = {
-            account_number: accNumber ? accNumber : user.account_number,
-            bsb: bsb ? bsb : user.bsb,
-            address: address.formatted_address ? address.formatted_address : user.address,
-            suburb: suburb,
-            lat: address ? address.lat : user.lat,
-            lng: address ? address.lng : user.lng,
-            available: availability ? availability : user.available
-        }
 
-        Instance.patch('user/update', data)
-            .then((response) => {
-                console.log(response)
-                let newData = user
-                newData.account_number = data.account_number
-                newData.bsb = data.bsb
-                newData.address = data.address
-                newData.suburb = data.suburb
-                newData.lat = data.lat
-                newData.lng = data.lng
-                newData.available = data.available
-                globalDispatch({ type: 'setUser', data: newData })
-            })
-            .catch((error) => {
-                console.log(error)
-            })
+        // let suburb
+        // address.address_components ? suburb = getSuburb(address.address_components) : suburb = user.suburb
+        
+        // const data = {
+        //     account_number: accNumber ? accNumber : user.account_number,
+        //     bsb: bsb ? bsb : user.bsb,
+        //     address: address.formatted_address ? address.formatted_address : user.address,
+        //     suburb: suburb,
+        //     lat: address ? address.lat : user.lat,
+        //     lng: address ? address.lng : user.lng,
+        //     available: availability ? availability : user.available
+        // }
+
+        // Instance.patch('user/update', data)
+        //     .then((response) => {
+        //         console.log(response)
+        //         let newData = user
+        //         newData.account_number = data.account_number
+        //         newData.bsb = data.bsb
+        //         newData.address = data.address
+        //         newData.suburb = data.suburb
+        //         newData.lat = data.lat
+        //         newData.lng = data.lng
+        //         newData.available = data.available
+        //         globalDispatch({ type: 'setUser', data: newData })
+        //     })
+        //     .catch((error) => {
+        //         console.log(error)
+            // })
 
     }
 
     const createStripeAccount = async () => {
-        const stripeData = {
-            u_id: user.id,
-            email: user.email,
-            bsb,
-            accountNumber: accNumber,
-            day: parseInt(dayOfBirth),
-            month: parseInt(monthOfBirth),
-            year: parseInt(yearOfBirth),
-            firstName: user.firstName,
-            lastName: user.lastName,
-            line1: address.address_components[0].long_name + ' ' + address.address_components[1].long_name,
-            country: address.address_components[5].short_name,
-            state: address.address_components[4].short_name,
-            city:   address.address_components[3].long_name,
-            postal_code: address.address_components[6].long_name,
-        }
+        console.log('dob', dateOfBirth)
+        console.log('acc', accountNumber)
+        console.log('bsb', BSB)
+        // const stripeData = {
+        //     u_id: user.id,
+        //     email: user.email,
+        //     bsb: BSB,
+        //     accountNumber,
+        //     day: parseInt(dayOfBirth),
+        //     month: parseInt(monthOfBirth),
+        //     year: parseInt(yearOfBirth),
+        //     firstName: user.firstName,
+        //     lastName: user.lastName,
+        //     line1: address.address_components[0].long_name + ' ' + address.address_components[1].long_name,
+        //     country: address.address_components[5].short_name,
+        //     state: address.address_components[4].short_name,
+        //     city:   address.address_components[3].long_name,
+        //     postal_code: address.address_components[6].long_name,
+        // }
 
-        try{
-            const { data, status } = await Instance.post('/stripe/createAccount', stripeData)
-            console.log('stripe', data, status)
-        } catch(err) {
-            console.log(err.response)
-        }
+        // try{
+        //     const { data, status } = await Instance.post('/stripe/createAccount', stripeData)
+        //     console.log('stripe', data, status)
+        // } catch(err) {
+        //     console.log(err.response)
+        // }
         
     }
 
     const renderSwitch = () => {
         switch (currentPage) {
             case 'Bank Details':
-                return <BankDetails
-                    dayOfBirth={dayOfBirth}
-                    monthOfBirth={monthOfBirth}
-                    yearOfBirth={yearOfBirth}
-                    setDayOfBirth={setDayOfBirth}
-                    setMonthOfBirth={setMonthOfBirth}
-                    setYearOfBirth={setYearOfBirth}
-                    setAccNumber={setAccNumber}
-                    setBsb={setBsb}
-                    isLenderUpgrade={true}
-                    lender
-                />
+                return <BankDetails lender />
             case 'Location Details':
                 return <LocationDetails />
             case 'Availability':
