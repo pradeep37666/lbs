@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import './Login.css';
+import './Login.css'
 import PageWrapper from "../../components/pageWrapper/pageWrapper.js";
 import { ReactComponent as Logo } from './../../assets/Logos/LogoRed.svg';
 import { Link } from 'react-router-dom';

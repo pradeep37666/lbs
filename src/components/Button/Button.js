@@ -3,10 +3,10 @@ import React from 'react'
 import './Button.css'
 import ValidationPopup from '../ValidationPopup/ValidationPopup'
 
-export default function Button({ onClick, isDisabled, errorMessage, isLoading, text  }) {
+export default function Button({ onClick, isDisabled, errorMessage, errorHeader, isLoading, text, inLineError  }) {
 
     const getButtonClassName = () => {
-        let buttonClass = "ButtonContainer"
+        let buttonClass = "Button"
         if(isDisabled || isLoading){
             buttonClass += " ButtonDisabled"
         }
@@ -19,24 +19,33 @@ export default function Button({ onClick, isDisabled, errorMessage, isLoading, t
     }
 
     return (
-        <div className="ButtonErrorContainer">
-            <button 
-            className={getButtonClassName()} 
-            onClick={handleButtonClick}
-            >
-                { isLoading ? (
-                    <CircularProgress color="#fff" size={20} />
+        <div className={ inLineError ? "ButtonErrorContainer" : "ButtonContainer" }>
+            <div className="ButtonValidationContainer">
+                <button 
+                className={getButtonClassName()} 
+                onClick={handleButtonClick}
+                >
+                    { isLoading ? (
+                        <CircularProgress color="inherit" size={20} />
+                    ) : (
+                        <div>
+                            { text }
+                        </div>
+                    )}
+                </button>
+                { errorMessage && !inLineError ? (
+                    <ValidationPopup errorText={errorMessage} errorHeader='Error' hide={false} />
                 ) : (
-                    <div>
-                        { text }
-                    </div>
+                    null
                 )}
-            </button>
-            { errorMessage ? (
-                <ValidationPopup errorText={errorMessage} errorHeader='Error' hide={false} />
-            ) : (
-                null
-            )}
+            </div>
+            { errorMessage && inLineError ? (
+                <div className="InLineErrorContainer">
+                <div className="ValidationPopup__Header">{errorHeader || 'Error' }</div>
+                { errorMessage }
+            </div>
+            ) : null }
         </div>
+        
     )
 }

@@ -1,3 +1,20 @@
+const passwordConstraints = {
+  presence: {
+      allowEmpty: false,
+      message: "^Required"
+    },
+    length: {
+      minimum: 8,
+      maximum: 20,
+      message: "^Must be at least 8 characters"
+    },
+    format: {
+      pattern: /^(?=.*[A-Za-z])(?=.*\d)[!@#$%^&*()_\-+={[}\]:;"'<,>.?/|\\A-Za-z\d]{8,20}$/,
+      flags: "i",
+      message: "^Must have at least 1 letter and 1 number"
+    }
+}
+
 const validationConstraints = {
     firstName: {
         presence: {
@@ -44,38 +61,9 @@ const validationConstraints = {
             message: "^Required",
         }
     },
-    password: {
-        presence: {
-          allowEmpty: false,
-          message: "^Required"
-        },
-        length: {
-          minimum: 8,
-          maximum: 20,
-          message: "^Must be at least 8 characters"
-        },
-        format: {
-          pattern: /^(?=.*[A-Za-z])(?=.*\d)[!@#$%^&*()_\-+={[}\]:;"'<,>.?/|\\A-Za-z\d]{8,20}$/,
-          flags: "i",
-          message: "^Must have at least 1 letter and 1 number"
-        }
-    },
-    confirmPassword: {
-        presence: {
-            allowEmpty: false,
-            message: "^Required"
-          },
-          length: {
-            minimum: 8,
-            maximum: 20,
-            message: "^Must be at least 8 characters"
-          },
-          format: {
-            pattern: /^(?=.*[A-Za-z])(?=.*\d)[!@#$%^&*()_\-+={[}\]:;"'<,>.?/|\\A-Za-z\d]{8,20}$/,
-            flags: "i",
-            message: "^Must have at least 1 letter and 1 number"
-          }
-    },
+    password: passwordConstraints,
+    confirmPassword: passwordConstraints,
+    currentPassword: passwordConstraints
 }
 
 const createValidationObject = (fields) => {
@@ -84,7 +72,10 @@ const createValidationObject = (fields) => {
         validationObj[field] = validationConstraints[field]
     })
     return validationObj
+    
 }
 export const loginConstraints = createValidationObject(['email', 'password'])
 export const registrationConstraints = createValidationObject([ 'firstName', 'lastName', 'email', 'phoneNumber', 'password', 'confirmPassword', ])
 export const newPasswordConstraints = createValidationObject([ 'password', 'confirmPassword' ])
+export const updateUserDetailsConstraints = createValidationObject(['firstName', 'lastName', 'email', 'phoneNumber',])
+// export const passwordConstraints = createValidationObject(['password'])

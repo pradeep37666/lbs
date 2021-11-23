@@ -1,23 +1,33 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {ReactComponent as Logo} from './../../assets/Logos/LogoRed.svg';
 import ValidationPopup from '../ValidationPopup/ValidationPopup';
-import { handleAccNumber, handleBsb, handleDayOfBirth, handleMonthOfBirth, handleYearOfBirth } from '../../util/UserValidation'
+import { handleAccNumber, handleBsb,  } from '../../util/UserValidation'
 import { CardNumberElement, CardCvcElement, CardExpiryElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import { CircularProgress } from '@material-ui/core';
 import UserButton from '../UserButton/UserButton';
+import cardElementOptions from '../../constants/cardElementOptions';
+import "react-datepicker/dist/react-datepicker.css";
+import ReactDatePicker from 'react-datepicker';
+import ValidationTextInput from './ValidationTextInput';
+import { LenderUpgradeContext } from '../../pages/account/UpgradeLender/UpgradeLender';
 
 export default function BankDetails(props) {
+    let state, dispatch
+    if(props.isLenderUpgrade){
+        state = useContext(LenderUpgradeContext).state
+        dispatch = useContext(LenderUpgradeContext).dispatch
+    }
+    const lenderUpgradeState = useContext(LenderUpgradeContext).state
+    const lenderUpgradeDispatch = useContext(LenderUpgradeContext).dispatch
+    const { accountNumber } = state
+
     const [nameValidation, setNameValidation] = useState("")
     const [cardNumberValidation, setCardNumberValidation] = useState("")
     const [expiryValidation, setExpiryValidation] = useState("")
     const [ccvValidation, setCcvValidation] = useState("")
-
+    const [dateOfBirth, setDateOfBirth] = useState(new Date())
     const [accNumberValidation, setAccNumberValidation] = useState("")
     const [bsbValidation, setBsbValidation] = useState("")
-
-    const [dayOfBirthValidation, setDayOfBirthValidation] = useState('')
-    const [monthOfBirthValidation, setMonthOfBirthValidation] = useState('')
-    const [yearOfBirthValidation, setYearOfBirthValidation] = useState('')
 
     const [isLoading, setIsLoading] = useState(false)
     const [cardNumber, setCardNumber] = useState()
@@ -48,35 +58,16 @@ export default function BankDetails(props) {
                 return (accNumberValidation.length > 0) ?  false : true
             case 'bsb':
                 return (bsbValidation.length > 0 && accNumberValidation.length === 0) ? false : true
-            case 'dayOfBirth' :
-                return (dayOfBirthValidation.length > 0) ?  false : true
-            case 'monthOfBirth' :
-                return (monthOfBirthValidation.length > 0 && !(dayOfBirthValidation.length > 0)) ?  false : true
-            case 'yearOfBirth' : 
-                return ((yearOfBirthValidation.length > 0 ) && (monthOfBirthValidation.length === 0)) ?  false : true
+            // case 'dayOfBirth' :
+            //     return (dayOfBirthValidation.length > 0) ?  false : true
+            // case 'monthOfBirth' :
+            //     return (monthOfBirthValidation.length > 0 && !(dayOfBirthValidation.length > 0)) ?  false : true
+            // case 'yearOfBirth' : 
+            //     return ((yearOfBirthValidation.length > 0 ) && (monthOfBirthValidation.length === 0)) ?  false : true
             default:
                 return
         }
     }
-
-    const CARD_ELEMENT_OPTIONS = {
-        style: {
-          base: {
-            color: "black",
-            fontFamily: '"DMSans", sans-serif',
-            fontSmoothing: "antialiased",
-            fontSize: "18px",
-            fontWeight: 'bold',
-            "::placeholder": {
-              color: "rgb(133,133,133)",
-            },
-          },
-          invalid: {
-            color: "#fa755a",
-            iconColor: "#fa755a",
-          },
-        },
-      };
 
       const createPaymentMethod = async () => {
         if(!cardName) {
@@ -136,7 +127,7 @@ export default function BankDetails(props) {
 
                 </div>
 
-                {!props.isUpgrade ? 
+                {!props.isLenderUpgrade ? 
 
                 <div className="LoginMain LoginMainNoMarg">
                 <div className="LoginHeader">Card Details</div>
@@ -154,7 +145,7 @@ export default function BankDetails(props) {
                 <CardNumberElement 
                 className="LoginInput" 
                 onChange={cardNumberObj => setCardNumber(cardNumberObj)} 
-                options={CARD_ELEMENT_OPTIONS}
+                options={cardElementOptions}
                 />
                 <div className={`triangleLeft ${!cardNumber?.error ? '' : 'ValidationTextHide'}`} /> 
                 <ValidationPopup errorText={cardNumber?.error?.message} errorHeader='Invalid Card Number' hide={!cardNumber?.error} />
@@ -168,12 +159,12 @@ export default function BankDetails(props) {
                     <CardExpiryElement
                     className="LoginInput" 
                     onChange={cardExpiryObj => setCardExpiry(cardExpiryObj)} 
-                    options={CARD_ELEMENT_OPTIONS}
+                    options={cardElementOptions}
                     />
                     <CardCvcElement
                     className="LoginInput" 
                     onChange={cardCvcObj => setCardCvc(cardCvcObj)} 
-                    options={CARD_ELEMENT_OPTIONS}
+                    options={cardElementOptions}
                     />
                     
                 </div>
@@ -197,20 +188,19 @@ export default function BankDetails(props) {
                 
                 : ''}
 
-                {props.lender &&
+                {props.isLenderUpgrade &&
                 <div className="LoginMain LoginMainNoMarg">
                      <div className="LoginHeader">Date of Birth</div> 
 
-                    <div className='Register__DOB__Container'>
+                    {/* <div className='Register__DOB__Container'>
                         <div className="DOBHeader">Day</div>
                         <div className="DOBHeader">Month</div>
                         <div className="DOBHeader">Year</div>
-                    </div>
+                    </div> */}
 
 
-                    <div className="LoginInputValidationContainer">
+                    {/* <div className="LoginInputValidationContainer">
                         <div className='Register__DOB__Container'>
-                            {/* onBlur={(e) => handlePhoneNumber(e, props.setPhoneNumber, setPhoneValidation)}  */}
                             
                             <input 
                             onChange={e => props.setDayOfBirth(e.target.value)}
@@ -241,7 +231,15 @@ export default function BankDetails(props) {
                         <div className={`triangleLeft ${showValidation("yearOfBirth") ? '' : 'ValidationTextHide'}`} />
                         <ValidationPopup errorText={yearOfBirthValidation} errorHeader='Invalid Year' hide={showValidation('yearOfBirth')}/>
                            
-                    </div> 
+                    </div>  */}
+                    <div>
+                        <ReactDatePicker 
+                        customInput={<input style={{ padding: 10, borderRadius: 10}}/>}
+                        selected={dateOfBirth} 
+                        onSelect={newDate => setDateOfBirth(newDate)}
+                        dateFormat={'dd/MM/yyyy'}
+                        />
+                    </div>
                     <div className="LoginHeader">Bank Deposit Details</div>
                     <div className="LoginText">Bank details will allow you to upgrade to a lender account.</div>
 
@@ -252,7 +250,11 @@ export default function BankDetails(props) {
                         <div className={`triangleLeft ${showValidation("accNum") ? '' : 'ValidationTextHide'}`} />
                         <ValidationPopup errorText={accNumberValidation} errorHeader='Invalid Account Number' hide={showValidation("accNum")}/>
                     </div>
-
+                    <ValidationTextInput 
+                    label="Account Number"
+                    onChange={e => dispatch({ type: 'setAccountNumber', data: e.target.value })}
+                    value={accountNumber}
+                    />
 
                     <div className="LoginHeader LoginHeader--NoMargin">BSB</div>
                     <div className="LoginInputValidationContainer">

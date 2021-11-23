@@ -4,113 +4,115 @@ import PageWrapper from '../../../components/pageWrapper/pageWrapper'
 import Banner from '../../../components/bannerText/bannerText'
 import { ReactComponent as Logo } from '../../../assets/Logos/LogoRed.svg'
 import Instance from '../../../util/axios'
-import ValidationPopup from '../../../components/ValidationPopup/ValidationPopup'
-import { handlePassword, handlePasswordConfirm } from '../../../util/UserValidation'
 import { useHistory } from 'react-router'
 import useGlobalState from '../../../util/useGlobalState'
+import ValidationTextInput from '../../../components/FormComponents/ValidationTextInput'
+import Button from '../../../components/Button/Button'
+import { newPasswordConstraints } from '../../../util/validationConstraints'
+import { validate } from 'validate.js'
 
 export default function UpdatePassword() {
-
     const { state } = useGlobalState()
     const { user } = state
     const history = useHistory()
 
-    const [title, setTitle] = useState('Current Password')
+    const [currentPage, setCurrentPage] = useState('Current Password')
     const [currentPassword, setCurrentPassword] = useState('')
-
-    const [newPassword, setNewPassword] = useState('')
-    const [confirmPassword, setConfirmPassword] = useState('')
-
-    const [loginValidation, setLoginValidation] = useState('')
-    const [passwordValidation, setPasswordValidation] = useState('')
-    const [confirmPasswordValidation, setConfirmPasswordValidation] = useState('')
-
-    const [validated, setValidated] = useState(false)
-
+    const [isLoginLoading, setIsLoginLoading] = useState(false)
+    const [password, setPassword] = useState('')
+    const [confirmPassword, setConfirmPassword] = useState()
+    const [isUpdateLoading, setIsUpdateLoading] = useState(false)
+    const [errorMessages, setErrorMessages] = useState({})
     const [showSuccess, setShowSuccess] = useState(false)
 
-    const authenticate = () => {
-        Instance.post('/auth/signIn', {
-            email: user.email,
-            password: currentPassword
-        }).then((response) => {
-            console.log(response)
-            if (response.status === 404) {
-                setLoginValidation("Incorrect password, please try again")
-                setCurrentPassword('')
-            } else if (response.status === 201) {
-                setTitle('New Password')
-                setCurrentPassword('')
-            }
-        })
-            .catch((error) => {
-                setLoginValidation("Incorrect password, please try again")
-                console.log(error)
-            })
-    }
-
-    const updatePassword = () => {
-        const data = {
-            password: newPassword
-        }
-
-        Instance.put('user/update', data)
-            .then((response) => {
-                if (response.status === 200) {
-                    setShowSuccess(true)
-                    
-                    setTimeout(() => {
-                        history.push({pathname: '/user/account'})
-                    }, 4000);
-                }
-            })
-            .catch((error) => {
-                console.log(error)
-            })
-    }
-
-    const handleLogin = (e) => {
-        setCurrentPassword(e.target.value)
-        setLoginValidation('')
-    }
-
-    const showValidation = (field) => {
-        switch (field) {
-            case 'password':
-                return (passwordValidation.length > 0) ? false : true
-            case 'confirmPassword':
-                return (confirmPasswordValidation.length > 0 && passwordValidation.length === 0) ? false : true
-            default:
-                return
-        }
-    }
-
     useEffect(() => {
-        if (newPassword && newPassword === confirmPassword) {
-            setValidated(true)
-        } else setValidated(false)
-    }, [newPassword, confirmPassword])
+        if(Object.keys(errorMessages).length > 0){
+            const valid = validateInputs()
+            if(valid){
+                setErrorMessages({})
+                return
+            }
+        }
+    },[password, confirmPassword])
+
+    const loginUser = async () => {
+        setIsLoginLoading(true)
+        try{
+            const { data, status } = await Instance.post('/auth/signIn', {
+                email: user.email,
+                password: currentPassword
+            })
+            setIsLoginLoading(false)
+            setCurrentPage('New Password')
+        } catch(err){
+            console.log(err)
+            setIsLoginLoading(false)
+        }
+    }
+
+    const updatePassword = async () => {
+        const valid = validateInputs()
+        if(!valid) return
+        setIsUpdateLoading(true)
+        try{    
+            const { data, status } = await Instance.patch('user/update', { password })
+            setIsUpdateLoading(false)
+            setShowSuccess(true)
+            setTimeout(() => history.push({ pathname: '/user/account' }), 4000);
+        } catch(err){
+            setIsUpdateLoading(false)
+            console.log(err.response)
+        }
+    }
+
+    const validateInputs = () => {
+        const validationErrors = validate({ password, confirmPassword }, newPasswordConstraints)
+        if(validationErrors){
+            console.log('errors', validationErrors)
+            setErrorMessages(validationErrors)
+            return false
+        }
+        setErrorMessages({})
+        return true
+    }
+
+
+    const getErrorMessage = (inputName) => {
+        if(Object.keys(errorMessages).length === 0) return null
+        for(const key in errorMessages){
+            if(Object.keys(errorMessages)[0] === inputName) return errorMessages[key][0]
+        }
+    }
+    // useEffect(() => {
+    //     if (newPassword && newPassword === confirmPassword) {
+    //         setValidated(true)
+    //     } else setValidated(false)
+    // }, [newPassword, confirmPassword])
+
 
     return (
         <PageWrapper>
-            <Banner textBold='Password Update' textNormal={title} />
-            {title === 'Current Password' ?
+            <Banner textBold='Password Update' textNormal={currentPage} />
+            {currentPage === 'Current Password' ?
                 // first step authenticate
                 <div className="LoginMain">
                     <Logo />
                     <div className="LoginHeader UpdatePassword__Header">Update Password</div>
                     <div className="UpdatePassword__Body">Input your current password to authenticate your Little Big Shed account.</div>
-                    <div className="LoginHeader--NoMargin">Current Password</div>
-                    <div className="PasswordInputContainer">
-                        <div className="LoginInputValidationContainer">
-                            <input type='password' className="LoginInput" key='current password' onChange={(e) => handleLogin(e)}></input>
-                            <div className={`triangleLeft ${loginValidation.length === 0 ? '' : 'ValidationTextHide'}`} />
-                            <ValidationPopup errorText={loginValidation} errorHeader='Invalid Password' hide={loginValidation.length === 0} />
-                        </div>
-                    </div>
 
+                    <ValidationTextInput 
+                    passwordInput
+                    label="Current Password"
+                    value={currentPassword}
+                    onChange={e => setCurrentPassword(e.target.value)}
+                    errorMessage={errorMessages?.password}
+                    />
                     <div className="LoginText">Forgot password?<span className="RetrieveLink"> Retrieve here</span></div>
-                    <button className={`LoginFormButton ${currentPassword.length === 0 ? 'ButtonDisabled' : ''}`} disabled={currentPassword.length === 0 ? true : false} onClick={() => authenticate()}>Next</button>
+                    <Button 
+                    onClick={loginUser}
+                    text="Next"
+                    isLoading={isLoginLoading}
+                    />
                 </div>
 
                 :
@@ -122,26 +124,29 @@ export default function UpdatePassword() {
                         <p>Create a new Little Big Shed password below.</p>
                         <p>Your password must include at least 8 characters, 1 number , 1 uppercase letter and a special character.</p>
                     </div>
-                    <div className="LoginHeader--NoMargin">New Password</div>
-                    <div className="LoginInputValidationContainer">
-                        <div className="PasswordInputContainer">
-                            <input type='password' className="LoginInput" onBlur={(e) => handlePassword(e, setNewPassword, setPasswordValidation)}></input>
-                        </div>
-                        <div className={`triangleLeft ${showValidation("password") ? '' : 'ValidationTextHide'}`} />
-                        <ValidationPopup errorText={passwordValidation} errorHeader='Invalid Password' hide={showValidation("password")} />
-                    </div>
+                    <ValidationTextInput 
+                    passwordInput
+                    value={password}
+                    errorMessage={getErrorMessage('password')}
+                    onChange={e => setPassword(e.target.value)}
+                    label="New Password"
+                    
+                    />
+                    <ValidationTextInput 
+                    passwordInput
+                    value={confirmPassword}
+                    onChange={e => setConfirmPassword(e.target.value)}
+                    label="Confirm New Password"
+                    errorMessage={getErrorMessage('confirmPassword')}
+                    />
 
-                    <div className="LoginHeader--NoMargin">Confirm New Password</div>
-                    <div className="LoginInputValidationContainer">
-                        <div className="PasswordInputContainer">
-                            <input type='password' className="LoginInput" onBlur={(e) => handlePasswordConfirm(e, setConfirmPassword, setConfirmPasswordValidation, newPassword)} />
-                        </div>
-                        <div className={`triangleLeft ${showValidation("confirmPassword") ? '' : 'ValidationTextHide'}`} />
-                        <ValidationPopup errorText={confirmPasswordValidation} errorHeader='Invalid Password' hide={showValidation("confirmPassword")} />
-                    </div>
-
-                    <button className={`LoginFormButton ${!validated ? 'ButtonDisabled' : ''}`} disabled={!validated ? true : false} onClick={() => updatePassword()}>Set New Password</button>
-
+                    {/* <button className={`LoginFormButton ${!validated ? 'ButtonDisabled' : ''}`} disabled={!validated ? true : false} onClick={() => updatePassword()}>Set New Password</button> */}
+                    <Button 
+                    text="Update Password"
+                    isLoading={isUpdateLoading}
+                    onClick={updatePassword}
+                    
+                    />
                     {showSuccess ? 
                     <div className="UpdatePassword__SuccessPopup"> 
                         <div className="LoginHeader">Success!</div>
