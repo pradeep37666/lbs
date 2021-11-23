@@ -1,0 +1,27 @@
+.UserCardContainer {
+  display: flex;
+  flex-direction: column;
+  width: calc(35% - 2rem);
+  margin-right: 2rem;
+}
+
+.ContentContainer {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+.MessagesHeading {
+  /* font-size: 30px; */
+  font-size: calc(1.1vw + 1.3rem);
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+@media only screen and (max-width: 495px) {
+  .UserCardContainer {
+    width: 90%;
+    margin-right: 0;
+  }
+  .ContentContainer {
+    justify-content: center;
+  }
+}
