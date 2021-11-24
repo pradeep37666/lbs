@@ -4,7 +4,7 @@ import Home from './pages/home/home.js';
 import ItemPage from './pages/item/item.js';
 import SearchPage from './pages/search/search.js';
 import Login from './pages/login/Login'
-import RegisterPage from './pages/register/register.js';
+import RegisterPage from './pages/register/Register.js';
 import AccountPage from './pages/account/account.js';
 import PostItem from './pages/postitem/postitem';
 import TradesPage from './pages/trades/trades.js';

@@ -57,22 +57,14 @@ const IOSSwitch = withStyles((theme) => ({
   );
 });
 
-export default function LBSSwitch(props) {
-  const [state, setState] = React.useState({
-    checkedB: true
-  });
-
-  const handleChange = (event) => {
-    setState({ ...state, [event.target.name]: event.target.checked });
-    props.set(event.target.checked);
-  };
+export default function LBSSwitch(isChecked, onClick, text) {
 
   return (
     <FormGroup className="SwitchContainer">
       <FormControlLabel
-        control={<IOSSwitch checked={state.checked} onChange={handleChange} name="checkedB" />}
+        control={<IOSSwitch checked={isChecked} onChange={() => onClick()} name="checkedB" />}
       />
-      {state.checkedB ? <div className="LenderSwitchLabel">{props.text}</div> : ''}
+      {isChecked && <div className="LenderSwitchLabel">{text}</div> }
     </FormGroup>
   );
 }

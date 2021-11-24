@@ -16,7 +16,6 @@ export default function TermsConditions(props) {
                 <div className="LoginText">Little big shed has outlined its terms and conditions below to help not only protect little big shed from fraudulent activity, but protect its users as well.</div>
 
                 <TC setTC={props.setTC}/>
-            {/* This is where we will submit all the form data, if user successfully registered takes us to the complete page */}
                 {!isLoading ? <button className={`LoginFormButton ${!props.validated ? 'ButtonDisabled' : ''}`} disabled={!props.validated} onClick={() => {
                     setIsLoading(false)
                     props.registerUser()

@@ -1,11 +1,10 @@
 import React, { useState } from "react"
 import ValidationPopup from '../ValidationPopup/ValidationPopup'
-// import ShowPasswordIcon from '../../assets/Icons/ShowPasswordIcon'
+import ShowPasswordIcon from '../../assets/Icons/ShowPasswordIcon'
 import './ValidationTextInput.css'
 
 export default function ValidationTextInput({ onChange, errorMessage, label, placeholder, passwordInput, errorHeader, value, inLineError }) {
     const [isInputHidden, setIsInputHidden] = useState(true)
-
 
     return (
         <div className={"ValidationInputContainer"}>
@@ -19,10 +18,10 @@ export default function ValidationTextInput({ onChange, errorMessage, label, pla
                             <input 
                             type={isInputHidden ? 'password' : 'text'}
                             placeholder={placeholder}
-                            className="ValidationInput"
+                            className="PasswordInput"
                             value={value}
                             onChange={onChange}/>
-                            {/* <ShowPasswordIcon onClick={() => setIsInputHidden(!isInputHidden)} /> */}
+                            <ShowPasswordIcon onClick={() => setIsInputHidden(!isInputHidden)} />
                         </div>
                     ) : (
                         <input 

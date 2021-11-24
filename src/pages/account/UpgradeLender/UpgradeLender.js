@@ -100,11 +100,12 @@ export default function UpgradeLender() {
     const renderSwitch = () => {
         switch (currentPage) {
             case 'Bank Details':
-                return <BankDetails lender />
+                return <BankDetails context={FormContext} />
             case 'Location Details':
-                return <LocationDetails />
+                return <LocationDetails context={FormContext} />
             case 'Availability':
                 return <Availability
+                    context={FormContext}
                     availability={availability}
                     setAvailability={setAvailability}
                     submitUpgrade={submitUpgrade}
@@ -117,13 +118,11 @@ export default function UpgradeLender() {
     }
 
     return (
-        <FormContext.Provider value={{ state, dispatch }}>
-            <PageWrapper>
-                <Banner textBold='Lender Upgrade' textNormal={currentPage} />
+        <PageWrapper>
+            <Banner textBold='Lender Upgrade' textNormal={currentPage} />
 
-                { renderSwitch() }
+            { renderSwitch() }
 
-            </PageWrapper>
-        </FormContext.Provider>
+        </PageWrapper>
     )
 }

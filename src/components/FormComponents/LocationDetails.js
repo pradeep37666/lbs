@@ -32,15 +32,6 @@ export default function LocationDetails() {
                     ) : (
                         <MapsAutocomplete setAddress={(address) => dispatch({ type: 'setAddress', data: address})}/>
                     )}
-
-                    
-
-                    {/* <button className={`LoginFormButton ${!props.validated ? 'ButtonDisabled' : ''}`} disabled={!props.validated} onClick={() => props.handleNextPage('Availability')}>Next</button>
-                    {user ? '' : <button className="LoginFormButton LoginFormButtonInverted" onClick={() => {
-                        wipeState()
-                        props.handleNextPage('Availability')
-                    }} style={{marginTop: '1em'}}>Skip This Step</button>
-                    } */}
                     <Button 
                     
                     text="Next"

@@ -11,10 +11,10 @@ import MomentUtils from '@date-io/moment';
 import Button from '../Button/Button';
 import { ThemeProvider } from '@material-ui/styles';
 
-export default function BankDetails(props) {
-    const { state, dispatch } = useContext(FormContext)
-    const { accountNumber, BSB, isLenderUpgrade, dateOfBirth } = state
-
+export default function BankDetails({ context }) {
+    const { state, dispatch } = useContext(context)
+    let { accountNumber, BSB, isLenderUpgrade, dateOfBirth } = state
+    isLenderUpgrade = true
     const [isLoading, setIsLoading] = useState(false)
     const [cardNumber, setCardNumber] = useState()
     const [cardExpiry, setCardExpiry] = useState()
@@ -47,32 +47,25 @@ export default function BankDetails(props) {
             })
             if(error) return
             setIsLoading(false)
-            props.setPaymentMethod(paymentMethod)
-            if (props.lender) props.handleNextPage('Location Details')
-            else props.handleNextPage('Terms & Conditions')
+
+            dispatch({ type: 'setPaymentMethod', data: paymentMethod })
+            dispatch({ type: 'setCurrentPage', data: isLenderUpgrade ? 'Location Details' : 'Terms & Conditions'})
         } catch(err) {
             setIsLoading(false)
         }
     }
 
-    const checkDateOfBirth = () => {
-        const now = new Date()
-        const userDob = new Date(props.yearOfBirth, props.monthOfBirth, props.dayOfBirth)
-        const cutoffDate = now.setFullYear(now.getFullYear() - 13)
-        return userDob < cutoffDate
-    }
-
-    const handleNextButtonClick = () => {
-        const isOverThirteen = checkDateOfBirth()
-        console.log('over thirteen', isOverThirteen)
-        if(!isOverThirteen) return 
-        console.log()
-        if(props.isUpgrade){
-            props.handleNextPage('Location Details')
-            return
-        }
-        createPaymentMethod()
-    }
+    // const handleNextButtonClick = () => {
+    //     const isOverThirteen = checkDateOfBirth()
+    //     console.log('over thirteen', isOverThirteen)
+    //     if(!isOverThirteen) return 
+    //     console.log()
+    //     if(props.isUpgrade){
+    //         props.handleNextPage('Location Details')
+    //         return
+    //     }
+    //     createPaymentMethod()
+    // }
 
     const datePickerTheme = createMuiTheme({
         palette: {
@@ -96,59 +89,52 @@ export default function BankDetails(props) {
                 { !isLenderUpgrade ? 
 
                 <div className="LoginMain LoginMainNoMarg">
-                <div className="LoginHeader">Card Details</div>
-                <div className="LoginText">We need these details to make a successful trade between 2 parties.</div>
-                <div className="LoginHeader LoginHeader--NoMargin">Name on Card</div>
-            <div className="LoginInputValidationContainer">
-                <input type='text' placeholder='Name on Card' className="LoginInput" onChange={(e) => setCardName(e.target.value)} />
-                <div className={`triangleLeft ${!cardNameError ? '' : 'ValidationTextHide'}`} /> 
-                <ValidationPopup errorText={"Please enter a card name"} errorHeader='Invalid Card Name' hide={!cardNameError} />
-            </div>
+                    <div className="LoginHeader">Card Details</div>
+                    <div className="LoginText">We need these details to make a successful trade between 2 parties.</div>
+                    <div className="LoginHeader LoginHeader--NoMargin">Name on Card</div>
+                    <div className="LoginInputValidationContainer">
+                        <input type='text' placeholder='Name on Card' className="LoginInput" onChange={(e) => setCardName(e.target.value)} />
+                        <div className={`triangleLeft ${!cardNameError ? '' : 'ValidationTextHide'}`} /> 
+                        <ValidationPopup errorText={"Please enter a card name"} errorHeader='Invalid Card Name' hide={!cardNameError} />
+                    </div>
 
 
-             <div className="LoginHeader LoginHeader--NoMargin">Number on Card</div>
-            <div className="LoginInputValidationContainer">
-                <CardNumberElement 
-                className="LoginInput" 
-                onChange={cardNumberObj => setCardNumber(cardNumberObj)} 
-                options={cardElementOptions}
-                />
-                <div className={`triangleLeft ${!cardNumber?.error ? '' : 'ValidationTextHide'}`} /> 
-                <ValidationPopup errorText={cardNumber?.error?.message} errorHeader='Invalid Card Number' hide={!cardNumber?.error} />
-            </div>
-            <div className="ExpiryCCVFlex">
-                <div className="LoginHeader">Expiry</div>
-                <div className="LoginHeader">CCV</div>
-            </div>
-            <div className="LoginInputValidationContainer">
-                <div className="ExpiryCCVFlex">
-                    <CardExpiryElement
-                    className="LoginInput" 
-                    onChange={cardExpiryObj => setCardExpiry(cardExpiryObj)} 
-                    options={cardElementOptions}
-                    />
-                    <CardCvcElement
-                    className="LoginInput" 
-                    onChange={cardCvcObj => setCardCvc(cardCvcObj)} 
-                    options={cardElementOptions}
-                    />
-                    
-                </div>
-                <div className={`triangleLeft ${!cardExpiry?.error ? '' : 'ValidationTextHide'}`} />
-                <ValidationPopup errorText={cardExpiry?.error?.message} errorHeader='Invalid Expiry Date' hide={!cardExpiry?.error} />
-                <div className={`triangleLeft ${!cardCvc?.error ? '' : 'ValidationTextHide'}`} />
-                <ValidationPopup errorText={cardCvc?.error?.message} errorHeader='Invalid CCV' hide={!cardCvc?.error} />
+                    <div className="LoginHeader LoginHeader--NoMargin">Number on Card</div>
+                    <div className="LoginInputValidationContainer">
+                        <CardNumberElement 
+                        className="LoginInput" 
+                        onChange={cardNumberObj => setCardNumber(cardNumberObj)} 
+                        options={cardElementOptions}
+                        />
+                        <div className={`triangleLeft ${!cardNumber?.error ? '' : 'ValidationTextHide'}`} /> 
+                        <ValidationPopup errorText={cardNumber?.error?.message} errorHeader='Invalid Card Number' hide={!cardNumber?.error} />
+                    </div>
+                    <div className="ExpiryCCVFlex">
+                        <div className="LoginHeader">Expiry</div>
+                        <div className="LoginHeader">CCV</div>
+                    </div>
+                    <div className="LoginInputValidationContainer">
+                        <div className="ExpiryCCVFlex">
+                            <CardExpiryElement
+                            className="LoginInput" 
+                            onChange={cardExpiryObj => setCardExpiry(cardExpiryObj)} 
+                            options={cardElementOptions}
+                            />
+                            <CardCvcElement
+                            className="LoginInput" 
+                            onChange={cardCvcObj => setCardCvc(cardCvcObj)} 
+                            options={cardElementOptions}
+                            />
+                            
+                        </div>
+                        <div className={`triangleLeft ${!cardExpiry?.error ? '' : 'ValidationTextHide'}`} />
+                        <ValidationPopup errorText={cardExpiry?.error?.message} errorHeader='Invalid Expiry Date' hide={!cardExpiry?.error} />
+                        <div className={`triangleLeft ${!cardCvc?.error ? '' : 'ValidationTextHide'}`} />
+                        <ValidationPopup errorText={cardCvc?.error?.message} errorHeader='Invalid CCV' hide={!cardCvc?.error} />
 
-            </div>
-            {!props.lender ? (
-                isLoading ? (
-                    <CircularProgress color="inherit" />
-                ) : (
-                    <button className={`LoginFormButton ${!props.validated ? 'ButtonDisabled' : ''}`} disabled={!props.validated} onClick={createPaymentMethod}>Next</button>
-                )
-            ) : null
+                    </div>
                 
-            }
+            
             </div>
             
             

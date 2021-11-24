@@ -1,24 +1,29 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import Instance from '../../util/axios';
+import Button from '../Button/Button';
 import {ReactComponent as Logo} from './../../assets/Logos/LogoRed.svg';
 
-export default function Verification({ phoneNumber, handleNextPage }) {
+export default function Verification({ context }) {
     const [verificationCode, setVerificationCode] = useState()
+    const [isLoading, setIsLoading] = useState(false)
+    const { state, dispatch } = useContext(context)
+    const { phoneNumber } = state
+
     const verifyCode = async () => {
-        console.log(phoneNumber)
+        setIsLoading(true)
         try{
-            const { data, status } = await Instance.post('/auth/verifyCodeWithMobile', {
+            await Instance.post('/auth/verifyCodeWithMobile', {
                 mobile: phoneNumber,
                 code: verificationCode
             })
-            console.log(data,status)
-            handleNextPage('Bank Details')
+            setIsLoading(false)
+            dispatch({ type: 'setCurrentPage', data: 'Bank Details'})
         } catch(err){
+            setIsLoading(false)
             console.log(err)
         }
-        
-
     }
+
     return (
         <div className="RegistrationWrapper">
                 <div className="LoginMain">
@@ -30,7 +35,11 @@ export default function Verification({ phoneNumber, handleNextPage }) {
                     <div className="LoginHeader">Verification Code</div>
                     <input type='text' placeholder='12345678' className="LoginInput" onChange={e => setVerificationCode(e.target.value)}/>
 
-                    <button className="LoginFormButton" onClick={verifyCode}>Next</button>
+                    <Button
+                    isLoading={isLoading}
+                    onClick={verifyCode}
+                    text="Next"
+                    />
                 </div>
         </div>
     )
