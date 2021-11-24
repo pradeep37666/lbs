@@ -70,7 +70,7 @@ export default function UserButton() {
                         </Link>
                         
 
-                        { user.bsb &&
+                        { user.isLender &&
                         <>
                             <hr className="hr__UserMenu" />
                             <Link to='/user/your_shed'>

@@ -47,7 +47,7 @@ export default function UserShedNav(props) {
                 </div>
             </Link>
 
-            { user.bsb &&
+            { user.isLender &&
             <Link to='/user/your_shed'>
                 <div className={`UserShedNav__LinkFlex ${activeMain === 'your_shed' ? 'UserShedNav__LinkFlex--Active' : ''}`} onClick={() => setActiveMain('your_shed')}>
                     <YourShed height="50px" width="50px" className="UserShedNav__Icon" />
@@ -80,7 +80,7 @@ export default function UserShedNav(props) {
                     </div>
 
                     <div className="HL" />
-                    {!user.bsb ?
+                    {!user.isLender ?
                         <Link to='/user/upgrade_to_lender'>
                             <div>
                                 <div className={`UserShedNav__SecondaryLink ${props.accountContent === 'Become a Lender' ? 'UserShedNav__SecondaryLink--active' : ''}`} onClick={() => props.setAccountContent('Become a Lender')}>
@@ -96,9 +96,6 @@ export default function UserShedNav(props) {
                                 <ChevronRightIcon style={{ fill: '#b43b4c' }} />
                             </div>
                         </div>}
-
-                    {/* {!user.bsb ? <div className="HL" /> : ''} */}
-
 
                     <div className="HL" />
                     <div>

@@ -168,9 +168,12 @@ export default function BankDetails(props) {
                         id="date-picker-inline"
                         value={dateOfBirth}
                         disableFuture
-                        onChange={(newDate) =>  dispatch({ type: 'setDateOfBirth', data: newDate})}
+                        onChange={(chosenDate) =>  {
+                            const newDate = new Date( chosenDate._d ? chosenDate._d : chosenDate )
+                            dispatch({ type: 'setDateOfBirth', data: newDate})
+                        }}
                         onAccept={() => console.log('a')}
-                        style={{ width: '100%' }}
+                        style={{ width: '100%', marginBottom: '1rem' }}
                         views={['year', 'month', 'date']}
                         KeyboardButtonProps={{
                             'aria-label': 'change date',

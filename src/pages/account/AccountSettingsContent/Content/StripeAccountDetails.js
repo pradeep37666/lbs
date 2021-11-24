@@ -6,6 +6,7 @@ import Button from '../../../../components/Button/Button'
 import useGlobalState from '../../../../util/useGlobalState'
 import EditIcon from '../../../../assets/Icons/EditIcon'
 import './StripeAccountDetails.css'
+import Arrow from '../../../../assets/Icons/Arrow'
 
 export default function AccountDetails() {
     const { state, dispatch } = useGlobalState()
@@ -14,8 +15,8 @@ export default function AccountDetails() {
     const [isUpdateAccountLoading, setIsUpdateAccountLoading] = useState(false)
     const [updateAccountError, setUpdateAccountError] = useState()
     const [accountDetails, setAccountDetails] = useState()
-    const [accNumber, setAccNumber] = useState(user.account_number)
-    const [bsb, setBsb] = useState(user.bsb)
+    const [accNumber, setAccNumber] = useState()
+    const [bsb, setBsb] = useState()
 
     const stripe = useStripe()
 
@@ -72,9 +73,24 @@ export default function AccountDetails() {
     return (
         <div className="AccountSettings__Container">
             
-                <div>
-                    <div className="AccountSettings__UserName">Bank Details</div>
-                    <div className="AccountSettings__BodyText">Your saved Bank Account details.</div>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                    <div>
+                        <div className="AccountSettings__UserName">Bank Details</div>
+                        <div className="AccountSettings__BodyText">Your saved Bank Account details.</div>
+                    </div>
+                    
+                    <div>
+                        { isEditingAccount ? (
+                            <Arrow 
+                            width={40}
+                            height={40}
+                            onClick={() => setIsEditingAccount(!isEditingAccount)}/>
+                        ) : (
+                            <EditIcon onClick={() => setIsEditingAccount(!isEditingAccount)}/>
+                        )}
+                    </div>
+                </div>
+
                     { accountDetails && !isEditingAccount ? (
                         <div className="AccountCardContainer">
                             <div className="AccountCardField">
@@ -85,7 +101,7 @@ export default function AccountDetails() {
                                 <span>BSB</span>
                                 <span>{accountDetails.routing_number}</span>
                             </div>
-                            <EditIcon onClick={() => setIsEditingAccount(!isEditingAccount)}/>
+                            
                         </div>
                     ) : (
                         <>
@@ -105,10 +121,11 @@ export default function AccountDetails() {
                             text="Update" 
                             inLineError
                             errorMessage={updateAccountError}
-                            onClick={updateAccountDetails}/>
+                            onClick={updateAccountDetails}
+                            />
                         </>
                     )}
-                </div>
+
         </div>
     )
 }

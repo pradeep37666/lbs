@@ -1,9 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import ProductSlots from "../productSlots/ProductSlots";
 import { ReactComponent as Logo } from "./../../assets/Logos/LogoRed.svg";
 import Button from "../Button/Button";
+import { FormContext } from "../../pages/account/UpgradeLender/UpgradeLender";
 
 export default function Availability(props) {
+  const { state } = useContext(FormContext)
+  const { isLenderUpgrade } = state
 
   return (
     <div className="RegistrationWrapper">
@@ -46,63 +49,17 @@ export default function Availability(props) {
               </div>
             </>
           ) : (
-            <>
-              {/* <button
-                className="LoginFormButton LoginFormButtonInverted"
-                onClick={() => {
-                  props.setAvailability(Array(14).fill(0))
-                  if (props.isUpgrade) {
-                    props.submitUpgrade();
-                    props.handleNextPage("Complete!");
-                  } else {
-                    props.handleNextPage("Terms & Conditions");
-                  }
-                }}
-                style={{ marginRight: ".5em" }}
-              >
-                Skip Step
-              </button> */}
               <Button 
-              text="Skip Step"
-              onClick={() => {
-                props.setAvailability(Array(14).fill(0))
-                if (props.isUpgrade) {
-                  props.submitUpgrade();
-                  props.handleNextPage("Complete!");
-                } else {
-                  props.handleNextPage("Terms & Conditions");
-                }
-              }}
-              invertedColors
-              />
-              {/* <button
-                className={`LoginFormButton ${
-                  !props.validated ? "ButtonDisabled" : ""
-                }`}
-                disabled={!props.validated}
-                onClick={() => {
-                  if (props.isUpgrade) {
-                    props.submitUpgrade();
-                    props.handleNextPage("Complete!");
-                  } else {
-                    props.handleNextPage("Terms & Conditions");
-                  }
-                }}
-              >
-                Next
-              </button> */}
-              <Button 
+              isDisabled={!props.availability.includes(1)}
               text="Next"
               onClick={() => {
-                if (props.isUpgrade) {
+                if (isLenderUpgrade) {
                   props.submitUpgrade();
-                  props.handleNextPage("Complete!");
                 } else {
                   props.handleNextPage("Terms & Conditions");
                 }
               }}
               />
-            </>
           )}
         </div>
       </div>

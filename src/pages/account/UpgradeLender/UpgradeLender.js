@@ -48,68 +48,52 @@ export default function UpgradeLender() {
         )
     }
 
-    const submitUpgrade = () => {
-        createStripeAccount()
+    const submitUpgrade = async () => {
+        await createStripeAccount()
+        const suburb =  getSuburb(address.address_components) 
+        const userData = {
+            address: address.formatted_address,
+            suburb: suburb,
+            lat: address.lat,
+            lng: address.lng,
+            available: availability.join(''),
+            isLender: true
+        }
 
-        // let suburb
-        // address.address_components ? suburb = getSuburb(address.address_components) : suburb = user.suburb
-        
-        // const data = {
-        //     account_number: accNumber ? accNumber : user.account_number,
-        //     bsb: bsb ? bsb : user.bsb,
-        //     address: address.formatted_address ? address.formatted_address : user.address,
-        //     suburb: suburb,
-        //     lat: address ? address.lat : user.lat,
-        //     lng: address ? address.lng : user.lng,
-        //     available: availability ? availability : user.available
-        // }
+        try{
+            const { data, status } = await Instance.patch('user/update', userData)
+            globalDispatch({ type: 'setUser', data })
 
-        // Instance.patch('user/update', data)
-        //     .then((response) => {
-        //         console.log(response)
-        //         let newData = user
-        //         newData.account_number = data.account_number
-        //         newData.bsb = data.bsb
-        //         newData.address = data.address
-        //         newData.suburb = data.suburb
-        //         newData.lat = data.lat
-        //         newData.lng = data.lng
-        //         newData.available = data.available
-        //         globalDispatch({ type: 'setUser', data: newData })
-        //     })
-        //     .catch((error) => {
-        //         console.log(error)
-            // })
-
+        } catch(err){
+            console.log('error', err)
+        }
     }
 
     const createStripeAccount = async () => {
-        console.log('dob', dateOfBirth)
-        console.log('acc', accountNumber)
-        console.log('bsb', BSB)
-        // const stripeData = {
-        //     u_id: user.id,
-        //     email: user.email,
-        //     bsb: BSB,
-        //     accountNumber,
-        //     day: parseInt(dayOfBirth),
-        //     month: parseInt(monthOfBirth),
-        //     year: parseInt(yearOfBirth),
-        //     firstName: user.firstName,
-        //     lastName: user.lastName,
-        //     line1: address.address_components[0].long_name + ' ' + address.address_components[1].long_name,
-        //     country: address.address_components[5].short_name,
-        //     state: address.address_components[4].short_name,
-        //     city:   address.address_components[3].long_name,
-        //     postal_code: address.address_components[6].long_name,
-        // }
 
-        // try{
-        //     const { data, status } = await Instance.post('/stripe/createAccount', stripeData)
-        //     console.log('stripe', data, status)
-        // } catch(err) {
-        //     console.log(err.response)
-        // }
+        const stripeData = {
+            u_id: user.id,
+            email: user.email,
+            bsb: BSB,
+            accountNumber,
+            day: dateOfBirth.getDate(),
+            month: dateOfBirth.getMonth(),
+            year: dateOfBirth.getFullYear(),
+            firstName: user.firstName,
+            lastName: user.lastName,
+            line1: address.address_components[0].long_name + ' ' + address.address_components[1].long_name,
+            country: address.address_components[5].short_name,
+            state: address.address_components[4].short_name,
+            city:   address.address_components[3].long_name,
+            postal_code: address.address_components[6].long_name,
+        }
+        console.log(stripeData)
+        try{
+            const { data, status } = await Instance.post('/stripe/createAccount', stripeData)
+            console.log('stripe', data, status)
+        } catch(err) {
+            console.log(err.response)
+        }
         
     }
 
@@ -123,7 +107,6 @@ export default function UpgradeLender() {
                 return <Availability
                     availability={availability}
                     setAvailability={setAvailability}
-                    isUpgrade={true}
                     submitUpgrade={submitUpgrade}
                 />
             case 'Complete!':

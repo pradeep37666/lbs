@@ -107,8 +107,6 @@ export default function EditPaymentDetails() {
         
     }
 
-    
-
     return (
         <>
             <div className="AccountSettings__Container">
@@ -134,7 +132,7 @@ export default function EditPaymentDetails() {
                             </div>
                         </div>
                     ) : (
-                            <>
+                        <>
                             <div className="AccountSettings__UserName">Card Details</div>
                             <div className="AccountSettings__BodyText">We need these details to make a successful trade between 2 parties.</div>
 
