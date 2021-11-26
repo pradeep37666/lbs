@@ -30,6 +30,7 @@ const lenderUpgradeReducer = (state, action) => {
                 ...state,
                 availability: action.data
             }
+        default : return state
     }
 }
 

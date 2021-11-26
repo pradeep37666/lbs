@@ -2,15 +2,15 @@ import React, { useState, useEffect, useContext } from "react";
 import ProductSlots from "../productSlots/ProductSlots";
 import { ReactComponent as Logo } from "./../../assets/Logos/LogoRed.svg";
 import Button from "../Button/Button";
-import { FormContext } from "../../pages/account/UpgradeLender/UpgradeLender";
+import useGlobalState from "../../util/useGlobalState";
 
-export default function Availability(props) {
-  const { state } = useContext(FormContext)
-  const { isLenderUpgrade } = state
-
+export default function Availability({ context, style,  submitUpgrade, }) {
+  const { state, dispatch } = useContext(context)
+  const { isLenderUpgrade, availability } = state
+  const { user } = useGlobalState().state
   return (
     <div className="RegistrationWrapper">
-      <div className="LoginMain" style={props.style ? props.style : null }>
+      <div className="LoginMain" style={ style }>
         <Logo height="50px" width="50px" style={{ marginBottom: ".5em" }} />
 
         <div className="LoginHeader">General Product Availability</div>
@@ -23,44 +23,21 @@ export default function Availability(props) {
         </div>
 
         <ProductSlots 
-        availability={props.availability}
-        setAvailability={props.setAvailability}
+        availability={availability}
+        setAvailability={(newAvailability) => dispatch({ type: 'setAvailability', data: newAvailability })}
         />
-        <div className="SkipNextButtonFlex" style={props.style ? { justifyContent: 'center'} : null }>
-          {props.addEditButtons ? (
-            <>
-              <div>
-                <button
-                  style={{ marginBottom: "4%" }}
-                  className={`LoginFormButton`}
-                  onClick={() => {props.handleDiscardChanges() }}
-                >
-                  Save Availability
-                </button>
-                <button
-                  className="LoginFormButton LoginFormButtonInverted"
-                  onClick={() => {
-                    props.handleDiscardChanges();
-                  }}
-                  style={{ marginRight: ".5em" }}
-                >
-                  Discard Changes
-                </button>
-              </div>
-            </>
-          ) : (
-              <Button 
-              isDisabled={!props.availability.includes(1)}
-              text="Next"
-              onClick={() => {
-                if (isLenderUpgrade) {
-                  props.submitUpgrade();
-                } else {
-                  props.handleNextPage("Terms & Conditions");
-                }
-              }}
-              />
-          )}
+        <div className="SkipNextButtonFlex" style={ style ? { justifyContent: 'center'} : null }>
+          <Button 
+          isDisabled={!availability.includes(1)}
+          text="Next"
+          onClick={() => {
+            if ( user ) {
+              submitUpgrade();
+            } else {
+              dispatch({ type: 'setCurrentPage', data: 'Terms & Conditions'})
+            }
+          }}
+          />
         </div>
       </div>
     </div>

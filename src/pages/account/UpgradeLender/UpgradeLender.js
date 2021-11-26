@@ -11,26 +11,25 @@ import useGlobalState from '../../../util/useGlobalState'
 import getSuburb from '../../../util/getSuburb'
 import lenderUpgradeReducer from '../../../util/lenderUpgradeReducer'
 
-export const FormContext = createContext()
+const FormContext = createContext()
 
 export default function UpgradeLender() {
+
     const [state, dispatch] = useReducer(lenderUpgradeReducer, { 
         isLenderUpgrade: true, 
         currentPage: 'Bank Details',
         dateOfBirth: new Date(1990, 1, 1), 
+        availability: new Array(14).fill(0)
     })
 
-    const { currentPage, address, accountNumber, BSB, dateOfBirth } = state
+    const { currentPage, address, accountNumber, BSB, dateOfBirth, availability } = state
 
     const globalDispatch = useGlobalState().dispatch
     const globalState = useGlobalState().state
     const { user } = globalState
 
     const history = useHistory()
-
-    const [availability, setAvailability] = useState(Array(14).fill(0))
    
-
     const getComplete = () => {
         return (
             <div className="RegistrationWrapper">
@@ -106,8 +105,6 @@ export default function UpgradeLender() {
             case 'Availability':
                 return <Availability
                     context={FormContext}
-                    availability={availability}
-                    setAvailability={setAvailability}
                     submitUpgrade={submitUpgrade}
                 />
             case 'Complete!':
@@ -118,11 +115,13 @@ export default function UpgradeLender() {
     }
 
     return (
-        <PageWrapper>
-            <Banner textBold='Lender Upgrade' textNormal={currentPage} />
+        <FormContext.Provider value={{ state, dispatch }}>
+            <PageWrapper>
+                <Banner textBold='Lender Upgrade' textNormal={currentPage} />
 
-            { renderSwitch() }
+                { renderSwitch() }
 
-        </PageWrapper>
+            </PageWrapper>
+        </FormContext.Provider>
     )
 }

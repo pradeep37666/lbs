@@ -12,7 +12,11 @@ import { registrationConstraints } from '../../util/validationConstraints';
 export default function BasicDetails({ context }) {
     const { state, dispatch } = useContext(context)
     const [errorMessages, setErrorMessages] = useState({})
+    const [isLoading, setIsLoading] = useState(false)
+    const [emailTakenError, setEmailTakenError] = useState()
+    const [phoneTakenError, setPhoneTakenError] = useState()
     const { firstName, lastName, email, phoneNumber, password, confirmPassword, image, isLenderUpgrade } = state
+    console.log('state', state)
 
     useEffect(() => {
         if(Object.keys(errorMessages).length > 0){
@@ -22,7 +26,7 @@ export default function BasicDetails({ context }) {
                 return
             }
         }
-    },[firstName, lastName, email, password, confirmPassword])
+    },[firstName, lastName, email, phoneNumber, password, confirmPassword])
 
     const getErrorMessage = (inputName) => {
         if(Object.keys(errorMessages).length === 0) return null
@@ -44,10 +48,16 @@ export default function BasicDetails({ context }) {
     const sendVerificationCode = async () => {
         const valid = validateInputs()
         if(!valid) return
-
+        setIsLoading(true)
+        const emailExists = await checkIfEmailExists()
+        const phoneExists = await checkIfPhoneNumberExists()
+        if(emailExists || phoneExists) {
+            setIsLoading(false)
+            return
+        }
         try{
-            const { data, status } = await Instance.get(`/auth/getVerificationCodeToMobile?mobile=${phoneNumber}`)
-            dispatch({ type: 'setCurrentPage', data: 'Verification' })
+            // const { data, status } = await Instance.get(`/auth/getVerificationCodeToMobile?mobile=${phoneNumber}`)
+            dispatch({ type: 'setCurrentPage', data: 'Bank Details' })
         } catch(err) {
             console.log(err)
         }
@@ -60,6 +70,32 @@ export default function BasicDetails({ context }) {
             raw: e.target.files[0]
         }
         dispatch({ type: 'setImage', data: image })
+    }
+
+    const checkIfEmailExists = async () => {
+        try{
+            const {  status} = await Instance.get(`/user/checkExist?email=${email}`)
+            if(status === 200) {
+                setEmailTakenError('Email is taken')
+                return true
+            }
+            return false
+        } catch(err){
+            console.log(err)
+        }
+    }
+
+    const checkIfPhoneNumberExists = async () => {
+        try{
+            const { data, status } = await Instance.get(`/user/checkExist?mobile=${phoneNumber}`)
+            if(status === 200) {
+                setPhoneTakenError('Phone number is taken')
+                return true
+            }
+            return false
+        } catch(err){
+            console.log(err)
+        }
     }
 
     return (
@@ -88,14 +124,14 @@ export default function BasicDetails({ context }) {
                 label="Email"
                 value={email}
                 onChange={e => dispatch({ type: 'setEmail', data: e.target.value })}
-                errorMessage={getErrorMessage('email')}
+                errorMessage={emailTakenError ? emailTakenError : getErrorMessage('email')}
                 />
                 <ValidationTextInput 
                 placeholder="0123 456 789"
                 label="Phone Number"
                 value={phoneNumber}
                 onChange={e => dispatch({ type: 'setPhoneNumber', data: e.target.value })}
-                errorMessage={getErrorMessage('phoneNumber')}
+                errorMessage={phoneTakenError ? phoneTakenError : getErrorMessage('phoneNumber')}
                 />
                 <div className="LoginHeader">Profile Picture</div>
                 <div className="ProfilePictureFlex">
@@ -145,7 +181,7 @@ export default function BasicDetails({ context }) {
                     <div className="LenderSwitchInfoFlex">
                     <LBSSwitch 
                     isChecked={isLenderUpgrade} 
-                    onClick={() => dispatch({ type: 'setLenderUpgrade', data: !isLenderUpgrade})} 
+                    onClick={() => dispatch({ type: 'setIsLenderUpgrade', data: !isLenderUpgrade})} 
                     text='Yes'/>
                     </div>
                 </div>
@@ -153,6 +189,7 @@ export default function BasicDetails({ context }) {
                 <div className="LoginText">These details allow us to send you payments for successful lends and help borrowers find your items</div>
 
                 <Button 
+                isLoading={isLoading}
                 onClick={sendVerificationCode}
                 text="Next"
                 />

@@ -7,14 +7,15 @@ import cardElementOptions from '../../constants/cardElementOptions';
 import ValidationTextInput from './ValidationTextInput';
 import { FormContext } from '../../pages/account/UpgradeLender/UpgradeLender';
 import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
+import useGlobalState from '../../util/useGlobalState'
 import MomentUtils from '@date-io/moment';
 import Button from '../Button/Button';
 import { ThemeProvider } from '@material-ui/styles';
 
 export default function BankDetails({ context }) {
+    const user = useGlobalState().state.user
     const { state, dispatch } = useContext(context)
-    let { accountNumber, BSB, isLenderUpgrade, dateOfBirth } = state
-    isLenderUpgrade = true
+    const { accountNumber, BSB, isLenderUpgrade, dateOfBirth } = state
     const [isLoading, setIsLoading] = useState(false)
     const [cardNumber, setCardNumber] = useState()
     const [cardExpiry, setCardExpiry] = useState()
@@ -55,18 +56,6 @@ export default function BankDetails({ context }) {
         }
     }
 
-    // const handleNextButtonClick = () => {
-    //     const isOverThirteen = checkDateOfBirth()
-    //     console.log('over thirteen', isOverThirteen)
-    //     if(!isOverThirteen) return 
-    //     console.log()
-    //     if(props.isUpgrade){
-    //         props.handleNextPage('Location Details')
-    //         return
-    //     }
-    //     createPaymentMethod()
-    // }
-
     const datePickerTheme = createMuiTheme({
         palette: {
             primary: {
@@ -74,20 +63,23 @@ export default function BankDetails({ context }) {
             }
         }
     })
+
+    const getMinDate = () => {
+            const today = new Date()
+            const minDate = new Date()
+            minDate.setFullYear(today.getFullYear() - 13)
+            return minDate
+    }
+
     return (
         <div className="RegistrationWrapper">
+            { !user && <>
                 <div className="LoginMain">
                     <Logo height='50px' width='50px' style={{marginBottom: '.5em'}}/>
-
                     <div className="LoginHeader">Payment Details</div>
                     <div className="LoginText">If you would like to share your shed with users, Little big shed will need to know your payment and banking details to allow you to send and receive money for Little Big Shed trades.</div>
-
                     <div className="LoginText">However if you only want to borrow items from other users, we will only need your card details.</div>
-
                 </div>
-
-                { !isLenderUpgrade ? 
-
                 <div className="LoginMain LoginMainNoMarg">
                     <div className="LoginHeader">Card Details</div>
                     <div className="LoginText">We need these details to make a successful trade between 2 parties.</div>
@@ -133,15 +125,18 @@ export default function BankDetails({ context }) {
                         <ValidationPopup errorText={cardCvc?.error?.message} errorHeader='Invalid CCV' hide={!cardCvc?.error} />
 
                     </div>
+                    { !isLenderUpgrade && 
+                    <Button 
+                    isLoading={isLoading}
+                    onClick={ createPaymentMethod}
+                    text="Next"
+                    />}
+                </div>
+            </>}
                 
-            
-            </div>
-            
-            
-            : ''}
 
             { isLenderUpgrade &&
-            <div className="LoginMain LoginMainNoMarg">
+            <div className="LoginMain">
 
                 <div className="LoginHeader">Date of Birth</div> 
                 <ThemeProvider theme={datePickerTheme}>
@@ -150,15 +145,18 @@ export default function BankDetails({ context }) {
                         disableToolbar
                         variant="inline"
                         format="DD/MM/yyyy"
+                        maxDate={getMinDate()}
+                        maxDateMessage="You must be at least 13 years old to create an account"
                         margin='normal'
                         id="date-picker-inline"
                         value={dateOfBirth}
                         disableFuture
                         onChange={(chosenDate) =>  {
+                            if(!chosenDate) return 
                             const newDate = new Date( chosenDate._d ? chosenDate._d : chosenDate )
                             dispatch({ type: 'setDateOfBirth', data: newDate})
                         }}
-                        onAccept={() => console.log('a')}
+                        onAccept={(newDate) => console.log(newDate)}
                         style={{ width: '100%', marginBottom: '1rem' }}
                         views={['year', 'month', 'date']}
                         KeyboardButtonProps={{
@@ -185,8 +183,9 @@ export default function BankDetails({ context }) {
                 />
                 <Button 
                 text="Next"
+                isLoading={isLoading}
                 isDisabled={ !accountNumber || !BSB }
-                onClick={() => dispatch({ type: 'setCurrentPage', data: 'Location Details'})}
+                onClick={() => user ? dispatch({ type: 'setCurrentPage', data: 'Location Details'}) : createPaymentMethod()}
                 />
             </div>
             }

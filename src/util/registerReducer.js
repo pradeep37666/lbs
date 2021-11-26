@@ -1,3 +1,5 @@
+import StateContext from "react-scroll-to-bottom/lib/ScrollToBottom/StateContext"
+
 const registerReducer = (state, action) => {
     switch(action.type){
         case 'setFirstName' :
@@ -30,10 +32,40 @@ const registerReducer = (state, action) => {
                 ...state,
                 image: action.data
             }
+        case 'setAccountNumber' :
+            return {
+                ...state,
+                accountNumber: action.data
+            }
+        case 'setBSB' :
+            return {
+                ...state,
+                BSB: action.data
+            }
         case 'setPaymentMethod' :
             return {
                 ...state,
                 paymentMethod: action.data
+            }
+        case 'setDateOfBirth' :
+            return {
+                ...state,
+                dateOfBirth: action.data
+            }
+        case 'setAvailability' :
+            return {
+                ...state,
+                availability: action.data
+            }
+        case 'setTermsChecked' :
+            return {
+                ...state,
+                termsChecked: action.data
+            }
+        case 'setAddress' :
+            return {
+                ...state,
+                address: action.data
             }
         case 'setIsLenderUpgrade' :
             return {
@@ -50,6 +82,8 @@ const registerReducer = (state, action) => {
                 ...state,
                 currentPage: action.data
             }
+        default :
+            return state
     }
 }
 

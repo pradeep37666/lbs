@@ -57,7 +57,7 @@ const IOSSwitch = withStyles((theme) => ({
   );
 });
 
-export default function LBSSwitch(isChecked, onClick, text) {
+export default function LBSSwitch({isChecked, onClick, text}) {
 
   return (
     <FormGroup className="SwitchContainer">

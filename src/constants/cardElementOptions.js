@@ -3,6 +3,7 @@ const cardElementOptions = {
           base: {
             color: "black",
             fontFamily: '"DMSans", sans-serif',
+            fontWeight: 'bold',
             fontSmoothing: "antialiased",
             fontSize: "18px",
             "::placeholder": {
