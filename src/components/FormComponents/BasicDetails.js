@@ -57,6 +57,7 @@ export default function BasicDetails({ context }) {
         }
         try{
             // const { data, status } = await Instance.get(`/auth/getVerificationCodeToMobile?mobile=${phoneNumber}`)
+            // dispatch({ type: 'setCurrentPage', data: 'Verification' })
             dispatch({ type: 'setCurrentPage', data: 'Bank Details' })
         } catch(err) {
             console.log(err)

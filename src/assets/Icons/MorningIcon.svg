@@ -5,7 +5,7 @@
       <rect width="144" height="144"/>
     </clipPath>
   </defs>
-  <g id="Morning_Slot_icon" data-name="Morning Slot icon" clip-path="url(#clip-Morning_Slot_icon)">
+  <g id="Morning_Slot_icon" data-name="Morning Slot icon" clipPath="url(#clip-Morning_Slot_icon)">
     <g id="Group_1767" data-name="Group 1767" transform="translate(-0.416 36)">
       <g id="Subtraction_33" data-name="Subtraction 33" transform="translate(43.086 28.418)" fill="none">
         <path d="M55.728,37.074H1.306a28.517,28.517,0,1,1,54.423,0Z" stroke="none"/>

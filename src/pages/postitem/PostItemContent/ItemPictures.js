@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import { ReactComponent as Logo } from "../../../assets/Logos/LogoRed.svg";
 import IconButton from "@material-ui/core/IconButton";
 import AddIcon from "@material-ui/icons/Add";
 import RemoveIcon from "@material-ui/icons/Remove";
 import { makeStyles } from "@material-ui/styles";
+import Button from "../../../components/Button/Button";
 
 const useStyles = makeStyles({
   button: {
@@ -31,13 +32,15 @@ const useStyles = makeStyles({
   },
 });
 
-export default function ItemPictures(props) {
+export default function ItemPictures({ context }) {
+  const { state, dispatch } = useContext(context)
+  const { pictures } = state
   const classes = useStyles();
 
   //finds the next unused id in the pictures array
   const findNextID = () => {
     var indices = [];
-    props.pictures.forEach((picture) => {
+    pictures.forEach((picture) => {
       indices[picture["id"]] = true;
     });
     for (var i = 1, l = indices.length; i < l; i++) {
@@ -50,26 +53,26 @@ export default function ItemPictures(props) {
 
   const handleChange = (e) => {
     if (e.target.files.length) {
-      let newPictures = props.pictures.map((picture) => picture);
+      let newPictures = pictures.map((picture) => picture);
       newPictures.push({
         preview: URL.createObjectURL(e.target.files[0]),
         raw: e.target.files[0],
         id: findNextID(),
       });
-      props.setPictures(newPictures);
+      dispatch({ type: 'setPictures', data: newPictures })
     }
   };
 
   const handleDelete = (id) => {
     var newPictures = [];
-    for (var i = 0; i < props.pictures.length; i++) {
-      var pic = props.pictures[i];
+    for (var i = 0; i < pictures.length; i++) {
+      var pic = pictures[i];
 
       if (pic.id !== id) {
         newPictures.push(pic);
       }
     }
-    props.setPictures(newPictures);
+    dispatch({ type: 'setPictures', data: newPictures })
   };
 
   return (
@@ -85,7 +88,7 @@ export default function ItemPictures(props) {
         </div>
 
         <div className="PostItem__ItemPictures__Container">
-          {props.pictures.map((picture, index) => {
+          {pictures.map((picture, index) => {
             return (
               <div className="PostItem__ItemPictures__Preview" key={index}>
                 <IconButton
@@ -124,16 +127,11 @@ export default function ItemPictures(props) {
             <AddIcon className={classes.icon} />
           </IconButton>
         </div>
-
-        <button
-          className={`LoginFormButton ${
-            !props.validated ? "ButtonDisabled" : ""
-          }`}
-          disabled={!props.validated}
-          onClick={() => props.handleNextPage("Advanced Details")}
-        >
-          Next
-        </button>
+        <Button 
+        text="Next"
+        onClick={() => dispatch({ type: 'setCurrentPage', data: 'Advanced Details'})}
+        isDisabled={pictures.length === 0}
+        />
       </div>
     </div>
   );

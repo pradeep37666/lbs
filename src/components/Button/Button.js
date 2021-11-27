@@ -3,7 +3,7 @@ import React from 'react'
 import './Button.css'
 import ValidationPopup from '../ValidationPopup/ValidationPopup'
 
-export default function Button({ onClick, isDisabled, errorMessage, errorHeader, isLoading, text, inLineError, invertedColors  }) {
+export default function Button({ onClick, isDisabled, errorMessage, errorHeader, isLoading, text, inLineError, invertedColors, style  }) {
 
     const getButtonClassName = () => {
         let buttonClass = invertedColors ? "ButtonInverted" : "Button"
@@ -19,7 +19,7 @@ export default function Button({ onClick, isDisabled, errorMessage, errorHeader,
     }
 
     return (
-        <div className={ inLineError ? "ButtonErrorContainer" : "ButtonContainer" }>
+        <div className={ inLineError ? "ButtonErrorContainer" : "ButtonContainer" } style={style}>
             <div className="ButtonValidationContainer">
                 <button 
                 className={getButtonClassName()} 
@@ -41,9 +41,9 @@ export default function Button({ onClick, isDisabled, errorMessage, errorHeader,
             </div>
             { errorMessage && inLineError ? (
                 <div className="InLineErrorContainer">
-                <div className="ValidationPopup__Header">{errorHeader || 'Error' }</div>
-                { errorMessage }
-            </div>
+                    <div className="ValidationPopup__Header">{errorHeader || 'Error' }</div>
+                    { errorMessage }
+                </div>
             ) : null }
         </div>
         

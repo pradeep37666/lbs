@@ -7,7 +7,7 @@ import ItemOverview from '../../components/application/ItemOverview'
 import PageWrapper from '../../components/pageWrapper/pageWrapper'
 import instance from '../../util/axios'
 import ApplicationFooter from '../../components/application/ApplicationFooter'
-import applicationReducer from '../../util/applicationReducer'
+import applicationReducer from '../../util/reducers/applicationReducer'
 import './application.css'
 import BookingPriceCalculator from '../../util/BookingPriceCalculator'
 

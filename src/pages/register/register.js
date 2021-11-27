@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useReducer, createContext } from 'react';
-import './register.css';
+import './Register.css';
 import PageWrapper from "../../components/pageWrapper/pageWrapper.js";
 import Banner from "../../components/bannerText/bannerText.js";
 import BasicDetails from '../../components/FormComponents/BasicDetails';
@@ -15,7 +15,7 @@ import useGlobalState from '../../util/useGlobalState';
 import { CometChat } from '@cometchat-pro/chat';
 import getSuburb from '../../util/getSuburb';
 import { useStripe } from '@stripe/react-stripe-js';
-import registerReducer from '../../util/registerReducer';
+import registerReducer from '../../util/reducers/registerReducer';
 
 const FormContext = createContext()
 
@@ -42,8 +42,6 @@ export default function Register() {
     const history = useHistory()
 
     const getUserDetails = () => {
-        
-
         const userDetails = {
             email: email,
             firstName,
@@ -96,13 +94,13 @@ export default function Register() {
                 localStorage.setItem('token', data.token.accessToken)
                 await saveCard()
                 await registerCometChat(data.user)
-
+                dispatch({ type: 'setCurrentPage', data: 'Complete!'})
             }
         } catch(e) {
             console.log(e)
             console.log(e.response)
             // history.push({pathname: '/login'})
-            alert("an error occurred during registration, please try again")
+            // alert("an error occurred during registration, please try again")
         }
         
     }

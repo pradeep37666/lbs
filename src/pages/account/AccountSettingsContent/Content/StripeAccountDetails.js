@@ -95,7 +95,7 @@ export default function AccountDetails() {
                         <div className="AccountCardContainer">
                             <div className="AccountCardField">
                                 <span>Account Number</span>
-                                <span>{accountDetails.last4}</span>
+                                <span>XX XXX {accountDetails.last4}</span>
                             </div>
                             <div className="AccountCardField">
                                 <span>BSB</span>

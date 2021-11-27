@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './productSlots.css';
 import SlotDay from '../slotDay/slotDay';
 
-export default function ProductSlots({ availability, setAvailability }) {
+export default function ProductSlots({ availability, onAvailabilityChange }) {
     const [openSlot, setOpenSlot] = useState()
 
     const handleSlotClick = (slotName) => {
@@ -32,12 +32,12 @@ export default function ProductSlots({ availability, setAvailability }) {
                 onMorningClick={() => { 
                     let newAvailability = [...availability]
                     newAvailability[morningIndex] = availability[morningIndex] ? 0 : 1
-                    setAvailability(newAvailability)
+                    onAvailabilityChange(newAvailability)
                 }}
                 onAfternoonClick={() => {
                     let newAvailability = [...availability]
                     newAvailability[afternoonIndex] = availability[afternoonIndex] ? 0 : 1
-                    setAvailability(newAvailability)
+                    onAvailabilityChange(newAvailability)
                 }}
                 />
             )

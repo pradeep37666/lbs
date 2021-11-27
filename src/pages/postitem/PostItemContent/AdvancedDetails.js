@@ -1,15 +1,17 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { ReactComponent as Logo } from '../../../assets/Logos/LogoRed.svg';
 import LBSSwitch from '../../../components/LBSSwitch/LBSSwitch';
 import { Fade } from '@material-ui/core';
+import Button from '../../../components/Button/Button';
+import ValidationTextInput from '../../../components/FormComponents/ValidationTextInput';
 
-export default function AdvancedDetails(props) {
-
+export default function AdvancedDetails({ context }) {
+    const { state, dispatch } = useContext(context)
+    const { description, price, discount, delivery } = state
     const [isDiscount, setIsDiscount] = useState(false)
 
     return (
-        <>
-        {/* Main Info Box */}
+        <div className="RegistrationWrapper">
             <div className="LoginMain">
 
                 <Logo height='50px' width='50px' style={{ marginBottom: '.5em' }} />
@@ -23,72 +25,86 @@ export default function AdvancedDetails(props) {
                 </div>
 
             </div>
-
-            {/* Item Description */}
             <div className="LoginMain LoginMainNoMarg">
-
                 <div className="LoginHeader">Item Description</div>
                 <div className="LoginText">
-
                     Be as in-depth and detail orientated as you can be, users like reading great description on products.
-
                 </div>
 
                 <div className="LoginHeader">Description</div>
-                <textarea rows='10' maxLength='254' placeholder='Describe your item!' className="LoginInput PostItem__TextArea" onChange={(e) => props.setDescription(e.target.value)} />
+                <textarea 
+                rows='10' 
+                maxLength='254'
+                value={description} 
+                placeholder='Describe your item!' 
+                className="LoginInput PostItem__TextArea" 
+                onChange={(e) => dispatch({ type: 'setDescription', data: e.target.value })} 
+                />
 
             </div>
 
-            {/* Item Price + Discount */}
             <div className="LoginMain LoginMainNoMarg">
-
                 <div className="LoginHeader">Item Price</div>
                 <div className="LoginText">
-
-                    Define a price you would like you item to be charged out at on a per slot basis. Slots are 4 hours long.
-
+                    Define a price you would like your item to be charged out at on a per slot basis. Slots are 4 hours long.
                 </div>
 
-                <div className="LoginHeader">Price ($)</div>
-                <input type='number' min="1" step="any" placeholder='10' className="LoginInput" onBlur={(e) => props.setPrice(parseInt(e.target.value))}/>
+                <ValidationTextInput 
+                label="Price ($)"
+                onChange={(e) => dispatch({ type: 'setPrice', data: parseInt(e.target.value) })}
+                inputType='number'
+                placeholder="$20"
+                />
 
                 <div className="BecomeLenderFlex">
                         <div className="LoginHeader" style={{width: 'auto'}}>Off Peak Discount</div>
                         <div className="LenderSwitchInfoFlex">
-                        <LBSSwitch set={setIsDiscount} text='Yes'/>
+                            <LBSSwitch 
+                            onClick={() => setIsDiscount(!isDiscount)} 
+                            isChecked={isDiscount} 
+                            text='Yes'/>
                         </div>
                 </div>
                     <Fade in={isDiscount} timeout={300} mountOnEnter unmountOnExit>
                         <div>
-                        <div className="LoginText">
+                            <div className="LoginText">
 
-                            Give borrowers the ability to borrow an item at a cheaper price in off peak times. The off peak discount is a 5% discount by default.
+                                Give borrowers the ability to borrow an item at a cheaper price in off peak times. The off peak discount is a 5% discount by default.
 
-                        </div>
-                        <input type='number' min="1" step="any" placeholder='5% discount' className="LoginInput" onBlur={(e) => props.setDiscount(parseInt(e.target.value))} />
+                            </div>
+                            <ValidationTextInput 
+                            inputType="number"
+                            value={discount}
+                            onChange={(e) => dispatch({ type: 'setDiscount', data: parseInt(e.target.value)})}
+                            placeholder="10%"
+                            />
                         </div>
                     </Fade>
 
             </div>
 
-            {/* Item Delivery */}
             <div className="LoginMain LoginMainNoMarg">
 
                 <div className="LoginHeader">Item Delivery & Pickup</div>
                 <div className="LoginText">
-
                     Enter the price you would like to charge out pick up and delivery. If you don’t want to offer this service, leave this empty.
-
                 </div>
 
                 <div className="LoginHeader">Price ($)</div>
-                <input type='number' min="1" step="any" placeholder='' className="LoginInput" onChange={(e) => props.setDelivery(parseInt(e.target.value))}/>
-
-                <button className={`LoginFormButton ${!props.validated ? 'ButtonDisabled' : ''}`} disabled={!props.validated} onClick={() => props.handleNextPage('Item Location')}>Next</button>
-
+                <ValidationTextInput 
+                inputType="number"
+                value={delivery}
+                onChange={(e) => dispatch({ type: 'setDelivery', data: e.target.value })}
+                placeholder="$10"
+                />
+                <Button 
+                text="Next"
+                onClick={() => dispatch({ type: 'setCurrentPage', data: 'Item Location'})}
+                isDisabled={!description || !price }
+                />
             </div>
 
-        </>
+        </div>
 
     )
 }

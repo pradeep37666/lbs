@@ -9,7 +9,7 @@ import { ReactComponent as Logo } from '../../../assets/Logos/LogoRed.svg';
 import { useHistory } from 'react-router'
 import useGlobalState from '../../../util/useGlobalState'
 import getSuburb from '../../../util/getSuburb'
-import lenderUpgradeReducer from '../../../util/lenderUpgradeReducer'
+import lenderUpgradeReducer from '../../../util/reducers/lenderUpgradeReducer'
 
 const FormContext = createContext()
 

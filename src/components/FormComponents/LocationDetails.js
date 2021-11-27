@@ -9,7 +9,7 @@ export default function LocationDetails({ context }) {
     const { isLenderUpgrade, address } = state
 
     const user = useGlobalState().state.user
-    
+    console.log(user)
     return (
         <div className="RegistrationWrapper">
                 <div className="LoginMain">
@@ -21,7 +21,7 @@ export default function LocationDetails({ context }) {
                     { user ? (
                         <MapsAutocomplete 
                         setAddress={(address) => dispatch({ type: 'setAddress', data: address})} 
-                        defaultLocation={user.address} 
+                        defaultLocation={address} 
                         defaultLat={user.lat} 
                         defaultLng={user.lng}/> 
                     ) : (

@@ -3,7 +3,7 @@ import ValidationPopup from '../ValidationPopup/ValidationPopup'
 import ShowPasswordIcon from '../../assets/Icons/ShowPasswordIcon'
 import './ValidationTextInput.css'
 
-export default function ValidationTextInput({ onChange, errorMessage, label, placeholder, passwordInput, errorHeader, value, inLineError }) {
+export default function ValidationTextInput({ onChange, errorMessage, label, placeholder, passwordInput, errorHeader, value, inLineError, inputType }) {
     const [isInputHidden, setIsInputHidden] = useState(true)
 
     return (
@@ -29,6 +29,8 @@ export default function ValidationTextInput({ onChange, errorMessage, label, pla
                         className="ValidationInput"
                         onChange={onChange}
                         value={value}
+                        type={inputType}
+                        step="1"
                         />
 
                     )}

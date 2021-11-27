@@ -136,7 +136,7 @@ export default function BankDetails({ context }) {
                 
 
             { isLenderUpgrade &&
-            <div className="LoginMain">
+            <div className="LoginMain" style={ !user ? { marginTop: 0 } : null}>
 
                 <div className="LoginHeader">Date of Birth</div> 
                 <ThemeProvider theme={datePickerTheme}>

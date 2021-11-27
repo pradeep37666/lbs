@@ -1,4 +1,4 @@
-import React, { useState, useEffect} from 'react'
+import React, { useState, useEffect, createContext, useReducer} from 'react'
 import './postitem.css'
 import PageWrapper from '../../components/pageWrapper/pageWrapper'
 import Banner from '../../components/bannerText/bannerText'
@@ -10,43 +10,35 @@ import Availability from './PostItemContent/Availability'
 import Complete from './PostItemContent/Complete'
 import useGlobalState from '../../util/useGlobalState'
 import Instance from '../../util/axios'
-import { useHistory } from 'react-router'
 import getSuburb from '../../util/getSuburb'
+import postItemReducer from '../../util/reducers/postItemReducer'
+
+const FormContext = createContext()
 
 export default function PostItem() {
-    const { state } = useGlobalState()
-    const { user } = state
-    const history = useHistory()
+    const [isCreateItemLoading, setIsCreateItemLoading] = useState(false)
+    const { user } = useGlobalState().state
+
+    const [state, dispatch] = useReducer(postItemReducer, { 
+        currentPage: 'Basic Details',
+        availability: user.available.split('').map(str => parseInt(str)),
+        address: user.address,
+        pictures: []
     
-    const [page, setPage] = useState('Basic Details') 
-    const [validated, setValidated] = useState(false)
+    })
 
-    const [title, setTitle] = useState('')
-    const [category, setCategory] = useState('Automotive')
-
-    const [pictures, setPictures] = useState([])
-
-    const [description, setDescription] = useState('')
-    const [price, setPrice] = useState('')
-    const [discount, setDiscount] = useState(0)
-    const [delivery, setDelivery] = useState(0)
-
-    const [address, setAddress] = useState(user.address)
-
-    const [availability, setAvailability] = useState(user.available)
+    const { currentPage, address, availability, title, category, pictures, description, price, discount, delivery } = state
 
     const [itemID, setItemID] = useState(null)
 
-    const handleNextPage = (newPage) => {
-        setPage(newPage)
+    useEffect(() => {
         window.scrollTo(0, 0)
-    }
+    },[currentPage])
 
-    const createItem = async () => {
-        // api call to post the images to the server, should return a key for each image and then we'll use that key in the items/save api
-        let suburb
-        address.address_components ? suburb = getSuburb(address.address_components) : suburb = user.suburb
-
+    const getItemDetails = () => {
+        // let suburb
+        // address.address_components ? suburb = getSuburb(address.address_components) : suburb = user.suburb
+        const suburb = address.address_components ? getSuburb(address.address_components) : user.suburb
         const itemDetails = {
             title: title,
             category: category,
@@ -54,13 +46,19 @@ export default function PostItem() {
             description: description,
             price: price,
             deliveryPrice: delivery,
-            discount: discount,
-            available: availability,
+            discount: discount ? discount : 5,
+            available: availability.join(''),
             lat: address.lat ? address.lat : user.lat,
             lng: address.lng ? address.lng : user.lng,
             address: address.formatted_address ? address.formatted_address : user.address,
             suburb: suburb
         }
+        return itemDetails
+    }
+
+    const createItem = async () => {
+       
+        const itemDetails = getItemDetails()
         console.log(itemDetails)
         const formData = new FormData()
         for (let key in itemDetails) {
@@ -70,28 +68,28 @@ export default function PostItem() {
             }
             formData.append(key, itemDetails[key])
         }
-        
+        setIsCreateItemLoading(true)
         try {
-            const response = await Instance.post('/items/save', formData)
-            console.log(response.data)
-            if (response.status === 201) {
-                uploadImages()
-                setItemID(response.data.i_id)
-            } else {
-                alert("an error occurred creating your item, please try again")
-                // history.go(0)
-            }
+            const { data, status } = await Instance.post('/items/save', formData)
+            console.log(data, status)
+
+            uploadImages()
+            setItemID(data.i_id)
+            dispatch({ type: 'setCurrentPage', data: 'Complete!'})
+
         } catch (e) {
+            alert("an error occurred creating your item, please try again")
             console.log(e.response)
+        } finally{
+            setIsCreateItemLoading(false)
         }
     }
 
+
+
     const uploadImages = async () => {        
-        //console.log('posting', file)
         const formData = new FormData()
         pictures.forEach((item) => formData.append('files', item.raw))
-        
-        // console.log('files',files)
         try{
             const res = await Instance.post('/file-upload/uploadManyToS3', formData)
             console.log(res)
@@ -100,42 +98,21 @@ export default function PostItem() {
         }
     }
 
-    const renderSwitch = () => {
-        switch (page) {
+    const renderCurrentPage = () => {
+        switch (currentPage) {
             case 'Basic Details':
-                return <BasicDetails 
-                validated={validated}
-                handleNextPage={handleNextPage}
-                setTitle={setTitle}
-                setCategory={setCategory} />
+                return <BasicDetails context={FormContext} />
             case 'Item Pictures':
-                return <ItemPictures 
-                validated={validated}
-                handleNextPage={handleNextPage}
-                setPictures={setPictures}
-                pictures={pictures}
-                />
+                return <ItemPictures context={FormContext} />
             case 'Advanced Details':
-                return <AdvancedDetails 
-                validated={validated}
-                handleNextPage={handleNextPage}
-                setDescription={setDescription}
-                setPrice={setPrice}
-                setDiscount={setDiscount}
-                setDelivery={setDelivery}                
-                />
+                return <AdvancedDetails context={FormContext} />
             case 'Item Location':
-                return <LocationDetails 
-                validated={validated}
-                handleNextPage={handleNextPage}
-                setAddress={setAddress} 
-                />
+                return <LocationDetails context={FormContext} />
             case 'Availability':
                 return <Availability 
-                validated={validated}
-                handleNextPage={handleNextPage}
-                setAvailability={setAvailability}
+                context={FormContext}
                 createItem={createItem}
+                isCreateItemLoading={isCreateItemLoading}
                 />
             case 'Complete!':
                 return <Complete 
@@ -147,55 +124,16 @@ export default function PostItem() {
                 delivery={delivery}
                 itemID={itemID}             
                 />
-            default:
-                return <BasicDetails 
-                validated={validated}
-                handleNextPage={handleNextPage}
-                setTitle={setTitle}
-                setCategory={setCategory} />
         }
     }
 
-    useEffect(() => {
-        switch (page) {
-            case 'Basic Details':
-                if (title && category) {
-                    setValidated(true)
-                } else setValidated(false)
-                break
-            case 'Item Pictures':
-                if (pictures.length > 0) {
-                    setValidated(true)
-                } else setValidated(false)
-                break
-            case 'Advanced Details':
-                if (description && price) {
-                    setValidated(true)
-                } else setValidated(false)
-                break
-            case 'Item Location':
-                if (address) {
-                    setValidated(true)
-                } else setValidated(false)
-                break
-            case 'Availability':
-                if (availability !== '00000000000000') {
-                    setValidated(true)
-                    console.log(title, category, description, price, delivery, discount, address, availability)
-                } else setValidated(false)
-                break
-            case 'Complete!':
-                break
-            default:
-                return '';
-        }
-    }, [page, title, category, pictures, description, price, delivery, discount, address, availability])
 
     return (
-        <PageWrapper>
-            <Banner textBold='Post Item' textNormal={page} />
-
-            {renderSwitch()}
-        </PageWrapper>
+        <FormContext.Provider value={{ state, dispatch }}>
+            <PageWrapper>
+                <Banner textBold='Post Item' textNormal={currentPage} />
+                {renderCurrentPage()}
+            </PageWrapper>
+        </FormContext.Provider>
     )
 }

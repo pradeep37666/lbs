@@ -6,7 +6,7 @@ import SearchPage from './pages/search/search.js';
 import Login from './pages/login/Login'
 import RegisterPage from './pages/register/Register.js';
 import AccountPage from './pages/account/account.js';
-import PostItem from './pages/postitem/postitem';
+import PostItem from './pages/postitem/PostItem';
 import TradesPage from './pages/trades/trades.js';
 import Messages from './pages/messages/Messages.js'
 import YourshedPage from './pages/yourshed/yourshed.js';
@@ -20,7 +20,7 @@ import {
   Route,
   Redirect
 } from "react-router-dom";
-import reducer from './util/reducer'
+import reducer from './util/reducers/globalStateReducer'
 import { CometChat } from '@cometchat-pro/chat'
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
