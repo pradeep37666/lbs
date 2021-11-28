@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { Suspense, useEffect, useState } from 'react'
 import './Trades.css'
 import PageWrapper from '../../components/pageWrapper/pageWrapper'
 import UserShedNav from '../../components/UserShedNav/UserShedNav'
@@ -20,7 +20,7 @@ export default function Trades() {
     const { state } = useGlobalState()
     const { user } = state
     const history = useHistory()
-    const [reportModalVisible, setReportModalVisible] = useState(true)
+    const [reportModalVisible, setReportModalVisible] = useState(false)
     const [reviewModalVisible, setReviewModalVisible] = useState(false)
     const [accountContent, setAccountContent] = useState('Trades')
     const [selectedBooking, setSelectedBooking] = useState(null)
@@ -91,8 +91,7 @@ export default function Trades() {
                 />  
             }
             <ReviewLender 
-            // open={reviewModalVisible && !isLender}
-            open={reviewModalVisible}
+            open={reviewModalVisible && !isLender}
             setReviewModalVisible={setReviewModalVisible}
             booking={selectedBooking}/>
             <ReviewBorrower 
@@ -127,6 +126,7 @@ export default function Trades() {
                         )
                         
                     )}
+                    <Suspense />
                 </div>
                 { isMobile ? (
                     <SwipeableDrawer anchor='right' open={selectedBooking} onClose={() => setSelectedBooking(null)}>

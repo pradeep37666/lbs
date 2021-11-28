@@ -14,21 +14,24 @@ import lenderUpgradeReducer from '../../../util/reducers/lenderUpgradeReducer'
 const FormContext = createContext()
 
 export default function UpgradeLender() {
-
+    const [isUpgradeLoading, setIsUpgradeLoading] = useState(false)
     const [state, dispatch] = useReducer(lenderUpgradeReducer, { 
         isLenderUpgrade: true, 
         currentPage: 'Bank Details',
         dateOfBirth: new Date(1990, 1, 1), 
         availability: new Array(14).fill(0)
     })
-
-    const { currentPage, address, accountNumber, BSB, dateOfBirth, availability } = state
-
     const globalDispatch = useGlobalState().dispatch
     const globalState = useGlobalState().state
     const { user } = globalState
-
     const history = useHistory()
+    const { currentPage, address, accountNumber, BSB, dateOfBirth, availability } = state
+
+    useEffect(() => {
+        window.scrollTo(0,0)
+    }, [currentPage]) 
+
+    
    
     const getComplete = () => {
         return (
@@ -48,6 +51,7 @@ export default function UpgradeLender() {
     }
 
     const submitUpgrade = async () => {
+        setIsUpgradeLoading(true)
         await createStripeAccount()
         const suburb =  getSuburb(address.address_components) 
         const userData = {
@@ -61,9 +65,11 @@ export default function UpgradeLender() {
 
         try{
             const { data, status } = await Instance.patch('user/update', userData)
+            setIsUpgradeLoading(false)
             globalDispatch({ type: 'setUser', data })
 
         } catch(err){
+            setIsUpgradeLoading(false)
             console.log('error', err)
         }
     }
@@ -106,6 +112,7 @@ export default function UpgradeLender() {
                 return <Availability
                     context={FormContext}
                     submitUpgrade={submitUpgrade}
+                    isUpgradeLoading={isUpgradeLoading}
                 />
             case 'Complete!':
                 return getComplete()

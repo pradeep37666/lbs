@@ -38,6 +38,7 @@ export default function PostItem() {
     const getItemDetails = () => {
         // let suburb
         // address.address_components ? suburb = getSuburb(address.address_components) : suburb = user.suburb
+        console.log('delivery', delivery)
         const suburb = address.address_components ? getSuburb(address.address_components) : user.suburb
         const itemDetails = {
             title: title,
@@ -45,7 +46,7 @@ export default function PostItem() {
             files: pictures,
             description: description,
             price: price,
-            deliveryPrice: delivery,
+            deliveryPrice: delivery ? delivery : 0,
             discount: discount ? discount : 5,
             available: availability.join(''),
             lat: address.lat ? address.lat : user.lat,

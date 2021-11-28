@@ -193,7 +193,7 @@ export default function EditPaymentDetails() {
                     
                 )}
             </div>
-            <StripeAccountDetails />
+            { user.isLender && <StripeAccountDetails />}
         </>
     )
 }

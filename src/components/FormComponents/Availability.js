@@ -4,7 +4,7 @@ import { ReactComponent as Logo } from "./../../assets/Logos/LogoRed.svg";
 import Button from "../Button/Button";
 import useGlobalState from "../../util/useGlobalState";
 
-export default function Availability({ context, style,  submitUpgrade, }) {
+export default function Availability({ context, style,  submitUpgrade, isUpgradeLoading }) {
   const { state, dispatch } = useContext(context)
   const { isLenderUpgrade, availability } = state
   const { user } = useGlobalState().state
@@ -24,12 +24,13 @@ export default function Availability({ context, style,  submitUpgrade, }) {
 
         <ProductSlots 
         availability={availability}
-        setAvailability={(newAvailability) => dispatch({ type: 'setAvailability', data: newAvailability })}
+        onAvailabilityChange={(newAvailability) => dispatch({ type: 'setAvailability', data: newAvailability })}
         />
         <div className="SkipNextButtonFlex" style={ style ? { justifyContent: 'center'} : null }>
           <Button 
           isDisabled={!availability.includes(1)}
           text="Next"
+          isLoading={isUpgradeLoading}
           onClick={() => {
             if ( user ) {
               submitUpgrade();

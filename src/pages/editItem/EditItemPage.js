@@ -13,12 +13,8 @@ import { makeStyles } from "@material-ui/styles";
 import getImage from "../../util/getImage.js";
 import LBSSwitch from "../../components/LBSSwitch/LBSSwitch";
 import { Fade } from "@material-ui/core";
-import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import DialogContentText from "@material-ui/core/DialogContentText";
 import Dialog from "@material-ui/core/Dialog";
-import Button from "@material-ui/core/Button";
 import Availability from "../../components/FormComponents/Availability";
 import { useHistory } from "react-router";
 import { CircularProgress } from "@material-ui/core";
@@ -46,8 +42,6 @@ function EditItemPage(props) {
   const [suburb, setSuburb] = useState();
 
   const [isDiscount, setIsDiscount] = useState(false);
-
-  //--------modal for displaying the edit button dialogue-------//
   const [open, setOpen] = useState(false);
   const [editAvailabilityOpen, setEditAvailabilityOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false)
@@ -320,7 +314,7 @@ function EditItemPage(props) {
                     Off Peak Discount
                   </div>
                   <div className="LenderSwitchInfoFlex">
-                    <LBSSwitch set={setIsDiscount} text="Yes" />
+                    <LBSSwitch onClick={() => setIsDiscount(!isDiscount)} isChecked={isDiscount} text="Yes" />
                   </div>
                 </div>
                 <Fade in={isDiscount} timeout={300} mountOnEnter unmountOnExit>

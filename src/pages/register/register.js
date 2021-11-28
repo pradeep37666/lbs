@@ -41,6 +41,10 @@ export default function Register() {
 
     const history = useHistory()
 
+    useEffect(() => {
+        window.scrollTo(0, 0)
+    }, [currentPage])
+
     const getUserDetails = () => {
         const userDetails = {
             email: email,
@@ -77,6 +81,7 @@ export default function Register() {
     }
 
     const registerUser = async () => {
+        setIsRegisterLoading(true)
         await setupCometChat()
         const userDetails = getUserDetails()
         console.log('address', address)
@@ -94,10 +99,11 @@ export default function Register() {
                 localStorage.setItem('token', data.token.accessToken)
                 await saveCard()
                 await registerCometChat(data.user)
+                setIsRegisterLoading(false)
                 dispatch({ type: 'setCurrentPage', data: 'Complete!'})
             }
         } catch(e) {
-            console.log(e)
+            setIsRegisterLoading(false)
             console.log(e.response)
             // history.push({pathname: '/login'})
             // alert("an error occurred during registration, please try again")

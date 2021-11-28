@@ -7,7 +7,7 @@ import Button from '../Button/Button'
 export default function LocationDetails({ context }) {
     const { state, dispatch } = useContext(context)
     const { isLenderUpgrade, address } = state
-
+    console.log(address)
     const user = useGlobalState().state.user
     console.log(user)
     return (
@@ -30,7 +30,7 @@ export default function LocationDetails({ context }) {
                     <Button 
                     
                     text="Next"
-                    isDisabled={!address}
+                    isDisabled={address?.address_components.length !== 7}
                     onClick={() => {
                         dispatch({ type: 'setCurrentPage', data: 'Availability' })
                     }}/>

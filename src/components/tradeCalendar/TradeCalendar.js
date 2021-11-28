@@ -13,7 +13,7 @@ export default function TradeCalendar({ borrowerBookingItems, lenderBookingItems
     const [currentMonth, setCurrentMonth] = useState()
     const [currentYear, setCurrentYear] = useState()
     const [totalDates, setTotalDates] = useState()
-    
+    console.log('render')
     useEffect(() => {
         const today = new Date()
         const currentDate = today.getDate()
@@ -31,7 +31,8 @@ export default function TradeCalendar({ borrowerBookingItems, lenderBookingItems
         if(currentDate < 7) return
         console.log('b')
         tradeCalendarRef.current.scrollTo((((currentDate) * 2) - 8) * (isMobile ? 25 : 50), 0)
-    },[tradeCalendarRef.current])
+    },[currentYear])
+    // },[tradeCalendarRef.current, currentYear])
 
    
     function getDaysInMonth(month, year) {

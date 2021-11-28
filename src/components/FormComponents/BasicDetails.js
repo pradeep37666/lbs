@@ -16,7 +16,6 @@ export default function BasicDetails({ context }) {
     const [emailTakenError, setEmailTakenError] = useState()
     const [phoneTakenError, setPhoneTakenError] = useState()
     const { firstName, lastName, email, phoneNumber, password, confirmPassword, image, isLenderUpgrade } = state
-    console.log('state', state)
 
     useEffect(() => {
         if(Object.keys(errorMessages).length > 0){
@@ -58,7 +57,7 @@ export default function BasicDetails({ context }) {
         try{
             // const { data, status } = await Instance.get(`/auth/getVerificationCodeToMobile?mobile=${phoneNumber}`)
             // dispatch({ type: 'setCurrentPage', data: 'Verification' })
-            dispatch({ type: 'setCurrentPage', data: 'Bank Details' })
+            dispatch({ type: 'setCurrentPage', data: 'Bank Details'})
         } catch(err) {
             console.log(err)
         }

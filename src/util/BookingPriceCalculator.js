@@ -99,7 +99,6 @@ export default class BookingPriceCalculator{
         if(this.end.timeslot === 'morning' && this.isWeekday(this.end.dateObj)){
             discountTimeSlots -= 1
         }
-        console.log('discount slots', discountTimeSlots)
         return discountTimeSlots
     }
 
