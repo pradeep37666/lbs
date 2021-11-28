@@ -37,6 +37,7 @@ export default function Application() {
         })
     }, [confirmedStart, confirmedEnd])
     console.log(bookingPriceCalculator)
+    
     useEffect(() => {
         const getItem = async () => {
             const { data, status } = await instance.get(`/items/findByIid?i_id=${itemId}`)

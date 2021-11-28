@@ -5,6 +5,8 @@ import { ApplicationContext } from '../../pages/application/Application'
 import getDateSuffix from '../../util/getDateSuffix'
 import useGlobalState from '../../util/useGlobalState'
 import './ApplicationFooter.css'
+import Button from '../Button/Button'
+import { pick } from 'query-string'
 
 export default function ApplicationFooter() {
     const globalState = useGlobalState().state
@@ -34,7 +36,7 @@ export default function ApplicationFooter() {
         if(page === 'ItemOverview') route = 'ItemAvailability'
         handleNextPage(route)
     }
-
+    console.log(deliverySelected, pickupSelected)
     return (
         <div className="ApplicationFooter">
          <div className="ApplicationFooterContainer">
@@ -70,20 +72,18 @@ export default function ApplicationFooter() {
                 </div>
             </div>
             <div className="ApplicationFooterButtonContainer">
-                <div 
-                onClick={clearDates} 
-                className={`ApplicationFooterClearButton
-                ${page === 'ItemAvailability' ? '' : 'ApplicationFooterClearRemoved'}`}
-                >
-                    <h4>Clear Dates</h4>
-                </div>
-                <div 
-                onClick={handleClick} 
-                className={`ApplicationFooterNextButton
-                ${page === 'ItemAvailability' ? '' : 'ApplicationFooterLargeNextButton'}`}
-                >
-                    <h4>Next</h4>
-                </div>  
+                { page === 'ItemAvailability' &&
+                <Button 
+                text="Clear Dates"
+                onClick={clearDates}
+                invertedColors
+                style={{ marginRight: '0.5rem'}}
+                />}
+                <Button 
+                onClick={handleClick}
+                text="Next"
+                isDisabled={page === 'ItemOptions' && (!address && (deliverySelected || pickupSelected))}
+                />
             </div>
             
             </div>

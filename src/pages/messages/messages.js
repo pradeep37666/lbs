@@ -11,7 +11,7 @@ import Instance from '../../util/axios'
 import { isMobile } from 'react-device-detect'
 import NoContent from '../../components/NoContent/NoContent'
 import { useHistory } from 'react-router'
-import ReviewLender from '../../components/reviewLender/ReviewLender'
+import ReviewLender from '../../components/modals/ReviewLender/ReviewLender'
 
 export default function Messages() {
     const { state } = useGlobalState()

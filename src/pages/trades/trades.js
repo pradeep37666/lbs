@@ -7,14 +7,14 @@ import TradeCalendar from '../../components/tradeCalendar/TradeCalendar'
 import TradeSidebar from '../../components/TradeSidebar/TradeSidebar'
 import { isMobile } from 'react-device-detect'
 import { CircularProgress, SwipeableDrawer } from '@material-ui/core'
-import TradeFailed from '../../components/TradeFailed/TradeFailed'
+import TradeFailed from '../../components/modals/TradeFailed/TradeFailed'
 import userEvent from '@testing-library/user-event'
 import useGlobalState from '../../util/useGlobalState'
 
 import ReviewBorrower from '../../components/ReviewBorrower/ReviewBorrower'
 import { useHistory } from 'react-router'
 import NoContent from '../../components/NoContent/NoContent'
-import ReviewLender from '../../components/reviewLender/ReviewLender'
+import ReviewLender from '../../components/modals/ReviewLender/ReviewLender'
 
 export default function Trades() {
     const { state } = useGlobalState()

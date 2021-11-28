@@ -88,8 +88,6 @@ export default function CalendarRow({ days, isCurrentMonth }) {
         const startIndex = getDateIndex(confirmedStart.dateObj)
         console.log(confirmedStart.dateObj, startIndex * 2)
         const endIndex = getDateIndex(selected)
-        // console.log("morning start" ,confirmedStart?.am, )
-        // console.log("morning end", confirmedEnd?.am )
         const timeSlot = yearAvailability.slice((startIndex * 2) + (confirmedStart?.am ? 1 : 2), (endIndex * 2) + (am ? 2 : 3))
         console.log('timeslot', timeSlot)
         if(timeSlot.indexOf('0') > -1) { 

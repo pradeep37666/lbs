@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import PageWrapper from '../../components/pageWrapper/pageWrapper.js';
 import ReviewCard from '../../components/reviewCard/reviewCard.js';
 import ItemImageModal from '../../components/itemImagesModal/imagesModal.js';
-import ItemReviewModal from '../../components/reviewModal/reviewModal.js';
+import ItemReviewModal from '../../components/modals/ReviewModal/ReviewModal.js';
 import './item.css';
 import Location from './../../assets/Icons/LocationIcon.svg';
 import Delivery from './../../assets/Icons/DeliveryIcon.svg';
@@ -214,7 +214,7 @@ export default function Item() {
         console.log(JSON.stringify(item, null,'\t'))
     }
     //-------------------------------------------------//
-
+    console.log('item owner', itemOwner)
     return (
         <PageWrapper>
             {ImageModal && <ItemImageModal setModal={setImageModal} images={itemPictures} modal={ImageModal} /> }
@@ -324,7 +324,7 @@ export default function Item() {
                             <div className="RatingLenderFlex">
                                 <Avatar src={handleItemImage()} alt="" className="ProfileIcon" />
                                 <div>
-                                    <div className="RatingHeader">{isUserItem ? user.fullName : itemOwner ? itemOwner.fullName : ''}</div>
+                                    <div className="RatingHeader">{isUserItem ? `${user.firstName} ${user.lastName}` : itemOwner ? `${itemOwner.firstName} ${itemOwner.lastName}` : ''}</div>
                                     <div className="RatingStarFlex">{isUserItem ? user.lender_rating : itemOwner && itemOwner.lender_rating}/5 <StarFilled fill='#e9d8b4' className="StarIconRating" /></div>
 
                                 </div>

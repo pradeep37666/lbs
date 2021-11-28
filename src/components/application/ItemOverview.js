@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { ApplicationContext } from '../../pages/application/Application'
 import {ReactComponent as StarFilled} from '../../assets/Icons/StarFilled.svg'
 import './ItemOverview.css'
@@ -10,8 +10,10 @@ import { useHistory } from 'react-router'
 import { CometChat } from '@cometchat-pro/chat'
 import useGlobalState from '../../util/useGlobalState'
 import axios from 'axios'
+import Button from '../Button/Button'
 
 export default function ItemOverview() {
+    const [isLoading, setIsLoading] = useState(false)
     const { state, dispatch } = useContext(ApplicationContext)
     const globalState = useGlobalState()
     const user  = globalState.state.user
@@ -56,12 +58,15 @@ export default function ItemOverview() {
             deliveryOption = 'none'
         }
         const startIndex = (getDateIndex(confirmedStart.dateObj) * 2) + (confirmedStart.timeslot === 'morning' ? 1 : 2)
-        const endIndex = (getDateIndex(confirmedEnd.dateObj) * 2) + (confirmedEnd.timeslot === 'morning' ? 1 : 2)
+        let endIndex = (getDateIndex(confirmedEnd.dateObj) * 2) + (confirmedEnd.timeslot === 'morning' ? 1 : 2)
+        if(endIndex < startIndex){
+            endIndex += 730
+        }
         confirmedStart.dateObj.setHours(confirmedStart?.am ? 6 : 12)
         
         const price = bookingPriceCalculator.getTotalPrice()
 
-
+        setIsLoading(true)
         try{
             await instance.post(`booking/save/${confirmedStart.dateObj.getTime()}`, {
                 i_id: item.i_id,
@@ -73,12 +78,14 @@ export default function ItemOverview() {
                 address: address ? address : user.address,
                 price
             })
-            sendEnquiry(item)
+            await sendEnquiry(item)
+            setIsLoading(false)
             history.push({ 
                 pathname: `/item/${item.i_id}`, 
                 state: { bookingCreated: true, price }
             })
         } catch(e) {
+            setIsLoading(false)
             console.log(e.response)
         }
         
@@ -206,9 +213,12 @@ export default function ItemOverview() {
                 </div>
                 
             </div>
-            <div className="ItemOverviewSendButton" onClick={saveBooking}>
-                <span className="ItemOverviewSendText">Send</span>
-            </div>
+            <Button 
+            onClick={saveBooking}
+            text="Send"
+            isLoading={isLoading}
+            style={{ width: '75%', alignSelf: 'center', marginTop: '1rem'}}
+            />
                 
             
             </div>
