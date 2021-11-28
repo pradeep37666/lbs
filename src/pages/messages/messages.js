@@ -93,7 +93,6 @@ export default function Messages() {
             )
         })
     }
-    // return <ReviewLender />
     return (
         <PageWrapper>
             <ClickAwayListener onClickAway={() => setPopupOpen(false)}>

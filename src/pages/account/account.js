@@ -1,25 +1,21 @@
 import React, { useState, useEffect } from 'react'
-import './account.css'
+import './Account.css'
 import PageWrapper from '../../components/pageWrapper/pageWrapper'
 import UserShedNav from '../../components/UserShedNav/UserShedNav'
 import AccountSettings from './AccountSettingsContent/AccountSettings'
 import TermsConditions from './TermsConditions/TermsConditions'
-import Availability from './Availability/Availability'
-import Instance from '../../util/axios'
-import useGlobalState from '../../util/useGlobalState'
+import AccountAvailability from './AccountAailability/AccountAvailability'
 import { isMobile } from 'react-device-detect'
 
 export default function Account() {
-    const { state, dispatch } = useGlobalState()
-    const { user } = state
     const [accountContent, setAccountContent] = useState('Account')
 
-    const getAccountSettingsContent = () => {
+    const renderAccountSettingsContent = () => {
         switch (accountContent) {
             case 'Account':
                 return <AccountSettings />
             case 'Availability':
-                return <Availability return={returnToAccountSettings} />
+                return <AccountAvailability setAccountContent={setAccountContent} />
             case 'Terms & Conditions':
                 return <TermsConditions />
             case 'Support':
@@ -27,10 +23,6 @@ export default function Account() {
             default:
                 return 'account page'
         }
-    }
-
-    const returnToAccountSettings = () => {
-        setAccountContent('Account')
     }
 
     return (
@@ -43,13 +35,8 @@ export default function Account() {
                         {accountContent}
                     </div>
 
-                    {getAccountSettingsContent()}
-
+                    {renderAccountSettingsContent()}
                 </div>
-
-
-
-
 
             </div>
         </PageWrapper>

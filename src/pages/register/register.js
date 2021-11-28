@@ -124,7 +124,7 @@ export default function Register() {
       }
     const registerCometChat = async (userObj) => {
         const newUser = new CometChat.User(userObj.id)
-        newUser.setName(`${userObj.fullName} ${userObj.lastName}` )
+        newUser.setName(`${userObj.firstName} ${userObj.lastName}` )
         try{
             await CometChat.createUser(newUser, process.env.REACT_APP_CHAT_AUTH_KEY)
             console.log('successfully registered to comet chat', newUser)

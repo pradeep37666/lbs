@@ -1,13 +1,13 @@
 .LenderSwitchLabel {
-    position: absolute;
-    font-size: 12px;
-    color: #FFF;
-    top: 5px;
-    left: -5px;
-    user-select: none;
-    pointer-events: none;
+  position: absolute;
+  font-size: 12px;
+  color: #fff;
+  top: 5px;
+  left: -5px;
+  user-select: none;
+  pointer-events: none;
 }
 
 .SwitchContainer {
-    position: relative;
+  position: relative;
 }

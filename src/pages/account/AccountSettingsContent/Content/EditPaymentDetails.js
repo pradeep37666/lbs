@@ -37,6 +37,7 @@ export default function EditPaymentDetails() {
     const getSavedCard = async () => {
         try{
             const { data, status } = await Instance.get('/stripe/getCreditCards')
+            console.log('got card', data)
             const userCard = data.data[0]
             setUserCard(userCard)
         } catch(err){

@@ -2,14 +2,14 @@ import React, { useReducer, useEffect, useState } from 'react';
 import './App.css';
 import Home from './pages/home/home.js';
 import ItemPage from './pages/item/item.js';
-import SearchPage from './pages/search/search.js';
+import Search from './pages/Search/Search';
 import Login from './pages/login/Login'
-import RegisterPage from './pages/register/Register.js';
-import AccountPage from './pages/account/account.js';
+import RegisterPage from './pages/Register/Register.js';
+import AccountPage from './pages/account/Account.js';
 import PostItem from './pages/postitem/PostItem';
-import TradesPage from './pages/trades/trades.js';
+import TradesPage from './pages/Trades/Trades.js';
 import Messages from './pages/messages/Messages.js'
-import YourshedPage from './pages/yourshed/yourshed.js';
+import YourshedPage from './pages/YourShed/YourShed.js';
 import FavouritesPage from './pages/favourites/favourites.js';
 import UpgradeLender from './pages/account/UpgradeLender/UpgradeLender';
 import UpdatePassword from './pages/account/UpdatePassword/UpdatePassword';
@@ -124,7 +124,7 @@ function App() {
           <ScrollToTop>
             <Route exact path="/" component={Home} />
             <Route exact path="/item/:itemId" component={ItemPage} />
-            <Route exact path="/search/:searchParams?" component={SearchPage} />
+            <Route exact path="/search/:searchParams?" component={Search} />
             <Route exact path="/forgotpassword" component={ForgotPassword} />
             <AuthRoute exact path="/item/edit/:itemId" component={EditItemPage} />
             <AuthRoute path="/user/trades" component={TradesPage} />

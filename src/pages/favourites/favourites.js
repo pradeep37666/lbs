@@ -3,7 +3,7 @@ import instance from '../../util/axios';
 import './favourites.css'
 import PageWrapper from '../../components/pageWrapper/pageWrapper'
 import UserShedNav from '../../components/UserShedNav/UserShedNav'
-import ItemCard from '../../components/itemCard/itemCard';
+import ItemCard from '../../components/ItemCard/ItemCard';
 import { isMobile } from 'react-device-detect';
 import { CircularProgress } from '@material-ui/core';
 import NoContent from '../../components/NoContent/NoContent';

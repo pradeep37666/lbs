@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import './yourshed.css'
-import '../../components/itemCard/itemCard.css';
+import './YourShed.css'
 import { Link } from 'react-router-dom'
 import PageWrapper from '../../components/pageWrapper/pageWrapper'
 import UserShedNav from '../../components/UserShedNav/UserShedNav'
 import instance from '../../util/axios';
-import ItemCard from '../../components/itemCard/itemCard';
+import ItemCard from '../../components/ItemCard/ItemCard';
 import { isMobile } from 'react-device-detect';
 import useGlobalState from '../../util/useGlobalState';
 
@@ -15,6 +14,7 @@ export default function Yourshed() {
     const [accountContent, setAccountContent] = useState('Your Shed')
     const [items, setItems] = useState([]);
     const [loading, setLoading] = useState(true);
+
 useEffect(()=>{
     instance.get(`/items/findByUid?u_id=${user.id}`)
       .then(({data} ) => {

@@ -6,7 +6,6 @@ import compareDates from '../../util/compareDates'
 import ValidationPopup from '../ValidationPopup/ValidationPopup'
 import '../../components/FormComponents/BasicDetails'
 import getDateIndex from '../../util/getDateIndex'
-import itemCard from '../itemCard/itemCard'
 
 export default function CalendarRow({ days, isCurrentMonth }) {
     const { state, dispatch } = useContext(ApplicationContext)
