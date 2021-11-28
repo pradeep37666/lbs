@@ -7,6 +7,7 @@ import useGlobalState from '../../util/useGlobalState'
 import './ApplicationFooter.css'
 import Button from '../Button/Button'
 import { pick } from 'query-string'
+import BookingDatesPanel from '../BookingDatesPanel/BookingDatesPanel'
 
 export default function ApplicationFooter() {
     const globalState = useGlobalState().state
@@ -44,33 +45,11 @@ export default function ApplicationFooter() {
                 <span>Total Price</span>
                 <span className="ApplicatonFooterPrice">${bookingPriceCalculator ? bookingPriceCalculator.getTotalPrice() : null }</span>
             </div>
-            <div className="ApplicationFooterDetailsContainer">
-                <div className="ApplicationFooterDetails">
-                    <span className="ApplicationFooterDetailsHeader">Collect</span>
-                    <div>
-                        <span className="ApplicationFooterTime">{confirmedStart?.am ? '8:00am' : '1:00pm'} </span>
-                        <span className="ApplicationFooterDay">{dayArray[confirmedStart.dateObj.getDay()]}</span>
-                    </div>
-                    <div>
-                        <span>{ getDateSuffix(confirmedStart.dateObj)} </span> 
-                        <span>{ monthArray[confirmedStart.dateObj.getMonth()]}</span>
-                    </div>
-                </div>
-                <div className="ApplicationFooterArrowContainer">
-                    <Arrow />
-                </div>
-                <div className="ApplicationFooterDetails">
-                    <span className="ApplicationFooterDetailsHeader">Return</span>
-                    <div>
-                        <span className="ApplicationFooterTime">{confirmedEnd?.am ? '12:00pm' : '5:00pm'} </span>
-                        <span className="ApplicationFooterDay">{dayArray[confirmedEnd.dateObj.getDay()]}</span>
-                    </div>
-                    <div>
-                        <span>{getDateSuffix(confirmedEnd.dateObj)} </span>
-                        <span>{ monthArray[confirmedEnd.dateObj.getMonth()]}</span>
-                    </div>
-                </div>
-            </div>
+           <BookingDatesPanel 
+           startDate={confirmedStart}
+           endDate={confirmedEnd}
+           
+           />
             <div className="ApplicationFooterButtonContainer">
                 { page === 'ItemAvailability' &&
                 <Button 

@@ -11,6 +11,8 @@ import useGlobalState from '../../util/useGlobalState'
 import RatingFiller from '../ratingFiller/ratingFiller'
 import MissingProfile from '../../assets/Icons/MissingProfileIcon.png'
 import TradeCalendarStatusPanel from '../tradeCalendar/tradeCalendarStatusPanel/TradeCalendarStatusPanel'
+import BookingPriceCalculator from '../../util/BookingPriceCalculator'
+import BookingDatesPanel from '../BookingDatesPanel/BookingDatesPanel'
 
 export default function TradeSidebar({ booking, getBookings, setReportModalVisible, setReviewModalVisible }) {
     const { state } = useGlobalState()
@@ -18,6 +20,8 @@ export default function TradeSidebar({ booking, getBookings, setReportModalVisib
     const [item, setItem] = useState(null)
     const [userDetails, setUserDetails] = useState()
     const [isLoading, setIsLoading] = useState(true)
+    const [bookingPriceCalculator, setBookingPriceCalculator] = useState()
+
 
     useEffect(() => {
         setIsLoading(true)
@@ -35,6 +39,16 @@ export default function TradeSidebar({ booking, getBookings, setReportModalVisib
         getItemDetails()
     },[booking])
 
+    useEffect(() => {
+        if(!item) return
+        const beginDate = getDateObject(booking.start_date)
+        const endDate = getDateObject(booking.end_date)
+        const newBookingPriceCalculator = new BookingPriceCalculator(item.price, item.discount, item.deliveryPrice, beginDate, endDate)
+        newBookingPriceCalculator.setDeliverySelected(booking.delivery_option === "both" || booking.delivery_option === "delivery")
+        newBookingPriceCalculator.setPickupSelected(booking.delivery_option === "both" || booking.delivery_option === "pickup")
+        setBookingPriceCalculator(newBookingPriceCalculator)
+    },[item])
+
     const getUserDetails = async () => {
         const id = booking.io_id === user.id ? booking.u_id : booking.io_id
         try{
@@ -48,12 +62,6 @@ export default function TradeSidebar({ booking, getBookings, setReportModalVisib
         }
         
     }
-    console.log(booking)
-    const beginDate = getDateObject(booking.start_date)
-    const endDate = getDateObject(booking.end_date)
-
-    const dayArray = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", ]
-    const monthArray = ["January", "February", "March", "April","May", "June", "July", "August", "September", "October", "November", "December"]
 
     return (
         <div className="TradeSidebarContainer">
@@ -88,53 +96,30 @@ export default function TradeSidebar({ booking, getBookings, setReportModalVisib
                     
                     <div className="TradeSidebarCostFlex">
                         <span>Cost for Item </span>
-                        <span className="ItemOverviewPrice">${ item.price * ((booking.end_date - booking.start_date) + 1)}</span>
+                        <span className="ItemOverviewPrice">${ bookingPriceCalculator.getPriceWithoutExtras() }</span>
                     </div>
-                    { booking.delivery_option === "delivery" || booking.delivery_option === "both" &&
+                    { bookingPriceCalculator.deliverySelected &&
                     <div className="TradeSidebarCostFlex">
                         <span>Item Delivery </span>
-                        <span className="ItemOverviewPrice">${item.deliveryPrice}</span>
+                        <span className="ItemOverviewPrice">${bookingPriceCalculator.deliveryPrice}</span>
                     </div>}
-                    { booking.delivery_option === "pickup" || booking.delivery_option === "both" &&
+                    { bookingPriceCalculator.pickupSelected &&
                     <div className="TradeSidebarCostFlex">
                         <span>Item Pickup </span>
-                        <span className="ItemOverviewPrice">${item.deliveryPrice}</span>
+                        <span className="ItemOverviewPrice">${bookingPriceCalculator.deliveryPrice}</span>
                     </div>}
                     <div className="TradeSidebarCostFlex" style={{ paddingTop: '1rem', borderTop: '1px solid #31364c'}}>
                         <span>Total Price</span>
-                        <span className="ItemOverviewPrice">${ booking.price }</span>
+                        <span className="ItemOverviewPrice">${ bookingPriceCalculator.getTotalPrice() }</span>
 
                     </div>
                 </div>
                 <div className="TradeSidebarSection">
                     <span className="TradeSidebarHeading">Dates</span>
-                    <div className="ApplicationFooterDetailsContainer">
-                        <div className="ApplicationFooterDetails">
-                            <span className="ApplicationFooterDetailsHeader">Collect</span>
-                            <div style={{ textAlign: 'center'}}>
-                                <span className="ApplicationFooterTime">{beginDate?.morning ? '8:00am' : '1:00pm'} </span>
-                                <span className="ApplicationFooterDay">{dayArray[beginDate.date.getDay()]}</span>
-                            </div>
-                            <div>
-                                <span>{getDateSuffix(beginDate.date)} </span>
-                                <span>{ monthArray[beginDate.date.getMonth()]}</span>
-                            </div>
-                        </div>
-                        <div className="ApplicationFooterArrowContainer">
-                            <Arrow />
-                        </div>
-                        <div className="ApplicationFooterDetails">
-                            <span className="ApplicationFooterDetailsHeader">Return</span>
-                            <div style={{ textAlign: 'center' }}>
-                                <span className="ApplicationFooterTime">{endDate?.morning ? '12:00pm' : '5:00pm'} </span>
-                                <span className="ApplicationFooterDay">{dayArray[endDate.date.getDay()]}</span>
-                            </div>
-                            <div>
-                                <span>{getDateSuffix(endDate.date)} </span>
-                                <span>{ monthArray[endDate.date.getMonth()]}</span>
-                            </div>
-                        </div>
-                    </div>
+                   <BookingDatesPanel 
+                   startDate={bookingPriceCalculator.start}
+                   endDate={bookingPriceCalculator.end}
+                   />
 
                 </div>
                 { booking.delivery_option !== 'none' &&

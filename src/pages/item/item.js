@@ -27,7 +27,7 @@ import { Avatar } from '@material-ui/core';
 import MissingProfile from '../../assets/Icons/MissingProfileIcon.png'
 
 import { isMobile } from 'react-device-detect'
-import AvailabilityModal from '../../components/AvailabilityModal/AvailabilityModal.js';
+import AvailabilityModal from '../../components/modals/AvailabilityModal/AvailabilityModal.js';
 import NoReviews from '../../components/NoReviews/NoReviews.js';
 
 export default function Item() {

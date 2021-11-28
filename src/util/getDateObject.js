@@ -13,9 +13,9 @@ const getDateObject = (dateIndex) => {
     date.setDate(day)
 
     if(day % 1 === 0){
-        return { date, morning: true }
+        return { dateObj: date, morning: true, timeslot: 'morning' }
     } else {
-        return { date, afternoon: true}
+        return { dateObj: date, afternoon: true, timeslot: 'afternoon'}
     }
 }
 

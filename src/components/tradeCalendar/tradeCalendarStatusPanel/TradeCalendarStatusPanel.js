@@ -80,14 +80,14 @@ export default function TradeCalendarStatusPanel({ booking, userDetails, getBook
         const startSlot = getDateObject(booking.start_date)
         console.log(startSlot)
         if(startSlot?.morning){
-            startSlot.date.setHours(8, 0, 0) 
+            startSlot.dateObj.setHours(8, 0, 0) 
         } else{
-            startSlot.date.setHours(13, 0, 0) 
+            startSlot.dateObj.setHours(13, 0, 0) 
         }
         const now = new Date()
         const oneHour = 60 * 60 * 1000
 
-        if((startSlot.date.getTime() - oneHour) < now.getTime()){
+        if((startSlot.dateObj.getTime() - oneHour) < now.getTime()){
             return true
         }
         return false
@@ -97,13 +97,13 @@ export default function TradeCalendarStatusPanel({ booking, userDetails, getBook
     const isDropoffTime = () => {
         const endSlot = getDateObject(booking.end_date)
         if(endSlot?.morning){
-            endSlot.date.setHours(12, 0, 0)
+            endSlot.dateObj.setHours(12, 0, 0)
         } else{
-            endSlot.date.setHours(17, 0, 0)
+            endSlot.dateObj.setHours(17, 0, 0)
         }
         const now = new Date()
         const oneHour = 60 * 60 * 1000
-        if(endSlot.date.getTime() - oneHour < now.getTime()){
+        if(endSlot.dateObj.getTime() - oneHour < now.getTime()){
             return true
         }
     }
