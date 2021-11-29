@@ -25,44 +25,55 @@ export default function ItemOverview() {
     const monthArray = ["January", "February", "March", "April","May", "June", "July", "August", "September", "October", "November", "December"]
     
     const saveBooking = async () => {
+        const bookingInfo = getBookingInfo()
+        console.log('booking info', bookingInfo)
+        // setIsLoading(true)
+        // try{
+        //     await instance.post(`booking/save/${confirmedStart.dateObj.getTime()}`, )
+        //     await sendEnquiry(item)
+        //     setIsLoading(false)
+        //     history.push({ 
+        //         pathname: `/item/${item.i_id}`, 
+        //         state: { bookingCreated: true, price }
+        //     })
+        // } catch(e) {
+        //     setIsLoading(false)
+        //     console.log(e.response)
+        // }
+    }
 
+    const getBookingInfo = () => {
         let deliveryOption = (deliverySelected && pickupSelected) ? 'both' : deliverySelected ? 'delivery' : 'pickup'
-        if(!deliverySelected && !pickupSelected) {
-            deliveryOption = 'none'
-        }
+        if(!deliverySelected && !pickupSelected) deliveryOption = 'none'
+
         const startIndex = (getDateIndex(confirmedStart.dateObj) * 2) + (confirmedStart.timeslot === 'morning' ? 1 : 2)
         let endIndex = (getDateIndex(confirmedEnd.dateObj) * 2) + (confirmedEnd.timeslot === 'morning' ? 1 : 2)
-        if(endIndex < startIndex){
-            endIndex += 730
+
+        const isLeapYear = (currentYear % 4 === 0 && currentYear% 100 !== 0) || currentYear % 400 === 0
+
+        let bookingYear = currentYear
+        if( startIndex > 732 ) bookingYear += 1
+
+        if(endIndex < startIndex && startIndex <= 732){
+            endIndex += 732
         }
-        confirmedStart.dateObj.setHours(confirmedStart?.am ? 6 : 12)
-        
+        const bookingStartTime = new Date(confirmedStart.dateObj.getTime())
+        bookingStartTime.setHours(confirmedStart?.am ? 6 : 12)
+
         const price = bookingPriceCalculator.getTotalPrice()
-        console.log('price', price)
-        setIsLoading(true)
-        try{
-            await instance.post(`booking/save/${confirmedStart.dateObj.getTime()}`, {
-                i_id: item.i_id,
-                io_id: item.u_id,
-                deliveryOption,
-                startDate: startIndex,
-                endDate: endIndex,
-                year: currentYear,
-                address: address ? address : user.address,
-                price
-            })
-            await sendEnquiry(item)
-            setIsLoading(false)
-            history.push({ 
-                pathname: `/item/${item.i_id}`, 
-                state: { bookingCreated: true, price }
-            })
-        } catch(e) {
-            setIsLoading(false)
-            console.log(e.response)
+
+        return {
+            i_id: item.i_id,
+            io_id: item.u_id,
+            deliveryOption,
+            startDate: startIndex,
+            endDate: endIndex,
+            year: bookingYear,
+            address: address ? address : user.address ? user.address : '',
+            price   
         }
-        
     }
+
 
     const unblockUser = async () => {
         var blockedUsersRequest = new CometChat.BlockedUsersRequestBuilder()

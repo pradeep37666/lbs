@@ -4,10 +4,17 @@ import { ReactComponent as Logo } from "./../../assets/Logos/LogoRed.svg";
 import Button from "../Button/Button";
 import useGlobalState from "../../util/useGlobalState";
 
-export default function Availability({ context, style,  submitUpgrade, isUpgradeLoading, isEditItem }) {
+export default function Availability({ context, style,  submitUpgrade, isUpgradeLoading, isEditItem, onCancel }) {
+  const [initialAvailability, setInitialAvailability] = useState()
+
   const { state, dispatch } = useContext(context)
   const { isLenderUpgrade, availability } = state
   const { user } = useGlobalState().state
+
+  useEffect(() => {
+    setInitialAvailability(availability)
+  },[])
+
   return (
     <div className="RegistrationWrapper">
       <div className="LoginMain" style={ style }>
@@ -33,9 +40,14 @@ export default function Availability({ context, style,  submitUpgrade, isUpgrade
               text="Cancel"
               invertedColors
               style={{ marginRight: '0.5rem'}}
+              onClick={() => {
+                dispatch({ type: 'setAvailability', data: initialAvailability })
+                onCancel()
+              }}
               />
               <Button 
               text="Save"
+              onClick={() => onCancel()}
               />
             </>
           ) : (

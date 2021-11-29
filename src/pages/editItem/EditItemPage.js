@@ -42,23 +42,6 @@ function EditItemPage() {
 
   useEffect(() => {
     getItem()
-    // setLoading(true);
-
-    // const { data } = await 
-    // Instance.get(`/items/findByIid/?i_id=${itemId}`)
-    //   .then((response) => {
-    //     console.log('aaa', response.data)
-
-    //     dispatch({ type: 'setInitialState', data: response.data.item })
-
-    //     // setUpdatedImage(response.data.item.pictures.split(","));
-    //     // setPictures(structurePictures(response.data.item.pictures.split(",")));
-
-    //     setLoading(false);
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //   });
   }, [params]);
 
   const getItem = async () => {
@@ -199,12 +182,12 @@ function EditItemPage() {
                 >
                   <DialogContent>
                     <Availability
-                      // style={{ width: '100%', marginTop: '1rem', }}
+                      style={{ width: '100%', marginTop: '1rem', }}
                       // setAvailability={setAvailable}
                       isEditItem
-                      // addEditButtons
                       context={EditItemContext}
-                      handleDiscardChanges={() => setEditAvailabilityOpen(!editAvailabilityOpen)}
+                      onCancel={() => setEditAvailabilityOpen(!editAvailabilityOpen)}
+
                     />
                   </DialogContent>
                 </Dialog>
