@@ -35,10 +35,12 @@ export default function TradeCalendarStatusPanel({ booking, userDetails, getBook
         }
         const dropOff = isDropoffTime()
         if(dropOff && status >= 3){
+        // if(status >= 3){
         // if(dropOff || status >= 1){
             return (
             <DropOff 
             booking={booking}
+            finishBooking={finishBooking}
             updateBookingStatus={updateBookingStatus}
             isOwner={isOwner}
             userDetails={userDetails}
@@ -118,6 +120,14 @@ export default function TradeCalendarStatusPanel({ booking, userDetails, getBook
         }
     }
 
+    const finishBooking = async () => {
+        try{
+            const { data, status } = await Instance.get(`/booking/finish?b_id=${booking.b_id}`)
+            console.log(data, status)
+        } catch(err){
+            console.log(err.response)
+        }
+    }
     const updateBookingStatus = async (newStatus) => {
         try{
             const newBooking = {b_id: booking.b_id, status: newStatus}

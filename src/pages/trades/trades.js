@@ -11,7 +11,7 @@ import TradeFailed from '../../components/modals/TradeFailed/TradeFailed'
 import userEvent from '@testing-library/user-event'
 import useGlobalState from '../../util/useGlobalState'
 
-import ReviewBorrower from '../../components/ReviewBorrower/ReviewBorrower'
+import ReviewBorrower from '../../components/modals/ReviewBorrower/ReviewBorrower'
 import { useHistory } from 'react-router'
 import NoContent from '../../components/NoContent/NoContent'
 import ReviewLender from '../../components/modals/ReviewLender/ReviewLender'
@@ -98,8 +98,13 @@ export default function Trades() {
             open={reviewModalVisible && isLender}
             onClick={() => setReviewModalVisible(false)}  
             booking={selectedBooking} />
-            <div className="UserShedWrapper">
-                { !isMobile && <UserShedNav setAccountContent={setAccountContent} accountContent={accountContent}/>}
+            <div className="UserShedWrapper" style={{ paddingRight: 0}}>
+                { !isMobile && <UserShedNav 
+                setAccountContent={setAccountContent}
+                accountContent={accountContent}
+                // style={{ width: '15%'}}
+                style={{ marginRight: '1rem' }}
+                />}
 
                 <div className="TradesContainer" style={ isLoading ? { display: 'flex', justifyContent: 'center', alignItems: 'center'} : noBookings ? { width: '100%'} : null}>
                     { isLoading ? (
@@ -126,7 +131,6 @@ export default function Trades() {
                         )
                         
                     )}
-                    <Suspense />
                 </div>
                 { isMobile ? (
                     <SwipeableDrawer anchor='right' open={selectedBooking} onClose={() => setSelectedBooking(null)}>

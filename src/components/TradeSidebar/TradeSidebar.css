@@ -4,6 +4,7 @@
   padding: 1rem 1rem;
   border-left: 1px solid #d6d6d6;
   width: 30%;
+  max-width: 300px;
 }
 
 .TradeSidebarSubHeading {
@@ -54,6 +55,11 @@
   display: flex;
 }
 
+@media only screen and (max-width: 1300px) {
+  .TradeSidebarContainer {
+    padding: 1rem 0.5rem;
+  }
+}
 @media only screen and (max-width: 495px) {
   .TradeSidebarContainer {
     width: 300px;

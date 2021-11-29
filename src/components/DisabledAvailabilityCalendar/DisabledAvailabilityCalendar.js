@@ -2,7 +2,7 @@ import React, { useContext} from 'react'
 
 import DisabledCalendarItem from './DisabledCalendarItem';
 import DisabledCalendarRow from './DisabledCalendarRow';
-import { ApplicationContext } from '../AvailabilityModal/AvailabilityModal'
+import { ApplicationContext } from '../modals/AvailabilityModal/AvailabilityModal'
 
 
 export default function DisabledAvailabilityCalendar({ month, year, }) {

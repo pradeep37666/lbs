@@ -32,7 +32,7 @@ export default function UserShedNav(props) {
     }
 
     return (
-        <div className="UserShedNav">
+        <div className="UserShedNav" style={props.style}>
             <Link to='/user/trades'>
                 <div className={`UserShedNav__LinkFlex ${activeMain === 'trades' ? 'UserShedNav__LinkFlex--Active' : ''}`} onClick={() => setActiveMain('trades')}>
                     <Trades height="50px" width="50px" className="UserShedNav__Icon" />

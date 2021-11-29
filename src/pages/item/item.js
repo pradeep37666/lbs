@@ -20,7 +20,7 @@ import Instance from '../../util/axios';
 import { useParams, useLocation, useHistory } from 'react-router';
 import useGlobalState from "../../util/useGlobalState"
 import CircularProgress from '@material-ui/core/CircularProgress';
-import ApplicationModal from '../../components/applicationModal/ApplicationModal'
+import ApplicationModal from '../../components/modals/ApplicationModal/ApplicationModal'
 import getImage from '../../util/getImage.js';
 import NoContent2 from '../../assets/Images/NoContent2.png'
 import { Avatar } from '@material-ui/core';

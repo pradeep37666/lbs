@@ -50,6 +50,11 @@ const editItemReducer = (state, action) => {
                 ...state,
                 images: action.data
             }
+        case 'setNewImages' :
+            return {
+                ...state,
+                newImages: action.data
+            }
         case 'setDeletedImages' :
             return {
                 ...state,

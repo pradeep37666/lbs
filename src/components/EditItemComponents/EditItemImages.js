@@ -6,7 +6,7 @@ import AddIcon from "@material-ui/icons/Add"
 import getImage from '../../util/getImage';
 
 export default function EditItemImages({ state, dispatch }) {
-    const { images } = state
+    const { images, newImages, deletedImages } = state
 
     const useStyles = makeStyles({
       button: {
@@ -42,7 +42,7 @@ export default function EditItemImages({ state, dispatch }) {
                     <IconButton 
                     aria-label="delete" 
                     className={classes.buttonDelete} 
-                    // onClick={() => removeImage(image.id)}
+                    onClick={() => removeImage(image.id)}
                     >
                         <RemoveIcon className={classes.icon} />
                     </IconButton>
@@ -56,52 +56,52 @@ export default function EditItemImages({ state, dispatch }) {
         })
     }
 
-    // const removeImage = (id) => {
-    //     var newimages = [];
-    //     for (var i = 0; i < images.length; i++) {
-    //       var pic = images[i];
+    const removeImage = (id) => {
+      const removedImage = images.find(img => img.id === id)
+      const updatedDisplayImages = images.filter(img => img.id !== id)
+      dispatch({ type: 'setImages', data: updatedDisplayImages})
+
+      if(removedImage.url){
+        dispatch({type: 'setDeletedImages', data: [...deletedImages, removedImage.url]})
+      } else {
+        dispatch({ type: 'setNewImages', data: newImages.filter(img => img.id !== id)})
+      }
+        // for (var i = 0; i < images.length; i++) {
+        //   var pic = images[i];
     
-    //       if (pic.id !== id) {
-    //         newimages.push(pic);
-    //       } else {
-    //         if (pic.url) setDeletedImages(deletedImages => [...deletedImages, pic.url])
-    //         else setNewImages(newImages.filter(({id}) => id !== pic.id))
-    //       }
-    //     }
-    //     setimages(newimages);
-    //   };
+        //   if (pic.id !== id) {
+        //     newimages.push(pic);
+        //   } else {
+        //     if (pic.url) setDeletedImages(deletedImages => [...deletedImages, pic.url])
+        //     else setNewImages(newImages.filter(({id}) => id !== pic.id))
+        //   }
+        // }
+        // setimages(newimages);
+      };
 
-    //   const handleChange = (e) => {
-    //     if (e.target.files.length) {
-    //       let updatedPictures = [
-    //         ...pictures,
-    //         {
-    //           preview: URL.createObjectURL(e.target.files[0]),
-    //           raw: e.target.files[0],
-    //           id: findNextID(),
-    //         },
-    //       ]
-    //       setNewImages(newImages => [...newImages, {
-    //           preview: URL.createObjectURL(e.target.files[0]),
-    //           raw: e.target.files[0],
-    //           id: findNextID(),
-    //       }])
-    //       setPictures(updatedPictures);
-    //     }
-    //   };
+      const handleImageUpload = (e) => {
+        if (e.target.files.length === 0) return
+        const updatedImages = [...images,
+          {
+            preview: URL.createObjectURL(e.target.files[0]),
+            raw: e.target.files[0],
+            id: getNextID(),
+          },
+        ]
+        const updatedNewImages = [...newImages, {
+            preview: URL.createObjectURL(e.target.files[0]),
+            raw: e.target.files[0],
+            id: getNextID(),
+        }]
+        dispatch({ type: 'setNewImages', data: updatedNewImages})
+        dispatch({ type: 'setImages', data: updatedImages})
+        
+      };
 
-    //   const findNextID = () => {
-    //     var indices = [];
-    //     images.forEach((image) => {
-    //       indices[image["id"]] = true;
-    //     });
-    //     for (var i = 1, l = indices.length; i < l; i++) {
-    //       if (indices[i] === undefined) {
-    //         break;
-    //       }
-    //     }
-    //     return i;
-    //   };
+      const getNextID = () => {
+        const lastImage = images[images.length - 1]
+        return lastImage.id + 1
+      };
     
     console.log('images', images)
     return (
@@ -118,7 +118,7 @@ export default function EditItemImages({ state, dispatch }) {
             onClick={(e) => {
                 e.target.value = null;
             }}
-            // onChange={(e) => handleChange(e)}
+            onChange={(e) => handleImageUpload(e)}
             />
             <div className="PostItem__Itemimages__Add__Container" style={{ marginBottom: "-15%" }}>
                 <IconButton

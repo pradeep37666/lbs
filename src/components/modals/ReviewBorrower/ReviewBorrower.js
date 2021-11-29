@@ -3,10 +3,10 @@ import "./ReviewBorrower.css";
 import { CircularProgress, Dialog, DialogContent, IconButton } from "@material-ui/core";
 import { Close } from "@material-ui/icons";
 import { makeStyles } from "@material-ui/styles";
-import { ReactComponent as StarOutline } from "./../../assets/Icons/StarOutline.svg";
-import { ReactComponent as StarFilled } from "./../../assets/Icons/StarFilled.svg";
-import Instance from "../../util/axios";
-import useGlobalState from "../../util/useGlobalState";
+import { ReactComponent as StarOutline } from "./../../../assets/Icons/StarOutline.svg";
+import { ReactComponent as StarFilled } from "./../../../assets/Icons/StarFilled.svg";
+import Instance from "../../../util/axios";
+import useGlobalState from "../../../util/useGlobalState";
 
 function ReviewBorrower({ onClick, isLender, booking, open }) {
   const { state } = useGlobalState()

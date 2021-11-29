@@ -67,7 +67,7 @@ export default function TradeSidebar({ booking, getBookings, setReportModalVisib
         <div className="TradeSidebarContainer">
 
             { isLoading ? (
-                <CircularProgress style={{ justifySelf: 'center', alignSelf: 'center'}}/>
+                <CircularProgress style={{ justifySelf: 'center', alignSelf: 'center'}} color="inherit" />
             ) : (
             <>
                 <div className="TradeSidebarSection">
@@ -126,7 +126,7 @@ export default function TradeSidebar({ booking, getBookings, setReportModalVisib
                  <div className="TradeSidebarSection">
                     <div className="TradeSidebarLocationContainer">
                         <span className="TradeSidebarHeading">Delivery / Pickup Location</span>
-                        <span>{booking.address}</span>
+                        <span style={{ textAlign: 'center'}}>{booking.address}</span>
                     </div>
                 </div>}
                 { userDetails &&

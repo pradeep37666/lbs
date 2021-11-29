@@ -11,6 +11,7 @@ import { CometChat } from '@cometchat-pro/chat'
 import useGlobalState from '../../util/useGlobalState'
 import axios from 'axios'
 import Button from '../Button/Button'
+import getDateSuffix from '../../util/getDateSuffix'
 
 export default function ItemOverview() {
     const [isLoading, setIsLoading] = useState(false)
@@ -22,34 +23,6 @@ export default function ItemOverview() {
     const history = useHistory()
     const dayArray = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
     const monthArray = ["January", "February", "March", "April","May", "June", "July", "August", "September", "October", "November", "December"]
-
-    const getDateSuffix = (confirmedDate) => {
-        const date = confirmedDate.dateObj.getDate()
-        const dateString = date.toString()
-        const lastChar = dateString.charAt(dateString.length - 1)
-
-        switch(lastChar){
-        case '1' : {
-            if(date > 10 && date < 20){
-                return date + 'th'
-            }
-            return date + 'st'
-        }
-        case '2' : {
-            if(date > 10 && date < 20){
-                return date + 'th'
-            }
-            return date + 'nd'
-        }
-        case '3' : {
-            if(date > 10 && date < 20){
-                return date + 'th'
-            }
-            return date + 'rd'
-        }
-        default : return date + 'th'
-        }
-    }
     
     const saveBooking = async () => {
 
@@ -65,7 +38,7 @@ export default function ItemOverview() {
         confirmedStart.dateObj.setHours(confirmedStart?.am ? 6 : 12)
         
         const price = bookingPriceCalculator.getTotalPrice()
-
+        console.log('price', price)
         setIsLoading(true)
         try{
             await instance.post(`booking/save/${confirmedStart.dateObj.getTime()}`, {
@@ -191,7 +164,7 @@ export default function ItemOverview() {
                             <span>{dayArray[confirmedStart.dateObj.getDay()]}</span>
                         </div>
                         <div>
-                            <span>{ getDateSuffix(confirmedStart) } </span>
+                            <span>{ getDateSuffix(confirmedStart.dateObj) } </span>
                             <span>{ monthArray[confirmedStart.dateObj.getMonth()]}</span>
                         </div>
                     </div>
@@ -205,7 +178,7 @@ export default function ItemOverview() {
                             <span>{dayArray[confirmedEnd.dateObj.getDay()]}</span>
                         </div>
                         <div>
-                            <span>{ getDateSuffix(confirmedEnd) } </span>
+                            <span>{ getDateSuffix(confirmedEnd.dateObj) } </span>
                             <span>{ monthArray[confirmedEnd.dateObj.getMonth()]} </span>
                         </div>
                     </div>

@@ -1,7 +1,7 @@
 import { Dialog, DialogContent, Slide } from '@material-ui/core'
 import React from 'react'
-import Check from '../../assets/Icons/Check'
-import ApplicationItemCard from '../application/ApplicationItemCard'
+import Check from '../../../assets/Icons/Check'
+import ApplicationItemCard from '../../application/ApplicationItemCard'
 import './ApplicationModal.css'
 
 export default function ApplicationModal({ onClick, item, open }) {

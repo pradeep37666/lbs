@@ -7,7 +7,7 @@ export default function StatusThree({ isOwner, updateBookingStatus, booking, use
            { isOwner && userDetails ? (
                 <div>
                     <span>Get the product ready to be borrowed by </span>
-                    <span>{userDetails.fullName}</span>
+                    <span>{`${userDetails.firstName} ${userDetails.lastName}`}</span>
                 </div>
            ) : (
                 <span>Get ready to pick your up your item</span>

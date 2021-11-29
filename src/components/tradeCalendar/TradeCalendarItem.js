@@ -17,7 +17,7 @@ export default function TradeCalendarItem({ booking, setSelectedBooking, row, cu
         
     const isLend = booking.io_id === user.id
     const isConfirmed = booking.status > 2
-    const isCancelled = booking.status === 0
+    const isCancelled = booking.status === 0 || booking.status === 2
     const sameTimeSlot = booking.start_date === booking.end_date
     console.log(sameTimeSlot, 'timeslot')
     

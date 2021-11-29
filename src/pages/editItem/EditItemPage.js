@@ -22,9 +22,12 @@ const EditItemContext = createContext()
 function EditItemPage() {
   const [state, dispatch] = useReducer(editItemReducer, { 
     availability: [],
-    isDiscount: false
+    isDiscount: false,
+    newImages: [],
+    images: [],
+    deletedImages: []
   })
-  const { title, category, description, price, deliveryPrice, discount, address, availability, lat, lng, suburb, images, titleText } = state
+  const { title, category, description, price, deliveryPrice, discount, address, availability, lat, lng, suburb, images, titleText, deletedImages, newImages } = state
 
   const history = useHistory();
   const [loading, setLoading] = useState(true);
@@ -33,30 +36,43 @@ function EditItemPage() {
   const [editAvailabilityOpen, setEditAvailabilityOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false)
 
-  const [deletedImages, setDeletedImages] = useState([])
-  const [newImages, setNewImages] = useState([])
-
   const params = useParams();
   const parsed = queryString.parse(params.itemId);
   let itemId = parsed.i_id;
 
   useEffect(() => {
-    setLoading(true);
-    Instance.get(`/items/findByIid/?i_id=${itemId}`)
-      .then((response) => {
-        console.log('aaa', response.data)
+    getItem()
+    // setLoading(true);
 
-        dispatch({ type: 'setInitialState', data: response.data.item })
+    // const { data } = await 
+    // Instance.get(`/items/findByIid/?i_id=${itemId}`)
+    //   .then((response) => {
+    //     console.log('aaa', response.data)
 
-        // setUpdatedImage(response.data.item.pictures.split(","));
-        // setPictures(structurePictures(response.data.item.pictures.split(",")));
+    //     dispatch({ type: 'setInitialState', data: response.data.item })
 
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    //     // setUpdatedImage(response.data.item.pictures.split(","));
+    //     // setPictures(structurePictures(response.data.item.pictures.split(",")));
+
+    //     setLoading(false);
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //   });
   }, [params]);
+
+  const getItem = async () => {
+    setLoading(true)
+    try {
+      const { data } = await Instance.get(`/items/findByIid/?i_id=${itemId}`)
+      dispatch({ type: 'setInitialState', data: data.item })
+      setLoading(false)
+    } catch(err){
+      setLoading(false)
+      console.log(err.response)
+    }
+
+  }
 
   const deleteItem = async () => {
     try{
@@ -65,19 +81,10 @@ function EditItemPage() {
     } catch(err){
       console.log(err.response)
     }
-    // Instance.delete(`/items/delete?i_id=${itemId}`)
-    //   .then((response) => {
-    //     console.log(response);
-    //   })
-    //   .catch((error) => {
-    //     console.log("Error : ", error);
-    //   });
-    // history.push(`/user/your_shed`);
   };
 
   console.log(images)
   
-
   const applyChanges = async () => {
     let newSuburb
     address.address_components ? newSuburb = getSuburb(address.address_components) : newSuburb = suburb
