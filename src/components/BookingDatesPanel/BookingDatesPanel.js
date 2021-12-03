@@ -1,6 +1,6 @@
 import React from 'react'
 import Arrow from '../../assets/Icons/Arrow'
-import getDateSuffix from '../../util/getDateSuffix'
+import getDateSuffix from '../../util/dateUtils/getDateSuffix'
 
 export default function BookingDatesPanel({ startDate, endDate }) {
     const dayArray = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", ]

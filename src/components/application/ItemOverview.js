@@ -1,8 +1,8 @@
 import React, { useContext, useState } from 'react'
 import { ApplicationContext } from '../../pages/application/Application'
-import {ReactComponent as StarFilled} from '../../assets/Icons/StarFilled.svg'
+import checkIfLeapYear from '../../util/dateUtils/checkIfLeapYear'
 import './ItemOverview.css'
-import getDateIndex from '../../util/getDateIndex'
+import getDateIndex from '../../util/dateUtils/getDateIndex'
 import Arrow from '../../assets/Icons/Arrow'
 import ApplicationItemCard from './ApplicationItemCard'
 import instance from '../../util/axios'
@@ -11,14 +11,14 @@ import { CometChat } from '@cometchat-pro/chat'
 import useGlobalState from '../../util/useGlobalState'
 import axios from 'axios'
 import Button from '../Button/Button'
-import getDateSuffix from '../../util/getDateSuffix'
+import getDateSuffix from '../../util/dateUtils/getDateSuffix'
 
 export default function ItemOverview() {
     const [isLoading, setIsLoading] = useState(false)
     const { state, dispatch } = useContext(ApplicationContext)
     const globalState = useGlobalState()
     const user  = globalState.state.user
-    const { item, confirmedEnd, confirmedStart, deliverySelected, pickupSelected, address, currentYear, bookingPriceCalculator } = state
+    const { item, confirmedEnd, confirmedStart, deliverySelected, pickupSelected, address, currentYear, bookingPriceCalculator, currentMonth } = state
 
     const history = useHistory()
     const dayArray = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
@@ -27,42 +27,43 @@ export default function ItemOverview() {
     const saveBooking = async () => {
         const bookingInfo = getBookingInfo()
         console.log('booking info', bookingInfo)
-        // setIsLoading(true)
-        // try{
-        //     await instance.post(`booking/save/${confirmedStart.dateObj.getTime()}`, )
-        //     await sendEnquiry(item)
-        //     setIsLoading(false)
-        //     history.push({ 
-        //         pathname: `/item/${item.i_id}`, 
-        //         state: { bookingCreated: true, price }
-        //     })
-        // } catch(e) {
-        //     setIsLoading(false)
-        //     console.log(e.response)
-        // }
+        setIsLoading(true)
+        try{
+            await instance.post(`booking/save/${confirmedStart.dateObj.getTime()}`, bookingInfo )
+            await sendEnquiry(item)
+            setIsLoading(false)
+            history.push({ 
+                pathname: `/item/${item.i_id}`, 
+                state: { bookingCreated: true, price: bookingInfo.price }
+            })
+        } catch(e) {
+            setIsLoading(false)
+            console.log(e.response)
+        }
     }
 
     const getBookingInfo = () => {
         let deliveryOption = (deliverySelected && pickupSelected) ? 'both' : deliverySelected ? 'delivery' : 'pickup'
         if(!deliverySelected && !pickupSelected) deliveryOption = 'none'
 
-        const startIndex = (getDateIndex(confirmedStart.dateObj) * 2) + (confirmedStart.timeslot === 'morning' ? 1 : 2)
-        let endIndex = (getDateIndex(confirmedEnd.dateObj) * 2) + (confirmedEnd.timeslot === 'morning' ? 1 : 2)
-
-        const isLeapYear = (currentYear % 4 === 0 && currentYear% 100 !== 0) || currentYear % 400 === 0
+        const startIndex = (getDateIndex(confirmedStart))
+        let endIndex = (getDateIndex(confirmedEnd))
+        console.log('start', startIndex, 'end', endIndex)
 
         let bookingYear = currentYear
-        if( startIndex > 732 ) bookingYear += 1
+        if(currentMonth >= 10 && startIndex < 200){
+            bookingYear += 1
+        }
 
-        if(endIndex < startIndex && startIndex <= 732){
-            endIndex += 732
+        if((endIndex < startIndex) && (startIndex <= checkIfLeapYear(currentYear) ? 730 : 732)){
+            endIndex += checkIfLeapYear(currentYear) ? 731 : 729
         }
         const bookingStartTime = new Date(confirmedStart.dateObj.getTime())
         bookingStartTime.setHours(confirmedStart?.am ? 6 : 12)
 
         const price = bookingPriceCalculator.getTotalPrice()
 
-        return {
+        return ({
             i_id: item.i_id,
             io_id: item.u_id,
             deliveryOption,
@@ -71,7 +72,7 @@ export default function ItemOverview() {
             year: bookingYear,
             address: address ? address : user.address ? user.address : '',
             price   
-        }
+        })
     }
 
 
@@ -110,7 +111,7 @@ export default function ItemOverview() {
 
     const sendEnquiry = async (item) => {
         await unblockUser()
-        const textMessage = new CometChat.TextMessage(item.u_id, `${user.fullName} has enquired about your ${item.title}`, CometChat.RECEIVER_TYPE.USER)
+        const textMessage = new CometChat.TextMessage(item.u_id, `${user.firstName} ${user.lastName} has enquired about your ${item.title}`, CometChat.RECEIVER_TYPE.USER)
         textMessage.setMetadata({ enquiry: true, itemName: item.title })
         try{
             const res = await CometChat.sendMessage(textMessage)

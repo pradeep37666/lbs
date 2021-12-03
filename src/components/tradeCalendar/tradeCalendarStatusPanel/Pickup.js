@@ -24,7 +24,7 @@ export default function Pickup({ isOwner, userDetails, updateBookingStatus, book
                     </>
                 ) : (
                     <>
-                        <span>Has {userDetails.fullName} picked up the item?</span>
+                        <span>Has {`${userDetails.firstName} ${userDetails.lastName}`} picked up the item?</span>
                         <div className="TradeStatusButtonContainer">
                         
                             <div className="TradeStatusDeclineButton" onClick={() => setNoPressed(true)}>
@@ -51,7 +51,7 @@ export default function Pickup({ isOwner, userDetails, updateBookingStatus, book
                     </>
                 ) : (
                     <>
-                        <span>Has {userDetails.fullName} successfully provided you the item?</span>
+                        <span>Has {`${userDetails.firstName} ${userDetails.lastName}`} successfully provided you the item?</span>
                         <div className="TradeStatusButtonContainer">
                         
                             <div className="TradeStatusDeclineButton" onClick={() => setNoPressed(true)}>

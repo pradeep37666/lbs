@@ -67,6 +67,7 @@ export default function ReviewModal({ setReviewModalOpen, modalOpen, reviews, it
 
     const renderReviews = () => {
         return reviews.map((review, index) => {
+            console.log(review)
             return (
                 <div 
                 className="ReviewModalReviewCard"
@@ -110,7 +111,7 @@ export default function ReviewModal({ setReviewModalOpen, modalOpen, reviews, it
                                 <div className="RatingLenderFlex">
                                     <Avatar style={{ height: 60, width: 60 }} src={getOwnerImage()} alt="" className="ProfileIconReview" />
                                     <div>
-                                        <div className="RatingHeaderReview">{isUserItem ? user.fullName : itemOwner.fullName}</div>
+                                        <div className="RatingHeaderReview">{isUserItem ? `${user.firstName} ${user.lastName}` : `${itemOwner.firstName} ${itemOwner.lastName}`}</div>
                                         <div className="RatingLenderReview">{lenderRating}/5 </div>
                                     </div>
                                 </div>

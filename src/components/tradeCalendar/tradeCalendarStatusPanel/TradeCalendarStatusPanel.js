@@ -9,7 +9,7 @@ import StatusThree from './StatusThree'
 import StatusFour from './StatusFour'
 import StatusFive from './StatusFive'
 import Pickup from './Pickup'
-import getDateObject from '../../../util/getDateObject'
+import getDateObject from '../../../util/dateUtils/getDateObject'
 import StatusSix from './StatusSix'
 import StatusSeven from './StatusSeven'
 import DropOff from './DropOff'
@@ -61,7 +61,14 @@ export default function TradeCalendarStatusPanel({ booking, userDetails, getBook
                 return <StatusThree isOwner={isOwner} updateBookingStatus={updateBookingStatus} booking={booking} userDetails={userDetails} />
             }
             case 4 : {
-                return <StatusFour isOwner={isOwner} updateBookingStatus={updateBookingStatus} booking={booking} userDetails={userDetails}/>
+                return (
+                <StatusFour 
+                isOwner={isOwner} 
+                updateBookingStatus={updateBookingStatus} 
+                booking={booking} 
+                userDetails={userDetails}
+                setReportModalVisible={setReportModalVisible} />
+                )
             }
             case 5 : {
                 return <StatusFive isOwner={isOwner} updateBookingStatus={updateBookingStatus} booking={booking} userDetails={userDetails}/>

@@ -5,7 +5,7 @@ import { ApplicationContext } from '../modals/AvailabilityModal/AvailabilityModa
 import compareDates from '../../util/compareDates'
 import ValidationPopup from '../ValidationPopup/ValidationPopup'
 import '../../components/FormComponents/BasicDetails'
-import getDateIndex from '../../util/getDateIndex'
+import getDateIndex from '../../util/dateUtils/getDateIndex'
 
 export default function DisabledCalendarRow({ days, isCurrentMonth }) {
     const { state, dispatch } = useContext(ApplicationContext)

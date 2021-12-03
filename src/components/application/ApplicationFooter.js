@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import Arrow from '../../assets/Icons/Arrow'
 import { ApplicationContext } from '../../pages/application/Application'
 
-import getDateSuffix from '../../util/getDateSuffix'
+import getDateSuffix from '../../util/dateUtils/getDateSuffix'
 import useGlobalState from '../../util/useGlobalState'
 import './ApplicationFooter.css'
 import Button from '../Button/Button'

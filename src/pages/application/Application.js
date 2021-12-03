@@ -46,7 +46,6 @@ export default function Application() {
             dispatch({ type: 'setItem', data: data.item})
             dispatch({ type: 'setItemAvailability', data: data.item.available})
             dispatch({ type: 'setYearAvailability', data: data.yearAvailability})
-            console.log(data.yearAvailability)
         }
         getItem()
 

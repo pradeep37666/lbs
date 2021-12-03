@@ -8,13 +8,13 @@ export default function StatusFive({ isOwner, updateBookingStatus, booking, appr
         <div className="TradeStatusContentContainer">
             { (isOwner && userDetails) ? (
                 <span>
-                    Currently {userDetails.fullName} has your item, be a helpful lender and lend a hand to them if they have any questions.
+                    Currently {`${userDetails.firstName} ${userDetails.lastName}`} has your item, be a helpful lender and lend a hand to them if they have any questions.
                 </span>
                 
             ) : (
                     userDetails && 
                     <>
-                        <span>Have you picked up the item from {userDetails.fullName}?</span>
+                        <span>Have you picked up the item from {`${userDetails.firstName} ${userDetails.lastName}`}?</span>
                         <div className="TradeStatusButtonContainer">
                         
                             <div className="TradeStatusDeclineButton" onClick={() => setCancelPressed(true)}>
