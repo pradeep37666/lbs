@@ -41,7 +41,7 @@ export default function Messages() {
         if(!activeChatUser) return
         getMessages()
     }, [activeChatUser])
-
+    console.log('a')
     
     const getConversations = async () => {
         try{
