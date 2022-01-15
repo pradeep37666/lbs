@@ -2,14 +2,14 @@ import React, { useReducer, useEffect, useState } from 'react';
 import './App.css';
 import Home from './pages/home/home.js';
 import ItemPage from './pages/item/item.js';
-import Search from './pages/Search/Search';
-import Login from './pages/login/Login'
-import RegisterPage from './pages/Register/Register.js';
-import AccountPage from './pages/account/Account.js';
-import PostItem from './pages/postitem/PostItem';
-import TradesPage from './pages/Trades/Trades.js';
-import Messages from './pages/messages/Messages.js'
-import YourshedPage from './pages/YourShed/YourShed.js';
+import Search from './pages/search/search';
+import Login from './pages/login/login'
+import RegisterPage from './pages/register/register.js';
+import AccountPage from './pages/account/account.js';
+import PostItem from './pages/postitem/postitem';
+import TradesPage from './pages/trades/trades.js';
+import Messages from './pages/messages/messages.js'
+import YourshedPage from './pages/yourshed/yourshed.js';
 import FavouritesPage from './pages/favourites/favourites.js';
 import UpgradeLender from './pages/account/UpgradeLender/UpgradeLender';
 import UpdatePassword from './pages/account/UpdatePassword/UpdatePassword';

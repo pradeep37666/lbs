@@ -78,6 +78,7 @@ export default function EditPaymentDetails() {
                     name: cardName
                 }
             })
+            console.log(paymentMethod)
             if(error){
                 setIsCreateCardLoading(false)
                 return

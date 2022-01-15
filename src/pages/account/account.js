@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import './Account.css'
+import './account.css'
 import PageWrapper from '../../components/pageWrapper/pageWrapper'
 import UserShedNav from '../../components/UserShedNav/UserShedNav'
 import AccountSettings from './AccountSettingsContent/AccountSettings'

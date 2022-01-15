@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 import Application from '../../../pages/application/Application'
 import Instance from '../../../util/axios'
+import Button from '../../Button/Button'
 
-export default function StatusOne({ isOwner, updateBookingStatus, booking, approveBooking }) {
+export default function StatusOne({ isOwner, updateBookingStatus, booking, approveBooking, isLoading }) {
     const [cancelPressed, setCancelPressed] = useState(false)
     
     return (
@@ -25,9 +26,15 @@ export default function StatusOne({ isOwner, updateBookingStatus, booking, appro
                         <div className="TradeStatusDeclineButton" onClick={() => setCancelPressed(true)}>
                             <span>Decline</span>
                         </div>
-                        <div className="TradeStatusApproveButton" onClick={approveBooking}>
+                        {/* <div className="TradeStatusApproveButton" onClick={approveBooking}>
                             <span>Approve</span>
-                        </div> 
+                        </div>  */}
+                        <Button 
+                        text="Approve"
+                        style={{ width: '45%'}}
+                        onClick={approveBooking}
+                        isLoading={isLoading}
+                        />
                     </div>
                     
                 ) 

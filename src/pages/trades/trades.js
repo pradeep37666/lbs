@@ -1,5 +1,5 @@
 import React, { Suspense, useEffect, useState } from 'react'
-import './Trades.css'
+import './trades.css'
 import PageWrapper from '../../components/pageWrapper/pageWrapper'
 import UserShedNav from '../../components/UserShedNav/UserShedNav'
 import Instance from '../../util/axios'

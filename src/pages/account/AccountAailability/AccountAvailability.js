@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import ProductSlots from '../../../components/productSlots/ProductSlots'
+import ProductSlots from '../../../components/productSlots/productSlots'
 import './AccountAvailability.css'
 import Instance from '../../../util/axios'
 import { useHistory } from 'react-router'

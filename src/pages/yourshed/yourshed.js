@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import './YourShed.css'
+import './yourshed.css'
 import { Link } from 'react-router-dom'
 import PageWrapper from '../../components/pageWrapper/pageWrapper'
 import UserShedNav from '../../components/UserShedNav/UserShedNav'
 import instance from '../../util/axios';
-import ItemCard from '../../components/ItemCard/ItemCard';
+import ItemCard from '../../components/itemCard/itemCard';
 import { isMobile } from 'react-device-detect';
 import useGlobalState from '../../util/useGlobalState';
 

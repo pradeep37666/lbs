@@ -1,5 +1,5 @@
 import React from 'react';
-import './ItemCard.css'
+import './itemCard.css'
 import PreviewImage from './../../assets/Images/ATVMower.png';
 import LocationIcon from './../../assets/Icons/LocationIcon.svg';
 import DeliveryIcon from './../../assets/Icons/DeliveryIcon.svg';

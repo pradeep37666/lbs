@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useReducer, createContext } from 'react';
-import './Register.css';
+import './register.css';
 import PageWrapper from "../../components/pageWrapper/pageWrapper.js";
 import Banner from "../../components/bannerText/bannerText.js";
 import BasicDetails from '../../components/FormComponents/BasicDetails';

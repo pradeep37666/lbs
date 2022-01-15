@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import "./Search.css";
+import "./search.css";
 import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 import PageWrapper from "../../components/pageWrapper/pageWrapper.js";
-import ItemCard from "../../components/ItemCard/ItemCard.js";
+import ItemCard from "../../components/itemCard/itemCard.js";
 import SearchFilterBar from "../../components/searchFilterBar/searchFilterBar.js";
 import { makeStyles, withStyles } from "@material-ui/styles";
 import Select from "@material-ui/core/Select";

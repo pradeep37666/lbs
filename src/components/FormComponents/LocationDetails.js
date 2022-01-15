@@ -30,7 +30,7 @@ export default function LocationDetails({ context }) {
                     <Button 
                     
                     text="Next"
-                    isDisabled={address?.address_components.length !== 7}
+                    // isDisabled={address && address?.address_components.length !== 7}
                     onClick={() => {
                         dispatch({ type: 'setCurrentPage', data: 'Availability' })
                     }}/>

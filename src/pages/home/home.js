@@ -6,7 +6,7 @@ import SelectInput from "../../components/selectInput/selectInput.js";
 import CategorySelect from "../../components/categorySelect/categorySelect.js";
 import RatingSelect from "../../components/ratingSelect/ratingSelect.js";
 import SearchIcon from "../../assets/Icons/SearchIcon.svg";
-import ItemCard from "../../components/ItemCard/ItemCard";
+import ItemCard from "../../components/itemCard/itemCard";
 import WateringCanIcon from "../../assets/Icons/GardeningIcon.svg";
 import HammerIcon from "../../assets/Icons/HammerIcon.js";
 import CarIcon from "../../assets/Icons/CarIcon.js";

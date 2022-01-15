@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import ProductSlots from "../productSlots/ProductSlots";
+import ProductSlots from "../productSlots/productSlots";
 import { ReactComponent as Logo } from "./../../assets/Logos/LogoRed.svg";
 import Button from "../Button/Button";
 import useGlobalState from "../../util/useGlobalState";

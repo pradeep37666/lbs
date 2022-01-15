@@ -17,6 +17,7 @@ import StatusEight from './StatusEight'
 
 export default function TradeCalendarStatusPanel({ booking, userDetails, getBookings, setReportModalVisible, setReviewModalVisible }) {
     const [status, setStatus] = useState()
+    const [isApproveLoading, setIsApproveLoading] = useState(false)
     const { state } = useGlobalState()
     const { user } = state
     const isOwner = booking.io_id === user.id
@@ -52,13 +53,25 @@ export default function TradeCalendarStatusPanel({ booking, userDetails, getBook
         if(isHourBefore && status === 3) return <Pickup isOwner={isOwner} updateBookingStatus={updateBookingStatus} booking={booking} userDetails={userDetails} setReportModalVisible={setReportModalVisible}/>
         switch(status){
             case 1 : {
-                return <StatusOne isOwner={isOwner} updateBookingStatus={updateBookingStatus} booking={booking} approveBooking={approveBooking}/>
+                return <StatusOne 
+                isOwner={isOwner} 
+                updateBookingStatus={updateBookingStatus} 
+                booking={booking} 
+                approveBooking={approveBooking} 
+                isLoading={isApproveLoading}/>
             }
             case 2 : {
-                return <StatusTwo isOwner={isOwner} updateBookingStatus={updateBookingStatus} booking={booking}/>
+                return <StatusTwo 
+                isOwner={isOwner} 
+                updateBookingStatus={updateBookingStatus} 
+                booking={booking}/>
             }
             case 3 : {
-                return <StatusThree isOwner={isOwner} updateBookingStatus={updateBookingStatus} booking={booking} userDetails={userDetails} />
+                return <StatusThree 
+                isOwner={isOwner} 
+                updateBookingStatus={updateBookingStatus} 
+                booking={booking} 
+                userDetails={userDetails} />
             }
             case 4 : {
                 return (
@@ -117,14 +130,17 @@ export default function TradeCalendarStatusPanel({ booking, userDetails, getBook
         }
     }
     const approveBooking = async () => {
+        setIsApproveLoading(true)
         try{
             const { data, status} = await Instance.get(`/booking/approve?b_id=${booking.b_id}`)
             console.log(data,status)
+            setIsApproveLoading(false)
             setStatus(3)
             getBookings()
         } catch(err) {
+            setIsApproveLoading(false)
             console.log(err.response)
-        }
+        } 
     }
 
     const finishBooking = async () => {
