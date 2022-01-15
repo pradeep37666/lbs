@@ -41,7 +41,7 @@ export default function Login() {
             dispatch({ type: 'setUser', data: response.data.user })
         }catch(error){
             console.log(error)
-            setLoginError("An error occurred whilst logging in, please try again")
+            setLoginError("An error occurred while logging in, please try again")
             setIsLoading(false)
         } 
     }
@@ -114,6 +114,7 @@ export default function Login() {
                     isLoading={isLoading} 
                     errorMessage={loginError} 
                     onClick={(e) => handleSubmit(e)} 
+                    isDisabled={!email || !password}
                     />
                 </form>
                 <Link to="/forgotpassword">

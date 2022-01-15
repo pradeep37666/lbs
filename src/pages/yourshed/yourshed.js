@@ -18,7 +18,6 @@ export default function Yourshed() {
 useEffect(()=>{
     instance.get(`/items/findByUid?u_id=${user.id}`)
       .then(({data} ) => {
-        //console.log("response",data)
         setItems(data);
         setLoading(false);
       })

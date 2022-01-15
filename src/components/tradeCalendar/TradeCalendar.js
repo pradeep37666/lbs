@@ -20,7 +20,7 @@ export default function TradeCalendar({ borrowerBookingItems, lenderBookingItems
         setCurrentDate(currentDate)
         setCurrentMonth(currentMonth)
         setCurrentYear(currentYear)
-        
+
     },[])
 
     useEffect(() => {
@@ -74,7 +74,7 @@ export default function TradeCalendar({ borrowerBookingItems, lenderBookingItems
     const monthArray = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
 
     const renderDates = () => {
-        if(!currentMonth || !currentYear || !currentDate) return
+        if(currentMonth === undefined || !currentYear || !currentDate) return
         const dates = getAllDays()
         if(!totalDates) setTotalDates(dates.length)
         const arr = []

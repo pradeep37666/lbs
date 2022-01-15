@@ -24,6 +24,7 @@ export default function UpdatePassword() {
     const [isUpdateLoading, setIsUpdateLoading] = useState(false)
     const [errorMessages, setErrorMessages] = useState({})
     const [showSuccess, setShowSuccess] = useState(false)
+    const [loginError, setLoginError] = useState('')
 
     useEffect(() => {
         if(Object.keys(errorMessages).length > 0){
@@ -43,9 +44,11 @@ export default function UpdatePassword() {
                 password: currentPassword
             })
             setIsLoginLoading(false)
+            setLoginError('')
             setCurrentPage('New Password')
         } catch(err){
-            console.log(err)
+            const incorrectPassword = err.response.status === 404
+            setLoginError(incorrectPassword ? 'Incorrect password' : 'Something went wrong, please try again')
             setIsLoginLoading(false)
         }
     }
@@ -107,6 +110,7 @@ export default function UpdatePassword() {
                     onClick={loginUser}
                     text="Next"
                     isLoading={isLoginLoading}
+                    errorMessage={loginError}
                     />
                 </div>
 
@@ -137,7 +141,7 @@ export default function UpdatePassword() {
                     />
 
                     <Button 
-                    isDisabled={!password || !confirmPassword}
+                    isDisabled={!password || !confirmPassword || password !== confirmPassword}
                     text="Update Password"
                     isLoading={isUpdateLoading}
                     onClick={updatePassword}

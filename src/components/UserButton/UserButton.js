@@ -23,11 +23,10 @@ export default function UserButton() {
     const history = useHistory()
 
     const [menuOpen, setMenuOpen] = useState(false)
-
     const handleLogout = async () => {
         localStorage.removeItem('token')
         dispatch({ type: 'setUser', data: null })
-        const res = await CometChat.logout()
+        await CometChat.logout()
         history.push({ pathname: '/' })
     }
 

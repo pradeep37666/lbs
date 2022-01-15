@@ -13,6 +13,8 @@ export default function TradeCalendarItemContainer({ bookingItem, setSelectedBoo
     const itemImage = bookings[0].items_pictures.split(',')[0]
     const isLend = bookings[0].io_id === user.id
 
+    console.log('aa', totalDates)
+
     const renderBookings = () => {        
         return bookings.map(( booking, index) => {
             const prevBookings = bookings.slice(0, index)

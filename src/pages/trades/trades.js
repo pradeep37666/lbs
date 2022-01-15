@@ -99,13 +99,11 @@ export default function Trades() {
             onClick={() => setReviewModalVisible(false)}  
             booking={selectedBooking} />
             <div className="UserShedWrapper" style={{ paddingRight: 0}}>
-                { !isMobile && <UserShedNav 
+                { !isMobile && 
+                <UserShedNav 
                 setAccountContent={setAccountContent}
                 accountContent={accountContent}
-                // style={{ width: '15%'}}
-                style={{ marginRight: '1rem' }}
                 />}
-
                 <div className="TradesContainer" style={ isLoading ? { display: 'flex', justifyContent: 'center', alignItems: 'center'} : noBookings ? { width: '100%'} : null}>
                     { isLoading ? (
                         <CircularProgress color="inherit" />
@@ -139,7 +137,7 @@ export default function Trades() {
                 ) : (
                      selectedBooking && <TradeSidebar getBookings={getBookings} booking={selectedBooking} setReportModalVisible={setReportModalVisible} setReviewModalVisible={setReviewModalVisible}/>
                 )}
-                
+                {/* </div> */}
             </div>
         </PageWrapper>
     )
