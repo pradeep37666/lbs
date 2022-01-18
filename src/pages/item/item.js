@@ -96,7 +96,6 @@ export default function Item() {
     const getItemReviews = async (id) => {
         try{
             const { data, status } = await Instance.get(`/comments/findByIid?i_id=${id}`)
-            console.log(data)
             setReviews(data)
         } catch(err){
             console.log(err)
@@ -113,7 +112,6 @@ export default function Item() {
     
             Geocode.fromAddress(item.suburb)
                 .then((response) => {
-                    console.log(response)
                     setApprox({
                         center: {
                             lat: response.results[0].geometry.location.lat,
@@ -154,8 +152,6 @@ export default function Item() {
         }
     }
     const handleFavourite = () => {
-        console.log("posted favourite item ", item)
-        console.log("favourited", favourited)
         if (!favourited) {
             Instance.post(`/liked/save`, { i_id: item.i_id })
                 .then((data) => {
