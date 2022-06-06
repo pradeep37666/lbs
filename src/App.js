@@ -2,13 +2,13 @@ import React, { useReducer, useEffect, useState } from 'react';
 import './App.css';
 import Home from './pages/home/home.js';
 import ItemPage from './pages/item/item.js';
-import SearchPage from './pages/search/search.js';
-import LoginPage from './pages/login/login.js';
+import Search from './pages/search/search';
+import Login from './pages/login/login'
 import RegisterPage from './pages/register/register.js';
 import AccountPage from './pages/account/account.js';
 import PostItem from './pages/postitem/postitem';
 import TradesPage from './pages/trades/trades.js';
-import MessagesPage from './pages/messages/messages.js';
+import Messages from './pages/messages/messages.js'
 import YourshedPage from './pages/yourshed/yourshed.js';
 import FavouritesPage from './pages/favourites/favourites.js';
 import UpgradeLender from './pages/account/UpgradeLender/UpgradeLender';
@@ -20,12 +20,13 @@ import {
   Route,
   Redirect
 } from "react-router-dom";
-import reducer from './util/reducer'
+import reducer from './util/reducers/globalStateReducer'
 import { CometChat } from '@cometchat-pro/chat'
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 import EditItemPage from './pages/editItem/EditItemPage';
 import Instance from './util/axios';
+import ForgotPassword from './pages/ForgotPassword/ForgotPassword';
 
 export const GlobalStateContext = React.createContext()
 
@@ -40,6 +41,7 @@ function App() {
   const token = localStorage.getItem('token')
 
   useEffect(() => {
+    console.log('firing')
     if (!token) {
       setLoadingUser(false)
       return
@@ -50,9 +52,12 @@ function App() {
 
   const getCurrentUser = async () => {
     try{
+      console.log('user going in', user)
+      console.log('token', token)
       const { data } = await Instance.get('/user/me')
       dispatch({ type: 'setUser', data })
     } catch(err) {
+      console.log('error loading user', err.response)
       localStorage.removeItem('token')
     } finally {
       setLoadingUser(false)
@@ -103,7 +108,7 @@ function App() {
       <Route
         {...rest}
         render={(props) =>
-          user && user.bsb
+          user && user.isLender
             ? <Redirect to={{ pathname: '/user/account', state: { from: props.location } }} />
             : <Component {...props} />}
       />
@@ -119,10 +124,11 @@ function App() {
           <ScrollToTop>
             <Route exact path="/" component={Home} />
             <Route exact path="/item/:itemId" component={ItemPage} />
-            <Route exact path="/search/:searchParams?" component={SearchPage} />
+            <Route exact path="/search/:searchParams?" component={Search} />
+            <Route exact path="/forgotpassword" component={ForgotPassword} />
             <AuthRoute exact path="/item/edit/:itemId" component={EditItemPage} />
             <AuthRoute path="/user/trades" component={TradesPage} />
-            <AuthRoute path="/user/messages" component={MessagesPage} />
+            <AuthRoute path="/user/messages" component={Messages} />
             <AuthRoute path="/user/your_shed" component={YourshedPage} />
             <AuthRoute path="/user/favourites" component={FavouritesPage} />
             <AuthRoute path="/user/account" component={AccountPage} />
@@ -135,7 +141,7 @@ function App() {
             <AuthRoute path="/postitem" component={PostItem}/>
 
             {/* Routes for login/register should redirect to user page if user is logged in */}
-            <AuthRedirectRoute path="/login" component={LoginPage} />
+            <AuthRedirectRoute path="/login" component={Login} />
             <Route path="/register" component={RegisterPage} />
           </ScrollToTop>
 

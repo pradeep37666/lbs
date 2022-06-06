@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react'
 import TimeSlotPicker from '../timeSlotPicker/timeSlotPicker'
-import { ApplicationContext } from '../AvailabilityModal/AvailabilityModal'
+import { ApplicationContext } from '../modals/AvailabilityModal/AvailabilityModal'
 import compareDates from '../../util/compareDates'
 import getAvailability from '../../util/getAvailability'
 

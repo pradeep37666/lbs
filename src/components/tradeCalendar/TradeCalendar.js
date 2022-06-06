@@ -1,8 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import getDateIndex from '../../util/getDateIndex'
 import './TradeCalendar.css'
-import TradeCalendarItem from './TradeCalendarItem'
-import getDateObject from '../../util/getDateObject'
 import TradeCalendarItemContainer from './tradeCalendarItemContainer/TradeCalendarItemContainer'
 import compareDates from '../../util/compareDates'
 import { isMobile } from 'react-device-detect'
@@ -13,7 +10,8 @@ export default function TradeCalendar({ borrowerBookingItems, lenderBookingItems
     const [currentMonth, setCurrentMonth] = useState()
     const [currentYear, setCurrentYear] = useState()
     const [totalDates, setTotalDates] = useState()
-    
+
+
     useEffect(() => {
         const today = new Date()
         const currentDate = today.getDate()
@@ -22,17 +20,14 @@ export default function TradeCalendar({ borrowerBookingItems, lenderBookingItems
         setCurrentDate(currentDate)
         setCurrentMonth(currentMonth)
         setCurrentYear(currentYear)
-        
+
     },[])
 
     useEffect(() => {
-        console.log('a')
         if(!tradeCalendarRef.current) return
         if(currentDate < 7) return
-        console.log('b')
         tradeCalendarRef.current.scrollTo((((currentDate) * 2) - 8) * (isMobile ? 25 : 50), 0)
-    },[tradeCalendarRef.current])
-
+    },[currentYear])
    
     function getDaysInMonth(month, year) {
         var date = new Date(year, month, 1);
@@ -79,7 +74,7 @@ export default function TradeCalendar({ borrowerBookingItems, lenderBookingItems
     const monthArray = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
 
     const renderDates = () => {
-        if(!currentMonth || !currentYear || !currentDate) return
+        if(currentMonth === undefined || !currentYear || !currentDate) return
         const dates = getAllDays()
         if(!totalDates) setTotalDates(dates.length)
         const arr = []

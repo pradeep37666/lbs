@@ -1,5 +1,16 @@
 .TradesContainer {
-  width: 60%;
+  min-width: 55%;
+  /* display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: 100%; */
+}
+
+.UserShed__MainContent {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
 }
 
 .TradesPageWrapper {

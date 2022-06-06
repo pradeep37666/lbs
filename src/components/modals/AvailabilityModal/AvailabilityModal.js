@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
-import Instance from '../../util/axios'
-import AvailabilityCalendar from '../availabilityCalendar/AvailabilityCalendar'
-import DisabledAvailabilityCalendar from '../DisabledAvailabilityCalendar/DisabledAvailabilityCalendar'
+import Instance from '../../../util/axios'
+import AvailabilityCalendar from '../../availabilityCalendar/AvailabilityCalendar'
+import DisabledAvailabilityCalendar from '../../DisabledAvailabilityCalendar/DisabledAvailabilityCalendar'
 import './AvailabilityModal.css'
 
 export const ApplicationContext = React.createContext()

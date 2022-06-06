@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { Suspense, useEffect, useState } from 'react'
 import './trades.css'
 import PageWrapper from '../../components/pageWrapper/pageWrapper'
 import UserShedNav from '../../components/UserShedNav/UserShedNav'
@@ -7,20 +7,20 @@ import TradeCalendar from '../../components/tradeCalendar/TradeCalendar'
 import TradeSidebar from '../../components/TradeSidebar/TradeSidebar'
 import { isMobile } from 'react-device-detect'
 import { CircularProgress, SwipeableDrawer } from '@material-ui/core'
-import TradeFailed from '../../components/TradeFailed/TradeFailed'
+import TradeFailed from '../../components/modals/TradeFailed/TradeFailed'
 import userEvent from '@testing-library/user-event'
 import useGlobalState from '../../util/useGlobalState'
 
-import ReviewBorrower from '../../components/ReviewBorrower/ReviewBorrower'
+import ReviewBorrower from '../../components/modals/ReviewBorrower/ReviewBorrower'
 import { useHistory } from 'react-router'
 import NoContent from '../../components/NoContent/NoContent'
-import ReviewLender from '../../components/reviewLender/ReviewLender'
+import ReviewLender from '../../components/modals/ReviewLender/ReviewLender'
 
 export default function Trades() {
     const { state } = useGlobalState()
     const { user } = state
     const history = useHistory()
-    const [reportModalVisible, setReportModalVisible] = useState(true)
+    const [reportModalVisible, setReportModalVisible] = useState(false)
     const [reviewModalVisible, setReviewModalVisible] = useState(false)
     const [accountContent, setAccountContent] = useState('Trades')
     const [selectedBooking, setSelectedBooking] = useState(null)
@@ -91,17 +91,19 @@ export default function Trades() {
                 />  
             }
             <ReviewLender 
-            // open={reviewModalVisible && !isLender}
-            open={reviewModalVisible}
+            open={reviewModalVisible && !isLender}
             setReviewModalVisible={setReviewModalVisible}
             booking={selectedBooking}/>
             <ReviewBorrower 
             open={reviewModalVisible && isLender}
             onClick={() => setReviewModalVisible(false)}  
             booking={selectedBooking} />
-            <div className="UserShedWrapper">
-                { !isMobile && <UserShedNav setAccountContent={setAccountContent} accountContent={accountContent}/>}
-
+            <div className="UserShedWrapper" style={{ paddingRight: 0}}>
+                { !isMobile && 
+                <UserShedNav 
+                setAccountContent={setAccountContent}
+                accountContent={accountContent}
+                />}
                 <div className="TradesContainer" style={ isLoading ? { display: 'flex', justifyContent: 'center', alignItems: 'center'} : noBookings ? { width: '100%'} : null}>
                     { isLoading ? (
                         <CircularProgress color="inherit" />
@@ -135,7 +137,7 @@ export default function Trades() {
                 ) : (
                      selectedBooking && <TradeSidebar getBookings={getBookings} booking={selectedBooking} setReportModalVisible={setReportModalVisible} setReviewModalVisible={setReviewModalVisible}/>
                 )}
-                
+                {/* </div> */}
             </div>
         </PageWrapper>
     )

@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
 
-export default function DropOff({ booking, isOwner, updateBookingStatus,  userDetails, setReviewModalVisible, setReportModalVisible}) {
+export default function DropOff({ booking, isOwner, updateBookingStatus,  userDetails, setReviewModalVisible, setReportModalVisible, finishBooking}) {
     const [noPressed, setNoPressed] = useState()
+
+
 
     return (
         <div className="TradeStatusContentContainer">
@@ -20,14 +22,15 @@ export default function DropOff({ booking, isOwner, updateBookingStatus,  userDe
                     </>
                 ) : (
                     <>
-                        <span>Has {userDetails.fullName} dropped off the item?</span>
+                        <span>Has {`${userDetails.firstName} ${userDetails.lastName}`} dropped off the item?</span>
                         <div className="TradeStatusButtonContainer">
                         
                             <div className="TradeStatusDeclineButton" onClick={() => setNoPressed(true)}>
                                 <span>No</span>
                             </div>
-                            <div className="TradeStatusApproveButton" onClick={() => {
-                                updateBookingStatus(7)
+                            <div className="TradeStatusApproveButton" onClick={async () => {
+                                await finishBooking()
+                                await updateBookingStatus(7)
                                 setReviewModalVisible(true)
                             }}>
                                 <span>Yes</span>

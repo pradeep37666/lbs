@@ -4,7 +4,7 @@
       <rect width="144" height="144"/>
     </clipPath>
   </defs>
-  <g id="Camera_icon" data-name="Camera icon" clip-path="url(#clip-Camera_icon)">
+  <g id="Camera_icon" data-name="Camera icon" clipPath="url(#clip-Camera_icon)">
     <g id="Group_2446" data-name="Group 2446" transform="translate(0 11)">
       <path id="Path_121" data-name="Path 121" d="M535.281,749.514h-95.5a24.279,24.279,0,0,1-24.25-24.25V676.325a24.279,24.279,0,0,1,24.25-24.25h95.5a24.279,24.279,0,0,1,24.25,24.25v48.939A24.279,24.279,0,0,1,535.281,749.514Zm-95.5-92.42a19.252,19.252,0,0,0-19.227,19.231v48.939a19.249,19.249,0,0,0,19.227,19.227h95.5a19.248,19.248,0,0,0,19.227-19.227V676.325a19.252,19.252,0,0,0-19.227-19.231Z" transform="translate(-415.531 -628.122)" fill="#b03b4b"/>
       <path id="Path_122" data-name="Path 122" d="M428.287,667.1v-.672a15.553,15.553,0,0,1,15.536-15.539h43.172A15.551,15.551,0,0,1,502.53,666.43v.672h5.023v-.672a20.581,20.581,0,0,0-20.559-20.559H443.823a20.581,20.581,0,0,0-20.559,20.559v.672Z" transform="translate(-393.408 -645.871)" fill="#b03b4b"/>

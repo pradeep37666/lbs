@@ -5,9 +5,9 @@ import { CircularProgress, Dialog, DialogContent, IconButton } from "@material-u
 import { Close } from "@material-ui/icons";
 import { makeStyles } from "@material-ui/styles";
 import Checkbox from "@material-ui/core/Checkbox";
-import Instance from '../../util/axios'
+import Instance from '../../../util/axios'
 import userEvent from "@testing-library/user-event";
-import useGlobalState from "../../util/useGlobalState";
+import useGlobalState from "../../../util/useGlobalState";
 
 function TradeFailed({ onClick, isLender, open, booking, getBookings, setReportModalVisible }) {
   const { state } = useGlobalState()

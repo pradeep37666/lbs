@@ -1,8 +1,8 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { ApplicationContext } from '../../pages/application/Application'
-import {ReactComponent as StarFilled} from '../../assets/Icons/StarFilled.svg'
+import checkIfLeapYear from '../../util/dateUtils/checkIfLeapYear'
 import './ItemOverview.css'
-import getDateIndex from '../../util/getDateIndex'
+import getDateIndex from '../../util/dateUtils/getDateIndex'
 import Arrow from '../../assets/Icons/Arrow'
 import ApplicationItemCard from './ApplicationItemCard'
 import instance from '../../util/axios'
@@ -10,79 +10,71 @@ import { useHistory } from 'react-router'
 import { CometChat } from '@cometchat-pro/chat'
 import useGlobalState from '../../util/useGlobalState'
 import axios from 'axios'
+import Button from '../Button/Button'
+import getDateSuffix from '../../util/dateUtils/getDateSuffix'
 
 export default function ItemOverview() {
+    const [isLoading, setIsLoading] = useState(false)
     const { state, dispatch } = useContext(ApplicationContext)
     const globalState = useGlobalState()
     const user  = globalState.state.user
-    const { item, confirmedEnd, confirmedStart, deliverySelected, pickupSelected, address, currentYear, bookingPriceCalculator } = state
+    const { item, confirmedEnd, confirmedStart, deliverySelected, pickupSelected, address, currentYear, bookingPriceCalculator, currentMonth } = state
 
     const history = useHistory()
     const dayArray = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
     const monthArray = ["January", "February", "March", "April","May", "June", "July", "August", "September", "October", "November", "December"]
-
-    const getDateSuffix = (confirmedDate) => {
-        const date = confirmedDate.dateObj.getDate()
-        const dateString = date.toString()
-        const lastChar = dateString.charAt(dateString.length - 1)
-
-        switch(lastChar){
-        case '1' : {
-            if(date > 10 && date < 20){
-                return date + 'th'
-            }
-            return date + 'st'
-        }
-        case '2' : {
-            if(date > 10 && date < 20){
-                return date + 'th'
-            }
-            return date + 'nd'
-        }
-        case '3' : {
-            if(date > 10 && date < 20){
-                return date + 'th'
-            }
-            return date + 'rd'
-        }
-        default : return date + 'th'
-        }
-    }
     
     const saveBooking = async () => {
-
-        let deliveryOption = (deliverySelected && pickupSelected) ? 'both' : deliverySelected ? 'delivery' : 'pickup'
-        if(!deliverySelected && !pickupSelected) {
-            deliveryOption = 'none'
-        }
-        const startIndex = (getDateIndex(confirmedStart.dateObj) * 2) + (confirmedStart.timeslot === 'morning' ? 1 : 2)
-        const endIndex = (getDateIndex(confirmedEnd.dateObj) * 2) + (confirmedEnd.timeslot === 'morning' ? 1 : 2)
-        confirmedStart.dateObj.setHours(confirmedStart?.am ? 6 : 12)
-        
-        const price = bookingPriceCalculator.getTotalPrice()
-
-
+        const bookingInfo = getBookingInfo()
+        console.log('booking info', bookingInfo)
+        setIsLoading(true)
         try{
-            await instance.post(`booking/save/${confirmedStart.dateObj.getTime()}`, {
-                i_id: item.i_id,
-                io_id: item.u_id,
-                deliveryOption,
-                startDate: startIndex,
-                endDate: endIndex,
-                year: currentYear,
-                address: address ? address : user.address,
-                price
-            })
-            sendEnquiry(item)
+            await instance.post(`booking/save/${confirmedStart.dateObj.getTime()}`, bookingInfo )
+            await sendEnquiry(item)
+            setIsLoading(false)
             history.push({ 
                 pathname: `/item/${item.i_id}`, 
-                state: { bookingCreated: true, price }
+                state: { bookingCreated: true, price: bookingInfo.price }
             })
         } catch(e) {
+            setIsLoading(false)
             console.log(e.response)
         }
-        
     }
+
+    const getBookingInfo = () => {
+        let deliveryOption = (deliverySelected && pickupSelected) ? 'both' : deliverySelected ? 'delivery' : 'pickup'
+        if(!deliverySelected && !pickupSelected) deliveryOption = 'none'
+
+        const startIndex = (getDateIndex(confirmedStart))
+        let endIndex = (getDateIndex(confirmedEnd))
+        console.log('start', startIndex, 'end', endIndex)
+
+        let bookingYear = currentYear
+        if(currentMonth >= 10 && startIndex < 200){
+            bookingYear += 1
+        }
+
+        if((endIndex < startIndex) && (startIndex <= checkIfLeapYear(currentYear) ? 730 : 732)){
+            endIndex += checkIfLeapYear(currentYear) ? 731 : 729
+        }
+        const bookingStartTime = new Date(confirmedStart.dateObj.getTime())
+        bookingStartTime.setHours(confirmedStart?.am ? 6 : 12)
+
+        const price = bookingPriceCalculator.getTotalPrice()
+
+        return ({
+            i_id: item.i_id,
+            io_id: item.u_id,
+            deliveryOption,
+            startDate: startIndex,
+            endDate: endIndex,
+            year: bookingYear,
+            address: address ? address : user.address ? user.address : '',
+            price   
+        })
+    }
+
 
     const unblockUser = async () => {
         var blockedUsersRequest = new CometChat.BlockedUsersRequestBuilder()
@@ -119,7 +111,7 @@ export default function ItemOverview() {
 
     const sendEnquiry = async (item) => {
         await unblockUser()
-        const textMessage = new CometChat.TextMessage(item.u_id, `${user.fullName} has enquired about your ${item.title}`, CometChat.RECEIVER_TYPE.USER)
+        const textMessage = new CometChat.TextMessage(item.u_id, `${user.firstName} ${user.lastName} has enquired about your ${item.title}`, CometChat.RECEIVER_TYPE.USER)
         textMessage.setMetadata({ enquiry: true, itemName: item.title })
         try{
             const res = await CometChat.sendMessage(textMessage)
@@ -184,7 +176,7 @@ export default function ItemOverview() {
                             <span>{dayArray[confirmedStart.dateObj.getDay()]}</span>
                         </div>
                         <div>
-                            <span>{ getDateSuffix(confirmedStart) } </span>
+                            <span>{ getDateSuffix(confirmedStart.dateObj) } </span>
                             <span>{ monthArray[confirmedStart.dateObj.getMonth()]}</span>
                         </div>
                     </div>
@@ -198,7 +190,7 @@ export default function ItemOverview() {
                             <span>{dayArray[confirmedEnd.dateObj.getDay()]}</span>
                         </div>
                         <div>
-                            <span>{ getDateSuffix(confirmedEnd) } </span>
+                            <span>{ getDateSuffix(confirmedEnd.dateObj) } </span>
                             <span>{ monthArray[confirmedEnd.dateObj.getMonth()]} </span>
                         </div>
                     </div>
@@ -206,9 +198,12 @@ export default function ItemOverview() {
                 </div>
                 
             </div>
-            <div className="ItemOverviewSendButton" onClick={saveBooking}>
-                <span className="ItemOverviewSendText">Send</span>
-            </div>
+            <Button 
+            onClick={saveBooking}
+            text="Send"
+            isLoading={isLoading}
+            style={{ width: '75%', alignSelf: 'center', marginTop: '1rem'}}
+            />
                 
             
             </div>

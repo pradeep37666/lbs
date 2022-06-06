@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import PageWrapper from '../../components/pageWrapper/pageWrapper.js';
 import ReviewCard from '../../components/reviewCard/reviewCard.js';
 import ItemImageModal from '../../components/itemImagesModal/imagesModal.js';
-import ItemReviewModal from '../../components/reviewModal/reviewModal.js';
+import ItemReviewModal from '../../components/modals/ReviewModal/ReviewModal.js';
 import './item.css';
 import Location from './../../assets/Icons/LocationIcon.svg';
 import Delivery from './../../assets/Icons/DeliveryIcon.svg';
@@ -20,14 +20,14 @@ import Instance from '../../util/axios';
 import { useParams, useLocation, useHistory } from 'react-router';
 import useGlobalState from "../../util/useGlobalState"
 import CircularProgress from '@material-ui/core/CircularProgress';
-import ApplicationModal from '../../components/applicationModal/ApplicationModal'
+import ApplicationModal from '../../components/modals/ApplicationModal/ApplicationModal'
 import getImage from '../../util/getImage.js';
 import NoContent2 from '../../assets/Images/NoContent2.png'
 import { Avatar } from '@material-ui/core';
 import MissingProfile from '../../assets/Icons/MissingProfileIcon.png'
 
 import { isMobile } from 'react-device-detect'
-import AvailabilityModal from '../../components/AvailabilityModal/AvailabilityModal.js';
+import AvailabilityModal from '../../components/modals/AvailabilityModal/AvailabilityModal.js';
 import NoReviews from '../../components/NoReviews/NoReviews.js';
 
 export default function Item() {
@@ -96,7 +96,6 @@ export default function Item() {
     const getItemReviews = async (id) => {
         try{
             const { data, status } = await Instance.get(`/comments/findByIid?i_id=${id}`)
-            console.log(data)
             setReviews(data)
         } catch(err){
             console.log(err)
@@ -113,7 +112,6 @@ export default function Item() {
     
             Geocode.fromAddress(item.suburb)
                 .then((response) => {
-                    console.log(response)
                     setApprox({
                         center: {
                             lat: response.results[0].geometry.location.lat,
@@ -154,8 +152,6 @@ export default function Item() {
         }
     }
     const handleFavourite = () => {
-        console.log("posted favourite item ", item)
-        console.log("favourited", favourited)
         if (!favourited) {
             Instance.post(`/liked/save`, { i_id: item.i_id })
                 .then((data) => {
@@ -214,7 +210,7 @@ export default function Item() {
         console.log(JSON.stringify(item, null,'\t'))
     }
     //-------------------------------------------------//
-
+    console.log('item owner', itemOwner)
     return (
         <PageWrapper>
             {ImageModal && <ItemImageModal setModal={setImageModal} images={itemPictures} modal={ImageModal} /> }
@@ -324,7 +320,7 @@ export default function Item() {
                             <div className="RatingLenderFlex">
                                 <Avatar src={handleItemImage()} alt="" className="ProfileIcon" />
                                 <div>
-                                    <div className="RatingHeader">{isUserItem ? user.fullName : itemOwner ? itemOwner.fullName : ''}</div>
+                                    <div className="RatingHeader">{isUserItem ? `${user.firstName} ${user.lastName}` : itemOwner ? `${itemOwner.firstName} ${itemOwner.lastName}` : ''}</div>
                                     <div className="RatingStarFlex">{isUserItem ? user.lender_rating : itemOwner && itemOwner.lender_rating}/5 <StarFilled fill='#e9d8b4' className="StarIconRating" /></div>
 
                                 </div>

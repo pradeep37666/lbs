@@ -2,7 +2,7 @@ import React, { useContext} from 'react'
 
 import DisabledCalendarItem from './DisabledCalendarItem';
 import DisabledCalendarRow from './DisabledCalendarRow';
-import { ApplicationContext } from '../AvailabilityModal/AvailabilityModal'
+import { ApplicationContext } from '../modals/AvailabilityModal/AvailabilityModal'
 
 
 export default function DisabledAvailabilityCalendar({ month, year, }) {
@@ -56,19 +56,9 @@ export default function DisabledAvailabilityCalendar({ month, year, }) {
         return rows
     }
 
-    const renderCurrentYearLabel = () => {
-        if(currentMonth === month){
-            return <span className="CalendarCurrentYearLabel">{currentYear}</span>
-        }
-        if(monthArray[month] === 'January'){
-            return <span>{currentYear + 1}</span>
-        }
-    }
-
     const monthArray = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
     return (
         <div className="CalendarContainer">
-            { renderCurrentYearLabel() }
             <div className="CalendarInfoContainer">
                 <span className="CalendarMonth">{monthArray[month]} </span>
                 <span className="CalendarYear">{year}</span>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useReducer, createContext } from 'react'
 import PageWrapper from '../../../components/pageWrapper/pageWrapper'
 import Banner from '../../../components/bannerText/bannerText'
 import BankDetails from '../../../components/FormComponents/BankDetails'
@@ -9,31 +9,30 @@ import { ReactComponent as Logo } from '../../../assets/Logos/LogoRed.svg';
 import { useHistory } from 'react-router'
 import useGlobalState from '../../../util/useGlobalState'
 import getSuburb from '../../../util/getSuburb'
+import lenderUpgradeReducer from '../../../util/reducers/lenderUpgradeReducer'
+
+const FormContext = createContext()
 
 export default function UpgradeLender() {
-    const dispatch = useGlobalState().dispatch
+    const [isUpgradeLoading, setIsUpgradeLoading] = useState(false)
+    const [state, dispatch] = useReducer(lenderUpgradeReducer, { 
+        isLenderUpgrade: true, 
+        currentPage: 'Bank Details',
+        dateOfBirth: new Date(1990, 1, 1), 
+        availability: new Array(14).fill(0)
+    })
+    const globalDispatch = useGlobalState().dispatch
     const globalState = useGlobalState().state
     const { user } = globalState
-
     const history = useHistory()
-    const [dayOfBirth, setDayOfBirth] = useState()
-    const [monthOfBirth, setMonthOfBirth] = useState()
-    const [yearOfBirth, setYearOfBirth] = useState()
-    const [page, setPage] = useState('Bank Details')
+    const { currentPage, address, accountNumber, BSB, dateOfBirth, availability } = state
 
-    const [accNumber, setAccNumber] = useState("")
-    const [bsb, setBsb] = useState("")
+    useEffect(() => {
+        window.scrollTo(0,0)
+    }, [currentPage]) 
 
-    const [address, setAddress] = useState("")
-    const [availability, setAvailability] = useState('00000000000000')
-
-    const [validated, setValidated] = useState(false)
-
-    const handleNextPage = (newPage) => {
-        setPage(newPage)
-        window.scrollTo(0, 0)
-    }
-
+    
+   
     const getComplete = () => {
         return (
             <div className="RegistrationWrapper">
@@ -51,50 +50,40 @@ export default function UpgradeLender() {
         )
     }
 
-    const submitUpgrade = () => {
-        createStripeAccount()
-        // return
-        let suburb
-        address.address_components ? suburb = getSuburb(address.address_components) : suburb = user.suburb
-        
-        const data = {
-            account_number: accNumber ? accNumber : user.account_number,
-            bsb: bsb ? bsb : user.bsb,
-            address: address.formatted_address ? address.formatted_address : user.address,
+    const submitUpgrade = async () => {
+        setIsUpgradeLoading(true)
+        await createStripeAccount()
+        const suburb =  getSuburb(address.address_components) 
+        const userData = {
+            address: address.formatted_address,
             suburb: suburb,
-            lat: address ? address.lat : user.lat,
-            lng: address ? address.lng : user.lng,
-            available: availability ? availability : user.available
+            lat: address.lat,
+            lng: address.lng,
+            available: availability.join(''),
+            isLender: true
         }
 
-        Instance.put('user/update', data)
-            .then((response) => {
-                console.log(response)
-                let newData = user
-                newData.account_number = data.account_number
-                newData.bsb = data.bsb
-                newData.address = data.address
-                newData.suburb = data.suburb
-                newData.lat = data.lat
-                newData.lng = data.lng
-                newData.available = data.available
-                dispatch({ type: 'setUser', data: newData })
-            })
-            .catch((error) => {
-                console.log(error)
-            })
+        try{
+            const { data, status } = await Instance.patch('user/update', userData)
+            setIsUpgradeLoading(false)
+            globalDispatch({ type: 'setUser', data })
 
+        } catch(err){
+            setIsUpgradeLoading(false)
+            console.log('error', err)
+        }
     }
 
     const createStripeAccount = async () => {
+
         const stripeData = {
             u_id: user.id,
             email: user.email,
-            bsb,
-            accountNumber: accNumber,
-            day: parseInt(dayOfBirth),
-            month: parseInt(monthOfBirth),
-            year: parseInt(yearOfBirth),
+            bsb: BSB,
+            accountNumber,
+            day: dateOfBirth.getDate(),
+            month: dateOfBirth.getMonth(),
+            year: dateOfBirth.getFullYear(),
             firstName: user.firstName,
             lastName: user.lastName,
             line1: address.address_components[0].long_name + ' ' + address.address_components[1].long_name,
@@ -103,8 +92,7 @@ export default function UpgradeLender() {
             city:   address.address_components[3].long_name,
             postal_code: address.address_components[6].long_name,
         }
-        console.log('stripe data', stripeData)
-        console.log('user', user)
+        console.log(stripeData)
         try{
             const { data, status } = await Instance.post('/stripe/createAccount', stripeData)
             console.log('stripe', data, status)
@@ -115,36 +103,16 @@ export default function UpgradeLender() {
     }
 
     const renderSwitch = () => {
-        switch (page) {
+        switch (currentPage) {
             case 'Bank Details':
-                return <BankDetails
-                    validated={validated}
-                    handleNextPage={handleNextPage}
-                    dayOfBirth={dayOfBirth}
-                    monthOfBirth={monthOfBirth}
-                    yearOfBirth={yearOfBirth}
-                    setDayOfBirth={setDayOfBirth}
-                    setMonthOfBirth={setMonthOfBirth}
-                    setYearOfBirth={setYearOfBirth}
-                    setAccNumber={setAccNumber}
-                    setBsb={setBsb}
-                    setValidated={setValidated}
-                    isUpgrade={true}
-                    lender={true}
-                />
+                return <BankDetails context={FormContext} />
             case 'Location Details':
-                return <LocationDetails
-                    validated={validated}
-                    handleNextPage={handleNextPage}
-                    setAddress={setAddress}
-                />
+                return <LocationDetails context={FormContext} />
             case 'Availability':
                 return <Availability
-                    validated={validated}
-                    handleNextPage={handleNextPage}
-                    setAvailability={setAvailability}
-                    isUpgrade={true}
+                    context={FormContext}
                     submitUpgrade={submitUpgrade}
+                    isUpgradeLoading={isUpgradeLoading}
                 />
             case 'Complete!':
                 return getComplete()
@@ -153,34 +121,14 @@ export default function UpgradeLender() {
         }
     }
 
-    useEffect(() => {
-        switch (page) {
-            case 'Bank Details':
-                if (accNumber && bsb) {
-                    setValidated(true)
-                } else setValidated(false)
-                break
-            case 'Location Details':
-                if (address) {
-                    setValidated(true)
-                } else setValidated(false)
-                break
-            case 'Availability':
-                if (availability !== '00000000000000') {
-                    setValidated(true)
-                } else setValidated(false)
-                break
-            default:
-                return '';
-        }
-    }, [page, accNumber, bsb, address, availability])
-
     return (
-        <PageWrapper>
-            <Banner textBold='Lender Upgrade' textNormal={page} />
+        <FormContext.Provider value={{ state, dispatch }}>
+            <PageWrapper>
+                <Banner textBold='Lender Upgrade' textNormal={currentPage} />
 
-            {renderSwitch()}
+                { renderSwitch() }
 
-        </PageWrapper>
+            </PageWrapper>
+        </FormContext.Provider>
     )
 }

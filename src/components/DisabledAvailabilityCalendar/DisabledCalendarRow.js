@@ -1,12 +1,11 @@
 import React, { useState, useContext, useEffect } from 'react'
 import DisabledCalendarItem from './DisabledCalendarItem'
 import TimeSlotPicker from '../timeSlotPicker/timeSlotPicker'
-import { ApplicationContext } from '../AvailabilityModal/AvailabilityModal'
+import { ApplicationContext } from '../modals/AvailabilityModal/AvailabilityModal'
 import compareDates from '../../util/compareDates'
 import ValidationPopup from '../ValidationPopup/ValidationPopup'
 import '../../components/FormComponents/BasicDetails'
-import getDateIndex from '../../util/getDateIndex'
-import itemCard from '../itemCard/itemCard'
+import getDateIndex from '../../util/dateUtils/getDateIndex'
 
 export default function DisabledCalendarRow({ days, isCurrentMonth }) {
     const { state, dispatch } = useContext(ApplicationContext)

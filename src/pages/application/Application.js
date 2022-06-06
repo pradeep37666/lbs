@@ -7,7 +7,7 @@ import ItemOverview from '../../components/application/ItemOverview'
 import PageWrapper from '../../components/pageWrapper/pageWrapper'
 import instance from '../../util/axios'
 import ApplicationFooter from '../../components/application/ApplicationFooter'
-import applicationReducer from '../../util/applicationReducer'
+import applicationReducer from '../../util/reducers/applicationReducer'
 import './application.css'
 import BookingPriceCalculator from '../../util/BookingPriceCalculator'
 
@@ -37,6 +37,7 @@ export default function Application() {
         })
     }, [confirmedStart, confirmedEnd])
     console.log(bookingPriceCalculator)
+    
     useEffect(() => {
         const getItem = async () => {
             const { data, status } = await instance.get(`/items/findByIid?i_id=${itemId}`)
@@ -45,7 +46,6 @@ export default function Application() {
             dispatch({ type: 'setItem', data: data.item})
             dispatch({ type: 'setItemAvailability', data: data.item.available})
             dispatch({ type: 'setYearAvailability', data: data.yearAvailability})
-            console.log(data.yearAvailability)
         }
         getItem()
 

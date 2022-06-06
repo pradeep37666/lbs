@@ -8,7 +8,7 @@ export default function StatusTwo({ isOwner, updateBookingStatus, booking }) {
         <div className="TradeStatusContentContainer">
                 { isOwner ? (
                     <div className="TradeStatusButtonContainer">
-                        <span>2 You have asked for new times from this user</span>
+                        <span>You have asked for new times from this user</span>
                     </div>
                 ) : (
                     < >

@@ -1,5 +1,5 @@
 import React from 'react';
-import './itemCard.css';
+import './itemCard.css'
 import PreviewImage from './../../assets/Images/ATVMower.png';
 import LocationIcon from './../../assets/Icons/LocationIcon.svg';
 import DeliveryIcon from './../../assets/Icons/DeliveryIcon.svg';
@@ -9,17 +9,21 @@ import { Link } from 'react-router-dom';
 import getImage from '../../util/getImage';
 
 
-export default function itemCard(props) {
-  const item = props.item;
+export default function ItemCard({ item, favourited }) {
   
   const itemPictures = item.pictures?.split(',')
   const itemSuburb = item.suburb.split(',')
+
   return (
     <div className="ItemCard">
-      {/* new prop for image link to go here later */}
-      <Link to={`/item/${item.i_id}`} item={item} style={{position:"relative"}}>
+
+      <Link to={`/item/${item.i_id}`} style={{position:"relative"}}>
         <img src={itemPictures ? getImage(itemPictures[0]) : PreviewImage} alt={item.title} className="PreviewImage"/>
-        {props.favourited&&<div className="favouriteStar"><StarFilled/></div>}
+
+        { favourited &&
+        <div className="favouriteStar">
+          <StarFilled/>
+          </div> }
       </Link>
       <div className="ItemDetailsContainer">
         <div className="ItemNameText">{item.title}</div>
@@ -39,9 +43,6 @@ export default function itemCard(props) {
           <div style={{ textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap'}}>
             {itemSuburb[0]}
           </div>
-          
-    
-          
         </div>
 
         <div className="RatingSection">

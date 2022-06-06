@@ -5,8 +5,7 @@ import { ApplicationContext } from '../../pages/application/Application'
 import compareDates from '../../util/compareDates'
 import ValidationPopup from '../ValidationPopup/ValidationPopup'
 import '../../components/FormComponents/BasicDetails'
-import getDateIndex from '../../util/getDateIndex'
-import itemCard from '../itemCard/itemCard'
+import getDateIndex from '../../util/dateUtils/getDateIndex'
 
 export default function CalendarRow({ days, isCurrentMonth }) {
     const { state, dispatch } = useContext(ApplicationContext)
@@ -86,13 +85,11 @@ export default function CalendarRow({ days, isCurrentMonth }) {
     }
 
     const validateTimeSlots = ({ am }) => {
-        const startIndex = getDateIndex(confirmedStart.dateObj)
+        const startIndex = getDateIndex(confirmedStart)
         console.log(confirmedStart.dateObj, startIndex * 2)
-        const endIndex = getDateIndex(selected)
-        // console.log("morning start" ,confirmedStart?.am, )
-        // console.log("morning end", confirmedEnd?.am )
-        const timeSlot = yearAvailability.slice((startIndex * 2) + (confirmedStart?.am ? 1 : 2), (endIndex * 2) + (am ? 2 : 3))
-        console.log('timeslot', timeSlot)
+        const endIndex = getDateIndex({ dateObj: selected, timeslot: am ? 'morning' : 'afternoon'})
+        const timeSlot = yearAvailability.slice(startIndex, endIndex)
+
         if(timeSlot.indexOf('0') > -1) { 
             setExpanded(false)
             setErrorHidden(false)

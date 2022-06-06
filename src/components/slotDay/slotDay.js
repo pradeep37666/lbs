@@ -2,35 +2,29 @@ import React from 'react';
 import './slotDay.css';
 import TimeSlotPicker from '../timeSlotPicker/timeSlotPicker';
 
-export default function SlotDay(props) {
+export default function SlotDay({ open, onClick, onMorningClick, onAfternoonClick, morningSelected, afternoonSelected, day}) {
 
-    const handleOpenSlot = () => {
-        // calls to parent to close every day, then we open just the one that was clicked on
-        props.closeAll();
-        props.setOpen(!props.open);
-    }
     const handleMorningClick = () => {
-       props.setMorning(!props.morning)
+       onMorningClick()
     }
 
     const handleAfternoonClick = () => {
-        props.setAfternoon(!props.afternoon)
+        onAfternoonClick()
     }
+    
     return (
         <div>
             <div className="DayDotsFlex">
-                <div className={`DayInactive ${props.morning || props.afternoon ? 'DayActive' : ''}`} onClick={handleOpenSlot}>
-                    {props.day}
-                    {props.open ? <div className="triangle"/>: ''}
-                    
-                    </div>
+                <div className={`DayInactive ${morningSelected || afternoonSelected ? 'DayActive' : ''}`} onClick={onClick}>
+                    { day }
+                    { open && <div className="triangle"/> }
+                </div>
                 <div className="DotsFlex">
-                    <div className={`AvailabilityDot ${props.morning ? 'DotMorningActive' : ''}`}/>
-                    <div className={`AvailabilityDot ${props.afternoon ? 'DotAfternoonActive' : ''}`}/>
+                    <div className={`AvailabilityDot ${morningSelected ? 'DotMorningActive' : ''}`}/>
+                    <div className={`AvailabilityDot ${afternoonSelected ? 'DotAfternoonActive' : ''}`}/>
                 </div>
             </div>
-            {/* this will go in the onclick div to get middle of it and appear there */}
-            {props.open ? <TimeSlotPicker morningClick={handleMorningClick} afternoonClick={handleAfternoonClick} morning={props.morning} afternoon={props.afternoon}/> : ''}
+            {open && <TimeSlotPicker morningClick={handleMorningClick} afternoonClick={handleAfternoonClick} morning={morningSelected} afternoon={afternoonSelected}/> }
         </div>
     )
 }

@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import './reviewModal.css';
-import Jake from './../../assets/Images/JakeFriend.png';
-import {ReactComponent as StarOutline} from './../../assets/Icons/StarOutline.svg';
-import {ReactComponent as StarFilled} from './../../assets/Icons/StarFilled.svg';
-import ItemImage from './../../assets/Images/search_section_bg.jpg';
+import './ReviewModal.css';
+import Jake from './../../../assets/Images/JakeFriend.png';
+import {ReactComponent as StarOutline} from './../../../assets/Icons/StarOutline.svg';
+import {ReactComponent as StarFilled} from './../../../assets/Icons/StarFilled.svg';
+import ItemImage from './../../../assets/Images/search_section_bg.jpg';
 import CloseIcon from '@material-ui/icons/Close';
 import { Avatar, CircularProgress, Slide } from '@material-ui/core';
-import MissingProfile from '../../assets/Icons/MissingProfileIcon.png'
-import getImage from '../../util/getImage';
-import Instance from '../../util/axios';
+import MissingProfile from '../../../assets/Icons/MissingProfileIcon.png'
+import getImage from '../../../util/getImage';
+import Instance from '../../../util/axios';
 import { CastForEducationSharp } from '@material-ui/icons';
-import useGlobalState from '../../util/useGlobalState';
+import useGlobalState from '../../../util/useGlobalState';
 import { useHistory } from 'react-router';
 
 export default function ReviewModal({ setReviewModalOpen, modalOpen, reviews, item, itemOwner, isUserItem }) {
@@ -67,6 +67,7 @@ export default function ReviewModal({ setReviewModalOpen, modalOpen, reviews, it
 
     const renderReviews = () => {
         return reviews.map((review, index) => {
+            console.log(review)
             return (
                 <div 
                 className="ReviewModalReviewCard"
@@ -110,7 +111,7 @@ export default function ReviewModal({ setReviewModalOpen, modalOpen, reviews, it
                                 <div className="RatingLenderFlex">
                                     <Avatar style={{ height: 60, width: 60 }} src={getOwnerImage()} alt="" className="ProfileIconReview" />
                                     <div>
-                                        <div className="RatingHeaderReview">{isUserItem ? user.fullName : itemOwner.fullName}</div>
+                                        <div className="RatingHeaderReview">{isUserItem ? `${user.firstName} ${user.lastName}` : `${itemOwner.firstName} ${itemOwner.lastName}`}</div>
                                         <div className="RatingLenderReview">{lenderRating}/5 </div>
                                     </div>
                                 </div>

@@ -10,7 +10,7 @@ export default function StatusSix({ isOwner, updateBookingStatus, booking, appro
             { isOwner && userDetails ? (
                 
                 <span>
-                    Currently {userDetails.fullName} has your item, be a helpful lender and lend a hand to them if they have any questions.
+                    Currently {`${userDetails.firstName} ${userDetails.lastName}`} has your item, be a helpful lender and lend a hand to them if they have any questions.
                 </span>
                 
                 

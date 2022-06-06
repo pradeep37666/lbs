@@ -1,0 +1,9 @@
+.AccountCardContainer {
+    display: flex;
+    justify-content: space-between;
+}
+
+.AccountCardField {
+    display: flex;
+    flex-direction: column;
+}

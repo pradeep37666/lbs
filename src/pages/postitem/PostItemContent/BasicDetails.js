@@ -1,8 +1,13 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import {ReactComponent as Logo} from '../../../assets/Logos/LogoRed.svg';
 import CategorySelect from '../../../components/categorySelect/categorySelect';
+import Button from '../../../components/Button/Button';
+import ValidationTextInput from '../../../components/FormComponents/ValidationTextInput';
 
-export default function BasicDetails(props) {
+export default function BasicDetails({ validated, setTitle, setCategory, context }) {
+    const { state, dispatch } = useContext(context)
+    const { title, category } = state
+    
     return (
         <div className="RegistrationWrapper">
             <div className="LoginMain">
@@ -11,15 +16,23 @@ export default function BasicDetails(props) {
 
                 <div className="LoginHeader">Basic Item Details</div>
                 <div className="LoginText">Provide us with some basic details so we can categorise your item correctly.</div>
-
-                <div className="LoginHeader">Title</div>
-                <input type='text' className="LoginInput" onBlur={(e) => props.setTitle(e.target.value)}/>
-
+                <ValidationTextInput 
+                onChange={e => dispatch({ type: 'setTitle', data: e.target.value })}
+                label="Title"
+                />
                 <div className="LoginHeader">Category</div>
-                <CategorySelect width="100%" fontSize="18px" margin="0 0 2em 0" thinBorder setCategory={props.setCategory}/>
-
-                <button className={`LoginFormButton ${!props.validated ? 'ButtonDisabled' : ''}`} disabled={!props.validated} onClick={() => props.handleNextPage('Item Pictures')}>Next</button>
-
+                <CategorySelect 
+                width="100%" 
+                fontSize="18px" 
+                margin="0 0 2em 0" 
+                thinBorder 
+                setCategory={category => dispatch({type: 'setCategory', data: category})}
+                />
+                <Button 
+                text="Next"
+                onClick={() => dispatch({ type: 'setCurrentPage', data: 'Item Pictures'})}
+                isDisabled={!title || !category}
+                />
             </div>
 
         </div>

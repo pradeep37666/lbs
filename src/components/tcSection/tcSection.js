@@ -48,12 +48,8 @@ const useStyles = makeStyles({
   },
 });
 
-export default function CustomizedCheckbox(props) {
+export default function CustomizedCheckbox({ onClick}) {
     const classes = useStyles();
-
-    const handleChange = (event) => {
-        props.setTC(event.target.checked);
-    }
 
     return (
       <div>
@@ -81,7 +77,7 @@ Sint aliquip est labore dolore nulla nisi nulla proident dolor qui esse occaecat
                     disableRipple
                     color="default"
                     checkedIcon={<span className={clsx(classes.icon, classes.checkedIcon)} />}
-                    onChange={handleChange}
+                    onChange={onClick}
                     icon={<span className={classes.icon} />}
                     inputProps={{ 'aria-label': 'decorative checkbox' }}
                 />

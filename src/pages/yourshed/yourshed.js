@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import './yourshed.css'
-import '../../components/itemCard/itemCard.css';
 import { Link } from 'react-router-dom'
 import PageWrapper from '../../components/pageWrapper/pageWrapper'
 import UserShedNav from '../../components/UserShedNav/UserShedNav'
@@ -15,10 +14,10 @@ export default function Yourshed() {
     const [accountContent, setAccountContent] = useState('Your Shed')
     const [items, setItems] = useState([]);
     const [loading, setLoading] = useState(true);
+
 useEffect(()=>{
     instance.get(`/items/findByUid?u_id=${user.id}`)
       .then(({data} ) => {
-        //console.log("response",data)
         setItems(data);
         setLoading(false);
       })

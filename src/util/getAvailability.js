@@ -1,20 +1,29 @@
-import getDateIndex from "./getDateIndex"
+import getDateIndex from "./dateUtils/getDateIndex"
 
 
 const getAvailability = (dateObj, itemAvailabilityString, yearAvailabilityString) => {
 
     const day = dateObj.getDay()
-
-    const yearIndex = getDateIndex(dateObj)
     
+    const morningSlot = {
+        dateObj,
+        timeslot: 'morning'
+    }
+    const afternoonSlot = {
+        dateObj,
+        timeslot: 'afternoon'
+    }
+    const morningYearIndex = getDateIndex(morningSlot)
+    const afternoonYearIndex = getDateIndex(afternoonSlot)
+
     let dayIndex
     if(day === 0){
         dayIndex = 7
     } else {
         dayIndex = day
     }
-    const amBooked = yearAvailabilityString[(yearIndex * 2) + 1] === '0'
-    const pmBooked = yearAvailabilityString[(yearIndex * 2) + 2] === '0'
+    const amBooked = yearAvailabilityString[morningYearIndex] === '0'
+    const pmBooked = yearAvailabilityString[(afternoonYearIndex)] === '0'
 
     const amAvailable = itemAvailabilityString[(dayIndex * 2) - 2]
     const pmAvailable = itemAvailabilityString[(dayIndex * 2) - 1]

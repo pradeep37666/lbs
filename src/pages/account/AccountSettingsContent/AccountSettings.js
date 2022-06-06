@@ -30,7 +30,7 @@ export default function AccountSettings() {
             })
     }, [])
 
-    console.log('user', user)
+    
     return (
         <div className="AccountSettings__FlexMain">
             <div className="AccountSettings__Main">
@@ -45,35 +45,18 @@ export default function AccountSettings() {
                         </div>
                     </div>
                     <div className="AccountSettings__AccountProductsFlex">
-                        <div><span className="AccountSettings-Medium">Account:</span> Borrower {!user.bsb ? '' : '& Lender'}</div>
+                        <div><span className="AccountSettings-Medium">Account:</span> Borrower {user.isLender && '& Lender'}</div>
                         <div><span className="AccountSettings-Medium">Products:</span> {userProducts}</div>
 
                     </div>
-
                 </div>
-
-
-                {/* <div className="AccountSettings__Container">
-                    <div className="AccountSettings__Title">Badge Collection</div>
-                </div> */}
-
                 <EditAccountDetails />
-                
-
             </div>
-
             <div className="AccountSettings__Main">
 
                 <EditPaymentDetails />
 
-                {user.bsb &&
-
-                    <EditLocation />
-
-                    }
-
-
-
+                {user.isLender && <EditLocation /> }
             </div>
         </div>
     )

@@ -4,22 +4,18 @@ import PageWrapper from '../../components/pageWrapper/pageWrapper'
 import UserShedNav from '../../components/UserShedNav/UserShedNav'
 import AccountSettings from './AccountSettingsContent/AccountSettings'
 import TermsConditions from './TermsConditions/TermsConditions'
-import Availability from './Availability/Availability'
-import Instance from '../../util/axios'
-import useGlobalState from '../../util/useGlobalState'
+import AccountAvailability from './AccountAailability/AccountAvailability'
 import { isMobile } from 'react-device-detect'
 
 export default function Account() {
-    const { state, dispatch } = useGlobalState()
-    const { user } = state
     const [accountContent, setAccountContent] = useState('Account')
 
-    const getAccountSettingsContent = () => {
+    const renderAccountSettingsContent = () => {
         switch (accountContent) {
             case 'Account':
                 return <AccountSettings />
             case 'Availability':
-                return <Availability return={returnToAccountSettings} />
+                return <AccountAvailability setAccountContent={setAccountContent} />
             case 'Terms & Conditions':
                 return <TermsConditions />
             case 'Support':
@@ -28,35 +24,6 @@ export default function Account() {
                 return 'account page'
         }
     }
-
-    const returnToAccountSettings = () => {
-        setAccountContent('Account')
-    }
-
-    // Removes bsb from account essentially making the user only a borrower again , for testing purposes
-
-    // const user = GetUser()
-
-    // useEffect(() => {
-    //     if (accountContent === 'Support') {
-    //         const data = {
-    //             account_number: '',
-    //             bsb: '',
-    //         }
-
-    //         Instance.put('user/update', data)
-    //             .then((response) => {
-    //                 console.log(response)
-    //                 let newData = user
-    //                 newData.account_number = data.account_number
-    //                 newData.bsb = data.bsb
-    //                 dispatch({ type: 'setUser', data: newData })
-    //             })
-    //             .catch((error) => {
-    //                 console.log(error)
-    //             })
-    //     }
-    // }, [accountContent])
 
     return (
         <PageWrapper>
@@ -68,13 +35,8 @@ export default function Account() {
                         {accountContent}
                     </div>
 
-                    {getAccountSettingsContent()}
-
+                    {renderAccountSettingsContent()}
                 </div>
-
-
-
-
 
             </div>
         </PageWrapper>
