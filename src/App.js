@@ -1,5 +1,16 @@
 import React, { useReducer, useEffect, useState } from 'react';
 import './App.css';
+
+import Top from './pages/marketing/Top/Top'
+import LendYourStuff from './pages/marketing/LendYourStuff/LendYourStuff'
+import RentStuff from './pages/marketing/RentStuff/RentStuff'
+import HowItWorks from './pages/marketing/HowItWorks/HowItWorks'
+import AboutUs from './pages/marketing/AboutUs/AboutUs'
+import Blog from './pages/marketing/Blog/Blog'
+import Protection from './pages/marketing/Protection/Protection'
+import FAQs from './pages/marketing/FAQs/FAQs'
+import ContactUs from './pages/marketing/ContactUs/ContactUs'
+
 import Home from './pages/home/home.js';
 import ItemPage from './pages/item/item.js';
 import Search from './pages/search/search';
@@ -67,7 +78,6 @@ function App() {
   const setupCometChat = () => {
     const appId = process.env.REACT_APP_CHAT_APP_ID
     let cometChatSettings = new CometChat.AppSettingsBuilder().subscribePresenceForAllUsers().setRegion('us').build();
-    console.log('settings', cometChatSettings)
     CometChat.init(appId, cometChatSettings)
     .then(
       () => {
@@ -122,7 +132,19 @@ function App() {
         
         <Router>
           <ScrollToTop>
-            <Route exact path="/" component={Home} />
+            {/* marketing pages here with different routers */}
+            <Route exaact path='/' component={Top} />
+            <Route exaact path='/lend_your_stuff' component={LendYourStuff} />
+            <Route exaact path='/rent_stuff' component={RentStuff} />
+            <Route exaact path='/how_it_works' component={HowItWorks} />
+            <Route exaact path='/about_us' component={AboutUs} />
+            <Route exaact path='/blog' component={Blog} />
+            <Route exaact path='/protection' component={Protection} />
+            <Route exaact path='/faqs' component={FAQs} />
+            <Route exaact path='/contact_us' component={ContactUs} />
+
+            {/* <Route exact path="/" component={Home} /> */}
+            <Route exact path="/home" component={Home} />
             <Route exact path="/item/:itemId" component={ItemPage} />
             <Route exact path="/search/:searchParams?" component={Search} />
             <Route exact path="/forgotpassword" component={ForgotPassword} />

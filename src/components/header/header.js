@@ -72,7 +72,6 @@ export default function Header() {
         <img src={Logo} alt="Logo" className="HeaderLogo" />
       </Link>
 
-
       <div className="SearchWrapper">
         <form onSubmit={handleSubmit} className="SearchForm">
           <div className='HeaderSearchDiv'>
@@ -80,7 +79,6 @@ export default function Header() {
           </div>
           { !isMobile && <Search height="16px" />}
         </form>
-
       </div>
 
       <div className="LoginWrapper">
@@ -88,15 +86,9 @@ export default function Header() {
           <Link to="/login" style={{ width: '100%' }}>
             <Login />
           </Link>
-          : <UserButton />}
-
-
-
-
+          : <UserButton />
+        }
       </div>
-
-
-
     </div>
   )
 }

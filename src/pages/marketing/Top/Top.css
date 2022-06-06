@@ -1,0 +1,6 @@
+.marketing_container {
+    position: relative;
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
