@@ -2,10 +2,13 @@ import React from 'react'
 import './Top.css'
 import NavBar from '../../../components/marketing/NavBar/NavBar'
 import { 
-  Android, Apple, TopInfoGraphic,
-  TopMowing,
+  Android, Apple, TopInfoGraphic, TopMowing,
 } from '../../../assets/Images/Marketings/Marketings'
 import MarketingButton from '../../../components/marketing/MarketingButton/MarketingButton'
+import { dummyCategory, procedures } from '../../../assets/Data/MarketSelections'
+import StepCard from '../../../components/marketing/StepCard/StepCard'
+import CategoryCard from '../../../components/marketing/CategoryCard/CategoryCard'
+import Footer from '../../../components/marketing/Footer/Footer'
 
 const Top = () => {
   return (
@@ -120,9 +123,38 @@ const Top = () => {
           </div>
         </div>
         <div className='top_info_bottom_section'>
-          {/* grid columns */}
+          <div className='top_grid_section'>
+            {procedures.map(step => (
+              <StepCard step={step} key={step.id}/>
+            ))}
+          </div>
+        </div>
+        <div className='search_items_btn'>
+          <MarketingButton
+            bgColor='#33384F'
+            textColor='#FFFFFF'
+          >
+          Search Items
+          </MarketingButton>
         </div>
       </div>
+
+      <div className='marketing_image_container fifth_bg height100p'>
+        <div className='category_title_section'>
+          <p className='category_main_title'>
+          Discover Your Next Borrow
+          </p>
+          <p className='category_sub_title'>
+          As our little shed grows into something big, you’ll be able to lend and borrow all sorts of stuff. Some of our popular categories include:
+          </p>
+        </div>
+        <div className='category_card_section'>
+            {dummyCategory.map(category => (
+              <CategoryCard category={category} key={category.id}/>
+            ))}
+        </div>
+      </div>
+      <Footer />
     </div>
   )
 }

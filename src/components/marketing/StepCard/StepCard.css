@@ -1,0 +1,27 @@
+.step_card_container {
+    width: 15em;
+    background: #F5F5F5;
+    border-radius: 10px;
+    padding: 0.5em;
+}
+
+.step_card_icon {
+    width: 2em;
+    height: 2em;    
+    margin: 1em 0 0 1em;
+}
+
+.step_card_title {
+    color: #33384F;
+    font-size: 1.3em;
+    font-family: 'Kameron', serif;
+    font-weight: bold;
+    margin: 0;
+    padding: 0.5em;
+    padding-bottom: 0;
+}
+
+.step_card_description {
+    margin: 0.2em 0;
+    padding: 0 0.8em;
+}

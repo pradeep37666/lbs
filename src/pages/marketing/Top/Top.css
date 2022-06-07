@@ -15,6 +15,10 @@
     height: 100vh;
 }
 
+.height100p {
+    height: 100%;
+}
+
 .first_bg {
     background-image: url(../../../assets/Images/Marketings/TopFirst.png);
 }
@@ -23,7 +27,8 @@
     background-image: url(../../../assets/Images/Marketings/TopBgWall.png);
 }
 
-.third_bg {
+.third_bg,
+.fifth_bg {
     background-color: #F5F5F5;
 }
 
@@ -130,8 +135,7 @@
     width: 46%;
 }
 
-.top_info_top_section,
-.top_info_bottom_section {
+.top_info_top_section {
     height: 50%;
 }
 
@@ -157,3 +161,54 @@
     align-items: flex-start;
     justify-content: flex-start;
 }
+
+.top_grid_section {
+    width: 100%;
+    display: grid;
+    flex-wrap: wrap;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: auto;
+    justify-items: center;
+    padding: 0 3em;
+}
+
+.search_items_btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1.5em;
+}
+
+.category_title_section {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 1.5em;
+}
+
+.category_main_title {
+    font-family: 'Kameron', serif;
+    color: #33384F;
+    font-weight: bold;
+    font-size: 2.5em;
+    padding-top: 1.5em;
+    margin: 0;
+}
+
+.category_sub_title {
+    width: 35em;
+    margin: 0 auto;
+}
+
+.category_card_section {
+    width: 100%;
+    max-width: 1300px;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 0 2.5em;
+    padding-bottom: 3em;
+    margin: 0 auto;
+}
+

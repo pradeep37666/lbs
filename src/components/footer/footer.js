@@ -23,7 +23,6 @@ export default function Footer() {
             <img src={AppleButton} alt="Google Play" className="AppButton" />
             <img src={GoogleButton} alt="Google Play" className="AppButton" />
           </div>
-
         </div>
       </div>
 
