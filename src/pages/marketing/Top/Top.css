@@ -1,6 +1,159 @@
 .marketing_container {
     position: relative;
+    width: 100%;
     height: 100%;
-    overflow-y: auto;
-    overflow-x: hidden;
+}
+
+.marketing_image_container {
+    width: 100%;
+    height: 85vh;
+    position: relative;
+    background-size: cover;
+}
+
+.height100 {
+    height: 100vh;
+}
+
+.first_bg {
+    background-image: url(../../../assets/Images/Marketings/TopFirst.png);
+}
+
+.second_bg {
+    background-image: url(../../../assets/Images/Marketings/TopBgWall.png);
+}
+
+.third_bg {
+    background-color: #F5F5F5;
+}
+
+.forth_bg {
+    background-color: #FFFFFF;
+}
+
+.marketing_image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.top_title_section {
+    height: 100%;
+    width: 37%;
+    position: absolute;
+    top: 15%;
+    left: 15%;
+}
+
+.top_main_title,
+.download_main_title {
+    font-family: 'Kameron', serif;
+    font-weight: bold;
+    color: #FFFFFF;
+    line-height: 1;
+    margin: 0;
+}
+
+.top_main_title {
+    font-size: 3.5em;
+}
+
+.download_main_title {
+    font-size: 1.8em;
+}
+
+.top_sub_title,
+.download_sub_title {
+    color: #FFFFFF;
+    font-size: 1.1em;
+    margin: 0;
+}
+
+.download_app_section {
+    width: 70%;
+    margin-top: 1.5em;
+}
+
+.app_icons {
+    margin-left: 0.5em;
+    width: 1.1em;
+    height: 1.1em;
+}
+
+.flex_box {
+    display: flex;
+}
+
+.top_section_box {
+    width: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.top_graphic {
+    height: 100%;
+    padding: 1em;
+}
+
+.top_info_section {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2em 4em;
+}
+
+.top_info_section:last-child {
+    align-items: flex-start;
+}
+
+.top_info_title{
+    font-family: 'Kameron', serif;
+    color: #33384F;
+    font-size: 2.5em;
+    font-weight: bold;
+    margin: 0;
+    margin-top: 0.5em;
+}
+
+.top_info_description {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.top_info_left_desc,
+.top_info_right_desc {
+    width: 46%;
+}
+
+.top_info_top_section,
+.top_info_bottom_section {
+    height: 50%;
+}
+
+.top_info_top_section {
+    width: 100%;
+    justify-content: center;
+}
+
+.top_info_smaller_section {
+    width: 40%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2em 4em;
+    padding-right: 0;
+}
+
+.top_section_smaller_box {
+    width: 40%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
 }

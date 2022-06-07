@@ -133,7 +133,7 @@ function App() {
         <Router>
           <ScrollToTop>
             {/* marketing pages here with different routers */}
-            <Route exaact path='/' component={Top} />
+            <Route exaact path='/top' component={Top} />
             <Route exaact path='/lend_your_stuff' component={LendYourStuff} />
             <Route exaact path='/rent_stuff' component={RentStuff} />
             <Route exaact path='/how_it_works' component={HowItWorks} />
@@ -168,9 +168,7 @@ function App() {
           </ScrollToTop>
 
         </Router>
-
         }
-        
       </GlobalStateContext.Provider>
     </Elements>
   );
