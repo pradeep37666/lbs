@@ -67,6 +67,37 @@ const rentOutProcedures = [
     },
 ]
 
+const rentingProcedures = [
+    {
+        id: 1,
+        icon: MowingImg,
+        title: '1. Explore And Find',
+        description1: 'To book your first borrow create an account and follow the steps to verify your identity and payment details.',
+        description2: 'Search for your item on our little big platform via category, location, and price. You can add an item to ‘your favourites’ before requesting a booking to borrow.',
+    },
+    {
+        id: 2,
+        icon: CameraImg,
+        title: '2. Book And Pay',
+        description1: 'When you’ve found an item you’d like to borrow, send a booking request to the lender. You’ll receive a notification when your booking has been accepted. It’ll automatically be added to your in-app calendar and the lender fee will be deducted from your account. At the time of booking a 10% deposit is taken. The remaining balance is paid once the share is complete.',
+        description2: 'If you change your mind, no worries. Find out more about our cancellation policy. Use the chat function in the app to ask the lender any questions and arrange handover details. You can choose to have your item delivered and/or picked up from the lender for an additional fee or arrange contactless sharing.',
+    },
+    {
+        id: 3,
+        icon: DollarSign,
+        title: '3. Collect And Enjoy',
+        description1: 'Now you’re ready to make, mend or learn! If you’ve arranged to meet the lender in person, it’s a good chance to ask them about any tips/quirks for using the item.',
+        description2: 'When using the item, take care and show respect as if it was your own. If you come across any issues during your borrow, learn what to do.',
+    },
+    {
+        id: 4,
+        icon: Message,
+        title: '4. Return And rate',
+        description1: 'Once you have returned the item and the lender is happy that it’s still in good condition, they will confirm the share is complete.',
+        description2: 'Help build trust in your neighbourhood by leaving a review about the lender and item via our 5-star rating system.',
+    },
+]
+
 const dummyCategory = [
     {
         id: 1,
@@ -121,5 +152,6 @@ const dummyCategory = [
 export { 
     procedures, 
     rentOutProcedures,
+    rentingProcedures,
     dummyCategory, 
 }

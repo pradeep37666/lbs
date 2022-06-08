@@ -14,6 +14,7 @@ import SignUpImg from './signup.png'
 import DollarSign from './dollarSign.png'
 import CameraImg from './camera.png'
 import MowingImg from './mowing.png'
+import TradieImg from './tradieImage.png'
 
 export {
     TopFirst,
@@ -32,4 +33,5 @@ export {
     DollarSign,
     CameraImg,
     MowingImg,
+    TradieImg,
 }

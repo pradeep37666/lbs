@@ -13,8 +13,9 @@ import { rentOutProcedures } from '../../../assets/Data/MarketSelections'
 const LendYourStuff = () => {
   return (
     <div className='marketing_container'>
-      <NavBar />
-      <div className='marketing_img_md_container bg_top'>
+      <NavBar selected='lend_your_stuff'/>
+
+      <div className='marketing_img_md_container bg_lend_your_stuff'>
         <div className='main_title_section'>
           <p className='main_title'>
           Rent Out Your Stuff To Earn Cash And Do Good
@@ -42,8 +43,8 @@ const LendYourStuff = () => {
               textColor={'#33384F'}
             >
             Download Now!
-              <img src={Apple} className='app_icons'/>
-              <img src={Android} className='app_icons'/>
+              <img src={Apple} className='app_icons' alt='apple icon'/>
+              <img src={Android} className='app_icons' alt='android icon'/>
             </MarketingButton>
           </div>
         </div>
@@ -51,7 +52,7 @@ const LendYourStuff = () => {
 
       <div className='marketing_img_md_container bg_wall flex_box'>
         <div className='half_screen_center'>
-          <img src={TopInfoGraphic} className='graphic_image'/>
+          <img src={TopInfoGraphic} className='graphic_image' alt='mowing iamge'/>
         </div>
         <div className='half_screen_center article_section'>
           <p className='marketing_main_title'>
@@ -88,7 +89,7 @@ const LendYourStuff = () => {
           </div>
         </div>
         <div className='center_text_image'>
-          <img src={TopMowing} className='graphic_image no_left_padding' alt='lady image'/>
+          <img src={TopMowing} className='graphic_image no_left_padding' alt='guiter guy image'/>
         </div>
       </div>
 
@@ -129,7 +130,7 @@ const LendYourStuff = () => {
             </div>
           </div>
           <div className='top_section_smaller_box'>
-            <img src={TopMowing} className='graphic_image' alt='lady image'/>
+            <img src={TopMowing} className='graphic_image' alt='surf borad lady image'/>
           </div>
         </div>
         <div className='top_grid_section'>

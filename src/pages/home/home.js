@@ -88,9 +88,7 @@ export default function Home() {
     <PageWrapper>
 
       <div className="SearchSection">
-
         <div className="SearchSectionWrapper">
-          
           <div className="SearchSectionTitle">Let's Find Your Next Borrow</div>
           <div className="SearchSectionFilters">
             <div className="SearchFiltersRowFlex">
@@ -132,16 +130,14 @@ export default function Home() {
 
           </div>
           <div>
-          <button className="SearchButtonLarge" onClick={handleSubmit}>
-            <div className="SearchButtonLargeFlex">
-              <img src={SearchIcon} alt="search button" className="SearchIcon35"/>
-              <div>Search</div>
-            </div>
+            <button className="SearchButtonLarge" onClick={handleSubmit}>
+              <div className="SearchButtonLargeFlex">
+                <img src={SearchIcon} alt="search button" className="SearchIcon35"/>
+                <div>Search</div>
+              </div>
 
-          </button>
+            </button>
           </div>
-          
-
         </div>
       </div>
 

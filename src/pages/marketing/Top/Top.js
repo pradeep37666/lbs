@@ -15,6 +15,7 @@ const Top = () => {
   return (
     <div className='marketing_container'>
       <NavBar />
+      
       <div className='marketing_img_md_container bg_top'>
         <div className='main_title_section'>
           <p className='main_title'>

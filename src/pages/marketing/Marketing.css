@@ -2,9 +2,9 @@
     position: relative;
     width: 100%;
     height: 100%;
-    overflow-x: hidden;
 }
 
+.marketing_image_fit_container,
 .marketing_image_xlg_container,
 .marketing_image_lg_container,
 .marketing_img_md_container,
@@ -13,6 +13,10 @@
     width: 100%;
     position: relative;
     background-size: cover;
+}
+
+.marketing_image_fit_container {
+    height: 100%;
 }
 
 .marketing_image_xlg_container {
@@ -149,16 +153,20 @@
 }
 
 .no_left_padding {
-    padding-left: 0;
+    padding-left: 0 !important;
 }
 
 .no_right_padding {
-    padding-right: 0;
+    padding-right: 0 !important;
 }
 
 .center_items {
     display: flex;
     justify-content: center;
+}
+
+.sm_width {
+    width: 21em;
 }
 
 /* breakpoint */
