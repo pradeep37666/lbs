@@ -10,6 +10,8 @@ const StepCard = ({ step }) => {
             />
             <p className='step_card_title'>{step.title}</p>
             <p className='step_card_description'>{step.description}</p>
+            <p className='step_card_long_description'>{step.description1}</p>
+            <p className='step_card_long_description'>{step.description2}</p>
         </div>
     )
 }

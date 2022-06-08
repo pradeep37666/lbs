@@ -5,13 +5,14 @@ import UserShedNav from '../../components/UserShedNav/UserShedNav'
 import { CometChat } from '@cometchat-pro/chat'
 import UserCard from '../../components/messaging/userCard/UserCard'
 import ActiveChat from '../../components/messaging/activeChat/ActiveChat'
+import { Facebook } from 'react-content-loader'
 import { CircularProgress, ClickAwayListener } from '@material-ui/core'
 import useGlobalState from '../../util/useGlobalState'
 import Instance from '../../util/axios'
 import { isMobile } from 'react-device-detect'
 import NoContent from '../../components/NoContent/NoContent'
 import { useHistory } from 'react-router'
-import ReviewLender from '../../components/modals/ReviewLender/ReviewLender'
+// import ReviewLender from '../../components/reviewLender/ReviewLender'
 
 export default function Messages() {
     const { state } = useGlobalState()
@@ -41,7 +42,7 @@ export default function Messages() {
         if(!activeChatUser) return
         getMessages()
     }, [activeChatUser])
-    console.log('a')
+
     
     const getConversations = async () => {
         try{
@@ -93,6 +94,7 @@ export default function Messages() {
             )
         })
     }
+    // return <ReviewLender />
     return (
         <PageWrapper>
             <ClickAwayListener onClickAway={() => setPopupOpen(false)}>

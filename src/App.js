@@ -19,7 +19,7 @@ import RegisterPage from './pages/register/register.js';
 import AccountPage from './pages/account/account.js';
 import PostItem from './pages/postitem/postitem';
 import TradesPage from './pages/trades/trades.js';
-import Messages from './pages/messages/messages.js'
+import Messages from './pages/messages/messages.js';
 import YourshedPage from './pages/yourshed/yourshed.js';
 import FavouritesPage from './pages/favourites/favourites.js';
 import UpgradeLender from './pages/account/UpgradeLender/UpgradeLender';

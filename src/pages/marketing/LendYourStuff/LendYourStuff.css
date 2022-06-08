@@ -1,0 +1,77 @@
+.bg_lend_your_stuff {
+    background-image: url(../../../assets/Images/Marketings/TopFirst.png);
+}
+
+.bg_lbs {
+    background-image: url(../../../assets/TexturedBackgrounds/LBS_Illustration\ Pattern_RED.jpg);
+}
+
+.bg_signup {
+    background-image: url(../../../assets/Images/Marketings/TopFirst.png);
+}
+
+.button_font {
+    font-size: 0.9em;
+}
+
+.description_list {
+    padding-left: 0.5em;
+    margin: 0;
+}
+
+.description_list li {
+    list-style: none;
+    font-size: 0.8em;
+    margin: 0.3em;
+}
+
+.description_list li::before {
+    content: '\2022';
+    color: #33384F;
+    font-weight: bold;
+    display: inline-block;
+    width: 1em;
+    margin-left: -1em;
+}
+
+.lbs_quote_text,
+.lbs_quote_lgtext {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: #FFFFFF;
+    font-family: 'Kameron', serif;
+    font-weight: bold;
+    font-size: 2em;
+}
+
+.lbs_quote_text {
+    height: 100%;
+    width: 100%;
+    padding: 0 20%;
+}
+
+.lbs_quote_lgtext {
+    height: auto;
+    width: 13em;
+    margin: 0 auto;
+}
+
+.image_half_container {
+    width: 50%;
+    padding: 5em 0;
+}
+
+.dark_mode_text {
+    color: #FFFFFF;
+}
+
+.center_quote_btn {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}

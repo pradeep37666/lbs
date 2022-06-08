@@ -77,20 +77,67 @@
     background-image: url(../../../assets/Images/Marketings/TopBgWall.png);
 }
 
-.footer_content_box {
+.footer_middle_logo {
+    height: 5em;
+    width: 5em;
+}
 
+.footer_first_title,
+.footer_first_desc,
+.footer_last_title,
+.footer_last_desc {
+    margin: 0;
+    max-width: 12em;
+}
+
+.footer_first_title,
+.footer_last_title {
+    color: #33384F;
+    font-weight: bold;
+}
+
+.footer_first_desc,
+.footer_last_desc {
+    font-size: 0.8em;
+}
+
+.footer_content_box {
+    margin: 1em 0;
 }
 
 .footer_section_title_main,
 .footer_section_title {
-
+    margin: 0.5em 0;
+    cursor: pointer;
 }
 
 .footer_section_title_main {
-
+    color: #33384F;
+    font-weight: bold;
 }
 
 .footer_bottom_container {
     display: flex;
     justify-content: space-between;
+    background: #33384F;
+    color: #FFFFFF;
+}
+
+.footer_bottom_left {
+    margin-left: 2em;
+}
+
+.footer_bottom_right {
+    margin-right: 2em;
+}
+
+.social_media_icons {
+    color: #33384F;
+    width: 1.3em;
+    height: 1.3em;
+    margin-right: 0.5em;
+}
+
+.margin_top {
+    margin-top: 1em;
 }

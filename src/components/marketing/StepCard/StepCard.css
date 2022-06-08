@@ -21,7 +21,13 @@
     padding-bottom: 0;
 }
 
-.step_card_description {
+.step_card_description,
+.step_card_long_description {
     margin: 0.2em 0;
     padding: 0 0.8em;
+}
+
+.step_card_long_description {
+    margin-bottom: 0.8em;
+    font-size: 0.8em;
 }

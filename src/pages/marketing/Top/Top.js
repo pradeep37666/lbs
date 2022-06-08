@@ -1,4 +1,5 @@
 import React from 'react'
+import '../Marketing.css'
 import './Top.css'
 import NavBar from '../../../components/marketing/NavBar/NavBar'
 import { 
@@ -14,15 +15,15 @@ const Top = () => {
   return (
     <div className='marketing_container'>
       <NavBar />
-      <div className='marketing_image_container first_bg'>
-        <div className='top_title_section'>
-          <p className='top_main_title'>
+      <div className='marketing_img_md_container bg_top'>
+        <div className='main_title_section'>
+          <p className='main_title'>
           Let’s Share Stuff And Do Good
           </p>
-          <p className='top_sub_title'>
+          <p className='main_sub_title'>
           Buy less, lend and borrow more. Care for your place and our planet together.
           </p>
-          <div style={{display: 'flex'}}>
+          <div className='flex_box'>
             <MarketingButton 
               bgColor={'#33384F'}
               textColor={'#FFFFFF'}
@@ -48,22 +49,22 @@ const Top = () => {
               textColor={'#33384F'}
             >
             Download Now!
-              <img src={Apple} className='app_icons'/>
-              <img src={Android} className='app_icons'/>
+              <img src={Apple} className='app_icons' alt='apple icon' />
+              <img src={Android} className='app_icons' alt='android icon' />
             </MarketingButton>
           </div>
         </div>
       </div>
 
-      <div className='marketing_image_container second_bg flex_box'>
-        <div className='top_section_box'>
-          <img src={TopInfoGraphic} className='top_graphic'/>
+      <div className='marketing_img_md_container bg_wall flex_box'>
+        <div className='half_screen_center'>
+          <img src={TopInfoGraphic} className='graphic_image' alt='graphic image'/>
         </div>
-        <div className='top_info_section'>
-          <p className='top_info_title'>
+        <div className='half_screen_center article_section'>
+          <p className='marketing_main_title'>
           Your Local Tool, Hobby Gear And Equipment Rental App.
           </p>
-          <div className='top_info_description flex_box'>
+          <div className='marketing_main_description'>
             <p className='top_info_left_desc'>
             A LITTLE sharing makes a BIG difference – for us, our community and the planet. That’s why we created Little Big Shed. It’s an online equipment share platform to help you borrow more, buy less, and make some extra cash when you lend your stuff.<br/><br/> 
             Now all of us can support each other to make, mend and learn by sharing tools, hobby gear, leisure equipment and much more!<br/><br/> 
@@ -84,16 +85,14 @@ const Top = () => {
         </div>
       </div>
 
-      <div className='marketing_image_container third_bg flex_box'>
-        <div className='top_info_section'>
-          <p className='top_info_title'>
+      <div className='marketing_img_sm_container bg_grey flex_box'>
+        <div className='half_screen_center column_section'>
+          <p className='marketing_main_title max_width'>
           Share Your Stuff, Earn Cash And Do Good
           </p>
-          <div className='top_info_description flex_box'>
-            <p>
+          <p className='marketing_main_description max_width'>
             Our equipment rental app means that anything you have in your ‘little shed’ (whether that’s a garage, a kitchen drawer or a cupboard shelf) can become part of something much bigger — the sharing economy.<br/><br/> Why not lend your stuff to people in your area when not in use and make some extra cash on the side? We’ll take good care of you too so you can lend your items worry-free. Check out our lender protection policy to find out more about sharing with our verified users.
-            </p>
-          </div>
+          </p>
           <MarketingButton
             bgColor='#AC172C'
             textColor='#FFFFFF'
@@ -101,25 +100,25 @@ const Top = () => {
           Lend Your Stuff
           </MarketingButton>
         </div>
-        <div className='top_section_box'>
-          <img src={TopMowing} className='top_graphic'/>
+        <div className='half_screen_center'>
+          <img src={TopMowing} className='graphic_image' alt='mowing image'/>
         </div>
       </div>
 
-      <div className='marketing_image_container forth_bg height100'>
+      <div className='marketing_image_xlg_container bg_white'>
         <div className='top_info_top_section flex_box'>
           <div className='top_info_smaller_section'>
-            <p className='top_info_title'>
+            <p className='marketing_main_title'>
             Borrow Items To Learn, Make And Mend
             </p>
-            <div className='top_info_description flex_box'>
+            <div className='marketing_main_description'>
               <p>
               Did you know that 80% of household items we own are used less than once a month? You can do your bit to reduce waste by borrowing instead of buying to kick-start your next DIY project or creative experience.<br/><br/> Just follow these four simple steps:
               </p>
             </div>
           </div>
           <div className='top_section_smaller_box'>
-            <img src={TopMowing} className='top_graphic'/>
+            <img src={TopMowing} className='graphic_image' alt='lady image'/>
           </div>
         </div>
         <div className='top_info_bottom_section'>
@@ -139,7 +138,7 @@ const Top = () => {
         </div>
       </div>
 
-      <div className='marketing_image_container fifth_bg height100p'>
+      <div className='marketing_image_xlg_container bg_grey height100p'>
         <div className='category_title_section'>
           <p className='category_main_title'>
           Discover Your Next Borrow
@@ -154,6 +153,7 @@ const Top = () => {
             ))}
         </div>
       </div>
+
       <Footer />
     </div>
   )

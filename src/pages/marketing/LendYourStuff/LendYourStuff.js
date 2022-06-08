@@ -1,9 +1,163 @@
 import React from 'react'
 import './LendYourStuff.css'
+import { 
+  Android, Apple, DummyImage, 
+  SignUpImg, TopInfoGraphic, TopMowing 
+} from '../../../assets/Images/Marketings/Marketings'
+import MarketingButton from '../../../components/marketing/MarketingButton/MarketingButton'
+import NavBar from '../../../components/marketing/NavBar/NavBar'
+import Footer from '../../../components/marketing/Footer/Footer'
+import StepCard from '../../../components/marketing/StepCard/StepCard'
+import { rentOutProcedures } from '../../../assets/Data/MarketSelections'
 
 const LendYourStuff = () => {
   return (
-    <div>LendYourStuff</div>
+    <div className='marketing_container'>
+      <NavBar />
+      <div className='marketing_img_md_container bg_top'>
+        <div className='main_title_section'>
+          <p className='main_title'>
+          Rent Out Your Stuff To Earn Cash And Do Good
+          </p>
+          <div className='flex_box'>
+            <MarketingButton 
+              bgColor={'#AC172C'}
+              textColor={'#FFFFFF'}
+            >
+            <p className='button_font'>
+            Sign Up To Start Sharing
+            </p>
+            <img src={SignUpImg} className='app_icons' alt='signup icon' />
+            </MarketingButton>
+          </div>
+          <div className='download_app_section'>
+            <p className='download_main_title'>
+            Download our free app!
+            </p>
+            <p className='download_sub_title'>
+            Download our mobile app to borrow and lend, where ever you are!
+            </p>
+            <MarketingButton 
+              bgColor={'#E9D8B4'}
+              textColor={'#33384F'}
+            >
+            Download Now!
+              <img src={Apple} className='app_icons'/>
+              <img src={Android} className='app_icons'/>
+            </MarketingButton>
+          </div>
+        </div>
+      </div>
+
+      <div className='marketing_img_md_container bg_wall flex_box'>
+        <div className='half_screen_center'>
+          <img src={TopInfoGraphic} className='graphic_image'/>
+        </div>
+        <div className='half_screen_center article_section'>
+          <p className='marketing_main_title'>
+          Share Your Shed On Our Tool Borrowing App
+          </p>
+          <p className='marketing_main_description'>
+          Around the world, the sharing economy is booming. People are sharing their equipment, their homes, their cars and their skills.<br /><br /> 
+          This act of sharing has significant social, economic, cultural and environmental benefits. By lending out your stuff on Little Big Shed you’re helping to:
+          </p>
+          <ul className='description_list'>
+            <li>
+            Create equal opportunities – by making tools, hobby gear and leisure equipment more available and affordable to everyone.
+            </li>
+            <li>
+            Build community connection and support – by sharing with your neighbours you get to meet a like-minded local, help them save space and money, and make some extra cash on the side.
+            </li>
+            <li>
+            Care for the environment – with less people buying stuff new, demand for products reduces. Sharing helps design waste out of the system before it has the chance to become rubbish.
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div className='marketing_img_sm_container bg_white flex_box center_items'>
+        <div className='center_text_image'>
+          <p className='marketing_main_title text_align'>
+          No Service Fees
+          </p>
+          <div className='marketing_main_description text_align'>
+            <p>
+            We believe in the power of sharing and want to make it as easy, accessible and beneficial as possible. That’s why Little Big Shed has no platform service fee. We cover the costs for the smooth sailing of our shed so that you can earn more when you do good sharing your stuff.<br /><br /> 
+            The only cost of using Little Big Shed is a 2.9%&#60;processing fee&#62;: link to FAQ + 30c transaction fee charged by our third party payment provider deducted from what you get paid.
+            </p>
+          </div>
+        </div>
+        <div className='center_text_image'>
+          <img src={TopMowing} className='graphic_image no_left_padding' alt='lady image'/>
+        </div>
+      </div>
+
+      <div className='marketing_img_xsm_container bg_lbs'>
+        <p className='lbs_quote_text'>
+        A Little Sharing Can Make A Big Difference To Your Pocket, Your Community And The Planet.
+        </p>
+      </div>
+
+      <div className='marketing_img_sm_container bg_dark flex_box center_items'>
+        <div className='image_half_container'>
+          <img src={DummyImage} className='picture_image no_right_padding' alt='tradie image'/>
+        </div>
+        <div className='center_text_image'>
+          <p className='marketing_main_title text_align dark_mode_text'>
+          We’ve Got You Covered If Something Goes Wrong, Up To $2000
+          </p>
+          <div className='marketing_main_description text_align dark_mode_text'>
+            <p>
+            Our tool borrowing app means that anything you have in your little shed can easily be shared with your neighbours when not in use. Plus, you can do it all worry-free!<br /><br /> 
+            Rest assured that when you share your shed, we have your listed items covered against damage during the lending period if something goes wrong – up to NZ$2000 of cover per item.<br /><br />  
+            Check out our full lender protection policy to find out more about sharing with our verified Little Big Shed users.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div className='marketing_image_xlg_container bg_white'>
+        <div className='top_info_top_section flex_box'>
+          <div className='top_info_smaller_section'>
+            <p className='marketing_main_title'>
+            Borrow Items To Learn, Make And Mend
+            </p>
+            <div className='marketing_main_description'>
+              <p>
+              Did you know that 80% of household items we own are used less than once a month? You can do your bit to reduce waste by borrowing instead of buying to kick-start your next DIY project or creative experience.<br/><br/> Just follow these four simple steps:
+              </p>
+            </div>
+          </div>
+          <div className='top_section_smaller_box'>
+            <img src={TopMowing} className='graphic_image' alt='lady image'/>
+          </div>
+        </div>
+        <div className='top_grid_section'>
+          {rentOutProcedures.map(step => (
+            <StepCard step={step} key={step.id}/>
+          ))}
+        </div>
+      </div>
+
+      <div className='marketing_img_sm_container bg_signup'>
+        <div className='center_quote_btn'>
+          <p className='lbs_quote_lgtext'>
+          Ready To Start Earning And Do Good? Sign Up
+          </p>
+          <MarketingButton 
+            bgColor={'#AC172C'}
+            textColor={'#FFFFFF'}
+          >
+            <p className='button_font'>
+            Sign Up To Start Sharing
+            </p>
+            <img src={SignUpImg} className='app_icons' alt='signup icon' />
+          </MarketingButton>
+        </div>
+      </div>
+      
+      <Footer />
+    </div>
   )
 }
 
