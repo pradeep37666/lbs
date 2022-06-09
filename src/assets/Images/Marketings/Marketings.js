@@ -15,6 +15,10 @@ import DollarSign from './dollarSign.png'
 import CameraImg from './camera.png'
 import MowingImg from './mowing.png'
 import TradieImg from './tradieImage.png'
+import DummyAvatar1 from './sample-avatar1.jpeg'
+import DummyAvatar2 from './sample-avatar2.webp'
+import DummyAvatar3 from './sample-avatar3.jpg'
+import DummyAvatar4 from './sample-avatar4.jpg'
 
 export {
     TopFirst,
@@ -34,4 +38,8 @@ export {
     CameraImg,
     MowingImg,
     TradieImg,
+    DummyAvatar1,
+    DummyAvatar2,
+    DummyAvatar3,
+    DummyAvatar4,
 }

@@ -70,15 +70,49 @@ const NavBar = ({ selected }) => {
                     </Link>
                     <div 
                         className={ selected === 'info_hub'
-                            ? 'link_title selected'
-                            : 'link_title'
+                            ? 'info_hub_container selected'
+                            : 'info_hub_container'
                         }
+                        onClick={() => setIsInfoOpen(!isInfoOpen)}
                     >
-                        Info Hub
-                        {isInfoOpen
-                        ? <IoIosArrowUp className='link_title_icon' onClick={() => setIsInfoOpen(false)}/>
-                        : <IoIosArrowDown  className='link_title_icon' onClick={() => setIsInfoOpen(true)}/>
-                        }
+                        <div className='info_hub_title'>
+                            Info Hub
+                            {isInfoOpen
+                            ? <IoIosArrowUp 
+                                className='link_title_icon' 
+                                onClick={() => setIsInfoOpen(false)}
+                                />
+                            : <IoIosArrowDown  
+                                className='link_title_icon' 
+                                onClick={() => setIsInfoOpen(true)}
+                                />
+                            }
+                        </div>
+                        <div 
+                            className={isInfoOpen
+                                ? 'nav_popup_opend'
+                                : 'nav_popup_closed'
+                            }
+                        >
+                            <p
+                                className='option_blog'
+                                onClick={() => history.push('/blog')}
+                            >
+                            Blog
+                            </p>
+                            <p
+                                className='option_protection'
+                                onClick={() => history.push('/protection')}
+                            >
+                            Lender Protection
+                            </p>
+                            <p
+                                className='option_faqs'
+                                onClick={() => history.push('/faqs')}
+                            >
+                            FAQ’s
+                            </p>
+                        </div>
                     </div>
                     {/* search bar here */}
                 </div>

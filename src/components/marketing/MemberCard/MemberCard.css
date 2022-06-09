@@ -1,0 +1,35 @@
+.member_card_container {
+    width: 18em;
+    height: 20em;
+    background: #F5F5F5;    
+    border-radius: 10px;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    margin: 0 0.5em;
+}
+
+.member_avatar {
+    width: 60px !important;
+    height: 60px !important;
+    margin: 1em auto;
+}
+
+.member_name {
+    font-size: 1.2em;
+    color: #33384F;
+    font-family: 'Kameron', serif;
+    font-weight: bold;
+    margin: 0;
+}
+
+.member_status {
+    font-weight: bold;
+    font-size: 0.9em;
+    margin: 0;
+}
+
+.member_description {
+    padding: 0 1em;
+    font-size: 0.8em;
+}

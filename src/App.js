@@ -133,15 +133,15 @@ function App() {
         <Router>
           <ScrollToTop>
             {/* marketing pages here with different routers */}
-            <Route exaact path='/top' component={Top} />
-            <Route exaact path='/lend_your_stuff' component={LendYourStuff} />
-            <Route exaact path='/rent_stuff' component={RentStuff} />
-            <Route exaact path='/how_it_works' component={HowItWorks} />
-            <Route exaact path='/about_us' component={AboutUs} />
-            <Route exaact path='/blog' component={Blog} />
-            <Route exaact path='/protection' component={Protection} />
-            <Route exaact path='/faqs' component={FAQs} />
-            <Route exaact path='/contact_us' component={ContactUs} />
+            <Route exact path='/top' component={Top} />
+            <Route exact path='/lend_your_stuff' component={LendYourStuff} />
+            <Route exact path='/rent_stuff' component={RentStuff} />
+            <Route exact path='/how_it_works' component={HowItWorks} />
+            <Route exact path='/about_us' component={AboutUs} />
+            <Route exact path='/blog' component={Blog} />
+            <Route exact path='/protection' component={Protection} />
+            <Route exact path='/faqs' component={FAQs} />
+            <Route exact path='/contact_us' component={ContactUs} />
 
             {/* <Route exact path="/" component={Home} /> */}
             <Route exact path="/home" component={Home} />

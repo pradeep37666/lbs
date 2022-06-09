@@ -7,6 +7,10 @@ import {
     MowingImg,
     CameraImg,
     DollarSign,
+    DummyAvatar1,
+    DummyAvatar2,
+    DummyAvatar3,
+    DummyAvatar4,
 } from '../Images/Marketings/Marketings'
 
 const procedures = [
@@ -98,6 +102,45 @@ const rentingProcedures = [
     },
 ]
 
+const teamMembers = [
+    {
+        id: 1,
+        avatar: DummyAvatar1,
+        firstName: 'Test',
+        lastName: 'Name',
+        position: 'Position',
+        title: 'Title',
+        description: 'pariatur incididunt. Id ut sunt do non excepteur. Ullamco enim ea consectetur in nisi amet ex minim quis ullamco cillum quis est. Laborum tempor quis dolore ut et quis dolor culpa in incididunt nulla consectetur Lorem. Sit anim est dolor officia eu esse ex ipsum. Aute et magna aliquip anim. Deserunt eiusmod qui in incididunt est non excepteur laborum amet.',
+    },
+    {
+        id: 2,
+        avatar: DummyAvatar2,
+        firstName: 'Test',
+        lastName: 'Name',
+        position: 'Position',
+        title: 'Title',
+        description: 'pariatur incididunt. Id ut sunt do non excepteur. Ullamco enim ea consectetur in nisi amet ex minim quis ullamco cillum quis est. Laborum tempor quis dolore ut et quis dolor culpa in incididunt nulla consectetur Lorem. Sit anim est dolor officia eu esse ex ipsum. Aute et magna aliquip anim. Deserunt eiusmod qui in incididunt est non excepteur laborum amet.',
+    },
+    {
+        id: 3,
+        avatar: DummyAvatar3,
+        firstName: 'Test',
+        lastName: 'Name',
+        position: 'Position',
+        title: 'Title',
+        description: 'pariatur incididunt. Id ut sunt do non excepteur. Ullamco enim ea consectetur in nisi amet ex minim quis ullamco cillum quis est. Laborum tempor quis dolore ut et quis dolor culpa in incididunt nulla consectetur Lorem. Sit anim est dolor officia eu esse ex ipsum. Aute et magna aliquip anim. Deserunt eiusmod qui in incididunt est non excepteur laborum amet.',
+    },
+    {
+        id: 4,
+        avatar: DummyAvatar4,
+        firstName: 'Test',
+        lastName: 'Name',
+        position: 'Position',
+        title: 'Title',
+        description: 'pariatur incididunt. Id ut sunt do non excepteur. Ullamco enim ea consectetur in nisi amet ex minim quis ullamco cillum quis est. Laborum tempor quis dolore ut et quis dolor culpa in incididunt nulla consectetur Lorem. Sit anim est dolor officia eu esse ex ipsum. Aute et magna aliquip anim. Deserunt eiusmod qui in incididunt est non excepteur laborum amet.',
+    },
+]
+
 const dummyCategory = [
     {
         id: 1,
@@ -153,5 +196,6 @@ export {
     procedures, 
     rentOutProcedures,
     rentingProcedures,
+    teamMembers,
     dummyCategory, 
 }

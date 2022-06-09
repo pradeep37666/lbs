@@ -11,9 +11,7 @@
 }
 
 .smaller_width {
-    /* max-width: 30em; */
     padding-left: 10em;
-    flex-direction: column;
 }
 
 .padding_sm  {
@@ -23,4 +21,27 @@
 .insert_image_width_height {
     width: 80%;
     height: 80%;
+}
+
+.seven_to_three {
+    width: 60%;
+}
+
+.three_to_seven {
+    width: 40%;
+}
+
+.sharing_description {
+    font-size: 0.8em;
+}
+
+.text_container_width {
+    padding-right: 10em;
+}
+
+.center_member_items {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
