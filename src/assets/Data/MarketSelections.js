@@ -102,6 +102,33 @@ const rentingProcedures = [
     },
 ]
 
+const damagedProcedures = [
+    {
+        id: 1,
+        icon: ThumbsUp,
+        title: '1. Photos Or Videos',
+        description: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.',
+    },
+    {
+        id: 2,
+        icon: Message,
+        title: '2. When do I report?',
+        description: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.',
+    },
+    {
+        id: 3,
+        icon: MowingImg,
+        title: '3. Borrower Communication',
+        description: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.',
+    },
+    {
+        id: 4,
+        icon: DollarSign,
+        title: '4. Reach Out To Us',
+        description: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.',
+    },
+]
+
 const teamMembers = [
     {
         id: 1,
@@ -196,6 +223,7 @@ export {
     procedures, 
     rentOutProcedures,
     rentingProcedures,
+    damagedProcedures,
     teamMembers,
     dummyCategory, 
 }

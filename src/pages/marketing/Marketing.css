@@ -165,6 +165,10 @@
     padding-right: 0 !important;
 }
 
+.no_bottom_padding {
+    padding-bottom: 0 !important;
+}
+
 .margin_bottom {
     margin: 1em 0;
 }

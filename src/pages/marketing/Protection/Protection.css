@@ -1,0 +1,31 @@
+.protection_title_position {
+    width: 60%;
+    top: 40%;
+    left: 10%;
+}
+
+.sub_title_width {
+    width: 50%;
+}
+
+.start_desc_text {
+    text-align: start;
+}
+
+.damaged_steps_title,
+.damaged_steps_description {
+    text-align: center;
+    margin: 0 auto;
+}
+
+.damaged_steps_title {
+    width: 15em;
+}
+
+.damaged_steps_description {
+    max-width: 30em;
+    font-size: 0.5em;
+    font-weight: 400;
+    color: #33384F;
+    line-height: 0.9em;
+}

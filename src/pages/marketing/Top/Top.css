@@ -86,6 +86,7 @@
     max-width: 1300px;
     display: flex;
     flex-wrap: wrap;
+    gap: 1em;
     flex-direction: row;
     justify-content: center;
     align-items: center;
