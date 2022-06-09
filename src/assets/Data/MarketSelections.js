@@ -11,6 +11,7 @@ import {
     DummyAvatar2,
     DummyAvatar3,
     DummyAvatar4,
+    DummyBlog,
 } from '../Images/Marketings/Marketings'
 
 const procedures = [
@@ -219,6 +220,49 @@ const dummyCategory = [
     },
 ]
 
+const dummyBlog = [
+    {
+        id: 1,
+        image: DummyBlog,
+        title: 'Little Big Shed Launches New Online Community Sharing App',
+        content: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.',
+        category: [ 'Tools', 'Sharing', 'Knowledge' ],
+        postedDate: '22-02-2022',
+    },
+    {
+        id: 2,
+        image: DummyBlog,
+        title: 'Real Stories: Rodger',
+        content: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.',
+        category: [ 'Tools', 'Sharing', 'Knowledge' ],
+        postedDate: '22-02-2022',
+    },
+    {
+        id: 3,
+        image: DummyBlog,
+        title: 'A new look a camping gear',
+        content: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.',
+        category: [ 'Tools', 'Sharing', 'Knowledge' ],
+        postedDate: '22-02-2022',
+    },
+    {
+        id: 4,
+        image: DummyBlog,
+        title: 'Little Big Shed Launches New Online Community Sharing App',
+        content: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.',
+        category: [ 'Tools', 'Sharing', 'Knowledge' ],
+        postedDate: '22-02-2022',
+    },
+    {
+        id: 5,
+        image: DummyBlog,
+        title: 'The Origins of Little Big Shed: Founders Story',
+        content: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.',
+        category: [ 'Tools', 'Sharing', 'Knowledge' ],
+        postedDate: '22-02-2022',
+    },
+]
+
 export { 
     procedures, 
     rentOutProcedures,
@@ -226,4 +270,5 @@ export {
     damagedProcedures,
     teamMembers,
     dummyCategory, 
+    dummyBlog,
 }

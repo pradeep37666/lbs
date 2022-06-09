@@ -1,0 +1,13 @@
+.blog_card_flex_box {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    max-width: 1300px;
+    gap: 1em;
+    flex-direction: row;
+    justify-content: flex-start;
+    padding: 0 2em;
+    padding-bottom: 3em;
+    margin: 0 auto;
+    margin-top: 4em;
+}

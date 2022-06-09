@@ -1,11 +1,12 @@
 import React from 'react'
+import '../Marketing.css'
+import './Protection.css'
 import { damagedProcedures } from '../../../assets/Data/MarketSelections'
 import { TopInfoGraphic } from '../../../assets/Images/Marketings/Marketings'
 import Footer from '../../../components/marketing/Footer/Footer'
 import MarketingButton from '../../../components/marketing/MarketingButton/MarketingButton'
 import NavBar from '../../../components/marketing/NavBar/NavBar'
 import StepCard from '../../../components/marketing/StepCard/StepCard'
-import './Protection.css'
 
 const Protection = () => {
   return (
