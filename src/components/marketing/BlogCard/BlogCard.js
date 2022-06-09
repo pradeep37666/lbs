@@ -1,12 +1,12 @@
 import React from 'react'
 import './BlogCard.css'
 
-const BlogCard = ({ blog }) => {
+const BlogCard = ({ blog, setClickedBlogId }) => {
 
     return (
         <div 
             className='blog_card_container'
-            
+            onClick={() => setClickedBlogId(blog.id)}
         >
             <img 
                 src={blog.image} alt='blog top' 
@@ -19,7 +19,7 @@ const BlogCard = ({ blog }) => {
                 {blog.category.join(' / ')}
             </p>
             <p className='blog_card_content'>
-                {blog.content}
+                {blog.subtitle}
             </p>
             <p className='blog_card_postedDate'>
                 {blog.postedDate}

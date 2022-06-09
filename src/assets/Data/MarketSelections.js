@@ -130,6 +130,33 @@ const damagedProcedures = [
     },
 ]
 
+const howItWorksProcedures = [
+    {
+        id: 1,
+        icon: Search,
+        title: 'Explore and Find',
+        description: 'Search our little big platform to be matched with neighbours nearby who want to share that item.',
+    },
+    {
+        id: 2,
+        icon: Calendar,
+        title: 'Book and Pay',
+        description: 'Create an account to book in your first borrow. You’ll receive a notification from the lender once accepted.',
+    },
+    {
+        id: 3,
+        icon: Message,
+        title: 'Collect and Enjoy',
+        description: 'Use the app chat to connect and arrange pickup details with the lender. Now you’re ready to make, mend or explore!',
+    },
+    {
+        id: 4,
+        icon: ThumbsUp,
+        title: 'Return and Rate',
+        description: 'Return your borrow when agreed and in the same condition you found it. Review your share using our rating system and help build trust in your hood.',
+    },
+]
+
 const teamMembers = [
     {
         id: 1,
@@ -225,33 +252,69 @@ const dummyBlog = [
         id: 1,
         image: DummyBlog,
         title: 'Little Big Shed Launches New Online Community Sharing App',
-        content: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.',
+        subtitle: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.',
         category: [ 'Tools', 'Sharing', 'Knowledge' ],
         postedDate: '22-02-2022',
+        contentTitle: 'Equipment rental, hobby gear and tool sharing in your hood.',
+        contentBody: `We wanted to let you enjoy the power of sharing so we can all do something positive together – for us, our community and the planet. That’s why we’ve been inspired to create Little Big Shed, an online sharing platform to help you share stuff and do good. Now we can all afford to make, mend, learn (and earn) by sharing tools, hobby gear, leisure equipment and plenty more, from like-minded neighbourhood locals!<br /><br/>
+        Sound good? It gets better. There’s also no service fee for using our platform – Little Big Shed covers its own running costs so that lenders earn more from sharing their items and borrowers save more from not having to buy new. <br /><br />
+        Our equipment rental app means that absolutely anything you have in your little shed (whether that be a garage, a kitchen drawer or a cupboard shelf!) can become part of something much bigger — the sharing economy. Around the world, people are sharing their equipment, their homes, their cars and their skills. This act of sharing helps local communities save money and supports your neighbours to make money.<br /><br /> 
+        The sharing economy is projected to explode, according to Pricewaterhouse Coopers. Globally, they predict that by 2025 it will be worth more than NZ$483b. The five key sectors include peer-to-peer finance, peer-to-peer accommodation, car sharing, music, TV and video streaming, and online staffing. In China alone, there are over 600 million users of shared services and platforms.<br /><br />
+        Our Little Big Shed tool, hobby and equipment share platform is based on people using items only when required. This eliminates the need for all of us to own possessions which spend most of their life gathering dust. Did you know 80% of household items that we own are used less than once a month? <br/> <br />
+        By pooling our resources, from lawnmowers<gardening> and water blasters<cleaning> to walking gear<camping/hiking> and pasta makers<appliances>, we can help to reduce waste by making our spending habits more sustainable. This ticks boxes not just for us personally. The equipment rental and sharing economy has major social, environmental and economic benefits for our planet.<br /><br />
+        What’s really great is by sharing within our communities, we buy fewer items overall. With less people buying stuff new, and lending and borrowing more, demand for products reduces. This, in turn, leads to factories manufacturing and supplying less stuff (that we don’t really need).<br /><br />
+        By consuming less, we’re doing our bit to save precious natural resources by making less metal and plastic and using less energy. Sharing is a way of designing waste out of the system before it has the chance to become rubbish – cutting pollution and waste across the whole supply chain. Ultimately, less stuff ends up in our landfills, on our beaches and in our oceans – better for us and for our planet. ‘Cause there’s no Planet B, right?`,
     },
     {
         id: 2,
         image: DummyBlog,
         title: 'Real Stories: Rodger',
-        content: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.',
+        subtitle: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.',
         category: [ 'Tools', 'Sharing', 'Knowledge' ],
         postedDate: '22-02-2022',
+        contentTitle: 'Equipment rental, hobby gear and tool sharing in your hood.',
+        contentBody: `We wanted to let you enjoy the power of sharing so we can all do something positive together – for us, our community and the planet. That’s why we’ve been inspired to create Little Big Shed, an online sharing platform to help you share stuff and do good. Now we can all afford to make, mend, learn (and earn) by sharing tools, hobby gear, leisure equipment and plenty more, from like-minded neighbourhood locals!<br /><br/>
+        Sound good? It gets better. There’s also no service fee for using our platform – Little Big Shed covers its own running costs so that lenders earn more from sharing their items and borrowers save more from not having to buy new. <br /><br />
+        Our equipment rental app means that absolutely anything you have in your little shed (whether that be a garage, a kitchen drawer or a cupboard shelf!) can become part of something much bigger — the sharing economy. Around the world, people are sharing their equipment, their homes, their cars and their skills. This act of sharing helps local communities save money and supports your neighbours to make money.<br /><br /> 
+        The sharing economy is projected to explode, according to Pricewaterhouse Coopers. Globally, they predict that by 2025 it will be worth more than NZ$483b. The five key sectors include peer-to-peer finance, peer-to-peer accommodation, car sharing, music, TV and video streaming, and online staffing. In China alone, there are over 600 million users of shared services and platforms.<br /><br />
+        Our Little Big Shed tool, hobby and equipment share platform is based on people using items only when required. This eliminates the need for all of us to own possessions which spend most of their life gathering dust. Did you know 80% of household items that we own are used less than once a month? <br/> <br />
+        By pooling our resources, from lawnmowers<gardening> and water blasters<cleaning> to walking gear<camping/hiking> and pasta makers<appliances>, we can help to reduce waste by making our spending habits more sustainable. This ticks boxes not just for us personally. The equipment rental and sharing economy has major social, environmental and economic benefits for our planet.<br /><br />
+        What’s really great is by sharing within our communities, we buy fewer items overall. With less people buying stuff new, and lending and borrowing more, demand for products reduces. This, in turn, leads to factories manufacturing and supplying less stuff (that we don’t really need).<br /><br />
+        By consuming less, we’re doing our bit to save precious natural resources by making less metal and plastic and using less energy. Sharing is a way of designing waste out of the system before it has the chance to become rubbish – cutting pollution and waste across the whole supply chain. Ultimately, less stuff ends up in our landfills, on our beaches and in our oceans – better for us and for our planet. ‘Cause there’s no Planet B, right?`,
     },
     {
         id: 3,
         image: DummyBlog,
         title: 'A new look a camping gear',
-        content: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.',
+        subtitle: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.',
         category: [ 'Tools', 'Sharing', 'Knowledge' ],
         postedDate: '22-02-2022',
+        contentTitle: 'Equipment rental, hobby gear and tool sharing in your hood.',
+        contentBody: `We wanted to let you enjoy the power of sharing so we can all do something positive together – for us, our community and the planet. That’s why we’ve been inspired to create Little Big Shed, an online sharing platform to help you share stuff and do good. Now we can all afford to make, mend, learn (and earn) by sharing tools, hobby gear, leisure equipment and plenty more, from like-minded neighbourhood locals!<br /><br/>
+        Sound good? It gets better. There’s also no service fee for using our platform – Little Big Shed covers its own running costs so that lenders earn more from sharing their items and borrowers save more from not having to buy new. <br /><br />
+        Our equipment rental app means that absolutely anything you have in your little shed (whether that be a garage, a kitchen drawer or a cupboard shelf!) can become part of something much bigger — the sharing economy. Around the world, people are sharing their equipment, their homes, their cars and their skills. This act of sharing helps local communities save money and supports your neighbours to make money.<br /><br /> 
+        The sharing economy is projected to explode, according to Pricewaterhouse Coopers. Globally, they predict that by 2025 it will be worth more than NZ$483b. The five key sectors include peer-to-peer finance, peer-to-peer accommodation, car sharing, music, TV and video streaming, and online staffing. In China alone, there are over 600 million users of shared services and platforms.<br /><br />
+        Our Little Big Shed tool, hobby and equipment share platform is based on people using items only when required. This eliminates the need for all of us to own possessions which spend most of their life gathering dust. Did you know 80% of household items that we own are used less than once a month? <br/> <br />
+        By pooling our resources, from lawnmowers<gardening> and water blasters<cleaning> to walking gear<camping/hiking> and pasta makers<appliances>, we can help to reduce waste by making our spending habits more sustainable. This ticks boxes not just for us personally. The equipment rental and sharing economy has major social, environmental and economic benefits for our planet.<br /><br />
+        What’s really great is by sharing within our communities, we buy fewer items overall. With less people buying stuff new, and lending and borrowing more, demand for products reduces. This, in turn, leads to factories manufacturing and supplying less stuff (that we don’t really need).<br /><br />
+        By consuming less, we’re doing our bit to save precious natural resources by making less metal and plastic and using less energy. Sharing is a way of designing waste out of the system before it has the chance to become rubbish – cutting pollution and waste across the whole supply chain. Ultimately, less stuff ends up in our landfills, on our beaches and in our oceans – better for us and for our planet. ‘Cause there’s no Planet B, right?`,
     },
     {
         id: 4,
         image: DummyBlog,
         title: 'Little Big Shed Launches New Online Community Sharing App',
-        content: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.',
+        subtitle: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.',
         category: [ 'Tools', 'Sharing', 'Knowledge' ],
         postedDate: '22-02-2022',
+        contentTitle: 'Equipment rental, hobby gear and tool sharing in your hood.',
+        contentBody: `We wanted to let you enjoy the power of sharing so we can all do something positive together – for us, our community and the planet. That’s why we’ve been inspired to create Little Big Shed, an online sharing platform to help you share stuff and do good. Now we can all afford to make, mend, learn (and earn) by sharing tools, hobby gear, leisure equipment and plenty more, from like-minded neighbourhood locals!<br /><br/>
+        Sound good? It gets better. There’s also no service fee for using our platform – Little Big Shed covers its own running costs so that lenders earn more from sharing their items and borrowers save more from not having to buy new. <br /><br />
+        Our equipment rental app means that absolutely anything you have in your little shed (whether that be a garage, a kitchen drawer or a cupboard shelf!) can become part of something much bigger — the sharing economy. Around the world, people are sharing their equipment, their homes, their cars and their skills. This act of sharing helps local communities save money and supports your neighbours to make money.<br /><br /> 
+        The sharing economy is projected to explode, according to Pricewaterhouse Coopers. Globally, they predict that by 2025 it will be worth more than NZ$483b. The five key sectors include peer-to-peer finance, peer-to-peer accommodation, car sharing, music, TV and video streaming, and online staffing. In China alone, there are over 600 million users of shared services and platforms.<br /><br />
+        Our Little Big Shed tool, hobby and equipment share platform is based on people using items only when required. This eliminates the need for all of us to own possessions which spend most of their life gathering dust. Did you know 80% of household items that we own are used less than once a month? <br/> <br />
+        By pooling our resources, from lawnmowers<gardening> and water blasters<cleaning> to walking gear<camping/hiking> and pasta makers<appliances>, we can help to reduce waste by making our spending habits more sustainable. This ticks boxes not just for us personally. The equipment rental and sharing economy has major social, environmental and economic benefits for our planet.<br /><br />
+        What’s really great is by sharing within our communities, we buy fewer items overall. With less people buying stuff new, and lending and borrowing more, demand for products reduces. This, in turn, leads to factories manufacturing and supplying less stuff (that we don’t really need).<br /><br />
+        By consuming less, we’re doing our bit to save precious natural resources by making less metal and plastic and using less energy. Sharing is a way of designing waste out of the system before it has the chance to become rubbish – cutting pollution and waste across the whole supply chain. Ultimately, less stuff ends up in our landfills, on our beaches and in our oceans – better for us and for our planet. ‘Cause there’s no Planet B, right?`,
     },
     {
         id: 5,
@@ -260,6 +323,15 @@ const dummyBlog = [
         content: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.',
         category: [ 'Tools', 'Sharing', 'Knowledge' ],
         postedDate: '22-02-2022',
+        contentTitle: 'Equipment rental, hobby gear and tool sharing in your hood.',
+        contentBody: `We wanted to let you enjoy the power of sharing so we can all do something positive together – for us, our community and the planet. That’s why we’ve been inspired to create Little Big Shed, an online sharing platform to help you share stuff and do good. Now we can all afford to make, mend, learn (and earn) by sharing tools, hobby gear, leisure equipment and plenty more, from like-minded neighbourhood locals!<br /><br/>
+        Sound good? It gets better. There’s also no service fee for using our platform – Little Big Shed covers its own running costs so that lenders earn more from sharing their items and borrowers save more from not having to buy new. <br /><br />
+        Our equipment rental app means that absolutely anything you have in your little shed (whether that be a garage, a kitchen drawer or a cupboard shelf!) can become part of something much bigger — the sharing economy. Around the world, people are sharing their equipment, their homes, their cars and their skills. This act of sharing helps local communities save money and supports your neighbours to make money.<br /><br /> 
+        The sharing economy is projected to explode, according to Pricewaterhouse Coopers. Globally, they predict that by 2025 it will be worth more than NZ$483b. The five key sectors include peer-to-peer finance, peer-to-peer accommodation, car sharing, music, TV and video streaming, and online staffing. In China alone, there are over 600 million users of shared services and platforms.<br /><br />
+        Our Little Big Shed tool, hobby and equipment share platform is based on people using items only when required. This eliminates the need for all of us to own possessions which spend most of their life gathering dust. Did you know 80% of household items that we own are used less than once a month? <br/> <br />
+        By pooling our resources, from lawnmowers<gardening> and water blasters<cleaning> to walking gear<camping/hiking> and pasta makers<appliances>, we can help to reduce waste by making our spending habits more sustainable. This ticks boxes not just for us personally. The equipment rental and sharing economy has major social, environmental and economic benefits for our planet.<br /><br />
+        What’s really great is by sharing within our communities, we buy fewer items overall. With less people buying stuff new, and lending and borrowing more, demand for products reduces. This, in turn, leads to factories manufacturing and supplying less stuff (that we don’t really need).<br /><br />
+        By consuming less, we’re doing our bit to save precious natural resources by making less metal and plastic and using less energy. Sharing is a way of designing waste out of the system before it has the chance to become rubbish – cutting pollution and waste across the whole supply chain. Ultimately, less stuff ends up in our landfills, on our beaches and in our oceans – better for us and for our planet. ‘Cause there’s no Planet B, right?`,
     },
 ]
 
@@ -268,6 +340,7 @@ export {
     rentOutProcedures,
     rentingProcedures,
     damagedProcedures,
+    howItWorksProcedures,
     teamMembers,
     dummyCategory, 
     dummyBlog,
