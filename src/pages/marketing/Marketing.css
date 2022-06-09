@@ -130,6 +130,11 @@
     padding-right: 0;  
 }
 
+.insert_image_background {
+    position: relative;
+    background-size: cover;
+}
+
 /* utils */
 
 .flex_box {

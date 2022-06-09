@@ -4,8 +4,9 @@ import './HowItWorks.css'
 import NavBar from '../../../components/marketing/NavBar/NavBar'
 import { Android, Apple, SignUpImg, TopInfoGraphic, TopMowing } from '../../../assets/Images/Marketings/Marketings'
 import MarketingButton from '../../../components/marketing/MarketingButton/MarketingButton'
-import { procedures, rentingProcedures } from '../../../assets/Data/MarketSelections'
+import { rentingProcedures } from '../../../assets/Data/MarketSelections'
 import StepCard from '../../../components/marketing/StepCard/StepCard'
+import Footer from '../../../components/marketing/Footer/Footer'
 
 const HowItWorks = () => {
   return (
@@ -128,10 +129,10 @@ const HowItWorks = () => {
           We’re sharing more stuff with each other than ever before, Peer-to-peer technologies are changing the way we travel, listen to music, work, borrow money and access other people’s tools, hobby or leisure equipment.<br /><br /> 
           In 2013 the sharing economy was worth just NZ$22 billion. It is predicted to grow to more that NZ$495 billion by 2025, matching traditional hire/rental modals.
           </p>
-          </div>
-          <div className='half_screen_center'>
-            <img src={TopInfoGraphic} className='how_it_works_images' alt='less than once a month'/>
-          </div>
+        </div>
+        <div className='half_screen_center'>
+          <img src={TopInfoGraphic} className='how_it_works_images' alt='less than once a month'/>
+        </div>
       </div>
 
       <div className='marketing_img_xsm_container bg_lbs'>
@@ -144,8 +145,42 @@ const HowItWorks = () => {
             Check out our guide and FAQ’s for more info!
             </p>
           </div>
+          <div className='flex_box'>
+            <MarketingButton 
+              bgColor={'#E9D8B4'}
+              textColor={'#33384F'}
+            >
+            User Guides
+            </MarketingButton>
+            <MarketingButton 
+              bgColor={'#33384F'}
+              textColor={'#FFFFFF'}
+            >
+            FAQ’s
+            </MarketingButton>
+          </div>
         </div>
       </div>
+
+      <div className='marketing_img_sm_container bg_grey flex_box center_items'>
+        <div className='half_screen_center'>
+          <img src={TopMowing} className='how_it_works_images' alt='2 people standing'/>
+        </div>
+        <div className='half_screen_center article_section'>
+          <p className='marketing_main_title'>
+          Share Your Stuff, Earn Cash And Do Good.
+          </p>
+          <MarketingButton 
+            bgColor={'#AC172C'}
+            textColor={'#FFFFFF'}
+            width='20em'
+            >
+            Keen to start sharing your stuff?
+          </MarketingButton>
+        </div>
+      </div>
+
+      <Footer />
     </div>
   )
 }

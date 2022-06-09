@@ -1,0 +1,26 @@
+.bg_about_us {
+    background-image: url(../../../assets/Images/Marketings/TopFirst.png);
+}
+
+.bg_zero_waste {
+    background-image: url(../../../assets/Images/Marketings/dummyImage.jpg);
+}
+
+.position_lower {
+    top: 60%;
+}
+
+.smaller_width {
+    /* max-width: 30em; */
+    padding-left: 10em;
+    flex-direction: column;
+}
+
+.padding_sm  {
+    padding: 3em;
+}
+
+.insert_image_width_height {
+    width: 80%;
+    height: 80%;
+}
