@@ -53,8 +53,8 @@
 }
 
 .blog_instraction_desc {
-    margin: 0;
-    margin-top: 0.5em;
+    margin: 0.5em 0;
+    margin-bottom: 1.5em;
     color: #33384F;
     font-size: 0.9em;
 }

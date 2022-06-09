@@ -3,12 +3,15 @@ import '../Marketing.css'
 import './Blog.css'
 import { TopMowing } from '../../../assets/Images/Marketings/Marketings'
 import NavBar from '../../../components/marketing/NavBar/NavBar'
-import { dummyBlog, howItWorksProcedures } from '../../../assets/Data/MarketSelections'
+import { dummyBlog, dummyCategory, howItWorksProcedures } from '../../../assets/Data/MarketSelections'
 import BlogCard from '../../../components/marketing/BlogCard/BlogCard'
 import LBSStepCard from '../../../components/marketing/LBSStepCard/LBSStepCard'
+import CategoryCard from '../../../components/marketing/CategoryCard/CategoryCard'
+import MarketingButton from '../../../components/marketing/MarketingButton/MarketingButton'
+import Footer from '../../../components/marketing/Footer/Footer'
 
 const Blog = () => {
-  const [ clickedBlogId, setClickedBlogId ] = useState(1)
+  const [ clickedBlogId, setClickedBlogId ] = useState('')
   const [ selectedArticle, setSelectedArticle ] = useState('')
 
   useEffect(() => { 
@@ -94,9 +97,47 @@ const Blog = () => {
             <LBSStepCard step={step} key={step.id}/>
           ))}
           </div>
+          <p className='blog_instraction_desc'>
+          Plus, we’ve got you covered if something goes wrong, so no worries if your item comes back damaged or is stolen. Check out our lender protection policy to find out more about how you can lend worry-free with our verified Little Big Shed users.
+          </p>
         </div>
+
+        <div className='blog_instraction_sections bg_white'>
+          <p className='blog_instraction_title'>
+          What can you lend and borrow?
+          </p>
+          <p className='blog_instraction_desc'>
+          As our little shed grows into something big, you’ll be able to lend and borrow all sorts of stuff! Our categories will include listings for:
+          </p>
+          <div className='category_card_section'>
+            {dummyCategory.map(category => (
+              <CategoryCard category={category} key={category.id}/>
+            ))}
+          </div>
+          <p className='blog_instraction_desc'>
+          What you have in your little shed can become part of something big – the sharing economy.<br /><br /> 
+          By making a collective effort to buy less and lend and borrow more, we put less pressure on our planet’s natural resources meaning we can all contribute to protecting the planet.<br /><br />  
+          Go on, connect and share with locals like you so we can all care for our place and our planet together!
+          </p>
+        </div>
+
+        <div className='marketing_img_sm_container bg_signup'>
+          <div className='center_quote_btn'>
+            <p className='lbs_quote_lgtext'>
+            Ready To Start Borrowing?
+            </p>
+            <MarketingButton 
+              bgColor={'#AC172C'}
+              textColor={'#FFFFFF'}
+            >
+              Sign Up To Start Sharing
+            </MarketingButton>
+          </div>
+        </div>        
       </>
       }
+
+      <Footer />
     </div>
   )
 }
