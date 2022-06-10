@@ -1,0 +1,30 @@
+.contact_text_input_container {
+    padding: 0.5em;
+}
+
+.contact_text_label {
+    margin: 0;
+    color: #33384F;
+    font-weight: bold;
+}
+
+.contact_text_input_field,
+.contact_textarea_input_field {
+    width: 100%;
+    height: 3em;
+    padding: 0 0.5em;
+    border-radius: 10px;
+    outline: none;
+    border: 1px solid #AC172C;
+    background-color: #FFFFFF;
+}
+
+.contact_text_input_field:focus,
+.contact_textarea_input_field:focus {
+    border: 2px solid #AC172C;
+} 
+
+.contact_textarea_input_field {
+    height: 15em;
+    padding: 0.5em;
+}

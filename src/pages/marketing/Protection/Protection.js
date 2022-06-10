@@ -16,7 +16,7 @@ const Protection = () => {
       <div className='marketing_img_md_container bg_about_us'>
         <div className='main_title_section protection_title_position'>
           <p className='main_title'>
-          No Worries If Your Item Comes Back Damaged Or Is Stolen – We’ve Got You Covered!
+          Need Some More Information? We Have You Covered.
           </p>
           <p className='main_sub_title sub_title_width'>
           Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.

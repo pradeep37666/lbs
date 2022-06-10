@@ -43,13 +43,13 @@ const Footer = () => {
                 <div className='footer_content_box'>
                     <p 
                         className='footer_section_title_main'
-                        onClick={() => history.push('/')}    
+                        onClick={() => history.push('/about_us')}    
                     >
                         About Us
                     </p>
                     <p 
                         className='footer_section_title'
-                        onClick={() => history.push('/')}
+                        onClick={() => history.push('contact_us')}
                     >
                         Contact Us
                     </p>
@@ -69,31 +69,31 @@ const Footer = () => {
                 <div className='footer_content_box'>
                     <p 
                         className='footer_section_title_main'
-                        onClick={() => history.push('/')}    
+                        onClick={() => history.push('/how_it_works')}    
                     >
                         How It Works
                     </p>
                     <p 
                         className='footer_section_title'
-                        onClick={() => history.push('/')}
+                        onClick={() => history.push('/blog')}
                     >
                         Blog
                     </p>
                     <p 
                         className='footer_section_title'
-                        onClick={() => history.push('/')}
+                        onClick={() => history.push('/protection')}
                     >
                         Lender Protection
                     </p>
                     <p 
                         className='footer_section_title'
-                        onClick={() => history.push('/')}
+                        onClick={() => history.push('/faqs')}
                     >
-                        Lender Protection
+                        Guides &amp; FAQ’s
                     </p>
                     <p 
                         className='footer_section_title'
-                        onClick={() => history.push('/')}
+                        onClick={() => history.push('/login')}
                     >
                         Sign Up / Login
                     </p>

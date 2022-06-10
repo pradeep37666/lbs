@@ -335,6 +335,39 @@ const dummyBlog = [
     },
 ]
 
+const dummyQuestions = [
+    {
+        id: 1,
+        title: 'Setting Listing Fees For You Items.',
+        content: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.',
+    },
+    {
+        id: 2,
+        title: 'How To Make Sure Your Item Is Safe For Others.',
+        content: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.',
+    },
+    {
+        id: 3,
+        title: 'What To Do When An Item Is Damaged.',
+        content: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.',
+    },
+    {
+        id: 4,
+        title: 'How To List An Item.',
+        content: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.',
+    },
+    {
+        id: 5,
+        title: 'Tips To A Successful Listing.',
+        content: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.',
+    },
+    {
+        id: 6,
+        title: 'How To Take A Good Photo.',
+        content: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.',
+    },
+]
+
 export { 
     procedures, 
     rentOutProcedures,
@@ -344,4 +377,5 @@ export {
     teamMembers,
     dummyCategory, 
     dummyBlog,
+    dummyQuestions,
 }
