@@ -3,6 +3,7 @@ import '../Marketing.css'
 import './ContactUs.css'
 import NavBar from '../../../components/marketing/NavBar/NavBar'
 import ContactTextInput from '../../../components/marketing/ContactTextInput/ContactTextInput'
+import Footer from '../../../components/marketing/Footer/Footer'
 
 const ContactUs = () => {
   const [ firstName, setFirstName ] = useState('')
@@ -10,6 +11,7 @@ const ContactUs = () => {
   const [ email, setEmail ] = useState('')
   const [ number, setNumber ] = useState('')
   const [ message, setMessage ] = useState('')
+  const [ isChecked, setIsChecked ] = useState(false)
 
   const handleSubmit = () => {
     // submit message here
@@ -64,21 +66,29 @@ const ContactUs = () => {
                   setInput={setMessage}
                 />
                 <div className='news_letter_box'>
-                  <div>
-                    <p>
+                  <div className='news_title_box'>
+                    <p className='news_main_title'>
                     Subscribe To News Letters
                     </p>
-                    <p>
+                    <p className='news_sub_title'>
                     Subscribe to our Little Big Shed email updates.
                     </p>
                   </div>
-                  {/* checkbox */}
+                  <div className='news_checkbox_container'>
+                    <input 
+                      type='checkbox' 
+                      className='news_checkbox_input' 
+                      checked={isChecked}
+                      onClick={() => setIsChecked(!isChecked)}
+                    />
+                  </div>
                 </div>
               </div>
             </div>
             <div className='submit_btn_container'>
               <button
                 className='submit_message_btn'
+                onClick={handleSubmit}
               >
               Send Message
               </button>
@@ -104,6 +114,8 @@ const ContactUs = () => {
           </div>
         </div>
       </div>
+
+      <Footer />
     </div>
   )
 }

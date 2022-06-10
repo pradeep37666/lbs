@@ -71,3 +71,39 @@
 .submit_message_btn:hover {
     box-shadow: 15px 15px 25px 0px rgba(0,0,0,0.1);
 }
+
+.news_letter_box {
+    display: flex;
+}
+
+.news_title_box {
+    max-width: 80%;
+}
+
+.news_main_title,
+.news_sub_title {
+    margin: 0;
+    padding: 0 1em;
+}
+
+.news_main_title {
+    color: #33384F;
+    font-weight: bold;
+}
+
+.news_sub_title {
+    font-size: 0.8em;
+}
+
+.news_checkbox_container {
+    position: relative;
+    max-width: 20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    user-select: none;
+}
+
+.news_checkbox_input {
+    cursor: pointer;
+}
