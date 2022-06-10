@@ -20,6 +20,7 @@ import DummyAvatar2 from './sample-avatar2.webp'
 import DummyAvatar3 from './sample-avatar3.jpg'
 import DummyAvatar4 from './sample-avatar4.jpg'
 import DummyBlog from './sample_blog.jpg'
+import { ReactComponent as SearchBarIcon} from './SearchBarIcon.svg'
 
 export {
     TopFirst,
@@ -44,4 +45,5 @@ export {
     DummyAvatar3,
     DummyAvatar4,
     DummyBlog,
+    SearchBarIcon,
 }
