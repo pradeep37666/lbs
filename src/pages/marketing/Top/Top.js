@@ -6,7 +6,7 @@ import {
   Android, Apple, ArohaClear, TopInfoGraphic, TopMowing,
 } from '../../../assets/Images/Marketings/Marketings'
 import MarketingButton from '../../../components/marketing/MarketingButton/MarketingButton'
-import { categories, dummyCategory, procedures } from '../../../assets/Data/MarketSelections'
+import { categories, procedures } from '../../../assets/Data/MarketSelections'
 import StepCard from '../../../components/marketing/StepCard/StepCard'
 import CategoryCard from '../../../components/marketing/CategoryCard/CategoryCard'
 import Footer from '../../../components/marketing/Footer/Footer'
