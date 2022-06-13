@@ -1,7 +1,8 @@
 .bg_top {
-    background-image: url(../../../assets/Images/Marketings/TopFirst.png);
+    background-image: url(../../../assets/Images/Marketings/Background/TopFirst.png);
+    max-width: 100%;
 }
-
+        
 .article_section {
     flex-direction: column;
     padding: 2em 4em;
@@ -18,7 +19,7 @@
 
 .top_info_top_section {
     width: 100%;
-    height: 50%;
+    height: 30em;
     justify-content: center;
 }
 
@@ -107,10 +108,40 @@
     
 }
 
+@media screen and (max-width: 850px) {
+    .top_info_smaller_section {
+        padding: 0;
+    }
+    .top_info_top_section {
+        height: 20em;
+    }
+}
+
 @media screen and (max-width: 768px) {
     
 }
 
 @media screen and (max-width: 700px) {
-    
+    .article_section {
+        padding: 0 2em;
+        padding-bottom: 2em;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .disable_img {
+        display: none !important;
+    }
+    .top_section_smaller_box {
+        display: none;
+    }
+    .top_info_smaller_section {
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+        padding: 1em 3em;
+    }
+    .top_info_top_section {
+        height: 10em;
+    }
 }

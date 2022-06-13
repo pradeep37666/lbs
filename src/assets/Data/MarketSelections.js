@@ -12,6 +12,14 @@ import {
     DummyAvatar3,
     DummyAvatar4,
     DummyBlog,
+    Tools,
+    Gardening,
+    Events,
+    Hobbies,
+    Outdoor,
+    Kids,
+    Vehicle,
+    Closet,
 } from '../Images/Marketings/Marketings'
 
 const procedures = [
@@ -196,54 +204,54 @@ const teamMembers = [
     },
 ]
 
-const dummyCategory = [
+const categories = [
     {
         id: 1,
         category: 'Tools',
         items: 21056,
-        image: DummyCategoryImg
+        image: Tools
     },
     {
         id: 2,
         category: 'Gardening',
         items: 16702,
-        image: DummyCategoryImg
+        image: Gardening
     },
     {
         id: 3,
         category: 'Events & Parties',
         items: 12334,
-        image: DummyCategoryImg
+        image: Events
     },
     {
         id: 4,
         category: 'Hobbies',
         items: 4586,
-        image: DummyCategoryImg
+        image: Hobbies
     },
     {
         id: 5,
         category: 'Outdoor',
         items: 21056,
-        image: DummyCategoryImg
+        image: Outdoor
     },
     {
         id: 6,
         category: 'Kids',
         items: 16702,
-        image: DummyCategoryImg
+        image: Kids
     },
     {
         id: 7,
         category: 'Vehicle',
         items: 12334,
-        image: DummyCategoryImg
+        image: Vehicle
     },
     {
         id: 8,
         category: 'Closet',
         items: 4586,
-        image: DummyCategoryImg
+        image: Closet
     },
 ]
 
@@ -375,7 +383,7 @@ export {
     damagedProcedures,
     howItWorksProcedures,
     teamMembers,
-    dummyCategory, 
+    categories, 
     dummyBlog,
     dummyQuestions,
 }

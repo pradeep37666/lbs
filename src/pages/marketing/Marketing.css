@@ -187,9 +187,13 @@
 }
 
 /* breakpoint */
-
 @media screen and (max-width: 1440px) {
-    
+    .main_title_section {
+        width: 45%;
+    }
+    .graphic_image {
+        padding: 2em;
+    }
 }
 
 @media screen and (max-width: 1250px) {
@@ -197,21 +201,127 @@
 }
 
 @media screen and (max-width: 1024px) {
-    
+    .marketing_img_md_container {
+        height: 60vh;
+    }
+    .marketing_img_sm_container {
+        height: 50vh;
+    }
+    .main_title {
+        font-size: 2.8em;
+    }
+    .main_sub_title,
+    .download_sub_title {
+        font-size: 0.9em;
+    }
+    .download_main_title {
+        font-size: 1.5em;
+    }
+    .marketing_main_title {
+        font-size: 1.8em;
+    }
+    .marketing_main_description {
+        font-size: 0.6em;
+    }
+    .responsive_img_size {
+        width: 30em;
+        height: 30em;
+    }
 }
 
 @media screen and (max-width: 768px) {
-    
+    .marketing_img_md_container {
+        height: 45vh;
+    }
+    .main_title_section {
+        width: 55%;
+        height: auto;
+        bottom: 0;
+        left: 15%;
+    }
+    .main_title {
+        font-size: 2em;
+    }
+    .main_sub_title,
+    .download_sub_title {
+        font-size: 0.6em;
+    }
+    .download_main_title {
+        font-size: 1.3em;
+    }
+    .straight_column {
+        height: 100%;
+        flex-direction: column;
+        justify-content: center;
+        justify-items: center;
+        align-items: center;
+    }
+    .full_width {
+        width: 100%;
+        height: auto;
+    }
+
+    .responsive_img_size {
+        width: 25em;
+        height: 25em;
+    }
+
+    .responsive_img_sm_size {
+        width: 20em;
+        height: 20em;
+    }
+
+    .graphic_image {
+        padding: 0;
+    }
 }
 
 @media screen and (max-width: 700px) {
     
 }
 
+@media screen and (max-width: 600px) {
+    .marketing_img_md_container {
+        height: 35vh;
+    }
+    .main_title_section {
+        width: 55%;
+        height: auto;
+        top: 5%;
+        left: 15%;
+    }
+    .straight_column {
+        height: 100%;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .marketing_img_md_container {
+        height: 35vh;
+    }
+    .main_title_section {
+        width: 80%;
+        top: 5%;
+        left: 10%;
+    }
+    .main_title {
+        font-size: 1.8em;
+    }
+    .download_main_title {
+        font-size: 1em;
+    }
+    .straight_column {
+        height: 100%;
+    }
+    .graphic_image {
+        padding: 1em;
+    }
+}
+
 /* background */
 
 .bg_wall {
-    background-image: url(../../assets/Images/Marketings/TopBgWall.png);
+    background-image: url(../../assets/Images/Marketings/Background/TopBgWall.png);
 }
 
 .bg_grey{

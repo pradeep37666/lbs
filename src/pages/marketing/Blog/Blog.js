@@ -3,7 +3,7 @@ import '../Marketing.css'
 import './Blog.css'
 import { TopMowing } from '../../../assets/Images/Marketings/Marketings'
 import NavBar from '../../../components/marketing/NavBar/NavBar'
-import { dummyBlog, dummyCategory, howItWorksProcedures } from '../../../assets/Data/MarketSelections'
+import { categories, dummyBlog, dummyCategory, howItWorksProcedures } from '../../../assets/Data/MarketSelections'
 import BlogCard from '../../../components/marketing/BlogCard/BlogCard'
 import LBSStepCard from '../../../components/marketing/LBSStepCard/LBSStepCard'
 import CategoryCard from '../../../components/marketing/CategoryCard/CategoryCard'
@@ -110,7 +110,7 @@ const Blog = () => {
           As our little shed grows into something big, you’ll be able to lend and borrow all sorts of stuff! Our categories will include listings for:
           </p>
           <div className='category_card_section'>
-            {dummyCategory.map(category => (
+            {categories.map(category => (
               <CategoryCard category={category} key={category.id}/>
             ))}
           </div>

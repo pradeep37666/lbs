@@ -5,6 +5,7 @@ import Logo from '../../../assets/Logos/LBS_Logo_Flat_White.png'
 import { IoIosArrowDown, IoIosArrowUp } from 'react-icons/io'
 import { CgMenu } from 'react-icons/cg'
 import SearchBar from '../SearchBar/SearchBar'
+import MenuModal from '../MenuModal/MenuModal'
 
 const NavBar = ({ selected }) => {
     const [ isInfoOpen, setIsInfoOpen ] = useState(false)
@@ -126,6 +127,10 @@ const NavBar = ({ selected }) => {
                 <CgMenu 
                     className='nav_bar_sm_menu'
                     onClick={() => setIsMenuModalOpen(true)}
+                />
+                <MenuModal 
+                    open={isMenuModalOpen}
+                    handleClose={() => setIsMenuModalOpen(false)}
                 />
             </div>
         </div>

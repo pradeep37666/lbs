@@ -6,6 +6,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    text-align: center;
     margin: 0.8em 1em 0.8em 0;
     font-weight: bold;
     cursor: pointer;
@@ -19,4 +20,28 @@
     box-shadow: 4px -1px 25px -4px rgba(245, 245, 245, 0.8);
     -webkit-box-shadow: 4px -1px 25px -4px rgba(245, 245, 245, 0.8);
     -moz-box-shadow: 4px -1px 25px -4px rgba(245, 245, 245, 0.8);
+}
+
+@media screen and (max-width: 850px) {
+    .marketing_btn_container {
+        font-size: 0.9em;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .marketing_btn_container {
+       margin: 0.3em 0.5em;
+       width: 16em;
+    }
+    .marketing_btn_container {
+        font-size: 0.8em;
+    }
+}
+
+@media screen and (max-width: 600px) {
+
+}
+
+@media screen and (max-width: 500px) {
+    
 }

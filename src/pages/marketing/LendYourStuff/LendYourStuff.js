@@ -1,8 +1,8 @@
 import React from 'react'
 import './LendYourStuff.css'
 import { 
-  Android, Apple, DummyImage, 
-  SignUpImg, TopInfoGraphic, TopMowing 
+  Android, Apple, LYSMowing, LYSPaint, 
+  NatalieCliear, SignUpImg, TaneClear
 } from '../../../assets/Images/Marketings/Marketings'
 import MarketingButton from '../../../components/marketing/MarketingButton/MarketingButton'
 import NavBar from '../../../components/marketing/NavBar/NavBar'
@@ -52,7 +52,7 @@ const LendYourStuff = () => {
 
       <div className='marketing_img_md_container bg_wall flex_box'>
         <div className='half_screen_center'>
-          <img src={TopInfoGraphic} className='graphic_image' alt='mowing iamge'/>
+          <img src={LYSMowing} className='graphic_image' alt='mowing iamge'/>
         </div>
         <div className='half_screen_center article_section'>
           <p className='marketing_main_title'>
@@ -89,7 +89,7 @@ const LendYourStuff = () => {
           </div>
         </div>
         <div className='center_text_image'>
-          <img src={TopMowing} className='graphic_image no_left_padding' alt='guiter guy image'/>
+          <img src={TaneClear} className='graphic_image no_left_padding' alt='guiter guy image'/>
         </div>
       </div>
 
@@ -101,7 +101,7 @@ const LendYourStuff = () => {
 
       <div className='marketing_img_sm_container bg_dark flex_box center_items'>
         <div className='image_half_container'>
-          <img src={DummyImage} className='picture_image no_right_padding' alt='tradie image'/>
+          <img src={LYSPaint} className='picture_image no_right_padding' alt='tradie image'/>
         </div>
         <div className='center_text_image'>
           <p className='marketing_main_title text_align dark_mode_text'>
@@ -130,7 +130,7 @@ const LendYourStuff = () => {
             </div>
           </div>
           <div className='top_section_smaller_box'>
-            <img src={TopMowing} className='graphic_image' alt='surf borad lady image'/>
+            <img src={NatalieCliear} className='graphic_image' alt='surf borad lady image'/>
           </div>
         </div>
         <div className='top_grid_section'>

@@ -3,10 +3,10 @@ import '../Marketing.css'
 import './Top.css'
 import NavBar from '../../../components/marketing/NavBar/NavBar'
 import { 
-  Android, Apple, TopInfoGraphic, TopMowing,
+  Android, Apple, ArohaClear, TopInfoGraphic, TopMowing,
 } from '../../../assets/Images/Marketings/Marketings'
 import MarketingButton from '../../../components/marketing/MarketingButton/MarketingButton'
-import { dummyCategory, procedures } from '../../../assets/Data/MarketSelections'
+import { categories, dummyCategory, procedures } from '../../../assets/Data/MarketSelections'
 import StepCard from '../../../components/marketing/StepCard/StepCard'
 import CategoryCard from '../../../components/marketing/CategoryCard/CategoryCard'
 import Footer from '../../../components/marketing/Footer/Footer'
@@ -57,11 +57,11 @@ const Top = () => {
         </div>
       </div>
 
-      <div className='marketing_img_md_container bg_wall flex_box'>
-        <div className='half_screen_center'>
-          <img src={TopInfoGraphic} className='graphic_image' alt='graphic image'/>
+      <div className='marketing_img_md_container bg_wall flex_box straight_column'>
+        <div className='half_screen_center full_width'>
+          <img src={TopInfoGraphic} className='graphic_image responsive_img_size' alt='graphic image'/>
         </div>
-        <div className='half_screen_center article_section'>
+        <div className='half_screen_center article_section full_width'>
           <p className='marketing_main_title'>
           Your Local Tool, Hobby Gear And Equipment Rental App.
           </p>
@@ -86,8 +86,8 @@ const Top = () => {
         </div>
       </div>
 
-      <div className='marketing_img_sm_container bg_grey flex_box'>
-        <div className='half_screen_center column_section'>
+      <div className='marketing_img_sm_container bg_grey flex_box straight_column'>
+        <div className='half_screen_center column_section full_width'>
           <p className='marketing_main_title max_width'>
           Share Your Stuff, Earn Cash And Do Good
           </p>
@@ -101,12 +101,12 @@ const Top = () => {
           Lend Your Stuff
           </MarketingButton>
         </div>
-        <div className='half_screen_center'>
-          <img src={TopMowing} className='graphic_image' alt='mowing image'/>
+        <div className='half_screen_center full_width'>
+          <img src={TopMowing} className='graphic_image responsive_img_size' alt='mowing image'/>
         </div>
       </div>
 
-      <div className='marketing_image_xlg_container bg_white'>
+      <div className='marketing_image_fit_container bg_white'>
         <div className='top_info_top_section flex_box'>
           <div className='top_info_smaller_section'>
             <p className='marketing_main_title'>
@@ -119,7 +119,7 @@ const Top = () => {
             </div>
           </div>
           <div className='top_section_smaller_box'>
-            <img src={TopMowing} className='graphic_image' alt='lady image'/>
+            <img src={ArohaClear} className='graphic_image responsive_img_sm_size disable_img' alt='lady image'/>
           </div>
         </div>
         <div className='top_info_bottom_section'>
@@ -149,7 +149,7 @@ const Top = () => {
           </p>
         </div>
         <div className='category_card_section'>
-            {dummyCategory.map(category => (
+            {categories.map(category => (
               <CategoryCard category={category} key={category.id}/>
             ))}
         </div>

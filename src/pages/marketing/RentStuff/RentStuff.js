@@ -3,9 +3,9 @@ import '../Marketing.css'
 import './RentStuff.css'
 import NavBar from '../../../components/marketing/NavBar/NavBar'
 import SearchInput from '../../../components/marketing/SearchInput/SearchInput'
-import { DummyImage, TopMowing } from '../../../assets/Images/Marketings/Marketings'
+import { CleaningWindow, DummyImage, RSSawing, TopMowing } from '../../../assets/Images/Marketings/Marketings'
 import MarketingButton from '../../../components/marketing/MarketingButton/MarketingButton'
-import { dummyCategory } from '../../../assets/Data/MarketSelections'
+import { categories, dummyCategory } from '../../../assets/Data/MarketSelections'
 import CategoryCard from '../../../components/marketing/CategoryCard/CategoryCard'
 import Footer from '../../../components/marketing/Footer/Footer'
 
@@ -27,7 +27,7 @@ const RentStuff = () => {
 
             <div className='marketing_img_md_container bg_grey flex_box'>
                 <div className='half_screen_center'>
-                    <img src={TopMowing} className='graphic_image' alt='graphic image'/>
+                    <img src={RSSawing} className='graphic_image' alt='graphic image'/>
                 </div>
                 <div className='half_screen_center article_section'>
                     <p className='marketing_main_title'>
@@ -51,7 +51,7 @@ const RentStuff = () => {
                     </p>
                 </div>
                 <div className='category_card_section'>
-                    {dummyCategory.map(category => (
+                    {categories.map(category => (
                     <CategoryCard category={category} key={category.id}/>
                     ))}
                 </div>
@@ -88,7 +88,7 @@ const RentStuff = () => {
                     </MarketingButton>
                 </div>
                 <div className='image_half_container'>
-                    <img src={DummyImage} className='picture_image no_left_padding' alt='tradie image'/>
+                    <img src={CleaningWindow} className='picture_image no_left_padding' alt='tradie image'/>
                 </div>
             </div>
 
