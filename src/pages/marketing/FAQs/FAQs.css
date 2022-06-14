@@ -1,5 +1,5 @@
 .bg_faqs {
-    background-image: url(../../../assets/Images/Marketings/Background/faqs_top.png);
+    background-image: url(../../../assets/Images/Marketings/Background/faq_top.png);
 }
 
 .bg_faqs_signup {
@@ -37,4 +37,10 @@
     justify-content: center;
     padding-top: 2em;
     padding-bottom: 4em;
+}
+
+@media screen and (max-width: 1440px) {
+    .faqs_sub_title {
+        width: 80%;
+    }
 }

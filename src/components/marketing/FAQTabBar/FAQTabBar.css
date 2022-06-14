@@ -1,6 +1,7 @@
 .faq_tab_section {
     display: flex;
     padding-left: 3em;
+    width: 100%;
 }
 
 .faq_tab_title {
@@ -30,5 +31,27 @@
     }
     100% {
         width: 100%;
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .faq_tab_title {
+        margin: 0.5em;
+    }
+    .faq_tab_section {
+        padding-left: 0;
+        justify-content: center;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .faq_tab_title {
+        font-size: 1.2em;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .faq_tab_title {
+        font-size: 0.9em;
     }
 }

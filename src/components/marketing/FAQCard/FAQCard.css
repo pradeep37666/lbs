@@ -17,3 +17,15 @@
     margin: 0;
     font-size: 0.9em;
 }
+
+@media screen and (max-width: 500px) {
+    .faq_card_container {
+        width: 90%;
+    }
+    .faq_card_main_title {
+        font-size: 1.2em;
+    }
+    .faq_card_sub_title {
+        font-size: 0.7em;
+    }
+}

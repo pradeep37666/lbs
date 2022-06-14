@@ -7,7 +7,7 @@ import AboutUsTop from './Background/aboutus_top.png'
 import ProtectionTop from './Background/protection_top.png'
 import ProtectionSignupTop from './Background/protection_signup_bg.png'
 import BlogTop from './Background/blog_top.png'
-import FAQTop from './Background/faqs_top.png'
+import FAQTop from './Background/faq_top.png'
 import FAQSignup from './Background/faqs_signup.png'
 import ContactUsTop from './Background/contact_us_top.png'
 

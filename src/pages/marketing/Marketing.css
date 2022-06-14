@@ -196,10 +196,6 @@
     }
 }
 
-@media screen and (max-width: 1250px) {
-    
-}
-
 @media screen and (max-width: 1024px) {
     .marketing_img_md_container {
         height: 60vh;
