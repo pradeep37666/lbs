@@ -48,6 +48,12 @@
     }
 }
 
+@media screen and (max-width: 768px) {
+    .add_padding_right {
+        padding-right: 0;
+    }
+}
+
 @media screen and (max-width: 700px) {
     .search_title {
         font-size: 2em;

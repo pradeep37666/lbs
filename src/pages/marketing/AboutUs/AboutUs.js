@@ -23,8 +23,8 @@ const AboutUs = () => {
         </div>
       </div>
 
-      <div className='marketing_img_md_container bg_grey flex_box center_items'>
-        <div className='half_screen_center smaller_width column_section'>
+      <div className='marketing_img_md_container bg_grey flex_box center_items straight_column'>
+        <div className='center_text_image add_padding_right full_width'>
           <p className='marketing_main_title'>
           A Way We Can All Be Zero Waste
           </p>
@@ -39,20 +39,16 @@ const AboutUs = () => {
             </p>
           </div>
         </div>
-        <div className='half_screen_center padding_sm'>
-          <div className='insert_image_background insert_image_width_height'>
-            <img src={Chainsaw} className='graphic_image responsive_img_size' alt='graphic image'/>
-          </div>
+        <div className='image_half_container full_width'>
+          <img src={Chainsaw} className='picture_image no_left_padding' alt='tradie image'/>
         </div>
       </div>
 
-      <div className='marketing_img_md_container bg_wall flex_box center_items'>
-        <div className='half_screen_center three_to_seven'>
-          <div className='insert_image_background insert_image_width_height'>
-            <img src={WashingAndSawing} className='graphic_image responsive_img_size' alt='graphic image'/>
-          </div>
+      <div className='marketing_img_md_container bg_wall flex_box center_items straight_column'>
+        <div className='image_half_container four_to_six full_width'>
+          <img src={WashingAndSawing} className='picture_image no_left_padding' alt='tradie image'/>
         </div>
-        <div className='half_screen_center seven_to_three column_section align_start text_container_width'>
+        <div className='half_screen_center six_to_four column_section align_start text_container_width'>
           <p className='marketing_main_title'>
           The Power Of Sharing
           </p>
@@ -73,8 +69,8 @@ const AboutUs = () => {
         </div>
       </div>
 
-      <div className='marketing_img_sm_container bg_dark flex_box center_items'>
-        <div className='center_text_image'>
+      <div className='marketing_img_sm_container bg_dark flex_box center_items straight_column'>
+        <div className='center_text_image full_width'>
           <p className='marketing_main_title text_align dark_mode_text'>
           Sarmuhabat Singh | Founder
           </p>
@@ -92,7 +88,7 @@ const AboutUs = () => {
           </p>
           </MarketingButton>
         </div>
-        <div className='image_half_container'>
+        <div className='image_half_container full_width'>
           <img src={Sarmuhabat} className='picture_image' alt='tradie image'/>
         </div>
       </div>

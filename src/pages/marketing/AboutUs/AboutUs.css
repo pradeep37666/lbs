@@ -1,5 +1,5 @@
 .bg_about_us {
-    background-image: url(../../../assets/Images/Marketings/Background/about_us_top.png);
+    background-image: url(../../../assets/Images/Marketings/Background/aboutus_top.png);
 }
 
 .bg_about_us_signup {
@@ -23,11 +23,11 @@
     height: 80%;
 }
 
-.seven_to_three {
+.six_to_four {
     width: 60%;
 }
 
-.three_to_seven {
+.four_to_six {
     width: 40%;
 }
 
@@ -44,4 +44,19 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+@media screen and (max-width: 1024px) {
+    .text_container_width {
+        padding-right: 3em;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .six_to_four {
+        width: 100%;
+    }
+    .text_container_width {
+        padding: 1em 2em;
+    }
 }

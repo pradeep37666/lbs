@@ -142,7 +142,7 @@
 }
 
 .responsive_img_size {
-    max-width: 80%;
+    max-width: 100%;
 }
 
 .height100p {
@@ -299,9 +299,9 @@
 }
 
 @media screen and (max-width: 500px) {
-    .marketing_img_md_container {
+    /* .marketing_img_md_container {
         height: 35vh;
-    }
+    } */
     .main_title_section {
         width: 80%;
         top: 5%;
