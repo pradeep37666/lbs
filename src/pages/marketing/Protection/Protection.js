@@ -2,7 +2,7 @@ import React from 'react'
 import '../Marketing.css'
 import './Protection.css'
 import { damagedProcedures } from '../../../assets/Data/MarketSelections'
-import { MaryClear, TopInfoGraphic } from '../../../assets/Images/Marketings/Marketings'
+import { MaryClear } from '../../../assets/Images/Marketings/Marketings'
 import Footer from '../../../components/marketing/Footer/Footer'
 import MarketingButton from '../../../components/marketing/MarketingButton/MarketingButton'
 import NavBar from '../../../components/marketing/NavBar/NavBar'
@@ -13,7 +13,7 @@ const Protection = () => {
     <div className='marketing_container'>
       <NavBar selected='info_hub'/>
 
-      <div className='marketing_img_md_container bg_about_us'>
+      <div className='marketing_img_md_container bg_protection'>
         <div className='main_title_section protection_title_position'>
           <p className='main_title'>
           Need Some More Information? We Have You Covered.
@@ -24,8 +24,8 @@ const Protection = () => {
         </div>
       </div>
 
-      <div className='marketing_img_md_container bg_wall flex_box'>
-        <div className='half_screen_center article_section no_right_padding'>
+      <div className='marketing_img_md_container bg_wall flex_box straight_column'>
+        <div className='half_screen_center article_section no_right_padding full_width'>
           <p className='marketing_main_title'>
           Am I Eligible For Lender Protection?
           </p>
@@ -44,8 +44,8 @@ const Protection = () => {
             </li>
           </ul>
         </div>
-        <div className='half_screen_center'>
-          <img src={MaryClear} className='graphic_image no_left_padding' alt='mowing iamge'/>
+        <div className='half_screen_center full_width'>
+          <img src={MaryClear} className='graphic_image no_left_padding responsive_img_sm_size' alt='mowing iamge'/>
         </div>
       </div>
 

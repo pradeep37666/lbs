@@ -37,3 +37,13 @@
     color: #33384F;
     line-height: 0.9em;
 }
+
+@media screen and (max-width: 450px) {
+    .protection_title_position {
+        top: 30%;
+        width: 90%;
+    }
+    .damaged_steps_title {
+        width: 90%;
+    }
+}
