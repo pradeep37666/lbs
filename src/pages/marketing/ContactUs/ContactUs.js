@@ -32,11 +32,11 @@ const ContactUs = () => {
         </div>
       </div>
 
-      <div className='marketing_img_md_container bg_grey flex_box center_items'>
+      <div className='marketing_img_md_container bg_grey flex_box center_items responsive_contact_container'>
         <div className='image_half_container contact_img_bg'></div>
         <div className='contact_input_container'>
           <div className='contact_input_box'>
-            <div className='flex_box'>
+            <div className='flex_box contact_box_responsive'>
               <div className='input_fields_left'>
                 <ContactTextInput 
                   label='First Name'

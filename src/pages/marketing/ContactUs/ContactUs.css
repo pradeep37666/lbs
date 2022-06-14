@@ -111,3 +111,35 @@
 .news_checkbox_input {
     cursor: pointer;
 }
+
+@media screen and (max-width: 1440px) {
+    .contact_details_box {
+        flex-direction: column;
+        align-items: center;
+    }
+    .contact_number_box {
+        text-align: center;
+    }
+}
+
+@media screen and (max-width: 1124px) {
+    .responsive_contact_container {
+        height: 100%;
+    }
+    .contact_box_responsive {
+        flex-direction: column;
+    }
+    .input_fields_left,
+    .input_fields_right {
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .contact_img_bg {
+        display: none;
+    }
+    .contact_input_container {
+        width: 100%;
+    }
+}
