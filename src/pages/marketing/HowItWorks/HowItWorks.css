@@ -58,6 +58,19 @@
     margin: 0;
 }
 
+@media screen and (max-width: 768px) {
+    .hiw_question_section {
+        flex-direction: column;
+    }
+    .space_between {
+        margin: 0.5em 0;
+    }
+    .smaller_graphics {
+        width: 20em;
+        height: 20em;
+    }
+}
+
 @media screen and (max-width: 600px) {
     .text_height_fit {
         height: 15em;
@@ -65,5 +78,14 @@
     }
     .responsive_text_width {
         width: 90%;
+    }
+}
+
+@media screen and (max-width: 450px) {
+    .hiw_question_title_box {
+        text-align: center;
+    }
+    .space_between {
+        flex-direction: column;
     }
 }
