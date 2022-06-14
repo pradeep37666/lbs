@@ -261,6 +261,7 @@
     .full_width {
         width: 100%;
         height: auto;
+        padding: 1.5em;
     }
 
     .responsive_img_size {
@@ -311,9 +312,6 @@
     }
     .download_main_title {
         font-size: 1em;
-    }
-    .straight_column {
-        height: 100%;
     }
     .graphic_image {
         padding: 1em;

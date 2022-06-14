@@ -17,7 +17,7 @@ const HowItWorks = () => {
     <div className='marketing_container'>
       <NavBar selected='how_it_works'/>
 
-      <div className='marketing_img_md_container bg_lend_your_stuff'>
+      <div className='marketing_img_md_container bg_how_it_works'>
         <div className='main_title_section wider_section'>
           <p className='main_title'>
           Hire Gear For Your Next Adventure Or DIY Project
@@ -53,8 +53,8 @@ const HowItWorks = () => {
       </div>
 
       <div className='marketing_image_fit_container bg_wall'>
-        <div className='section_top flex_box'>
-          <div className='half_screen_center article_section'>
+        <div className='section_top flex_box text_height_fit'>
+          <div className='half_screen_center article_section responsive_text_width'>
             <p className='marketing_main_title'>
             Helping You To Do Your Bit And Earn Extra
             </p>
@@ -63,16 +63,16 @@ const HowItWorks = () => {
             Think about that tool you need, but don’t have the budget for. Or the outfit you’d love to make if only you had access to that overlocker. Maybe you’ve got a big shed full of tools and you want to help your neighbours out. Plus we take no service fee you get more cash in your back pocket.
             </p>
           </div>
-          <div className='half_screen_center'>
+          <div className='half_screen_center disable_img'>
             <img src={LBS80} className='how_it_works_images' alt='less than once a month'/>
           </div>
         </div>
 
-        <div className='section_bottom flex_box'>
-          <div className='half_screen_center'>
+        <div className='section_bottom flex_box text_height_fit'>
+          <div className='half_screen_center disable_img'>
             <img src={LBSModal} className='how_it_works_images' alt='less than once a month'/>
           </div>
-          <div className='half_screen_center article_section'>
+          <div className='half_screen_center article_section responsive_text_width'>
             <p className='marketing_main_title'>
             Helping You To Do Your Bit And Earn Extra
             </p>

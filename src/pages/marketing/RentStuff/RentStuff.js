@@ -14,7 +14,7 @@ const RentStuff = () => {
         <div className='marketing_container'>
             <NavBar selected='rent_stuff'/>
 
-            <div className='marketing_img_md_container bg_rent_stuff center_items'>
+            <div className='marketing_img_md_container bg_rent_stuff center_items responsive_box_for_search'>
                 <div className='search_title_section'>
                     <p className='search_title'>
                     Let’s Find Your Next Borrow
@@ -25,11 +25,11 @@ const RentStuff = () => {
                 </div>
             </div>
 
-            <div className='marketing_img_md_container bg_grey flex_box'>
-                <div className='half_screen_center'>
-                    <img src={RSSawing} className='graphic_image' alt='graphic image'/>
+            <div className='marketing_img_md_container bg_grey flex_box straight_column'>
+                <div className='half_screen_center full_width'>
+                    <img src={RSSawing} className='graphic_image responsive_img_size' alt='graphic image'/>
                 </div>
-                <div className='half_screen_center article_section'>
+                <div className='half_screen_center article_section full_width'>
                     <p className='marketing_main_title'>
                     Get Set For Your next DIY Project, Hobby or Adventure!
                     </p>
@@ -69,8 +69,8 @@ const RentStuff = () => {
             </div>
 
 
-            <div className='marketing_img_sm_container bg_grey flex_box center_items'>
-                <div className='center_text_image add_padding_right'>
+            <div className='marketing_img_sm_container bg_grey flex_box center_items straight_column'>
+                <div className='center_text_image add_padding_right full_width'>
                     <p className='marketing_main_title text_align'>
                     Want To Share Your Stuff And Earn Some Cash?
                     </p>
@@ -87,7 +87,7 @@ const RentStuff = () => {
                         Start Sharing
                     </MarketingButton>
                 </div>
-                <div className='image_half_container'>
+                <div className='image_half_container full_width'>
                     <img src={CleaningWindow} className='picture_image no_left_padding' alt='tradie image'/>
                 </div>
             </div>

@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import './SearchInput.css'
 import CategorySelect from '../../categorySelect/categorySelect'
 import RatingSelect from '../../ratingSelect/ratingSelect'
 import SelectInput from '../../selectInput/selectInput'
@@ -40,7 +41,7 @@ const SearchInput = () => {
     return (
         <>
             <div className="SearchSectionFilters">
-                <div className="SearchFiltersRowFlex">
+                <div className="SearchFiltersRowFlex responsive_container">
                     <div className="SearchInputContainer">
                         <TextInput 
                             width="100%" 
@@ -68,7 +69,7 @@ const SearchInput = () => {
 
                 <hr className="DividingLine"/>
 
-                <div className="SearchFiltersRowFlex">
+                <div className="SearchFiltersRowFlex responsive_container">
                     <div className="PriceFilterSearch">
                         <div className="PriceFilterContainer">
                             <SelectInput 
@@ -112,7 +113,7 @@ const SearchInput = () => {
             </div>
             <div>
                 <button 
-                    className="SearchButtonLarge" 
+                    className="SearchButtonLarge responsive_search_button" 
                     onClick={handleSubmit}
                 >
                 <div className="SearchButtonLargeFlex">

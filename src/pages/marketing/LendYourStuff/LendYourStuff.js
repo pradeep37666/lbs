@@ -50,11 +50,11 @@ const LendYourStuff = () => {
         </div>
       </div>
 
-      <div className='marketing_img_md_container bg_wall flex_box'>
-        <div className='half_screen_center'>
-          <img src={LYSMowing} className='graphic_image' alt='mowing iamge'/>
+      <div className='marketing_img_md_container bg_wall flex_box straight_column'>
+        <div className='half_screen_center full_width'>
+          <img src={LYSMowing} className='graphic_image responsive_img_size' alt='mowing iamge'/>
         </div>
-        <div className='half_screen_center article_section'>
+        <div className='half_screen_center article_section full_width'>
           <p className='marketing_main_title'>
           Share Your Shed On Our Tool Borrowing App
           </p>
@@ -63,21 +63,21 @@ const LendYourStuff = () => {
           This act of sharing has significant social, economic, cultural and environmental benefits. By lending out your stuff on Little Big Shed you’re helping to:
           </p>
           <ul className='description_list'>
-            <li>
+            <li className='description_list_text'>
             Create equal opportunities – by making tools, hobby gear and leisure equipment more available and affordable to everyone.
             </li>
-            <li>
+            <li className='description_list_text'>
             Build community connection and support – by sharing with your neighbours you get to meet a like-minded local, help them save space and money, and make some extra cash on the side.
             </li>
-            <li>
+            <li className='description_list_text'>
             Care for the environment – with less people buying stuff new, demand for products reduces. Sharing helps design waste out of the system before it has the chance to become rubbish.
             </li>
           </ul>
         </div>
       </div>
 
-      <div className='marketing_img_sm_container bg_white flex_box center_items'>
-        <div className='center_text_image'>
+      <div className='marketing_img_sm_container bg_white flex_box center_items straight_column'>
+        <div className='center_text_image full_width'>
           <p className='marketing_main_title text_align'>
           No Service Fees
           </p>
@@ -88,8 +88,8 @@ const LendYourStuff = () => {
             </p>
           </div>
         </div>
-        <div className='center_text_image'>
-          <img src={TaneClear} className='graphic_image no_left_padding' alt='guiter guy image'/>
+        <div className='center_text_image full_width'>
+          <img src={TaneClear} className='graphic_image no_left_padding disable_guiter' alt='guiter guy image'/>
         </div>
       </div>
 
@@ -99,11 +99,11 @@ const LendYourStuff = () => {
         </p>
       </div>
 
-      <div className='marketing_img_sm_container bg_dark flex_box center_items'>
-        <div className='image_half_container'>
+      <div className='marketing_img_sm_container bg_dark flex_box center_items straight_column'>
+        <div className='image_half_container full_width'>
           <img src={LYSPaint} className='picture_image no_right_padding' alt='tradie image'/>
         </div>
-        <div className='center_text_image'>
+        <div className='center_text_image full_width'>
           <p className='marketing_main_title text_align dark_mode_text'>
           We’ve Got You Covered If Something Goes Wrong, Up To $2000
           </p>
@@ -117,17 +117,12 @@ const LendYourStuff = () => {
         </div>
       </div>
 
-      <div className='marketing_image_xlg_container bg_white'>
+      <div className='marketing_image_fit_container bg_white'>
         <div className='top_info_top_section flex_box'>
           <div className='top_info_smaller_section'>
             <p className='marketing_main_title'>
-            Borrow Items To Learn, Make And Mend
+            Four Simple Steps To Rent Out The Stuff In Your Shed
             </p>
-            <div className='marketing_main_description'>
-              <p>
-              Did you know that 80% of household items we own are used less than once a month? You can do your bit to reduce waste by borrowing instead of buying to kick-start your next DIY project or creative experience.<br/><br/> Just follow these four simple steps:
-              </p>
-            </div>
           </div>
           <div className='top_section_smaller_box'>
             <img src={NatalieCliear} className='graphic_image' alt='surf borad lady image'/>
@@ -140,7 +135,7 @@ const LendYourStuff = () => {
         </div>
       </div>
 
-      <div className='marketing_img_sm_container bg_signup'>
+      <div className='marketing_img_sm_container bg_lys_signup'>
         <div className='center_quote_btn'>
           <p className='lbs_quote_lgtext'>
           Ready To Start Earning And Do Good? Sign Up

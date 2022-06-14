@@ -1,0 +1,13 @@
+@media screen and (max-width: 710px) {
+    .responsive_container {
+        justify-content: space-around !important;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .responsive_search_button {
+        padding: 0.4em 1.5em !important;
+        font-size: 1em !important;
+    }
+}
+
