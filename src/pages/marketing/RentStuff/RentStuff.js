@@ -2,12 +2,12 @@ import React from 'react'
 import '../Marketing.css'
 import './RentStuff.css'
 import NavBar from '../../../components/marketing/NavBar/NavBar'
-import SearchInput from '../../../components/marketing/SearchInput/SearchInput'
-import { CleaningWindow, DummyImage, RSSawing, TopMowing } from '../../../assets/Images/Marketings/Marketings'
-import MarketingButton from '../../../components/marketing/MarketingButton/MarketingButton'
-import { categories, dummyCategory } from '../../../assets/Data/MarketSelections'
-import CategoryCard from '../../../components/marketing/CategoryCard/CategoryCard'
 import Footer from '../../../components/marketing/Footer/Footer'
+import SearchInput from '../../../components/marketing/SearchInput/SearchInput'
+import { CleaningWindow, RSSawing } from '../../../assets/Images/Marketings/Marketings'
+import MarketingButton from '../../../components/marketing/MarketingButton/MarketingButton'
+import { categories } from '../../../assets/Data/MarketSelections'
+import CategoryCard from '../../../components/marketing/CategoryCard/CategoryCard'
 
 const RentStuff = () => {
     return (

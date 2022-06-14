@@ -1,3 +1,11 @@
+.bg_blog {
+    background-image: url(../../../assets/Images/Marketings/Background/blog_top.png);
+}
+
+.bg_blog_signup {
+    background-image: url(../../../assets/Images/Marketings/Background/protection_signup_bg.png);
+}
+
 .blog_card_flex_box {
     display: flex;
     flex-wrap: wrap;

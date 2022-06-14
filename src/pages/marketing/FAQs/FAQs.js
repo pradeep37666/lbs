@@ -51,7 +51,7 @@ const FAQs = () => {
         </div>
       </div>
 
-      <div className='marketing_img_sm_container bg_signup'>
+      <div className='marketing_img_sm_container bg_faqs_signup'>
         <div className='center_quote_btn'>
           <p className='lbs_quote_lgtext'>
           Got A Question Not Answered Here?

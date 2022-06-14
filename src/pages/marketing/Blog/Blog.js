@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import '../Marketing.css'
 import './Blog.css'
-import { TopMowing } from '../../../assets/Images/Marketings/Marketings'
+import { SawingGuiter, TopMowing } from '../../../assets/Images/Marketings/Marketings'
 import NavBar from '../../../components/marketing/NavBar/NavBar'
 import { categories, dummyBlog, dummyCategory, howItWorksProcedures } from '../../../assets/Data/MarketSelections'
 import BlogCard from '../../../components/marketing/BlogCard/BlogCard'
@@ -36,7 +36,7 @@ const Blog = () => {
 
         <div className='marketing_img_md_container bg_grey flex_box'>
           <div className='half_screen_center'>
-              <img src={TopMowing} className='graphic_image' alt='graphic image'/>
+              <img src={SawingGuiter} className='graphic_image' alt='graphic image'/>
           </div>
           <div className='half_screen_center article_section'>
               <p className='marketing_main_title'>
@@ -121,7 +121,7 @@ const Blog = () => {
           </p>
         </div>
 
-        <div className='marketing_img_sm_container bg_signup'>
+        <div className='marketing_img_sm_container bg_blog_signup'>
           <div className='center_quote_btn'>
             <p className='lbs_quote_lgtext'>
             Ready To Start Borrowing?

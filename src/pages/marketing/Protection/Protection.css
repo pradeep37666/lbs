@@ -1,3 +1,11 @@
+.bg_protection {
+    background-image: url(../../../assets/Images/Marketings/Background/protection_top.png);
+}
+
+.bg_protection_signup {
+    background-image: url(../../../assets/Images/Marketings/Background/protection_signup_bg.png);
+}
+
 .protection_title_position {
     width: 60%;
     top: 40%;

@@ -3,7 +3,6 @@ import {
     Message,
     Calendar,
     ThumbsUp,
-    DummyCategoryImg,
     MowingImg,
     CameraImg,
     DollarSign,

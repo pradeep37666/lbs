@@ -34,3 +34,10 @@
     font-size: 0.9em;
     margin: 0;
 }
+
+@media screen and (max-width: 1160px) {
+    .category_card_container {
+        width: 15em;
+        height: 17em;
+    }
+}

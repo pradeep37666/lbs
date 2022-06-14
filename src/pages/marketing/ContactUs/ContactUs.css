@@ -1,5 +1,9 @@
+.bg_contact_us {
+    background-image: url(../../../assets/Images/Marketings/Background/contact_us_top.png);
+}
+
 .contact_img_bg {
-    background-image: url(../../../assets/Images/Marketings/dummyImage.jpg);
+    background-image: url(../../../assets/Images/Marketings/Images/contact_us_tradie.png);
     background-size: cover;
     margin: 5em;
 }

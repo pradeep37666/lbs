@@ -1,15 +1,21 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './Footer.css'
 import Logo from '../../../assets/Logos/LBS_Logo_Flat_Red.jpg'
-import BlackLogo from '../../../assets/Logos/LBS_Logo_Flat_White_2.png'
 import AppleButton from '../../../assets/Images/AppStoreButton.png'
-import GoogleButton from '../../../assets/Images/GooglePlayBorder.png'
+import GooglePlayButton from '../../../assets/Images/GooglePlayButton.png'
 import { useHistory } from 'react-router-dom'
 import { BsFacebook, BsTwitter } from 'react-icons/bs'
 import { FiInstagram } from 'react-icons/fi'
+import { EmailArrowBtn, LBSBlackLogo } from '../../../assets/Images/Marketings/Marketings'
 
 const Footer = () => {
+    const [ email, setEmail ] = useState('')
     const history = useHistory()
+
+    const sendSubscribeEmail = () => {
+        // send email
+    }
+
     return (
         <div className='footer_container'>
             <div className='footer_header_container'>
@@ -26,13 +32,13 @@ const Footer = () => {
                 </div>
                 <div className='footer_header_right_section'>
                     <img src={AppleButton} alt='Apple Store' className="app_button" />
-                    <img src={GoogleButton} alt='Google Play' className="app_button google_button" />
+                    <img src={GooglePlayButton} alt='Google Play' className="app_button google_button" />
                 </div>
             </div>
 
             <div className='footer_content_container'>
                 <div className='footer_content_box'>
-                    <img src={BlackLogo} alt='lbs footer logo' className='footer_middle_logo'/>
+                    <img src={LBSBlackLogo} alt='lbs footer logo' className='footer_middle_logo'/>
                     <p className='footer_first_title'>
                     Share stuff, do good
                     </p>
@@ -149,7 +155,23 @@ const Footer = () => {
                     <p className='footer_last_desc'>
                     Subscribe to the Little Big Shed newsletter to keep up to date with our sharing news and new item listings!
                     </p>
-                    {/* search bar */}
+                    <div className='subscribe_email_container'>
+                        <input 
+                            className='subscribe_email_input'
+                            placeholder='Email'
+                            onChange={(e) => setEmail(e.target.value)}
+                        />
+                        <button 
+                            className='subscribe_button'
+                            onClick={sendSubscribeEmail}
+                        >
+                            <img 
+                                src={EmailArrowBtn} 
+                                alt='email button'
+                                className='email_arrow_icon'
+                            />
+                        </button>
+                    </div>
                     <p className='footer_last_title margin_top'>
                     Get Social
                     </p>

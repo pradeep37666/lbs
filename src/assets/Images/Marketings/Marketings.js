@@ -3,6 +3,13 @@ import TopFirst from './Background/TopFirst.png'
 import TopBgWall from './Background/TopBgWall.png'
 import LendYourStuffTop from './Background/lend_your_stuff_top.png'
 import RentStuffTop from './Background/rent_stuff_top.png'
+import AboutUsTop from './Background/about_us_top.png'
+import ProtectionTop from './Background/protection_top.png'
+import ProtectionSignupTop from './Background/protection_signup_bg.png'
+import BlogTop from './Background/blog_top.png'
+import FAQTop from './Background/faqs_top.png'
+import FAQSignup from './Background/faqs_signup.png'
+import ContactUsTop from './Background/contact_us_top.png'
 
 // Graphics
 import TopInfoGraphic from './Graphics/TopInfoGraphic.png'
@@ -12,6 +19,14 @@ import LYSMowing from './Graphics/lys_mowing.png'
 import TaneClear from './Graphics/Tane_Clear.png'
 import NatalieCliear from './Graphics/Natalie_Clear.png'
 import RSSawing from './Graphics/rs_sawing.png'
+import LBS80 from './Graphics/LBS_80%_transparent.png'
+import LBSModal from './Graphics/LBS_Model_transparent.png'
+import AdrianClear from './Graphics/Adrian_Clear.png'
+import LBSEconomy from './Graphics/LBS Economy_Stats_transparent.png'
+import HIWSurf from './Graphics/hiw_surf_people.png'
+import WashingAndSawing from './Graphics/washing_and_sawing.png'
+import MaryClear from './Graphics/Mary_Clear.png'
+import SawingGuiter from './Graphics/sawing_guiter.png'
 
 // Icons
 import Android from './Icons/android.png'
@@ -20,6 +35,12 @@ import Search from './Icons/search.png'
 import Calendar from './Icons/calendar.png'
 import Message from './Icons/message.png'
 import ThumbsUp from './Icons/thumbsUp.png'
+import EmailArrowBtn from './Icons/emailArrowBtn.svg'
+import MowingImg from './Icons/mowing.png'
+import CameraImg from './Icons/camera.png'
+import DollarSign from './Icons/dollarSign.png'
+import SignUpImg from './Icons/signup.png'
+import { ReactComponent as SearchBarIcon} from './Icons/SearchBarIcon.svg'
 
 // Avatar
 import DummyAvatar1 from './Avatars/sample-avatar1.jpeg'
@@ -38,22 +59,28 @@ import Outdoor from './Images/Outdoor.png'
 import Kids from './Images/Kids.png'
 import Vehicle from './Images/Vehicle.png'
 import Closet from './Images/Closet.png'
+import Chainsaw from './Images/chainsaw.png'
+import Sarmuhabat from './Images/sarmuhabat.png'
+import TradieImg from './Images/tradieImage.png'
+import ContactUsTradie from './Images/contact_us_tradie.png'
 
-import DummyCategoryImg from './dummyCategoryImg.jpg'
-import DummyImage from './dummyImage.jpg'
-import SignUpImg from './signup.png'
-import DollarSign from './dollarSign.png'
-import CameraImg from './camera.png'
-import MowingImg from './mowing.png'
-import TradieImg from './tradieImage.png'
+// Logos
+import LBSBlackLogo from './Logos/LBS_black_logo.svg'
+
 import DummyBlog from './sample_blog.jpg'
-import { ReactComponent as SearchBarIcon} from './SearchBarIcon.svg'
 
 export {
     TopFirst,
     TopBgWall,
     LendYourStuffTop,
     RentStuffTop,
+    AboutUsTop,
+    ProtectionTop,
+    ProtectionSignupTop,
+    BlogTop,
+    FAQTop,
+    FAQSignup,
+    ContactUsTop,
 
     TopInfoGraphic,
     TopMowing,
@@ -62,9 +89,27 @@ export {
     TaneClear,
     NatalieCliear,
     RSSawing,
+    LBS80,
+    LBSModal,
+    AdrianClear,
+    LBSEconomy,
+    HIWSurf,
+    WashingAndSawing,
+    MaryClear,
+    SawingGuiter,
 
     Android,
     Apple,
+    Search,
+    Message,
+    Calendar,
+    ThumbsUp,
+    EmailArrowBtn,
+    MowingImg,
+    CameraImg,
+    DollarSign,
+    SignUpImg,
+    SearchBarIcon,
 
     DummyAvatar1,
     DummyAvatar2,
@@ -81,18 +126,12 @@ export {
     Kids,
     Vehicle,
     Closet,
-
-    Search,
-    Message,
-    Calendar,
-    ThumbsUp,
-    DummyCategoryImg,
-    DummyImage,
-    SignUpImg,
-    DollarSign,
-    CameraImg,
-    MowingImg,
+    Chainsaw,
+    Sarmuhabat,
     TradieImg,
-    DummyBlog,
-    SearchBarIcon,
+    ContactUsTradie,
+
+    LBSBlackLogo,
+
+    DummyBlog,    
 }

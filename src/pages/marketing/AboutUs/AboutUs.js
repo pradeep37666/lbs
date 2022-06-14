@@ -2,7 +2,9 @@ import React from 'react'
 import '../Marketing.css'
 import './AboutUs.css'
 import NavBar from '../../../components/marketing/NavBar/NavBar'
-import { DummyImage, SignUpImg } from '../../../assets/Images/Marketings/Marketings'
+import { 
+  Chainsaw, Sarmuhabat, SignUpImg, WashingAndSawing 
+} from '../../../assets/Images/Marketings/Marketings'
 import MarketingButton from '../../../components/marketing/MarketingButton/MarketingButton'
 import { teamMembers } from '../../../assets/Data/MarketSelections'
 import MemberCard from '../../../components/marketing/MemberCard/MemberCard'
@@ -38,13 +40,17 @@ const AboutUs = () => {
           </div>
         </div>
         <div className='half_screen_center padding_sm'>
-          <div className='insert_image_background insert_image_width_height bg_zero_waste'></div>
+          <div className='insert_image_background insert_image_width_height'>
+            <img src={Chainsaw} className='graphic_image responsive_img_size' alt='graphic image'/>
+          </div>
         </div>
       </div>
 
       <div className='marketing_img_md_container bg_wall flex_box center_items'>
         <div className='half_screen_center three_to_seven'>
-          <div className='insert_image_background insert_image_width_height bg_zero_waste'></div>
+          <div className='insert_image_background insert_image_width_height'>
+            <img src={WashingAndSawing} className='graphic_image responsive_img_size' alt='graphic image'/>
+          </div>
         </div>
         <div className='half_screen_center seven_to_three column_section align_start text_container_width'>
           <p className='marketing_main_title'>
@@ -87,7 +93,7 @@ const AboutUs = () => {
           </MarketingButton>
         </div>
         <div className='image_half_container'>
-          <img src={DummyImage} className='picture_image' alt='tradie image'/>
+          <img src={Sarmuhabat} className='picture_image' alt='tradie image'/>
         </div>
       </div>
 
@@ -102,7 +108,7 @@ const AboutUs = () => {
         </div>
       </div>
 
-      <div className='marketing_img_sm_container bg_signup'>
+      <div className='marketing_img_sm_container bg_about_us_signup'>
         <div className='center_quote_btn'>
           <p className='lbs_quote_lgtext'>
           Ready To Start Earning And Do Good? Sign Up

@@ -2,7 +2,11 @@ import React from 'react'
 import '../Marketing.css'
 import './HowItWorks.css'
 import NavBar from '../../../components/marketing/NavBar/NavBar'
-import { Android, Apple, SignUpImg, TopInfoGraphic, TopMowing } from '../../../assets/Images/Marketings/Marketings'
+import { 
+  AdrianClear, Android, Apple, 
+  HIWSurf, LBS80, LBSEconomy, 
+  LBSModal, SignUpImg
+} from '../../../assets/Images/Marketings/Marketings'
 import MarketingButton from '../../../components/marketing/MarketingButton/MarketingButton'
 import { rentingProcedures } from '../../../assets/Data/MarketSelections'
 import StepCard from '../../../components/marketing/StepCard/StepCard'
@@ -60,13 +64,13 @@ const HowItWorks = () => {
             </p>
           </div>
           <div className='half_screen_center'>
-            <img src={TopInfoGraphic} className='how_it_works_images' alt='less than once a month'/>
+            <img src={LBS80} className='how_it_works_images' alt='less than once a month'/>
           </div>
         </div>
 
         <div className='section_bottom flex_box'>
           <div className='half_screen_center'>
-            <img src={TopInfoGraphic} className='how_it_works_images' alt='less than once a month'/>
+            <img src={LBSModal} className='how_it_works_images' alt='less than once a month'/>
           </div>
           <div className='half_screen_center article_section'>
             <p className='marketing_main_title'>
@@ -91,7 +95,7 @@ const HowItWorks = () => {
             </p>
           </div>
           <div className='half_screen_center'>
-            <img src={TopMowing} className='how_it_works_images no_left_padding' alt='less than once a month'/>
+            <img src={AdrianClear} className='how_it_works_images no_left_padding' alt='less than once a month'/>
           </div>
         </div>
         <div className='section_bottom flex_box mb_md'>
@@ -131,7 +135,7 @@ const HowItWorks = () => {
           </p>
         </div>
         <div className='half_screen_center'>
-          <img src={TopInfoGraphic} className='how_it_works_images' alt='less than once a month'/>
+          <img src={LBSEconomy} className='how_it_works_images' alt='less than once a month'/>
         </div>
       </div>
 
@@ -164,7 +168,7 @@ const HowItWorks = () => {
 
       <div className='marketing_img_sm_container bg_grey flex_box center_items'>
         <div className='half_screen_center'>
-          <img src={TopMowing} className='how_it_works_images' alt='2 people standing'/>
+          <img src={HIWSurf} className='how_it_works_images' alt='2 people standing'/>
         </div>
         <div className='half_screen_center article_section'>
           <p className='marketing_main_title'>

@@ -21,7 +21,7 @@ const ContactUs = () => {
     <div className='marketing_container'>
       <NavBar />
 
-      <div className='marketing_img_md_container bg_faqs'>
+      <div className='marketing_img_md_container bg_contact_us'>
         <div className='main_title_section protection_title_position'>
           <p className='main_title'>
           Get In Touch
