@@ -26,7 +26,7 @@ const Blog = () => {
 
       {clickedBlogId === '' &&
       <>
-        <div className='marketing_img_md_container bg_about_us'>
+        <div className='marketing_img_md_container bg_blog'>
           <div className='main_title_section position_lower'>
             <p className='main_title'>
             Little Big Ideas
@@ -34,11 +34,11 @@ const Blog = () => {
           </div>
         </div>
 
-        <div className='marketing_img_md_container bg_grey flex_box'>
-          <div className='half_screen_center'>
-              <img src={SawingGuiter} className='graphic_image' alt='graphic image'/>
+        <div className='marketing_img_md_container bg_grey flex_box straight_column'>
+          <div className='half_screen_center full_width'>
+              <img src={SawingGuiter} className='graphic_image responsive_img_sm_size' alt='graphic image'/>
           </div>
-          <div className='half_screen_center article_section'>
+          <div className='half_screen_center article_section full_width'>
               <p className='marketing_main_title'>
               Discover The Power Of Sharing
               </p>
@@ -102,12 +102,16 @@ const Blog = () => {
           </p>
         </div>
 
-        <div className='blog_instraction_sections bg_white'>
-          <p className='blog_instraction_title'>
-          What can you lend and borrow?
-          </p>
+        <div className='marketing_image_xlg_container height100p bg_white'>
+          <div className='category_title_section'>
+            <p className='category_main_title'>
+            What can you lend and borrow?
+            </p>
+            <p className='category_sub_title'>
+            As our little shed grows into something big, you’ll be able to lend and borrow all sorts of stuff! Our categories will include listings for:
+            </p>
+          </div>
           <p className='blog_instraction_desc'>
-          As our little shed grows into something big, you’ll be able to lend and borrow all sorts of stuff! Our categories will include listings for:
           </p>
           <div className='category_card_section'>
             {categories.map(category => (
