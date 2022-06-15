@@ -36,8 +36,11 @@ export default function Register() {
         termsChecked: false,
         availability: Array(14).fill(0)
     })
-    const { firstName, lastName, email, phoneNumber, password, address, 
-        confirmPassword, currentPage, image, paymentMethod, isLenderUpgrade, dateOfBirth, availability, accountNumber, BSB } = state
+    const { 
+        firstName, lastName, email, phoneNumber, password, address, 
+        confirmPassword, currentPage, image, paymentMethod, 
+        isLenderUpgrade, dateOfBirth, availability, accountNumber, BSB 
+    } = state
 
     const history = useHistory()
 
@@ -84,8 +87,7 @@ export default function Register() {
         setIsRegisterLoading(true)
         await setupCometChat()
         const userDetails = getUserDetails()
-        console.log('address', address)
-        console.log('details', userDetails)
+        console.log({userDetails})
 
         const formData = new FormData()
         Object.keys(userDetails).forEach(key => {

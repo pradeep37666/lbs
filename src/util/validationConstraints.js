@@ -28,16 +28,6 @@ const validationConstraints = {
             message: "^Required"
         }
     },
-    // username: {
-    //     presence: {
-    //         allowEmpty: false,
-    //         message: "^Required"
-    //     },
-    //     length: {
-    //         minimum: 6,
-    //         message: '^Must be at least 6 characters'
-    //     }
-    // },
     email: {
         presence: {
           allowEmpty: false,

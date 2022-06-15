@@ -26,6 +26,7 @@
               <MarketingButton 
                 bgColor={'#AC172C'}
                 textColor={'#FFFFFF'}
+                linkTo={'/register'}
               >
               <p className='button_font'>
               Sign Up To Start Sharing
@@ -117,6 +118,7 @@
             <MarketingButton 
               bgColor={'#AC172C'}
               textColor={'#FFFFFF'}
+              linkTo={'/register'}
             >
               <p className='button_font'>
               Sign Up To Start Sharing
@@ -161,6 +163,7 @@
               <MarketingButton 
                 bgColor={'#33384F'}
                 textColor={'#FFFFFF'}
+                linkTo={'/faqs'}
               >
               FAQ’s
               </MarketingButton>
@@ -180,6 +183,7 @@
               bgColor={'#AC172C'}
               textColor={'#FFFFFF'}
               width='20em'
+              linkTo={'/lend_your_stuff'}
               >
               Keen to start sharing your stuff?
             </MarketingButton>

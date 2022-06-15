@@ -28,12 +28,14 @@ const Top = () => {
             <MarketingButton 
               bgColor={'#33384F'}
               textColor={'#FFFFFF'}
+              linkTo={'/rent_stuff'}
             >
             Want To Rent Stuff?
             </MarketingButton>
             <MarketingButton 
               bgColor={'#AC172C'}
               textColor={'#FFFFFF'}
+              linkTo={'/lend_your_stuff'}
             >
             Have Stuff To Lend?
             </MarketingButton>
@@ -80,14 +82,15 @@ const Top = () => {
           <MarketingButton
             bgColor='#AC172C'
             textColor='#FFFFFF'
+            linkTo={'/register'}
           >
           Sign up to start sharing
           </MarketingButton>
         </div>
       </div>
 
-      <div className='marketing_img_sm_container bg_grey flex_box straight_column'>
-        <div className='half_screen_center column_section full_width'>
+      <div className='marketing_img_sm_container bg_grey center_items straight_column'>
+        <div className='half_screen_center column_section adjusting_box_size full_width'>
           <p className='marketing_main_title max_width'>
           Share Your Stuff, Earn Cash And Do Good
           </p>
@@ -97,6 +100,7 @@ const Top = () => {
           <MarketingButton
             bgColor='#AC172C'
             textColor='#FFFFFF'
+            linkTo={'/lend_your_stuff'}
           >
           Lend Your Stuff
           </MarketingButton>
@@ -133,6 +137,7 @@ const Top = () => {
           <MarketingButton
             bgColor='#33384F'
             textColor='#FFFFFF'
+            linkTo={'/search/?keyword='}
           >
           Search Items
           </MarketingButton>

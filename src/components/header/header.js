@@ -68,7 +68,7 @@ export default function Header() {
   return (
     <div className={`HeaderBar ${HeaderSticky ? 'HeaderBarSticky' : ''}`}>
       
-      <Link to="/">
+      <Link to="/home">
         <img src={Logo} alt="Logo" className="HeaderLogo" />
       </Link>
 

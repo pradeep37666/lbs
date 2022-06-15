@@ -59,6 +59,7 @@ const FAQs = () => {
           <MarketingButton 
             bgColor={'#E9D8B4'}
             textColor={'#33384F'}
+            linkTo={'/contact_us'}
           >
             Ask A Question
           </MarketingButton>

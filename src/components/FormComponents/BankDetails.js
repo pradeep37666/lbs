@@ -47,11 +47,12 @@ export default function BankDetails({ context }) {
                 }
             })
             if(error) return
-            setIsLoading(false)
-
+            console.log({paymentMethod})
             dispatch({ type: 'setPaymentMethod', data: paymentMethod })
             dispatch({ type: 'setCurrentPage', data: isLenderUpgrade ? 'Location Details' : 'Terms & Conditions'})
         } catch(err) {
+            console.log({err})
+        } finally {
             setIsLoading(false)
         }
     }
@@ -128,7 +129,7 @@ export default function BankDetails({ context }) {
                     { !isLenderUpgrade && 
                     <Button 
                     isLoading={isLoading}
-                    onClick={ createPaymentMethod}
+                    onClick={createPaymentMethod}
                     text="Next"
                     />}
                 </div>

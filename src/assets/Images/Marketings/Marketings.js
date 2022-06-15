@@ -2,6 +2,7 @@
 import TopFirst from './Background/TopFirst.png'
 import TopBgWall from './Background/TopBgWall.png'
 import LendYourStuffTop from './Background/lend_your_stuff_top.png'
+import LendYourStuffSignup from './Background/lend_your_stuff_signup.png'
 import RentStuffTop from './Background/rent_stuff_top.png'
 import AboutUsTop from './Background/aboutus_top.png'
 import ProtectionTop from './Background/protection_top.png'
@@ -73,6 +74,7 @@ export {
     TopFirst,
     TopBgWall,
     LendYourStuffTop,
+    LendYourStuffSignup,
     RentStuffTop,
     AboutUsTop,
     ProtectionTop,

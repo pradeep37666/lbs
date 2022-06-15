@@ -169,6 +169,10 @@
     padding-bottom: 0 !important;
 }
 
+.padding_sm_left {
+    padding-left: 2em;
+}
+
 .margin_bottom {
     margin: 1em 0;
 }
@@ -184,6 +188,10 @@
 
 .align_start {
     align-items: flex-start;
+}
+
+.adjusting_box_size {
+    max-width: 30em;
 }
 
 /* breakpoint */
@@ -224,6 +232,9 @@
     .responsive_img_size {
         width: 30em;
         height: 30em;
+    }
+    .adjusting_box_size {
+        padding: 0 1em;
     }
 }
 

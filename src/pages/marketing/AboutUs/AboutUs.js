@@ -61,6 +61,7 @@ const AboutUs = () => {
           <MarketingButton 
             bgColor={'#AC172C'}
             textColor={'#FFFFFF'}
+            linkTo={'/register'}
           >
           <p className='button_font'>
           Sign Up To Start Sharing
@@ -112,6 +113,7 @@ const AboutUs = () => {
           <MarketingButton 
             bgColor={'#33384F'}
             textColor={'#FFFFFF'}
+            linkTo={'/register'}
           >
             <p className='button_font'>
             Sign Up To Start Sharing

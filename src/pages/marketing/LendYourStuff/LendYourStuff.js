@@ -24,6 +24,7 @@ const LendYourStuff = () => {
             <MarketingButton 
               bgColor={'#AC172C'}
               textColor={'#FFFFFF'}
+              linkTo={'/register'}
             >
             <p className='button_font'>
             Sign Up To Start Sharing
@@ -143,6 +144,7 @@ const LendYourStuff = () => {
           <MarketingButton 
             bgColor={'#AC172C'}
             textColor={'#FFFFFF'}
+            linkTo={'/register'}
           >
             <p className='button_font'>
             Sign Up To Start Sharing

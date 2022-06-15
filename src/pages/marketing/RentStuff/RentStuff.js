@@ -62,6 +62,7 @@ const RentStuff = () => {
                     <MarketingButton
                         bgColor='#33384F'
                         textColor='#FFFFFF'
+                        linkTo={'/register'}
                     >
                         Get Started
                     </MarketingButton>
@@ -83,6 +84,7 @@ const RentStuff = () => {
                     <MarketingButton
                         bgColor='#AC172C'
                         textColor='#FFFFFF'
+                        linkTo={'/lend_your_stuff'}
                     >
                         Start Sharing
                     </MarketingButton>

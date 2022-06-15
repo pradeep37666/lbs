@@ -32,7 +32,6 @@ export default function ValidationTextInput({ onChange, errorMessage, label, pla
                         type={inputType}
                         step="1"
                         />
-
                     )}
                     { errorMessage && !inLineError ? (
                         <ValidationPopup errorText={errorMessage} hide={false} errorHeader={errorHeader ||  `Invalid ${label}`}/>
