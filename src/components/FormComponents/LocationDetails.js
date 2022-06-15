@@ -8,33 +8,35 @@ export default function LocationDetails({ context }) {
     const { state, dispatch } = useContext(context)
     const { address } = state
     const user = useGlobalState().state.user
-    
+
     return (
         <div className="RegistrationWrapper">
-                <div className="LoginMain">
-                    <Logo height='50px' width='50px' style={{marginBottom: '.5em'}}/>
+            <div className="LoginMain">
+                <Logo height='50px' width='50px' style={{marginBottom: '.5em'}}/>
 
-                    <div className="LoginHeader">Shed Location</div>
-                    <div className="LoginText">If you would like to share your shed with users, Little big shed will need to know your location in order for borrowers to find you.</div>
+                <div className="LoginHeader">Shed Location</div>
+                <div className="LoginText">If you would like to share your shed with users, Little big shed will need to know your location in order for borrowers to find you.</div>
 
-                    { user ? (
-                        <MapsAutocomplete 
-                        setAddress={(address) => dispatch({ type: 'setAddress', data: address})} 
-                        defaultLocation={address} 
-                        defaultLat={user.lat} 
-                        defaultLng={user.lng}/> 
-                    ) : (
-                        <MapsAutocomplete setAddress={(address) => dispatch({ type: 'setAddress', data: address})}/>
-                    )}
-                    <Button 
-                    
-                    text="Next"
-                    // isDisabled={address && address?.address_components.length !== 7}
-                    onClick={() => {
-                        dispatch({ type: 'setCurrentPage', data: 'Availability' })
-                    }}/>
+                { user ? (
+                    <MapsAutocomplete 
+                    setAddress={(address) => dispatch({ type: 'setAddress', data: address})} 
+                    defaultLocation={address} 
+                    defaultLat={user.lat} 
+                    defaultLng={user.lng}/> 
+                ) : (
+                    <MapsAutocomplete 
+                    setAddress={(address) => dispatch({ type: 'setAddress', data: address})}
+                    />
+                )}
+                <Button 
+                
+                text="Next"
+                // isDisabled={address && address?.address_components.length !== 7}
+                onClick={() => {
+                    dispatch({ type: 'setCurrentPage', data: 'Availability' })
+                }}/>
 
-                </div>
             </div>
+        </div>
     )
 }

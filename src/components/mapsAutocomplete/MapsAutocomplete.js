@@ -53,6 +53,7 @@ const CustomListItem = withStyles((theme) => ({
 }))(ListItem);
 
 export default function MapsAutocomplete(props) {
+
     const {
         placePredictions,
         getPlacePredictions,
@@ -62,14 +63,14 @@ export default function MapsAutocomplete(props) {
         debounce: 500,
     })
 
-    const [value, setValue] = useState(props.defaultLocation ? props.defaultLocation : '')
-    const [showResults, setShowResults] = useState(true)
-    const [lat, setLat] = useState(props.defaultLat ? props.defaultLat : '')
-    const [lng, setLng] = useState(props.defaultLng ? props.defaultLng : '')
-    const [place, setPlace] = useState('')
-    const [mapInstance, setMapInstance] = useState('')
-    const [googleInstance, setGoogleInstance] = useState('')
-    const [mapProps, setMapProps] = useState({
+    const [ value, setValue ] = useState(props.defaultLocation ? props.defaultLocation : '')
+    const [ showResults, setShowResults ] = useState(true)
+    const [ lat, setLat ] = useState(props.defaultLat ? props.defaultLat : '')
+    const [ lng, setLng ] = useState(props.defaultLng ? props.defaultLng : '')
+    const [ place, setPlace ] = useState('')
+    const [ mapInstance, setMapInstance ] = useState('')
+    const [ googleInstance, setGoogleInstance ] = useState('')
+    const [ mapProps, setMapProps ] = useState({
         center: {
             lat: -25.6091,
             lng: 134.3619
@@ -112,14 +113,12 @@ export default function MapsAutocomplete(props) {
     }
 
     const getPlaceDetails = async (place) => {
-        var request = {
+        const request = {
             placeId: place.place_id,
             fields: ['formatted_address', 'geometry', 'address_components']
         }
-
         const service = new googleInstance.places.PlacesService(mapInstance)
         service.getDetails(request, callback)
-
         function callback(place, status) {
             if (status == googleInstance.places.PlacesServiceStatus.OK) {
                 setPlace(place)
@@ -139,7 +138,6 @@ export default function MapsAutocomplete(props) {
                 },
                 zoom: 12
             })
-
             const selectedPlace = {
                 address_components: place.address_components,
                 formatted_address: place.formatted_address,
@@ -148,7 +146,6 @@ export default function MapsAutocomplete(props) {
             }
             props.setAddress(selectedPlace)
         }
-        
     }, [lat, lng])
 
     return (
@@ -183,7 +180,11 @@ export default function MapsAutocomplete(props) {
                 placePredictions.map((place, index) => {
                     return (
                         <CustomListItem button onClick={() => selectAddress(place)} key={index}>
-                            <ListItemText primary={place.structured_formatting.main_text} secondary={place.structured_formatting.secondary_text} classes={{ primary: classes.listText, secondary: classes.listText }} />
+                            <ListItemText 
+                            primary={place.structured_formatting.main_text} 
+                            secondary={place.structured_formatting.secondary_text} 
+                            classes={{ primary: classes.listText, secondary: classes.listText }} 
+                            />
                         </CustomListItem>
                     )
                 })

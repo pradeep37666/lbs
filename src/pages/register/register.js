@@ -16,6 +16,7 @@ import { CometChat } from '@cometchat-pro/chat';
 import getSuburb from '../../util/getSuburb';
 import { useStripe } from '@stripe/react-stripe-js';
 import registerReducer from '../../util/reducers/registerReducer';
+import parseAddressComponent from '../../util/parseAddressComponent';
 
 const FormContext = createContext()
 
@@ -24,7 +25,8 @@ export default function Register() {
     const globalDispatch = useGlobalState().dispatch
     const stripe = useStripe()
     const [ state, dispatch ] = useReducer(registerReducer, { 
-        currentPage: 'Basic Details',
+        // currentPage: 'Basic Details',
+        currentPage: 'Location Details',
         dateOfBirth: new Date(1990, 0, 1),
         isLenderUpgrade: false,
         firstName: '', 
@@ -62,20 +64,21 @@ export default function Register() {
             const suburb = getSuburb(address.address_components) 
 
             Object.assign(userDetails, {
+                isLender: true,
                 day: dateOfBirth.getDate(),
                 month: dateOfBirth.getMonth() + 1,
                 year: dateOfBirth.getFullYear(),
-                address:  address.formatted_address.split(',')[0],
-                line1: address.formatted_address.split(',')[0],
                 bsb: BSB,
                 account_number: accountNumber,
-                isLender: true,
-                suburb,
                 lat: address.lat,
                 lng: address.lng,
+                // address:  parseAddressComponent(address?.address_components),
+                address:  address.formatted_address.split(',')[0],
+                line1: address.formatted_address.split(',')[0],
+                suburb,
                 country: address.address_components[5].short_name,
                 state: address.address_components[4].short_name,
-                city:   address.address_components[3].long_name,
+                city: address.address_components[3].long_name,
                 postal_code: address.address_components[6].long_name,
 
             })
@@ -109,7 +112,6 @@ export default function Register() {
             // history.push({pathname: '/login'})
             // alert("an error occurred during registration, please try again")
         }
-        
     }
 
     const saveCard = async () => {
@@ -117,7 +119,6 @@ export default function Register() {
             await Instance.post('/stripe/addCreditCard', {
                 paymentMethodId: paymentMethod.id
             })
-            console.log('saved card')
         } catch(err){
             console.log(err)
         }
@@ -134,20 +135,18 @@ export default function Register() {
         newUser.setName(`${userObj.firstName} ${userObj.lastName}` )
         try{
             await CometChat.createUser(newUser, process.env.REACT_APP_CHAT_AUTH_KEY)
-            console.log('successfully registered to comet chat', newUser)
             await cometChatLogin(userObj)
-        } catch(e) {
-            console.log('comet chat register error', e)
+        } catch(error) {
+            console.log({error})
         }
         
     }
 
     const cometChatLogin = async (user) => {
         try{
-            const User = await  CometChat.login(user.id, process.env.REACT_APP_CHAT_AUTH_KEY)
-            console.log(User, 'logged into comet chat')
-        } catch(e) {
-            console.log('aaaaaa', e)
+            await CometChat.login(user.id, process.env.REACT_APP_CHAT_AUTH_KEY)
+        } catch(error) {
+            console.log({error})
         }
     }
 
