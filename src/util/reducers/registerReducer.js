@@ -1,5 +1,3 @@
-import StateContext from "react-scroll-to-bottom/lib/ScrollToBottom/StateContext"
-
 const registerReducer = (state, action) => {
     switch(action.type){
         case 'setFirstName' :

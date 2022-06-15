@@ -59,6 +59,7 @@ export default function ItemPictures({ context }) {
         raw: e.target.files[0],
         id: findNextID(),
       });
+      // const imageKey = FileService.uploadImageToS3(e)
       dispatch({ type: 'setPictures', data: newPictures })
     }
   };

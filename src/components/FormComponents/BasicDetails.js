@@ -2,19 +2,19 @@ import React, { useContext, useState, useEffect } from 'react';
 import {ReactComponent as Logo} from './../../assets/Logos/LogoRed.svg';
 import {ReactComponent as CameraIcon} from './../../assets/Icons/CameraIcon.svg';
 import LBSSwitch from '../LBSSwitch/LBSSwitch.js';
-import { isMobile } from 'react-device-detect';
 import Instance from '../../util/axios';
 import ValidationTextInput from './ValidationTextInput';
 import Button from '../Button/Button';
 import { validate } from 'validate.js';
 import { registrationConstraints } from '../../util/validationConstraints';
+import { uploadImages } from '../../services/FileService';
 
 export default function BasicDetails({ context }) {
     const { state, dispatch } = useContext(context)
-    const [errorMessages, setErrorMessages] = useState({})
-    const [isLoading, setIsLoading] = useState(false)
-    const [emailTakenError, setEmailTakenError] = useState()
-    const [phoneTakenError, setPhoneTakenError] = useState()
+    const [ errorMessages, setErrorMessages ] = useState({})
+    const [ isLoading, setIsLoading ] = useState(false)
+    const [ emailTakenError, setEmailTakenError ] = useState()
+    const [ phoneTakenError, setPhoneTakenError ] = useState()
     const { firstName, lastName, email, phoneNumber, password, confirmPassword, image, isLenderUpgrade } = state
 
     useEffect(() => {
@@ -25,7 +25,7 @@ export default function BasicDetails({ context }) {
                 return
             }
         }
-    },[firstName, lastName, email, phoneNumber, password, confirmPassword])
+    },[ firstName, lastName, email, phoneNumber, password, confirmPassword ])
 
     const getErrorMessage = (inputName) => {
         if(Object.keys(errorMessages).length === 0) return null
@@ -35,7 +35,7 @@ export default function BasicDetails({ context }) {
     }
 
     const validateInputs = () => {
-        const validationErrors = validate({ firstName, lastName, email, phoneNumber, password, confirmPassword}, registrationConstraints)
+        const validationErrors = validate({ firstName, lastName, email, phoneNumber, password, confirmPassword }, registrationConstraints)
         if(validationErrors){
             setErrorMessages(validationErrors)
             return false
@@ -57,18 +57,19 @@ export default function BasicDetails({ context }) {
         try{
             // const { data, status } = await Instance.get(`/auth/getVerificationCodeToMobile?mobile=${phoneNumber}`)
             // dispatch({ type: 'setCurrentPage', data: 'Verification' })
-            dispatch({ type: 'setCurrentPage', data: 'Bank Details'})
+            dispatch({ type: 'setCurrentPage', data: 'Bank Details' })
         } catch(err) {
             console.log(err)
         }
     }
 
-    const handleChange = (e) => {
-        if (e.target.files.length === 0) return  
+    const handleChange = ({ target }) => {
+        if (target.files.length === 0) return  
         const image = {
-            preview: URL.createObjectURL(e.target.files[0]),
-            raw: e.target.files[0]
+            preview: URL.createObjectURL(target.files[0]),
+            raw: target.files[0]
         }
+        console.log(uploadImages(image.raw))
         dispatch({ type: 'setImage', data: image })
     }
 
@@ -142,7 +143,12 @@ export default function BasicDetails({ context }) {
                     
                         : <CameraIcon className="CameraIcon"/>}
                     </div>
-                    <input type="file" id="selectFile" style={{ display: "none" }} onChange={(e) => handleChange(e)} />
+                    <input 
+                        type="file" 
+                        id="selectFile" 
+                        style={{ display: "none" }} 
+                        onChange={(e) => handleChange(e)} 
+                    />
                     <button 
                     className="LoginFormButton UploadButton" 
                     onClick={() => document.getElementById('selectFile').click()}

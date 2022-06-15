@@ -20,10 +20,10 @@ import registerReducer from '../../util/reducers/registerReducer';
 const FormContext = createContext()
 
 export default function Register() {
-    const [isRegisterLoading, setIsRegisterLoading] = useState(false)
+    const [ isRegisterLoading, setIsRegisterLoading ] = useState(false)
     const globalDispatch = useGlobalState().dispatch
     const stripe = useStripe()
-    const [state, dispatch] = useReducer(registerReducer, { 
+    const [ state, dispatch ] = useReducer(registerReducer, { 
         currentPage: 'Basic Details',
         dateOfBirth: new Date(1990, 0, 1),
         isLenderUpgrade: false,
@@ -37,8 +37,8 @@ export default function Register() {
         availability: Array(14).fill(0)
     })
     const { 
-        firstName, lastName, email, phoneNumber, password, address, 
-        confirmPassword, currentPage, image, paymentMethod, 
+        firstName, lastName, email, phoneNumber, password, 
+        address, currentPage, image, paymentMethod, 
         isLenderUpgrade, dateOfBirth, availability, accountNumber, BSB 
     } = state
 
@@ -158,11 +158,8 @@ export default function Register() {
             <div className="RegistrationWrapper">
                 <div className="LoginMain">
                 <Logo height='50px' width='50px' style={{marginBottom: '1em'}}/>
-
                 <div className="LoginHeader">Account Created</div>
                 <div className="LoginText">You have successfully created your Little Big Shed account and are now ready to start borrowing!</div>
-
-                
                     <button className="LoginFormButton" onClick={() => history.push({pathname: '/user/account'})}>
                         Continue
                     </button>

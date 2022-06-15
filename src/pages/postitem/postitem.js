@@ -12,7 +12,7 @@ import useGlobalState from '../../util/useGlobalState'
 import Instance from '../../util/axios'
 import getSuburb from '../../util/getSuburb'
 import postItemReducer from '../../util/reducers/postItemReducer'
-
+ 
 const FormContext = createContext()
 
 export default function PostItem() {
@@ -24,7 +24,6 @@ export default function PostItem() {
         availability: user.available.split('').map(str => parseInt(str)),
         address: user.address,
         pictures: []
-    
     })
 
     const { currentPage, address, availability, title, category, pictures, description, price, discount, delivery } = state
