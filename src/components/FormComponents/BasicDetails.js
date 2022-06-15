@@ -7,7 +7,7 @@ import ValidationTextInput from './ValidationTextInput';
 import Button from '../Button/Button';
 import { validate } from 'validate.js';
 import { registrationConstraints } from '../../util/validationConstraints';
-import { uploadImages } from '../../services/FileService';
+import { uploadAvatar } from '../../services/FileService';
 
 export default function BasicDetails({ context }) {
     const { state, dispatch } = useContext(context)
@@ -69,7 +69,8 @@ export default function BasicDetails({ context }) {
             preview: URL.createObjectURL(target.files[0]),
             raw: target.files[0]
         }
-        console.log(uploadImages(image.raw))
+        // FIXME:
+        console.log(uploadAvatar(target.files[0]))
         dispatch({ type: 'setImage', data: image })
     }
 

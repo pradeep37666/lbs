@@ -95,7 +95,6 @@ export default function Register() {
         })
         try{
             const { data, status } = await Instance.post(isLenderUpgrade ? '/auth/lenderSignUp' : '/auth/signUp', formData)
-            console.log('response', data, status)
             if(status === 201) {
                 globalDispatch({ type: 'setUser', data: data.user})
                 localStorage.setItem('token', data.token.accessToken)

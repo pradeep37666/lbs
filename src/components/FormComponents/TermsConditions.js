@@ -1,15 +1,12 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import {ReactComponent as Logo} from './../../assets/Logos/LogoRed.svg';
 import TC from '../../components/tcSection/tcSection';
-import { CircularProgress } from '@material-ui/core';
 import Button from '../Button/Button';
 
 export default function TermsConditions({ context, registerUser, isRegisterLoading }) {
     const { state, dispatch } = useContext(context)
     const { termsChecked } = state
-    const [isLoading, setIsLoading] = useState(false)
 
-    console.log('state', state)
     return (
         <div className="RegistrationWrapper">
                 <div className="LoginMain">
@@ -26,7 +23,6 @@ export default function TermsConditions({ context, registerUser, isRegisterLoadi
                 isLoading={isRegisterLoading}
                 onClick={registerUser}
                 />
-
                 </div>
         </div>
     )

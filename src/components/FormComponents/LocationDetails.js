@@ -6,10 +6,9 @@ import Button from '../Button/Button'
 
 export default function LocationDetails({ context }) {
     const { state, dispatch } = useContext(context)
-    const { isLenderUpgrade, address } = state
-    console.log(address)
+    const { address } = state
     const user = useGlobalState().state.user
-    console.log(user)
+    
     return (
         <div className="RegistrationWrapper">
                 <div className="LoginMain">

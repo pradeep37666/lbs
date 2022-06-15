@@ -43,7 +43,8 @@ export const GlobalStateContext = React.createContext()
 
 const initialState = {}
 
-const stripe = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY)
+// const stripe = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY)
+const stripe = loadStripe('pk_test_51JAi4wAaysFIruTL4KcRCjRZ1aSi6KYbnBDjGRkKuuht6nojLH2ItABIh430Ee9nHzbnqgm80dlwWJZfXMLrbATw00fg4d8m5c')
 
 function App() {
   const [state, dispatch] = useReducer(reducer, initialState)

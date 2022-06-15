@@ -2,10 +2,9 @@ import React, { useContext, useEffect, useState } from 'react';
 import {ReactComponent as Logo} from './../../assets/Logos/LogoRed.svg';
 import ValidationPopup from '../ValidationPopup/ValidationPopup';
 import { CardNumberElement, CardCvcElement, CardExpiryElement, useStripe, useElements } from '@stripe/react-stripe-js';
-import { CircularProgress, createMuiTheme } from '@material-ui/core';
+import { createMuiTheme } from '@material-ui/core';
 import cardElementOptions from '../../constants/cardElementOptions';
 import ValidationTextInput from './ValidationTextInput';
-import { FormContext } from '../../pages/account/UpgradeLender/UpgradeLender';
 import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
 import useGlobalState from '../../util/useGlobalState'
 import MomentUtils from '@date-io/moment';
@@ -47,7 +46,6 @@ export default function BankDetails({ context }) {
                 }
             })
             if(error) return
-            console.log({paymentMethod})
             dispatch({ type: 'setPaymentMethod', data: paymentMethod })
             dispatch({ type: 'setCurrentPage', data: isLenderUpgrade ? 'Location Details' : 'Terms & Conditions'})
         } catch(err) {
