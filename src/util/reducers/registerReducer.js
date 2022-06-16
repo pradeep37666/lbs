@@ -30,6 +30,11 @@ const registerReducer = (state, action) => {
                 ...state,
                 image: action.data
             }
+        case 'setImageLink' :
+            return {
+                ...state,
+                imageLink: action.data
+            }
         case 'setAccountNumber' :
             return {
                 ...state,
@@ -74,6 +79,16 @@ const registerReducer = (state, action) => {
             return {
                 ...state,
                 confirmPassword: action.data
+            }
+        case 'setLenderRating' :
+            return {
+                ...state,
+                lenderRating: action.data
+            }
+        case 'setBorrowerRating' :
+            return {
+                ...state,
+                borrowerRating: action.data
             }
         case 'setCurrentPage' :
             return {

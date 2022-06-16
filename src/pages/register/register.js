@@ -13,8 +13,6 @@ import Instance from '../../util/axios';
 import { useHistory } from 'react-router-dom';
 import useGlobalState from '../../util/useGlobalState';
 import { CometChat } from '@cometchat-pro/chat';
-import getSuburb from '../../util/getSuburb';
-import { useStripe } from '@stripe/react-stripe-js';
 import registerReducer from '../../util/reducers/registerReducer';
 import parseAddressComponent from '../../util/parseAddressComponent';
 
@@ -23,10 +21,8 @@ const FormContext = createContext()
 export default function Register() {
     const [ isRegisterLoading, setIsRegisterLoading ] = useState(false)
     const globalDispatch = useGlobalState().dispatch
-    const stripe = useStripe()
     const [ state, dispatch ] = useReducer(registerReducer, { 
-        // currentPage: 'Basic Details',
-        currentPage: 'Location Details',
+        currentPage: 'Basic Details',
         dateOfBirth: new Date(1990, 0, 1),
         isLenderUpgrade: false,
         firstName: '', 
@@ -36,12 +32,15 @@ export default function Register() {
         password: '',
         confirmPassword: '',
         termsChecked: false,
-        availability: Array(14).fill(0)
+        availability: Array(14).fill(0),
+        lenderRating: 0,
+        borrowerRating: 0,
     })
     const { 
         firstName, lastName, email, phoneNumber, password, 
-        address, currentPage, image, paymentMethod, 
-        isLenderUpgrade, dateOfBirth, availability, accountNumber, BSB 
+        address, currentPage, imageLink, paymentMethod, 
+        isLenderUpgrade, dateOfBirth, availability, 
+        accountNumber, BSB, lenderRating, borrowerRating
     } = state
 
     const history = useHistory()
@@ -55,14 +54,14 @@ export default function Register() {
             email: email,
             firstName,
             lastName,
-            avatar: image ? image.raw : '',
+            avatar: imageLink ? imageLink : '',
             mobile: phoneNumber,
             available: availability.join(''),
             password: password,
+            lender_rating: lenderRating,
+            borrower_rating: borrowerRating,
         }
         if(isLenderUpgrade){
-            const suburb = getSuburb(address.address_components) 
-
             Object.assign(userDetails, {
                 isLender: true,
                 day: dateOfBirth.getDate(),
@@ -70,17 +69,11 @@ export default function Register() {
                 year: dateOfBirth.getFullYear(),
                 bsb: BSB,
                 account_number: accountNumber,
-                lat: address.lat,
-                lng: address.lng,
-                // address:  parseAddressComponent(address?.address_components),
-                address:  address.formatted_address.split(',')[0],
-                line1: address.formatted_address.split(',')[0],
-                suburb,
-                country: address.address_components[5].short_name,
-                state: address.address_components[4].short_name,
-                city: address.address_components[3].long_name,
-                postal_code: address.address_components[6].long_name,
-
+                address: {
+                    ...parseAddressComponent(address?.address_components),
+                    lat: address.lat,
+                    lng: address.lng,
+                },
             })
         }
         return userDetails
@@ -94,7 +87,16 @@ export default function Register() {
 
         const formData = new FormData()
         Object.keys(userDetails).forEach(key => {
-            formData.append(key, userDetails[key])
+            if (key === 'address'){
+                for (let subKey in userDetails[key]) {
+                    formData.append(key, {
+                        ...userDetails[key][subKey],
+                        subKey: userDetails[key][subKey]
+                    })
+                }
+            } else {
+                formData.append(key, userDetails[key])
+            }
         })
         try{
             const { data, status } = await Instance.post(isLenderUpgrade ? '/auth/lenderSignUp' : '/auth/signUp', formData)
@@ -139,7 +141,6 @@ export default function Register() {
         } catch(error) {
             console.log({error})
         }
-        
     }
 
     const cometChatLogin = async (user) => {
@@ -192,7 +193,6 @@ export default function Register() {
             <PageWrapper>
                 <Banner textBold='Account Creation' textNormal={currentPage} />
                 {renderCurrentPage()}
-                
             </PageWrapper>
         </FormContext.Provider>
     )

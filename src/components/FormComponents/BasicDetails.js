@@ -7,7 +7,7 @@ import ValidationTextInput from './ValidationTextInput';
 import Button from '../Button/Button';
 import { validate } from 'validate.js';
 import { registrationConstraints } from '../../util/validationConstraints';
-import { uploadAvatar } from '../../services/FileService';
+import { FileService } from '../../services/FileService'
 
 export default function BasicDetails({ context }) {
     const { state, dispatch } = useContext(context)
@@ -15,7 +15,10 @@ export default function BasicDetails({ context }) {
     const [ isLoading, setIsLoading ] = useState(false)
     const [ emailTakenError, setEmailTakenError ] = useState()
     const [ phoneTakenError, setPhoneTakenError ] = useState()
-    const { firstName, lastName, email, phoneNumber, password, confirmPassword, image, isLenderUpgrade } = state
+    const { 
+        firstName, lastName, email, phoneNumber, 
+        password, confirmPassword, image, isLenderUpgrade
+    } = state
 
     useEffect(() => {
         if(Object.keys(errorMessages).length > 0){
@@ -63,15 +66,16 @@ export default function BasicDetails({ context }) {
         }
     }
 
-    const handleChange = ({ target }) => {
+    const handleChange = async ({ target }) => {
         if (target.files.length === 0) return  
+        const fileLink = await FileService.uploadSingleImage(target.files[0])
+        if (!fileLink) return
         const image = {
             preview: URL.createObjectURL(target.files[0]),
             raw: target.files[0]
         }
-        // FIXME:
-        console.log(uploadAvatar(target.files[0]))
         dispatch({ type: 'setImage', data: image })
+        dispatch({ type: 'setImageLink', data: fileLink})
     }
 
     const checkIfEmailExists = async () => {

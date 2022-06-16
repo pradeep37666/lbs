@@ -10,6 +10,8 @@ const parseAddressComponent = (addressComponent) => {
     const streetName = streetNameObj?.long_name
     const suburbObj = addressComponent.find(obj => obj.types.includes('locality'))
     const suburb = suburbObj?.long_name
+    const cityObj = addressComponent.find(obj => obj.types.includes('administrative_area_level_2'))
+    const city = cityObj?.long_name
     const stateObj = addressComponent.find(obj => obj.types.includes('administrative_area_level_1'))
     const state = stateObj?.short_name
     const countryObj = addressComponent.find(obj => obj.types.includes('country'))
@@ -18,7 +20,15 @@ const parseAddressComponent = (addressComponent) => {
     const postCode = postCodeObj?.long_name
     const presentValues = [subPremise, streetNumber, streetName, suburb, state, country, postCode].filter(value => value !== undefined)
     const fullAddress = presentValues.join(" ")
-    return { streetNumber, streetName, suburb, state, country, postCode, fullAddress }
+    if (streetNumber === undefined || 
+        streetName === undefined || 
+        suburb === undefined || 
+        city === undefined || 
+        state === undefined || 
+        country === undefined || 
+        postCode === undefined
+    ) return
+    return { streetNumber, streetName, suburb, city, state, country, postCode, fullAddress }
 }
 
 export default parseAddressComponent

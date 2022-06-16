@@ -1,15 +1,21 @@
 import Instance from '../util/axios'
 
-const uploadAvatar = async (file) => {
-    try {
-        const response = await Instance.post('/file-upload/uploadToS3', file) 
-        console.log({response})
-        if (!response) return false
-        else return true
-    } catch (error) {
-        console.log(error)
-        return false
+const FileService = {
+    uploadSingleImage: async (file) => {
+        try {
+            const formData = new FormData()
+            formData.append("file", file)
+            const response = await Instance.post('/file-upload/uploadToS3', formData) 
+            if (!response) return false
+            if ( response.status === 201) return response.data
+        } catch (error) {
+            console.log(error)
+        }
+    },
+
+    uploadMultipleImages: async (file) => {
+
     }
 }
 
-export { uploadAvatar }
+export { FileService }

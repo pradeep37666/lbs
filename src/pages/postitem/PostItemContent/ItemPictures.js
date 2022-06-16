@@ -51,30 +51,30 @@ export default function ItemPictures({ context }) {
     return i;
   };
 
-  const handleChange = (e) => {
-    if (e.target.files.length) {
-      let newPictures = pictures.map((picture) => picture);
+  const handleChange = ({ target }) => {
+    if (target.files.length) {
+      let newPictures = pictures.map((picture) => picture)
       newPictures.push({
-        preview: URL.createObjectURL(e.target.files[0]),
-        raw: e.target.files[0],
+        preview: URL.createObjectURL(target.files[0]),
+        raw: target.files[0],
         id: findNextID(),
       });
       // const imageKey = FileService.uploadImageToS3(e)
       dispatch({ type: 'setPictures', data: newPictures })
     }
-  };
+  }
 
   const handleDelete = (id) => {
-    var newPictures = [];
-    for (var i = 0; i < pictures.length; i++) {
-      var pic = pictures[i];
+    let newPictures = [];
+    for (let i = 0; i < pictures.length; i++) {
+      let pic = pictures[i];
 
       if (pic.id !== id) {
         newPictures.push(pic);
       }
     }
     dispatch({ type: 'setPictures', data: newPictures })
-  };
+  }
 
   return (
     <div className="RegistrationWrapper">
