@@ -50,6 +50,36 @@ const registerReducer = (state, action) => {
                 ...state,
                 paymentMethod: action.data
             }
+        case 'setMCC' :
+            return {
+                ...state,
+                mcc: action.data
+            }
+        case 'setWebsite' :
+            return {
+                ...state,
+                website: action.data
+            }
+        case 'setIdFrontImage' :
+            return {
+                ...state,
+                idFrontImage: action.data
+            }
+        case 'setIdBackImage' :
+            return {
+                ...state,
+                idBackImage: action.data
+            }
+        case 'setIdFrontImageLink' :
+            return {
+                ...state,
+                idFrontImageLink: action.data
+            }
+        case 'setIdBackImageLink' :
+            return {
+                ...state,
+                idBackImageLink: action.data
+            }
         case 'setDateOfBirth' :
             return {
                 ...state,

@@ -58,9 +58,9 @@ export default function BasicDetails({ context }) {
             return
         }
         try{
-            // const { data, status } = await Instance.get(`/auth/getVerificationCodeToMobile?mobile=${phoneNumber}`)
-            // dispatch({ type: 'setCurrentPage', data: 'Verification' })
-            dispatch({ type: 'setCurrentPage', data: 'Bank Details' })
+            const { status } = await Instance.get(`/auth/getVerificationCodeToMobile?mobile=${phoneNumber}`)
+            if (status === 200)
+                dispatch({ type: 'setCurrentPage', data: 'Verification' })
         } catch(err) {
             console.log(err)
         }
@@ -160,9 +160,7 @@ export default function BasicDetails({ context }) {
                     >
                         Upload
                     </button>
-
                 </div>
-
             </div>
 
             <div className="LoginMain LoginMainNoMarg">

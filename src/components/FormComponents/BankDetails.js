@@ -10,17 +10,21 @@ import useGlobalState from '../../util/useGlobalState'
 import MomentUtils from '@date-io/moment';
 import Button from '../Button/Button';
 import { ThemeProvider } from '@material-ui/styles';
+import { ReactComponent as CameraIcon } from '../../assets/Icons/CameraIcon.svg'
 
 export default function BankDetails({ context }) {
     const user = useGlobalState().state.user
     const { state, dispatch } = useContext(context)
-    const { accountNumber, BSB, isLenderUpgrade, dateOfBirth } = state
-    const [isLoading, setIsLoading] = useState(false)
-    const [cardNumber, setCardNumber] = useState()
-    const [cardExpiry, setCardExpiry] = useState()
-    const [cardCvc, setCardCvc] = useState()
-    const [cardName, setCardName] = useState()
-    const [cardNameError, setCardNameError] = useState(false)
+    const { 
+        accountNumber, BSB, mcc, website, idFrontImage, 
+        idBackImage, isLenderUpgrade, dateOfBirth 
+    } = state
+    const [ isLoading, setIsLoading ] = useState(false)
+    const [ cardNumber, setCardNumber ] = useState()
+    const [ cardExpiry, setCardExpiry ] = useState()
+    const [ cardCvc, setCardCvc ] = useState()
+    const [ cardName, setCardName ] = useState()
+    const [ cardNameError, setCardNameError ] = useState(false)
 
     const stripe = useStripe()
     const elements = useElements()
@@ -70,6 +74,14 @@ export default function BankDetails({ context }) {
             return minDate
     }
 
+    const uploadFrontId = ({ target }) => {
+
+    }
+
+    const uploadBackId = ({ target }) => {
+
+    }
+
     return (
         <div className="RegistrationWrapper">
             { !user && <>
@@ -88,8 +100,6 @@ export default function BankDetails({ context }) {
                         <div className={`triangleLeft ${!cardNameError ? '' : 'ValidationTextHide'}`} /> 
                         <ValidationPopup errorText={"Please enter a card name"} errorHeader='Invalid Card Name' hide={!cardNameError} />
                     </div>
-
-
                     <div className="LoginHeader LoginHeader--NoMargin">Number on Card</div>
                     <div className="LoginInputValidationContainer">
                         <CardNumberElement 
@@ -122,8 +132,31 @@ export default function BankDetails({ context }) {
                         <ValidationPopup errorText={cardExpiry?.error?.message} errorHeader='Invalid Expiry Date' hide={!cardExpiry?.error} />
                         <div className={`triangleLeft ${!cardCvc?.error ? '' : 'ValidationTextHide'}`} />
                         <ValidationPopup errorText={cardCvc?.error?.message} errorHeader='Invalid CCV' hide={!cardCvc?.error} />
-
                     </div>
+
+                    <div className="LoginHeader">Upload a photo of your </div>
+                    <div className="ProfilePictureFlex">
+                    <div className="ProfilePictureCircle" >
+                        {idFrontImage ? 
+                    
+                        <img src={idFrontImage.preview} alt="" className="IdFrontPicturePreview"/>
+                    
+                        : <CameraIcon className="CameraIcon"/>}
+                    </div>
+                    <input 
+                        type="file" 
+                        id="selectFile" 
+                        style={{ display: "none" }} 
+                        onChange={(e) => uploadFrontId(e)} 
+                    />
+                    <button 
+                    className="LoginFormButton UploadButton" 
+                    onClick={() => document.getElementById('selectFile').click()}
+                    >
+                        Upload
+                    </button>
+                </div>
+
                     { !isLenderUpgrade && 
                     <Button 
                     isLoading={isLoading}

@@ -22,7 +22,7 @@ export default function Register() {
     const [ isRegisterLoading, setIsRegisterLoading ] = useState(false)
     const globalDispatch = useGlobalState().dispatch
     const [ state, dispatch ] = useReducer(registerReducer, { 
-        currentPage: 'Basic Details',
+        currentPage: 'Bank Details',
         dateOfBirth: new Date(1990, 0, 1),
         isLenderUpgrade: false,
         firstName: '', 
@@ -40,7 +40,8 @@ export default function Register() {
         firstName, lastName, email, phoneNumber, password, 
         address, currentPage, imageLink, paymentMethod, 
         isLenderUpgrade, dateOfBirth, availability, 
-        accountNumber, BSB, lenderRating, borrowerRating
+        accountNumber, BSB, mcc, website, idFrontImageLink, 
+        idBackImageLink, lenderRating, borrowerRating
     } = state
 
     const history = useHistory()
@@ -67,13 +68,20 @@ export default function Register() {
                 day: dateOfBirth.getDate(),
                 month: dateOfBirth.getMonth() + 1,
                 year: dateOfBirth.getFullYear(),
-                bsb: BSB,
-                account_number: accountNumber,
                 address: {
                     ...parseAddressComponent(address?.address_components),
                     lat: address.lat,
                     lng: address.lng,
                 },
+                stripeDetails: {
+                    bsb: BSB,
+                    account_number: accountNumber,
+                    phoneNumber: phoneNumber,
+                    mcc: mcc,
+                    website: website,
+                    documentFrontImage: idFrontImageLink,
+                    documentBackImage: idBackImageLink,
+                }
             })
         }
         return userDetails

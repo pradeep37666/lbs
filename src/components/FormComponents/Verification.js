@@ -1,7 +1,7 @@
-import React, { useContext, useState } from 'react';
-import Instance from '../../util/axios';
-import Button from '../Button/Button';
-import {ReactComponent as Logo} from './../../assets/Logos/LogoRed.svg';
+import React, { useContext, useState } from 'react'
+import Instance from '../../util/axios'
+import Button from '../Button/Button'
+import {ReactComponent as Logo} from './../../assets/Logos/LogoRed.svg'
 
 export default function Verification({ context }) {
     const [verificationCode, setVerificationCode] = useState()
@@ -10,17 +10,18 @@ export default function Verification({ context }) {
     const { phoneNumber } = state
 
     const verifyCode = async () => {
-        setIsLoading(true)
         try{
-            await Instance.post('/auth/verifyCodeWithMobile', {
+            setIsLoading(true)
+            const { status } =  await Instance.post('/auth/verifyCodeWithMobile', {
                 mobile: phoneNumber,
                 code: verificationCode
             })
-            setIsLoading(false)
+            if (status === 201)
             dispatch({ type: 'setCurrentPage', data: 'Bank Details'})
-        } catch(err){
+        } catch(error){
+            console.log(error)
+        } finally {
             setIsLoading(false)
-            console.log(err)
         }
     }
 
