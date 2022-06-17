@@ -5,11 +5,8 @@ import { ReactComponent as Logo } from './../../assets/Logos/LogoRed.svg';
 import { Link } from 'react-router-dom';
 import Instance from '../../util/axios';
 import { useHistory } from 'react-router-dom';
-import ValidationPopup from '../../components/ValidationPopup/ValidationPopup';
 import useGlobalState from '../../util/useGlobalState';
 import { CometChat } from '@cometchat-pro/chat';
-import { isMobile } from 'react-device-detect';
-import { CircularProgress } from '@material-ui/core';
 import { loginConstraints } from '../../util/validationConstraints';
 import ValidationTextInput from '../../components/FormComponents/ValidationTextInput';
 import { validate } from 'validate.js';
@@ -37,7 +34,7 @@ export default function Login() {
             })
             await cometChatLogin(response.data.user)
             setLoginError("")
-            localStorage.setItem('token', response.data.token.accessToken)
+            localStorage.setItem('LBSToken', response.data.token.accessToken)
             dispatch({ type: 'setUser', data: response.data.user })
         }catch(error){
             console.log(error)

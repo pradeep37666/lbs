@@ -15,7 +15,7 @@ const parseAddressComponent = (addressComponent) => {
     const stateObj = addressComponent.find(obj => obj.types.includes('administrative_area_level_1'))
     const state = stateObj?.short_name
     const countryObj = addressComponent.find(obj => obj.types.includes('country'))
-    const country = countryObj?.long_name
+    const country = countryObj?.short_name
     const postCodeObj = addressComponent.find(obj => obj.types.includes('postal_code'))
     const postCode = postCodeObj?.long_name
     const presentValues = [subPremise, streetNumber, streetName, suburb, state, country, postCode].filter(value => value !== undefined)

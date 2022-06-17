@@ -83,26 +83,11 @@ export default function Register() {
         setIsRegisterLoading(true)
         await setupCometChat()
         const userDetails = getUserDetails()
-        console.log({userDetails})
-
-        const formData = new FormData()
-        Object.keys(userDetails).forEach(key => {
-            if (key === 'address'){
-                for (let subKey in userDetails[key]) {
-                    formData.append(key, {
-                        ...userDetails[key][subKey],
-                        subKey: userDetails[key][subKey]
-                    })
-                }
-            } else {
-                formData.append(key, userDetails[key])
-            }
-        })
         try{
-            const { data, status } = await Instance.post(isLenderUpgrade ? '/auth/lenderSignUp' : '/auth/signUp', formData)
+            const { data, status } = await Instance.post(isLenderUpgrade ? '/auth/lenderSignUp' : '/auth/signUp', userDetails)
             if(status === 201) {
                 globalDispatch({ type: 'setUser', data: data.user})
-                localStorage.setItem('token', data.token.accessToken)
+                localStorage.setItem('LBSToken', data.token.accessToken)
                 await saveCard()
                 await registerCometChat(data.user)
                 setIsRegisterLoading(false)
@@ -111,8 +96,6 @@ export default function Register() {
         } catch(e) {
             setIsRegisterLoading(false)
             console.log(e.response)
-            // history.push({pathname: '/login'})
-            // alert("an error occurred during registration, please try again")
         }
     }
 

@@ -50,7 +50,7 @@ function App() {
   const [state, dispatch] = useReducer(reducer, initialState)
   const [loadingUser, setLoadingUser] = useState(true)
   const { user } = state
-  const token = localStorage.getItem('token')
+  const token = localStorage.getItem('LBSToken')
 
   useEffect(() => {
     if (!token) {
@@ -66,7 +66,7 @@ function App() {
       const { data } = await Instance.get('/user/me')
       dispatch({ type: 'setUser', data })
     } catch(err) {
-      localStorage.removeItem('token')
+      localStorage.removeItem('LBSToken')
     } finally {
       setLoadingUser(false)
     }
