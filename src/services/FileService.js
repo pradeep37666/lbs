@@ -1,3 +1,4 @@
+import { async } from 'validate.js'
 import Instance from '../util/axios'
 
 const FileService = {
@@ -5,9 +6,8 @@ const FileService = {
         try {
             const formData = new FormData()
             formData.append("file", file)
-            const response = await Instance.post('/file-upload/uploadToS3', formData) 
-            if (!response) return false
-            if ( response.status === 201) return response.data
+            const { data, status } = await Instance.post('/file-upload/uploadToS3', formData) 
+            if (status === 201) return data
         } catch (error) {
             console.log(error)
         }
@@ -15,6 +15,17 @@ const FileService = {
 
     uploadMultipleImages: async (file) => {
 
+    },
+
+    uploadIdentityImage: async (file) => {
+        try {
+            const formData = new FormData()
+            formData.append("file", file)
+            const { data, status } = await Instance.post('/stripe/identity-documents', formData)
+            if (status === 201) return data
+        } catch (error) {
+            console.log(error.response)
+        }
     }
 }
 

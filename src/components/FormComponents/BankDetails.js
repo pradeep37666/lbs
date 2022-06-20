@@ -11,6 +11,8 @@ import MomentUtils from '@date-io/moment';
 import Button from '../Button/Button';
 import { ThemeProvider } from '@material-ui/styles';
 import { ReactComponent as CameraIcon } from '../../assets/Icons/CameraIcon.svg'
+import { FileService } from '../../services/FileService';
+import { async } from 'validate.js';
 
 export default function BankDetails({ context }) {
     const user = useGlobalState().state.user
@@ -74,12 +76,22 @@ export default function BankDetails({ context }) {
             return minDate
     }
 
-    const uploadFrontId = ({ target }) => {
-
-    }
-
-    const uploadBackId = ({ target }) => {
-
+    const uploadIdImages = async (e, type) => {
+        const file = e.target.files[0]
+        if (e.target.files.length === 0) return
+        const fileLink = await FileService.uploadIdentityImage(file)
+        if (!fileLink) return
+        const image = {
+            preview: URL.createObjectURL(file),
+            raw: file
+        }
+        if (type === 'front') {
+            dispatch({ type: 'setIdFrontImage', data: image })
+            dispatch({ type: 'setIdFrontImageLink', data: fileLink.id})
+        } else if (type === 'back') {
+            dispatch({ type: 'setIdBackImage', data: image })
+            dispatch({ type: 'setIdBackImageLink', data: fileLink.id})
+        }
     }
 
     return (
@@ -133,30 +145,6 @@ export default function BankDetails({ context }) {
                         <div className={`triangleLeft ${!cardCvc?.error ? '' : 'ValidationTextHide'}`} />
                         <ValidationPopup errorText={cardCvc?.error?.message} errorHeader='Invalid CCV' hide={!cardCvc?.error} />
                     </div>
-
-                    <div className="LoginHeader">Upload a photo of your </div>
-                    <div className="ProfilePictureFlex">
-                    <div className="ProfilePictureCircle" >
-                        {idFrontImage ? 
-                    
-                        <img src={idFrontImage.preview} alt="" className="IdFrontPicturePreview"/>
-                    
-                        : <CameraIcon className="CameraIcon"/>}
-                    </div>
-                    <input 
-                        type="file" 
-                        id="selectFile" 
-                        style={{ display: "none" }} 
-                        onChange={(e) => uploadFrontId(e)} 
-                    />
-                    <button 
-                    className="LoginFormButton UploadButton" 
-                    onClick={() => document.getElementById('selectFile').click()}
-                    >
-                        Upload
-                    </button>
-                </div>
-
                     { !isLenderUpgrade && 
                     <Button 
                     isLoading={isLoading}
@@ -167,9 +155,8 @@ export default function BankDetails({ context }) {
             </>}
                 
 
-            { isLenderUpgrade &&
+            {isLenderUpgrade &&
             <div className="LoginMain" style={ !user ? { marginTop: 0 } : null}>
-
                 <div className="LoginHeader">Date of Birth</div> 
                 <ThemeProvider theme={datePickerTheme}>
                     <MuiPickersUtilsProvider utils={MomentUtils}>
@@ -198,8 +185,12 @@ export default function BankDetails({ context }) {
                     </MuiPickersUtilsProvider>
                 </ThemeProvider>
 
-                <div className="LoginHeader">Bank Deposit Details</div>
-                <div className="LoginText">Bank details will allow you to upgrade to a lender account.</div>
+                <div className="BankDetailMainTitle">
+                    Bank Deposit Details
+                </div>
+                <div className="BankDetailSubTitle">
+                    Bank details will allow you to upgrade to a lender account.
+                </div>
 
                 <ValidationTextInput 
                 label="Account Number"
@@ -213,15 +204,80 @@ export default function BankDetails({ context }) {
                 onChange={e => dispatch({ type: 'setBSB', data: e.target.value})}
                 label="BSB"
                 />
+                <div>
+                    <p className='IdProviderMainTitle'>
+                    Identity Documents
+                    </p>
+                    <p className='IdProviderSubTitle'>
+                    Attach a front and back image of a valid identity type (e.g. driver’s licence or passport).
+                    </p>
+                    <div className="LoginHeader">Front Identity Image</div>
+                    <div className="IdProvideInputContainer">
+                        <div className="IdProvideImageSquare" >
+                            {idFrontImage 
+                            ?   <img 
+                                src={idFrontImage.preview} 
+                                alt="id front" 
+                                className="IdFrontPicturePreview"
+                                />
+                            :   <CameraIcon className="CameraIcon"/>
+                            }
+                        </div>
+                        <input 
+                            type="file" 
+                            id="selectIdFront" 
+                            style={{ display: "none" }} 
+                            onChange={(e) => uploadIdImages(e, 'front')} 
+                        />
+                        <button 
+                        className="LoginFormButton UploadButton" 
+                        onClick={() => document.getElementById('selectIdFront').click()}
+                        >
+                            Upload
+                        </button>
+                    </div>
+
+                    <div className="LoginHeader">Back Identity Image</div>
+                    <div className="IdProvideInputContainer">
+                        <div className="IdProvideImageSquare" >
+                            {idBackImage 
+                            ?   <img 
+                                src={idBackImage.preview} 
+                                alt="id back" 
+                                className="IdFrontPicturePreview"
+                                />
+                            :   <CameraIcon className="CameraIcon"/>
+                            }
+                        </div>
+                        <input 
+                            type="file" 
+                            id="selectIdBack" 
+                            style={{ display: "none" }} 
+                            onChange={(e) => uploadIdImages(e, 'back')} 
+                        />
+                        <button 
+                        className="LoginFormButton UploadButton" 
+                        onClick={() => document.getElementById('selectIdBack').click()}
+                        >
+                            Upload
+                        </button>
+                    </div>
+                </div>
+
+                <div className="LoginHeader LoginHeader--NoMargin">Website (Social Media)</div>
+                <div className="LoginInputValidationContainer">
+                    <input type='text' placeholder='Enter your website' className="LoginInput" onChange={(e) => dispatch({ type: 'setWebsite', data: e.target.value})} />
+                    {/* <div className={`triangleLeft ${!websiteError ? '' : 'ValidationTextHide'}`} /> 
+                    <ValidationPopup errorText={"Please enter your website or social media"} errorHeader='Website is required' hide={!websiteError} /> */}
+                </div>
                 <Button 
                 text="Next"
                 isLoading={isLoading}
-                isDisabled={ !accountNumber || !BSB }
+                isDisabled={ !accountNumber || !BSB || !idFrontImage || !idBackImage}
                 onClick={() => user ? dispatch({ type: 'setCurrentPage', data: 'Location Details'}) : createPaymentMethod()}
                 />
             </div>
             }
-
         </div>
     )
 }

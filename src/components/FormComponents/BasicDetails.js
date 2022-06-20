@@ -67,12 +67,13 @@ export default function BasicDetails({ context }) {
     }
 
     const handleChange = async ({ target }) => {
+        const file = target.files[0]
         if (target.files.length === 0) return  
-        const fileLink = await FileService.uploadSingleImage(target.files[0])
+        const fileLink = await FileService.uploadSingleImage(file)
         if (!fileLink) return
         const image = {
-            preview: URL.createObjectURL(target.files[0]),
-            raw: target.files[0]
+            preview: URL.createObjectURL(file),
+            raw: file
         }
         dispatch({ type: 'setImage', data: image })
         dispatch({ type: 'setImageLink', data: fileLink})

@@ -22,7 +22,7 @@ export default function Register() {
     const [ isRegisterLoading, setIsRegisterLoading ] = useState(false)
     const globalDispatch = useGlobalState().dispatch
     const [ state, dispatch ] = useReducer(registerReducer, { 
-        currentPage: 'Bank Details',
+        currentPage: 'Basic Details',
         dateOfBirth: new Date(1990, 0, 1),
         isLenderUpgrade: false,
         firstName: '', 
@@ -51,48 +51,63 @@ export default function Register() {
     }, [currentPage])
 
     const getUserDetails = () => {
-        const userDetails = {
-            email: email,
-            firstName,
-            lastName,
-            avatar: imageLink ? imageLink : '',
-            mobile: phoneNumber,
-            available: availability.join(''),
-            password: password,
-            lender_rating: lenderRating,
-            borrower_rating: borrowerRating,
-        }
         if(isLenderUpgrade){
-            Object.assign(userDetails, {
-                isLender: true,
-                day: dateOfBirth.getDate(),
-                month: dateOfBirth.getMonth() + 1,
-                year: dateOfBirth.getFullYear(),
-                address: {
-                    ...parseAddressComponent(address?.address_components),
-                    lat: address.lat,
-                    lng: address.lng,
+            const lenderDetails = {
+                lenderDetails: {
+                    firstName,
+                    lastName,
+                    email,
+                    avatar: imageLink ? imageLink : '',
+                    mobile: phoneNumber,
+                    password: password,
+                    address: {
+                        ...parseAddressComponent(address?.address_components),
+                        lat: address.lat,
+                        lng: address.lng,
+                    },
+                    isLender: true,
+                    lender_rating: lenderRating,
+                    borrower_rating: borrowerRating,
+                    available: availability.join('')
                 },
                 stripeDetails: {
+                    day: dateOfBirth.getDate(),
+                    month: dateOfBirth.getMonth() + 1,
+                    year: dateOfBirth.getFullYear(),
                     bsb: BSB,
-                    account_number: accountNumber,
-                    phoneNumber: phoneNumber,
-                    mcc: mcc,
-                    website: website,
+                    accountNumber: accountNumber,
+                    mcc: '5734',
+                    website: website ?? 'stripe.com',
                     documentFrontImage: idFrontImageLink,
                     documentBackImage: idBackImageLink,
                 }
-            })
+            }
+            return lenderDetails
+        } else {
+            const userDetails = {
+                user: {
+                    firstName,
+                    lastName,
+                    email,
+                    avatar: imageLink ? imageLink : '',
+                    mobile: phoneNumber,
+                    password: password,
+                    isLender: false,
+                    lender_rating: lenderRating,
+                    borrower_rating: borrowerRating,
+                    available: availability.join(''),
+                }
+            }
+            return userDetails
         }
-        return userDetails
     }
 
     const registerUser = async () => {
         setIsRegisterLoading(true)
         await setupCometChat()
-        const userDetails = getUserDetails()
+        const signupDetails = getUserDetails()
         try{
-            const { data, status } = await Instance.post(isLenderUpgrade ? '/auth/lenderSignUp' : '/auth/signUp', userDetails)
+            const { data, status } = await Instance.post(isLenderUpgrade ? '/auth/lenderSignUp' : '/auth/signUp', signupDetails)
             if(status === 201) {
                 globalDispatch({ type: 'setUser', data: data.user})
                 localStorage.setItem('LBSToken', data.token.accessToken)

@@ -43,3 +43,38 @@
   font-weight: bold;
   font-size: 18px;
 }
+
+.IdProvideInputContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 0.5em;
+}
+
+.IdProvideImageSquare {
+  border: 1px solid #ac172c;
+  height: 120px;
+  width: 120px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 2em;
+  overflow: hidden;
+}
+
+.BankDetailMainTitle,
+.BankDetailSubTitle,
+.IdProviderMainTitle,
+.IdProviderSubTitle {
+  margin: 0;
+}
+
+.IdProviderMainTitle,
+.BankDetailMainTitle {
+  color: #33384f;
+  font-size: 20px;
+  font-weight: bold;
+  width: 100%;
+}
