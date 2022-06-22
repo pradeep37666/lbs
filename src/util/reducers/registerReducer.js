@@ -50,11 +50,6 @@ const registerReducer = (state, action) => {
                 ...state,
                 paymentMethod: action.data
             }
-        case 'setMCC' :
-            return {
-                ...state,
-                mcc: action.data
-            }
         case 'setWebsite' :
             return {
                 ...state,

@@ -58,11 +58,15 @@ export default function BasicDetails({ context }) {
             return
         }
         try{
-            const { status } = await Instance.get(`/auth/getVerificationCodeToMobile?mobile=${phoneNumber}`)
-            if (status === 200)
+            const { status } = await Instance.post('/auth/getVerificationCodeToMobile', {
+                mobile: phoneNumber
+            })
+            if (status === 201)
                 dispatch({ type: 'setCurrentPage', data: 'Verification' })
         } catch(err) {
             console.log(err)
+        } finally {
+            setIsLoading(false)
         }
     }
 
@@ -183,7 +187,6 @@ export default function BasicDetails({ context }) {
                 errorMessage={getErrorMessage('confirmPassword')}
                 />
             </div>
-            
 
             <div className="LoginMain LoginMainNoMarg">
                 <div className="BecomeLenderFlex">

@@ -14,12 +14,12 @@ import Button from '../../components/Button/Button';
 
 export default function Login() {
     const { dispatch } = useGlobalState()
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [errorMessages, setErrorMessages] = useState({})
+    const [ email, setEmail ] = useState('');
+    const [ password, setPassword ] = useState('');
+    const [ errorMessages, setErrorMessages ] = useState({})
+    const [ isLoading, setIsLoading ] = useState(false)
+    const [ loginError, setLoginError ] = useState("")
     const history = useHistory()
-    const [isLoading, setIsLoading] = useState(false)
-    const [loginError, setLoginError] = useState("")
 
     const handleSubmit = async (e) => {
         const valid = validateInputs()
@@ -32,10 +32,12 @@ export default function Login() {
                 email: email,
                 password: password
             })
+            if (status !== 201) return
             await cometChatLogin(data.user)
             setLoginError("")
             localStorage.setItem('LBSToken', data.token.accessToken)
             dispatch({ type: 'setUser', data: data.user })
+            history.push({pathname: '/user/account'})
         }catch(error){
             console.log(error)
             setLoginError("An error occurred while logging in, please try again")
@@ -49,13 +51,12 @@ export default function Login() {
         const res = await CometChat.init(appId, cometChatSettings)
       }
 
-
     const cometChatLogin = async (user) => {
         try{
             const User = await  CometChat.login(user.id, process.env.REACT_APP_CHAT_AUTH_KEY)
             console.log({User})
         } catch(e) {
-            console.log('a', e)
+            console.log({e})
             throw new Error
         }
     }

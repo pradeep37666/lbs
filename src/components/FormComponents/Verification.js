@@ -14,12 +14,12 @@ export default function Verification({ context }) {
             setIsLoading(true)
             const { status } =  await Instance.post('/auth/verifyCodeWithMobile', {
                 mobile: phoneNumber,
-                code: verificationCode
+                code: verificationCode,
             })
             if (status === 201)
             dispatch({ type: 'setCurrentPage', data: 'Bank Details'})
         } catch(error){
-            console.log(error)
+            console.log(error.response)
         } finally {
             setIsLoading(false)
         }

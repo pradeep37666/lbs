@@ -40,7 +40,7 @@ export default function Register() {
         firstName, lastName, email, phoneNumber, password, 
         address, currentPage, imageLink, paymentMethod, 
         isLenderUpgrade, dateOfBirth, availability, 
-        accountNumber, BSB, mcc, website, idFrontImageLink, 
+        accountNumber, BSB, website, idFrontImageLink, 
         idBackImageLink, lenderRating, borrowerRating
     } = state
 
@@ -77,7 +77,7 @@ export default function Register() {
                     bsb: BSB,
                     accountNumber: accountNumber,
                     mcc: '5734',
-                    website: website ?? 'stripe.com',
+                    website: website ?? 'https://www.stripe.com/au',
                     documentFrontImage: idFrontImageLink,
                     documentBackImage: idBackImageLink,
                 }
@@ -117,8 +117,9 @@ export default function Register() {
                 dispatch({ type: 'setCurrentPage', data: 'Complete!'})
             }
         } catch(e) {
-            setIsRegisterLoading(false)
             console.log(e.response)
+        } finally {
+            setIsRegisterLoading(false)
         }
     }
 
@@ -156,7 +157,6 @@ export default function Register() {
             console.log({error})
         }
     }
-
 
     const getComplete = () => {
         return (

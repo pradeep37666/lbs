@@ -12,7 +12,6 @@ import Button from '../Button/Button';
 import { ThemeProvider } from '@material-ui/styles';
 import { ReactComponent as CameraIcon } from '../../assets/Icons/CameraIcon.svg'
 import { FileService } from '../../services/FileService';
-import { async } from 'validate.js';
 
 export default function BankDetails({ context }) {
     const user = useGlobalState().state.user
