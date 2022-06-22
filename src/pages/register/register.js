@@ -85,18 +85,16 @@ export default function Register() {
             return lenderDetails
         } else {
             const userDetails = {
-                user: {
-                    firstName,
-                    lastName,
-                    email,
-                    avatar: imageLink ? imageLink : '',
-                    mobile: phoneNumber,
-                    password: password,
-                    isLender: false,
-                    lender_rating: lenderRating,
-                    borrower_rating: borrowerRating,
-                    available: availability.join(''),
-                }
+                firstName,
+                lastName,
+                email,
+                avatar: imageLink ? imageLink : '',
+                mobile: phoneNumber,
+                password: password,
+                isLender: false,
+                lender_rating: lenderRating,
+                borrower_rating: borrowerRating,
+                available: availability.join(''),
             }
             return userDetails
         }
@@ -125,9 +123,10 @@ export default function Register() {
 
     const saveCard = async () => {
         try{
-            await Instance.post('/stripe/addCreditCard', {
+            const { data } = await Instance.post('/stripe/addCreditCard', {
                 paymentMethodId: paymentMethod.id
             })
+            // if (!data) error message here
         } catch(err){
             console.log(err)
         }
