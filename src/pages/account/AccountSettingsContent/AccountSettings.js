@@ -30,7 +30,6 @@ export default function AccountSettings() {
             })
     }, [])
 
-    
     return (
         <div className="AccountSettings__FlexMain">
             <div className="AccountSettings__Main">
@@ -40,22 +39,41 @@ export default function AccountSettings() {
                         <Avatar src={`${user && user.avatar ? getImage(user.avatar) : MissingProfile }`} className="AccountSettings__Avatar" alt="ProfilePicture" />
                         <div className="AccountSettings__UserDetails">
                             <div className="AccountSettings__UserName">{user.fullName}</div>
-                            <div className="AccountSettings__Ratings"><span className="AccountSettings-Medium">Lender:</span> {user.lender_rating}/5 <RatingFiller rating={user.lender_rating} /></div>
-                            <div className="AccountSettings__Ratings"><span className="AccountSettings-Medium">Borrower:</span> {user.borrower_rating}/5 <RatingFiller rating={user.borrower_rating} /></div>
+                            <div className="AccountSettings__Ratings">
+                                <span className="AccountSettings-Medium">
+                                    Lender:
+                                </span> 
+                                {user.lender_rating}/5 
+                                <RatingFiller rating={user.lender_rating} />
+                            </div>
+                            <div className="AccountSettings__Ratings">
+                                <span className="AccountSettings-Medium">
+                                    Borrower:
+                                </span> 
+                                {user.borrower_rating}/5 
+                                <RatingFiller rating={user.borrower_rating} />
+                            </div>
                         </div>
                     </div>
                     <div className="AccountSettings__AccountProductsFlex">
-                        <div><span className="AccountSettings-Medium">Account:</span> Borrower {user.isLender && '& Lender'}</div>
-                        <div><span className="AccountSettings-Medium">Products:</span> {userProducts}</div>
-
+                        <div>
+                            <span className="AccountSettings-Medium">
+                                Account:
+                            </span> 
+                            Borrower {user.isLender && '& Lender'}
+                        </div>
+                        <div>
+                            <span className="AccountSettings-Medium">
+                                Products:
+                            </span> 
+                            {userProducts}
+                        </div>
                     </div>
                 </div>
                 <EditAccountDetails />
             </div>
             <div className="AccountSettings__Main">
-
                 <EditPaymentDetails />
-
                 {user.isLender && <EditLocation /> }
             </div>
         </div>

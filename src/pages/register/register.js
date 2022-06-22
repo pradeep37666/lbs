@@ -50,6 +50,10 @@ export default function Register() {
         window.scrollTo(0, 0)
     }, [currentPage])
 
+    useEffect(() => {
+        globalDispatch({ type: 'setUser', data: ''})
+    },[])
+
     const getUserDetails = () => {
         if(isLenderUpgrade){
             const lenderDetails = {

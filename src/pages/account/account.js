@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import './account.css'
 import PageWrapper from '../../components/pageWrapper/pageWrapper'
 import UserShedNav from '../../components/UserShedNav/UserShedNav'

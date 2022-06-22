@@ -17,7 +17,7 @@ export default function BankDetails({ context }) {
     const user = useGlobalState().state.user
     const { state, dispatch } = useContext(context)
     const { 
-        accountNumber, BSB, mcc, website, idFrontImage, 
+        accountNumber, BSB, idFrontImage, 
         idBackImage, isLenderUpgrade, dateOfBirth 
     } = state
     const [ isLoading, setIsLoading ] = useState(false)
@@ -238,7 +238,7 @@ export default function BankDetails({ context }) {
 
                     <div className="LoginHeader">Back Identity Image</div>
                     <div className="IdProvideInputContainer">
-                        <div className="IdProvideImageSquare" >
+                        <div className="IdProvideImageSquare">
                             {idBackImage 
                             ?   <img 
                                 src={idBackImage.preview} 
@@ -272,7 +272,7 @@ export default function BankDetails({ context }) {
                 <Button 
                 text="Next"
                 isLoading={isLoading}
-                isDisabled={ !accountNumber || !BSB || !idFrontImage || !idBackImage}
+                isDisabled={ !accountNumber || !BSB || !idFrontImage || !idBackImage }
                 onClick={() => user ? dispatch({ type: 'setCurrentPage', data: 'Location Details'}) : createPaymentMethod()}
                 />
             </div>

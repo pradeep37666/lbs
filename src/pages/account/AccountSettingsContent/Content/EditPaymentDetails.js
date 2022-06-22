@@ -27,8 +27,6 @@ export default function EditPaymentDetails() {
     const [cardNameError, setCardNameError] = useState(false)
     const [userCard, setUserCard] = useState()
 
-
-
     useEffect(() => {
         getSavedCard()
         getStripeDetails()

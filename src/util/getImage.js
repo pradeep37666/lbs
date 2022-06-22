@@ -1,5 +1,5 @@
 const getImage = (imageString) => {
- return `http://3.25.238.3:3000/file-upload/getFile?key=${imageString}`
+    return `http://54.79.152.215:3000/file-upload/getFile?key=${imageString}`
 }
 
 export default getImage
