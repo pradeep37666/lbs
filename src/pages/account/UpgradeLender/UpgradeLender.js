@@ -75,9 +75,8 @@ export default function UpgradeLender() {
     }
 
     const createStripeAccount = async () => {
-        console.log('this is get month + 1: ',dateOfBirth.getMonth() + 1)
+        console.log({user})
         const stripeData = {
-            u_id: user.id,
             email: user.email,
             bsb: BSB,
             accountNumber,
@@ -86,6 +85,7 @@ export default function UpgradeLender() {
             year: dateOfBirth.getFullYear(),
             firstName: user.firstName,
             lastName: user.lastName,
+            
             line1: address.address_components[0].long_name + ' ' + address.address_components[1].long_name,
             country: address.address_components[5].short_name,
             state: address.address_components[4].short_name,
