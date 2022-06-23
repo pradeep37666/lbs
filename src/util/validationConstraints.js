@@ -48,7 +48,7 @@ const validationConstraints = {
     phoneNumber: {
         presence: {
             allowEmpty: false,
-            message: "^Required a",
+            message: "^Required",
         }
     },
     password: passwordConstraints,

@@ -14,8 +14,8 @@ import lenderUpgradeReducer from '../../../util/reducers/lenderUpgradeReducer'
 const FormContext = createContext()
 
 export default function UpgradeLender() {
-    const [isUpgradeLoading, setIsUpgradeLoading] = useState(false)
-    const [state, dispatch] = useReducer(lenderUpgradeReducer, { 
+    const [ isUpgradeLoading, setIsUpgradeLoading ] = useState(false)
+    const [ state, dispatch ] = useReducer(lenderUpgradeReducer, { 
         isLenderUpgrade: true, 
         currentPage: 'Bank Details',
         dateOfBirth: new Date(1990, 1, 1), 
@@ -75,14 +75,14 @@ export default function UpgradeLender() {
     }
 
     const createStripeAccount = async () => {
-
+        console.log('this is get month + 1: ',dateOfBirth.getMonth() + 1)
         const stripeData = {
             u_id: user.id,
             email: user.email,
             bsb: BSB,
             accountNumber,
             day: dateOfBirth.getDate(),
-            month: dateOfBirth.getMonth(),
+            month: dateOfBirth.getMonth() + 1,
             year: dateOfBirth.getFullYear(),
             firstName: user.firstName,
             lastName: user.lastName,
@@ -99,7 +99,6 @@ export default function UpgradeLender() {
         } catch(err) {
             console.log(err.response)
         }
-        
     }
 
     const renderSwitch = () => {

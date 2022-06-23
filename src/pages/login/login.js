@@ -32,13 +32,14 @@ export default function Login() {
                 email: email,
                 password: password
             })
+            console.log({status})
             if (status !== 201) return
             await cometChatLogin(data.user)
             setLoginError("")
             localStorage.setItem('LBSToken', data.token.accessToken)
             dispatch({ type: 'setUser', data: data.user })
             history.push({pathname: '/user/account'})
-        }catch(error){
+        } catch(error) {
             console.log(error)
             setLoginError("An error occurred while logging in, please try again")
         } finally {

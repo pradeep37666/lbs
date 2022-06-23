@@ -22,9 +22,10 @@ export default function Register() {
     const [ isRegisterLoading, setIsRegisterLoading ] = useState(false)
     const globalDispatch = useGlobalState().dispatch
     const [ state, dispatch ] = useReducer(registerReducer, { 
+        isLenderUpgrade: false,
         currentPage: 'Basic Details',
         dateOfBirth: new Date(1990, 0, 1),
-        isLenderUpgrade: false,
+        availability: Array(14).fill(0),
         firstName: '', 
         lastName: '', 
         email: '',
@@ -32,7 +33,6 @@ export default function Register() {
         password: '',
         confirmPassword: '',
         termsChecked: false,
-        availability: Array(14).fill(0),
         lenderRating: 0,
         borrowerRating: 0,
     })

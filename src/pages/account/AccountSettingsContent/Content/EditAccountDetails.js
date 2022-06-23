@@ -8,19 +8,21 @@ import getImage from '../../../../util/getImage';
 import ValidationTextInput from '../../../../components/FormComponents/ValidationTextInput';
 import Button from '../../../../components/Button/Button';
 import { updateUserDetailsConstraints } from '../../../../util/validationConstraints';
-import { validate } from 'validate.js';
+import { async, validate } from 'validate.js';
+import { FileService } from '../../../../services/FileService';
 
 export default function EditAccountDetails(props) {
     const { state, dispatch } = useGlobalState()
     const { user } = state
-    const [isLoading, setIsLoading] = useState(false)
+    const [ isLoading, setIsLoading ] = useState(false)
 
-    const [image, setImage] = useState()
-    const [firstName, setFirstName] = useState(user.firstName)
-    const [lastName, setLastName] = useState(user.lastName)
-    const [email, setEmail] = useState(user.email)
-    const [phoneNumber, setPhoneNumber] = useState(user.mobile)
-    const [errorMessages, setErrorMessages] = useState({})
+    const [ image, setImage ] = useState('')
+    const [ imageLink, setImageLink ] = useState('')
+    const [ firstName, setFirstName ] = useState(user.firstName)
+    const [ lastName, setLastName ] = useState(user.lastName)
+    const [ email, setEmail ] = useState(user.email)
+    const [ phoneNumber, setPhoneNumber ] = useState(user.mobile)
+    const [ errorMessages, setErrorMessages ] = useState({})
 
     useEffect(() => {
         if(Object.keys(errorMessages).length > 0){
@@ -50,14 +52,17 @@ export default function EditAccountDetails(props) {
         return true
     }
 
-    const handleChange = (e) => {
-        if (e.target.files.length) {
-            setImage({
-                preview: URL.createObjectURL(e.target.files[0]),
-                raw: e.target.files[0]
-            })
-            console.log(e.target.files[0])
+    const handleChange = async ({ target }) => {
+        const file = target.files[0]
+        if (target.files.length === 0) return
+        const fileLink = await FileService.uploadSingleImage(file)
+        if (!fileLink) return
+        const image = {
+            preview: URL.createObjectURL(target.files[0]),
+            raw: target.files[0]
         }
+        setImage(image)
+        setImageLink(fileLink)
     }
 
     const updateBasicDetails = async () => {
@@ -69,14 +74,11 @@ export default function EditAccountDetails(props) {
             lastName,
             email,
             mobile: phoneNumber,
-            avatar: image ? image.raw : '', 
-        }
-        const formData = new FormData()
-        for(let key in userDetails){
-            formData.append(key, userDetails[key])
+            avatar: imageLink ? imageLink : '', 
         }
         try{
-            const { data } = await Instance.patch('user/update', formData)
+            const { data } = await Instance.patch('user/update', userDetails)
+            // if (!data) error message here
             dispatch({ type: 'setUser', data })
         } catch(err) {
             console.log(err.response)
@@ -133,7 +135,7 @@ export default function EditAccountDetails(props) {
                         )
                         : <CameraIcon className="CameraIcon" />}
                 </div>
-                <input type="file" id="selectFile" style={{ display: "none" }} onChange={(e) => handleChange(e)} />
+                <input type="file" id="selectFile" style={{ display: "none" }} onChange={handleChange} />
                 <button className="LoginFormButton UploadButton" onClick={() => document.getElementById('selectFile').click()}>{!user.avatar ? 'Upload' : 'Change Picture'}</button>
 
             </div>

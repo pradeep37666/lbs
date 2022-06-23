@@ -15,15 +15,45 @@ const lenderUpgradeReducer = (state, action) => {
                 ...state,
                 accountNumber : action.data
             }
-        case 'setAddress' : 
-            return {
-                ...state,
-                address: action.data
-            }
         case 'setBSB' :
             return {
                 ...state,
                 BSB : action.data
+            }
+        case 'setPaymentMethod' :
+            return {
+                ...state,
+                paymentMethod: action.data
+            }
+        case 'setWebsite' :
+            return {
+                ...state,
+                website: action.data
+            }
+        case 'setIdFrontImage' :
+            return {
+                ...state,
+                idFrontImage: action.data
+            }
+        case 'setIdBackImage' :
+            return {
+                ...state,
+                idBackImage: action.data
+            }
+        case 'setIdFrontImageLink' :
+            return {
+                ...state,
+                idFrontImageLink: action.data
+            }
+        case 'setIdBackImageLink' :
+            return {
+                ...state,
+                idBackImageLink: action.data
+            }
+        case 'setAddress' : 
+            return {
+                ...state,
+                address: action.data
             }
         case 'setAvailability' :
             return {

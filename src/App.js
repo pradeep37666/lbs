@@ -104,7 +104,7 @@ function App() {
         {...rest}
         render={(props) =>
           user
-            ? <Redirect to={{ pathname: '/', state: { from: props.location } }} />
+            ? <Redirect to={{ pathname: '/user/account', state: { from: props.location } }} />
             : <Component {...props} />}
       />
     )
