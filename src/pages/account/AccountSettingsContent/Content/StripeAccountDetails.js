@@ -10,7 +10,7 @@ import Arrow from '../../../../assets/Icons/Arrow'
 import { CircularProgress } from '@material-ui/core'
 
 export default function AccountDetails() {
-    const { state, dispatch } = useGlobalState()
+    const { state } = useGlobalState()
     const { user } = state
     const [isEditingAccount, setIsEditingAccount] = useState(false)
     const [isUpdateAccountLoading, setIsUpdateAccountLoading] = useState(false)
@@ -24,25 +24,24 @@ export default function AccountDetails() {
 
     useEffect(() => {
         getAccountDetails()
-
     }, [])
 
     const getAccountDetails = async () => {
         setIsEditingAccount(false)
-        setIsLoading(true)
         try{
+            setIsLoading(true)
             const { data, status } = await Instance.get('/stripe/retrieveAccount')
+            if (status !== 200) return
             const { last4, routing_number } = data
             setAccountDetails({ last4, routing_number })
         } catch(err) {
             console.log(err.response)
-        }finally{
+        } finally {
             setIsLoading(false)
         }
     }
 
     const createUpdateAccountToken = async () => {
-        
         try{
             const response = await stripe.createToken('bank_account', {
                 country: 'AU',
@@ -67,8 +66,7 @@ export default function AccountDetails() {
         setIsUpdateAccountLoading(true)
         const token = await createUpdateAccountToken()
         try{
-            const { data, status } = await Instance.patch('/stripe/updateAccount', { token: token.id })
-            console.log(data, status)
+            await Instance.patch('/stripe/updateAccount', { token: token.id })
             await getAccountDetails()
         } catch(err){
             console.log(err.response)

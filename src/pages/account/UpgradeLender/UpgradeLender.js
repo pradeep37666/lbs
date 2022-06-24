@@ -8,8 +8,8 @@ import Instance from '../../../util/axios'
 import { ReactComponent as Logo } from '../../../assets/Logos/LogoRed.svg';
 import { useHistory } from 'react-router'
 import useGlobalState from '../../../util/useGlobalState'
-import getSuburb from '../../../util/getSuburb'
 import lenderUpgradeReducer from '../../../util/reducers/lenderUpgradeReducer'
+import parseAddressComponent from '../../../util/parseAddressComponent'
 
 const FormContext = createContext()
 
@@ -25,13 +25,15 @@ export default function UpgradeLender() {
     const globalState = useGlobalState().state
     const { user } = globalState
     const history = useHistory()
-    const { currentPage, address, accountNumber, BSB, dateOfBirth, availability } = state
+    const { 
+        currentPage, address, accountNumber, BSB,
+        website, idFrontImageLink, idBackImageLink,
+        dateOfBirth, availability
+    } = state
 
     useEffect(() => {
         window.scrollTo(0,0)
     }, [currentPage]) 
-
-    
    
     const getComplete = () => {
         return (
@@ -51,53 +53,63 @@ export default function UpgradeLender() {
     }
 
     const submitUpgrade = async () => {
-        setIsUpgradeLoading(true)
-        await createStripeAccount()
-        const suburb =  getSuburb(address.address_components) 
-        const userData = {
-            address: address.formatted_address,
-            suburb: suburb,
-            lat: address.lat,
-            lng: address.lng,
-            available: availability.join(''),
-            isLender: true
-        }
-
         try{
+            setIsUpgradeLoading(true)
+            const stripeAccountId = await createStripeAccount()
+            if (!stripeAccountId) return
+            const userData = {
+                address: {
+                    ...parseAddressComponent(address?.address_components),
+                    lat: address.lat,
+                    lng: address.lng,
+                },
+                stripe: {
+                    accountId: stripeAccountId,
+                },
+                available: availability.join(''),
+                isLender: true,
+            }
             const { data, status } = await Instance.patch('user/update', userData)
-            setIsUpgradeLoading(false)
+            if (status !== 200) return
             globalDispatch({ type: 'setUser', data })
-
         } catch(err){
-            setIsUpgradeLoading(false)
             console.log('error', err)
+        } finally {
+            setIsUpgradeLoading(false)
         }
     }
 
     const createStripeAccount = async () => {
-        console.log({user})
+        const { streetNumber, streetName, city, state, postCode } = parseAddressComponent(address?.address_components)
         const stripeData = {
             email: user.email,
             bsb: BSB,
             accountNumber,
+            firstName: user.firstName,
+            lastName: user.lastName,
             day: dateOfBirth.getDate(),
             month: dateOfBirth.getMonth() + 1,
             year: dateOfBirth.getFullYear(),
-            firstName: user.firstName,
-            lastName: user.lastName,
-            
-            line1: address.address_components[0].long_name + ' ' + address.address_components[1].long_name,
-            country: address.address_components[5].short_name,
-            state: address.address_components[4].short_name,
-            city:   address.address_components[3].long_name,
-            postal_code: address.address_components[6].long_name,
+            mobile: user.mobile,
+            mcc: '5734',
+            website: website ?? 'https://www.stripe.com/au',
+            streetNumber,
+            streetName,
+            postCode,
+            city,
+            state,
+            documentFrontImage: idFrontImageLink,
+            documentBackImage: idBackImageLink,
         }
-        console.log(stripeData)
         try{
             const { data, status } = await Instance.post('/stripe/createAccount', stripeData)
-            console.log('stripe', data, status)
-        } catch(err) {
-            console.log(err.response)
+            if (status !== 201) {
+                // error message
+                return null
+            } 
+            return data.id
+        } catch(error) {
+            console.log(error.response)
         }
     }
 
@@ -112,6 +124,7 @@ export default function UpgradeLender() {
                     context={FormContext}
                     submitUpgrade={submitUpgrade}
                     isUpgradeLoading={isUpgradeLoading}
+                    type={'upgrateLender'}
                 />
             case 'Complete!':
                 return getComplete()
@@ -124,9 +137,7 @@ export default function UpgradeLender() {
         <FormContext.Provider value={{ state, dispatch }}>
             <PageWrapper>
                 <Banner textBold='Lender Upgrade' textNormal={currentPage} />
-
                 { renderSwitch() }
-
             </PageWrapper>
         </FormContext.Provider>
     )

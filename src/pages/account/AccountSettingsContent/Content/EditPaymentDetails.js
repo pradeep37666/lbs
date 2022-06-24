@@ -1,22 +1,25 @@
 import React, { useEffect, useState } from 'react'
-import { useHistory } from 'react-router'
 import Instance from '../../../../util/axios';
 import ValidationPopup from '../../../../components/ValidationPopup/ValidationPopup';
 import useGlobalState from '../../../../util/useGlobalState';
-import { CardCvcElement, CardElement, CardExpiryElement, CardNumberElement, useElements, useStripe } from '@stripe/react-stripe-js';
-import { CircularProgress, Typography } from '@material-ui/core';
+import { 
+    CardCvcElement, 
+    CardExpiryElement, 
+    CardNumberElement, 
+    useElements, 
+    useStripe 
+} from '@stripe/react-stripe-js';
+import { CircularProgress } from '@material-ui/core';
 import TrashCan from '../../../../assets/Icons/TrashCan';
-import ValidationTextInput from '../../../../components/FormComponents/ValidationTextInput';
 import Button from '../../../../components/Button/Button';
 import cardElementOptions from '../../../../constants/cardElementOptions';
 import StripeAccountDetails from './StripeAccountDetails';
 
 export default function EditPaymentDetails() {
-    const { state, dispatch } = useGlobalState()
+    const { state } = useGlobalState()
     const { user } = state
     const elements = useElements()
     const stripe = useStripe()
-    const history = useHistory()
 
     const [isCreateCardLoading, setIsCreateCardLoading] = useState(false)
     const [isCardLoading, setIsCardLoading] = useState(true)
@@ -29,29 +32,18 @@ export default function EditPaymentDetails() {
 
     useEffect(() => {
         getSavedCard()
-        getStripeDetails()
     }, [])
 
     const getSavedCard = async () => {
         try{
             const { data, status } = await Instance.get('/stripe/getCreditCards')
-            console.log('got card', data)
+            if (status !== 200) return
             const userCard = data.data[0]
             setUserCard(userCard)
         } catch(err){
             console.log(err)
         } finally { 
             setIsCardLoading(false)
-        }
-        
-    }
-
-    const getStripeDetails = async () => {
-        try{
-            const { data, status } = await Instance.get('/stripe/me')
-            console.log('stripe me', data)
-        } catch(err) {
-            console.log(err)
         }
     }
 
@@ -60,14 +52,13 @@ export default function EditPaymentDetails() {
         setCardNameError(false)
     }, [cardName])
 
-
     const createPaymentMethod = async () => {
         if(!cardName) {
             setCardNameError(true) 
             return
         }
-        setIsCreateCardLoading(true)
         try{
+            setIsCreateCardLoading(true)
             const cardNumber = elements.getElement(CardNumberElement)
             const { paymentMethod, error } = await stripe.createPaymentMethod({
                 type: 'card',
@@ -76,35 +67,29 @@ export default function EditPaymentDetails() {
                     name: cardName
                 }
             })
-            console.log(paymentMethod)
-            if(error){
-                setIsCreateCardLoading(false)
-                return
-            }
+            if(error) return
             await Instance.post('/stripe/addCreditCard', {
                 paymentMethodId: paymentMethod.id
             })
             await getSavedCard()
         } catch(err) {
             console.log(err.response)
+        } finally {
+            setIsCreateCardLoading(false)
         }
-        setIsCreateCardLoading(false)
     }
 
     const deleteCard = async () => {
         setIsCardLoading(true)
         try{
-            const { data, status } = await Instance.delete(`/stripe/deleteCreditCard?paymentMethodId=${userCard.id}`)
-            console.log(data,status)
+            const { status } = await Instance.delete(`/stripe/deleteCreditCard?paymentMethodId=${userCard.id}`)
             if(status !== 200) return
             setUserCard(null)
-
         } catch(err){
             console.log(err.response)
         } finally{
             setIsCardLoading(false)
         }
-        
     }
 
     return (
@@ -115,7 +100,6 @@ export default function EditPaymentDetails() {
                     <div style={{ display: 'flex', justifyContent: 'center'}}>
                         <CircularProgress color="inherit" />
                     </div>
-                    
                 ) : (
                     userCard ? (
                         <div>

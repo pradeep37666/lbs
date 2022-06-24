@@ -3,49 +3,56 @@ import Instance from '../../../../util/axios';
 import useGlobalState from '../../../../util/useGlobalState';
 import MapsAutocomplete from '../../../../components/mapsAutocomplete/MapsAutocomplete';
 import getSuburb from '../../../../util/getSuburb';
+import parseAddressComponent from '../../../../util/parseAddressComponent';
+import { async } from 'validate.js';
+import Button from '../../../../components/Button/Button';
 
 export default function EditLocation() {
-  const globalState = useGlobalState().state;
-  const dispatch = useGlobalState().dispatch;
+  const [ isLoading, setIsLoading ] = useState(false)
+  const globalState = useGlobalState().state
+  const dispatch = useGlobalState().dispatch
   const { user } = globalState;
 
-  const [address, setAddress] = useState(user.address)
+  const [ address, setAddress ] = useState(user.address)
 
-  const updateLocationDetails = () => {
-
-    let suburb
-    address.address_components ? suburb = getSuburb(address.address_components) : suburb = user.suburb
-
-    const data = {
-      address: address.formatted_address ? address.formatted_address : user.address,
-      suburb: suburb,
+  const updateLocationDetails = async () => {
+    const newAddressData = {
+      address: {
+        ...parseAddressComponent(address.address_components),
+        lat: address.lat,
+        lng: address.lng,
+      }
     }
-    Instance.put('user/update', data)
-      .then((response) => {
-        console.log(response)
-        let newData = user
-        newData.address = data.address
-        newData.suburb = data.suburb
-        dispatch({ type: 'setUser', data: newData })
-      })
-      .catch((error) => {
-        console.log(error.response)
-      })
+    try {
+      setIsLoading(true)
+      const { data, status } = await Instance.patch('user/update', newAddressData)
+      if (status !== 200) return
+      dispatch({type: 'setUser', data})
+    } catch (error) {
+      console.log(error.response)
+    } finally {
+      setIsLoading(false)
     }
+  }
 
     return (
       <div className="AccountSettings__Container">
         <div className="AccountSettings__Title">Location</div>
 
-        <MapsAutocomplete setAddress={setAddress} defaultLocation={user.address} defaultLat={user.lat} defaultLng={user.lng} />
+        <MapsAutocomplete 
+          setAddress={setAddress} 
+          defaultLocation={user.address?.fullAddress} 
+          defaultLat={user.lat} 
+          defaultLng={user.lng} 
+        />
 
         <div className="AccountSettings__ButtonFlex">
-          <button
-            className="LoginFormButton AccountSettings__SaveButton"
+          <Button
+            text="Save Changes"
             onClick={() => updateLocationDetails()}
-          >
-            Save Changes
-          </button>
+            isLoading={isLoading}
+            style={{width: '60%'}}
+          />
         </div>
       </div>
     )

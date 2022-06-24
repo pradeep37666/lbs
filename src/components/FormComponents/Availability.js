@@ -4,11 +4,19 @@ import { ReactComponent as Logo } from "./../../assets/Logos/LogoRed.svg";
 import Button from "../Button/Button";
 import useGlobalState from "../../util/useGlobalState";
 
-export default function Availability({ context, style,  submitUpgrade, isUpgradeLoading, isEditItem, onCancel }) {
+export default function Availability({ 
+  context, 
+  style,  
+  submitUpgrade, 
+  isUpgradeLoading, 
+  isEditItem, 
+  onCancel,
+  type,
+}) {
   const [initialAvailability, setInitialAvailability] = useState()
 
   const { state, dispatch } = useContext(context)
-  const { isLenderUpgrade, availability } = state
+  const { availability } = state
   const { user } = useGlobalState().state
 
   useEffect(() => {
@@ -55,7 +63,7 @@ export default function Availability({ context, style,  submitUpgrade, isUpgrade
             isDisabled={!availability.includes(1)}
             text="Next"
             isLoading={isUpgradeLoading}
-            onClick={() => user ? submitUpgrade() : dispatch({ type: 'setCurrentPage', data: 'Terms & Conditions'})}
+            onClick={() => (user && type === 'upgrateLender') ? submitUpgrade() : dispatch({ type: 'setCurrentPage', data: 'Terms & Conditions'})}
             />
           )}
         </div>

@@ -8,7 +8,7 @@ import getImage from '../../../../util/getImage';
 import ValidationTextInput from '../../../../components/FormComponents/ValidationTextInput';
 import Button from '../../../../components/Button/Button';
 import { updateUserDetailsConstraints } from '../../../../util/validationConstraints';
-import { async, validate } from 'validate.js';
+import { validate } from 'validate.js';
 import { FileService } from '../../../../services/FileService';
 
 export default function EditAccountDetails(props) {
@@ -17,7 +17,7 @@ export default function EditAccountDetails(props) {
     const [ isLoading, setIsLoading ] = useState(false)
 
     const [ image, setImage ] = useState('')
-    const [ imageLink, setImageLink ] = useState('')
+    const [ imageLink, setImageLink ] = useState(user.imageLink)
     const [ firstName, setFirstName ] = useState(user.firstName)
     const [ lastName, setLastName ] = useState(user.lastName)
     const [ email, setEmail ] = useState(user.email)
@@ -66,17 +66,18 @@ export default function EditAccountDetails(props) {
     }
 
     const updateBasicDetails = async () => {
+        console.log({imageLink})
         const valid = validateInputs()
         if(!valid) return 
-        setIsLoading(true)
         const userDetails = {
             firstName,
             lastName,
             email,
             mobile: phoneNumber,
-            avatar: imageLink ? imageLink : '', 
+            avatar: imageLink, 
         }
         try{
+            setIsLoading(true)
             const { data } = await Instance.patch('user/update', userDetails)
             // if (!data) error message here
             dispatch({ type: 'setUser', data })

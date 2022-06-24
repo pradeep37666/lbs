@@ -3,7 +3,17 @@ import React from 'react'
 import './Button.css'
 import ValidationPopup from '../ValidationPopup/ValidationPopup'
 
-export default function Button({ onClick, isDisabled, errorMessage, errorHeader, isLoading, text, inLineError, invertedColors, style  }) {
+export default function Button({ 
+    onClick, 
+    isDisabled, 
+    errorMessage, 
+    errorHeader, 
+    isLoading, 
+    text, 
+    inLineError, 
+    invertedColors, 
+    style  
+}) {
 
     const getButtonClassName = () => {
         let buttonClass = invertedColors ? "ButtonInverted" : "Button"

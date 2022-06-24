@@ -9,12 +9,11 @@ import EditLocation from './Content/EditLocation'
 import useGlobalState from '../../../util/useGlobalState'
 import { Avatar } from '@material-ui/core'
 import getImage from '../../../util/getImage'
-import { CardElement } from '@stripe/react-stripe-js'
 
 export default function AccountSettings() {
-    const { state, dispatch } = useGlobalState()
+    const { state } = useGlobalState()
     const { user } = state
-    const [userProducts, setUserProducts] = useState(0)
+    const [ userProducts, setUserProducts ] = useState(0)
 
     useEffect(() => {
         Instance.get('items/findByUid')
