@@ -13,8 +13,25 @@ const FileService = {
         }
     },
 
-    uploadMultipleImages: async (file) => {
-
+    uploadMultipleImages: async (files) => {
+        const formData = new FormData()
+        for (let i = 0; i < files.length; i++) {
+            formData.append('files', files[i])
+        }
+        try {
+            const { data, status } = await Instance.post('/file-upload/uploadManyToS3', formData)
+            if (status === 201) {
+                const newData = []
+                for (let i = 0; i < data.length; i++) {
+                    newData.push({
+                        imageKey: data[i]
+                    })
+                }
+                return newData
+            }
+        } catch (error) {
+            console.log(error.response)
+        }
     },
 
     uploadIdentityImage: async (file) => {

@@ -85,7 +85,7 @@ export default function AdvancedDetails({ context }) {
 
             <div className="LoginMain LoginMainNoMarg">
 
-                <div className="LoginHeader">Item Delivery & Pickup</div>
+                <div className="LoginHeader">Item Delivery &amp; Pickup</div>
                 <div className="LoginText">
                     Enter the price you would like to charge out pick up and delivery. If you don’t want to offer this service, leave this empty.
                 </div>

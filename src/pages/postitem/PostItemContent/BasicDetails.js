@@ -4,7 +4,7 @@ import CategorySelect from '../../../components/categorySelect/categorySelect';
 import Button from '../../../components/Button/Button';
 import ValidationTextInput from '../../../components/FormComponents/ValidationTextInput';
 
-export default function BasicDetails({ validated, setTitle, setCategory, context }) {
+export default function BasicDetails({ context }) {
     const { state, dispatch } = useContext(context)
     const { title, category } = state
     

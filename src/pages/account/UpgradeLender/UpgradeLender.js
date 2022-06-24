@@ -53,63 +53,41 @@ export default function UpgradeLender() {
     }
 
     const submitUpgrade = async () => {
-        try{
-            setIsUpgradeLoading(true)
-            const stripeAccountId = await createStripeAccount()
-            if (!stripeAccountId) return
-            const userData = {
+        const userData = {
+            borrowerDetails: {
                 address: {
                     ...parseAddressComponent(address?.address_components),
                     lat: address.lat,
                     lng: address.lng,
                 },
-                stripe: {
-                    accountId: stripeAccountId,
-                },
-                available: availability.join(''),
+                firstName: user.firstName,
+                lastName: user.lastName,
+                email: user.email,
+                mobile: user.mobile,
                 isLender: true,
+                available: availability.join('')
+            },
+            stripeDetails: {
+                day: dateOfBirth.getDate(),
+                month: dateOfBirth.getMonth() + 1,
+                year: dateOfBirth.getFullYear(),
+                bsb: BSB,
+                accountNumber,
+                mcc: '5734',
+                website: website ?? 'https://www.stripe.com/au',
+                documentFrontImage: idFrontImageLink,
+                documentBackImage: idBackImageLink,
             }
-            const { data, status } = await Instance.patch('user/update', userData)
-            if (status !== 200) return
+        }
+        try{
+            setIsUpgradeLoading(true)
+            const { data, status } = await Instance.post('/user/borrowerUpgrade', userData)
+            if (status !== 201) return
             globalDispatch({ type: 'setUser', data })
         } catch(err){
             console.log('error', err)
         } finally {
             setIsUpgradeLoading(false)
-        }
-    }
-
-    const createStripeAccount = async () => {
-        const { streetNumber, streetName, city, state, postCode } = parseAddressComponent(address?.address_components)
-        const stripeData = {
-            email: user.email,
-            bsb: BSB,
-            accountNumber,
-            firstName: user.firstName,
-            lastName: user.lastName,
-            day: dateOfBirth.getDate(),
-            month: dateOfBirth.getMonth() + 1,
-            year: dateOfBirth.getFullYear(),
-            mobile: user.mobile,
-            mcc: '5734',
-            website: website ?? 'https://www.stripe.com/au',
-            streetNumber,
-            streetName,
-            postCode,
-            city,
-            state,
-            documentFrontImage: idFrontImageLink,
-            documentBackImage: idBackImageLink,
-        }
-        try{
-            const { data, status } = await Instance.post('/stripe/createAccount', stripeData)
-            if (status !== 201) {
-                // error message
-                return null
-            } 
-            return data.id
-        } catch(error) {
-            console.log(error.response)
         }
     }
 

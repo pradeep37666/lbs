@@ -20,7 +20,7 @@ export default function LocationDetails({ context }) {
                 { user ? (
                     <MapsAutocomplete 
                     setAddress={(address) => dispatch({ type: 'setAddress', data: address})} 
-                    defaultLocation={address} 
+                    defaultLocation={address.fullAddress} 
                     defaultLat={user.lat} 
                     defaultLng={user.lng}/> 
                 ) : (
@@ -29,12 +29,11 @@ export default function LocationDetails({ context }) {
                     />
                 )}
                 <Button 
-                
-                text="Next"
-                // isDisabled={address && address?.address_components.length !== 7}
-                onClick={() => {
-                    dispatch({ type: 'setCurrentPage', data: 'Availability' })
-                }}/>
+                    text="Next"
+                    onClick={() => {
+                        dispatch({ type: 'setCurrentPage', data: 'Availability' })
+                    }}
+                />
 
             </div>
         </div>

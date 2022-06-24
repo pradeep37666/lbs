@@ -1,10 +1,13 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { ReactComponent as Logo } from "../../../assets/Logos/LogoRed.svg";
 import IconButton from "@material-ui/core/IconButton";
 import AddIcon from "@material-ui/icons/Add";
 import RemoveIcon from "@material-ui/icons/Remove";
 import { makeStyles } from "@material-ui/styles";
 import Button from "../../../components/Button/Button";
+import { FileService } from "../../../services/FileService";
+import { v4 as uuidv4 } from 'uuid'
+import { CircularProgress } from "@material-ui/core";
 
 const useStyles = makeStyles({
   button: {
@@ -33,46 +36,37 @@ const useStyles = makeStyles({
 });
 
 export default function ItemPictures({ context }) {
+  const [ isUploading, setIsUploading ] = useState(false)
   const { state, dispatch } = useContext(context)
   const { pictures } = state
-  const classes = useStyles();
+  const classes = useStyles()
 
-  //finds the next unused id in the pictures array
-  const findNextID = () => {
-    var indices = [];
-    pictures.forEach((picture) => {
-      indices[picture["id"]] = true;
-    });
-    for (var i = 1, l = indices.length; i < l; i++) {
-      if (indices[i] === undefined) {
-        break;
-      }
-    }
-    return i;
-  };
-
-  const handleChange = ({ target }) => {
-    if (target.files.length) {
+  const handleChange = async ({ target }) => {
+    try {
+      setIsUploading(true)
+      const files = target.files
+      if (!files.length) return
+      const fileLinks = await FileService.uploadMultipleImages(files)
+      if (!fileLinks) return
       let newPictures = pictures.map((picture) => picture)
-      newPictures.push({
-        preview: URL.createObjectURL(target.files[0]),
-        raw: target.files[0],
-        id: findNextID(),
-      });
-      // const imageKey = FileService.uploadImageToS3(e)
+      for (let i = 0; i < files.length; i++) {
+        newPictures.push({
+          preview: URL.createObjectURL(files[i]),
+          raw: files[i],
+          id: uuidv4(),
+        })
+      }
       dispatch({ type: 'setPictures', data: newPictures })
+      dispatch({ type: 'setPictureLinks', data: fileLinks })
+    } catch (error) {
+      console.log(error.response)
+    } finally {
+      setIsUploading(false)
     }
   }
 
   const handleDelete = (id) => {
-    let newPictures = [];
-    for (let i = 0; i < pictures.length; i++) {
-      let pic = pictures[i];
-
-      if (pic.id !== id) {
-        newPictures.push(pic);
-      }
-    }
+    const newPictures = pictures.filter(picture => picture.id !== id)
     dispatch({ type: 'setPictures', data: newPictures })
   }
 
@@ -91,7 +85,10 @@ export default function ItemPictures({ context }) {
         <div className="PostItem__ItemPictures__Container">
           {pictures.map((picture, index) => {
             return (
-              <div className="PostItem__ItemPictures__Preview" key={index}>
+              <div 
+                className="PostItem__ItemPictures__Preview" 
+                key={index}
+              >
                 <IconButton
                   aria-label="delete"
                   className={classes.buttonDelete}
@@ -99,24 +96,30 @@ export default function ItemPictures({ context }) {
                 >
                   <RemoveIcon className={classes.icon} />
                 </IconButton>
-
-                <img
-                  src={picture.preview}
-                  alt=""
-                  className="ProfilePicturePreview"
-                />
+                  <img
+                    src={picture.preview}
+                    alt="posting item"
+                    className="ProfilePicturePreview"
+                    loading="lazy"
+                  />
               </div>
-            );
+            )
           })}
+          {isUploading && (
+            <div 
+              className="PostItem__ItemPictures__Preview"
+              style={{ display: 'flex', justifyContent: 'center'}}
+            >
+              <CircularProgress color="inherit" />
+            </div>
+          )}
         </div>
         <input
           type="file"
           id="selectFile"
+          multiple
           style={{ display: "none" }}
-          onClick={(e) => {
-            e.target.value = null;
-          }}
-          onChange={(e) => handleChange(e)}
+          onChange={handleChange}
         />
 
         <div className="PostItem__ItemPictures__Add__Container">

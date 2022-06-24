@@ -8,7 +8,6 @@ import { useHistory } from 'react-router';
 
 export default function Complete(props) {
     const history = useHistory()
-    console.log(props.picture)
     return (
         <>
             <div className="LoginMain">
@@ -16,7 +15,7 @@ export default function Complete(props) {
 
                 <div className="LoginHeader PostItem__Complete__TextCenter">Item Posted!</div>
                 <div className="LoginText LoginTextSmall PostItem__Complete__TextCenter">You have successfully posted your <span className="PostItem__Complete__Bold">‘{props.title}’</span> to Little Big Shed</div>
-                <button className="LoginFormButton" onClick={() => history.push({pathname: '/'})} style={{ marginBottom: '1em' }}>Continue</button>
+                <button className="LoginFormButton" onClick={() => history.push({pathname: '/user/account'})} style={{ marginBottom: '1em' }}>Continue</button>
                 <button className="LoginFormButton LoginFormButtonInverted" onClick={() => history.go(0)}>List Another Item</button>
 
             </div>
@@ -52,7 +51,6 @@ export default function Complete(props) {
                         {props.category}
                     </div>
                 </div>
-                {/* Goes to newly made item page soon tm */}
                 <button className="LoginFormButton" onClick={() => {
                     if (!props.itemID) {
                         return

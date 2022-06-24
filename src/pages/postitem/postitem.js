@@ -12,6 +12,7 @@ import useGlobalState from '../../util/useGlobalState'
 import Instance from '../../util/axios'
 import getSuburb from '../../util/getSuburb'
 import postItemReducer from '../../util/reducers/postItemReducer'
+import parseAddressComponent from '../../util/parseAddressComponent'
  
 const FormContext = createContext()
 
@@ -26,7 +27,11 @@ export default function PostItem() {
         pictures: []
     })
 
-    const { currentPage, address, availability, title, category, pictures, description, price, discount, delivery } = state
+    const { 
+        title, category, pictureLinks, pictures, 
+        address, availability, description, price, 
+        discount, delivery, currentPage,
+    } = state
 
     const [itemID, setItemID] = useState(null)
 
@@ -35,66 +40,38 @@ export default function PostItem() {
     },[currentPage])
 
     const getItemDetails = () => {
-        // let suburb
-        // address.address_components ? suburb = getSuburb(address.address_components) : suburb = user.suburb
-        console.log('delivery', delivery)
-        const suburb = address.address_components ? getSuburb(address.address_components) : user.suburb
         const itemDetails = {
-            title: title,
-            category: category,
-            files: pictures,
-            description: description,
-            price: price,
+            title,
+            category,
+            images: pictureLinks,
+            description,
+            price,
             deliveryPrice: delivery ? delivery : 0,
-            discount: discount ? discount : 5,
-            available: availability.join(''),
-            lat: address.lat ? address.lat : user.lat,
-            lng: address.lng ? address.lng : user.lng,
-            address: address.formatted_address ? address.formatted_address : user.address,
-            suburb: suburb
+            discount: discount ? discount : 0,
+            address: {
+                ...address,
+                lat: address.lat,
+                lng: address.lng,
+            },
+            rating: 0,
+            weekly_availability: availability.join(''),
+            is_deleted: false,
         }
         return itemDetails
     }
 
     const createItem = async () => {
-       
         const itemDetails = getItemDetails()
-        console.log(itemDetails)
-        const formData = new FormData()
-        for (let key in itemDetails) {
-            if (key === 'files') {
-                pictures.forEach((item) => formData.append('files', item.raw))
-                continue
-            }
-            formData.append(key, itemDetails[key])
-        }
-        setIsCreateItemLoading(true)
         try {
-            const { data, status } = await Instance.post('/items/save', formData)
-            console.log(data, status)
-
-            uploadImages()
-            setItemID(data.i_id)
+            setIsCreateItemLoading(true)
+            const { data, status } = await Instance.post('/items/create', itemDetails)
+            if (status !== 201) return
+            setItemID(data.id)
             dispatch({ type: 'setCurrentPage', data: 'Complete!'})
-
-        } catch (e) {
-            alert("an error occurred creating your item, please try again")
-            console.log(e.response)
-        } finally{
+        } catch (error) {
+            console.log(error.response)
+        } finally {
             setIsCreateItemLoading(false)
-        }
-    }
-
-
-
-    const uploadImages = async () => {        
-        const formData = new FormData()
-        pictures.forEach((item) => formData.append('files', item.raw))
-        try{
-            const res = await Instance.post('/file-upload/uploadManyToS3', formData)
-            console.log(res)
-        } catch(e) {
-            console.log('image upload error', e)
         }
     }
 
@@ -126,7 +103,6 @@ export default function PostItem() {
                 />
         }
     }
-
 
     return (
         <FormContext.Provider value={{ state, dispatch }}>
