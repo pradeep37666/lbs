@@ -126,6 +126,7 @@ export default function Item() {
                             isUserItem={isUserItem}
                             itemOwner={itemOwner}
                         />
+                        <hr className='hr' />
                         <ItemReviews 
                             reviews={reviews}
                             openReviewModal={() => setReviewModalOpen(true)}

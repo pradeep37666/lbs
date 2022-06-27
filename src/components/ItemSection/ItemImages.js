@@ -1,15 +1,11 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import Instance from '../../util/axios'
 import getImage from '../../util/getImage'
 
 const ItemImages = ({ itemPictures, openImageModal }) => {
 
-    useEffect(() => {
-        console.log(itemPictures[0]?.imageKey)
-    },[itemPictures])
-
     const getItemImages = async (imageId) => {
-        const { data } = await Instance.get(`/item-images/${imageId}`)
+        const { data } = await Instance.get(`/item-images?id=${imageId}`)
         console.log({data})
         if (!data) return
         return data
