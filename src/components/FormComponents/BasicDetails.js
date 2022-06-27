@@ -1,13 +1,14 @@
-import React, { useContext, useState, useEffect } from 'react';
-import {ReactComponent as Logo} from './../../assets/Logos/LogoRed.svg';
-import {ReactComponent as CameraIcon} from './../../assets/Icons/CameraIcon.svg';
-import LBSSwitch from '../LBSSwitch/LBSSwitch.js';
-import Instance from '../../util/axios';
-import ValidationTextInput from './ValidationTextInput';
-import Button from '../Button/Button';
-import { validate } from 'validate.js';
-import { registrationConstraints } from '../../util/validationConstraints';
+import React, { useContext, useState, useEffect } from 'react'
+import {ReactComponent as Logo} from './../../assets/Logos/LogoRed.svg'
+import {ReactComponent as CameraIcon} from './../../assets/Icons/CameraIcon.svg'
+import LBSSwitch from '../LBSSwitch/LBSSwitch.js'
+import Instance from '../../util/axios'
+import ValidationTextInput from './ValidationTextInput'
+import Button from '../Button/Button'
+import { validate } from 'validate.js'
+import { registrationConstraints } from '../../util/validationConstraints'
 import { FileService } from '../../services/FileService'
+import PhoneNumberInput from '../phoneNumberInput/PhoneNumberInput'
 
 export default function BasicDetails({ context }) {
     const { state, dispatch } = useContext(context)
@@ -137,11 +138,11 @@ export default function BasicDetails({ context }) {
                 onChange={e => dispatch({ type: 'setEmail', data: e.target.value })}
                 errorMessage={emailTakenError ? emailTakenError : getErrorMessage('email')}
                 />
-                <ValidationTextInput 
-                placeholder="0123 456 789"
-                label="Phone Number"
+                <PhoneNumberInput 
+                label={'Phone Number'}
+                placeholder={'+61412345678'}
                 value={phoneNumber}
-                onChange={e => dispatch({ type: 'setPhoneNumber', data: e.target.value })}
+                onChange={number => dispatch({ type: 'setPhoneNumber', data: number })}
                 errorMessage={phoneTakenError ? phoneTakenError : getErrorMessage('phoneNumber')}
                 />
                 <div className="LoginHeader">Profile Picture</div>

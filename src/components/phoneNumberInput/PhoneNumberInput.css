@@ -1,0 +1,25 @@
+.phone_container {
+    width: 100%;
+    padding: 0.5em 0.7em;
+    border-radius: 10px;
+    border: 1px solid #ac172c;
+}
+
+.phone_input_container {
+    height: 100%;
+    outline: none;
+    border: none !important;
+    font-family: "DMSans", sans-serif;
+    font-weight: bold;
+    font-size: 18px !important;
+}
+
+.phone_btn_container {
+    background: #FFFFFF !important;
+    border: none !important;
+}
+
+.phone_dropdown_container {
+    border-radius: 5px !important;
+    border: 1px solid #ac172c ;
+}

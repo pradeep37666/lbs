@@ -62,7 +62,7 @@ export default function Register() {
                     lastName,
                     email,
                     avatar: imageLink ? imageLink : '',
-                    mobile: phoneNumber,
+                    mobile: `+${phoneNumber}`,
                     password: password,
                     address: {
                         ...parseAddressComponent(address?.address_components),
@@ -93,7 +93,7 @@ export default function Register() {
                 lastName,
                 email,
                 avatar: imageLink ? imageLink : '',
-                mobile: phoneNumber,
+                mobile: `+${phoneNumber}`,
                 password: password,
                 isLender: false,
                 lender_rating: lenderRating,

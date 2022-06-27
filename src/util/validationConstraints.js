@@ -37,18 +37,14 @@ const validationConstraints = {
           message: "^Must be a valid email address"
         }
     },
-    // dateOfBirth: {
-    //   // datetime: true
-    //     datetime: {
-    //         // dateOnly: true,
-    //         latest: moment.utc().subtract(18, 'years'),
-    //         message: "^You need to be at least 18 years old"
-    //       }
-    // },
     phoneNumber: {
         presence: {
             allowEmpty: false,
             message: "^Required",
+        },
+        format: {
+          pattern: /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im,
+          message: "^Must be a valid phone number"
         }
     },
     password: passwordConstraints,
@@ -68,4 +64,3 @@ export const loginConstraints = createValidationObject(['email', 'password'])
 export const registrationConstraints = createValidationObject([ 'firstName', 'lastName', 'email', 'phoneNumber', 'password', 'confirmPassword', ])
 export const newPasswordConstraints = createValidationObject([ 'password', 'confirmPassword' ])
 export const updateUserDetailsConstraints = createValidationObject(['firstName', 'lastName', 'email', 'phoneNumber',])
-// export const passwordConstraints = createValidationObject(['password'])
