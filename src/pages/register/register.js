@@ -127,7 +127,7 @@ export default function Register() {
 
     const saveCard = async () => {
         try{
-            const { data } = await Instance.post('/stripe/addCreditCard', {
+            const { data } = await Instance.post('/stripe/customer/credit-card', {
                 paymentMethodId: paymentMethod.id
             })
             // if (!data) error message here

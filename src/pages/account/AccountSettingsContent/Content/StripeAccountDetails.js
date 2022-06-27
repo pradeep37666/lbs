@@ -30,7 +30,7 @@ export default function AccountDetails() {
         setIsEditingAccount(false)
         try{
             setIsLoading(true)
-            const { data, status } = await Instance.get('/stripe/retrieveAccount')
+            const { data, status } = await Instance.get('/stripe/connect-account')
             if (status !== 200) return
             const { last4, routing_number } = data
             setAccountDetails({ last4, routing_number })
@@ -66,7 +66,7 @@ export default function AccountDetails() {
         setIsUpdateAccountLoading(true)
         const token = await createUpdateAccountToken()
         try{
-            await Instance.patch('/stripe/updateAccount', { token: token.id })
+            await Instance.patch('/stripe/connect-account', { token: token.id })
             await getAccountDetails()
         } catch(err){
             console.log(err.response)

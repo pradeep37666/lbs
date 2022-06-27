@@ -85,7 +85,7 @@ export default function BasicDetails({ context }) {
 
     const checkIfEmailExists = async () => {
         try{
-            const {  status} = await Instance.get(`/user/checkExist?email=${email}`)
+            const {  status} = await Instance.get(`/users/exists?email=${email}`)
             if(status === 200) {
                 setEmailTakenError('Email is taken')
                 return true
@@ -98,7 +98,7 @@ export default function BasicDetails({ context }) {
 
     const checkIfPhoneNumberExists = async () => {
         try{
-            const { data, status } = await Instance.get(`/user/checkExist?mobile=${phoneNumber}`)
+            const { status } = await Instance.get(`/users/exists?mobile=${phoneNumber}`)
             if(status === 200) {
                 setPhoneTakenError('Phone number is taken')
                 return true

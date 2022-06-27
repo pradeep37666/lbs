@@ -32,7 +32,6 @@ export default function Login() {
                 email: email,
                 password: password
             })
-            console.log({status})
             if (status !== 201) return
             await cometChatLogin(data.user)
             setLoginError("")

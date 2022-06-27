@@ -25,7 +25,7 @@ export default function EditLocation() {
     }
     try {
       setIsLoading(true)
-      const { data, status } = await Instance.patch('user/update', newAddressData)
+      const { data, status } = await Instance.patch('/users', newAddressData)
       if (status !== 200) return
       dispatch({type: 'setUser', data})
     } catch (error) {

@@ -63,7 +63,7 @@ function App() {
 
   const getCurrentUser = async () => {
     try{
-      const { data } = await Instance.get('/user/me')
+      const { data } = await Instance.get('/users/me')
       dispatch({ type: 'setUser', data })
     } catch(err) {
       localStorage.removeItem('LBSToken')

@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from 'react'
-import { ReactComponent as CameraIcon } from '../../../../assets/Icons/CameraIcon.svg';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import Instance from '../../../../util/axios';
-import { Link } from 'react-router-dom';
-import useGlobalState from '../../../../util/useGlobalState';
-import getImage from '../../../../util/getImage';
-import ValidationTextInput from '../../../../components/FormComponents/ValidationTextInput';
-import Button from '../../../../components/Button/Button';
-import { updateUserDetailsConstraints } from '../../../../util/validationConstraints';
-import { validate } from 'validate.js';
-import { FileService } from '../../../../services/FileService';
+import { ReactComponent as CameraIcon } from '../../../../assets/Icons/CameraIcon.svg'
+import ChevronRightIcon from '@material-ui/icons/ChevronRight'
+import Instance from '../../../../util/axios'
+import { Link } from 'react-router-dom'
+import useGlobalState from '../../../../util/useGlobalState'
+import getImage from '../../../../util/getImage'
+import ValidationTextInput from '../../../../components/FormComponents/ValidationTextInput'
+import Button from '../../../../components/Button/Button'
+import { updateUserDetailsConstraints } from '../../../../util/validationConstraints'
+import { validate } from 'validate.js'
+import { FileService } from '../../../../services/FileService'
 
-export default function EditAccountDetails(props) {
+export default function EditAccountDetails() {
     const { state, dispatch } = useGlobalState()
     const { user } = state
     const [ isLoading, setIsLoading ] = useState(false)
@@ -23,6 +23,11 @@ export default function EditAccountDetails(props) {
     const [ email, setEmail ] = useState(user.email)
     const [ phoneNumber, setPhoneNumber ] = useState(user.mobile)
     const [ errorMessages, setErrorMessages ] = useState({})
+
+    useEffect(() => {
+        const test = getImage(user.avatar)
+        console.log({test})
+    },[user])
 
     useEffect(() => {
         if(Object.keys(errorMessages).length > 0){
@@ -44,7 +49,6 @@ export default function EditAccountDetails(props) {
     const validateInputs = () => {
         const validationErrors = validate({ firstName, lastName, email, phoneNumber }, updateUserDetailsConstraints)
         if(validationErrors){
-            console.log('errors', validationErrors)
             setErrorMessages(validationErrors)
             return false
         }
@@ -66,7 +70,6 @@ export default function EditAccountDetails(props) {
     }
 
     const updateBasicDetails = async () => {
-        console.log({imageLink})
         const valid = validateInputs()
         if(!valid) return 
         const userDetails = {
@@ -78,7 +81,7 @@ export default function EditAccountDetails(props) {
         }
         try{
             setIsLoading(true)
-            const { data } = await Instance.patch('user/update', userDetails)
+            const { data } = await Instance.patch('/users', userDetails)
             // if (!data) error message here
             dispatch({ type: 'setUser', data })
         } catch(err) {

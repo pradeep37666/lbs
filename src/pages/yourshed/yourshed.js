@@ -20,7 +20,7 @@ export default function Yourshed() {
     },[])
 
     const getUserItems = async (userId) => {
-        const { data } = await Instance.get(`items/findByUserId?userId=${userId}`)
+        const { data } = await Instance.get(`users/${userId}/items`)
         if (data) {
             setItems(data)
             setLoading(false)

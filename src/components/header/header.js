@@ -11,16 +11,15 @@ import { isMobile } from 'react-device-detect'
 
 export default function Header() {
 
-  const [HeaderSticky, setHeaderSticky] = useState(false)
-  const [searchText, setSearchText] = useState('')
+  const [ HeaderSticky, setHeaderSticky ] = useState(false)
+  const [ searchText, setSearchText ] = useState('')
   const history = useHistory()
   const { state } = useGlobalState()
   const { user } = state
 
   const handleSubmit = (e) => {
-    e.preventDefault();
+    e.preventDefault()
     let string = ''
-    // if we're already on the search page, we want to add the keyword to whatever filters we have already set
     if (history.location.pathname === '/search/') {
       const queryString = history.location.search
       const endIndex = queryString.indexOf('&')

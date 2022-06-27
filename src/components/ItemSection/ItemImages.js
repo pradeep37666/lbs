@@ -1,11 +1,24 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import Instance from '../../util/axios'
 import getImage from '../../util/getImage'
 
 const ItemImages = ({ itemPictures, openImageModal }) => {
+
+    useEffect(() => {
+        console.log(itemPictures[0]?.imageKey)
+    },[itemPictures])
+
+    const getItemImages = async (imageId) => {
+        const { data } = await Instance.get(`/item-images/${imageId}`)
+        console.log({data})
+        if (!data) return
+        return data
+    }
+
     return (
         <>
             <img 
-                src={getImage(itemPictures[0])} 
+                src={getImage(itemPictures[0]?.imageKey)} 
                 alt='main image' 
                 className="MainItemImage " 
             />
@@ -13,7 +26,7 @@ const ItemImages = ({ itemPictures, openImageModal }) => {
                 {itemPictures[1] &&
                     <div className="SecondaryItemImageDiv ImageModalDiv">
                         <img 
-                            src={getImage(itemPictures[1])} 
+                            src={getItemImages(itemPictures[0]?.imageKey)} 
                             alt='second image' 
                             className="SecondaryItemImage" 
                             style={{ borderRadius: "0 0 0 15px" }} 
@@ -23,7 +36,7 @@ const ItemImages = ({ itemPictures, openImageModal }) => {
                 {itemPictures[2] &&
                     <div className="SecondaryItemImageDiv ImageModalDiv">
                         <img 
-                            src={getImage(itemPictures[2])} 
+                            src={getImage(itemPictures[2]?.imageKey)} 
                             alt='third image' 
                             className="SecondaryItemImage OpenModalImage" 
                             style={{ borderRadius: "0 0 15px 0" }} 

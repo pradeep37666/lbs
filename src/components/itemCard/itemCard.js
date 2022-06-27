@@ -8,7 +8,6 @@ import {ReactComponent as StarFilled} from './../../assets/Icons/StarFilled.svg'
 import { Link } from 'react-router-dom';
 import getImage from '../../util/getImage';
 
-
 export default function ItemCard({ item, favourited, userId }) {
   const [ itemImage, setItemImage ] = useState('')
   const [ itemSuburb, setItemSuburb] = useState('')

@@ -67,7 +67,7 @@ export default function PostItem() {
         const itemDetails = getItemDetails()
         try {
             setIsCreateItemLoading(true)
-            const { data, status } = await Instance.post('/items/create', itemDetails)
+            const { data, status } = await Instance.post('/items', itemDetails)
             if (status !== 201) return
             setItemID(data.id)
             dispatch({ type: 'setCurrentPage', data: 'Complete!'})

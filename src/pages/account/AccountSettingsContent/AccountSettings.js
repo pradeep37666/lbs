@@ -16,18 +16,18 @@ export default function AccountSettings() {
     const [ userProducts, setUserProducts ] = useState(0)
 
     useEffect(() => {
-        Instance.get('items/findByUid')
-            .then((response) => {
-                if (response.status === 200) {
-                    setUserProducts(response.data.length)
-                } else {
-                    console.log('there was an issue getting the users data')
-                }
-            })
-            .catch((error) => {
-                console.log(error)
-            })
+        getItems()
     }, [])
+
+    const getItems = async () => {
+        try {
+            const { data } = await Instance.get(`/users/${user.id}/items`)
+            if (!data) return
+            setUserProducts(data.length)
+        } catch (error) {
+            console.log(error.response)
+        }
+    }
 
     return (
         <div className="AccountSettings__FlexMain">

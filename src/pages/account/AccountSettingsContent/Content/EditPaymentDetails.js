@@ -36,7 +36,7 @@ export default function EditPaymentDetails() {
 
     const getSavedCard = async () => {
         try{
-            const { data, status } = await Instance.get('/stripe/getCreditCards')
+            const { data, status } = await Instance.get('/stripe/customer/credit-card')
             if (status !== 200) return
             const userCard = data.data[0]
             setUserCard(userCard)
@@ -68,7 +68,7 @@ export default function EditPaymentDetails() {
                 }
             })
             if(error) return
-            await Instance.post('/stripe/addCreditCard', {
+            await Instance.post('/stripe/customer/credit-card', {
                 paymentMethodId: paymentMethod.id
             })
             await getSavedCard()
@@ -82,7 +82,7 @@ export default function EditPaymentDetails() {
     const deleteCard = async () => {
         setIsCardLoading(true)
         try{
-            const { status } = await Instance.delete(`/stripe/deleteCreditCard?paymentMethodId=${userCard.id}`)
+            const { status } = await Instance.delete(`/stripe/customer/credit-card?paymentMethodId=${userCard.id}`)
             if(status !== 200) return
             setUserCard(null)
         } catch(err){
