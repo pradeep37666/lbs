@@ -54,7 +54,7 @@
 
 .RatingSection {
   font-size: 26px;
-  margin-bottom: 50px;
+  margin-bottom: 1em;
   display: flex;
   align-items: center;
   width: 100%;
@@ -64,11 +64,23 @@
   width: 100%;
   object-fit: cover;
   height: 220px;
+  border-radius: 10px;
 }
 
 .PreviewImage:hover {
   cursor: pointer;
 }
+
+.PreviewImage_Loading {
+  width: 100%;
+  height: 220px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border:1px solid #C7C7C7;
+  border-radius:10px;
+}
+
 .favouriteStar {
   position: absolute;
   top: 13px;

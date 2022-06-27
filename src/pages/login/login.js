@@ -54,11 +54,9 @@ export default function Login() {
 
     const cometChatLogin = async (user) => {
         try{
-            const User = await  CometChat.login(user.id, process.env.REACT_APP_CHAT_AUTH_KEY)
-            console.log({User})
+            await CometChat.login(user.id, process.env.REACT_APP_CHAT_AUTH_KEY)
         } catch(e) {
-            console.log({e})
-            throw new Error
+            console.log(e.response)
         }
     }
 

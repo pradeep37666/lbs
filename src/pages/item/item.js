@@ -1,34 +1,34 @@
-import React, { useState, useEffect } from 'react';
-import PageWrapper from '../../components/pageWrapper/pageWrapper.js';
-import ReviewCard from '../../components/reviewCard/reviewCard.js';
-import ItemImageModal from '../../components/itemImagesModal/imagesModal.js';
-import ItemReviewModal from '../../components/modals/ReviewModal/ReviewModal.js';
-import './item.css';
-import Location from './../../assets/Icons/LocationIcon.svg';
-import Delivery from './../../assets/Icons/DeliveryIcon.svg';
-import Category from './../../assets/Icons/CategoriesIcon.svg';
-import { ReactComponent as Profile } from './../../assets/Icons/UserCircle.svg';
-import Calendar from './../../assets/Icons/HangingCalendar.svg';
+import React, { useState, useEffect } from 'react'
+import './item.css'
+import PageWrapper from '../../components/pageWrapper/pageWrapper.js'
+import ReviewCard from '../../components/reviewCard/reviewCard.js'
+import ItemImageModal from '../../components/itemImagesModal/imagesModal.js'
+import ItemReviewModal from '../../components/modals/ReviewModal/ReviewModal.js'
+import Location from './../../assets/Icons/LocationIcon.svg'
+import Delivery from './../../assets/Icons/DeliveryIcon.svg'
+import Category from './../../assets/Icons/CategoriesIcon.svg'
+import { ReactComponent as Profile } from './../../assets/Icons/UserCircle.svg'
+import Calendar from './../../assets/Icons/HangingCalendar.svg'
 import Geocode from 'react-geocode'
 
-import { ReactComponent as StarFilled } from './../../assets/Icons/StarFilled.svg';
-// import { StarOutline } from '@material-ui/icons';
-import StarOutline from '../../assets/Icons/StarOutline.js';
+import { ReactComponent as StarFilled } from './../../assets/Icons/StarFilled.svg'
+// import { StarOutline } from '@material-ui/icons'
+import StarOutline from '../../assets/Icons/StarOutline.js'
 
-import GoogleMapReact from 'google-map-react';
-import Instance from '../../util/axios';
-import { useParams, useLocation, useHistory } from 'react-router';
+import GoogleMapReact from 'google-map-react'
+import Instance from '../../util/axios'
+import { useParams, useLocation, useHistory } from 'react-router'
 import useGlobalState from "../../util/useGlobalState"
-import CircularProgress from '@material-ui/core/CircularProgress';
+import CircularProgress from '@material-ui/core/CircularProgress'
 import ApplicationModal from '../../components/modals/ApplicationModal/ApplicationModal'
-import getImage from '../../util/getImage.js';
+import getImage from '../../util/getImage.js'
 import NoContent2 from '../../assets/Images/NoContent2.png'
-import { Avatar } from '@material-ui/core';
+import { Avatar } from '@material-ui/core'
 import MissingProfile from '../../assets/Icons/MissingProfileIcon.png'
 
 import { isMobile } from 'react-device-detect'
-import AvailabilityModal from '../../components/modals/AvailabilityModal/AvailabilityModal.js';
-import NoReviews from '../../components/NoReviews/NoReviews.js';
+import AvailabilityModal from '../../components/modals/AvailabilityModal/AvailabilityModal.js'
+import NoReviews from '../../components/NoReviews/NoReviews.js'
 
 export default function Item() {
     const { state } = useGlobalState()
@@ -37,61 +37,61 @@ export default function Item() {
     const location = useLocation()
     const history = useHistory()
 
-    const [modalVisible, setModalVisible] = useState(false)
-    const [item, setItem] = useState();
-    const [itemPictures, setItemPictures] = useState([])
-    const [favourited, setFavourited] = useState(false)
-    const [isUserItem, setIsUserItem] = useState(false)
-    const [itemOwner, setItemOwner] = useState(null)
-    const [loading, setLoading] = useState(true);
-    const [approx, setApprox] = useState(null)
-    const [reviewPage, setReviewPage] = useState(0)
-    const [ImageModal, setImageModal] = useState(false)
-    const [reviewModalOpen, setReviewModalOpen] = useState(false)
-    const [reviews, setReviews] = useState([])
-    const [availabilityModalVisible, setAvailabilityModalVisible] = useState(false)
-    const [availability, setAvailability] = useState()
+    const [ modalVisible, setModalVisible ] = useState(false)
+    const [ item, setItem ] = useState();
+    const [ itemPictures, setItemPictures ] = useState([])
+    const [ favourited, setFavourited ] = useState(false)
+    const [ isUserItem, setIsUserItem ] = useState(false)
+    const [ itemOwner, setItemOwner ] = useState(null)
+    const [ loading, setLoading ] = useState(true);
+    const [ approx, setApprox ] = useState(null)
+    const [ reviewPage, setReviewPage ] = useState(0)
+    const [ ImageModal, setImageModal ] = useState(false)
+    const [ reviewModalOpen, setReviewModalOpen ] = useState(false)
+    const [ reviews, setReviews ] = useState([])
+    const [ availabilityModalVisible, setAvailabilityModalVisible] = useState(false)
+    const [ availability, setAvailability ] = useState()
 
     useEffect(() => {
-        // update modal state if navigated to this screen after creating a booking
         const bookingCreated = location.state?.bookingCreated
         if (bookingCreated) setModalVisible(true)
+        if (user) getItemDetailsByUser()
+        else getItemDetails()
+    }, [params.itemId])
 
-        // Find the item with the id used in the link
-        if (user) {
-            Instance.get(`/items/findByIid/?i_id=${params.itemId}&u_id=${user.id}`)
-                .then((response) => {
-                    setItem(response.data.item);
-                    setAvailability(response.data.yearAvailability)
-                    setLoading(false);
-                    setFavourited(response.data.liked)
-                    getItemReviews(response.data.item.i_id)
-                    // Split picture string into an array and save
-                    setItemPictures(response.data.item.pictures.split(','))
-                    // Check if user owns the item
-                    if (!user || (response.data.item.u_id !== user.id)) {
-                        getItemOwner(response.data.item)
-                        return
-                    }
-                    setIsUserItem(true)
-                })
-                .catch((error) => {
-                    console.log(error);
-                })
-        } else {
-            Instance.get(`/items/findByIid/?i_id=${params.itemId}`)
-                .then((response) => {
-                    setItem(response.data.item)
-                    setAvailability(response.data.yearAvailability)
-                    setLoading(false)
-                    getItemOwner(response.data.item)
-                    setItemPictures(response.data.item.pictures.split(','))
-                })
-                .catch((error) => {
-                    console.log(error)
-                })
+    const getItemDetailsByUser = async () => {
+        try {
+            const { data } = await Instance.get(`/items/findByItemId?itemId=${params.itemId}?userId=${user.id}`)
+            if (!data) return
+            setItem(data)
+            setAvailability(data.yearAvailability)
+            setLoading(false);
+            setFavourited(data.liked)
+            getItemReviews(data.item.i_id)
+            setItemPictures(data.images)
+            if (!user || (data.item.userId !== user.id)) {
+                getItemOwner(data.item)
+                return
+            }
+            setIsUserItem(true)
+        } catch (error) {
+            console.log(error.response)
         }
-    }, [params.itemId]);
+    }
+
+    const getItemDetails = async () => {
+        try {
+            const { data } = await Instance.get(`/items/findByItemId=${params.itemId}`) 
+            if (!data) return
+            setItem(data.item)
+            setAvailability(data.yearAvailability)
+            setLoading(false)
+            getItemOwner(data.item)
+            setItemPictures(data.item.images)
+        } catch (error) {
+            console.log(error.response)
+        }
+    }    
 
     const getItemReviews = async (id) => {
         try{

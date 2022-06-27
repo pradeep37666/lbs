@@ -40,6 +40,9 @@ export default function PostItem() {
     },[currentPage])
 
     const getItemDetails = () => {
+        const formattedAddress = address?.address_components 
+            ? parseAddressComponent(address.address_components)
+            : address
         const itemDetails = {
             title,
             category,
@@ -49,7 +52,7 @@ export default function PostItem() {
             deliveryPrice: delivery ? delivery : 0,
             discount: discount ? discount : 0,
             address: {
-                ...address,
+                ...formattedAddress,
                 lat: address.lat,
                 lng: address.lng,
             },

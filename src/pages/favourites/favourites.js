@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import instance from '../../util/axios';
 import './favourites.css'
 import PageWrapper from '../../components/pageWrapper/pageWrapper'
 import UserShedNav from '../../components/UserShedNav/UserShedNav'
@@ -8,6 +7,7 @@ import { isMobile } from 'react-device-detect';
 import { CircularProgress } from '@material-ui/core';
 import NoContent from '../../components/NoContent/NoContent';
 import { useHistory } from 'react-router';
+import Instance from '../../util/axios';
 
 export default function Favourites() {
     const history = useHistory()
@@ -16,20 +16,25 @@ export default function Favourites() {
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(()=>{
-        instance.get('/liked/findByUid')
-          .then(({data} ) => {
-            setItems(data);
-            setIsLoading(false);
-          })
-          .catch(()=>{
-              
-          })
+        try {
+            getUserFavouriteItems()
+        } catch (error) {
+            console.log(error.response)
+        }
     },[])
+
+    const getUserFavouriteItems = async () => {
+        const { data } = await Instance.get('/liked/findByUserId')
+        if (data) {
+            setItems(data)
+            setIsLoading(false)
+        }
+    }
 
     const renderItems = () => {
         return items.map((item, i) => {
             return <ItemCard item={item} key={i} favourited={true}/>
-            })
+        })
     }
     return (
         <PageWrapper>

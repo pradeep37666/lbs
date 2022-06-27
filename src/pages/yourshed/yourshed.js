@@ -20,7 +20,7 @@ export default function Yourshed() {
     },[])
 
     const getUserItems = async (userId) => {
-        const { data } = await Instance.get('items/findByUserId', userId)
+        const { data } = await Instance.get(`items/findByUserId?userId=${userId}`)
         if (data) {
             setItems(data)
             setLoading(false)
@@ -38,18 +38,27 @@ export default function Yourshed() {
                     <div className="ItemCardSection">
                         { loading 
                         ? <div>Loading items...</div>
-                        :
-                        <>
-                            {items?.map((item, i) => (
-                                <ItemCard item={item} key={i}/>
-                            ))}
-                            <div className="ItemCard" style={{ justifyContent: 'flex-start'}}>
-                                <Link className="addItemBox" to="/postitem">
-                                    +
-                                </Link>
-                                <Link className="addItemButton" to="/postitem">Add New Item</Link>
+                        : items.length === 0
+                            ?
+                            <div>
+                                There's no item
                             </div>
-                        </>
+                            :
+                            <>
+                                {items?.map((item, i) => (
+                                    <ItemCard 
+                                        item={item} 
+                                        userId={user.id}
+                                        key={i}
+                                    />
+                                ))}
+                                <div className="ItemCard" style={{ justifyContent: 'flex-start'}}>
+                                    <Link className="addItemBox" to="/postitem">
+                                        +
+                                    </Link>
+                                    <Link className="addItemButton" to="/postitem">Add New Item</Link>
+                                </div>
+                            </>
                         }
                     </div>
                 </div>

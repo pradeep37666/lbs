@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './itemCard.css'
-import PreviewImage from './../../assets/Images/ATVMower.png';
+import NoContentImage from '../../assets/Images/NoContent.png'
 import LocationIcon from './../../assets/Icons/LocationIcon.svg';
 import DeliveryIcon from './../../assets/Icons/DeliveryIcon.svg';
 import {ReactComponent as StarOutline} from './../../assets/Icons/StarOutline.svg';
@@ -9,21 +9,38 @@ import { Link } from 'react-router-dom';
 import getImage from '../../util/getImage';
 
 
-export default function ItemCard({ item, favourited }) {
+export default function ItemCard({ item, favourited, userId }) {
+  const [ itemImage, setItemImage ] = useState('')
+  const [ itemSuburb, setItemSuburb] = useState('')
   
-  const itemPictures = item.pictures?.split(',')
-  const itemSuburb = item.suburb.split(',')
+  useEffect(() => {
+    if (item.images.length > 0) {
+      setItemImage(item.images[0]?.imageKey)
+    }
+    if (item.address?.suburb) {
+      setItemSuburb(item.address?.suburb)
+    }
+  },[item])
 
   return (
     <div className="ItemCard">
-
-      <Link to={`/item/${item.i_id}`} style={{position:"relative"}}>
-        <img src={itemPictures ? getImage(itemPictures[0]) : PreviewImage} alt={item.title} className="PreviewImage"/>
-
-        { favourited &&
+      <Link 
+        to={`/item/${item.id}`} 
+        style={{position:"relative"}}
+      >
+        <img 
+          src={itemImage 
+            ? getImage(itemImage) 
+            : NoContentImage
+          } 
+          alt={item.title} 
+          className="PreviewImage"
+        />
+      { favourited &&
         <div className="favouriteStar">
           <StarFilled/>
-          </div> }
+        </div> 
+      }
       </Link>
       <div className="ItemDetailsContainer">
         <div className="ItemNameText">{item.title}</div>
@@ -38,10 +55,10 @@ export default function ItemCard({ item, favourited }) {
 
         <div className="StatusLocationSection">
           <div className="ItemCardIconContainer" style={{ paddingLeft: 7 }}>
-            <img src={LocationIcon} alt={item.suburb} className="ItemCardIcon"/>
+            <img src={LocationIcon} alt={itemSuburb} className="ItemCardIcon"/>
           </div>
           <div style={{ textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap'}}>
-            {itemSuburb[0]}
+            {itemSuburb}
           </div>
         </div>
 

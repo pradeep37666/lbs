@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import {ReactComponent as Logo} from './../../assets/Logos/LogoRed.svg'
 import useGlobalState from '../../util/useGlobalState'
 import MapsAutocomplete from '../mapsAutocomplete/MapsAutocomplete'
@@ -34,7 +34,6 @@ export default function LocationDetails({ context }) {
                         dispatch({ type: 'setCurrentPage', data: 'Availability' })
                     }}
                 />
-
             </div>
         </div>
     )
