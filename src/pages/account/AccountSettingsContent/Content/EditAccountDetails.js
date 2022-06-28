@@ -25,11 +25,6 @@ export default function EditAccountDetails() {
     const [ errorMessages, setErrorMessages ] = useState({})
 
     useEffect(() => {
-        const test = getImage(user.avatar)
-        console.log({test})
-    },[user])
-
-    useEffect(() => {
         if(Object.keys(errorMessages).length > 0){
             const valid = validateInputs()
             if(valid){
