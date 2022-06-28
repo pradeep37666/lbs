@@ -13,7 +13,7 @@ export default function Availability({
   onCancel,
   type,
 }) {
-  const [initialAvailability, setInitialAvailability] = useState()
+  const [ initialAvailability, setInitialAvailability ] = useState()
 
   const { state, dispatch } = useContext(context)
   const { availability } = state

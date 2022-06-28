@@ -19,7 +19,7 @@ import RegisterPage from './pages/register/register.js';
 import AccountPage from './pages/account/account.js';
 import PostItem from './pages/postitem/postitem';
 import TradesPage from './pages/trades/trades.js';
-import Messages from './pages/messages/messages.js';
+import Messages from './pages/messages/Messages.js';
 import YourshedPage from './pages/yourshed/yourshed.js';
 import FavouritesPage from './pages/favourites/favourites.js';
 import UpgradeLender from './pages/account/UpgradeLender/UpgradeLender';
@@ -126,11 +126,10 @@ function App() {
     <Elements stripe={stripe}>
       <GlobalStateContext.Provider value={{ state, dispatch }}>
         {loadingUser ? '' : 
-        
         <Router>
           <ScrollToTop>
             {/* marketing pages here with different routers */}
-            <Route exact path='/top' component={Top} />
+            <Route exact path='/' component={Top} />
             <Route exact path='/lend_your_stuff' component={LendYourStuff} />
             <Route exact path='/rent_stuff' component={RentStuff} />
             <Route exact path='/how_it_works' component={HowItWorks} />
@@ -140,7 +139,6 @@ function App() {
             <Route exact path='/faqs' component={FAQs} />
             <Route exact path='/contact_us' component={ContactUs} />
 
-            {/* <Route exact path="/" component={Home} /> */}
             <Route exact path="/home" component={Home} />
             <Route exact path="/item/:itemId" component={ItemPage} />
             <Route exact path="/search/:searchParams?" component={Search} />

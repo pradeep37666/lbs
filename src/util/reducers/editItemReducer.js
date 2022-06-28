@@ -43,7 +43,7 @@ const editItemReducer = (state, action) => {
         case 'setAddress' : 
             return {
                 ...state,
-                titleText: action.data
+                adderess: action.data
             }
         case 'setImages' :
             return {
@@ -54,6 +54,11 @@ const editItemReducer = (state, action) => {
             return {
                 ...state,
                 newImages: action.data
+            }
+        case 'setNewImageLinks' :
+            return {
+                ...state,
+                newImageLinks: action.data
             }
         case 'setDeletedImages' :
             return {
@@ -71,23 +76,24 @@ const editItemReducer = (state, action) => {
                 editAvailabilityOpen: action.data
             }
         case 'setInitialState' :
-            const { title, category, description, price, deliveryPrice, discount, address, available, lat, lng, pictures } = action.data
-            console.log(action.data)
+            const { 
+                title, category, description, 
+                price, deliveryPrice, discount, 
+                address, weekly_availability, images
+            } = action.data
             return {
                 ...state,
                 title,
                 titleText: title,
                 category,
                 description,
-                images: pictures.split(',').map(( image, i ) => {return { url: image, id: i + 1 }}),
+                images,
                 price,
                 deliveryPrice,
                 isDiscount: Boolean(discount),
                 discount,
                 address,
-                availability: available.split('').map(str => parseInt(str)),
-                lat,
-                lng
+                availability: weekly_availability.split('').map(str => parseInt(str)),
             }
         default : return state
     }

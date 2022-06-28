@@ -22,12 +22,9 @@ const ItemInfoSection = ({
     const history = useHistory()
 
     const handleEdit =()=>{
-        let string =''
-        string = string.concat('i_id='+item.i_id)
-        // string = string.concat('&u_id='+item.u_id)
-        
-        history.push(`/item/edit/${string}`)
-        // console.log(JSON.stringify(item, null,'\t'))
+        // console.log({item})
+        // const editItemURL = string.concat('i_id='+item.id)
+        history.push(`/item/edit/${item.id}`)
     }
 
     const handleFavourite = async () => {

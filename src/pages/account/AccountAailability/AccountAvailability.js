@@ -1,28 +1,28 @@
 import React, { useState } from 'react'
-import ProductSlots from '../../../components/productSlots/productSlots'
 import './AccountAvailability.css'
+import ProductSlots from '../../../components/productSlots/productSlots'
 import Instance from '../../../util/axios'
-import { useHistory } from 'react-router'
 import useGlobalState from '../../../util/useGlobalState'
 import Button from '../../../components/Button/Button'
 
 export default function Availability({ setAccountContent }) {
-    const [isLoading, setIsLoading] = useState(false)
     const { state, dispatch } = useGlobalState()
     const { user } = state
-    const [availability, setAvailability] = useState(user.available.split('').map(str => parseInt(str)) )
+    const [ availability, setAvailability ] = useState(user.available.split('').map(str => parseInt(str)))
+    const [ isLoading, setIsLoading ] = useState(false)
     
     const updateAvailability = async () => {
-        setIsLoading(true)
         try{
-            const { data, status} = await Instance.patch('user/update', { 
+            setIsLoading(true)
+            const { data, status} = await Instance.patch('/users', { 
                 available: availability.join('')
             })
+            if (status !== 200) return
             dispatch({ type: 'setUser', data })
-            console.log(data, status)
-
-        } catch(err){
-            console.log(err.response)
+        } catch(error){
+            console.log(error.response)
+        } finally {
+            setIsLoading(false)
         }
     }
 

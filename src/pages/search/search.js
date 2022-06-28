@@ -1,101 +1,60 @@
-import React, { useState, useEffect } from "react";
-import "./search.css";
-import { useParams } from "react-router-dom/cjs/react-router-dom.min";
-import PageWrapper from "../../components/pageWrapper/pageWrapper.js";
-import ItemCard from "../../components/itemCard/itemCard.js";
-import SearchFilterBar from "../../components/searchFilterBar/searchFilterBar.js";
-import { makeStyles, withStyles } from "@material-ui/styles";
-import Select from "@material-ui/core/Select";
-import MenuItem from "@material-ui/core/MenuItem";
-import InputBase from "@material-ui/core/InputBase";
-import ArrowDown from "@material-ui/icons/ExpandMore";
-import Instance from "../../util/axios";
-import { CircularProgress } from "@material-ui/core";
-import { useLocation } from "react-router";
-
-const BootstrapInput = withStyles((theme) => ({
-  input: {
-    display: "inline",
-    paddingLeft: ".3em",
-    textAlign: "left",
-    fontSize: "20px",
-    fontFamily: ["DMSans, sans-serif"].join(","),
-    "&:focus": {
-      backgroundColor: "#FFFFFF",
-      borderRadius: "15px",
-    },
-  },
-}))(InputBase);
-
-const useStyles = makeStyles({
-  dropDown: {
-    border: "2px solid #95272f",
-    padding: "1em",
-    borderRadius: "15px",
-    boxSizing: "content-box",
-    "& .MuiMenuItem-root": {
-      fontFamily: "DMSans, sans-serif",
-    },
-  },
-  select: {
-    fontWeight: "normal",
-    "& .MuiSvgIcon-root": {
-      color: "#95272f",
-    },
-  },
-});
+import React, { useState, useEffect } from "react"
+import "./search.css"
+import PageWrapper from "../../components/pageWrapper/pageWrapper.js"
+import ItemCard from "../../components/itemCard/itemCard.js"
+import SearchFilterBar from "../../components/searchFilterBar/searchFilterBar.js"
+import { makeStyles, withStyles } from "@material-ui/styles"
+import Select from "@material-ui/core/Select"
+import MenuItem from "@material-ui/core/MenuItem"
+import InputBase from "@material-ui/core/InputBase"
+import ArrowDown from "@material-ui/icons/ExpandMore"
+import Instance from "../../util/axios"
+import { CircularProgress } from "@material-ui/core"
+import { useLocation } from "react-router"
 
 export default function Search(props) {
-  const location = useLocation();
-
+  const location = useLocation()
   const [searchItems, setSearchItems] = useState([]);
-
   const [priceAscending, setPriceAscending] = useState([]);
   const [priceDescending, setPriceDescending] = useState([]);
   const [ratingAscending, setRatingAscending] = useState([]);
   const [ratingDescending, setRatingDescending] = useState([]);
-
   const [loading, setLoading] = useState(true);
-
   const [suggestedItems, setSuggestedItems] = useState([]);
-
   const [SearchPage, setSearchPage] = useState(1);
   const [SortBy, setSortBy] = useState("Nothing Selected");
-
-  const NumSearchPages = Math.ceil(searchItems.length / 8);
+  const NumSearchPages = Math.ceil(searchItems?.length / 8);
 
   //format the url query so that it fits the search query
   const queryString = require("query-string");
-
   const parsed = queryString.parse(location.search);
 
   let keyword = "";
   keyword = parsed.keyword;
 
   useEffect(() => {
-    setLoading(true)
-    Instance.get(`/items/search/${location.search}`)
-      .then((response) => {
-        setSearchItems(response.data[0]);
-        setPriceAscending(response.data[0]);
-        setPriceDescending(response.data[0]);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.log(error.response);
-      });
+    getSearchItems()
+  }, [location.search])
 
-    //For Suggested Items
-    Instance.get(`/items/search/?limit=4`)
-      .then((response) => {
-        setSuggestedItems(response.data[0]);
-        setLoading(false);
-      })
-      .catch((error) => {
-        // handle error
-        console.log(error);
-      });
-  }, [location.search]);
+  const getSearchItems = async () => {
+    try {
+      const { data: seachData } = await Instance.get(`/items/search${location.search}`)
+      console.log({seachData})
+      if (seachData.items) {
+        setSearchItems(seachData[0])
+        setPriceAscending(seachData[0])
+        setPriceDescending(seachData[0])
+      }
+      
+      const { data: suggestData } = await Instance.get('/items/search/?limit=4')
+      console.log({suggestData})
+      if (suggestData.items) setSuggestedItems(suggestData[0])
+    } catch (error) {
+      console.log(error.response)
+    } finally {
+      setLoading(false)
+    }
+  }
 
   const getSearchPages = () => {
     let content = [];
@@ -110,10 +69,10 @@ export default function Search(props) {
         >
           {i}
         </div>
-      );
+      )
     }
-    return content;
-  };
+    return content
+  }
 
   const handlePaginationButtonClick = (direction) => {
     if (direction === "forward") {
@@ -128,18 +87,18 @@ export default function Search(props) {
   };
 
   const getSearchResultsPage = () => {
-    let content = [];
-    const startIndex = (SearchPage - 1) * 8;
-    let numResults = startIndex + 8;
+    let content = []
+    const startIndex = (SearchPage - 1) * 8
+    let numResults = startIndex + 8
     // If we're on the last page of results or there's less than 1 page find how many results are left, as if its less than a full page we need to change our iteration so we don't go out of index
     if (SearchPage === NumSearchPages || searchItems.length < 8) {
-      numResults = startIndex + (searchItems.length - (SearchPage - 1) * 8);
+      numResults = startIndex + (searchItems.length - (SearchPage - 1) * 8)
     }
     for (let i = startIndex; i < numResults; i++) {
-      content.push(<ItemCard item={searchItems[i]} key={i} />);
+      content.push(<ItemCard item={searchItems[i]} key={i} />)
     }
-    return content;
-  };
+    return content
+  }
 
   const getSearchResultsMain = () => {
     return (
@@ -172,30 +131,30 @@ export default function Search(props) {
 
   const sortPriceLowToHigh = () => {
     priceAscending.sort(function (a, b) {
-      return a.price - b.price;
-    });
-    console.log("Sorted Items Price Low to High -", priceAscending);
-  };
+      return a.price - b.price
+    })
+    console.log("Sorted Items Price Low to High -", priceAscending)
+  }
 
   const sortPriceHighToLow = () => {
     priceDescending.sort(function (a, b) {
-      return b.price - a.price;
-    });
-    console.log("Sorted Items Price High to Low -", priceDescending);
-  };
+      return b.price - a.price
+    })
+    console.log("Sorted Items Price High to Low -", priceDescending)
+  }
 
   const sortRatingLowToHigh = () => {
     ratingAscending.sort(function (a, b) {
-      return a.rating - b.rating;
-    });
-    console.log("Sorted Items Rating Low to High -", ratingAscending);
-  };
+      return a.rating - b.rating
+    })
+    console.log("Sorted Items Rating Low to High -", ratingAscending)
+  }
   const sortRatingHighToLow = () => {
     ratingDescending.sort(function (a, b) {
-      return b.rating - a.rating;
-    });
-    console.log("Sorted Items Rating High to Low -", ratingDescending);
-  };
+      return b.rating - a.rating
+    })
+    console.log("Sorted Items Rating High to Low -", ratingDescending)
+  }
 
   //mapping random items as suggested items in the search page
   const randomItemsMapper = () => {
@@ -308,3 +267,35 @@ export default function Search(props) {
     </PageWrapper>
   );
 }
+
+const BootstrapInput = withStyles((theme) => ({
+  input: {
+    display: "inline",
+    paddingLeft: ".3em",
+    textAlign: "left",
+    fontSize: "20px",
+    fontFamily: ["DMSans, sans-serif"].join(","),
+    "&:focus": {
+      backgroundColor: "#FFFFFF",
+      borderRadius: "15px",
+    },
+  },
+}))(InputBase)
+
+const useStyles = makeStyles({
+  dropDown: {
+    border: "2px solid #95272f",
+    padding: "1em",
+    borderRadius: "15px",
+    boxSizing: "content-box",
+    "& .MuiMenuItem-root": {
+      fontFamily: "DMSans, sans-serif",
+    },
+  },
+  select: {
+    fontWeight: "normal",
+    "& .MuiSvgIcon-root": {
+      color: "#95272f",
+    },
+  },
+})

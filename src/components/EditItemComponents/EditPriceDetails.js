@@ -6,7 +6,6 @@ import { Fade } from '@material-ui/core'
 export default function EditPriceDetails({ state, dispatch }) {
     const { isDiscount, price, discount } = state
 
-    console.log(isDiscount)
     return (
         <div className="LoginMain LoginMainNoMarg" style={{ width: "100%" }}>
             <div className="LoginHeader">Item Price</div>
@@ -40,13 +39,11 @@ export default function EditPriceDetails({ state, dispatch }) {
                         Allow borrowers to receive an off peak time discount to
                         incentivise mid week trading
                     </div>
-                    {/* <div style={{ width: "20%", display: "flex", flex: 2, marginRight: "10%" }}> */}
                     <ValidationTextInput 
                     onChange={e => dispatch({ type: 'setDiscount', data: e.target.value })}
                     inputType="number"
                     value={discount}
                     />
-                    {/* </div> */}
                     <div className="LoginText" style={{ marginTop: "3%", flex: 3, }} >
                         Off Peak Discount Rate
                     </div>
