@@ -12,25 +12,21 @@ import Instance from "../../util/axios"
 import { CircularProgress } from "@material-ui/core"
 import { useLocation } from "react-router"
 
-export default function Search(props) {
+export default function Search() {
   const location = useLocation()
-  const [searchItems, setSearchItems] = useState([]);
-  const [priceAscending, setPriceAscending] = useState([]);
-  const [priceDescending, setPriceDescending] = useState([]);
-  const [ratingAscending, setRatingAscending] = useState([]);
-  const [ratingDescending, setRatingDescending] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [suggestedItems, setSuggestedItems] = useState([]);
-  const [SearchPage, setSearchPage] = useState(1);
-  const [SortBy, setSortBy] = useState("Nothing Selected");
-  const NumSearchPages = Math.ceil(searchItems?.length / 8);
+  const [ searchItems, setSearchItems ] = useState([])
+  const [ priceAscending, setPriceAscending ] = useState([])
+  const [ priceDescending, setPriceDescending ] = useState([])
+  const [ ratingAscending, setRatingAscending ] = useState([])
+  const [ ratingDescending, setRatingDescending ] = useState([])
+  const [ loading, setLoading ] = useState(true)
+  const [ suggestedItems, setSuggestedItems ] = useState([])
+  const [ SearchPage, setSearchPage ] = useState(1)
+  const [ SortBy, setSortBy ] = useState("Nothing Selected")
+  const NumSearchPages = Math.ceil(searchItems?.length / 8)
 
-  //format the url query so that it fits the search query
-  const queryString = require("query-string");
-  const parsed = queryString.parse(location.search);
-
-  let keyword = "";
-  keyword = parsed.keyword;
+  const queryString = require("query-string")
+  const parsed = queryString.parse(location.search)
 
   useEffect(() => {
     getSearchItems()
@@ -38,17 +34,14 @@ export default function Search(props) {
 
   const getSearchItems = async () => {
     try {
-      const { data: seachData } = await Instance.get(`/items/search${location.search}`)
-      console.log({seachData})
-      if (seachData.items) {
-        setSearchItems(seachData[0])
-        setPriceAscending(seachData[0])
-        setPriceDescending(seachData[0])
+      const { data: searchData } = await Instance.get(`/items/search${location.search}`)
+      if (searchData.length) {
+        setSearchItems(searchData)
+        setPriceAscending(searchData)
+        setPriceDescending(searchData)
       }
-      
       const { data: suggestData } = await Instance.get('/items/search/?limit=4')
-      console.log({suggestData})
-      if (suggestData.items) setSuggestedItems(suggestData[0])
+      if (suggestData.length) setSuggestedItems(suggestData)
     } catch (error) {
       console.log(error.response)
     } finally {
@@ -90,7 +83,6 @@ export default function Search(props) {
     let content = []
     const startIndex = (SearchPage - 1) * 8
     let numResults = startIndex + 8
-    // If we're on the last page of results or there's less than 1 page find how many results are left, as if its less than a full page we need to change our iteration so we don't go out of index
     if (SearchPage === NumSearchPages || searchItems.length < 8) {
       numResults = startIndex + (searchItems.length - (SearchPage - 1) * 8)
     }
@@ -126,53 +118,48 @@ export default function Search(props) {
           </div>
         </div>
       </div>
-    );
-  };
+    )
+  }
 
   const sortPriceLowToHigh = () => {
     priceAscending.sort(function (a, b) {
       return a.price - b.price
     })
-    console.log("Sorted Items Price Low to High -", priceAscending)
   }
 
   const sortPriceHighToLow = () => {
     priceDescending.sort(function (a, b) {
       return b.price - a.price
     })
-    console.log("Sorted Items Price High to Low -", priceDescending)
   }
 
   const sortRatingLowToHigh = () => {
     ratingAscending.sort(function (a, b) {
       return a.rating - b.rating
     })
-    console.log("Sorted Items Rating Low to High -", ratingAscending)
   }
   const sortRatingHighToLow = () => {
     ratingDescending.sort(function (a, b) {
       return b.rating - a.rating
     })
-    console.log("Sorted Items Rating High to Low -", ratingDescending)
   }
 
-  //mapping random items as suggested items in the search page
   const randomItemsMapper = () => {
     if (suggestedItems.length > 0) {
       return suggestedItems.map((items, index) => {
-        return <ItemCard item={items} key={index}/>;
-      });
+        return <ItemCard item={items} key={index}/>
+      })
     }
-  };
+  }
 
   const handleChange = (event) => {
-    setSortBy(event.target.value);
-  };
+    setSortBy(event.target.value)
+  }
 
-  const classes = useStyles();
+  const classes = useStyles()
   return (
     <PageWrapper>
-      <SearchFilterBar keyWord={keyword} />
+      <SearchFilterBar keyWord={parsed.keyword} />
       {loading ? (
         <div className="ItemPage__Loading__Container">
           <CircularProgress size={75} />
@@ -265,7 +252,7 @@ export default function Search(props) {
         </div>
       )}
     </PageWrapper>
-  );
+  )
 }
 
 const BootstrapInput = withStyles((theme) => ({

@@ -1,12 +1,12 @@
 import React, { useContext} from 'react'
 import './AvailabilityCalendar.css'
-import CalendarItem from './CalendarItem';
-import CalendarRow from './CalendarRow';
-import { ApplicationContext } from '../../pages/application/Application';
+import { monthArray, dayArray } from '../../assets/Data/LBSArray'
+import CalendarItem from './CalendarItem'
+import CalendarRow from './CalendarRow'
+import { ApplicationContext } from '../../pages/application/Application'
 
 
 export default function AvailabilityCalendar({ month, year, }) {
-
     const { state } = useContext(ApplicationContext)
     const { currentMonth, currentYear } = state
 
@@ -19,8 +19,7 @@ export default function AvailabilityCalendar({ month, year, }) {
         }
         return days;
       }
-    const dayArray = ['Su','Mo','Tu','We','Th','Fr','Sa' ]
-
+    
     const days = getDaysInMonth(month, year)
 
     const renderRows = () => {
@@ -64,7 +63,6 @@ export default function AvailabilityCalendar({ month, year, }) {
         }
     }
 
-    const monthArray = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
     return (
         <div className="CalendarContainer">
             { renderCurrentYearLabel() }
@@ -79,7 +77,6 @@ export default function AvailabilityCalendar({ month, year, }) {
                         return <div className="CalendarItemDayName" key={index}>{day}</div>
                     })}  
                 </div>
-                
                 { renderRows() }
             </div>
         </div>

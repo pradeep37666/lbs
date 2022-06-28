@@ -54,7 +54,6 @@ export default function Trades() {
         try{
             const { data, status } = await Instance.get('booking/findByUid')
             if(status !== 200) return
-            console.log(data)
             const parsedBookings = parseBookings(data)
             setBorrowerBookingItems(parsedBookings)
         } catch(err){

@@ -5,7 +5,7 @@ import { ApplicationContext } from '../../pages/application/Application'
 import compareDates from '../../util/compareDates'
 import getAvailability from '../../util/getAvailability'
 
-export default function CalendarItem({day, index, onClick, isCurrentMonth }) {
+export default function CalendarItem({ day, index, onClick, isCurrentMonth }) {
     const [isApplicationPeriod, setIsApplicationPeriod] = useState(false)
     const [booked, setBooked] = useState(false)
     const [availability, setAvailability] = useState()

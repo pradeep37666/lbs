@@ -13,10 +13,10 @@ export default function ItemCard({ item, favourited, userId }) {
   const [ itemSuburb, setItemSuburb] = useState('')
   
   useEffect(() => {
-    if (item.images.length > 0) {
+    if (item?.images?.length > 0) {
       setItemImage(item.images[0]?.imageKey)
     }
-    if (item.address?.suburb) {
+    if (item?.address?.suburb) {
       setItemSuburb(item.address?.suburb)
     }
   },[item])
@@ -28,12 +28,12 @@ export default function ItemCard({ item, favourited, userId }) {
         style={{position:"relative"}}
       >
         <img 
-          src={itemImage 
-            ? getImage(itemImage) 
-            : NoContentImage
-          } 
-          alt={item.title} 
-          className="PreviewImage"
+        src={itemImage 
+          ? getImage(itemImage) 
+          : NoContentImage
+        } 
+        alt={item.title} 
+        className="PreviewImage"
         />
       { favourited &&
         <div className="favouriteStar">

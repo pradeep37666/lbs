@@ -4,11 +4,11 @@ import './ApplicationHeader.css'
 import { isMobile } from 'react-device-detect'
 
 export default function ApplicationHeader({ page, item }) {
-    const [pictures, setPictures] = useState()
+    const [ pictures, setPictures ] = useState()
 
     useEffect(() => {
         if(!item) return
-        setPictures(item.pictures.split(','))
+        setPictures(item.images)
     },[item])
 
     const renderContent = () => {
@@ -49,7 +49,7 @@ export default function ApplicationHeader({ page, item }) {
                 <span className="ApplicationHeaderHeading">Item - </span>
                 {item && 
                     <>
-                        <img src={pictures ? getImage(pictures[0]) : ''} alt="item image" className="ApplicationHeaderItemImage"></img>
+                        <img src={pictures ? getImage(pictures[0].imageKey) : ''} alt="item image" className="ApplicationHeaderItemImage"></img>
                         <span className="ApplicationHeaderItemTitle">{item.title}</span>
                     </>}
             </div>}

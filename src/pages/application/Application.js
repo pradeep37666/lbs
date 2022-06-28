@@ -1,5 +1,5 @@
 import React, { useEffect, useReducer } from 'react'
-import { useParams } from 'react-router-dom/cjs/react-router-dom.min'
+import './application.css'
 import ApplicationHeader from '../../components/application/ApplicationHeader'
 import ItemAvailability from '../../components/application/ItemAvailability'
 import ItemOptions from '../../components/application/ItemOptions'
@@ -8,8 +8,8 @@ import PageWrapper from '../../components/pageWrapper/pageWrapper'
 import instance from '../../util/axios'
 import ApplicationFooter from '../../components/application/ApplicationFooter'
 import applicationReducer from '../../util/reducers/applicationReducer'
-import './application.css'
 import BookingPriceCalculator from '../../util/BookingPriceCalculator'
+import { useParams } from 'react-router-dom'
 
 export const ApplicationContext = React.createContext()
 
@@ -36,19 +36,9 @@ export default function Application() {
             data: new BookingPriceCalculator(item.price, item.discount, item.deliveryPrice, confirmedStart, confirmedEnd)
         })
     }, [confirmedStart, confirmedEnd])
-    console.log(bookingPriceCalculator)
     
     useEffect(() => {
-        const getItem = async () => {
-            const { data, status } = await instance.get(`/items/findByIid?i_id=${itemId}`)
-
-            if(status !== 200) return
-            dispatch({ type: 'setItem', data: data.item})
-            dispatch({ type: 'setItemAvailability', data: data.item.available})
-            dispatch({ type: 'setYearAvailability', data: data.yearAvailability})
-        }
         getItem()
-
         const today = new Date()
         const currentDate = today.getDate()
         const currentMonth = today.getMonth()
@@ -57,6 +47,14 @@ export default function Application() {
         dispatch({ type: 'setCurrentMonth', data: currentMonth})
         dispatch({ type: 'setCurrentYear', data: currentYear})
     },[])
+
+    const getItem = async () => {
+        const { data, status } = await instance.get(`/items/${itemId}`)
+        if(status !== 200) return
+        dispatch({ type: 'setItem', data: data.item})
+        dispatch({ type: 'setItemAvailability', data: data.item.weekly_availability})
+        dispatch({ type: 'setYearAvailability', data: data.availability})
+    }
     
     const renderApplicaiton = () => {
         switch(page){
