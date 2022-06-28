@@ -29,7 +29,7 @@ function EditItemPage() {
     title, category, description, 
     price, deliveryPrice, discount, 
     address, availability, titleText,
-    newImageLinks, deletedImages, newImages
+    newImageLinks, deletedImages
   } = state
 
   const params = useParams()
@@ -43,11 +43,6 @@ function EditItemPage() {
   useEffect(() => {
     getItem()
   }, [params])
-
-  useEffect(() => {
-    console.log({newImages})
-    console.log({deletedImages})
-  },[newImages, deletedImages])
 
   const getItem = async () => {
     try {
@@ -63,12 +58,13 @@ function EditItemPage() {
   }
 
   const deleteItem = async () => {
-    // try{
-    //   await Instance.delete(`/items/delete?i_id=${itemId}`)
-    //   history.push(`/user/your_shed`);
-    // } catch(err){
-    //   console.log(err.response)
-    // }
+    try{
+      const { status } = await Instance.delete(`/items/${params.itemId}`)
+      if (status !== 200) return
+      history.push(`/user/your_shed`)
+    } catch(error){
+      console.log(error.response)
+    }
   }
   
   const applyChanges = async () => {
@@ -81,27 +77,16 @@ function EditItemPage() {
       discount,
       weekly_availability: availability.join(''),
       address,
-      images: newImageLinks,
-      imagesToDelete: deletedImages
+      images: newImageLinks ?? [],
+      imagesToDelete: deletedImages ?? []
     }
-
-    // const formData = new FormData()
-    // for (let key in newItemDetails) {
-    //   if (key === 'images') {
-    //     newImages.forEach((item) => formData.append('imageKey', item.imageKey))
-    //     continue
-    //   }
-    //   formData.append(key, newItemDetails[key])
-    // }
     try{
       setIsLoading(true)
-      const { data, status } = await Instance.patch(`/items/${params.itemId}`, newItemDetails)
-      console.log({status})
-      console.log({data})
+      const { status } = await Instance.patch(`/items/${params.itemId}`, newItemDetails)
       if (status !== 200) return
       history.push(`/item/${params.itemId}`)
-    } catch(err) {
-      console.log(err)
+    } catch(error) {
+      console.log(error.response)
     } finally{
       setIsLoading(false)
     }

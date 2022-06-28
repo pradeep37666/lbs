@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
-import { IconButton } from '@material-ui/core'
+import './EditItemImage.css'
+import { CircularProgress, IconButton } from '@material-ui/core'
 import RemoveIcon from "@material-ui/icons/Remove"
 import { makeStyles } from '@material-ui/core'
 import AddIcon from "@material-ui/icons/Add"
@@ -8,7 +9,7 @@ import { FileService } from '../../services/FileService'
 import { v4 as uuidv4 } from 'uuid'
 
 export default function EditItemImages({ state, dispatch }) {
-    const { images, newImages, newImageLinks, deletedImages } = state
+    const { images, newImages, deletedImages } = state
     const [ isUploading, setIsUploading ] = useState(false)
     const classes = useStyles()
 
@@ -19,16 +20,16 @@ export default function EditItemImages({ state, dispatch }) {
         if (!files.length) return
         const fileLinks = await FileService.uploadMultipleImages(files)
         if (!fileLinks) return
-        let newPictures = newImages.map(img => img)
-        for (let i = 0; i < newImages.length; i++) {
+        let newPictures = newImages.map((picture) => picture)
+        for (let i = 0; i < files.length; i++) {
           newPictures.push({
             preview: URL.createObjectURL(files[i]),
             raw: files[i],
             id: uuidv4(),
           })
         }
-        dispatch({ type: 'setPictures', data: newPictures })
-        dispatch({ type: 'setPictureLinks', data: fileLinks })
+        dispatch({ type: 'setNewImages', data: newPictures })
+        dispatch({ type: 'setNewImageLinks', data: fileLinks })
       } catch (error) {
         console.log(error.response)
       } finally {
@@ -38,7 +39,7 @@ export default function EditItemImages({ state, dispatch }) {
 
     const renderItemImages = (images) => {
       return images.map((image, index) => (
-        <div className="PostItem__ItemPictures__Preview" key={index}>
+        <div className="upload_item_image_box" key={index}>
           <IconButton 
             aria-label="delete" 
             className={classes.buttonDelete} 
@@ -47,9 +48,9 @@ export default function EditItemImages({ state, dispatch }) {
             <RemoveIcon className={classes.icon} />
           </IconButton>
           <img
-            src={getImage(image.imageKey)}
+            src={image.preview ?? getImage(image.imageKey)}
             alt=""
-            className="ProfilePicturePreview"
+            className="upload_item_image"
           />
         </div>
       ))
@@ -57,39 +58,36 @@ export default function EditItemImages({ state, dispatch }) {
 
     const removeImage = (id) => {
       const removedImage = images.find(img => img.id === id)
-      console.log({removedImage})
-      const updatedDisplayImages = images.filter(img => img.id !== id)
-      dispatch({ type: 'setImages', data: updatedDisplayImages})
-      if(removedImage.imageKey)
-        dispatch({type: 'setDeletedImages', data: [...deletedImages, removedImage.url]})
-      else 
-        dispatch({ type: 'setNewImages', data: newImages.filter(img => img.id !== id)})
-      
-      // for (var i = 0; i < images.length; i++) {
-      //   var pic = images[i];
-  
-      //   if (pic.id !== id) {
-      //     newimages.push(pic);
-      //   } else {
-      //     if (pic.url) setDeletedImages(deletedImages => [...deletedImages, pic.url])
-      //     else setNewImages(newImages.filter(({id}) => id !== pic.id))
-      //   }
-      // }
-      // setimages(newimages);
+      if (removedImage) {
+        const updatedDisplayImages = images.filter(img => img.id !== id)
+        dispatch({ type: 'setImages', data: updatedDisplayImages })
+        dispatch({ type: 'setDeletedImages', data: [...deletedImages, removedImage.id] })
+      } else {
+        dispatch({ type: 'setNewImages', data: newImages.filter(img => img.id !== id) })
+      }
     }
 
     return (
       <div className="LoginMain" style={{ width: "100%", marginTop: "0.5%" }}>
         <div className="LoginHeader">Item images</div>
-        <div className="PostItem__Itemimages__Container">
+        <div className="upload_item_image_container">
           { renderItemImages(images) }
           { renderItemImages(newImages)}
+          {isUploading && (
+          <div 
+          className="PostItem__ItemPictures__Preview"
+          style={{ display: 'flex', justifyContent: 'center'}}
+          >
+            <CircularProgress color="inherit" />
+          </div>
+          )}
         </div>
         <input
         type="file"
         id="selectFile"
         style={{ display: "none" }}
         onChange={handleImageUpload}
+        multiple
         />
         <div className="PostItem__Itemimages__Add__Container" style={{ marginBottom: "-15%" }}>
           <IconButton

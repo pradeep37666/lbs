@@ -4,13 +4,6 @@ import getImage from '../../util/getImage'
 
 const ItemImages = ({ itemPictures, openImageModal }) => {
 
-    const getItemImages = async (imageId) => {
-        const { data } = await Instance.get(`/item-images?id=${imageId}`)
-        console.log({data})
-        if (!data) return
-        return data
-    }
-
     return (
         <>
             <img 
@@ -22,7 +15,7 @@ const ItemImages = ({ itemPictures, openImageModal }) => {
                 {itemPictures[1] &&
                     <div className="SecondaryItemImageDiv ImageModalDiv">
                         <img 
-                            src={getItemImages(itemPictures[0]?.imageKey)} 
+                            src={getImage(itemPictures[1]?.imageKey)} 
                             alt='second image' 
                             className="SecondaryItemImage" 
                             style={{ borderRadius: "0 0 0 15px" }} 

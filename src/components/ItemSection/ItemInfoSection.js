@@ -21,17 +21,10 @@ const ItemInfoSection = ({
     const params = useParams()
     const history = useHistory()
 
-    const handleEdit =()=>{
-        // console.log({item})
-        // const editItemURL = string.concat('i_id='+item.id)
-        history.push(`/item/edit/${item.id}`)
-    }
-
     const handleFavourite = async () => {
         try {
             if (!favourited) {
                 const { data } = await Instance.post('likes/', { itemId: item.id })
-                console.log({data})
                 if (!data) return
                 setFavourited(true)
             } else {
@@ -99,7 +92,7 @@ const ItemInfoSection = ({
                 {(user && user.id === item.userId) 
                 ?   <button 
                         className="editButton" 
-                        onClick={handleEdit}
+                        onClick={() => history.push(`/item/edit/${item.id}`)}
                     >
                         Edit Item Details
                     </button>
