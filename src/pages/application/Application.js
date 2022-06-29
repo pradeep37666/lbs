@@ -26,7 +26,7 @@ const initialState = {
 }
 export default function Application() {
     const [state, dispatch] = useReducer(applicationReducer, initialState)
-    const tempYearlyAvailability = Array(730).fill(1)
+    const yearlyAvailability = Array(728).fill(1)
     const { 
         page, item, confirmedStart, 
         confirmedEnd, bookingPriceCalculator 
@@ -57,7 +57,7 @@ export default function Application() {
         if(status !== 200) return
         dispatch({ type: 'setItem', data: data.item})
         dispatch({ type: 'setItemAvailability', data: data.item.weekly_availability})
-        dispatch({ type: 'setYearAvailability', data: tempYearlyAvailability})
+        dispatch({ type: 'setYearAvailability', data: yearlyAvailability})
     }
     
     const renderApplicaiton = () => {

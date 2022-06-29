@@ -30,10 +30,20 @@ const postItemReducer = (state, action) => {
                 ...state,
                 price: action.data
             }
-        case 'setDelivery' :
+        case 'setDeliveryPrice' :
             return {
                 ...state,
-                delivery: action.data
+                deliveryPrice: action.data
+            }
+        case 'setPickupPrice' :
+            return {
+                ...state,
+                pickupPrice: action.data
+            }
+        case 'setDeliveryOption' : 
+            return {
+                ...state,
+                deliveryOption: action.data
             }
         case 'setDiscount' :
             return {

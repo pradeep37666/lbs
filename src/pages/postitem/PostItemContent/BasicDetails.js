@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import {ReactComponent as Logo} from '../../../assets/Logos/LogoRed.svg';
 import CategorySelect from '../../../components/categorySelect/categorySelect';
 import Button from '../../../components/Button/Button';
@@ -7,6 +7,10 @@ import ValidationTextInput from '../../../components/FormComponents/ValidationTe
 export default function BasicDetails({ context }) {
     const { state, dispatch } = useContext(context)
     const { title, category } = state
+
+    useEffect(() => {
+        console.log({category})
+    },[category])
     
     return (
         <div className="RegistrationWrapper">
@@ -26,6 +30,7 @@ export default function BasicDetails({ context }) {
                 fontSize="18px" 
                 margin="0 0 2em 0" 
                 thinBorder 
+                value={category}
                 setCategory={category => dispatch({type: 'setCategory', data: category})}
                 />
                 <Button 

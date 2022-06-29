@@ -4,10 +4,16 @@ import LBSSwitch from '../../../components/LBSSwitch/LBSSwitch';
 import { Fade } from '@material-ui/core';
 import Button from '../../../components/Button/Button';
 import ValidationTextInput from '../../../components/FormComponents/ValidationTextInput';
+import CategorySelect from '../../../components/categorySelect/categorySelect';
+import { DELIVERY_OPTIONS } from '../../../assets/Data/LBSSelectOptions';
+import LBSSelectBox from '../../../components/LBSSelectBox/LBSSelectBox';
 
 export default function AdvancedDetails({ context }) {
     const { state, dispatch } = useContext(context)
-    const { description, price, discount, delivery } = state
+    const { 
+        description, price, discount, delivery,
+        deliveryPrice, pickupPrice, deliveryOption,
+    } = state
     const [isDiscount, setIsDiscount] = useState(false)
 
     return (
@@ -68,9 +74,7 @@ export default function AdvancedDetails({ context }) {
                     <Fade in={isDiscount} timeout={300} mountOnEnter unmountOnExit>
                         <div>
                             <div className="LoginText">
-
                                 Give borrowers the ability to borrow an item at a cheaper price in off peak times. The off peak discount is a 5% discount by default.
-
                             </div>
                             <ValidationTextInput 
                             inputType="number"
@@ -87,9 +91,18 @@ export default function AdvancedDetails({ context }) {
 
                 <div className="LoginHeader">Item Delivery &amp; Pickup</div>
                 <div className="LoginText">
-                    Enter the price you would like to charge out pick up and delivery. If you don’t want to offer this service, leave this empty.
+                    Enter the price you would like to charge out pick up and delivery. 
+                    If you don’t want to offer this service, select "None".
                 </div>
-
+                <LBSSelectBox 
+                    selectOption={DELIVERY_OPTIONS}
+                    width='100%'
+                    fontSize='18px'
+                    margin='0 0 2em 0'
+                    thinBorder
+                    value={deliveryOption ?? ''}
+                    onChange={option => dispatch({type: 'setDeliveryOption', data: option})}
+                />
                 <div className="LoginHeader">Price ($)</div>
                 <ValidationTextInput 
                 inputType="number"

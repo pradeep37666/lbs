@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext } from 'react'
 import {ReactComponent as Logo} from './../../assets/Logos/LogoRed.svg'
 import useGlobalState from '../../util/useGlobalState'
 import MapsAutocomplete from '../mapsAutocomplete/MapsAutocomplete'
@@ -20,9 +20,9 @@ export default function LocationDetails({ context }) {
                 { user ? (
                     <MapsAutocomplete 
                     setAddress={(address) => dispatch({ type: 'setAddress', data: address})} 
-                    defaultLocation={address.fullAddress} 
-                    defaultLat={user.lat} 
-                    defaultLng={user.lng}/> 
+                    defaultLocation={user.address.fullAddress} 
+                    defaultLat={user.address.lat} 
+                    defaultLng={user.address.lng}/> 
                 ) : (
                     <MapsAutocomplete 
                     setAddress={(address) => dispatch({ type: 'setAddress', data: address})}

@@ -9,7 +9,7 @@ const ItemLocation = ({ item }) => {
             lat: -27.481009,
             lng: 153.040596
         },
-        zoom: 15
+        zoom: 14
     }
 
     useEffect(() => {

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useMemo } from 'react'
 import { ApplicationContext } from '../../pages/application/Application'
 import CheckBox from '../checkBox/CheckBox'
 import './ItemOptions.css'
@@ -9,23 +9,48 @@ export default function ItemOptions() {
     const { state, dispatch } = useContext(ApplicationContext)
     const globalState = useGlobalState().state
     const { user } = globalState
-    const { item, address, bookingPriceCalculator, deliverySelected, pickupSelected } = state
+    const { 
+        item, bookingPriceCalculator, 
+        deliverySelected, pickupSelected 
+    } = state
 
     const setAddress = (addressObj) => {
         dispatch({ type: 'setAddress', data: addressObj.formatted_address})
     }
+
     const getMap = () => {
-        if (user.address && (deliverySelected || pickupSelected)) return <MapsAutocomplete setAddress={setAddress} defaultLocation={user.address} defaultLat={user.lat} defaultLng={user.lng}/>
-        if (deliverySelected || pickupSelected) return <MapsAutocomplete setAddress={setAddress}/>
-        else return
+        if (user.address && deliverySelected) 
+            return <MapsAutocomplete 
+                setAddress={setAddress} 
+                defaultLocation={user.address.fullAddress} 
+                defaultLat={user.address.lat} 
+                defaultLng={user.address.lng}
+                />
+        if (item.address && pickupSelected) 
+            return <MapsAutocomplete 
+                setAddress={setAddress} 
+                defaultLocation={item.address.fullAddress} 
+                defaultLat={item.address.lat} 
+                defaultLng={item.address.lng}
+                />
+        else 
+            return <MapsAutocomplete setAddress={setAddress}/>
     }
 
     const handleDeliveryBoxClick = () => {
+        if (pickupSelected) {
+            dispatch({ type: 'setPickupSelected', data: !pickupSelected})
+            bookingPriceCalculator.setPickupSelected(!pickupSelected)
+        }
         dispatch({ type: 'setDeliverySelected', data: !deliverySelected})
         bookingPriceCalculator.setDeliverySelected(!deliverySelected)
     }
 
     const handlePickupBoxClick = () => {
+        if (deliverySelected) {
+            dispatch({ type: 'setDeliverySelected', data: !deliverySelected})
+            bookingPriceCalculator.setDeliverySelected(!deliverySelected)
+        }
         dispatch({ type: 'setPickupSelected', data: !pickupSelected})
         bookingPriceCalculator.setPickupSelected(!pickupSelected)
     }
@@ -58,9 +83,9 @@ export default function ItemOptions() {
                     />  
                 </div> 
             </div>
-
-            {getMap()}
-
+            {(deliverySelected || pickupSelected) &&
+                getMap()
+            }
         </div>
     )
 }

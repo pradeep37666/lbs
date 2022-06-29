@@ -95,7 +95,6 @@ export default function CalendarRow({ days, isCurrentMonth }) {
                 dispatch({type: 'setConfirmedEnd', data: { dateObj: selected, timeslot: 'afternoon', pm: true}})
             }
             if(confirmedStart?.am){
-                console.log('aighsd')
                 dispatch({type: 'setConfirmedEnd', data: { dateObj: selected,timeslot: 'afternoon', pm: true}})
                 return
             }

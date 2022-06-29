@@ -20,7 +20,7 @@ export default function PostItem() {
     const [isCreateItemLoading, setIsCreateItemLoading] = useState(false)
     const { user } = useGlobalState().state
 
-    const [state, dispatch] = useReducer(postItemReducer, { 
+    const [ state, dispatch ] = useReducer(postItemReducer, { 
         currentPage: 'Basic Details',
         availability: user.available.split('').map(str => parseInt(str)),
         address: user.address,
@@ -28,7 +28,8 @@ export default function PostItem() {
     })
 
     const { 
-        title, category, pictureLinks, pictures, 
+        title, category, pictureLinks, pictures,
+        deliveryPrice, pickupPrice, deliveryOption,
         address, availability, description, price, 
         discount, delivery, currentPage,
     } = state

@@ -129,8 +129,7 @@ export default function MapsAutocomplete(props) {
     }
 
     useEffect(() => {
-        // if a place is successfully selected and lat lng are found
-        if (place && lat && lng) {
+        if (lat && lng) {
             setMapProps({
                 center: {
                     lat: lat,
@@ -138,13 +137,15 @@ export default function MapsAutocomplete(props) {
                 },
                 zoom: 12
             })
-            const selectedPlace = {
-                address_components: place.address_components,
-                formatted_address: place.formatted_address,
-                lat: lat,
-                lng: lng
+            if (place) {
+                const selectedPlace = {
+                    address_components: place.address_components,
+                    formatted_address: place.formatted_address,
+                    lat: lat,
+                    lng: lng
+                }
+                props.setAddress(selectedPlace)
             }
-            props.setAddress(selectedPlace)
         }
     }, [lat, lng])
 

@@ -98,10 +98,8 @@ export default function CalendarItem({ day, index, onClick, isCurrentMonth }) {
             >
                 <span className="CalendarItemText" style={{ height: 'auto'}}>{day.getDate()}</span>
                 <div className="ItemAvailabilityContainer">
-                    <div className={`${booked.am ? 'ItemBooked' : null}
-                    ${ availability && !availability.am ? 'ItemAMUnavailable' : 'ItemAMAvailable'}`}/>
-                    <div className={`${booked.pm ? 'ItemBooked' : null}
-                    ${ availability && !availability.pm ? 'ItemPMUnavailable' : 'ItemPMAvailable'}`} />
+                    <div className={`${booked.am ? 'ItemBooked' : ''} ${ availability && !availability.am ? 'ItemAMUnavailable' : 'ItemAMAvailable'}`}/>
+                    <div className={`${booked.pm ? 'ItemBooked' : ''} ${ availability && !availability.pm ? 'ItemPMUnavailable' : 'ItemPMAvailable'}`} />
                 </div>
             </div>
         </div>

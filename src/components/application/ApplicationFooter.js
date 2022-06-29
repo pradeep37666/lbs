@@ -1,12 +1,8 @@
 import React, { useContext } from 'react'
-import Arrow from '../../assets/Icons/Arrow'
-import { ApplicationContext } from '../../pages/application/Application'
-
-import getDateSuffix from '../../util/dateUtils/getDateSuffix'
-import useGlobalState from '../../util/useGlobalState'
 import './ApplicationFooter.css'
+import { ApplicationContext } from '../../pages/application/Application'
+import useGlobalState from '../../util/useGlobalState'
 import Button from '../Button/Button'
-import { pick } from 'query-string'
 import BookingDatesPanel from '../BookingDatesPanel/BookingDatesPanel'
 
 export default function ApplicationFooter() {
@@ -14,8 +10,6 @@ export default function ApplicationFooter() {
     const { user } = globalState
     const  { state, dispatch, handleNextPage } = useContext(ApplicationContext)
     const { page, item, confirmedStart, confirmedEnd, deliverySelected, pickupSelected, address, currentYear, bookingPriceCalculator } = state
-    const dayArray = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
-    const monthArray = ["January", "February", "March", "April","May", "June", "July", "August", "September", "October", "November", "December"]
 
     const clearDates = () => {
         dispatch({ type: 'setConfirmedEnd', data: null})
@@ -26,18 +20,21 @@ export default function ApplicationFooter() {
     const handleClick = () => {
         let route
         if(page === 'ItemAvailability'){ 
-            route = item.deliveryPrice > 0 ? 'ItemOptions' : 'ItemOverview'
+            route = item.deliveryPrice > 0 
+            ? 'ItemOptions' 
+            : 'ItemOverview'
         }
         if(page === 'ItemOptions') {
-            if((deliverySelected || pickupSelected) && (!address && !user?.address) ){
-                return
-            }
+            if(
+                (deliverySelected || pickupSelected) && 
+                (!address && !user?.address) 
+            ){ return }
             route = 'ItemOverview'
         }
         if(page === 'ItemOverview') route = 'ItemAvailability'
         handleNextPage(route)
     }
-    console.log(deliverySelected, pickupSelected)
+    
     return (
         <div className="ApplicationFooter">
          <div className="ApplicationFooterContainer">
@@ -57,11 +54,14 @@ export default function ApplicationFooter() {
                 onClick={clearDates}
                 invertedColors
                 style={{ marginRight: '0.5rem'}}
-                />}
+                />
+                }
                 <Button 
                 onClick={handleClick}
                 text="Next"
-                isDisabled={page === 'ItemOptions' && (!address && (deliverySelected || pickupSelected))}
+                isDisabled={page === 'ItemOptions' && 
+                    (!address && (deliverySelected || pickupSelected))
+                }
                 />
             </div>
             
