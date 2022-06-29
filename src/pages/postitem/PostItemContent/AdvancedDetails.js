@@ -4,17 +4,30 @@ import LBSSwitch from '../../../components/LBSSwitch/LBSSwitch';
 import { Fade } from '@material-ui/core';
 import Button from '../../../components/Button/Button';
 import ValidationTextInput from '../../../components/FormComponents/ValidationTextInput';
-import CategorySelect from '../../../components/categorySelect/categorySelect';
 import { DELIVERY_OPTIONS } from '../../../assets/Data/LBSSelectOptions';
 import LBSSelectBox from '../../../components/LBSSelectBox/LBSSelectBox';
 
 export default function AdvancedDetails({ context }) {
     const { state, dispatch } = useContext(context)
     const { 
-        description, price, discount, delivery,
+        description, price, discount,
         deliveryPrice, pickupPrice, deliveryOption,
     } = state
     const [isDiscount, setIsDiscount] = useState(false)
+
+    const disabledDeliveryOption = () => {
+        if (!deliveryOption) return true
+        if (deliveryOption === 'BOTH') {
+            if (!deliveryPrice || !pickupPrice) return true
+        }
+        if (deliveryOption === 'DELIVERY') {
+            if (!deliveryPrice) return true
+        }
+        if (deliveryOption === 'PICKUP') {
+            if (!pickupPrice) return true
+        }
+        return false
+    }
 
     return (
         <div className="RegistrationWrapper">
@@ -103,17 +116,36 @@ export default function AdvancedDetails({ context }) {
                     value={deliveryOption ?? ''}
                     onChange={option => dispatch({type: 'setDeliveryOption', data: option})}
                 />
-                <div className="LoginHeader">Price ($)</div>
-                <ValidationTextInput 
-                inputType="number"
-                value={delivery}
-                onChange={(e) => dispatch({ type: 'setDelivery', data: e.target.value })}
-                placeholder="$10"
-                />
+
+                {((deliveryOption === 'DELIVERY') ||
+                 (deliveryOption === 'BOTH')) &&
+                <>
+                    <div className="LoginHeader">Delivery Fee ($)</div>
+                    <ValidationTextInput 
+                    inputType="number"
+                    value={deliveryPrice}
+                    onChange={(e) => dispatch({ type: 'setDeliveryPrice', data: e.target.value })}
+                    placeholder="$10"
+                    />
+                </>
+                }
+
+                {((deliveryOption === 'PICKUP') ||
+                 (deliveryOption === 'BOTH')) &&
+                <>
+                    <div className="LoginHeader">Pickup Fee ($)</div>
+                    <ValidationTextInput 
+                    inputType="number"
+                    value={pickupPrice}
+                    onChange={(e) => dispatch({ type: 'setPickupPrice', data: e.target.value })}
+                    placeholder="$10"
+                    />
+                </>
+                }
                 <Button 
                 text="Next"
                 onClick={() => dispatch({ type: 'setCurrentPage', data: 'Item Location'})}
-                isDisabled={!description || !price }
+                isDisabled={!description || !price || disabledDeliveryOption()}
                 />
             </div>
 

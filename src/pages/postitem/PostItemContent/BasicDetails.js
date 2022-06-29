@@ -7,10 +7,6 @@ import ValidationTextInput from '../../../components/FormComponents/ValidationTe
 export default function BasicDetails({ context }) {
     const { state, dispatch } = useContext(context)
     const { title, category } = state
-
-    useEffect(() => {
-        console.log({category})
-    },[category])
     
     return (
         <div className="RegistrationWrapper">

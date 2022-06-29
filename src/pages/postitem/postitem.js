@@ -21,7 +21,7 @@ export default function PostItem() {
     const { user } = useGlobalState().state
 
     const [ state, dispatch ] = useReducer(postItemReducer, { 
-        currentPage: 'Basic Details',
+        currentPage: 'Advanced Details',
         availability: user.available.split('').map(str => parseInt(str)),
         address: user.address,
         pictures: []
