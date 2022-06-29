@@ -11,12 +11,12 @@ export default function CalendarRow({ days, isCurrentMonth }) {
     const { state, dispatch } = useContext(ApplicationContext)
     const { selected, confirmedStart, confirmedEnd, yearAvailability } = state
     
-    const [expanded, setExpanded] = useState(false)
-    const [errorHidden, setErrorHidden] = useState(true)
-    const [morningActive, setMorningActive] = useState(false)
-    const [morningUnavailable, setMorningUnavailable] = useState(false)
-    const [afternoonUnavailable, setAfternoonUnavailable] = useState(false)
-    const [afternoonActive, setAfternoonActive] = useState(false)
+    const [ expanded, setExpanded ] = useState(false)
+    const [ errorHidden, setErrorHidden ] = useState(true)
+    const [ morningActive, setMorningActive ] = useState(false)
+    const [ morningUnavailable, setMorningUnavailable ] = useState(false)
+    const [ afternoonUnavailable, setAfternoonUnavailable ] = useState(false)
+    const [ afternoonActive, setAfternoonActive ] = useState(false)
 
     useEffect(() => {
         setErrorHidden(true)
@@ -34,7 +34,6 @@ export default function CalendarRow({ days, isCurrentMonth }) {
     },[selected, confirmedStart, confirmedEnd])
 
     const handleItemClick = ({ day, availability, booked }) => { 
-        // Clicking on a day that is already selected
         if(selected && compareDates(selected, day)){
             dispatch({ type: 'setSelected', data: null})
             return
@@ -46,7 +45,7 @@ export default function CalendarRow({ days, isCurrentMonth }) {
     
     const handleMorningClick = () => {
         if(confirmedStart && !compareDates(selected, confirmedStart.dateObj)){
-            const valid = validateTimeSlots({ am: true})
+            const valid = validateTimeSlots({ am: true })
             if(!valid) return 
         }
         // morning has already been selected
@@ -82,20 +81,6 @@ export default function CalendarRow({ days, isCurrentMonth }) {
         // No start selected, set start point
         dispatch({type: 'setConfirmedStart', data: { dateObj: selected,timeslot: 'morning', am: true}})
         dispatch({type: 'setConfirmedEnd', data: { dateObj: selected,timeslot: 'morning', am: true, sameTimeSlot: true}})
-    }
-
-    const validateTimeSlots = ({ am }) => {
-        const startIndex = getDateIndex(confirmedStart)
-        console.log(confirmedStart.dateObj, startIndex * 2)
-        const endIndex = getDateIndex({ dateObj: selected, timeslot: am ? 'morning' : 'afternoon'})
-        const timeSlot = yearAvailability.slice(startIndex, endIndex)
-
-        if(timeSlot.indexOf('0') > -1) { 
-            setExpanded(false)
-            setErrorHidden(false)
-            return false
-        }
-        return true
     }
 
     const handleAfternoonClick = () => {
@@ -136,6 +121,19 @@ export default function CalendarRow({ days, isCurrentMonth }) {
         dispatch({type: 'setConfirmedStart', data: { dateObj: selected,timeslot: 'afternoon', pm: true }})
         dispatch({type: 'setConfirmedEnd', data: { dateObj: selected, timeslot: 'afternoon',pm: true, sameTimeSlot: true}})
     }
+
+    const validateTimeSlots = ({ am }) => {
+        const startIndex = getDateIndex(confirmedStart)
+        const endIndex = getDateIndex({ dateObj: selected, timeslot: am ? 'morning' : 'afternoon'})
+        const timeSlot = yearAvailability.slice(startIndex, endIndex)
+
+        if(timeSlot.indexOf('0') > -1) { 
+            setExpanded(false)
+            setErrorHidden(false)
+            return false
+        }
+        return true
+    }
     
     const handleMorningLogic = () => {
         if(confirmedStart && selected && compareDates(selected, confirmedStart.dateObj) && confirmedStart?.am
@@ -154,12 +152,18 @@ export default function CalendarRow({ days, isCurrentMonth }) {
         }
         setAfternoonActive(false)
     }
+
     return (
         <div className="CalendarRowErrorContainer">
-            {!errorHidden && <ValidationPopup errorText={'error'} errorHeader='Invalid Time Slot' hide={errorHidden}/>}
+            {!errorHidden && 
+                <ValidationPopup 
+                    errorText={'error'} 
+                    errorHeader='Invalid Time Slot' 
+                    hide={errorHidden}
+                />
+            }
             <div className={`CalendarRow ${expanded && 'CalendarRowExpanded'}`}>
-                { days.map((day, index) => {
-                    return (
+                {days.map((day, index) => (
                     <CalendarItem 
                     onClick={handleItemClick}
                     day={day} 
@@ -167,8 +171,8 @@ export default function CalendarRow({ days, isCurrentMonth }) {
                     key={index}
                     isCurrentMonth={isCurrentMonth}
                     unavailable={isCurrentMonth}
-                    />)
-                })}
+                    />
+                ))}
                 { expanded && 
                 <div className="CalendarPadding">
                     <TimeSlotPicker 

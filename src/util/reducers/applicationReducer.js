@@ -87,7 +87,6 @@ const applicationReducer = (state, action) => {
         default : {
             return state
         }
-        
     }
 }
 

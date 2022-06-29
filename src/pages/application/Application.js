@@ -26,7 +26,11 @@ const initialState = {
 }
 export default function Application() {
     const [state, dispatch] = useReducer(applicationReducer, initialState)
-    const { page, item, confirmedStart, confirmedEnd, bookingPriceCalculator } = state
+    const tempYearlyAvailability = Array(730).fill(1)
+    const { 
+        page, item, confirmedStart, 
+        confirmedEnd, bookingPriceCalculator 
+    } = state
     const { itemId } = useParams()
 
     useEffect(() => {
@@ -53,7 +57,7 @@ export default function Application() {
         if(status !== 200) return
         dispatch({ type: 'setItem', data: data.item})
         dispatch({ type: 'setItemAvailability', data: data.item.weekly_availability})
-        dispatch({ type: 'setYearAvailability', data: data.availability})
+        dispatch({ type: 'setYearAvailability', data: tempYearlyAvailability})
     }
     
     const renderApplicaiton = () => {

@@ -6,15 +6,17 @@ import compareDates from '../../util/compareDates'
 import getAvailability from '../../util/getAvailability'
 
 export default function CalendarItem({ day, index, onClick, isCurrentMonth }) {
-    const [isApplicationPeriod, setIsApplicationPeriod] = useState(false)
-    const [booked, setBooked] = useState(false)
-    const [availability, setAvailability] = useState()
+    const [ isApplicationPeriod, setIsApplicationPeriod ] = useState(false)
+    const [ booked, setBooked ] = useState(false)
+    const [ availability, setAvailability ] = useState()
     
     const { state } = useContext(ApplicationContext)
-    const {selected, currentDate, confirmedStart, confirmedEnd, yearAvailability, itemAvailability } = state
+    const { 
+        selected, currentDate, confirmedStart, 
+        confirmedEnd, yearAvailability, itemAvailability 
+    } = state
 
     useEffect(() => {
-        
         if(!yearAvailability) return
         const { availability, booked } = getAvailability(day, itemAvailability, yearAvailability)
         setAvailability(availability)

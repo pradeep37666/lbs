@@ -1,6 +1,5 @@
 import getDateIndex from "./dateUtils/getDateIndex"
 
-
 const getAvailability = (dateObj, itemAvailabilityString, yearAvailabilityString) => {
 
     const day = dateObj.getDay()
@@ -39,5 +38,3 @@ const getAvailability = (dateObj, itemAvailabilityString, yearAvailabilityString
         } }
 }
 export default getAvailability
-
-// 1 1 1 1 1 1 1 1 1 0 0 0 0 0 
