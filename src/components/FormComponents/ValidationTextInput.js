@@ -31,6 +31,7 @@ export default function ValidationTextInput({ onChange, errorMessage, label, pla
                         value={value}
                         type={inputType}
                         step="1"
+                        onWheel={e => e.target.blur()}
                         />
                     )}
                     { errorMessage && !inLineError ? (

@@ -3,9 +3,9 @@ import './yourshed.css'
 import { Link } from 'react-router-dom'
 import PageWrapper from '../../components/pageWrapper/pageWrapper'
 import UserShedNav from '../../components/UserShedNav/UserShedNav'
-import ItemCard from '../../components/itemCard/itemCard';
-import { isMobile } from 'react-device-detect';
-import useGlobalState from '../../util/useGlobalState';
+import ItemCard from '../../components/itemCard/itemCard'
+import { isMobile } from 'react-device-detect'
+import useGlobalState from '../../util/useGlobalState'
 import Instance from '../../util/axios'
 
 export default function Yourshed() {
@@ -17,7 +17,7 @@ export default function Yourshed() {
 
     useEffect(()=>{
         getUserItems(user.id)
-    },[])
+    },[user])
 
     const getUserItems = async (userId) => {
         const { data } = await Instance.get(`users/${userId}/items`)

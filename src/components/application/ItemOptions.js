@@ -14,43 +14,33 @@ export default function ItemOptions() {
         deliverySelected, pickupSelected 
     } = state
 
+    useEffect(() => {
+        console.log({item})
+    },[item])
+
     const setAddress = (addressObj) => {
         dispatch({ type: 'setAddress', data: addressObj.formatted_address})
     }
 
     const getMap = () => {
-        if (user.address && deliverySelected) 
+        if (user.address && (deliverySelected || pickupSelected)) {
             return <MapsAutocomplete 
                 setAddress={setAddress} 
                 defaultLocation={user.address.fullAddress} 
                 defaultLat={user.address.lat} 
                 defaultLng={user.address.lng}
                 />
-        if (item.address && pickupSelected) 
-            return <MapsAutocomplete 
-                setAddress={setAddress} 
-                defaultLocation={item.address.fullAddress} 
-                defaultLat={item.address.lat} 
-                defaultLng={item.address.lng}
-                />
-        else 
+        } else {
             return <MapsAutocomplete setAddress={setAddress}/>
+        }
     }
 
     const handleDeliveryBoxClick = () => {
-        if (pickupSelected) {
-            dispatch({ type: 'setPickupSelected', data: !pickupSelected})
-            bookingPriceCalculator.setPickupSelected(!pickupSelected)
-        }
         dispatch({ type: 'setDeliverySelected', data: !deliverySelected})
         bookingPriceCalculator.setDeliverySelected(!deliverySelected)
     }
 
     const handlePickupBoxClick = () => {
-        if (deliverySelected) {
-            dispatch({ type: 'setDeliverySelected', data: !deliverySelected})
-            bookingPriceCalculator.setDeliverySelected(!deliverySelected)
-        }
         dispatch({ type: 'setPickupSelected', data: !pickupSelected})
         bookingPriceCalculator.setPickupSelected(!pickupSelected)
     }
@@ -62,26 +52,62 @@ export default function ItemOptions() {
                 <span>Options to help you borrow better</span>
             </div>
             <div className="DeliveryOptionsContainer">
-                <div className="OptionsItemContainer">
-                    <div>
-                        <span className="OptionsItemHeader">Delivery <span className="OptionsPrice">${item.deliveryPrice}</span></span>
-                        <p>Have your item delivered to you</p>
+                {item.deliveryOption === 'BOTH' &&
+                <>
+                    <div className="OptionsItemContainer">
+                        <div>
+                            <span className="OptionsItemHeader">
+                                Delivery <span className="OptionsPrice">${item.deliveryPrice}</span>
+                            </span>
+                            <p>Have your item delivered to you</p>
+                        </div>
+                        <CheckBox 
+                        checked={deliverySelected} 
+                        onClick={handleDeliveryBoxClick}
+                        /> 
                     </div>
-                    <CheckBox 
-                    checked={deliverySelected} 
-                    onClick={handleDeliveryBoxClick}
-                    /> 
-                </div>
-                <div className="OptionsItemContainer">
-                <div >
-                        <span className="OptionsItemHeader"> Pickup <span className="OptionsPrice">${item.deliveryPrice}</span></span>
-                        <p>Have your item picked up from you</p>
+                    <div className="OptionsItemContainer">
+                        <div >
+                            <span className="OptionsItemHeader"> 
+                                Pickup <span className="OptionsPrice">${item.pickupPrice}</span>
+                            </span>
+                            <p>Have your item picked up from you</p>
+                        </div>
+                        <CheckBox 
+                        checked={pickupSelected} 
+                        onClick={handlePickupBoxClick}
+                        />  
+                    </div> 
+                </>
+                }
+                {item.deliveryOption === 'DELIVERY' &&
+                    <div className="OptionsItemContainer">
+                        <div>
+                            <span className="OptionsItemHeader">
+                                Delivery <span className="OptionsPrice">${item.deliveryPrice}</span>
+                            </span>
+                            <p>Have your item delivered to you</p>
+                        </div>
+                        <CheckBox 
+                        checked={deliverySelected} 
+                        onClick={handleDeliveryBoxClick}
+                        /> 
                     </div>
-                    <CheckBox 
-                    checked={pickupSelected} 
-                    onClick={handlePickupBoxClick}
-                    />  
-                </div> 
+                }
+                {item.deliveryOption === 'PICKUP' &&
+                    <div className="OptionsItemContainer">
+                        <div >
+                            <span className="OptionsItemHeader"> 
+                                Pickup <span className="OptionsPrice">${item.pickupPrice}</span>
+                            </span>
+                            <p>Have your item picked up from you</p>
+                        </div>
+                        <CheckBox 
+                        checked={pickupSelected} 
+                        onClick={handlePickupBoxClick}
+                        />  
+                    </div> 
+                }
             </div>
             {(deliverySelected || pickupSelected) &&
                 getMap()

@@ -1,6 +1,5 @@
 import React from 'react'
-import { ReactComponent as Logo } from '../../../assets/Logos/LogoRed.svg';
-import Mower from '../../../assets/Images/ATVMower.png'
+import { ReactComponent as Logo } from '../../../assets/Logos/LogoRed.svg'
 import Location from '../../../assets/Icons/LocationIcon.svg'
 import Delivery from '../../../assets/Icons/DeliveryIcon.svg'
 import Category from '../../../assets/Icons/CategoriesIcon.svg'
@@ -23,7 +22,6 @@ export default function Complete(props) {
             <div className="LoginMain LoginMainNoMarg">
                 <div className="PostItem__Complete__ItemPreview">
                     <img src={props.picture.preview} alt={props.title} className="PostItem__Complete__ItemImage" />
-                    {/* <img src={props.picture.preview} alt={props.title} className="PostItem__Complete__ItemImage"/> */}
                 </div>
                 <div className="PostItem__Complete__ItemDetails__Container">
                     <div className="ItemNameText">{props.title}</div>
@@ -36,13 +34,74 @@ export default function Complete(props) {
                         {props.city}
                     </div>
                     <div className="LocationDeliveryCategory">
-                        <div className="LDCIconContainer">
-                            <img src={Delivery} alt="" className="LDCIcon" style={{ height: '22px' }} />
+                        {props.deliveryOption === 'BOTH' && 
+                        <div style={{display: 'flex', flexDirection: 'column', width: '100%'}}>
+                            <div style={{display: 'flex', flexDirection: 'row', fontSize: '0.9em'}}>
+                                <div className={`${props.deliveryPrice > 0 ? 'LDCIconContainer' : 'Hide'}`}>
+                                    <img src={Delivery} alt="" className="LDCIcon" style={{ height: '22px' }} />
+                                </div>
+                                <div>
+                                    Delivery Available&nbsp;
+                                    <span className={`${props.deliveryPrice > 0 ? '' : 'Hide'}`}>
+                                        /
+                                    </span>
+                                    <span className={`DeliveryFeeText ${props.deliveryPrice > 0 ? '' : 'Hide'}`}>
+                                        &nbsp;${props.deliveryPrice} Delivery Fee
+                                    </span>
+                                </div>
+                            </div>
+                            <div style={{display: 'flex', flexDirection: 'row', fontSize: '0.9em'}}>
+                                <div className={`${props.pickupPrice > 0 ? 'LDCIconContainer' : 'Hide'}`}>
+                                    <img src={Delivery} alt="" className="LDCIcon" style={{ height: '22px' }} />
+                                </div>
+                                <div>
+                                    Pickup Available&nbsp;
+                                    <span className={`${props.pickupPrice > 0 ? '' : 'Hide'}`}>
+                                        /
+                                    </span>
+                                    <span className={`DeliveryFeeText ${props.pickupPrice > 0 ? '' : 'Hide'}`}>
+                                        &nbsp;${props.pickupPrice} Pickup Fee
+                                    </span>
+                                </div>
+                            </div>
                         </div>
-                        <div>
-                        {props.delivery > 0 ? 'Delivery Available' : 'Pickup only'}&nbsp;<span className={`${props.delivery > 0 ? '' : 'Hide'}`}>/</span><span className={`DeliveryFeeText ${props.delivery > 0 ? '' : 'Hide'}`}>&nbsp;${props.delivery} Delivery Fee</span>
+                        }
+                        {props.deliveryOption === 'DELIVERY' && 
+                        <div style={{display: 'flex', flexDirection: 'column', width: '100%'}}>
+                            <div style={{display: 'flex', flexDirection: 'row', fontSize: '0.9em'}}>
+                                <div className={`${props.deliveryPrice > 0 ? 'LDCIconContainer' : 'Hide'}`}>
+                                    <img src={Delivery} alt="" className="LDCIcon" style={{ height: '22px' }} />
+                                </div>
+                                <div>
+                                    Delivery Only&nbsp;
+                                    <span className={`${props.deliveryPrice > 0 ? '' : 'Hide'}`}>
+                                        /
+                                    </span>
+                                    <span className={`DeliveryFeeText ${props.deliveryPrice > 0 ? '' : 'Hide'}`}>
+                                        &nbsp;${props.deliveryPrice} Delivery Fee
+                                    </span>
+                                </div>
+                            </div>
                         </div>
-                        
+                        }
+                        {props.deliveryOption === 'PICKUP' && 
+                        <div style={{display: 'flex', flexDirection: 'column', width: '100%'}}>
+                            <div style={{display: 'flex', flexDirection: 'row', fontSize: '0.9em'}}>
+                                <div className={`${props.pickupPrice > 0 ? 'LDCIconContainer' : 'Hide'}`}>
+                                    <img src={Delivery} alt="" className="LDCIcon" style={{ height: '22px' }} />
+                                </div>
+                                <div>
+                                    Pickup Only&nbsp;
+                                    <span className={`${props.pickupPrice > 0 ? '' : 'Hide'}`}>
+                                        /
+                                    </span>
+                                    <span className={`DeliveryFeeText ${props.pickupPrice > 0 ? '' : 'Hide'}`}>
+                                        &nbsp;${props.pickupPrice} Pickup Fee
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        }
                     </div>
                     <div className={'LocationDeliveryCategory'}>
                         <div className="LDCIconContainer">

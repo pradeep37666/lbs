@@ -21,7 +21,7 @@ export default function PostItem() {
     const { user } = useGlobalState().state
 
     const [ state, dispatch ] = useReducer(postItemReducer, { 
-        currentPage: 'Advanced Details',
+        currentPage: 'Basic Details',
         availability: user.available.split('').map(str => parseInt(str)),
         address: user.address,
         pictures: []
@@ -31,7 +31,7 @@ export default function PostItem() {
         title, category, pictureLinks, pictures,
         deliveryPrice, pickupPrice, deliveryOption,
         address, availability, description, price, 
-        discount, delivery, currentPage,
+        discount, currentPage,
     } = state
 
     const [itemID, setItemID] = useState(null)
@@ -50,8 +50,10 @@ export default function PostItem() {
             images: pictureLinks,
             description,
             price,
-            deliveryPrice: delivery ? delivery : 0,
-            discount: discount ? discount : 0,
+            deliveryPrice: deliveryPrice ?? 0,
+            pickupPrice: pickupPrice ?? 0,
+            deliveryOption,
+            discount: discount ?? 0,
             address: {
                 ...formattedAddress,
                 lat: address.lat,
@@ -80,6 +82,9 @@ export default function PostItem() {
     }
 
     const renderCurrentPage = () => {
+        const formattedAddress = address?.address_components 
+            ? parseAddressComponent(address.address_components)
+            : address
         switch (currentPage) {
             case 'Basic Details':
                 return <BasicDetails context={FormContext} />
@@ -100,9 +105,11 @@ export default function PostItem() {
                 title={title}
                 picture={pictures[0]}
                 price={price}
-                city={address.terms ? getSuburb(address.terms) : user.suburb}
+                city={address.suburb}
                 category={category} 
-                delivery={delivery}
+                deliveryPrice={deliveryPrice}
+                pickupPrice={pickupPrice}
+                deliveryOption={deliveryOption}
                 itemID={itemID}             
                 />
         }

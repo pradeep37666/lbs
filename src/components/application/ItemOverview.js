@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react'
+import './ItemOverview.css'
 import { ApplicationContext } from '../../pages/application/Application'
 import checkIfLeapYear from '../../util/dateUtils/checkIfLeapYear'
-import './ItemOverview.css'
 import getDateIndex from '../../util/dateUtils/getDateIndex'
 import Arrow from '../../assets/Icons/Arrow'
 import ApplicationItemCard from './ApplicationItemCard'
@@ -12,21 +12,23 @@ import useGlobalState from '../../util/useGlobalState'
 import axios from 'axios'
 import Button from '../Button/Button'
 import getDateSuffix from '../../util/dateUtils/getDateSuffix'
+import { fullNameDayArray, monthArray } from '../../assets/Data/LBSArray'
 
 export default function ItemOverview() {
-    const [isLoading, setIsLoading] = useState(false)
+    const [ isLoading, setIsLoading ] = useState(false)
     const { state, dispatch } = useContext(ApplicationContext)
     const globalState = useGlobalState()
     const user  = globalState.state.user
-    const { item, confirmedEnd, confirmedStart, deliverySelected, pickupSelected, address, currentYear, bookingPriceCalculator, currentMonth } = state
+    const { 
+        item, confirmedEnd, confirmedStart, 
+        deliverySelected, pickupSelected, address, 
+        currentYear, bookingPriceCalculator, currentMonth 
+    } = state
 
     const history = useHistory()
-    const dayArray = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
-    const monthArray = ["January", "February", "March", "April","May", "June", "July", "August", "September", "October", "November", "December"]
     
     const saveBooking = async () => {
         const bookingInfo = getBookingInfo()
-        console.log('booking info', bookingInfo)
         setIsLoading(true)
         try{
             await instance.post(`booking/save/${confirmedStart.dateObj.getTime()}`, bookingInfo )
@@ -48,7 +50,6 @@ export default function ItemOverview() {
 
         const startIndex = (getDateIndex(confirmedStart))
         let endIndex = (getDateIndex(confirmedEnd))
-        console.log('start', startIndex, 'end', endIndex)
 
         let bookingYear = currentYear
         if(currentMonth >= 10 && startIndex < 200){
@@ -173,7 +174,7 @@ export default function ItemOverview() {
                         <p>Collect</p>
                         <div>
                             <span className="ApplicationFooterTime">{confirmedStart?.am ? '8:00am' : '1:00pm'} </span>
-                            <span>{dayArray[confirmedStart.dateObj.getDay()]}</span>
+                            <span>{fullNameDayArray[confirmedStart.dateObj.getDay()]}</span>
                         </div>
                         <div>
                             <span>{ getDateSuffix(confirmedStart.dateObj) } </span>
@@ -187,7 +188,7 @@ export default function ItemOverview() {
                         <p>Return</p>
                         <div>
                             <span className="ApplicationFooterTime">{confirmedEnd?.am ? '12:00pm' : '5:00pm'} </span>
-                            <span>{dayArray[confirmedEnd.dateObj.getDay()]}</span>
+                            <span>{fullNameDayArray[confirmedEnd.dateObj.getDay()]}</span>
                         </div>
                         <div>
                             <span>{ getDateSuffix(confirmedEnd.dateObj) } </span>
@@ -204,8 +205,6 @@ export default function ItemOverview() {
             isLoading={isLoading}
             style={{ width: '75%', alignSelf: 'center', marginTop: '1rem'}}
             />
-                
-            
             </div>
     )
 }

@@ -17,4 +17,14 @@ const dayArray = [
     'Su','Mo','Tu','We','Th','Fr','Sa' 
 ]
 
-export { monthArray, dayArray }
+const fullNameDayArray = [
+    "Sunday", 
+    "Monday", 
+    "Tuesday", 
+    "Wednesday", 
+    "Thursday", 
+    "Friday", 
+    "Saturday"
+]
+
+export { monthArray, dayArray, fullNameDayArray }
