@@ -41,7 +41,7 @@ export default function AvailabilityModal({ item, onClick, availability }) {
 
     return (
         <ApplicationContext.Provider value={{ state }}>
-            <div className="ApplicationModalWrapper" onClick={onClick}>
+            <div className="Wrapper" onClick={onClick}>
                 <div className="AvailabilityModalMain"  onClick={(e) => e.stopPropagation()}>
                     { renderCalendars() }
                 </div>

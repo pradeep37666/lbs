@@ -12,4 +12,16 @@ Instance.interceptors.request.use(async (req) => {
     return req
 })
 
+export const CometChatInstance = axios.create({
+    baseURL: 'https://192491b43d1b6230.api-US.cometchat.io/v3.0',
+    timeout: 18000,
+})
+
+CometChatInstance.interceptors.request.use(async (req) => {
+    const token = localStorage.getItem('LBSToken')
+    if (!token) return req
+    req.headers.Authorization = `Bearer ${token}`
+    return req
+})
+
 export default Instance

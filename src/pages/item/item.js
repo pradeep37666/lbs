@@ -110,7 +110,7 @@ export default function Item() {
             :   <div className="ItemMainWrapper">
                     <ApplicationModal 
                         item={item} 
-                        onClick={() => setModalVisible(true)} 
+                        onClick={() => setModalVisible(false)} 
                         open={modalVisible} 
                     />
                     <div className="ItemInfoWrapper">

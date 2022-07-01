@@ -10,6 +10,7 @@ import ApplicationFooter from '../../components/application/ApplicationFooter'
 import applicationReducer from '../../util/reducers/applicationReducer'
 import BookingPriceCalculator from '../../util/BookingPriceCalculator'
 import { useParams } from 'react-router-dom'
+import checkIfLeapYear from '../../util/dateUtils/checkIfLeapYear'
 
 export const ApplicationContext = React.createContext()
 
@@ -25,12 +26,14 @@ const initialState = {
     pickupSelected: false
 }
 export default function Application() {
-    const [state, dispatch] = useReducer(applicationReducer, initialState)
-    const yearlyAvailability = Array(728).fill(1)
-    const { 
-        page, item, confirmedStart, 
-        confirmedEnd, bookingPriceCalculator 
-    } = state
+    const [ state, dispatch ] = useReducer(applicationReducer, initialState)
+    const today = new Date()
+    const currentDate = today.getDate()
+    const currentMonth = today.getMonth()
+    const currentYear = today.getFullYear()
+    const totalDays = checkIfLeapYear(currentYear) ? 730 : 732
+    const yearlyAvailability = Array(totalDays).fill(1)
+    const { page, item, confirmedStart, confirmedEnd } = state
     const { itemId } = useParams()
 
     useEffect(() => {
@@ -43,10 +46,6 @@ export default function Application() {
     
     useEffect(() => {
         getItem()
-        const today = new Date()
-        const currentDate = today.getDate()
-        const currentMonth = today.getMonth()
-        const currentYear = today.getFullYear()
         dispatch({ type: 'setCurrentDate', data: currentDate})
         dispatch({ type: 'setCurrentMonth', data: currentMonth})
         dispatch({ type: 'setCurrentYear', data: currentYear})
@@ -94,6 +93,5 @@ export default function Application() {
                 </PageWrapper> 
             </div>
         </ApplicationContext.Provider>
-        
     )
 }

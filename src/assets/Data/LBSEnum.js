@@ -5,4 +5,21 @@ const FQA_TABS = {
     ACCOUNT: 'Account',
 }
 
-export { FQA_TABS }
+const BOOKING_STATUS = {
+    PENDING: 'PENDING_APPROVAL',
+    APPROVED: 'APPROVED',
+    REJECTED: 'REJECTED',
+}
+
+const DELIVERY_OPTIONS = {
+    DELIVERY: 'DELIVERY', 
+    PICKUP: 'PICKUP', 
+    BOTH: 'BOTH', 
+    NONE: 'NONE',
+}
+
+export { 
+    FQA_TABS,
+    BOOKING_STATUS,
+    DELIVERY_OPTIONS,
+}
