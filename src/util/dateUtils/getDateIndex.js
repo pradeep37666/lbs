@@ -1,6 +1,5 @@
 import checkIfLeapYear from "./checkIfLeapYear"
 
-
 const getDateIndex = (bookingTime) => {
     const { dateObj } = bookingTime
     const year = dateObj.getYear()

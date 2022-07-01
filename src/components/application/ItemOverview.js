@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import './ItemOverview.css'
 import { ApplicationContext } from '../../pages/application/Application'
 import checkIfLeapYear from '../../util/dateUtils/checkIfLeapYear'
@@ -29,98 +29,98 @@ export default function ItemOverview() {
     
     const saveBooking = async () => {
         const bookingInfo = getBookingInfo()
-        setIsLoading(true)
-        try{
-            await instance.post(`booking/save/${confirmedStart.dateObj.getTime()}`, bookingInfo )
-            await sendEnquiry(item)
-            setIsLoading(false)
-            history.push({ 
-                pathname: `/item/${item.i_id}`, 
-                state: { bookingCreated: true, price: bookingInfo.price }
-            })
-        } catch(e) {
-            setIsLoading(false)
-            console.log(e.response)
-        }
+        // setIsLoading(true)
+        // try{
+        //     await instance.post(`booking/save/${confirmedStart.dateObj.getTime()}`, bookingInfo )
+        //     await sendEnquiry(item)
+        //     setIsLoading(false)
+        //     history.push({ 
+        //         pathname: `/item/${item.i_id}`, 
+        //         state: { bookingCreated: true, price: bookingInfo.price }
+        //     })
+        // } catch(e) {
+        //     setIsLoading(false)
+        //     console.log(e.response)
+        // }
     }
 
     const getBookingInfo = () => {
-        let deliveryOption = (deliverySelected && pickupSelected) ? 'both' : deliverySelected ? 'delivery' : 'pickup'
-        if(!deliverySelected && !pickupSelected) deliveryOption = 'none'
-
+        let deliveryOption = (deliverySelected && pickupSelected) ? 'BOTH' : deliverySelected ? 'DELIVERY' : 'PICKUP'
+        if(!deliverySelected && !pickupSelected) deliveryOption = 'NONE'
         const startIndex = (getDateIndex(confirmedStart))
         let endIndex = (getDateIndex(confirmedEnd))
+        console.log({startIndex})
+        console.log({endIndex})
 
-        let bookingYear = currentYear
-        if(currentMonth >= 10 && startIndex < 200){
-            bookingYear += 1
-        }
+        // let bookingYear = currentYear
+        // if(currentMonth >= 10 && startIndex < 200){
+        //     bookingYear += 1
+        // }
 
-        if((endIndex < startIndex) && (startIndex <= checkIfLeapYear(currentYear) ? 730 : 732)){
-            endIndex += checkIfLeapYear(currentYear) ? 731 : 729
-        }
-        const bookingStartTime = new Date(confirmedStart.dateObj.getTime())
-        bookingStartTime.setHours(confirmedStart?.am ? 6 : 12)
+        // if((endIndex < startIndex) && (startIndex <= checkIfLeapYear(currentYear) ? 730 : 732)){
+        //     endIndex += checkIfLeapYear(currentYear) ? 731 : 729
+        // }
+        // const bookingStartTime = new Date(confirmedStart.dateObj.getTime())
+        // bookingStartTime.setHours(confirmedStart?.am ? 6 : 12)
 
-        const price = bookingPriceCalculator.getTotalPrice()
+        // const price = bookingPriceCalculator.getTotalPrice()
 
-        return ({
-            i_id: item.i_id,
-            io_id: item.u_id,
-            deliveryOption,
-            startDate: startIndex,
-            endDate: endIndex,
-            year: bookingYear,
-            address: address ? address : user.address ? user.address : '',
-            price   
-        })
+        // return ({
+        //     i_id: item.i_id,
+        //     io_id: item.u_id,
+        //     deliveryOption,
+        //     startDate: startIndex,
+        //     endDate: endIndex,
+        //     year: bookingYear,
+        //     address: address ? address : user.address ? user.address : '',
+        //     price   
+        // })
     }
 
 
-    const unblockUser = async () => {
-        var blockedUsersRequest = new CometChat.BlockedUsersRequestBuilder()
-        .setLimit(10)
-        .build();
-        const blockedUsers = await blockedUsersRequest.fetchNext()
-        let userId, blockedId
-        // Applicant has blocked the item owner
-        if(blockedUsers.find(user => user.uid === item.u_id)){
-            userId = user.id
-            blockedId = item.u_id
-        } else {
-            // Item owner has blocked the applicant
-            userId = item.u_id
-            blockedId = user.id
-        }
-        try{
-            
-            const res = await axios.delete(`https://192491b43d1b6230.api-US.cometchat.io/v3.0/users/${userId}/blockedusers`, {
-                headers: {
-                    'apiKey' : process.env.REACT_APP_CHAT_API_KEY
-                },
-                data: {
-                    blockedUids: [blockedId]
-                }
-            })
-            console.log('response from unblock function', res)
-            return
-        } catch(e) {
-            console.log(e)
-            return
-        }
-    }
+    // const unblockUser = async () => {
+    //     var blockedUsersRequest = new CometChat.BlockedUsersRequestBuilder()
+    //     .setLimit(10)
+    //     .build();
+    //     const blockedUsers = await blockedUsersRequest.fetchNext()
+    //     let userId, blockedId
+    //     // Applicant has blocked the item owner
+    //     if(blockedUsers.find(user => user.uid === item.u_id)){
+    //         userId = user.id
+    //         blockedId = item.u_id
+    //     } else {
+    //         // Item owner has blocked the applicant
+    //         userId = item.u_id
+    //         blockedId = user.id
+    //     }
+    //     try{
+    //         const res = await axios.delete(`https://192491b43d1b6230.api-US.cometchat.io/v3.0/users/${userId}/blockedusers`, {
+    //             headers: {
+    //                 'apiKey' : process.env.REACT_APP_CHAT_API_KEY
+    //             },
+    //             data: {
+    //                 blockedUids: [blockedId]
+    //             }
+    //         })
+    //         console.log('response from unblock function', res)
+    //         return
+    //     } catch(e) {
+    //         console.log(e)
+    //         return
+    //     }
+    // }
 
-    const sendEnquiry = async (item) => {
-        await unblockUser()
-        const textMessage = new CometChat.TextMessage(item.u_id, `${user.firstName} ${user.lastName} has enquired about your ${item.title}`, CometChat.RECEIVER_TYPE.USER)
-        textMessage.setMetadata({ enquiry: true, itemName: item.title })
-        try{
-            const res = await CometChat.sendMessage(textMessage)
-            console.log('message', res)
-        } catch(e) {
-            console.log(e)
-        }
-    }
+    // const sendEnquiry = async (item) => {
+    //     await unblockUser()
+    //     const textMessage = new CometChat.TextMessage(item.u_id, `${user.firstName} ${user.lastName} has enquired about your ${item.title}`, CometChat.RECEIVER_TYPE.USER)
+    //     textMessage.setMetadata({ enquiry: true, itemName: item.title })
+    //     try{
+    //         const res = await CometChat.sendMessage(textMessage)
+    //         console.log('message', res)
+    //     } catch(e) {
+    //         console.log(e)
+    //     }
+    // }
 
     return (
             <div className="ApplicationOverviewContainer">
@@ -128,7 +128,6 @@ export default function ItemOverview() {
                     <span className="ApplicationOverviewHeader">Application Overview</span>
                     <ApplicationItemCard item={item}/>
                 </div>
-                
                 <div>
                     <span className="ApplicationOverviewSubHeader">Itemised Costs</span>
                     <div className="ItemOverviewItemContainer">

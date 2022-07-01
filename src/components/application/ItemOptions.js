@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useMemo } from 'react'
+import React, { useContext } from 'react'
 import { ApplicationContext } from '../../pages/application/Application'
 import CheckBox from '../checkBox/CheckBox'
 import './ItemOptions.css'
@@ -14,18 +14,15 @@ export default function ItemOptions() {
         deliverySelected, pickupSelected 
     } = state
 
-    useEffect(() => {
-        console.log({item})
-    },[item])
-
     const setAddress = (addressObj) => {
-        dispatch({ type: 'setAddress', data: addressObj.formatted_address})
+        dispatch({ type: 'setAddress', data: addressObj})
     }
 
     const getMap = () => {
         if (user.address && (deliverySelected || pickupSelected)) {
             return <MapsAutocomplete 
                 setAddress={setAddress} 
+                defaultAddress={user.address}
                 defaultLocation={user.address.fullAddress} 
                 defaultLat={user.address.lat} 
                 defaultLng={user.address.lng}

@@ -87,14 +87,12 @@ export default function Application() {
                 item={item ? item : null}
                 page={page} 
                 />
-                <div className="ApplicationContainer">
-                    { renderApplicaiton() }
-                </div>
-            { confirmedStart && page !== 'ItemOverview' ? <ApplicationFooter /> : null }    
-            </PageWrapper> 
+                    <div className="ApplicationContainer">
+                        { renderApplicaiton() }
+                    </div>
+                { confirmedStart && page !== 'ItemOverview' ? <ApplicationFooter /> : null }    
+                </PageWrapper> 
             </div>
-            
-            
         </ApplicationContext.Provider>
         
     )

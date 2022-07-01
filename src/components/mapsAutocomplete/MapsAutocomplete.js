@@ -9,9 +9,9 @@ import FormControl from '@material-ui/core/FormControl'
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
-import Geocode from 'react-geocode'
 import GoogleMapReact from 'google-map-react'
 import MapMarker from '../mapMarker/mapMarker'
+import parseAddressComponent from '../../util/parseAddressComponent'
 
 const BootstrapInput = withStyles((theme) => ({
     root: {
@@ -139,13 +139,13 @@ export default function MapsAutocomplete(props) {
             })
             if (place) {
                 const selectedPlace = {
-                    address_components: place.address_components,
-                    formatted_address: place.formatted_address,
-                    lat: lat,
-                    lng: lng
+                    ...parseAddressComponent(place.address_components),
+                    lat,
+                    lng,
                 }
                 props.setAddress(selectedPlace)
             }
+            props.setAddress(props.defaultAddress)
         }
     }, [lat, lng])
 

@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import './ApplicationFooter.css'
 import { ApplicationContext } from '../../pages/application/Application'
 import useGlobalState from '../../util/useGlobalState'
@@ -9,7 +9,11 @@ export default function ApplicationFooter() {
     const globalState = useGlobalState().state
     const { user } = globalState
     const  { state, dispatch, handleNextPage } = useContext(ApplicationContext)
-    const { page, item, confirmedStart, confirmedEnd, deliverySelected, pickupSelected, address, currentYear, bookingPriceCalculator } = state
+    const { 
+        page, item, confirmedStart, confirmedEnd,
+        deliverySelected, pickupSelected, address, 
+        currentYear, bookingPriceCalculator 
+    } = state
 
     const clearDates = () => {
         dispatch({ type: 'setConfirmedEnd', data: null})
