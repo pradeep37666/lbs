@@ -1,16 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react'
 import './login.css'
-import PageWrapper from "../../components/pageWrapper/pageWrapper.js";
-import { ReactComponent as Logo } from './../../assets/Logos/LogoRed.svg';
-import { Link } from 'react-router-dom';
-import Instance from '../../util/axios';
-import { useHistory } from 'react-router-dom';
-import useGlobalState from '../../util/useGlobalState';
-import { CometChat } from '@cometchat-pro/chat';
-import { loginConstraints } from '../../util/validationConstraints';
-import ValidationTextInput from '../../components/FormComponents/ValidationTextInput';
-import { validate } from 'validate.js';
-import Button from '../../components/Button/Button';
+import PageWrapper from "../../components/pageWrapper/pageWrapper.js"
+import { ReactComponent as Logo } from './../../assets/Logos/LogoRed.svg'
+import { Link } from 'react-router-dom'
+import Instance from '../../util/axios'
+import { useHistory } from 'react-router-dom'
+import useGlobalState from '../../util/useGlobalState'
+import { CometChat } from '@cometchat-pro/chat'
+import { loginConstraints } from '../../util/validationConstraints'
+import ValidationTextInput from '../../components/FormComponents/ValidationTextInput'
+import { validate } from 'validate.js'
+import Button from '../../components/Button/Button'
 
 export default function Login() {
     const { dispatch } = useGlobalState()
