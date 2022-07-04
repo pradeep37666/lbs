@@ -10,7 +10,6 @@ import Availability from './PostItemContent/Availability'
 import Complete from './PostItemContent/Complete'
 import useGlobalState from '../../util/useGlobalState'
 import Instance from '../../util/axios'
-import getSuburb from '../../util/getSuburb'
 import postItemReducer from '../../util/reducers/postItemReducer'
 import parseAddressComponent from '../../util/parseAddressComponent'
  

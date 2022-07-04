@@ -1,30 +1,25 @@
 import React, { useContext} from 'react'
-
-import DisabledCalendarItem from './DisabledCalendarItem';
-import DisabledCalendarRow from './DisabledCalendarRow';
+import DisabledCalendarItem from './DisabledCalendarItem'
+import DisabledCalendarRow from './DisabledCalendarRow'
 import { ApplicationContext } from '../modals/AvailabilityModal/AvailabilityModal'
-
+import { dayArray } from '../../assets/Data/LBSArray'
 
 export default function DisabledAvailabilityCalendar({ month, year, }) {
-
     const { state } = useContext(ApplicationContext)
     const { currentMonth, currentYear } = state
-    console.log('state', state)
     function getDaysInMonth(month, year) {
-        var date = new Date(year, month, 1);
-        var days = [];
+        var date = new Date(year, month, 1)
+        var days = []
         while (date.getMonth() === month) {
-          days.push(new Date(date));
-          date.setDate(date.getDate() + 1);
+          days.push(new Date(date))
+          date.setDate(date.getDate() + 1)
         }
-        return days;
-      }
-    const dayArray = ['Su','Mo','Tu','We','Th','Fr','Sa' ]
+        return days
+    }
 
     const days = getDaysInMonth(month, year)
 
     const renderRows = () => {
-        console.log('=====')
         const rows = []
         let rowDays = []
         for(let i = 0; i < days.length; i++){
@@ -70,7 +65,6 @@ export default function DisabledAvailabilityCalendar({ month, year, }) {
                         return <div className="CalendarItemDayName" key={index}>{day}</div>
                     })}  
                 </div>
-                
                 { renderRows() }
             </div>
         </div>

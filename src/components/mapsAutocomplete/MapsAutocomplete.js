@@ -144,8 +144,9 @@ export default function MapsAutocomplete(props) {
                     lng,
                 }
                 props.setAddress(selectedPlace)
+            } else {
+                props.setAddress(props.defaultAddress)
             }
-            props.setAddress(props.defaultAddress)
         }
     }, [lat, lng])
 

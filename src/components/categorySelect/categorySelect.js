@@ -1,4 +1,4 @@
-import { React, useState} from 'react'
+import { React, useEffect, useState} from 'react'
 import './categorySelect.css'
 import { makeStyles, withStyles } from '@material-ui/styles'
 import Select from '@material-ui/core/Select'
@@ -66,7 +66,7 @@ export default function CategorySelect(props) {
     props.setCategory(category.name)
   }
 
-  const defaultValue = props.value ? props.value : '';
+  const defaultValue = props.value ?? ''
 
   return (
     <div className={`${classes.inputDiv}`}>

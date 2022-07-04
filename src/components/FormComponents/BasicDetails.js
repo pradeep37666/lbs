@@ -49,18 +49,16 @@ export default function BasicDetails({ context }) {
     }
 
     const sendVerificationCode = async () => {
-        const valid = validateInputs()
-        if(!valid) return
-        setIsLoading(true)
-        const emailExists = await checkIfEmailExists()
-        const phoneExists = await checkIfPhoneNumberExists()
-        if(emailExists || phoneExists) {
-            setIsLoading(false)
-            return
-        }
         try{
+            const valid = validateInputs()
+            if(!valid) return
+            setIsLoading(true)
+            const emailExists = await checkIfEmailExists()
+            if(emailExists) return
+            const phoneExists = await checkIfPhoneNumberExists()
+            if(phoneExists) return
             const { status } = await Instance.post('/auth/getVerificationCodeToMobile', {
-                mobile: phoneNumber
+                mobile: `+${phoneNumber}`
             })
             if (status === 201)
                 dispatch({ type: 'setCurrentPage', data: 'Verification' })

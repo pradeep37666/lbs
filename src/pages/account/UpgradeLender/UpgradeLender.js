@@ -5,11 +5,10 @@ import BankDetails from '../../../components/FormComponents/BankDetails'
 import LocationDetails from '../../../components/FormComponents/LocationDetails'
 import Availability from '../../../components/FormComponents/Availability'
 import Instance from '../../../util/axios'
-import { ReactComponent as Logo } from '../../../assets/Logos/LogoRed.svg';
+import { ReactComponent as Logo } from '../../../assets/Logos/LogoRed.svg'
 import { useHistory } from 'react-router'
 import useGlobalState from '../../../util/useGlobalState'
 import lenderUpgradeReducer from '../../../util/reducers/lenderUpgradeReducer'
-import parseAddressComponent from '../../../util/parseAddressComponent'
 
 const FormContext = createContext()
 
@@ -55,11 +54,7 @@ export default function UpgradeLender() {
     const submitUpgrade = async () => {
         const userData = {
             borrowerDetails: {
-                address: {
-                    ...parseAddressComponent(address?.address_components),
-                    lat: address.lat,
-                    lng: address.lng,
-                },
+                address,
                 firstName: user.firstName,
                 lastName: user.lastName,
                 email: user.email,

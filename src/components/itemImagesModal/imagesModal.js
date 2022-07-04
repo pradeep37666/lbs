@@ -1,12 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import './imagesModal.css';
-import ItemImage from './../../assets/Images/search_section_bg.jpg';
-import CloseIcon from '@material-ui/icons/Close';
-import { Fade } from '@material-ui/core';
-import getImage from '../../util/getImage';
+import React, { useState, useEffect } from 'react'
+import './imagesModal.css'
+import ItemImage from './../../assets/Images/search_section_bg.jpg'
+import CloseIcon from '@material-ui/icons/Close'
+import { Fade } from '@material-ui/core'
+import getImage from '../../util/getImage'
 
 export default function ImagesModal(props) {
-    console.log('modal images', props.images)
     const Images = props.images;
 
     //The image that the modal is currently focused on, default is first image

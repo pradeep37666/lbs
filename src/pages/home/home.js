@@ -93,8 +93,13 @@ export default function Home() {
               <div className="SearchInputContainer">
                 <TextInput width="100%" label="Keywords" fontSize="20px" onChange={(e) => setKeywords(e.target.value)}/>
               </div>
-              <div className="SearchInputContainer">
-                <CategorySelect width="100%" label="Category" setCategory={setCategory}/>
+              <div className="SearchInputContainer CategoryInputField">
+                <CategorySelect 
+                  width="100%" 
+                  label="Category" 
+                  value={category}
+                  setCategory={(category) => setCategory(category)}
+                />
               </div>
               <div style={{ width: '25%', minWidth: '9rem'}}>
                 <TextInput width="100%" label="Location" fontSize="20px" onChange={(e) => setLocation(e.target.value)}/>

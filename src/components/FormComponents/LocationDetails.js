@@ -1,12 +1,11 @@
 import React, { useContext } from 'react'
-import {ReactComponent as Logo} from './../../assets/Logos/LogoRed.svg'
+import { ReactComponent as Logo } from './../../assets/Logos/LogoRed.svg'
 import useGlobalState from '../../util/useGlobalState'
 import MapsAutocomplete from '../mapsAutocomplete/MapsAutocomplete'
 import Button from '../Button/Button'
 
 export default function LocationDetails({ context }) {
-    const { state, dispatch } = useContext(context)
-    const { address } = state
+    const { dispatch } = useContext(context)
     const user = useGlobalState().state.user
 
     return (
@@ -17,9 +16,10 @@ export default function LocationDetails({ context }) {
                 <div className="LoginHeader">Shed Location</div>
                 <div className="LoginText">If you would like to share your shed with users, Little big shed will need to know your location in order for borrowers to find you.</div>
 
-                { user ? (
+                { user?.address ? (
                     <MapsAutocomplete 
                     setAddress={(address) => dispatch({ type: 'setAddress', data: address})} 
+                    defaultAddress={user.address}
                     defaultLocation={user.address.fullAddress} 
                     defaultLat={user.address.lat} 
                     defaultLng={user.address.lng}/> 
