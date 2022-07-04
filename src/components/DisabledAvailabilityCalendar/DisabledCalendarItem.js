@@ -17,15 +17,12 @@ export default function DisabledCalendarItem({ day, index, onClick, isCurrentMon
 
     useEffect(() => {
         if(!yearAvailability) return
-        getAvailability(day, itemAvailability, yearAvailability)
-        // const { availability, booked } = getAvailability(day, itemAvailability, yearAvailability)
-        // console.log(day, availability, booked)
-        // setAvailability(availability)
-        // console.log(availability)
-        // setBooked(booked)
-        // if(day.getDate() < currentDate && isCurrentMonth) {
-        //     setBooked({ am: true, pm: true })
-        // }
+        const { availability, booked } = getAvailability(day, itemAvailability, yearAvailability)
+        setAvailability(availability)
+        setBooked(booked)
+        if(day.getDate() < currentDate && isCurrentMonth) {
+            setBooked({ am: true, pm: true })
+        }
     },[yearAvailability])
         
     useEffect(() => {
@@ -82,7 +79,7 @@ export default function DisabledCalendarItem({ day, index, onClick, isCurrentMon
         ${ handleApplicationPeriodLogic() } `}
         style={{ gridColumnStart: index === 0 ? day.getDay() + 1 : null}}
         >
-            {/* <div 
+            <div 
             onClick={handleClick}
             className={`
             ItemCircle  
@@ -99,7 +96,7 @@ export default function DisabledCalendarItem({ day, index, onClick, isCurrentMon
                     <div className={`${booked.pm ? 'ItemBooked' : null}
                     ${ availability && !availability.pm ? 'ItemPMUnavailable' : 'ItemPMAvailable'}`} />
                 </div>
-            </div> */}
+            </div>
         </div>
     )
 }

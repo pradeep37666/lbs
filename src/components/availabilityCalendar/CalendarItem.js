@@ -1,5 +1,4 @@
 import React, { useState, useContext, useEffect } from 'react'
-import TimeSlotPicker from '../timeSlotPicker/timeSlotPicker'
 import './CalendarItem.css'
 import { ApplicationContext } from '../../pages/application/Application'
 import compareDates from '../../util/compareDates'

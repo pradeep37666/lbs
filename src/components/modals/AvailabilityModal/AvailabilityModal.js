@@ -1,6 +1,7 @@
 import React from 'react'
 import './AvailabilityModal.css'
 import DisabledAvailabilityCalendar from '../../DisabledAvailabilityCalendar/DisabledAvailabilityCalendar'
+import checkIfLeapYear from '../../../util/dateUtils/checkIfLeapYear'
 
 export const ApplicationContext = React.createContext()
 
@@ -9,11 +10,14 @@ export default function AvailabilityModal({ item, onClick, availability }) {
     const currentDate = today.getDate()
     const currentMonth = today.getMonth()
     const currentYear = today.getFullYear()
+    const totalDays = checkIfLeapYear(currentYear) ? 730 : 732
+    const yearlyAvailability = Array(totalDays).fill(1)
 
     const state = {
         item,
         itemAvailability: availability,
-        yearAvailability: item?.availabilities,
+        // yearlyAvailability needs to be dinamic
+        yearAvailability: yearlyAvailability,
         currentDate, 
         currentYear,
         currentMonth
@@ -38,7 +42,7 @@ export default function AvailabilityModal({ item, onClick, availability }) {
 
     return (
         <ApplicationContext.Provider value={{ state }}>
-            <div className="Wrapper" onClick={onClick}>
+            <div className="ModalWrapperMain" onClick={onClick}>
                 <div 
                     className="AvailabilityModalMain"  
                     onClick={(e) => e.stopPropagation()}

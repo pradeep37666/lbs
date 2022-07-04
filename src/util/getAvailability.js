@@ -1,11 +1,7 @@
 import getDateIndex from "./dateUtils/getDateIndex"
 
 const getAvailability = (dateObj, itemAvailabilityString, yearAvailabilityString) => {
-    console.log({dateObj})
-    console.log({itemAvailabilityString})
-    console.log({yearAvailabilityString})
     const day = dateObj.getDay()
-    
     const morningSlot = {
         dateObj,
         timeslot: 'morning'
@@ -16,7 +12,6 @@ const getAvailability = (dateObj, itemAvailabilityString, yearAvailabilityString
     }
     const morningYearIndex = getDateIndex(morningSlot)
     const afternoonYearIndex = getDateIndex(afternoonSlot)
-
     let dayIndex
     if(day === 0){
         dayIndex = 7

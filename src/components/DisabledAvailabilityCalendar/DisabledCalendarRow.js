@@ -86,12 +86,8 @@ export default function DisabledCalendarRow({ days, isCurrentMonth }) {
 
     const validateTimeSlots = ({ am }) => {
         const startIndex = getDateIndex(confirmedStart.day)
-        console.log(confirmedStart.day, startIndex * 2)
         const endIndex = getDateIndex(selected)
-        // console.log("morning start" ,confirmedStart?.am, )
-        // console.log("morning end", confirmedEnd?.am )
         const timeSlot = yearAvailability.slice((startIndex * 2) + (confirmedStart?.am ? 1 : 2), (endIndex * 2) + (am ? 2 : 3))
-        console.log('timeslot', timeSlot)
         if(timeSlot.indexOf('0') > -1) { 
             setExpanded(false)
             setErrorHidden(false)
@@ -179,14 +175,14 @@ export default function DisabledCalendarRow({ days, isCurrentMonth }) {
                 })}
                 { expanded && 
                 <div className="CalendarPadding">
-                    {/* <TimeSlotPicker 
+                    <TimeSlotPicker 
                     morning={morningActive}
                     afternoon={afternoonActive}
                     morningUnavailable={morningUnavailable}
                     afternoonUnavailable={afternoonUnavailable}
                     morningClick={handleMorningClick}
                     afternoonClick={handleAfternoonClick}
-                    /> */}
+                    />
                 </div>
                 }
             </div>
