@@ -1,7 +1,5 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import './AvailabilityModal.css'
-import Instance from '../../../util/axios'
-import AvailabilityCalendar from '../../availabilityCalendar/AvailabilityCalendar'
 import DisabledAvailabilityCalendar from '../../DisabledAvailabilityCalendar/DisabledAvailabilityCalendar'
 
 export const ApplicationContext = React.createContext()
@@ -14,8 +12,8 @@ export default function AvailabilityModal({ item, onClick, availability }) {
 
     const state = {
         item,
-        itemAvailability: item.available,
-        yearAvailability: availability,
+        itemAvailability: availability,
+        yearAvailability: item?.availabilities,
         currentDate, 
         currentYear,
         currentMonth
@@ -32,9 +30,9 @@ export default function AvailabilityModal({ item, onClick, availability }) {
                 month = currentMonth + index
             }
             if(currentMonth + index === 12) year += 1
-            // return (
-            // <DisabledAvailabilityCalendar month={month} year={year}/>
-            // )
+            return (
+            <DisabledAvailabilityCalendar month={month} year={year}/>
+            )
         })
     }
 

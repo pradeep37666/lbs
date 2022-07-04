@@ -13,7 +13,7 @@ export default function Verification({ context }) {
         try{
             setIsLoading(true)
             const { status } =  await Instance.post('/auth/verifyCodeWithMobile', {
-                mobile: phoneNumber,
+                mobile: `+${phoneNumber}`,
                 code: verificationCode,
             })
             if (status === 201)

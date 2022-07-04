@@ -1,7 +1,9 @@
 import getDateIndex from "./dateUtils/getDateIndex"
 
 const getAvailability = (dateObj, itemAvailabilityString, yearAvailabilityString) => {
-
+    console.log({dateObj})
+    console.log({itemAvailabilityString})
+    console.log({yearAvailabilityString})
     const day = dateObj.getDay()
     
     const morningSlot = {

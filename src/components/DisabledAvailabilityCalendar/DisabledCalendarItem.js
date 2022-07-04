@@ -4,25 +4,28 @@ import { ApplicationContext } from '../modals/AvailabilityModal/AvailabilityModa
 import compareDates from '../../util/compareDates'
 import getAvailability from '../../util/getAvailability'
 
-export default function DisabledCalendarItem({day, index, onClick, isCurrentMonth }) {
+export default function DisabledCalendarItem({ day, index, onClick, isCurrentMonth }) {
     const [isApplicationPeriod, setIsApplicationPeriod] = useState(false)
     const [booked, setBooked] = useState(false)
     const [availability, setAvailability] = useState()
     
     const { state } = useContext(ApplicationContext)
-    const {selected, currentDate, confirmedStart, confirmedEnd, yearAvailability, itemAvailability } = state
+    const {
+        selected, currentDate, confirmedStart, 
+        confirmedEnd, yearAvailability, itemAvailability 
+    } = state
 
     useEffect(() => {
-        
         if(!yearAvailability) return
-        const { availability, booked } = getAvailability(day, itemAvailability, yearAvailability)
-        console.log(day, availability, booked)
-        setAvailability(availability)
-        console.log(availability)
-        setBooked(booked)
-        if(day.getDate() < currentDate && isCurrentMonth) {
-            setBooked({ am: true, pm: true })
-        }
+        getAvailability(day, itemAvailability, yearAvailability)
+        // const { availability, booked } = getAvailability(day, itemAvailability, yearAvailability)
+        // console.log(day, availability, booked)
+        // setAvailability(availability)
+        // console.log(availability)
+        // setBooked(booked)
+        // if(day.getDate() < currentDate && isCurrentMonth) {
+        //     setBooked({ am: true, pm: true })
+        // }
     },[yearAvailability])
         
     useEffect(() => {
@@ -79,7 +82,7 @@ export default function DisabledCalendarItem({day, index, onClick, isCurrentMont
         ${ handleApplicationPeriodLogic() } `}
         style={{ gridColumnStart: index === 0 ? day.getDay() + 1 : null}}
         >
-            <div 
+            {/* <div 
             onClick={handleClick}
             className={`
             ItemCircle  
@@ -96,7 +99,7 @@ export default function DisabledCalendarItem({day, index, onClick, isCurrentMont
                     <div className={`${booked.pm ? 'ItemBooked' : null}
                     ${ availability && !availability.pm ? 'ItemPMUnavailable' : 'ItemPMAvailable'}`} />
                 </div>
-            </div>
+            </div> */}
         </div>
     )
 }

@@ -76,11 +76,12 @@ export default function UpgradeLender() {
         }
         try{
             setIsUpgradeLoading(true)
-            const { data, status } = await Instance.post('/user/borrowerUpgrade', userData)
+            const { data, status } = await Instance.post('/users/borrower-upgrade', userData)
             if (status !== 201) return
             globalDispatch({ type: 'setUser', data })
-        } catch(err){
-            console.log('error', err)
+            dispatch({ type: 'setCurrentPage', data: 'Complete!'})
+        } catch(error){
+            console.log(error.response)
         } finally {
             setIsUpgradeLoading(false)
         }

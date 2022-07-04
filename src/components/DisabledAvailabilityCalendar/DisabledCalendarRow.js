@@ -11,12 +11,12 @@ export default function DisabledCalendarRow({ days, isCurrentMonth }) {
     const { state, dispatch } = useContext(ApplicationContext)
     const { selected, confirmedStart, confirmedEnd, yearAvailability } = state
     
-    const [expanded, setExpanded] = useState(false)
-    const [errorHidden, setErrorHidden] = useState(true)
-    const [morningActive, setMorningActive] = useState(false)
-    const [morningUnavailable, setMorningUnavailable] = useState(false)
-    const [afternoonUnavailable, setAfternoonUnavailable] = useState(false)
-    const [afternoonActive, setAfternoonActive] = useState(false)
+    const [ expanded, setExpanded ] = useState(false)
+    const [ errorHidden, setErrorHidden ] = useState(true)
+    const [ morningActive, setMorningActive ] = useState(false)
+    const [ morningUnavailable, setMorningUnavailable ] = useState(false)
+    const [ afternoonUnavailable, setAfternoonUnavailable ] = useState(false)
+    const [ afternoonActive, setAfternoonActive ] = useState(false)
 
     useEffect(() => {
         setErrorHidden(true)
@@ -158,7 +158,13 @@ export default function DisabledCalendarRow({ days, isCurrentMonth }) {
     }
     return (
         <div className="CalendarRowErrorContainer">
-            {!errorHidden && <ValidationPopup errorText={'error'} errorHeader='Invalid Time Slot' hide={errorHidden}/>}
+            {!errorHidden && 
+                <ValidationPopup 
+                    errorText={'error'} 
+                    errorHeader='Invalid Time Slot' 
+                    hide={errorHidden}
+                />
+            }
             <div className={`CalendarRow ${expanded && 'CalendarRowExpanded'}`}>
                 { days.map((day, index) => {
                     return (
@@ -173,15 +179,16 @@ export default function DisabledCalendarRow({ days, isCurrentMonth }) {
                 })}
                 { expanded && 
                 <div className="CalendarPadding">
-                    <TimeSlotPicker 
+                    {/* <TimeSlotPicker 
                     morning={morningActive}
                     afternoon={afternoonActive}
                     morningUnavailable={morningUnavailable}
                     afternoonUnavailable={afternoonUnavailable}
                     morningClick={handleMorningClick}
                     afternoonClick={handleAfternoonClick}
-                    />
-                </div>}
+                    /> */}
+                </div>
+                }
             </div>
         </div>
     )
