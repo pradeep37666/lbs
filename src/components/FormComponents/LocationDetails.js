@@ -5,7 +5,8 @@ import MapsAutocomplete from '../mapsAutocomplete/MapsAutocomplete'
 import Button from '../Button/Button'
 
 export default function LocationDetails({ context }) {
-    const { dispatch } = useContext(context)
+    const { state, dispatch } = useContext(context)
+    const { address } = state
     const user = useGlobalState().state.user
 
     return (
@@ -30,6 +31,7 @@ export default function LocationDetails({ context }) {
                 )}
                 <Button 
                     text="Next"
+                    isDisabled={!user?.address && !address}
                     onClick={() => {
                         dispatch({ type: 'setCurrentPage', data: 'Availability' })
                     }}

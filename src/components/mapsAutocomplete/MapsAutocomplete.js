@@ -150,6 +150,12 @@ export default function MapsAutocomplete(props) {
         }
     }, [lat, lng])
 
+    useEffect(() => {
+        if(value === '') {
+            props.setAddress('')
+        }
+    },[value])
+
     return (
         <FormControl className={classes.form}>
 

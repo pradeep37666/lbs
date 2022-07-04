@@ -1,8 +1,7 @@
 import React, { useState } from 'react'
-import ValidationTextInput from '../../components/FormComponents/ValidationTextInput';
-import Instance from '../../util/axios';
-import {ReactComponent as Logo} from './../../assets/Logos/LogoRed.svg';
-
+import ValidationTextInput from '../../components/FormComponents/ValidationTextInput'
+import Instance from '../../util/axios'
+import {ReactComponent as Logo} from './../../assets/Logos/LogoRed.svg'
 
 export default function EnterCode({ setCurrentPage, phoneNumber }) {
     const [code, setCode] = useState()
@@ -10,14 +9,14 @@ export default function EnterCode({ setCurrentPage, phoneNumber }) {
 
     const verifyCode = async () => {
         try{
-            const { data, status } = await Instance.post('/auth/verifyCodeWithMobile', {
-                mobile: phoneNumber,
+            const { status } = await Instance.post('/auth/verifyCodeWithMobile', {
+                mobile: `+${phoneNumber}`,
                 code
             })
-            console.log(data, status)
+            if (status !== 200 ) return
             setCurrentPage("NewPassword")
-        } catch(err){
-            console.log(err.response)
+        } catch(error){
+            console.log(error.response)
             setCodeError("Please Check Your Phone")
         }
     }

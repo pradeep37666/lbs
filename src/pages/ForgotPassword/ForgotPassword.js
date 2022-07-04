@@ -6,8 +6,8 @@ import EnterPhone from './EnterPhone'
 import NewPassword from './NewPassword'
 
 export default function ForgotPassword() {
-    const [phoneNumber, setPhoneNumber] = useState()
-    const [currentPage, setCurrentPage] = useState('EnterPhone')
+    const [ phoneNumber, setPhoneNumber ] = useState()
+    const [ currentPage, setCurrentPage ] = useState('EnterPhone')
    
     const renderPage = () => {
         switch(currentPage) {
@@ -18,7 +18,6 @@ export default function ForgotPassword() {
             case 'NewPassword' :
                 return <NewPassword />
         }  
-
     }
 
     return (

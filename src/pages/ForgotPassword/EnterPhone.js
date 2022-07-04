@@ -1,18 +1,18 @@
-import React, { useEffect, useState } from 'react'
-import ValidationTextInput from '../../components/FormComponents/ValidationTextInput'
+import React, { useState } from 'react'
+import PhoneNumberInput from '../../components/phoneNumberInput/PhoneNumberInput'
 import Instance from '../../util/axios'
 
 export default function EnterPhone({ setPhoneNumber, phoneNumber, setCurrentPage }) {
-    const [verificationError, setVerificationError] = useState()
+    const [ verificationError, setVerificationError ] = useState()
 
     const sendVerificationCode = async () => {
         try{
-            const { data, status } = await Instance.get(`/auth/getVerificationCodeToMobile?mobile=${phoneNumber}`)
-            console.log(data, status)
+            const { status } = await Instance.get(`/auth/getVerificationCodeToMobile?mobile=+${phoneNumber}`)
+            if (status !== 200) return
             setCurrentPage('EnterCode')
-        } catch(err){
-            console.log(err.response)
-            if(err.response.status === 400){
+        } catch(error){
+            console.log(error.response)
+            if(error.response.status === 400){
                 setVerificationError("Invalid Phone Number")
             }
         }
@@ -24,10 +24,12 @@ export default function EnterPhone({ setPhoneNumber, phoneNumber, setCurrentPage
                 <div className="LoginText">
                     Enter the phone number associated with your Little Big Shed Account to retieve a new password.
                 </div>
-                <ValidationTextInput 
-                errorMessage={verificationError}
-                label="Phone Number" 
-                onChange={e => setPhoneNumber(e.target.value)} 
+                <PhoneNumberInput 
+                    label={'Phone Number'}
+                    placeholder={'+61412345678'}
+                    value={phoneNumber}
+                    onChange={number => setPhoneNumber(number)}
+                    errorMessage={verificationError}
                 />
                 <div onClick={sendVerificationCode} style={{ width: '100%' }}>
                     <button className="LoginFormButton">Send</button>

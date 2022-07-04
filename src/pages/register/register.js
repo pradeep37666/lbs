@@ -1,20 +1,19 @@
-import React, { useState, useEffect, useReducer, createContext } from 'react';
-import './register.css';
-import PageWrapper from "../../components/pageWrapper/pageWrapper.js";
-import Banner from "../../components/bannerText/bannerText.js";
-import BasicDetails from '../../components/FormComponents/BasicDetails';
-import Verification from '../../components/FormComponents/Verification';
-import BankDetails from '../../components/FormComponents/BankDetails';
-import LocationDetails from '../../components/FormComponents/LocationDetails';
-import Availability from '../../components/FormComponents/Availability';
-import TermsConditions from '../../components/FormComponents/TermsConditions';
-import {ReactComponent as Logo} from './../../assets/Logos/LogoRed.svg';
-import Instance from '../../util/axios';
-import { useHistory } from 'react-router-dom';
-import useGlobalState from '../../util/useGlobalState';
-import { CometChat } from '@cometchat-pro/chat';
-import registerReducer from '../../util/reducers/registerReducer';
-import parseAddressComponent from '../../util/parseAddressComponent';
+import React, { useState, useEffect, useReducer, createContext } from 'react'
+import './register.css'
+import PageWrapper from "../../components/pageWrapper/pageWrapper.js"
+import Banner from "../../components/bannerText/bannerText.js"
+import BasicDetails from '../../components/FormComponents/BasicDetails'
+import Verification from '../../components/FormComponents/Verification'
+import BankDetails from '../../components/FormComponents/BankDetails'
+import LocationDetails from '../../components/FormComponents/LocationDetails'
+import Availability from '../../components/FormComponents/Availability'
+import TermsConditions from '../../components/FormComponents/TermsConditions'
+import {ReactComponent as Logo} from './../../assets/Logos/LogoRed.svg'
+import Instance from '../../util/axios'
+import { useHistory } from 'react-router-dom'
+import useGlobalState from '../../util/useGlobalState'
+import { CometChat } from '@cometchat-pro/chat'
+import registerReducer from '../../util/reducers/registerReducer'
 
 const FormContext = createContext()
 
@@ -64,11 +63,7 @@ export default function Register() {
                     avatar: imageLink ? imageLink : '',
                     mobile: `+${phoneNumber}`,
                     password: password,
-                    address: {
-                        ...parseAddressComponent(address?.address_components),
-                        lat: address.lat,
-                        lng: address.lng,
-                    },
+                    address,
                     isLender: true,
                     lender_rating: lenderRating,
                     borrower_rating: borrowerRating,

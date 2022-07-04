@@ -171,11 +171,11 @@ export default function BasicDetails({ context }) {
                 <div className="LoginHeader">Password</div>
                 <div className="LoginText">Create a secure password including: at least 8 characters, 2 numbers and a special character.</div>
                 <ValidationTextInput 
+                label="Password"
                 placeholder=""
                 value={password}
                 passwordInput
                 onChange={e => dispatch({ type: 'setPassword', data: e.target.value })}
-                label="Password"
                 errorMessage={getErrorMessage('password')}
                 />
                 <ValidationTextInput 

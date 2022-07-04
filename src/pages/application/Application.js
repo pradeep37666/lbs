@@ -54,7 +54,6 @@ export default function Application() {
     const getItem = async () => {
         const { data, status } = await instance.get(`/items/${itemId}`)
         if(status !== 200) return
-        console.log(data.item)
         dispatch({ type: 'setItem', data: data.item})
         dispatch({ type: 'setItemAvailability', data: data.item.weekly_availability})
         dispatch({ type: 'setYearAvailability', data: yearlyAvailability})
