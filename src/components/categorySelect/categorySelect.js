@@ -76,7 +76,7 @@ export default function CategorySelect(props) {
       input={<BootstrapInput />} 
       className={`SelectInput ${props.thinBorder ? 'SelectInput--Thin' : ''} ${classes.select}`}
       IconComponent={ArrowDown}
-      value={props.value === '' ? defaultValue : category}
+      value={defaultValue ?? category}
       MenuProps={{
         anchorOrigin: {
           vertical: -22,

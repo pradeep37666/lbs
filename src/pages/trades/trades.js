@@ -40,7 +40,7 @@ export default function Trades() {
 
     const getLenderBookings = async () => {
         try{
-            const { data, status } = await Instance.get('booking/findByOwnerId')
+            const { data, status } = await Instance.get(`bookings/${user.id}`)
             if(status !== 200) return
             console.log(data)
             const parsedBookings = parseBookings(data)
@@ -52,25 +52,25 @@ export default function Trades() {
 
     const getBorrowerBookings = async () => {
         try{
-            const { data, status } = await Instance.get('booking/findByUid')
+            const { data, status } = await Instance.get(`users/${user.id}/bookings/borrower`)
             if(status !== 200) return
             const parsedBookings = parseBookings(data)
             setBorrowerBookingItems(parsedBookings)
-        } catch(err){
-            console.log(err)
+        } catch(error){
+            console.log(error.response)
         }
     }
 
      const parseBookings = (bookings) => {
-        const filteredBookings = []
-        bookings.forEach(bookingObj => {
-            const foundIndex = filteredBookings.findIndex(obj => obj.items_title === bookingObj.items_title)
-            if(foundIndex !== -1 ){
-                filteredBookings[foundIndex].bookings.push(bookingObj)
-            } else {
-                filteredBookings.push({ items_title: bookingObj.items_title, bookings: [bookingObj]})
-            }
+        const filteredBookings = bookings.map(booking => {
+            // const foundIndex = filteredBookings.findIndex(obj => obj.itemId === booking.itemId)
+            // if(foundIndex !== -1 ){
+            //     filteredBookings[foundIndex].bookings.push(booking)
+            // } else {
+            //     filteredBookings.push({ items_title: booking.items_title, bookings: [booking]})
+            // }
         })
+        console.log({filteredBookings})
         return filteredBookings
      }
 

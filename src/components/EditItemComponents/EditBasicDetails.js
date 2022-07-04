@@ -4,6 +4,7 @@ import CategorySelect from '../categorySelect/categorySelect'
 
 export default function EditBasicDetails({ state, dispatch }) {
     const { title, category, description, } = state
+
     return (
         <div
         className="LoginMain"
@@ -17,13 +18,15 @@ export default function EditBasicDetails({ state, dispatch }) {
             onChange={(e) => dispatch({ type: 'setTitle', data: e.target.value})}
             />
             <div className="LoginHeader">Category</div>
-            <CategorySelect
-                width="100%"
-                label="Category"
-                thinBorder
-                setCategory={newCategory => dispatch({ type: 'setCategory', data: newCategory})}
-                value={category}
-            />
+            <div className="LoginHeader">
+                <CategorySelect
+                    width="100%"
+                    label="Category"
+                    thinBorder
+                    setCategory={newCategory => dispatch({ type: 'setCategory', data: newCategory})}
+                    value={category}
+                />
+            </div>
             <div className="LoginHeader">Description</div>
             <textarea
                 rows="10"
