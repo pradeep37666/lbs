@@ -11,7 +11,7 @@ import useGlobalState from '../../util/useGlobalState'
 import Button from '../Button/Button'
 import getDateSuffix from '../../util/dateUtils/getDateSuffix'
 import { fullNameDayArray, monthArray } from '../../assets/Data/LBSArray'
-import { BOOKING_STATUS } from '../../assets/Data/LBSEnum'
+import { BOOKING_STATUSES } from '../../assets/Data/LBSEnum'
 import Instance, { CometChatInstance } from '../../util/axios'
 
 export default function ItemOverview() {
@@ -59,7 +59,7 @@ export default function ItemOverview() {
             lenderId: item.userId,
             borrowerId: user.id,
             itemId: item.id,
-            status: BOOKING_STATUS.PENDING,
+            status: BOOKING_STATUSES.APPLIED,
             error: false,
             deliveryOption,
             startDateIndex: startIndex,

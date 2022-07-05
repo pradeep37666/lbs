@@ -14,6 +14,7 @@ import StatusSix from './StatusSix'
 import StatusSeven from './StatusSeven'
 import DropOff from './DropOff'
 import StatusEight from './StatusEight'
+import { BOOKING_STATUSES } from '../../../assets/Data/LBSEnum'
 
 export default function TradeCalendarStatusPanel({ 
     booking, 
@@ -26,17 +27,17 @@ export default function TradeCalendarStatusPanel({
     const [ isApproveLoading, setIsApproveLoading ] = useState(false)
     const { state } = useGlobalState()
     const { user } = state
-    const isOwner = booking.io_id === user.id
+    const isOwner = booking.lenderId === user.id
 
     useEffect(() => {
         setStatus(booking.status)
     },[booking])
 
     const renderStatusPanel = () => {
-        if(status === 0){
+        if(status === BOOKING_STATUSES.REJECTED){
             return <StatusZero updateBookingStatus={updateBookingStatus} booking={booking}/>
         }
-        if( status === 7){
+        if( status === BOOKING_STATUSES.ITEM_RETURNED){
             return <StatusSeven booking={booking} isOwner={isOwner} />
         }
         const dropOff = isDropoffTime()

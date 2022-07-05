@@ -75,7 +75,6 @@ export default class BookingPriceCalculator{
     getPriceWithoutExtras() {
         let price = 0
         const totalTimeSlots = this.getTotalTimeSlots()
-        console.log({totalTimeSlots})
         const discountTimeSlots = this.getDiscountTimeSlots()
         const weekendTimeSlots = totalTimeSlots - discountTimeSlots
         price += weekendTimeSlots * this.pricePerSlot
@@ -110,8 +109,6 @@ export default class BookingPriceCalculator{
     getTotalDays() {
         const startDay = this.getDayOfYear(this.start.dateObj)
         const endDay  = this.getDayOfYear(this.end.dateObj)
-        console.log({startDay})
-        console.log({endDay})
         if(endDay - startDay >= 0){
             return endDay - startDay
         } else {

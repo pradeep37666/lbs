@@ -33,6 +33,10 @@
   margin-bottom: 10px;
 }
 
+.BorrowerAddressLocation {
+  font-size: 1.2em;
+}
+
 .TradeSidebarUserRatingContainer {
   display: flex;
   align-items: center;

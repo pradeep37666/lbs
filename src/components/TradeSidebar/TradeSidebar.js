@@ -34,8 +34,8 @@ export default function TradeSidebar({
 
     useEffect(() => {
         if(!item) return
-        const beginDate = getDateObject(booking.start_date)
-        const endDate = getDateObject(booking.end_date)
+        const beginDate = getDateObject(booking.startDateIndex)
+        const endDate = getDateObject(booking.endDateIndex)
         const newBookingPriceCalculator = new BookingPriceCalculator(item.price, item.discount, item.deliveryPrice, item.pickupPrice, beginDate, endDate)
         newBookingPriceCalculator.setDeliverySelected(booking.deliveryOption === DELIVERY_OPTIONS.BOTH || booking.deliveryOption === DELIVERY_OPTIONS.DELIVERY)
         newBookingPriceCalculator.setPickupSelected(booking.deliveryOption === DELIVERY_OPTIONS.BOTH || booking.deliveryOption === DELIVERY_OPTIONS.PICKUP)
@@ -112,13 +112,28 @@ export default function TradeSidebar({
                    startDate={bookingPriceCalculator.start}
                    endDate={bookingPriceCalculator.end}
                    />
-
                 </div>
                 {booking.deliveryOption !== DELIVERY_OPTIONS.NONE &&
                  <div className="TradeSidebarSection">
                     <div className="TradeSidebarLocationContainer">
-                        <span className="TradeSidebarHeading">Delivery / Pickup Location</span>
-                        <span style={{ textAlign: 'center'}}>{booking.address}</span>
+                        {booking.deliveryOption === DELIVERY_OPTIONS.BOTH &&
+                        <>
+                        <span className="TradeSidebarHeading BorrowerAddressLocation">Delivery / Pickup Location</span>
+                        <span style={{ textAlign: 'center'}}>{booking.borrowerAddress}</span>
+                        </>
+                        }
+                        {booking.deliveryOption === DELIVERY_OPTIONS.DELIVERY &&
+                        <>
+                        <span className="TradeSidebarHeading BorrowerAddressLocation">Delivery Location</span>
+                        <span style={{ textAlign: 'center'}}>{booking.borrowerAddress}</span>
+                        </>
+                        }
+                        {booking.deliveryOption === DELIVERY_OPTIONS.PICKUP &&
+                        <>
+                        <span className="TradeSidebarHeading BorrowerAddressLocation">Pickup Location</span>
+                        <span style={{ textAlign: 'center'}}>{booking.borrowerAddress}</span>
+                        </>
+                        }
                     </div>
                 </div>
                 }
