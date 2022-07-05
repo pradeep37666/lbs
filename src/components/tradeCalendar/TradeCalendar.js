@@ -1,16 +1,15 @@
 import React, { useEffect, useRef, useState } from 'react'
 import './TradeCalendar.css'
 import TradeCalendarItemContainer from './tradeCalendarItemContainer/TradeCalendarItemContainer'
-import compareDates from '../../util/compareDates'
 import { isMobile } from 'react-device-detect'
+import { dayArray, monthArray } from '../../assets/Data/LBSArray'
 
 export default function TradeCalendar({ borrowerBookingItems, lenderBookingItems, setSelectedBooking }) {
     const tradeCalendarRef = useRef()
-    const [currentDate, setCurrentDate] = useState()
-    const [currentMonth, setCurrentMonth] = useState()
-    const [currentYear, setCurrentYear] = useState()
-    const [totalDates, setTotalDates] = useState()
-
+    const [ currentDate, setCurrentDate ] = useState()
+    const [ currentMonth, setCurrentMonth ] = useState()
+    const [ currentYear, setCurrentYear ] = useState()
+    const [ totalDates, setTotalDates ] = useState()
 
     useEffect(() => {
         const today = new Date()
@@ -20,7 +19,6 @@ export default function TradeCalendar({ borrowerBookingItems, lenderBookingItems
         setCurrentDate(currentDate)
         setCurrentMonth(currentMonth)
         setCurrentYear(currentYear)
-
     },[])
 
     useEffect(() => {
@@ -30,48 +28,42 @@ export default function TradeCalendar({ borrowerBookingItems, lenderBookingItems
     },[currentYear])
    
     function getDaysInMonth(month, year) {
-        var date = new Date(year, month, 1);
-        var days = [];
+        var date = new Date(year, month, 1)
+        var days = []
         while (date.getMonth() === month) {
-          days.push(new Date(date));
-          date.setDate(date.getDate() + 1);
+          days.push(new Date(date))
+          date.setDate(date.getDate() + 1)
         }
-        return days;
+        return days
       }
 
     const renderBookingItemContainers = (bookingItems) => {
-        
         return bookingItems.map(( bookingItem, index) => {
             return (
                 <TradeCalendarItemContainer
-                header={index === 0}
-                setSelectedBooking={setSelectedBooking}
-                bookingItem={bookingItem} 
-                key={index} 
-                totalDates={totalDates}
-                currentMonth={currentMonth}
-                currentYear={currentYear}
+                    header={index === 0}
+                    setSelectedBooking={setSelectedBooking}
+                    bookingItem={bookingItem} 
+                    key={index} 
+                    totalDates={totalDates}
+                    currentMonth={currentMonth}
+                    currentYear={currentYear}
                 />
             )
         })
     }
  
     const getAllDays = () => {
-       
         const dates = []
         const date = new Date(currentYear, currentMonth, 1)
-        for(let i=0; i< 3; i++){
+        for(let i = 0; i < 3; i++){
             const month = date.getMonth()
             const monthDays = getDaysInMonth(month, currentYear)
             dates.push(monthDays)
             date.setMonth(currentMonth + (i + 1))
         }
-        
         return dates.flat()
     }
-
-    const dayArray = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa", ]
-    const monthArray = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
 
     const renderDates = () => {
         if(currentMonth === undefined || !currentYear || !currentDate) return
@@ -85,7 +77,6 @@ export default function TradeCalendar({ borrowerBookingItems, lenderBookingItems
                 { dates[i].getDate() === 1 &&
                     <span className="TradeCalendarMonthLabel">{monthArray[dates[i].getMonth()]}</span>
                 }
-                
                 <div className="TradeCalendarDayItem">
                     <span className="TradeCalendarDayItemName">{dayArray[dates[i].getDay()]}</span>
                     <div className={isCurrentDay ? 'TradeCalendarCurrentDay' : "TradeCalendarDayItemDate"}>
@@ -106,14 +97,12 @@ export default function TradeCalendar({ borrowerBookingItems, lenderBookingItems
                     <div className="TradeCalendarDaysContainer" style={{ gridTemplateColumns: `repeat(${totalDates * 2}, ${ isMobile ? 25 : 50}px)`, paddingTop: 35 }}>
                         {renderDates()} 
                     </div>
-                    
                     {lenderBookingItems.length > 0 && 
                     renderBookingItemContainers(lenderBookingItems)
                     }
                     {borrowerBookingItems.length > 0 && 
                     renderBookingItemContainers(borrowerBookingItems)
                     }
-                    
                 </div>
                 
             </div>

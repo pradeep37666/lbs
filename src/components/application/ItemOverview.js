@@ -55,7 +55,7 @@ export default function ItemOverview() {
         bookingStartTime.setHours(confirmedStart?.am ? 6 : 12)
         const price = bookingPriceCalculator.getTotalPrice()
         return ({
-            address: address ?? '',
+            borrowerAddress: address ?? '',
             lenderId: item.userId,
             borrowerId: user.id,
             itemId: item.id,

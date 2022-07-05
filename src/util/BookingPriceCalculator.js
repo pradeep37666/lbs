@@ -3,17 +3,17 @@ export default class BookingPriceCalculator{
     start
     end
     deliveryPrice
+    pickupPrice
     pricePerSlot
     offPeakDiscount
     deliverySelected
     pickupSelected
-    // startYear
-    // endYear 
 
     constructor(
         pricePerSlot, 
         offPeakDiscount,
         deliveryPrice,
+        pickupPrice,
         start,
         end
         )
@@ -22,6 +22,7 @@ export default class BookingPriceCalculator{
             this.end = end
             this.pricePerSlot = pricePerSlot
             this.deliveryPrice = deliveryPrice
+            this.pickupPrice = pickupPrice
             this.offPeakDiscount = offPeakDiscount
             this.deliverySelected = false
             this.pickupSelected = false
@@ -47,7 +48,7 @@ export default class BookingPriceCalculator{
             price += this.deliveryPrice
         }
         if(this.pickupSelected){
-            price += this.deliveryPrice
+            price += this.pickupPrice
         }
         return price.toFixed(2)
     }
@@ -66,20 +67,19 @@ export default class BookingPriceCalculator{
             price += this.deliveryPrice
         }
         if(this.pickupSelected){
-            price += this.deliveryPrice
+            price += this.pickupPrice
         }
         return price
     }
+
     getPriceWithoutExtras() {
         let price = 0
-
         const totalTimeSlots = this.getTotalTimeSlots()
+        console.log({totalTimeSlots})
         const discountTimeSlots = this.getDiscountTimeSlots()
         const weekendTimeSlots = totalTimeSlots - discountTimeSlots
         price += weekendTimeSlots * this.pricePerSlot
-
         price += discountTimeSlots * (this.pricePerSlot * (1 - this.offPeakDiscount / 100))
-
         return parseFloat(price.toFixed(2))
     }
     
@@ -110,6 +110,8 @@ export default class BookingPriceCalculator{
     getTotalDays() {
         const startDay = this.getDayOfYear(this.start.dateObj)
         const endDay  = this.getDayOfYear(this.end.dateObj)
+        console.log({startDay})
+        console.log({endDay})
         if(endDay - startDay >= 0){
             return endDay - startDay
         } else {
@@ -120,7 +122,6 @@ export default class BookingPriceCalculator{
 
     getTotalTimeSlots() {
         let totalDays = this.getTotalDays()
-
         if(this.start.timeslot === 'morning' && this.end.timeslot === 'morning'){
             totalDays = (totalDays * 2) + 1
         }
@@ -142,17 +143,13 @@ export default class BookingPriceCalculator{
         if(this.offPeakDiscount > 0){
             offPeakDiscount = discountTimeSlots * (this.pricePerSlot * (this.offPeakDiscount / 100))
         }
-        
         return offPeakDiscount.toFixed(2)
     }
 
     getYearCrossoverDays(startDay, endDay) {
         const currentYear = this.start.dateObj.getFullYear()
-        // const nextYear  = currentYear + 1
-
         const isLeapYear = (currentYear % 4 === 0 && currentYear% 100 !== 0) || currentYear % 400 === 0;
         const currentYearDays = isLeapYear ? 366 : 365
-        
         const crossoverDays = currentYearDays - startDay
         return crossoverDays + endDay
     }
@@ -161,15 +158,12 @@ export default class BookingPriceCalculator{
         const year = dateObj.getFullYear()
         const month = dateObj.getMonth()
         const date = dateObj.getDate()
-    
-        let dayOfYear = date;
-
+        let dayOfYear = date
         const monthDays = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
         for (let i = 0; i < month ; i++) {
             //the month index need minus 1
-            dayOfYear += monthDays[i];
+            dayOfYear += monthDays[i]
         }
-    
         const isLeapYear =  (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
         // Add extra day if it is a leap year
         if (isLeapYear && month > 2) {

@@ -6,7 +6,7 @@ import getImage from '../../util/getImage'
 import EmptyImage from '../../assets/Logos/LBS_Logo_Flat_FullColour.png'
 
 export default function ApplicationItemCard({ item, onClick, extra, price }) {
-    const mainItemImage = item.images.length !== 0 
+    const mainItemImage = item?.images?.length !== 0 
     ? getImage(item.images[0].imageKey) 
     : EmptyImage
 

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
+import './TradeCalendarStatusPanel.css'
 import Instance from '../../../util/axios'
 import useGlobalState from '../../../util/useGlobalState'
-import './TradeCalendarStatusPanel.css'
 import StatusOne from './StatusOne'
 import StatusTwo from './StatusTwo'
 import StatusZero from './StatusZero'
@@ -15,9 +15,15 @@ import StatusSeven from './StatusSeven'
 import DropOff from './DropOff'
 import StatusEight from './StatusEight'
 
-export default function TradeCalendarStatusPanel({ booking, userDetails, getBookings, setReportModalVisible, setReviewModalVisible }) {
-    const [status, setStatus] = useState()
-    const [isApproveLoading, setIsApproveLoading] = useState(false)
+export default function TradeCalendarStatusPanel({ 
+    booking, 
+    userDetails, 
+    getBookings, 
+    setReportModalVisible, 
+    setReviewModalVisible 
+}) {
+    const [ status, setStatus ] = useState()
+    const [ isApproveLoading, setIsApproveLoading ] = useState(false)
     const { state } = useGlobalState()
     const { user } = state
     const isOwner = booking.io_id === user.id
@@ -27,7 +33,6 @@ export default function TradeCalendarStatusPanel({ booking, userDetails, getBook
     },[booking])
 
     const renderStatusPanel = () => {
-        // return <Pickup isOwner={isOwner} updateBookingStatus={updateBookingStatus} booking={booking} userDetails={userDetails} setReportModalVisible={setReportModalVisible}/>
         if(status === 0){
             return <StatusZero updateBookingStatus={updateBookingStatus} booking={booking}/>
         }
@@ -36,18 +41,17 @@ export default function TradeCalendarStatusPanel({ booking, userDetails, getBook
         }
         const dropOff = isDropoffTime()
         if(dropOff && status >= 3){
-        // if(status >= 3){
-        // if(dropOff || status >= 1){
             return (
-            <DropOff 
-            booking={booking}
-            finishBooking={finishBooking}
-            updateBookingStatus={updateBookingStatus}
-            isOwner={isOwner}
-            userDetails={userDetails}
-            setReviewModalVisible={setReviewModalVisible}
-            setReportModalVisible={setReportModalVisible}
-            />)
+                <DropOff 
+                    booking={booking}
+                    finishBooking={finishBooking}
+                    updateBookingStatus={updateBookingStatus}
+                    isOwner={isOwner}
+                    userDetails={userDetails}
+                    setReviewModalVisible={setReviewModalVisible}
+                    setReportModalVisible={setReportModalVisible}
+                />
+            )
         }
         const isHourBefore = isPickupTime()
         if(isHourBefore && status === 3) return <Pickup isOwner={isOwner} updateBookingStatus={updateBookingStatus} booking={booking} userDetails={userDetails} setReportModalVisible={setReportModalVisible}/>
@@ -100,7 +104,6 @@ export default function TradeCalendarStatusPanel({ booking, userDetails, getBook
 
     const isPickupTime = () => {
         const startSlot = getDateObject(booking.start_date)
-        console.log(startSlot)
         if(startSlot?.morning){
             startSlot.dateObj.setHours(8, 0, 0) 
         } else{
@@ -163,13 +166,11 @@ export default function TradeCalendarStatusPanel({ booking, userDetails, getBook
         } catch(err) {
             console.log(err)
         }
-        
     }
     
     return (
         <div className="TradeStatusContainer">
-                
-                {renderStatusPanel()}
+            {renderStatusPanel()}
         </div>
     )
 }

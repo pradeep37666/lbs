@@ -46,8 +46,6 @@ export default function StatusOne({ isOwner, updateBookingStatus, booking, appro
                             <span>Cancel Borrow</span>
                         </div>
                     </div>
-                
-                
             )}
         </>
     )
