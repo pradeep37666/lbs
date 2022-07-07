@@ -119,19 +119,19 @@ export default function TradeSidebar({
                         {booking.deliveryOption === DELIVERY_OPTIONS.BOTH &&
                         <>
                         <span className="TradeSidebarHeading BorrowerAddressLocation">Delivery / Pickup Location</span>
-                        <span style={{ textAlign: 'center'}}>{booking.borrowerAddress}</span>
+                        <span style={{ textAlign: 'center'}}>{booking.borrowerAddress?.fullAddress}</span>
                         </>
                         }
                         {booking.deliveryOption === DELIVERY_OPTIONS.DELIVERY &&
                         <>
                         <span className="TradeSidebarHeading BorrowerAddressLocation">Delivery Location</span>
-                        <span style={{ textAlign: 'center'}}>{booking.borrowerAddress}</span>
+                        <span style={{ textAlign: 'center'}}>{booking.borrowerAddress?.fullAddress}</span>
                         </>
                         }
                         {booking.deliveryOption === DELIVERY_OPTIONS.PICKUP &&
                         <>
                         <span className="TradeSidebarHeading BorrowerAddressLocation">Pickup Location</span>
-                        <span style={{ textAlign: 'center'}}>{booking.borrowerAddress}</span>
+                        <span style={{ textAlign: 'center'}}>{booking.borrowerAddress?.fullAddress}</span>
                         </>
                         }
                     </div>

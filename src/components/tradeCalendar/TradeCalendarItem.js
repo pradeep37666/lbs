@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import './TradeCalendarItem.css'
 import getDateObject from '../../util/dateUtils/getDateObject'
 import Arrow from '../../assets/Icons/Arrow'
@@ -57,6 +57,10 @@ export default function TradeCalendarItem({ booking, setSelectedBooking, row, cu
         }
         return 'TradeCalendarItemPending'
     }
+
+    useEffect(() => {
+        console.log({booking})
+    },[booking])
 
     return (
         <div 

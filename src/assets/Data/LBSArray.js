@@ -27,4 +27,18 @@ const fullNameDayArray = [
     "Saturday"
 ]
 
-export { monthArray, dayArray, fullNameDayArray }
+const bookingStatusesArray = [ 
+    'APPLIED', 
+    'APPROVED', 
+    'REJECTED', 
+    'TO_RESCHEDULE', 
+    'LENDER_CONFIRMED', 
+    'BORROWER_CONFIRMED', 
+    'BOTH_CONFIRMED', 
+    'ITEM_RETURNED', 
+    'BORROWER_REVIEWED', 
+    'LENDER_REVIEWED', 
+    'BOTH_REVIEWED'
+]
+
+export { monthArray, dayArray, fullNameDayArray, bookingStatusesArray }

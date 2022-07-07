@@ -1,8 +1,9 @@
 import React from 'react'
 import { useHistory } from 'react-router'
+import { BOOKING_STATUSES } from '../../../assets/Data/LBSEnum'
 
 export default function StatusTwo({ isOwner, updateBookingStatus, booking }) {
-    const itemId = booking.i_id
+    const itemId = booking.id
     const history = useHistory()
     return (
         <div className="TradeStatusContentContainer">
@@ -14,7 +15,7 @@ export default function StatusTwo({ isOwner, updateBookingStatus, booking }) {
                     < >
                         <span>The owner has re-scheduled the booking</span>
                         <div className="TradeStatusButtonContainer">
-                            <div className="TradeStatusDeclineButton" onClick={() => updateBookingStatus(0)}>
+                            <div className="TradeStatusDeclineButton" onClick={() => updateBookingStatus(BOOKING_STATUSES.REJECTED)}>
                                 <span>Cancel</span>
                             </div>
                             <div className="TradeStatusApproveButton" onClick={() => {history.push(`/item/${itemId}/application`)}}>

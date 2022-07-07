@@ -1,10 +1,8 @@
 import React, { useState } from 'react'
 import { BOOKING_STATUSES } from '../../../assets/Data/LBSEnum'
-import Application from '../../../pages/application/Application'
-import Instance from '../../../util/axios'
 import Button from '../../Button/Button'
 
-export default function StatusOne({ isOwner, updateBookingStatus, booking, approveBooking, isLoading }) {
+export default function StatusOne({ isOwner, updateBookingStatus, approveBooking, isLoading }) {
     const [cancelPressed, setCancelPressed] = useState(false)
     
     return (
@@ -27,9 +25,6 @@ export default function StatusOne({ isOwner, updateBookingStatus, booking, appro
                         <div className="TradeStatusDeclineButton" onClick={() => setCancelPressed(true)}>
                             <span>Decline</span>
                         </div>
-                        {/* <div className="TradeStatusApproveButton" onClick={approveBooking}>
-                            <span>Approve</span>
-                        </div>  */}
                         <Button 
                         text="Approve"
                         style={{ width: '45%'}}
@@ -37,16 +32,14 @@ export default function StatusOne({ isOwner, updateBookingStatus, booking, appro
                         isLoading={isLoading}
                         />
                     </div>
-                    
                 ) 
-                
             ) : (
-                    <div className="TradeStatusContentContainer">
-                        <span>Application sent, the item owner has 24 hours to respond</span>
-                        <div className="TradeStatusDeclineButton" onClick={() => updateBookingStatus(BOOKING_STATUSES.REJECTED)}>
-                            <span>Cancel Borrow</span>
-                        </div>
+                <div className="TradeStatusContentContainer">
+                    <span>Application sent, the item owner has 24 hours to respond</span>
+                    <div className="TradeStatusDeclineButton" onClick={() => updateBookingStatus(BOOKING_STATUSES.REJECTED)}>
+                        <span>Cancel Borrow</span>
                     </div>
+                </div>
             )}
         </>
     )

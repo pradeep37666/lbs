@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import './TradeCalendarItemContainer.css'
 import TradeCalendarItem from '../TradeCalendarItem'
 import getImage from '../../../util/getImage'
@@ -17,6 +17,10 @@ export default function TradeCalendarItemContainer({
     const { user } = state
     const itemImages = bookingItem?.item?.images ?? []
     const isLender = user.id === bookingItem.lenderId
+
+    useEffect(() => {
+        console.log({bookingItem})
+    },[bookingItem])
 
     const renderBookings = () => { 
         const row = header ? 3 : 2

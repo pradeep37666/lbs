@@ -40,7 +40,7 @@ export default function Application() {
         if(!confirmedStart || !confirmedEnd) return
         dispatch({ 
             type: 'setBookingPriceCalculator', 
-            data: new BookingPriceCalculator(item.price, item.discount, item.deliveryPrice, confirmedStart, confirmedEnd)
+            data: new BookingPriceCalculator(item.price, item.discount, item.deliveryPrice, item.pickupPrice, confirmedStart, confirmedEnd)
         })
     }, [confirmedStart, confirmedEnd])
     

@@ -1,9 +1,7 @@
 import React, { useState } from 'react'
-import Application from '../../../pages/application/Application'
-import Instance from '../../../util/axios'
 
 export default function StatusFour({ isOwner, updateBookingStatus, userDetails, setReportModalVisible }) {
-    const [noPressed, setNoPressed] = useState(false)
+    const [ noPressed, setNoPressed ] = useState(false)
     
     return (
         <div className="TradeStatusContentContainer">
@@ -36,11 +34,9 @@ export default function StatusFour({ isOwner, updateBookingStatus, userDetails, 
                  )
                  
             ) : (
-                    <span>
-                        Enjoy the use of your item.
-                    </span>
-                
-                
+                <span>
+                    Enjoy the use of your item.
+                </span>
             )}
         </div>
     )

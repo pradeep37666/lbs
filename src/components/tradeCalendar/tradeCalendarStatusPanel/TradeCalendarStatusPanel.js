@@ -33,11 +33,15 @@ export default function TradeCalendarStatusPanel({
         setStatus(booking.status)
     },[booking])
 
+    useEffect(() => {
+        console.log(booking.id)
+    },[booking])
+
     const renderStatusPanel = () => {
         if(status === BOOKING_STATUSES.REJECTED){
             return <StatusZero updateBookingStatus={updateBookingStatus} booking={booking}/>
         }
-        if( status === BOOKING_STATUSES.ITEM_RETURNED){
+        if(status === BOOKING_STATUSES.ITEM_RETURNED){
             return <StatusSeven booking={booking} isOwner={isOwner} />
         }
         const dropOff = isDropoffTime()
@@ -55,9 +59,16 @@ export default function TradeCalendarStatusPanel({
             )
         }
         const isHourBefore = isPickupTime()
-        if(isHourBefore && status === 3) return <Pickup isOwner={isOwner} updateBookingStatus={updateBookingStatus} booking={booking} userDetails={userDetails} setReportModalVisible={setReportModalVisible}/>
+        if(isHourBefore && status === 3) {
+            return <Pickup 
+                isOwner={isOwner} 
+                updateBookingStatus={updateBookingStatus} 
+                userDetails={userDetails} 
+                setReportModalVisible={setReportModalVisible}
+            />
+        } 
         switch(status){
-            case 1 : {
+            case 'APPLIED' : {
                 return <StatusOne 
                 isOwner={isOwner} 
                 updateBookingStatus={updateBookingStatus} 
@@ -65,17 +76,15 @@ export default function TradeCalendarStatusPanel({
                 approveBooking={approveBooking} 
                 isLoading={isApproveLoading}/>
             }
-            case 2 : {
+            case 'TO_RESCHEDULE' : {
                 return <StatusTwo 
                 isOwner={isOwner} 
                 updateBookingStatus={updateBookingStatus} 
                 booking={booking}/>
             }
-            case 3 : {
+            case 'BOTH_CONFIRMED' : {
                 return <StatusThree 
                 isOwner={isOwner} 
-                updateBookingStatus={updateBookingStatus} 
-                booking={booking} 
                 userDetails={userDetails} />
             }
             case 4 : {
@@ -121,10 +130,10 @@ export default function TradeCalendarStatusPanel({
     }
 
     const isDropoffTime = () => {
-        const endSlot = getDateObject(booking.end_date)
+        const endSlot = getDateObject(booking.endDateIndex)
         if(endSlot?.morning){
             endSlot.dateObj.setHours(12, 0, 0)
-        } else{
+        } else {
             endSlot.dateObj.setHours(17, 0, 0)
         }
         const now = new Date()
@@ -133,6 +142,7 @@ export default function TradeCalendarStatusPanel({
             return true
         }
     }
+
     const approveBooking = async () => {
         setIsApproveLoading(true)
         try{
@@ -157,9 +167,9 @@ export default function TradeCalendarStatusPanel({
     }
     const updateBookingStatus = async (newStatus) => {
         try{
-            const newBooking = {b_id: booking.b_id, status: newStatus}
-            const { data, status} = await Instance.put('/booking/update', newBooking)
-            console.log(data,status)
+            const { data, status} = await Instance.patch(`/bookings/${booking.id}/status`, { status: newStatus })
+            console.log({data})
+            console.log({status})
             if(status === 200){
                 setStatus(newStatus)
                 getBookings()

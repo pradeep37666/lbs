@@ -13,6 +13,7 @@ import ReviewBorrower from '../../components/modals/ReviewBorrower/ReviewBorrowe
 import { useHistory } from 'react-router'
 import NoContent from '../../components/NoContent/NoContent'
 import ReviewLender from '../../components/modals/ReviewLender/ReviewLender'
+import { bookingStatusesArray } from '../../assets/Data/LBSArray'
 
 export default function Trades() {
     const { state } = useGlobalState()
@@ -39,7 +40,7 @@ export default function Trades() {
     const getLenderBookings = async () => {
         try {
             const { data, status } = await Instance.get(`/users/${user.id}/bookings/lender`, {
-                status: [ 'PENDING_APPROVAL', 'APPROVED', 'REJECTED', 'ITEM_RETURNED' ]
+                status: bookingStatusesArray
             })
             if(status !== 200) return
             // const parsedBookings = parseBookings(data)
@@ -52,8 +53,9 @@ export default function Trades() {
     const getBorrowerBookings = async () => {
         try {
             const { data, status } = await Instance.get(`/users/${user.id}/bookings/borrower`, {
-                status: [ 'PENDING_APPROVAL', 'APPROVED', 'REJECTED', 'ITEM_RETURNED' ]
+                status: bookingStatusesArray
             })
+            console.log({data})
             if(status !== 200) return
             // const parsedBookings = parseBookings(data)
             setBorrowerBookingItems(data)

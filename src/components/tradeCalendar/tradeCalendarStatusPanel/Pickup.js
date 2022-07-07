@@ -1,12 +1,10 @@
 import React, { useState } from 'react'
 
-export default function Pickup({ isOwner, userDetails, updateBookingStatus, booking, setReportModalVisible }) {
+export default function Pickup({ isOwner, userDetails, updateBookingStatus, setReportModalVisible }) {
     const [noPressed, setNoPressed] = useState(false)
     if(!userDetails){
         return ''
     }
-    console.log(booking)
-    console.log(userDetails)
     return (
         <div className="TradeStatusContentContainer">
             { isOwner ? (
@@ -26,7 +24,6 @@ export default function Pickup({ isOwner, userDetails, updateBookingStatus, book
                     <>
                         <span>Has {`${userDetails.firstName} ${userDetails.lastName}`} picked up the item?</span>
                         <div className="TradeStatusButtonContainer">
-                        
                             <div className="TradeStatusDeclineButton" onClick={() => setNoPressed(true)}>
                                 <span>No</span>
                             </div>

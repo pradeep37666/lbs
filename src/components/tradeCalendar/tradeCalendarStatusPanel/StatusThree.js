@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function StatusThree({ isOwner, updateBookingStatus, booking, userDetails }) {
+export default function StatusThree({ isOwner, userDetails }) {
 
     return (
         <div className="TradeStatusContentContainer">
