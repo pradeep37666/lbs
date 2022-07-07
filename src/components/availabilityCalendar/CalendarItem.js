@@ -15,6 +15,16 @@ export default function CalendarItem({ day, index, onClick, isCurrentMonth }) {
         confirmedEnd, yearAvailability, itemAvailability 
     } = state
 
+    const isToday = () => {
+        if (
+            day.getDate() <= new Date().getDate() &&
+            day.getMonth() <= new Date().getMonth() &&
+            day.getFullYear() <= new Date().getFullYear()
+          )
+        return true
+        return false
+    }
+
     useEffect(() => {
         if(!yearAvailability) return
         const { availability, booked } = getAvailability(day, itemAvailability, yearAvailability)
@@ -43,7 +53,11 @@ export default function CalendarItem({ day, index, onClick, isCurrentMonth }) {
 
     const handleClick = (e) => {
         e.stopPropagation()
-        // Dont show time slot picker if the day is completely unavailable or completely booked
+        if (
+            day.getDate() <= new Date().getDate() &&
+            day.getMonth() <= new Date().getMonth() &&
+            day.getFullYear() <= new Date().getFullYear()
+          ) return
         if((booked.am || !availability.am) &&  (booked.pm || !availability.pm)) return
         onClick({day, availability, booked})
     }
@@ -73,6 +87,11 @@ export default function CalendarItem({ day, index, onClick, isCurrentMonth }) {
     }
 
     const handleUnavailableLogic = () => {
+        if (
+            day.getDate() <= new Date().getDate() &&
+            day.getMonth() <= new Date().getMonth() &&
+            day.getFullYear() <= new Date().getFullYear()
+          ) return true
         if(availability && (!availability.am || booked.am) && (!availability.pm || booked.pm) ) return true
         return false
     }
@@ -97,8 +116,8 @@ export default function CalendarItem({ day, index, onClick, isCurrentMonth }) {
             >
                 <span className="CalendarItemText" style={{ height: 'auto'}}>{day.getDate()}</span>
                 <div className="ItemAvailabilityContainer">
-                    <div className={`${booked.am ? 'ItemBooked' : ''} ${ availability && !availability.am ? 'ItemAMUnavailable' : 'ItemAMAvailable'}`}/>
-                    <div className={`${booked.pm ? 'ItemBooked' : ''} ${ availability && !availability.pm ? 'ItemPMUnavailable' : 'ItemPMAvailable'}`} />
+                    <div className={`${booked.am || isToday() ? 'ItemBooked' : ''} ${ availability && !availability.am ? 'ItemAMUnavailable' : 'ItemAMAvailable'}`}/>
+                    <div className={`${booked.pm || isToday() ? 'ItemBooked' : ''} ${ availability && !availability.pm ? 'ItemPMUnavailable' : 'ItemPMAvailable'}`} />
                 </div>
             </div>
         </div>

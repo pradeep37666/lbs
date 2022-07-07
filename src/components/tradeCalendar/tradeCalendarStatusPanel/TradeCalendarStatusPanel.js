@@ -30,11 +30,8 @@ export default function TradeCalendarStatusPanel({
     const isOwner = booking.lenderId === user.id
 
     useEffect(() => {
+        console.log({booking})
         setStatus(booking.status)
-    },[booking])
-
-    useEffect(() => {
-        console.log(booking.id)
     },[booking])
 
     const renderStatusPanel = () => {
@@ -144,17 +141,28 @@ export default function TradeCalendarStatusPanel({
     }
 
     const approveBooking = async () => {
-        setIsApproveLoading(true)
         try{
-            const { data, status} = await Instance.get(`/booking/approve?b_id=${booking.b_id}`)
-            console.log(data,status)
-            setIsApproveLoading(false)
-            setStatus(3)
+            setIsApproveLoading(true)
+            const { status } = await Instance.get(`/bookings/${booking.id}/approve`)
+            if (status !== 200) return
+            setStatus(BOOKING_STATUSES.APPROVED)
             getBookings()
         } catch(err) {
-            setIsApproveLoading(false)
             console.log(err.response)
-        } 
+        } finally {
+            setIsApproveLoading(false)
+        }
+    }
+
+    const updateBookingStatus = async (newStatus) => {
+        try{
+            const { status} = await Instance.patch(`/bookings/${booking.id}/status`, { status: newStatus })
+            if(status !== 200) return
+            setStatus(newStatus)
+            getBookings()
+        } catch(err) {
+            console.log(err)
+        }
     }
 
     const finishBooking = async () => {
@@ -163,19 +171,6 @@ export default function TradeCalendarStatusPanel({
             console.log(data, status)
         } catch(err){
             console.log(err.response)
-        }
-    }
-    const updateBookingStatus = async (newStatus) => {
-        try{
-            const { data, status} = await Instance.patch(`/bookings/${booking.id}/status`, { status: newStatus })
-            console.log({data})
-            console.log({status})
-            if(status === 200){
-                setStatus(newStatus)
-                getBookings()
-            }
-        } catch(err) {
-            console.log(err)
         }
     }
     

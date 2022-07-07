@@ -64,7 +64,8 @@ export default function ItemOverview() {
             deliveryOption,
             startDateIndex: startIndex,
             endDateIndex: endIndex,
-            year: bookingYear,
+            startYear: bookingYear,
+            endYear: confirmedEnd.dateObj.getFullYear(),
             price,
         })
     }
@@ -104,7 +105,7 @@ export default function ItemOverview() {
     }
 
     const makeBooking = async (bookingInfo, item) => {
-        const { data } = await Instance.post('bookings', bookingInfo)
+        const { data } = await Instance.post('/bookings', bookingInfo)
         await sendEnquiry(item)
         if (!data) return
         history.push({

@@ -10,8 +10,8 @@ export default function StatusThree({ isOwner, userDetails }) {
                     <span>{`${userDetails.firstName} ${userDetails.lastName}`}</span>
                 </div>
            ) : (
-                <span>Get ready to pick your up your item</span>
-           ) }
+                <span>Get ready to pick up your item</span>
+           )}
         </div>
     )
 }

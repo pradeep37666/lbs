@@ -1,9 +1,15 @@
 import React, { useState } from 'react'
 
-export default function DropOff({ booking, isOwner, updateBookingStatus,  userDetails, setReviewModalVisible, setReportModalVisible, finishBooking}) {
-    const [noPressed, setNoPressed] = useState()
-
-
+export default function DropOff({ 
+    booking, 
+    isOwner, 
+    updateBookingStatus,  
+    userDetails, 
+    setReviewModalVisible, 
+    setReportModalVisible, 
+    finishBooking
+}) {
+    const [ noPressed, setNoPressed ] = useState()
 
     return (
         <div className="TradeStatusContentContainer">

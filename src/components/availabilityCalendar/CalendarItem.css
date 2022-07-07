@@ -30,7 +30,7 @@
   margin-right: 2px;
 }
 .ItemPMUnavailable {
-  background-color: gray;
+  background-color: #808080;
   height: 8px;
   width: 8px;
   border-radius: 4px;

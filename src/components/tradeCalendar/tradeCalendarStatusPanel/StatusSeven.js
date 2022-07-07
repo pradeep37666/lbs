@@ -1,6 +1,4 @@
 import React, { useState } from 'react'
-import Application from '../../../pages/application/Application'
-import Instance from '../../../util/axios'
 
 export default function StatusSeven({ isOwner, booking,  }) {
     
