@@ -1,62 +1,108 @@
 import React, { useState } from 'react'
+import { BOOKING_STATUSES } from '../../../assets/Data/LBSEnum'
+import StatusButton from './StatusButton'
 
-export default function Pickup({ isOwner, userDetails, updateBookingStatus, setReportModalVisible }) {
-    const [noPressed, setNoPressed] = useState(false)
+export const Pickup = ({ 
+    isOwner, 
+    userDetails, 
+    updateBookingStatus, 
+    setReportModalVisible,
+    status,
+}) => {
+    const [ noPressed, setNoPressed ] = useState(false)
+    const confirmationStatus = () => {
+        if (isOwner) {
+            switch (status) {
+                case BOOKING_STATUSES.APPROVED:
+                    return BOOKING_STATUSES.LENDER_CONFIRMED
+                case BOOKING_STATUSES.BORROWER_CONFIRMED:
+                    return BOOKING_STATUSES.BOTH_CONFIRMED
+                default:
+                    return
+            }
+        } else {
+            switch (status) {
+                case BOOKING_STATUSES.APPROVED:
+                    return BOOKING_STATUSES.BORROWER_CONFIRMED
+                case BOOKING_STATUSES.LENDER_CONFIRMED:
+                    return BOOKING_STATUSES.BOTH_CONFIRMED
+                default:
+                    return
+            }
+        }
+    }
+
     if(!userDetails){
         return ''
     }
+
     return (
         <div className="TradeStatusContentContainer">
-            { isOwner ? (
-                 noPressed ? (
+            {isOwner ? (
+                noPressed ? (
                     <>
-                        <span>Would you like to send a report?</span>
+                        <span style={{marginBottom: '0.5em'}}>
+                            Would you like to send a report?
+                        </span>
                         <div className="TradeStatusButtonContainer">
-                            <div className="TradeStatusDeclineButton">
-                                <span>No</span>
-                            </div>
-                            <div className="TradeStatusApproveButton" onClick={() => setReportModalVisible(true)}>
-                                <span>Yes</span>
-                            </div>
+                            <StatusButton 
+                                text='Submit Report'
+                                type='blue'
+                                onClick={() => setReportModalVisible(true)}
+                                width='100%'
+                            />
                         </div>
                     </>
                 ) : (
                     <>
-                        <span>Has {`${userDetails.firstName} ${userDetails.lastName}`} picked up the item?</span>
+                        <span style={{marginBottom: '0.5em'}}>
+                            Has {`${userDetails.firstName} ${userDetails.lastName}`} picked up the item?
+                        </span>
                         <div className="TradeStatusButtonContainer">
-                            <div className="TradeStatusDeclineButton" onClick={() => setNoPressed(true)}>
-                                <span>No</span>
-                            </div>
-                            <div className="TradeStatusApproveButton" onClick={() => updateBookingStatus(5)}>
-                                <span>Yes</span>
-                            </div>
+                            <StatusButton 
+                                text='No'
+                                type='white'
+                                onClick={() => setNoPressed(true)}
+                            />
+                            <StatusButton 
+                                text='Yes'
+                                type='blue'
+                                onClick={() => updateBookingStatus(confirmationStatus())}
+                            />
                         </div>
                     </>
                 )
            ) : (
                  noPressed ? (
                     <>
-                        <span>Would you like to send a report?</span>
+                        <span style={{marginBottom: '0.5em'}}>
+                            Would you like to send a report?
+                        </span>
                         <div className="TradeStatusButtonContainer">
-                            <div className="TradeStatusDeclineButton">
-                                <span>No</span>
-                            </div>
-                            <div className="TradeStatusApproveButton" onClick={() => setReportModalVisible(true)}>
-                                <span>Yes</span>
-                            </div>
+                            <StatusButton 
+                                text='Submit Report'
+                                type='blue'
+                                onClick={() => setReportModalVisible(true)}
+                                width='100%'
+                            />
                         </div>
                     </>
                 ) : (
                     <>
-                        <span>Has {`${userDetails.firstName} ${userDetails.lastName}`} successfully provided you the item?</span>
+                        <span style={{marginBottom: '0.5em'}}>
+                            Has {`${userDetails.firstName} ${userDetails.lastName}`} successfully provided you the item?
+                        </span>
                         <div className="TradeStatusButtonContainer">
-                        
-                            <div className="TradeStatusDeclineButton" onClick={() => setNoPressed(true)}>
-                                <span>No</span>
-                            </div>
-                            <div className="TradeStatusApproveButton" onClick={() => updateBookingStatus(4)}>
-                                <span>Yes</span>
-                            </div>
+                            <StatusButton 
+                                text='No'
+                                type='white'
+                                onClick={() => setNoPressed(true)}
+                            />
+                            <StatusButton 
+                                text='Yes'
+                                type='blue'
+                                onClick={() => updateBookingStatus(confirmationStatus())}
+                            />
                         </div>
                     </>
                 )
@@ -64,3 +110,5 @@ export default function Pickup({ isOwner, userDetails, updateBookingStatus, setR
         </div>
     )
 }
+
+export default Pickup

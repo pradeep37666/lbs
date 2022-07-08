@@ -1,10 +1,10 @@
 import React from 'react'
+import { monthArray } from '../../assets/Data/LBSArray'
 import Arrow from '../../assets/Icons/Arrow'
 import getDateSuffix from '../../util/dateUtils/getDateSuffix'
 
 export default function BookingDatesPanel({ startDate, endDate }) {
     const dayArray = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", ]
-    const monthArray = ["January", "February", "March", "April","May", "June", "July", "August", "September", "October", "November", "December"]
 
     return (
              

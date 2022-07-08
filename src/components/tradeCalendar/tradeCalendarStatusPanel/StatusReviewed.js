@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function StatusEight({ isOwner, }) {
+export const StatusReviewed = ({ isOwner }) => {
     return (
         <div className="TradeStatusContentContainer">
             { isOwner ? (
@@ -11,8 +11,9 @@ export default function StatusEight({ isOwner, }) {
                 <span>
                     Borrow complete
                 </span>
-                
             )}
         </div>
     )
 }
+
+export default StatusReviewed

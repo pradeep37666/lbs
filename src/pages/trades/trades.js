@@ -55,7 +55,6 @@ export default function Trades() {
             const { data, status } = await Instance.get(`/users/${user.id}/bookings/borrower`, {
                 status: bookingStatusesArray
             })
-            console.log({data})
             if(status !== 200) return
             // const parsedBookings = parseBookings(data)
             setBorrowerBookingItems(data)

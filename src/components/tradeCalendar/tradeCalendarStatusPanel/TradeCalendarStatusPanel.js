@@ -2,27 +2,28 @@ import React, { useEffect, useState } from 'react'
 import './TradeCalendarStatusPanel.css'
 import Instance from '../../../util/axios'
 import useGlobalState from '../../../util/useGlobalState'
-import StatusOne from './StatusOne'
-import StatusTwo from './StatusTwo'
-import StatusZero from './StatusZero'
-import StatusThree from './StatusThree'
-import StatusFour from './StatusFour'
-import StatusFive from './StatusFive'
+import StatusRejected  from './StatusRejected'
+import StatusApplied from './StatusApplied'
+import StatusReschedule from './StatusReschedule'
+import StatusApproved from './StatusApproved'
 import Pickup from './Pickup'
+import StatusConfirmed from './StatusConfirmed'
+import StatusItemReturn from './StatusItemReturn'
+import StatusReviewed from './StatusReviewed'
 import getDateObject from '../../../util/dateUtils/getDateObject'
-import StatusSix from './StatusSix'
-import StatusSeven from './StatusSeven'
 import DropOff from './DropOff'
-import StatusEight from './StatusEight'
 import { BOOKING_STATUSES } from '../../../assets/Data/LBSEnum'
+import StatusDefault from './StatusDefault'
 
-export default function TradeCalendarStatusPanel({ 
+export const TradeCalendarStatusPanel = ({ 
     booking, 
     userDetails, 
     getBookings, 
     setReportModalVisible, 
-    setReviewModalVisible 
-}) {
+    setReviewModalVisible,
+    startDate,
+    endDate,
+}) => {
     const [ status, setStatus ] = useState()
     const [ isApproveLoading, setIsApproveLoading ] = useState(false)
     const { state } = useGlobalState()
@@ -30,114 +31,121 @@ export default function TradeCalendarStatusPanel({
     const isOwner = booking.lenderId === user.id
 
     useEffect(() => {
-        console.log({booking})
         setStatus(booking.status)
-    },[booking])
+    },[])
 
     const renderStatusPanel = () => {
-        if(status === BOOKING_STATUSES.REJECTED){
-            return <StatusZero updateBookingStatus={updateBookingStatus} booking={booking}/>
-        }
-        if(status === BOOKING_STATUSES.ITEM_RETURNED){
-            return <StatusSeven booking={booking} isOwner={isOwner} />
-        }
-        const dropOff = isDropoffTime()
-        if(dropOff && status >= 3){
-            return (
-                <DropOff 
-                    booking={booking}
-                    finishBooking={finishBooking}
-                    updateBookingStatus={updateBookingStatus}
-                    isOwner={isOwner}
-                    userDetails={userDetails}
-                    setReviewModalVisible={setReviewModalVisible}
-                    setReportModalVisible={setReportModalVisible}
-                />
-            )
-        }
+        // An hour before booking time
         const isHourBefore = isPickupTime()
-        if(isHourBefore && status === 3) {
-            return <Pickup 
+        if(isHourBefore && 
+            (status === BOOKING_STATUSES.APPROVED || 
+            (isOwner && status === BOOKING_STATUSES.BORROWER_CONFIRMED) || 
+            (!isOwner && status === BOOKING_STATUSES.LENDER_CONFIRMED)
+            )
+        )   return <Pickup 
                 isOwner={isOwner} 
                 updateBookingStatus={updateBookingStatus} 
                 userDetails={userDetails} 
                 setReportModalVisible={setReportModalVisible}
+                status={status}
             />
-        } 
+
+        // An hour before returning time
+        const dropOff = isDropoffTime()
+        if(dropOff && status === BOOKING_STATUSES.BOTH_CONFIRMED)
+            return <DropOff 
+                booking={booking}
+                updateBookingStatus={updateBookingStatus}
+                isOwner={isOwner}
+                userDetails={userDetails}
+                setReviewModalVisible={setReviewModalVisible}
+                setReportModalVisible={setReportModalVisible}
+                endDateObj={endDate}
+            />
+
+        // Booking approved but not an hour before booking time
+        if((status === BOOKING_STATUSES.APPROVED) ||
+            (isOwner && status === BOOKING_STATUSES.BORROWER_CONFIRMED) ||
+            (!isOwner && status === BOOKING_STATUSES.LENDER_CONFIRMED)
+        )   return <StatusApproved 
+                isOwner={isOwner} 
+                userDetails={userDetails} 
+                startDateObj={startDate}
+            />
+        
+        // Lender and / or Borrower confirmed pickup
+        if((status === BOOKING_STATUSES.BOTH_CONFIRMED) ||
+           (isOwner && status === BOOKING_STATUSES.LENDER_CONFIRMED) ||
+           (!isOwner && status === BOOKING_STATUSES.BORROWER_CONFIRMED)
+        )   return <StatusConfirmed 
+                isOwner={isOwner}
+                userDetails={userDetails}
+                endDateObj={endDate}
+            />
+        
+        // Display a review submitted
+        if((status === BOOKING_STATUSES.BOTH_REVIEWED) ||
+           (isOwner && status === BOOKING_STATUSES.LENDER_REVIEWED) ||
+           (!isOwner && status === BOOKING_STATUSES.BORROWER_REVIEWED)
+        ) return <StatusReviewed isOwner={isOwner} />
+
         switch(status){
-            case 'APPLIED' : {
-                return <StatusOne 
+            case BOOKING_STATUSES.REJECTED: {
+                return <StatusRejected 
+                updateBookingStatus={updateBookingStatus} 
+                booking={booking}/>
+            }
+            case BOOKING_STATUSES.APPLIED: {
+                return <StatusApplied 
                 isOwner={isOwner} 
                 updateBookingStatus={updateBookingStatus} 
                 booking={booking} 
                 approveBooking={approveBooking} 
-                isLoading={isApproveLoading}/>
+                isLoading={isApproveLoading}
+                startDate={startDate}
+                endDate={endDate}/>
             }
-            case 'TO_RESCHEDULE' : {
-                return <StatusTwo 
+            case BOOKING_STATUSES.TO_RESCHEDULE: {
+                return <StatusReschedule 
                 isOwner={isOwner} 
                 updateBookingStatus={updateBookingStatus} 
                 booking={booking}/>
             }
-            case 'BOTH_CONFIRMED' : {
-                return <StatusThree 
-                isOwner={isOwner} 
-                userDetails={userDetails} />
+            case BOOKING_STATUSES.ITEM_RETURNED: {
+                return <StatusItemReturn 
+                isOwner={isOwner}
+                setReviewModalVisible={setReportModalVisible}/>
             }
-            case 4 : {
-                return (
-                <StatusFour 
-                isOwner={isOwner} 
-                updateBookingStatus={updateBookingStatus} 
-                booking={booking} 
-                userDetails={userDetails}
-                setReportModalVisible={setReportModalVisible} />
-                )
-            }
-            case 5 : {
-                return <StatusFive isOwner={isOwner} updateBookingStatus={updateBookingStatus} booking={booking} userDetails={userDetails}/>
-            }
-            case 6 : {
-                return <StatusSix isOwner={isOwner} updateBookingStatus={updateBookingStatus} booking={booking} userDetails={userDetails}/>
-            }
-            case 8 : {
-                return <StatusEight isOwner={isOwner} />
-            }
-            default : {
-                return 'default'
+            default: {
+                return <StatusDefault />
             }
         }
     }
 
     const isPickupTime = () => {
-        const startSlot = getDateObject(booking.start_date)
-        if(startSlot?.morning){
+        const startSlot = getDateObject(booking.startDateIndex)
+        if(startSlot?.morning) 
             startSlot.dateObj.setHours(8, 0, 0) 
-        } else{
+        else 
             startSlot.dateObj.setHours(13, 0, 0) 
-        }
         const now = new Date()
         const oneHour = 60 * 60 * 1000
-
-        if((startSlot.dateObj.getTime() - oneHour) < now.getTime()){
-            return true
-        }
+        if((startSlot.dateObj.getTime() - oneHour) < now.getTime())
+            return true 
         return false
-        
     }
 
     const isDropoffTime = () => {
         const endSlot = getDateObject(booking.endDateIndex)
-        if(endSlot?.morning){
+        if(endSlot?.morning) 
             endSlot.dateObj.setHours(12, 0, 0)
-        } else {
+        else 
             endSlot.dateObj.setHours(17, 0, 0)
-        }
         const now = new Date()
         const oneHour = 60 * 60 * 1000
-        if(endSlot.dateObj.getTime() - oneHour < now.getTime()){
+        if(endSlot.dateObj.getTime() - oneHour < now.getTime()) 
             return true
-        }
+        return false
     }
 
     const approveBooking = async () => {
@@ -164,15 +172,6 @@ export default function TradeCalendarStatusPanel({
             console.log(err)
         }
     }
-
-    const finishBooking = async () => {
-        try{
-            const { data, status } = await Instance.get(`/booking/finish?b_id=${booking.b_id}`)
-            console.log(data, status)
-        } catch(err){
-            console.log(err.response)
-        }
-    }
     
     return (
         <div className="TradeStatusContainer">
@@ -180,3 +179,5 @@ export default function TradeCalendarStatusPanel({
         </div>
     )
 }
+
+export default TradeCalendarStatusPanel

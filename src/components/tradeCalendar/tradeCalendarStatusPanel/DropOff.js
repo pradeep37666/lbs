@@ -1,68 +1,74 @@
 import React, { useState } from 'react'
+import { BOOKING_STATUSES } from '../../../assets/Data/LBSEnum'
+import StatusButton from './StatusButton'
 
-export default function DropOff({ 
-    booking, 
+export const DropOff = ({
     isOwner, 
     updateBookingStatus,  
     userDetails, 
     setReviewModalVisible, 
     setReportModalVisible, 
-    finishBooking
-}) {
+    endDateObj
+}) => {
     const [ noPressed, setNoPressed ] = useState()
+    const endTime = endDateObj.timeslot === 'morning' ? '8:00am' : '1:00pm'
 
     return (
         <div className="TradeStatusContentContainer">
            { isOwner && userDetails ? (
                  noPressed ? (
                     <>
-                        <span>Would you like to send a report?</span>
+                        <span style={{marginBottom: '0.5em'}}>
+                            Would you like to send a report?
+                        </span>
                         <div className="TradeStatusButtonContainer">
-                            <div className="TradeStatusDeclineButton">
-                                <span>No</span>
-                            </div>
-                            <div className="TradeStatusApproveButton" onClick={() => setReportModalVisible(true)}>
-                                <span>Yes</span>
-                            </div>
+                            <StatusButton 
+                                text='Submit Report'
+                                type='blue'
+                                onClick={() => setReportModalVisible(true)}
+                                width='100%'
+                            />
                         </div>
                     </>
                 ) : (
                     <>
-                        <span>Has {`${userDetails.firstName} ${userDetails.lastName}`} dropped off the item?</span>
+                        <span style={{marginBottom: '0.5em'}}>
+                            Has {`${userDetails.firstName} ${userDetails.lastName}`} dropped off the item?
+                        </span>
                         <div className="TradeStatusButtonContainer">
-                        
-                            <div className="TradeStatusDeclineButton" onClick={() => setNoPressed(true)}>
-                                <span>No</span>
-                            </div>
-                            <div className="TradeStatusApproveButton" onClick={async () => {
-                                await finishBooking()
-                                await updateBookingStatus(7)
-                                setReviewModalVisible(true)
-                            }}>
-                                <span>Yes</span>
-                            </div>
+                            <StatusButton 
+                                text='No'
+                                type='white'
+                                onClick={() => setNoPressed(true)}
+                            />
+                            <StatusButton 
+                                text='Yes'
+                                type='blue'
+                                onClick={async () => {
+                                    await updateBookingStatus(BOOKING_STATUSES.ITEM_RETURNED)
+                                    setReviewModalVisible(true)
+                                }}
+                            />
                         </div>
                     </>
                 )
-           ) : (
-                // userDetails && booking.status !== 7 ? (
-                userDetails && booking.status !== 1 ? (
-                    <>
-                        <span>Your item is due today. Please check that it's in the same condition as when you borrowed it.</span>
-                    </>
-                ) : (
-                     <>
-                        <span>Item returned, thank you for borrowing this item with Little Big Shed.</span>
-                        <div className="TradeStatusButtonContainer">
-                            <div className="TradeStatusApproveButton" onClick={() => setReviewModalVisible(true)}>
-                                <span>Rate Lender</span>
+            ) : (
+                <>
+                    <span style={{marginBottom: '0.5em'}}>
+                        Your item is due today. Please check that it’s in the same condition as when you borrowed it.
+                    </span>
+                    <StatusButton 
+                        text={
+                            <div>
+                                Your Item Is Due Back At <b>{endTime}</b>
                             </div>
-                        </div>
-                    </>
-                )
-
-               
-           ) }
+                        }
+                        nonBtn={true}
+                    />
+                </>
+            )}
         </div>
     )
 }
+
+export default DropOff

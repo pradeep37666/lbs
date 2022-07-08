@@ -80,6 +80,8 @@ export default function TradeSidebar({
                         userDetails={userDetails} 
                         setReportModalVisible={setReportModalVisible}
                         setReviewModalVisible={setReviewModalVisible}
+                        startDate={bookingPriceCalculator.start}
+                        endDate={bookingPriceCalculator.end}
                     />
                 </div>
                 <div className="TradeSidebarSection">
