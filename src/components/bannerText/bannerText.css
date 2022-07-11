@@ -16,3 +16,17 @@
 .BannerTextNormal {
   font-weight: normal;
 }
+
+.BannerBackBtn {
+  position: relative;
+  width: 35px;
+  height: 35px;
+  margin-right: 1em;
+  transform: translateX(0);
+  transition: transform 0.5s;
+  cursor: pointer;
+}
+
+.BannerBackBtn:hover {
+  transform: translateX(-15px);
+}

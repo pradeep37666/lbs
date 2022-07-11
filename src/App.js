@@ -33,41 +33,46 @@ import {
   HashRouter as Router,
   Route,
   Redirect
-} from "react-router-dom";
+} from "react-router-dom"
 import reducer from './util/reducers/globalStateReducer'
+import snackbarReducer from './util/reducers/snackbarReducer'
 import { CometChat } from '@cometchat-pro/chat'
-import { Elements } from '@stripe/react-stripe-js';
-import { loadStripe } from '@stripe/stripe-js';
-import EditItemPage from './pages/editItem/EditItemPage';
-import Instance from './util/axios';
-import ForgotPassword from './pages/ForgotPassword/ForgotPassword';
+import { Elements } from '@stripe/react-stripe-js'
+import { loadStripe } from '@stripe/stripe-js'
+import EditItemPage from './pages/editItem/EditItemPage'
+import Instance from './util/axios'
+import ForgotPassword from './pages/ForgotPassword/ForgotPassword'
+import LBSSnackBar from './components/LBSSnackBar/LBSSnackBar'
 
-const SentryRoute = Sentry.withSentryRouting(Route);
-
-const history = createBrowserHistory();
-
+const SentryRoute = Sentry.withSentryRouting(Route)
+const history = createBrowserHistory()
 Sentry.init({
   integrations: [
     new BrowserTracing({
       routingInstrumentation: Sentry.reactRouterV5Instrumentation(history),
     }),
   ],
-
-  // We recommend adjusting this value in production, or using tracesSampler
-  // for finer control
   tracesSampleRate: 1.0,
-});
+})
 
 export const GlobalStateContext = React.createContext()
+export const GlobalErrorContext = React.createContext()
 
 const initialState = {}
+const initialErrorState = {
+  toggleSnackbar: false,
+  snackbarMessage: '',
+  snackbarBtnText: '',
+  snackbarBtnFunc: () => {}
+}
 
 // const stripe = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY)
 const stripe = loadStripe('pk_test_51JAi4wAaysFIruTL4KcRCjRZ1aSi6KYbnBDjGRkKuuht6nojLH2ItABIh430Ee9nHzbnqgm80dlwWJZfXMLrbATw00fg4d8m5c')
 
 function App() {
-  const [state, dispatch] = useReducer(reducer, initialState)
-  const [loadingUser, setLoadingUser] = useState(true)
+  const [ state, dispatch ] = useReducer(reducer, initialState)
+  const [ errorState, errorDispatch ] = useReducer(snackbarReducer, initialErrorState)
+  const [ loadingUser, setLoadingUser ] = useState(true)
   const { user } = state
   const token = localStorage.getItem('LBSToken')
 
@@ -143,9 +148,11 @@ function App() {
 
   return (
     <Elements stripe={stripe}>
+      <GlobalErrorContext.Provider value={{errorState, errorDispatch}}>
       <GlobalStateContext.Provider value={{ state, dispatch }}>
         {loadingUser ? '' : 
         <Router history={history}>
+          <LBSSnackBar timeout={10000}/>
           <ScrollToTop>
             {/* marketing pages here with different routers */}
             <SentryRoute exact path='/' component={Top} />
@@ -185,6 +192,7 @@ function App() {
         </Router>
         }
       </GlobalStateContext.Provider>
+      </GlobalErrorContext.Provider>
     </Elements>
   );
 }

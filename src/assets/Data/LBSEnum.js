@@ -26,8 +26,28 @@ const BOOKING_STATUSES = {
     BOTH_REVIEWED: 'BOTH_REVIEWED',
 }
 
+const SNACKBAR_BUTTON_TYPES = {
+    CLOSE: 'CLOSE',
+    RETRY: 'RETRY',
+    FIX: 'FIX',
+    DISMISS: 'DISMISS',
+    UNDO: 'UNDO'
+}
+
+const REGISTER_PAGES = {
+    BASIC: 'Basic Details',
+    VERIFICATION: 'Verification',
+    BANK: 'Bank Details',
+    LOCATION: 'Location Details',
+    AVAILABILITY: 'Availability',
+    TNC: 'Terms & Conditions',
+    COMPLETE: 'Complete!'
+}
+
 export { 
     FQA_TABS,
     DELIVERY_OPTIONS,
     BOOKING_STATUSES,
+    SNACKBAR_BUTTON_TYPES,
+    REGISTER_PAGES,
 }

@@ -14,6 +14,7 @@ import { useHistory } from 'react-router-dom'
 import useGlobalState from '../../util/useGlobalState'
 import { CometChat } from '@cometchat-pro/chat'
 import registerReducer from '../../util/reducers/registerReducer'
+import { REGISTER_PAGES } from '../../assets/Data/LBSEnum'
 
 const FormContext = createContext()
 
@@ -22,7 +23,7 @@ export default function Register() {
     const globalDispatch = useGlobalState().dispatch
     const [ state, dispatch ] = useReducer(registerReducer, { 
         isLenderUpgrade: false,
-        currentPage: 'Basic Details',
+        currentPage: REGISTER_PAGES.BASIC,
         dateOfBirth: new Date(1990, 0, 1),
         availability: Array(14).fill(0),
         firstName: '', 
@@ -111,7 +112,7 @@ export default function Register() {
                 await saveCard()
                 await registerCometChat(data.user)
                 setIsRegisterLoading(false)
-                dispatch({ type: 'setCurrentPage', data: 'Complete!'})
+                dispatch({ type: 'setCurrentPage', data: REGISTER_PAGES.COMPLETE})
             }
         } catch(e) {
             console.log(e.response)
@@ -171,21 +172,46 @@ export default function Register() {
         )
     }
 
+    const backPrevPage = (currentPage) => {
+        switch (currentPage) {
+            case REGISTER_PAGES.BASIC: 
+                history.push('/login')
+                return
+            case REGISTER_PAGES.VERIFICATION: 
+                dispatch({ type: 'setCurrentPage', data: REGISTER_PAGES.BASIC})
+                return
+            case REGISTER_PAGES.BANK: 
+                dispatch({ type: 'setCurrentPage', data: REGISTER_PAGES.VERIFICATION})
+                return
+            case REGISTER_PAGES.LOCATION: 
+                dispatch({ type: 'setCurrentPage', data: REGISTER_PAGES.BANK})
+                return
+            case REGISTER_PAGES.AVAILABILITY: 
+                dispatch({ type: 'setCurrentPage', data: REGISTER_PAGES.LOCATION})
+                return
+            case REGISTER_PAGES.TNC: 
+                dispatch({ type: 'setCurrentPage', data: REGISTER_PAGES.AVAILABILITY})
+                return
+            default:
+                break;
+        }
+    }
+
     const renderCurrentPage = () => {
         switch (currentPage) {
-            case 'Basic Details':
+            case REGISTER_PAGES.BASIC:
                 return <BasicDetails context={FormContext} />
-            case 'Verification':
+            case REGISTER_PAGES.VERIFICATION:
                 return <Verification context={FormContext} />
-            case 'Bank Details':
+            case REGISTER_PAGES.BANK:
                 return <BankDetails context={FormContext} />
-            case 'Location Details':
+            case REGISTER_PAGES.LOCATION:
                 return <LocationDetails context={FormContext} />
-            case 'Availability':
+            case REGISTER_PAGES.AVAILABILITY:
                 return <Availability context={FormContext} />
-            case 'Terms & Conditions':
+            case REGISTER_PAGES.TNC:
                 return <TermsConditions context={FormContext} registerUser={registerUser} isRegisterLoading={isRegisterLoading} />
-            case 'Complete!':
+            case REGISTER_PAGES.COMPLETE:
                 return getComplete();
             default:
                 return '';
@@ -195,7 +221,11 @@ export default function Register() {
     return (
         <FormContext.Provider value={{ state, dispatch }}>
             <PageWrapper>
-                <Banner textBold='Account Creation' textNormal={currentPage} />
+                <Banner 
+                    textBold='Account Creation' 
+                    textNormal={currentPage}
+                    prevPage={() => backPrevPage(currentPage)}
+                />
                 {renderCurrentPage()}
             </PageWrapper>
         </FormContext.Provider>

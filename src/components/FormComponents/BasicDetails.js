@@ -9,6 +9,7 @@ import { validate } from 'validate.js'
 import { registrationConstraints } from '../../util/validationConstraints'
 import { FileService } from '../../services/FileService'
 import PhoneNumberInput from '../phoneNumberInput/PhoneNumberInput'
+import { REGISTER_PAGES } from '../../assets/Data/LBSEnum'
 
 export default function BasicDetails({ context }) {
     const { state, dispatch } = useContext(context)
@@ -53,17 +54,15 @@ export default function BasicDetails({ context }) {
             const valid = validateInputs()
             if(!valid) return
             setIsLoading(true)
-            const emailExists = await checkIfEmailExists()
-            if(emailExists) return
-            const phoneExists = await checkIfPhoneNumberExists()
-            if(phoneExists) return
+            const emailOrMobileExists = await checkEmailandMobile()
+            if(emailOrMobileExists) return
             const { status } = await Instance.post('/auth/getVerificationCodeToMobile', {
                 mobile: `+${phoneNumber}`
             })
             if (status === 201)
-                dispatch({ type: 'setCurrentPage', data: 'Verification' })
+                dispatch({ type: 'setCurrentPage', data: REGISTER_PAGES.VERIFICATION })
         } catch(err) {
-            console.log(err)
+            setPhoneTakenError('Phone Number. Please check the details and try again.')
         } finally {
             setIsLoading(false)
         }
@@ -82,29 +81,25 @@ export default function BasicDetails({ context }) {
         dispatch({ type: 'setImageLink', data: fileLink})
     }
 
-    const checkIfEmailExists = async () => {
+    const checkEmailandMobile = async () => {
         try{
-            const {  status} = await Instance.get(`/users/exists?email=${email}`)
-            if(status === 200) {
-                setEmailTakenError('Email is taken')
+            const { data } = await Instance.post(`/users/exists`, {
+                email,
+                mobile: `+${phoneNumber}`
+            })
+            if (!data) return
+            if(data.email.exist) {
+                setEmailTakenError('Email is already in use')
+                return true
+            }
+            if(data.mobile.exist) {
+                setPhoneTakenError('Phone Number is already in use')
                 return true
             }
             return false
         } catch(err){
             console.log(err)
-        }
-    }
-
-    const checkIfPhoneNumberExists = async () => {
-        try{
-            const { status } = await Instance.get(`/users/exists?mobile=${phoneNumber}`)
-            if(status === 200) {
-                setPhoneTakenError('Phone number is taken')
-                return true
-            }
-            return false
-        } catch(err){
-            console.log(err)
+            setEmailTakenError('Invalid Email or Phone Number. Please check the details and try again.')
         }
     }
 

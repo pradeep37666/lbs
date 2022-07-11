@@ -1,0 +1,47 @@
+.snackbar_container {
+    position: fixed;
+    bottom: 1rem;
+    left: 1.5rem;
+    background-color: #AC172C;
+    width: fit-content;
+    max-width: 400px;
+    border-radius: 10px;
+    padding: 0.5em 1em;
+    display: flex;
+    animation: fadein 0.8s, fadeout 0.8s;
+    transition: background-color 0.3s;
+    z-index: 100;
+}
+
+.snackbar_container:hover {
+    background-color: #b42e41;
+}
+
+.snackbar_message {
+    padding-right: 0.5em;
+    color: white;
+    font-weight: 500;
+}
+
+.snackbar_button {
+    border: none;
+    background-color: rgba(172, 23, 44, 0);
+    font-weight: bold;
+    font-size: 0.9em;
+    color: #3284FF;
+    cursor: pointer;
+}
+
+.snackbar_button:hover {
+    box-shadow: none;
+}
+
+@keyframes fadeout {
+    from {
+        left: 0rem;
+        opacity: 0;
+    } to {
+        left: 1.5rem;
+        opacity: 1;
+    }
+}
