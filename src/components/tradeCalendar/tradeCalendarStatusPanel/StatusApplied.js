@@ -49,7 +49,7 @@ export const StatusApplied = ({
                             <StatusButton 
                                 text='Approve'
                                 type='red'
-                                onClick={approveBooking}
+                                onClick={() => updateBookingStatus(BOOKING_STATUSES.APPROVED)}
                                 isLoading={isLoading}
                             />
                         </div>

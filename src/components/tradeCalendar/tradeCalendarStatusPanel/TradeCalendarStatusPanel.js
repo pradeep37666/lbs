@@ -52,7 +52,7 @@ export const TradeCalendarStatusPanel = ({
 
         // An hour before returning time
         const dropOff = isDropoffTime()
-        if(dropOff && status === BOOKING_STATUSES.BOTH_CONFIRMED)
+        if(dropOff && status !== BOOKING_STATUSES.BOTH_CONFIRMED)
             return <DropOff 
                 booking={booking}
                 updateBookingStatus={updateBookingStatus}
@@ -100,7 +100,6 @@ export const TradeCalendarStatusPanel = ({
                 isOwner={isOwner} 
                 updateBookingStatus={updateBookingStatus} 
                 booking={booking} 
-                approveBooking={approveBooking} 
                 isLoading={isApproveLoading}
                 startDate={startDate}
                 endDate={endDate}/>
@@ -148,21 +147,8 @@ export const TradeCalendarStatusPanel = ({
         return false
     }
 
-    const approveBooking = async () => {
-        try{
-            setIsApproveLoading(true)
-            const { status } = await Instance.get(`/bookings/${booking.id}/approve`)
-            if (status !== 200) return
-            setStatus(BOOKING_STATUSES.APPROVED)
-            getBookings()
-        } catch(err) {
-            console.log(err.response)
-        } finally {
-            setIsApproveLoading(false)
-        }
-    }
-
     const updateBookingStatus = async (newStatus) => {
+        console.log({newStatus})
         try{
             const { status} = await Instance.patch(`/bookings/${booking.id}/status`, { status: newStatus })
             if(status !== 200) return

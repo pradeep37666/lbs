@@ -9,7 +9,7 @@
 .UserShed__Title {
   color: #33384f;
   font-weight: bold;
-  margin: 1em 0;
+  margin-bottom: 1em;
   font-size: calc(1.1vw + 1.3rem);
 }
 

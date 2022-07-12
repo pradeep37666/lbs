@@ -43,7 +43,6 @@ export default function Trades() {
                 status: bookingStatusesArray
             })
             if(status !== 200) return
-            // const parsedBookings = parseBookings(data)
             setLenderBookingItems(data) 
         } catch(error){
             console.log(error.response)
@@ -56,25 +55,11 @@ export default function Trades() {
                 status: bookingStatusesArray
             })
             if(status !== 200) return
-            // const parsedBookings = parseBookings(data)
             setBorrowerBookingItems(data)
         } catch(error){
             console.log(error.response)
         }
     }
-
-    // const parseBookings = (bookings) => {
-    //     const filteredBookings = []
-    //     bookings.forEach(bookingObj => {
-    //         const foundIndex = filteredBookings.findIndex(obj => obj.items_title === bookingObj.items_title)
-    //         if(foundIndex !== -1 ){
-    //             filteredBookings[foundIndex].bookings.push(bookingObj)
-    //         } else {
-    //             filteredBookings.push({ items_title: bookingObj.items_title, bookings: [bookingObj]})
-    //         }
-    //     })
-    //     return filteredBookings
-    //  }
 
     const noBookings = (lenderBookingItems.length === 0 && borrowerBookingItems.length === 0)
     const isLender = selectedBooking?.lenderId === user.id

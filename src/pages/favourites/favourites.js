@@ -2,18 +2,20 @@ import React, { useEffect, useState } from 'react'
 import './favourites.css'
 import PageWrapper from '../../components/pageWrapper/pageWrapper'
 import UserShedNav from '../../components/UserShedNav/UserShedNav'
-import ItemCard from '../../components/itemCard/itemCard';
-import { isMobile } from 'react-device-detect';
-import { CircularProgress } from '@material-ui/core';
-import NoContent from '../../components/NoContent/NoContent';
-import { useHistory } from 'react-router';
-import Instance from '../../util/axios';
+import ItemCard from '../../components/itemCard/itemCard'
+import { isMobile } from 'react-device-detect'
+import { CircularProgress } from '@material-ui/core'
+import NoContent from '../../components/NoContent/NoContent'
+import { useHistory } from 'react-router'
+import Instance from '../../util/axios'
+import useGlobalState from '../../util/useGlobalState'
 
 export default function Favourites() {
+    const { user } = useGlobalState()?.state
     const history = useHistory()
-    const [accountContent, setAccountContent] = useState('Favourites')
-    const [items, setItems] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
+    const [ accountContent, setAccountContent ] = useState('Favourites')
+    const [ items, setItems ] = useState([]);
+    const [ isLoading, setIsLoading ] = useState(true);
 
     useEffect(()=>{
         try {
@@ -24,9 +26,13 @@ export default function Favourites() {
     },[])
 
     const getUserFavouriteItems = async () => {
-        const { data } = await Instance.get('/liked/findByUserId')
-        if (data) {
+        try {
+            const { data } = await Instance.get(`/users/${user?.id}/likes`)
+            if (!data) return
             setItems(data)
+        } catch (error) {
+            console.log(error.response)
+        } finally {
             setIsLoading(false)
         }
     }

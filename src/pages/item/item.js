@@ -53,7 +53,7 @@ export default function Item() {
             setItemPictures(item.images)
             setIsLoading(false)
             if (item.userId !== user.id) {
-                getItemOwner(data.item)
+                getItemOwner(item)
                 return
             }
             setIsUserItem(true)
@@ -74,7 +74,8 @@ export default function Item() {
 
     const getItemOwner = async (item) => {
         setIsUserItem(false)
-        const { data, status } = await Instance.get(`user/getOneUser?id=${item}`)
+        const { data } = await Instance.get(`users/${item.userId}`)
+        if (!data) return
         setItemOwner(data)
     }
 
@@ -96,7 +97,7 @@ export default function Item() {
                     itemOwner={itemOwner}
                 />
             }
-            { availabilityModalVisible && item && 
+            {availabilityModalVisible && item && 
                 <AvailabilityModal 
                     item={item}
                     onClick={() => setAvailabilityModalVisible(false)}
