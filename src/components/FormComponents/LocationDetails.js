@@ -31,7 +31,7 @@ export default function LocationDetails({ context }) {
                 )}
                 <Button 
                     text="Next"
-                    isDisabled={!user?.address && !address}
+                    isDisabled={!user?.address && !address?.fullAddress}
                     onClick={() => {
                         dispatch({ type: 'setCurrentPage', data: 'Availability' })
                     }}

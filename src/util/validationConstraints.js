@@ -17,39 +17,39 @@ const passwordConstraints = {
 
 const validationConstraints = {
     firstName: {
-        presence: {
-          allowEmpty: false,
-          message: "^Required"
-        }
+      presence: {
+        allowEmpty: false,
+        message: "^Required"
+      }
     },
     lastName: {
-        presence: {
-            allowEmpty: false,
-            message: "^Required"
-        }
+      presence: {
+        allowEmpty: false,
+        message: "^Required"
+      }
     },
     email: {
-        presence: {
-          allowEmpty: false,
-          message: "^Required"
-        },
-        email: {
-          message: "^Must be a valid email address"
-        }
+      presence: {
+        allowEmpty: false,
+        message: "^Required"
+      },
+      email: {
+        message: "^Must be a valid email address"
+      }
     },
     phoneNumber: {
-        presence: {
-            allowEmpty: false,
-            message: "^Required",
-        },
-        format: {
-          pattern: /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im,
-          message: "^Must be a valid phone number"
-        }
+      presence: {
+        allowEmpty: false,
+        message: "^Required",
+      },
+      format: {
+        pattern: /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im,
+        message: "^Must be a valid phone number"
+      }
     },
     password: passwordConstraints,
     confirmPassword: passwordConstraints,
-    currentPassword: passwordConstraints
+    currentPassword: passwordConstraints,
 }
 
 const createValidationObject = (fields) => {
@@ -58,8 +58,8 @@ const createValidationObject = (fields) => {
         validationObj[field] = validationConstraints[field]
     })
     return validationObj
-    
 }
+
 export const loginConstraints = createValidationObject(['email', 'password'])
 export const registrationConstraints = createValidationObject([ 'firstName', 'lastName', 'email', 'phoneNumber', 'password', 'confirmPassword', ])
 export const newPasswordConstraints = createValidationObject([ 'password', 'confirmPassword' ])

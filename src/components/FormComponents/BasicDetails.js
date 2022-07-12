@@ -9,10 +9,12 @@ import { validate } from 'validate.js'
 import { registrationConstraints } from '../../util/validationConstraints'
 import { FileService } from '../../services/FileService'
 import PhoneNumberInput from '../phoneNumberInput/PhoneNumberInput'
-import { REGISTER_PAGES } from '../../assets/Data/LBSEnum'
+import { REGISTER_PAGES, SNACKBAR_BUTTON_TYPES } from '../../assets/Data/LBSEnum'
+import useErrorState from '../../util/reducers/errorContext'
 
 export default function BasicDetails({ context }) {
     const { state, dispatch } = useContext(context)
+    const { errorDispatch } = useErrorState()
     const [ errorMessages, setErrorMessages ] = useState({})
     const [ isLoading, setIsLoading ] = useState(false)
     const [ emailTakenError, setEmailTakenError ] = useState()
@@ -61,8 +63,14 @@ export default function BasicDetails({ context }) {
             })
             if (status === 201)
                 dispatch({ type: 'setCurrentPage', data: REGISTER_PAGES.VERIFICATION })
-        } catch(err) {
-            setPhoneTakenError('Phone Number. Please check the details and try again.')
+        } catch(error) {
+            errorDispatch({type: 'openSnackBar', data: {
+                message: 'Either email or phone number is invalid. Please check the details and try again.',
+                btnText: SNACKBAR_BUTTON_TYPES.CLOSE,
+                btnFunc: () => errorDispatch({type: 'closeSnackBar'})
+            }})
+            setEmailTakenError('')
+            setPhoneTakenError('')
         } finally {
             setIsLoading(false)
         }
@@ -87,19 +95,16 @@ export default function BasicDetails({ context }) {
                 email,
                 mobile: `+${phoneNumber}`
             })
-            if (!data) return
-            if(data.email.exist) {
+            if(data?.email.exist) {
                 setEmailTakenError('Email is already in use')
                 return true
-            }
-            if(data.mobile.exist) {
+            } else if(data?.mobile.exist) {
                 setPhoneTakenError('Phone Number is already in use')
                 return true
             }
             return false
-        } catch(err){
-            console.log(err)
-            setEmailTakenError('Invalid Email or Phone Number. Please check the details and try again.')
+        } catch(error){
+            console.log(error.response)
         }
     }
 
@@ -125,7 +130,7 @@ export default function BasicDetails({ context }) {
                 errorMessage={getErrorMessage('lastName') }
                 />
                 <ValidationTextInput 
-                placeholder="John@Doe.com"
+                placeholder="johndoe@sample.com"
                 label="Email"
                 value={email}
                 onChange={e => dispatch({ type: 'setEmail', data: e.target.value })}

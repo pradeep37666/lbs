@@ -14,13 +14,16 @@ import { useHistory } from 'react-router-dom'
 import useGlobalState from '../../util/useGlobalState'
 import { CometChat } from '@cometchat-pro/chat'
 import registerReducer from '../../util/reducers/registerReducer'
-import { REGISTER_PAGES } from '../../assets/Data/LBSEnum'
+import { REGISTER_PAGES, SNACKBAR_BUTTON_TYPES } from '../../assets/Data/LBSEnum'
+import { getPrevRegisterPage } from '../../util/getPrevPage'
+import useErrorState from '../../util/reducers/errorContext'
 
 const FormContext = createContext()
 
 export default function Register() {
     const [ isRegisterLoading, setIsRegisterLoading ] = useState(false)
     const globalDispatch = useGlobalState().dispatch
+    const { errorDispatch } = useErrorState()
     const [ state, dispatch ] = useReducer(registerReducer, { 
         isLenderUpgrade: false,
         currentPage: REGISTER_PAGES.BASIC,
@@ -109,28 +112,50 @@ export default function Register() {
             if(status === 201) {
                 globalDispatch({ type: 'setUser', data: data.user})
                 localStorage.setItem('LBSToken', data.token.accessToken)
-                await saveCard()
+                const status = await saveCard()
+                if (!status) return
                 await registerCometChat(data.user)
                 setIsRegisterLoading(false)
                 dispatch({ type: 'setCurrentPage', data: REGISTER_PAGES.COMPLETE})
             }
         } catch(e) {
             console.log(e.response)
+            if(e.response.status === 500) {
+                errorDispatch({type: 'openSnackBar', data: {
+                    message: 'Failed to register. Please check your bank details.',
+                    btnText: SNACKBAR_BUTTON_TYPES.RETRY,
+                    btnFunc: () => {
+                        dispatch({ type: 'setCurrentPage', data: REGISTER_PAGES.BANK})
+                        errorDispatch({type: 'closeSnackBar'})
+                    }
+                }})
+            }
+            errorDispatch({type: 'openSnackBar', data: {
+                message: 'Failed to register. Please check your details and try again.',
+                btnText: SNACKBAR_BUTTON_TYPES.RETRY,
+                btnFunc: () => errorDispatch({type: 'closeSnackBar'})
+            }})
         } finally {
             setIsRegisterLoading(false)
         }
     }
 
     const saveCard = async () => {
-        try{
-            const { data } = await Instance.post('/stripe/customer/credit-card', {
+        try {
+            const { status, data } = await Instance.post('/stripe/customer/credit-card', {
                 paymentMethodId: paymentMethod.id
             })
-            // if (!data) error message here
-        } catch(err){
-            console.log(err)
+            return status
+        } catch (error) {
+            errorDispatch({type: 'openSnackBar', data: {
+                message: 'Invalid credit card infomation. Please check and try again.',
+                btnText: SNACKBAR_BUTTON_TYPES.RETRY,
+                btnFunc: () => {
+                    dispatch({ type: 'setCurrentPage', data: REGISTER_PAGES.BANK})
+                    errorDispatch({type: 'closeSnackBar'})
+                }
+            }})
         }
-        
     }
     
     const setupCometChat = async () => {
@@ -172,31 +197,6 @@ export default function Register() {
         )
     }
 
-    const backPrevPage = (currentPage) => {
-        switch (currentPage) {
-            case REGISTER_PAGES.BASIC: 
-                history.push('/login')
-                return
-            case REGISTER_PAGES.VERIFICATION: 
-                dispatch({ type: 'setCurrentPage', data: REGISTER_PAGES.BASIC})
-                return
-            case REGISTER_PAGES.BANK: 
-                dispatch({ type: 'setCurrentPage', data: REGISTER_PAGES.VERIFICATION})
-                return
-            case REGISTER_PAGES.LOCATION: 
-                dispatch({ type: 'setCurrentPage', data: REGISTER_PAGES.BANK})
-                return
-            case REGISTER_PAGES.AVAILABILITY: 
-                dispatch({ type: 'setCurrentPage', data: REGISTER_PAGES.LOCATION})
-                return
-            case REGISTER_PAGES.TNC: 
-                dispatch({ type: 'setCurrentPage', data: REGISTER_PAGES.AVAILABILITY})
-                return
-            default:
-                break;
-        }
-    }
-
     const renderCurrentPage = () => {
         switch (currentPage) {
             case REGISTER_PAGES.BASIC:
@@ -224,7 +224,7 @@ export default function Register() {
                 <Banner 
                     textBold='Account Creation' 
                     textNormal={currentPage}
-                    prevPage={() => backPrevPage(currentPage)}
+                    prevPage={() => getPrevRegisterPage(isLenderUpgrade, currentPage, dispatch, history)}
                 />
                 {renderCurrentPage()}
             </PageWrapper>

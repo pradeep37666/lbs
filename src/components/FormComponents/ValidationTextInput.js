@@ -3,7 +3,17 @@ import ValidationPopup from '../ValidationPopup/ValidationPopup'
 import ShowPasswordIcon from '../../assets/Icons/ShowPasswordIcon'
 import './ValidationTextInput.css'
 
-export default function ValidationTextInput({ onChange, errorMessage, label, placeholder, passwordInput, errorHeader, value, inLineError, inputType }) {
+export default function ValidationTextInput({ 
+    onChange, 
+    errorMessage, 
+    label, 
+    placeholder, 
+    passwordInput, 
+    errorHeader, 
+    value, 
+    inLineError, 
+    inputType 
+}) {
     const [isInputHidden, setIsInputHidden] = useState(true)
 
     return (

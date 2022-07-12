@@ -18,7 +18,7 @@ export default function BankDetails({ context }) {
     const { state, dispatch } = useContext(context)
     const { 
         accountNumber, BSB, idFrontImage, 
-        idBackImage, isLenderUpgrade, dateOfBirth 
+        idBackImage, isLenderUpgrade, dateOfBirth, website
     } = state
     const [ isLoading, setIsLoading ] = useState(false)
     const [ cardNumber, setCardNumber ] = useState()
@@ -53,8 +53,8 @@ export default function BankDetails({ context }) {
             if(error) return
             dispatch({ type: 'setPaymentMethod', data: paymentMethod })
             dispatch({ type: 'setCurrentPage', data: isLenderUpgrade ? 'Location Details' : 'Terms & Conditions'})
-        } catch(err) {
-            console.log({err})
+        } catch(error) {
+            console.log(error.response)
         } finally {
             setIsLoading(false)
         }
@@ -95,7 +95,7 @@ export default function BankDetails({ context }) {
 
     return (
         <div className="RegistrationWrapper">
-            { !user && <>
+            <>
                 <div className="LoginMain">
                     <Logo height='50px' width='50px' style={{marginBottom: '.5em'}}/>
                     <div className="LoginHeader">Payment Details</div>
@@ -151,9 +151,8 @@ export default function BankDetails({ context }) {
                     text="Next"
                     />}
                 </div>
-            </>}
+            </>
                 
-
             {isLenderUpgrade &&
             <div className="LoginMain" style={ !user ? { marginTop: 0 } : null}>
                 <div className="LoginHeader">Date of Birth</div> 
@@ -192,16 +191,16 @@ export default function BankDetails({ context }) {
                 </div>
 
                 <ValidationTextInput 
-                label="Account Number"
-                value={accountNumber}
-                placeholder="123 456 789"
-                onChange={e => dispatch({ type: 'setAccountNumber', data: e.target.value })}
+                    label="Account Number"
+                    value={accountNumber}
+                    placeholder="123 456 789"
+                    onChange={e => dispatch({ type: 'setAccountNumber', data: e.target.value })}
                 />
                 <ValidationTextInput 
-                value={BSB}
-                placeholder="123 456"
-                onChange={e => dispatch({ type: 'setBSB', data: e.target.value})}
-                label="BSB"
+                    value={BSB}
+                    label="BSB"
+                    placeholder="123 456"
+                    onChange={e => dispatch({ type: 'setBSB', data: e.target.value})}
                 />
                 <div>
                     <p className='IdProviderMainTitle'>
@@ -265,14 +264,20 @@ export default function BankDetails({ context }) {
 
                 <div className="LoginHeader LoginHeader--NoMargin">Website (Social Media)</div>
                 <div className="LoginInputValidationContainer">
-                    <input type='text' placeholder='Enter your website' className="LoginInput" onChange={(e) => dispatch({ type: 'setWebsite', data: e.target.value})} />
-                    {/* <div className={`triangleLeft ${!websiteError ? '' : 'ValidationTextHide'}`} /> 
-                    <ValidationPopup errorText={"Please enter your website or social media"} errorHeader='Website is required' hide={!websiteError} /> */}
+                    <input 
+                        type='text' 
+                        placeholder='Enter your website' 
+                        className="LoginInput" 
+                        value={website}
+                        onChange={(e) => dispatch({ type: 'setWebsite', data: e.target.value})} 
+                    />
+                    <div className={`triangleLeft ${!cardCvc?.error ? '' : 'ValidationTextHide'}`} />
+                    <ValidationPopup errorText={cardCvc?.error?.message} errorHeader='Invalid CCV' hide={!cardCvc?.error} />
                 </div>
                 <Button 
                 text="Next"
                 isLoading={isLoading}
-                isDisabled={ !accountNumber || !BSB || !idFrontImage || !idBackImage }
+                isDisabled={ !accountNumber || !BSB || !idFrontImage || !idBackImage || !website }
                 onClick={() => user ? dispatch({ type: 'setCurrentPage', data: 'Location Details'}) : createPaymentMethod()}
                 />
             </div>

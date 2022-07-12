@@ -1,22 +1,17 @@
-import React, { useReducer, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import './LBSSnackBar.css'
-import snackbarReducer from '../../util/reducers/snackbarReducer'
+import useErrorState from '../../util/reducers/errorContext'
 
 const LBSSnackBar = ({ timeout }) => {
-    const [ state, dispatch ] = useReducer(snackbarReducer, {
-        toggleSnackbar: false,
-        snackbarMessage: '',
-        snackbarBtnText: '',
-        snackbarBtnFunc: () => {}
-    })
+    const { errorState, errorDispatch } = useErrorState()
     const { 
         toggleSnackbar, snackbarMessage, snackbarBtnText, snackbarBtnFunc
-     } = state
+     } = errorState
 
     let TIMER
     const handleTimeout = () => {
         TIMER = setTimeout(() => {
-            dispatch({type: 'closeSnackbar'})
+            errorDispatch({type: 'closeSnackbar'})
         }, timeout)
     }
 
@@ -34,7 +29,7 @@ const LBSSnackBar = ({ timeout }) => {
             </p>
             <button 
                 className='snackbar_button'
-                onClick={() => snackbarBtnFunc()}
+                onClick={snackbarBtnFunc}
             >
                 {snackbarBtnText}
             </button>

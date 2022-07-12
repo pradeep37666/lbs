@@ -31,7 +31,8 @@ const SNACKBAR_BUTTON_TYPES = {
     RETRY: 'RETRY',
     FIX: 'FIX',
     DISMISS: 'DISMISS',
-    UNDO: 'UNDO'
+    UNDO: 'UNDO',
+    RESEND: 'RESEND',
 }
 
 const REGISTER_PAGES = {
