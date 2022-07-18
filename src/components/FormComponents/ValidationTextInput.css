@@ -78,3 +78,8 @@
   font-weight: bold;
   width: 100%;
 }
+
+.red_bg {
+  background-color: #f7e7e9;
+  border-radius: 10px;
+}

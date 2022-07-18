@@ -29,12 +29,10 @@ export default function Account() {
         <PageWrapper>
             <div className="UserShedWrapper">
                 { !isMobile && <UserShedNav setAccountContent={setAccountContent} accountContent={accountContent} />}
-
                 <div className="UserShed__MainContent">
                     <div className="UserShed__Title">
                         {accountContent}
                     </div>
-
                     {renderAccountSettingsContent()}
                 </div>
 

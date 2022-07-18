@@ -10,9 +10,13 @@ import Button from '../../../../components/Button/Button'
 import { updateUserDetailsConstraints } from '../../../../util/validationConstraints'
 import { validate } from 'validate.js'
 import { FileService } from '../../../../services/FileService'
+import useErrorState from '../../../../util/reducers/errorContext'
+import { SNACKBAR_BUTTON_TYPES } from '../../../../assets/Data/LBSEnum'
+import PhoneNumberInput from '../../../../components/phoneNumberInput/PhoneNumberInput'
 
 export default function EditAccountDetails() {
     const { state, dispatch } = useGlobalState()
+    const { errorDispatch } = useErrorState()
     const { user } = state
     const [ isLoading, setIsLoading ] = useState(false)
 
@@ -23,6 +27,8 @@ export default function EditAccountDetails() {
     const [ email, setEmail ] = useState(user.email)
     const [ phoneNumber, setPhoneNumber ] = useState(user.mobile)
     const [ errorMessages, setErrorMessages ] = useState({})
+    const [ emailTakenError, setEmailTakenError ] = useState()
+    const [ phoneTakenError, setPhoneTakenError ] = useState()
 
     useEffect(() => {
         if(Object.keys(errorMessages).length > 0){
@@ -76,15 +82,42 @@ export default function EditAccountDetails() {
         }
         try{
             setIsLoading(true)
+            const emailOrMobileExists = await checkEmailandMobile()
+            if (emailOrMobileExists) return
             const { data } = await Instance.patch('/users', userDetails)
-            // if (!data) error message here
             dispatch({ type: 'setUser', data })
         } catch(err) {
             console.log(err.response)
+            errorDispatch({type: 'openSnackBar', data: {
+                message: 'Either email or phone number is invalid. Please check the details and try again.',
+                btnText: SNACKBAR_BUTTON_TYPES.CLOSE,
+                btnFunc: () => errorDispatch({type: 'closeSnackBar'})
+            }})
+            setEmailTakenError('')
+            setPhoneTakenError('')
         } finally {
             setIsLoading(false)
         }
         
+    }
+
+    const checkEmailandMobile = async () => {
+        try {
+            const { data } = await Instance.post('/users/exists', {
+                email,
+                mobile: `+${phoneNumber}`
+            })
+            if(data?.email.exist) {
+                setEmailTakenError('Email is already in use')
+                return true
+            } else if(data?.mobile.exist) {
+                setPhoneTakenError('Phone Number is already in use')
+                return true
+            }
+            return false
+        } catch (error) {
+            console.log(error.response)
+        }
     }
 
     return (
@@ -111,15 +144,15 @@ export default function EditAccountDetails() {
             onChange={e => setEmail(e.target.value)}
             value={email}
             placeholder="John@Doe.com"
-            errorMessage={getErrorMessage('email')}
+            errorMessage={emailTakenError ? emailTakenError : getErrorMessage('email')}
             inLineError
             />
-            <ValidationTextInput 
+            <PhoneNumberInput 
             label="Phone Number"
-            onChange={e => setPhoneNumber(e.target.value)}
+            placeholder="+61412345678"
             value={phoneNumber}
-            placeholder="0425678912"
-            errorMessage={getErrorMessage('phoneNumber')}
+            onChange={value => setPhoneNumber(value)}
+            errorMessage={phoneTakenError ? phoneTakenError : getErrorMessage('phoneNumber')}
             inLineError
             />
 

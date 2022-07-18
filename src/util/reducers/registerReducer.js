@@ -105,16 +105,6 @@ const registerReducer = (state, action) => {
                 ...state,
                 confirmPassword: action.data
             }
-        case 'setLenderRating' :
-            return {
-                ...state,
-                lenderRating: action.data
-            }
-        case 'setBorrowerRating' :
-            return {
-                ...state,
-                borrowerRating: action.data
-            }
         case 'setCurrentPage' :
             return {
                 ...state,

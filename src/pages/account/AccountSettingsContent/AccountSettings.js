@@ -73,7 +73,10 @@ export default function AccountSettings() {
             </div>
             <div className="AccountSettings__Main">
                 <EditPaymentDetails />
-                {user.isLender && <EditLocation /> }
+                {user.isLender && 
+                 user.address && 
+                 <EditLocation /> 
+                }
             </div>
         </div>
     )

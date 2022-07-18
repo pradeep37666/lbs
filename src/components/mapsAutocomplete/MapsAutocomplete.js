@@ -148,7 +148,7 @@ export default function MapsAutocomplete(props) {
                 props.setAddress(props.defaultAddress)
             }
         }
-    }, [lat, lng])
+    }, [lat, lng, props.defaultAddress])
 
     useEffect(() => {
         if(value === '') {

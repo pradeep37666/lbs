@@ -10,6 +10,7 @@ const PhoneNumberInput = ({
     value,
     onChange,
     errorMessage,
+    inLineError
 }) => {
 
     return (
@@ -19,7 +20,7 @@ const PhoneNumberInput = ({
             </div>
             <div className="LoginInputValidationContainer">
                 <PhoneInput 
-                    country={'au'}
+                    country={'nz'}
                     placeholder={placeholder}
                     value={value}
                     enableSearch={true}
@@ -30,7 +31,7 @@ const PhoneNumberInput = ({
                     buttonClass={'phone_btn_container'}
                     dropdownClass={'phone_dropdown_container'}
                 />
-                {errorMessage &&
+                {errorMessage && !inLineError &&
                 <ValidationPopup 
                     errorText={errorMessage} 
                     hide={false} 
@@ -38,6 +39,12 @@ const PhoneNumberInput = ({
                 />
                 }
             </div>
+            {errorMessage && inLineError &&
+            <div className="InLineErrorContainer red_bg">
+                <div className="ValidationPopup__Header">{`Invalid ${label}`}</div>
+                { errorMessage }
+            </div>
+            }
         </div>
     )
 }

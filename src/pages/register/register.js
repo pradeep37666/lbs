@@ -36,15 +36,13 @@ export default function Register() {
         password: '',
         confirmPassword: '',
         termsChecked: false,
-        lenderRating: 0,
-        borrowerRating: 0,
     })
     const { 
         firstName, lastName, email, phoneNumber, password, 
         address, currentPage, imageLink, paymentMethod, 
         isLenderUpgrade, dateOfBirth, availability, 
         accountNumber, BSB, website, idFrontImageLink, 
-        idBackImageLink, lenderRating, borrowerRating
+        idBackImageLink
     } = state
 
     const history = useHistory()
@@ -69,8 +67,6 @@ export default function Register() {
                     password: password,
                     address,
                     isLender: true,
-                    lender_rating: lenderRating,
-                    borrower_rating: borrowerRating,
                     available: availability.join('')
                 },
                 stripeDetails: {
@@ -97,8 +93,6 @@ export default function Register() {
                     mobile: `+${phoneNumber}`,
                     password: password,
                     isLender: false,
-                    lender_rating: lenderRating,
-                    borrower_rating: borrowerRating,
                     available: availability.join(''),
                 },
                 stripeDetails: {
