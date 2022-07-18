@@ -12,8 +12,9 @@ import StatusItemReturn from './StatusItemReturn'
 import StatusReviewed from './StatusReviewed'
 import getDateObject from '../../../util/dateUtils/getDateObject'
 import DropOff from './DropOff'
-import { BOOKING_STATUSES } from '../../../assets/Data/LBSEnum'
+import { BOOKING_STATUSES, SNACKBAR_BUTTON_TYPES } from '../../../assets/Data/LBSEnum'
 import StatusDefault from './StatusDefault'
+import useErrorState from '../../../util/reducers/errorContext'
 
 export const TradeCalendarStatusPanel = ({ 
     booking, 
@@ -29,14 +30,20 @@ export const TradeCalendarStatusPanel = ({
     const { state } = useGlobalState()
     const { user } = state
     const isOwner = booking.lenderId === user.id
+    const { errorDispatch } = useErrorState()
 
     useEffect(() => {
         setStatus(booking.status)
     },[])
 
+    useEffect(() => {
+        console.log({status})
+    },[status])
+
     const renderStatusPanel = () => {
         // An hour before booking time
-        const isHourBefore = isPickupTime()
+        const isHourBefore = true
+        // const isHourBefore = isPickupTime()
         if(isHourBefore && 
             (status === BOOKING_STATUSES.APPROVED || 
             (isOwner && status === BOOKING_STATUSES.BORROWER_CONFIRMED) || 
@@ -90,19 +97,25 @@ export const TradeCalendarStatusPanel = ({
         ) return <StatusReviewed isOwner={isOwner} />
 
         switch(status){
-            case BOOKING_STATUSES.REJECTED: {
-                return <StatusRejected 
-                updateBookingStatus={updateBookingStatus} 
-                booking={booking}/>
-            }
             case BOOKING_STATUSES.APPLIED: {
                 return <StatusApplied 
                 isOwner={isOwner} 
                 updateBookingStatus={updateBookingStatus} 
-                booking={booking} 
                 isLoading={isApproveLoading}
                 startDate={startDate}
                 endDate={endDate}/>
+            }
+            case BOOKING_STATUSES.REJECTED: {
+                return <StatusRejected 
+                userDetails={userDetails}
+                isOwner={isOwner}
+                status={status}/>
+            }
+            case BOOKING_STATUSES.CANCELLED: {
+                return <StatusRejected 
+                userDetails={userDetails}
+                isOwner={isOwner}
+                status={status}/>
             }
             case BOOKING_STATUSES.TO_RESCHEDULE: {
                 return <StatusReschedule 
@@ -148,20 +161,36 @@ export const TradeCalendarStatusPanel = ({
     }
 
     const updateBookingStatus = async (newStatus) => {
-        console.log({newStatus})
         try{
             const { status} = await Instance.patch(`/bookings/${booking.id}/status`, { status: newStatus })
             if(status !== 200) return
             setStatus(newStatus)
             getBookings()
-        } catch(err) {
-            console.log(err)
+        } catch(error) {
+            console.log(error.response)
+            if (newStatus === 'APPROVED' && error?.response?.status === 400) {
+                errorDispatch({type: 'openSnackBar', data: {
+                    message: 'Booking date conflicts with existing booking(s).',
+                    btnText: SNACKBAR_BUTTON_TYPES.CLOSE,
+                    btnFunc: () => {
+                        errorDispatch({type: 'closeSnackBar'})
+                    }
+                }}) 
+            } else if (newStatus === 'REJECTED' && error?.response?.status === 400) {
+                errorDispatch({type: 'openSnackBar', data: {
+                    message: 'Unable to reject once booking approved',
+                    btnText: SNACKBAR_BUTTON_TYPES.CLOSE,
+                    btnFunc: () => {
+                        errorDispatch({type: 'closeSnackBar'})
+                    }
+                }}) 
+            }
         }
     }
     
     return (
         <div className="TradeStatusContainer">
-            {renderStatusPanel()}
+            {status && renderStatusPanel()}
         </div>
     )
 }

@@ -19,7 +19,7 @@ export default function TradeCalendarItem({ booking, setSelectedBooking, row, cu
 
     const isLend = booking.lenderId === user.id
     const isConfirmed = booking.status === 'APPROVED'
-    const isCancelled = booking.status === 'REJECTED'
+    const isCancelled = booking.status === 'REJECTED' || booking.status === 'CANCELLED'
     const sameTimeSlot = booking.startDateIndex === booking.endDateIndex
     
     const getBackgroundImage = () => {
@@ -57,10 +57,6 @@ export default function TradeCalendarItem({ booking, setSelectedBooking, row, cu
         }
         return 'TradeCalendarItemPending'
     }
-
-    useEffect(() => {
-        console.log({booking})
-    },[booking])
 
     return (
         <div 

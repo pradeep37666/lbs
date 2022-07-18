@@ -18,10 +18,6 @@ export default function TradeCalendarItemContainer({
     const itemImages = bookingItem?.item?.images ?? []
     const isLender = user.id === bookingItem.lenderId
 
-    useEffect(() => {
-        console.log({bookingItem})
-    },[bookingItem])
-
     const renderBookings = () => { 
         const row = header ? 3 : 2
         return (

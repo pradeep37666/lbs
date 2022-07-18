@@ -4,7 +4,7 @@ import { BOOKING_STATUSES } from '../../../assets/Data/LBSEnum'
 import StatusButton from './StatusButton'
 
 export const StatusReschedule = ({ isOwner, updateBookingStatus, booking }) => {
-    const itemId = booking.id
+    const itemId = booking.itemId
     const history = useHistory()
 
     return (
@@ -12,7 +12,7 @@ export const StatusReschedule = ({ isOwner, updateBookingStatus, booking }) => {
             { isOwner ? (
                 <div className="TradeStatusContentContainer">
                     <span style={{marginBottom: '0.5em'}}>
-                    You have asked for new times from this user, they have 24hrs to send their new times before this trade is completely cancelled.
+                    You have asked for new times from this borrower, they have 24hrs to send their new times before this trade is completely cancelled.
                     </span>
                     <StatusButton 
                         text='Wait For New Times'

@@ -83,23 +83,29 @@ export default function Register() {
                     website: website ?? 'https://www.stripe.com/au',
                     documentFrontImage: idFrontImageLink,
                     documentBackImage: idBackImageLink,
+                    paymentMethodId: paymentMethod.id
                 }
             }
             return lenderDetails
         } else {
-            const userDetails = {
-                firstName,
-                lastName,
-                email,
-                avatar: imageLink ? imageLink : '',
-                mobile: `+${phoneNumber}`,
-                password: password,
-                isLender: false,
-                lender_rating: lenderRating,
-                borrower_rating: borrowerRating,
-                available: availability.join(''),
+            const borrowerDetails = {
+                borrowerDetails: {
+                    firstName,
+                    lastName,
+                    email,
+                    avatar: imageLink ? imageLink : '',
+                    mobile: `+${phoneNumber}`,
+                    password: password,
+                    isLender: false,
+                    lender_rating: lenderRating,
+                    borrower_rating: borrowerRating,
+                    available: availability.join(''),
+                },
+                stripeDetails: {
+                    paymentMethodId: paymentMethod.id
+                }
             }
-            return userDetails
+            return borrowerDetails
         }
     }
 
@@ -112,49 +118,31 @@ export default function Register() {
             if(status === 201) {
                 globalDispatch({ type: 'setUser', data: data.user})
                 localStorage.setItem('LBSToken', data.token.accessToken)
-                const status = await saveCard()
-                if (!status) return
                 await registerCometChat(data.user)
                 setIsRegisterLoading(false)
                 dispatch({ type: 'setCurrentPage', data: REGISTER_PAGES.COMPLETE})
             }
         } catch(e) {
             console.log(e.response)
-            if(e.response.status === 500) {
+            const messageType = e?.response?.data?.message?.split(':')[0]
+            if (messageType === 'Invalid request to stripe') {
                 errorDispatch({type: 'openSnackBar', data: {
-                    message: 'Failed to register. Please check your bank details.',
+                    message: 'Invalid bank infomation. Please check your bank details and try again.',
                     btnText: SNACKBAR_BUTTON_TYPES.RETRY,
                     btnFunc: () => {
                         dispatch({ type: 'setCurrentPage', data: REGISTER_PAGES.BANK})
                         errorDispatch({type: 'closeSnackBar'})
                     }
                 }})
+            } else {
+                errorDispatch({type: 'openSnackBar', data: {
+                    message: 'Failed to register. Please check your details and try again.',
+                    btnText: SNACKBAR_BUTTON_TYPES.CLOSE,
+                    btnFunc: () => errorDispatch({type: 'closeSnackBar'})
+                }})
             }
-            errorDispatch({type: 'openSnackBar', data: {
-                message: 'Failed to register. Please check your details and try again.',
-                btnText: SNACKBAR_BUTTON_TYPES.RETRY,
-                btnFunc: () => errorDispatch({type: 'closeSnackBar'})
-            }})
         } finally {
             setIsRegisterLoading(false)
-        }
-    }
-
-    const saveCard = async () => {
-        try {
-            const { status, data } = await Instance.post('/stripe/customer/credit-card', {
-                paymentMethodId: paymentMethod.id
-            })
-            return status
-        } catch (error) {
-            errorDispatch({type: 'openSnackBar', data: {
-                message: 'Invalid credit card infomation. Please check and try again.',
-                btnText: SNACKBAR_BUTTON_TYPES.RETRY,
-                btnFunc: () => {
-                    dispatch({ type: 'setCurrentPage', data: REGISTER_PAGES.BANK})
-                    errorDispatch({type: 'closeSnackBar'})
-                }
-            }})
         }
     }
     

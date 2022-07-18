@@ -40,7 +40,14 @@ export const StatusConfirmed = ({ isOwner, userDetails, endDateObj }) => {
                     <StatusButton 
                         text={
                             <div>
-                                Your Item Is Due Back At <b>{endTime}</b>
+                                Your Item Is Due Back At 
+                                <div style={{display: 'flex'}}>
+                                    <p style={{fontWeight: 'bold', color: '#AC172C', margin: '0'}}>{endTime}&nbsp;</p>
+                                    <p style={{fontWeight: 'bold', margin: '0'}}>{endDay}&nbsp;</p>
+                                    <p style={{margin: '0'}}>{endDate}</p>
+                                    <p style={{margin: '0'}}>&nbsp; - &nbsp;</p>
+                                    <p style={{margin: '0'}}>{endMonth}</p>
+                                </div>
                             </div>
                         }
                         nonBtn={true}

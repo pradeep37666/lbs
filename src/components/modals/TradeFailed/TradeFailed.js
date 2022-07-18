@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "./TradeFailed.css";
 import clsx from "clsx";
 import { CircularProgress, Dialog, DialogContent, IconButton } from "@material-ui/core";
@@ -6,8 +6,9 @@ import { Close } from "@material-ui/icons";
 import { makeStyles } from "@material-ui/styles";
 import Checkbox from "@material-ui/core/Checkbox";
 import Instance from '../../../util/axios'
-import userEvent from "@testing-library/user-event";
 import useGlobalState from "../../../util/useGlobalState";
+import useErrorState from "../../../util/reducers/errorContext";
+import { BOOKING_STATUSES, SNACKBAR_BUTTON_TYPES } from "../../../assets/Data/LBSEnum";
 
 function TradeFailed({ onClick, isLender, open, booking, getBookings, setReportModalVisible }) {
   const { state } = useGlobalState()
@@ -19,9 +20,10 @@ function TradeFailed({ onClick, isLender, open, booking, getBookings, setReportM
     UNKNOWN: `Unknown Reason`,
     OTHER: "Other",
   };
-  const [isLoading, setIsLoading] = useState(false)
-  const [comment, setComment] = useState("");
-  const [reason, setReason] = useState("Arrival");
+  const [ isLoading, setIsLoading ] = useState(false)
+  const [ comment, setComment ] = useState("")
+  const [ reason, setReason ] = useState("Arrival")
+  const { errorDispatch } = useErrorState()
 
   const useStyles = makeStyles({
     button: {
@@ -94,16 +96,24 @@ function TradeFailed({ onClick, isLender, open, booking, getBookings, setReportM
   const submitReport = async () => {
     setIsLoading(true)
     try{
-      const { data, status } = await Instance.post('/report', {
-        b_id: booking.b_id,
+      const { status } = await Instance.post('/booking-reports', {
+        bookingId: booking.id,
         reason,
+        userId: user.id,
         detail: comment,
-        ro_id: user.id
       })
-      await updateBookingStatus(0)
+      if (status !== 201) return
+      await updateBookingStatus(BOOKING_STATUSES.REJECTED)
       setReportModalVisible(false)
     } catch(err){
       console.log(err)
+      errorDispatch({type: 'openSnackBar', data: {
+        message: 'Failed to submit a report. Please try again later.',
+        btnText: SNACKBAR_BUTTON_TYPES.CLOSE,
+        btnFunc: () => {
+            errorDispatch({type: 'closeSnackBar'})
+        }
+      }})
     } finally {
       setIsLoading(false)
       
@@ -113,13 +123,9 @@ function TradeFailed({ onClick, isLender, open, booking, getBookings, setReportM
 
   const updateBookingStatus = async (newStatus) => {
     try{
-        const newBooking = {b_id: booking.b_id, status: newStatus}
-        const { data, status} = await Instance.put('/booking/update', newBooking)
-        console.log(data,status)
-        if(status === 200){
-            // setStatus(newStatus)
+        const { status } = await Instance.patch(`/bookings/${booking.id}/status`, { status: newStatus })
+        if(status !== 200) return
             getBookings()
-        }
     } catch(err) {
         console.log(err)
     }
@@ -240,9 +246,13 @@ function TradeFailed({ onClick, isLender, open, booking, getBookings, setReportM
               <CircularProgress color="inherit"/>
             ) : (
               <button
-              className="SearchButtonLarge"
+              className={!comment
+                ? "SearchButtonLargeDisabled"
+                : "SearchButtonLarge"
+              }
               onClick={submitReport}
               style={{ width: "auto" }}
+              disabled={!comment}
               >
                 <div className="ItemButtonFlex">Submit Report</div>
               </button>

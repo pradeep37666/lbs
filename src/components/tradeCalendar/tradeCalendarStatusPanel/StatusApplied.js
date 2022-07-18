@@ -6,12 +6,11 @@ import BookingDatesPanel from '../../BookingDatesPanel/BookingDatesPanel'
 export const StatusApplied = ({ 
     isOwner, 
     updateBookingStatus, 
-    approveBooking, 
     isLoading,
     startDate,
     endDate
 }) => {
-    const [cancelPressed, setCancelPressed] = useState(false)
+    const [ cancelPressed, setCancelPressed ] = useState(false)
     
     return (
         <>
@@ -58,12 +57,12 @@ export const StatusApplied = ({
             ) : (
                 <div className="TradeStatusContentContainer">
                     <span style={{marginBottom: '0.5em'}}>
-                        Application sent, the item owner has 24 hours to respond
+                        Your booking request has been sent, the item owner has 24 hours to respond
                     </span>
                     <StatusButton 
                         text='Cancel Borrow'
                         type='white'
-                        onClick={updateBookingStatus(BOOKING_STATUSES.REJECTED)}
+                        onClick={() => updateBookingStatus(BOOKING_STATUSES.CANCELLED)}
                         width='100%'
                     />
                 </div>

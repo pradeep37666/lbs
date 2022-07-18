@@ -95,6 +95,17 @@
   width: max-content;
   font-size: 24px;
 }
+.SearchButtonLargeDisabled {
+  background-color: #bcbcbc;
+  border: none;
+  outline: none;
+  border-radius: 10px;
+  padding: 0.6em 2em;
+  font-family: "DMSans", sans-serif;
+  color: #33384f;
+  width: max-content;
+  font-size: 24px;
+}
 .SearchInputContainer {
   width: 35%;
   min-width: 9rem;
