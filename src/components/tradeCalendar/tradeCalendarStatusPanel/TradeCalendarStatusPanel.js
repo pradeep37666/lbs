@@ -58,8 +58,9 @@ export const TradeCalendarStatusPanel = ({
             />
 
         // An hour before returning time
-        const dropOff = isDropoffTime()
-        if(dropOff && status !== BOOKING_STATUSES.BOTH_CONFIRMED)
+        const dropOff = true
+        // const dropOff = isDropoffTime()
+        if(dropOff && status === BOOKING_STATUSES.BOTH_CONFIRMED)
             return <DropOff 
                 booking={booking}
                 updateBookingStatus={updateBookingStatus}

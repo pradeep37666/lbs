@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
+import { dayArray, monthArray } from '../../../assets/Data/LBSArray'
 import { BOOKING_STATUSES } from '../../../assets/Data/LBSEnum'
+import getDateSuffix from '../../../util/dateUtils/getDateSuffix'
 import StatusButton from './StatusButton'
 
 export const DropOff = ({
@@ -12,7 +14,9 @@ export const DropOff = ({
 }) => {
     const [ noPressed, setNoPressed ] = useState()
     const endTime = endDateObj.timeslot === 'morning' ? '8:00am' : '1:00pm'
-
+    const endDay = dayArray[endDateObj.dateObj.getDay()]
+    const endDate = getDateSuffix(endDateObj.dateObj)
+    const endMonth = monthArray[endDateObj.dateObj.getMonth()]
     return (
         <div className="TradeStatusContentContainer">
            { isOwner && userDetails ? (
@@ -60,7 +64,14 @@ export const DropOff = ({
                     <StatusButton 
                         text={
                             <div>
-                                Your Item Is Due Back At <b>{endTime}</b>
+                                Your Item Is Due Back At 
+                                <div style={{display: 'flex'}}>
+                                    <p style={{fontWeight: 'bold', color: '#AC172C', margin: '0'}}>{endTime}&nbsp;</p>
+                                    <p style={{fontWeight: 'bold', margin: '0'}}>{endDay}&nbsp;</p>
+                                    <p style={{margin: '0'}}>{endDate}</p>
+                                    <p style={{margin: '0'}}>&nbsp; - &nbsp;</p>
+                                    <p style={{margin: '0'}}>{endMonth}</p>
+                                </div>
                             </div>
                         }
                         nonBtn={true}

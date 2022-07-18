@@ -2,9 +2,7 @@ import React, { useState } from 'react'
 import Instance from '../../../../util/axios';
 import useGlobalState from '../../../../util/useGlobalState';
 import MapsAutocomplete from '../../../../components/mapsAutocomplete/MapsAutocomplete';
-import getSuburb from '../../../../util/getSuburb';
 import parseAddressComponent from '../../../../util/parseAddressComponent';
-import { async } from 'validate.js';
 import Button from '../../../../components/Button/Button';
 
 export default function EditLocation() {
