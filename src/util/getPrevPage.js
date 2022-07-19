@@ -1,4 +1,4 @@
-import { POST_ITEM_PAGE, REGISTER_PAGES } from "../assets/Data/LBSEnum"
+import { POST_ITEM_PAGE, REGISTER_PAGES, UPGRADE_LENDER } from "../assets/Data/LBSEnum"
 
 export const getPrevRegisterPage = (isLenderUpgrade, currentPage, dispatch, history) => {
     if (isLenderUpgrade) {
@@ -63,6 +63,25 @@ export const getPrevPostItemPage = (currentPage, dispatch, history) => {
             return
         case POST_ITEM_PAGE.COMPLETE:
             dispatch({ type: 'setCurrentPage', data: POST_ITEM_PAGE.AVAILABILITY})
+            return
+        default:
+            return
+    }
+}
+
+export const getPrevUpgradeLenderPage = (currentPage, dispatch, history) => {
+    switch (currentPage) {
+        case UPGRADE_LENDER.BANK:
+            history.push('/user/account')
+            return
+        case UPGRADE_LENDER.LOCATION:
+            dispatch({ type: 'setCurrentPage', data: UPGRADE_LENDER.BANK })
+            return
+        case UPGRADE_LENDER.AVAILABILITY: 
+            dispatch({ type: 'setCurrentPage', data: UPGRADE_LENDER.LOCATION })
+            return
+        case UPGRADE_LENDER.COMPLETE:
+            dispatch({ type: 'setCurrentPage', data: UPGRADE_LENDER.COMPLETE })
             return
         default:
             return

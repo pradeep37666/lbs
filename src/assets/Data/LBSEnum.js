@@ -55,6 +55,13 @@ const POST_ITEM_PAGE = {
     COMPLETE: 'Complete!'
 }
 
+const UPGRADE_LENDER = {
+    BANK: 'Bank Details',
+    LOCATION: 'Location Details',
+    AVAILABILITY: 'Availability',
+    COMPLETE: 'Complete!'
+}
+
 export { 
     FQA_TABS,
     DELIVERY_OPTIONS,
@@ -62,4 +69,5 @@ export {
     SNACKBAR_BUTTON_TYPES,
     REGISTER_PAGES,
     POST_ITEM_PAGE,
+    UPGRADE_LENDER,
 }

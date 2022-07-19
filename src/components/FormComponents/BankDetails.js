@@ -12,13 +12,15 @@ import Button from '../Button/Button';
 import { ThemeProvider } from '@material-ui/styles';
 import { ReactComponent as CameraIcon } from '../../assets/Icons/CameraIcon.svg'
 import { FileService } from '../../services/FileService';
+import { UPGRADE_LENDER } from '../../assets/Data/LBSEnum';
 
-export default function BankDetails({ context }) {
+export default function BankDetails({ context, lenderUpgrade }) {
     const user = useGlobalState().state.user
     const { state, dispatch } = useContext(context)
     const { 
         accountNumber, BSB, idFrontImage, 
-        idBackImage, isLenderUpgrade, dateOfBirth, website
+        idBackImage, isLenderUpgrade, dateOfBirth, 
+        website
     } = state
     const [ isLoading, setIsLoading ] = useState(false)
     const [ cardNumber, setCardNumber ] = useState()
@@ -102,6 +104,7 @@ export default function BankDetails({ context }) {
                     <div className="LoginText">If you would like to share your shed with users, Little big shed will need to know your payment and banking details to allow you to send and receive money for Little Big Shed trades.</div>
                     <div className="LoginText">However if you only want to borrow items from other users, we will only need your card details.</div>
                 </div>
+                {!lenderUpgrade &&
                 <div className="LoginMain LoginMainNoMarg">
                     <div className="LoginHeader">Card Details</div>
                     <div className="LoginText">We need these details to make a successful trade between 2 parties.</div>
@@ -151,10 +154,11 @@ export default function BankDetails({ context }) {
                     text="Next"
                     />}
                 </div>
+                }
             </>
                 
             {isLenderUpgrade &&
-            <div className="LoginMain" style={ !user ? { marginTop: 0 } : null}>
+            <div className="LoginMain" style={ (!user || lenderUpgrade) ? { marginTop: 0 } : null}>
                 <div className="LoginHeader">Date of Birth</div> 
                 <ThemeProvider theme={datePickerTheme}>
                     <MuiPickersUtilsProvider utils={MomentUtils}>
@@ -278,7 +282,7 @@ export default function BankDetails({ context }) {
                 text="Next"
                 isLoading={isLoading}
                 isDisabled={ !accountNumber || !BSB || !idFrontImage || !idBackImage || !website }
-                onClick={() => user ? dispatch({ type: 'setCurrentPage', data: 'Location Details'}) : createPaymentMethod()}
+                onClick={() => user ? dispatch({ type: 'setCurrentPage', data: UPGRADE_LENDER.LOCATION}) : createPaymentMethod()}
                 />
             </div>
             }

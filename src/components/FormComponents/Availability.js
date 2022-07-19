@@ -3,6 +3,7 @@ import ProductSlots from "../productSlots/productSlots";
 import { ReactComponent as Logo } from "./../../assets/Logos/LogoRed.svg";
 import Button from "../Button/Button";
 import useGlobalState from "../../util/useGlobalState";
+import { REGISTER_PAGES } from "../../assets/Data/LBSEnum";
 
 export default function Availability({ 
   context, 
@@ -63,7 +64,7 @@ export default function Availability({
             isDisabled={!availability.includes(1)}
             text="Next"
             isLoading={isUpgradeLoading}
-            onClick={() => (user && type === 'upgrateLender') ? submitUpgrade() : dispatch({ type: 'setCurrentPage', data: 'Terms & Conditions'})}
+            onClick={() => (user && type === 'upgrateLender') ? submitUpgrade() : dispatch({ type: 'setCurrentPage', data: REGISTER_PAGES.TNC})}
             />
           )}
         </div>

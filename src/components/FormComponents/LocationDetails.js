@@ -32,7 +32,7 @@ export default function LocationDetails({ context }) {
                 )}
                 <Button 
                     text="Next"
-                    isDisabled={user ? (!user?.address || !address?.fullAddress) : (!address?.fullAddress)}
+                    isDisabled={user ? (!user?.address && !address?.fullAddress) : (!address?.fullAddress)}
                     onClick={() => {
                         dispatch({ type: 'setCurrentPage', data: POST_ITEM_PAGE.AVAILABILITY })
                     }}

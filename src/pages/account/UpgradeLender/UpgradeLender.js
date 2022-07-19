@@ -9,6 +9,8 @@ import { ReactComponent as Logo } from '../../../assets/Logos/LogoRed.svg'
 import { useHistory } from 'react-router'
 import useGlobalState from '../../../util/useGlobalState'
 import lenderUpgradeReducer from '../../../util/reducers/lenderUpgradeReducer'
+import { UPGRADE_LENDER } from '../../../assets/Data/LBSEnum'
+import { getPrevUpgradeLenderPage } from '../../../util/getPrevPage'
 
 const FormContext = createContext()
 
@@ -89,18 +91,18 @@ export default function UpgradeLender() {
 
     const renderSwitch = () => {
         switch (currentPage) {
-            case 'Bank Details':
-                return <BankDetails context={FormContext} />
-            case 'Location Details':
+            case UPGRADE_LENDER.BANK:
+                return <BankDetails context={FormContext} lenderUpgrade={true}/>
+            case UPGRADE_LENDER.LOCATION:
                 return <LocationDetails context={FormContext} />
-            case 'Availability':
+            case UPGRADE_LENDER.AVAILABILITY:
                 return <Availability
                     context={FormContext}
                     submitUpgrade={submitUpgrade}
                     isUpgradeLoading={isUpgradeLoading}
                     type={'upgrateLender'}
                 />
-            case 'Complete!':
+            case UPGRADE_LENDER.COMPLETE:
                 return getComplete()
             default:
                 return ''
@@ -110,7 +112,11 @@ export default function UpgradeLender() {
     return (
         <FormContext.Provider value={{ state, dispatch }}>
             <PageWrapper>
-                <Banner textBold='Lender Upgrade' textNormal={currentPage} />
+                <Banner 
+                    textBold='Lender Upgrade' 
+                    textNormal={currentPage} 
+                    prevPage={() => getPrevUpgradeLenderPage(currentPage, dispatch, history)}
+                />
                 { renderSwitch() }
             </PageWrapper>
         </FormContext.Provider>

@@ -48,7 +48,9 @@ const validationConstraints = {
       }
     },
     password: passwordConstraints,
-    confirmPassword: passwordConstraints,
+    confirmPassword: {
+      equality: 'password'
+    },
     currentPassword: passwordConstraints,
 }
 
