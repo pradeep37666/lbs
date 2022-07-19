@@ -9,8 +9,9 @@ import { ReactComponent as Logo } from '../../../assets/Logos/LogoRed.svg'
 import { useHistory } from 'react-router'
 import useGlobalState from '../../../util/useGlobalState'
 import lenderUpgradeReducer from '../../../util/reducers/lenderUpgradeReducer'
-import { UPGRADE_LENDER } from '../../../assets/Data/LBSEnum'
+import { SNACKBAR_BUTTON_TYPES, UPGRADE_LENDER } from '../../../assets/Data/LBSEnum'
 import { getPrevUpgradeLenderPage } from '../../../util/getPrevPage'
+import useErrorState from '../../../util/reducers/errorContext'
 
 const FormContext = createContext()
 
@@ -26,6 +27,7 @@ export default function UpgradeLender() {
     const globalState = useGlobalState().state
     const { user } = globalState
     const history = useHistory()
+    const { errorDispatch } = useErrorState()
     const { 
         currentPage, address, accountNumber, BSB,
         website, idFrontImageLink, idBackImageLink,
@@ -84,6 +86,23 @@ export default function UpgradeLender() {
             dispatch({ type: 'setCurrentPage', data: 'Complete!'})
         } catch(error){
             console.log(error.response)
+            const messageType = error?.response?.data?.message?.split(':')[0]
+            if (messageType === 'Invalid request to stripe') {
+                errorDispatch({type: 'openSnackBar', data: {
+                    message: 'Invalid bank infomation. Please check your bank details and try again.',
+                    btnText: SNACKBAR_BUTTON_TYPES.RETRY,
+                    btnFunc: () => {
+                        dispatch({ type: 'setCurrentPage', data: UPGRADE_LENDER.BANK})
+                        errorDispatch({type: 'closeSnackBar'})
+                    }
+                }})
+            } else {
+                errorDispatch({type: 'openSnackBar', data: {
+                    message: 'Failed to register. Please check your details and try again.',
+                    btnText: SNACKBAR_BUTTON_TYPES.CLOSE,
+                    btnFunc: () => errorDispatch({type: 'closeSnackBar'})
+                }})
+            }
         } finally {
             setIsUpgradeLoading(false)
         }
