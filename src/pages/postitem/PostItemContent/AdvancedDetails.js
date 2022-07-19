@@ -6,6 +6,7 @@ import Button from '../../../components/Button/Button';
 import ValidationTextInput from '../../../components/FormComponents/ValidationTextInput';
 import { DELIVERY_OPTIONS } from '../../../assets/Data/LBSSelectOptions';
 import LBSSelectBox from '../../../components/LBSSelectBox/LBSSelectBox';
+import { POST_ITEM_PAGE } from '../../../assets/Data/LBSEnum';
 
 export default function AdvancedDetails({ context }) {
     const { state, dispatch } = useContext(context)
@@ -73,6 +74,7 @@ export default function AdvancedDetails({ context }) {
                 onChange={(e) => dispatch({ type: 'setPrice', data: parseInt(e.target.value) })}
                 inputType='number'
                 placeholder="$20"
+                value={price}
                 />
 
                 <div className="BecomeLenderFlex">
@@ -144,7 +146,7 @@ export default function AdvancedDetails({ context }) {
                 }
                 <Button 
                 text="Next"
-                onClick={() => dispatch({ type: 'setCurrentPage', data: 'Item Location'})}
+                onClick={() => dispatch({ type: 'setCurrentPage', data: POST_ITEM_PAGE.LOCATION })}
                 isDisabled={!description || !price || disabledDeliveryOption()}
                 />
             </div>

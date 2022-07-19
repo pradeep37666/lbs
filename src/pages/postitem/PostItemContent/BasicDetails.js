@@ -3,6 +3,7 @@ import {ReactComponent as Logo} from '../../../assets/Logos/LogoRed.svg'
 import CategorySelect from '../../../components/categorySelect/categorySelect'
 import Button from '../../../components/Button/Button'
 import ValidationTextInput from '../../../components/FormComponents/ValidationTextInput'
+import { POST_ITEM_PAGE } from '../../../assets/Data/LBSEnum'
 
 export default function BasicDetails({ context }) {
     const { state, dispatch } = useContext(context)
@@ -17,6 +18,7 @@ export default function BasicDetails({ context }) {
                 <ValidationTextInput 
                 onChange={e => dispatch({ type: 'setTitle', data: e.target.value })}
                 label="Title"
+                value={title}
                 />
                 <div className="LoginHeader">Category</div>
                 <CategorySelect 
@@ -29,7 +31,7 @@ export default function BasicDetails({ context }) {
                 />
                 <Button 
                 text="Next"
-                onClick={() => dispatch({ type: 'setCurrentPage', data: 'Item Pictures'})}
+                onClick={() => dispatch({ type: 'setCurrentPage', data: POST_ITEM_PAGE.PICTURES})}
                 isDisabled={!title || !category}
                 />
             </div>

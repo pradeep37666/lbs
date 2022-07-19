@@ -48,7 +48,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function CustomizedCheckbox({ onClick}) {
+export default function CustomizedCheckbox({ onClick, termsChecked }) {
     const classes = useStyles();
 
     return (
@@ -80,6 +80,7 @@ Sint aliquip est labore dolore nulla nisi nulla proident dolor qui esse occaecat
                     onChange={onClick}
                     icon={<span className={classes.icon} />}
                     inputProps={{ 'aria-label': 'decorative checkbox' }}
+                    checked={termsChecked}
                 />
                     <div>Sit in cillum quis consequat magna aute sint veniam deserunt nulla pariatur.</div>
                 </div>

@@ -15,7 +15,10 @@ export default function TermsConditions({ context, registerUser, isRegisterLoadi
                 <div className="LoginHeader">{`Terms & Conditions`}</div>
                 <div className="LoginText">Little big shed has outlined its terms and conditions below to help not only protect little big shed from fraudulent activity, but protect its users as well.</div>
 
-                <TC onClick={() => dispatch({ type: 'setTermsChecked', data: !termsChecked})}/>
+                <TC 
+                    onClick={() => dispatch({ type: 'setTermsChecked', data: !termsChecked})}
+                    termsChecked={termsChecked}
+                />
 
                 <Button
                 text="Next"

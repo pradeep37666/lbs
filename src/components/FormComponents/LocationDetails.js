@@ -3,6 +3,7 @@ import { ReactComponent as Logo } from './../../assets/Logos/LogoRed.svg'
 import useGlobalState from '../../util/useGlobalState'
 import MapsAutocomplete from '../mapsAutocomplete/MapsAutocomplete'
 import Button from '../Button/Button'
+import { POST_ITEM_PAGE } from '../../assets/Data/LBSEnum'
 
 export default function LocationDetails({ context }) {
     const { state, dispatch } = useContext(context)
@@ -31,9 +32,9 @@ export default function LocationDetails({ context }) {
                 )}
                 <Button 
                     text="Next"
-                    isDisabled={!user?.address && !address?.fullAddress}
+                    isDisabled={user ? (!user?.address || !address?.fullAddress) : (!address?.fullAddress)}
                     onClick={() => {
-                        dispatch({ type: 'setCurrentPage', data: 'Availability' })
+                        dispatch({ type: 'setCurrentPage', data: POST_ITEM_PAGE.AVAILABILITY })
                     }}
                 />
             </div>

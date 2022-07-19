@@ -12,15 +12,20 @@ import useGlobalState from '../../util/useGlobalState'
 import Instance from '../../util/axios'
 import postItemReducer from '../../util/reducers/postItemReducer'
 import parseAddressComponent from '../../util/parseAddressComponent'
+import { POST_ITEM_PAGE, SNACKBAR_BUTTON_TYPES } from '../../assets/Data/LBSEnum'
+import { getPrevPostItemPage } from '../../util/getPrevPage'
+import { useHistory } from 'react-router-dom'
+import useErrorState from '../../util/reducers/errorContext'
  
 const FormContext = createContext()
 
 export default function PostItem() {
     const [isCreateItemLoading, setIsCreateItemLoading] = useState(false)
     const { user } = useGlobalState().state
-
+    const history = useHistory()
+    const { errorDispatch } = useErrorState()
     const [ state, dispatch ] = useReducer(postItemReducer, { 
-        currentPage: 'Basic Details',
+        currentPage: POST_ITEM_PAGE.BASIC,
         availability: user.available.split('').map(str => parseInt(str)),
         address: user.address,
         pictures: []
@@ -72,34 +77,36 @@ export default function PostItem() {
             const { data, status } = await Instance.post('/items', itemDetails)
             if (status !== 201) return
             setItemID(data.id)
-            dispatch({ type: 'setCurrentPage', data: 'Complete!'})
+            dispatch({ type: 'setCurrentPage', data: POST_ITEM_PAGE.COMPLETE})
         } catch (error) {
             console.log(error.response)
+            errorDispatch({type: 'openSnackBar', data: {
+                message: 'Failed to create a new item. Please check the details and try again.',
+                btnText: SNACKBAR_BUTTON_TYPES.CLOSE,
+                btnFunc: () => errorDispatch({type: 'closeSnackBar'})
+            }})
         } finally {
             setIsCreateItemLoading(false)
         }
     }
 
     const renderCurrentPage = () => {
-        const formattedAddress = address?.address_components 
-            ? parseAddressComponent(address.address_components)
-            : address
         switch (currentPage) {
-            case 'Basic Details':
+            case POST_ITEM_PAGE.BASIC:
                 return <BasicDetails context={FormContext} />
-            case 'Item Pictures':
+            case POST_ITEM_PAGE.PICTURES:
                 return <ItemPictures context={FormContext} />
-            case 'Advanced Details':
+            case POST_ITEM_PAGE.ADVANCE:
                 return <AdvancedDetails context={FormContext} />
-            case 'Item Location':
+            case POST_ITEM_PAGE.LOCATION:
                 return <LocationDetails context={FormContext} />
-            case 'Availability':
+            case POST_ITEM_PAGE.AVAILABILITY:
                 return <Availability 
                 context={FormContext}
                 createItem={createItem}
                 isCreateItemLoading={isCreateItemLoading}
                 />
-            case 'Complete!':
+            case POST_ITEM_PAGE.COMPLETE:
                 return <Complete 
                 title={title}
                 picture={pictures[0]}
@@ -117,7 +124,11 @@ export default function PostItem() {
     return (
         <FormContext.Provider value={{ state, dispatch }}>
             <PageWrapper>
-                <Banner textBold='Post Item' textNormal={currentPage} />
+                <Banner 
+                    textBold='Post Item' 
+                    textNormal={currentPage}
+                    prevPage={() => getPrevPostItemPage(currentPage, dispatch, history)}
+                />
                 {renderCurrentPage()}
             </PageWrapper>
         </FormContext.Provider>

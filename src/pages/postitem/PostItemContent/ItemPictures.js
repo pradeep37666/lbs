@@ -8,6 +8,7 @@ import Button from "../../../components/Button/Button";
 import { FileService } from "../../../services/FileService";
 import { v4 as uuidv4 } from 'uuid'
 import { CircularProgress } from "@material-ui/core";
+import { POST_ITEM_PAGE } from "../../../assets/Data/LBSEnum";
 
 const useStyles = makeStyles({
   button: {
@@ -133,7 +134,7 @@ export default function ItemPictures({ context }) {
         </div>
         <Button 
         text="Next"
-        onClick={() => dispatch({ type: 'setCurrentPage', data: 'Advanced Details'})}
+        onClick={() => dispatch({ type: 'setCurrentPage', data: POST_ITEM_PAGE.ADVANCE})}
         isDisabled={pictures.length === 0}
         />
       </div>

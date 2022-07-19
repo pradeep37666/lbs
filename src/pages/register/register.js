@@ -118,10 +118,9 @@ export default function Register() {
             }
         } catch(e) {
             console.log(e.response)
-            const messageType = e?.response?.data?.message?.split(':')[0]
-            if (messageType === 'Invalid request to stripe') {
+            if (e?.response?.data?.statusCode === 402) {
                 errorDispatch({type: 'openSnackBar', data: {
-                    message: 'Invalid bank infomation. Please check your bank details and try again.',
+                    message: `${e?.response?.data?.message} Please check your bank details and try again.`,
                     btnText: SNACKBAR_BUTTON_TYPES.RETRY,
                     btnFunc: () => {
                         dispatch({ type: 'setCurrentPage', data: REGISTER_PAGES.BANK})

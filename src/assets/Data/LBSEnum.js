@@ -46,10 +46,20 @@ const REGISTER_PAGES = {
     COMPLETE: 'Complete!'
 }
 
+const POST_ITEM_PAGE = {
+    BASIC: 'Basic Details',
+    PICTURES: 'Item Pictures',
+    ADVANCE: 'Advanced Details',
+    LOCATION: 'Item Location',
+    AVAILABILITY: 'Availability',
+    COMPLETE: 'Complete!'
+}
+
 export { 
     FQA_TABS,
     DELIVERY_OPTIONS,
     BOOKING_STATUSES,
     SNACKBAR_BUTTON_TYPES,
     REGISTER_PAGES,
+    POST_ITEM_PAGE,
 }
