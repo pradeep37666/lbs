@@ -4,6 +4,7 @@ import StarFilled from '../../assets/Icons/StarFilled'
 import getImage from '../../util/getImage'
 import useGlobalState from '../../util/useGlobalState'
 import MissingProfile from '../../assets/Icons/MissingProfileIcon.png'
+import RatingFiller from '../../components/ratingFiller/ratingFiller'
 
 const ItemRating = ({ 
     item,
@@ -30,7 +31,7 @@ const ItemRating = ({
                     <div className="RatingHeader">Product</div>
                     <div className="RatingStarFlex">
                         {item.rating}/5 
-                        <StarFilled fill='#e9d8b4' className="StarIconRating" />
+                        <RatingFiller rating={item.rating}/>
                     </div>
                 </div>
                 <div className="RatingLenderFlex">
@@ -53,7 +54,12 @@ const ItemRating = ({
                                 ? user.lender_rating 
                                 : itemOwner && itemOwner.lender_rating
                             }/5 
-                            <StarFilled fill='#e9d8b4' className="StarIconRating" />
+                            <RatingFiller 
+                                rating={isUserItem 
+                                    ? user.lender_rating 
+                                    : itemOwner && itemOwner.lender_rating
+                                }
+                            />
                         </div>
                     </div>
                 </div>

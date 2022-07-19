@@ -1,4 +1,4 @@
-import { POST_ITEM_PAGE, REGISTER_PAGES, UPGRADE_LENDER } from "../assets/Data/LBSEnum"
+import { CREATE_BOOKING, POST_ITEM_PAGE, REGISTER_PAGES, UPGRADE_LENDER } from "../assets/Data/LBSEnum"
 
 export const getPrevRegisterPage = (isLenderUpgrade, currentPage, dispatch, history) => {
     if (isLenderUpgrade) {
@@ -87,3 +87,19 @@ export const getPrevUpgradeLenderPage = (currentPage, dispatch, history) => {
             return
     }
 }
+
+export const getPrevBookingPage = (currentPage, dispatch, history, itemId) => {
+    switch (currentPage) {
+        case CREATE_BOOKING.AVAILABILITY:
+            history.push(`/item/${itemId}`)
+            return
+        case CREATE_BOOKING.OPTION:
+            dispatch({type: 'setPage', data: CREATE_BOOKING.AVAILABILITY})
+            return
+        case CREATE_BOOKING.OVERVIEW:
+            dispatch({type: 'setPage', data: CREATE_BOOKING.OPTION})
+            return
+        default:
+            return
+    }
+} 

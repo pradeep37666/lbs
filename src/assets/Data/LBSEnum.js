@@ -62,6 +62,12 @@ const UPGRADE_LENDER = {
     COMPLETE: 'Complete!'
 }
 
+const CREATE_BOOKING = {
+    AVAILABILITY: 'ItemAvailability',
+    OPTION: 'ItemOptions',
+    OVERVIEW: 'ItemOverview',
+}
+
 export { 
     FQA_TABS,
     DELIVERY_OPTIONS,
@@ -70,4 +76,5 @@ export {
     REGISTER_PAGES,
     POST_ITEM_PAGE,
     UPGRADE_LENDER,
+    CREATE_BOOKING,
 }

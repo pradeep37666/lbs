@@ -9,8 +9,9 @@ import instance from '../../util/axios'
 import ApplicationFooter from '../../components/application/ApplicationFooter'
 import applicationReducer from '../../util/reducers/applicationReducer'
 import BookingPriceCalculator from '../../util/BookingPriceCalculator'
-import { useParams } from 'react-router-dom'
+import { useHistory, useParams } from 'react-router-dom'
 import checkIfLeapYear from '../../util/dateUtils/checkIfLeapYear'
+import { getPrevBookingPage } from '../../util/getPrevPage'
 
 export const ApplicationContext = React.createContext()
 
@@ -25,6 +26,7 @@ const initialState = {
     deliverySelected: false,
     pickupSelected: false
 }
+
 export default function Application() {
     const [ state, dispatch ] = useReducer(applicationReducer, initialState)
     const today = new Date()
@@ -35,6 +37,7 @@ export default function Application() {
     const yearlyAvailability = Array(totalDays).fill(1)
     const { page, item, confirmedStart, confirmedEnd } = state
     const { itemId } = useParams()
+    const history = useHistory()
 
     useEffect(() => {
         if(!confirmedStart || !confirmedEnd) return
@@ -54,8 +57,8 @@ export default function Application() {
     const getItem = async () => {
         const { data, status } = await instance.get(`/items/${itemId}`)
         if(status !== 200) return
-        dispatch({ type: 'setItem', data: data.item})
-        dispatch({ type: 'setItemAvailability', data: data.item.weekly_availability})
+        dispatch({ type: 'setItem', data: data})
+        dispatch({ type: 'setItemAvailability', data: data.weekly_availability})
         dispatch({ type: 'setYearAvailability', data: yearlyAvailability})
     }
     
@@ -81,15 +84,16 @@ export default function Application() {
     return (
         <ApplicationContext.Provider value={{ state, dispatch, handleNextPage}}>
             <div onClick={(e) => {dispatch({ type: 'setSelected', data: null })}}>
-               <PageWrapper>
-                <ApplicationHeader 
-                item={item ? item : null}
-                page={page} 
-                />
-                    <div className="ApplicationContainer">
-                        { renderApplicaiton() }
-                    </div>
-                { confirmedStart && page !== 'ItemOverview' ? <ApplicationFooter /> : null }    
+                <PageWrapper>
+                    <ApplicationHeader 
+                    item={item ? item : null}
+                    page={page} 
+                    prevPage={() => getPrevBookingPage(page, dispatch, history, itemId)}
+                    />
+                        <div className="ApplicationContainer">
+                            { renderApplicaiton() }
+                        </div>
+                    { confirmedStart && page !== 'ItemOverview' ? <ApplicationFooter /> : null }    
                 </PageWrapper> 
             </div>
         </ApplicationContext.Provider>

@@ -10,9 +10,10 @@ import getImage from '../../util/getImage';
 
 export default function ItemCard({ item, favourited, userId }) {
   const [ itemImage, setItemImage ] = useState('')
-  const [ itemSuburb, setItemSuburb] = useState('')
+  const [ itemSuburb, setItemSuburb ] = useState('')
   
   useEffect(() => {
+    console.log({item})
     if (item?.images?.length > 0) {
       setItemImage(item.images[0]?.imageKey)
     }

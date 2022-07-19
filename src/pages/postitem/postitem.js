@@ -63,7 +63,6 @@ export default function PostItem() {
                 lat: address.lat,
                 lng: address.lng,
             },
-            rating: 0,
             weekly_availability: availability.join(''),
             is_deleted: false,
         }

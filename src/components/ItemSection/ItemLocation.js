@@ -40,6 +40,10 @@ const ItemLocation = ({ item }) => {
             }
         }
     }
+
+    useEffect(() => {
+        console.log({item})
+    },[item])
     return (
         <>
             <div className="ItemDetailsHeader">Location</div>
@@ -62,7 +66,7 @@ const ItemLocation = ({ item }) => {
                 })} />
                 }
             </div>
-            <div className="PickupLocationText">Pickup location around {item.suburb}</div>
+            <div className="PickupLocationText">Pickup location around {item?.address?.suburb}</div>
             <div className="PickupLocationTextLight">Enquire about the item to acquire location</div>
         </>
     )

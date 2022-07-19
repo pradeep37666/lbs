@@ -2,8 +2,10 @@ import React, { useEffect, useState } from 'react'
 import getImage from '../../util/getImage'
 import './ApplicationHeader.css'
 import { isMobile } from 'react-device-detect'
+import { HiChevronLeft } from 'react-icons/hi'
+import { CREATE_BOOKING } from '../../assets/Data/LBSEnum'
 
-export default function ApplicationHeader({ page, item }) {
+export default function ApplicationHeader({ page, item, prevPage }) {
     const [ pictures, setPictures ] = useState()
 
     useEffect(() => {
@@ -13,27 +15,38 @@ export default function ApplicationHeader({ page, item }) {
 
     const renderContent = () => {
         switch(page) {
-            case 'ItemAvailability' : {
+            case CREATE_BOOKING.AVAILABILITY: {
                 return (
                     <div className="HeaderTextContainer">
+                        <HiChevronLeft 
+                            onClick={prevPage}
+                            className='BannerBackBtn'
+                        />
                         <span className="ApplicationHeaderHeading">Apply For Product</span>
                         <span className="ApplicationHeaderSubheading">{`${!isMobile ? " -" : ''}Select pick up date and time`}</span>
                     </div>
                    
                 )
-                break
             }
-            case 'ItemOptions' : {
+            case CREATE_BOOKING.OPTION: {
                 return (
                     <div className="HeaderTextContainer">
+                        <HiChevronLeft 
+                            onClick={prevPage}
+                            className='BannerBackBtn'
+                        />
                         <span className="ApplicationHeaderHeading">Book your stuff</span> 
                         <span className="ApplicationHeaderSubheading">{`${!isMobile ? " -" : ''}Make your borrowing easier`}</span>
                     </div>
                 )
             }
-            case 'ItemOverview' : {
+            case CREATE_BOOKING.OVERVIEW: {
                 return (
                 <div className="HeaderTextContainer">
+                    <HiChevronLeft 
+                        onClick={prevPage}
+                        className='BannerBackBtn'
+                    />
                     <span className="ApplicationHeaderHeading">Book your stuff</span> 
                     <span className="ApplicationHeaderSubheading">{`${!isMobile ? " -" : ''}Please check we've got everything right`}</span>
                 </div>
@@ -42,10 +55,10 @@ export default function ApplicationHeader({ page, item }) {
         }
     }
     return (
-        <div className="ApplicationHeaderContainer">
+        <div className="ApplicationHeaderContainer FlexBookingContainer">
             { renderContent() }
             { !isMobile &&
-            <div className="ItemDetails">
+            <div className="ItemDetails ">
                 <span className="ApplicationHeaderHeading">Item - </span>
                 {item && 
                     <>

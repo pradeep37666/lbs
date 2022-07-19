@@ -7,14 +7,23 @@
   justify-content: center;
   margin-bottom: 20px;
 }
+
+.FlexBookingContainer {
+  flex-direction: column;
+}
+
+
 .HeaderTextContainer {
   display: flex;
   align-items: center;
+  justify-content: center;
   padding-right: 25px;
 }
+
 .ItemDetails {
   display: flex;
   align-items: center;
+  justify-content: center;
 }
 
 .ApplicationHeaderItemImage {
@@ -49,4 +58,19 @@
   .ApplicationHeaderSubheading {
     text-align: center;
   }
+}
+
+
+.BannerBackBtn {
+  position: relative;
+  width: 35px;
+  height: 35px;
+  margin-right: 1em;
+  transform: translateX(0);
+  transition: transform 0.5s;
+  cursor: pointer;
+}
+
+.BannerBackBtn:hover {
+  transform: translateX(-15px);
 }

@@ -22,9 +22,9 @@ export default function Item() {
     const location = useLocation()
 
     const [ modalVisible, setModalVisible ] = useState(false)
-    const [ item, setItem ] = useState();
+    const [ item, setItem ] = useState()
     const [ itemPictures, setItemPictures ] = useState([])
-    const [ favourited, setFavourited ] = useState(false)
+    const [ favourited, setFavourited ] = useState('')
     const [ isUserItem, setIsUserItem ] = useState(false)
     const [ itemOwner, setItemOwner ] = useState(null)
     const [ isLoading, setIsLoading ] = useState(true)
@@ -43,23 +43,33 @@ export default function Item() {
 
     const getItemDetailsByUser = async (itemId) => {
         try {
+            await getItemLikedByUser(itemId)
             const { data } = await Instance.get(`items/${itemId}`)
             if (!data) return
-            const item = data.item
-            setItem(item)
-            setAvailability(item.weekly_availability)
-            setFavourited(data.userLiked)
+            setItem(data)
+            setAvailability(data.weekly_availability)
             getItemReviews(itemId)
-            setItemPictures(item.images)
+            setItemPictures(data.images)
             setIsLoading(false)
-            if (item.userId !== user.id) {
-                getItemOwner(item)
+            if (data.userId !== user.id) {
+                getItemOwner(data)
                 return
             }
             setIsUserItem(true)
         } catch (error) {
             console.log(error.response)
+        } finally {
+            setIsLoading(false)
         }
+    }
+
+    const getItemLikedByUser = async (itemId) => {
+        const { data } = await Instance.get(`likes?itemId=${itemId}`)
+        if (!data) {
+            setFavourited('')
+            return
+        }
+        setFavourited(data.id)
     }
 
     const getItemReviews = async (id) => {
@@ -86,7 +96,8 @@ export default function Item() {
                     setModal={setImageModal} 
                     images={itemPictures} 
                     modal={ImageModal} 
-                /> }
+                /> 
+            }
             {reviewModalOpen && 
                 <ItemReviewModal 
                     setReviewModalOpen={setReviewModalOpen} 
@@ -119,7 +130,7 @@ export default function Item() {
                             item={item}
                             openAvailabilityModal={() => setAvailabilityModalVisible(true)}
                             favourited={favourited}
-                            setFavourited={setFavourited}
+                            getItemLikedByUser={getItemLikedByUser}
                         />
                         <hr className="hr" />
                         <ItemRating 

@@ -14,8 +14,8 @@ export default function Favourites() {
     const { user } = useGlobalState()?.state
     const history = useHistory()
     const [ accountContent, setAccountContent ] = useState('Favourites')
-    const [ items, setItems ] = useState([]);
-    const [ isLoading, setIsLoading ] = useState(true);
+    const [ items, setItems ] = useState([])
+    const [ isLoading, setIsLoading ] = useState(true)
 
     useEffect(()=>{
         try {
@@ -39,9 +39,10 @@ export default function Favourites() {
 
     const renderItems = () => {
         return items.map((item, i) => {
-            return <ItemCard item={item} key={i} favourited={true}/>
+            return <ItemCard item={item.item} key={i} favourited={true}/>
         })
     }
+
     return (
         <PageWrapper>
             <div className="UserShedWrapper">

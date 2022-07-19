@@ -15,7 +15,7 @@ const ItemInfoSection = ({
     item, 
     openAvailabilityModal,
     favourited,
-    setFavourited,
+    getItemLikedByUser,
 }) => {
     const { user } = useGlobalState()?.state
     const params = useParams()
@@ -24,12 +24,13 @@ const ItemInfoSection = ({
     const handleFavourite = async () => {
         try {
             if (!favourited) {
-                const { data } = await Instance.post('likes/', { itemId: item.id })
-                if (!data) return
-                setFavourited(true)
+                const { status } = await Instance.post('/likes/', { itemId: item.id })
+                if (status !== 201) return
+                getItemLikedByUser(item.id)
             } else {
-                // TODO: delete likes api request here
-                setFavourited(false)
+                const { status } = await Instance.delete(`/likes/${favourited}`)
+                if (status !== 200) return
+                getItemLikedByUser(item.id)
             }
         } catch (error) {
             console.log(error.response)
