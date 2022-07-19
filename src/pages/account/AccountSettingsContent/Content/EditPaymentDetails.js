@@ -14,10 +14,13 @@ import TrashCan from '../../../../assets/Icons/TrashCan';
 import Button from '../../../../components/Button/Button';
 import cardElementOptions from '../../../../constants/cardElementOptions';
 import StripeAccountDetails from './StripeAccountDetails';
+import useErrorState from '../../../../util/reducers/errorContext';
+import { SNACKBAR_BUTTON_TYPES } from '../../../../assets/Data/LBSEnum';
 
 export default function EditPaymentDetails() {
     const { state } = useGlobalState()
     const { user } = state
+    const { errorDispatch } = useErrorState()
     const elements = useElements()
     const stripe = useStripe()
 
@@ -72,8 +75,15 @@ export default function EditPaymentDetails() {
                 paymentMethodId: paymentMethod.id
             })
             await getSavedCard()
-        } catch(err) {
-            console.log(err.response)
+        } catch(error) {
+            console.log(error.response)
+            if (error?.response?.data?.statusCode === 402) {
+                errorDispatch({type: 'openSnackBar', data: {
+                    message: `${error?.response?.data?.message} Please check your bank details and try again.`,
+                    btnText: SNACKBAR_BUTTON_TYPES.CLOSE,
+                    btnFunc: () => errorDispatch({type: 'closeSnackBar'})
+                }})
+            }
         } finally {
             setIsCreateCardLoading(false)
         }

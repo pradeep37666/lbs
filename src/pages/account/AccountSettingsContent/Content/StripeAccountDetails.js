@@ -8,17 +8,20 @@ import EditIcon from '../../../../assets/Icons/EditIcon'
 import './StripeAccountDetails.css'
 import Arrow from '../../../../assets/Icons/Arrow'
 import { CircularProgress } from '@material-ui/core'
+import { SNACKBAR_BUTTON_TYPES } from '../../../../assets/Data/LBSEnum'
+import useErrorState from '../../../../util/reducers/errorContext'
 
 export default function AccountDetails() {
     const { state } = useGlobalState()
     const { user } = state
-    const [isEditingAccount, setIsEditingAccount] = useState(false)
-    const [isUpdateAccountLoading, setIsUpdateAccountLoading] = useState(false)
-    const [updateAccountError, setUpdateAccountError] = useState()
-    const [accountDetails, setAccountDetails] = useState()
-    const [accNumber, setAccNumber] = useState()
-    const [isLoading, setIsLoading] = useState(true)
-    const [bsb, setBsb] = useState()
+    const { errorDispatch } = useErrorState()
+    const [ isEditingAccount, setIsEditingAccount ] = useState(false)
+    const [ isUpdateAccountLoading, setIsUpdateAccountLoading ] = useState(false)
+    const [ updateAccountError, setUpdateAccountError ] = useState()
+    const [ accountDetails, setAccountDetails] = useState()
+    const [ accNumber, setAccNumber ] = useState()
+    const [ isLoading, setIsLoading ] = useState(true)
+    const [ bsb, setBsb ] = useState()
 
     const stripe = useStripe()
 
@@ -44,8 +47,8 @@ export default function AccountDetails() {
     const createUpdateAccountToken = async () => {
         try{
             const response = await stripe.createToken('bank_account', {
-                country: 'AU',
-                currency: 'aud',
+                country: 'nz',
+                currency: 'nzd',
                 routing_number: bsb,
                 account_number: accNumber,
                 account_holder_type: 'individual',
@@ -68,8 +71,16 @@ export default function AccountDetails() {
         try{
             await Instance.patch('/stripe/connect-account', { token: token.id })
             await getAccountDetails()
-        } catch(err){
-            console.log(err.response)
+        } catch(error){
+            console.log(error.response)
+            const messageType = error?.response?.data?.message?.split(':')[0]
+            if (messageType === 'Invalid request to stripe') {
+                errorDispatch({type: 'openSnackBar', data: {
+                    message: 'Invalid bank infomation. Please check your bank details and try again.',
+                    btnText: SNACKBAR_BUTTON_TYPES.CLOSE,
+                    btnFunc: () => errorDispatch({type: 'closeSnackBar'})
+                }})
+            }
         } finally{
             setIsUpdateAccountLoading(false)
         }
