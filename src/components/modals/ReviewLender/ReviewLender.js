@@ -88,12 +88,14 @@ function ReviewLender({ setReviewModalVisible, isLender, booking, open }) {
             className="BorrowerStarIcon StarClick"
             fill="#E9D8B4"
             onClick={() => setLenderRating(index + 1)}
+            key={index}
             /> 
           } else {
             return <StarOutline
             className="BorrowerStarIcon StarClick"
             fill="#E9D8B4"
             onClick={() => setLenderRating(index + 1)}
+            key={index}
             /> 
           }
           
@@ -108,12 +110,14 @@ function ReviewLender({ setReviewModalVisible, isLender, booking, open }) {
           className="BorrowerStarIcon StarClick"
           fill="#E9D8B4"
           onClick={() => setProductRating(index + 1)}
+          key={index}
           /> 
         } else {
           return <StarOutline
           className="BorrowerStarIcon StarClick"
           fill="#E9D8B4"
           onClick={() => setProductRating(index + 1)}
+          key={index}
           /> 
         }
     })

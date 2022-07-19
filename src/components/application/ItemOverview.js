@@ -11,12 +11,14 @@ import useGlobalState from '../../util/useGlobalState'
 import Button from '../Button/Button'
 import getDateSuffix from '../../util/dateUtils/getDateSuffix'
 import { fullNameDayArray, monthArray } from '../../assets/Data/LBSArray'
-import { BOOKING_STATUSES } from '../../assets/Data/LBSEnum'
+import { BOOKING_STATUSES, SNACKBAR_BUTTON_TYPES } from '../../assets/Data/LBSEnum'
 import Instance, { CometChatInstance } from '../../util/axios'
+import useErrorState from '../../util/reducers/errorContext'
 
 export default function ItemOverview() {
     const [ isLoading, setIsLoading ] = useState(false)
     const { state, dispatch } = useContext(ApplicationContext)
+    const { errorDispatch } = useErrorState()
     const globalState = useGlobalState()
     const user  = globalState.state.user
     const { 
@@ -34,6 +36,11 @@ export default function ItemOverview() {
             await makeBooking(bookingInfo, item)
         } catch(e) {
             console.log(e.response)
+            errorDispatch({type: 'openSnackBar', data: {
+                message: 'Failed to book this item. Please check details and try again.',
+                btnText: SNACKBAR_BUTTON_TYPES.CLOSE,
+                btnFunc: () => errorDispatch({type: 'closeSnackBar'})
+            }})
         } finally {
             setIsLoading(false)
         }
