@@ -13,6 +13,7 @@ import { isMobile } from 'react-device-detect'
 import NoContent from '../../components/NoContent/NoContent'
 import { useHistory } from 'react-router'
 // import ReviewLender from '../../components/reviewLender/ReviewLender'
+// fixed this file name
 
 export default function Messages() {
     const { state } = useGlobalState()
