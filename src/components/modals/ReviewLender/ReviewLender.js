@@ -44,9 +44,9 @@ function ReviewLender({
   })
 
   const getNextItemStatus = () => {
-    if (booking?.item?.status === BOOKING_STATUSES.ITEM_RETURNED)
+    if (booking?.status === BOOKING_STATUSES.ITEM_RETURNED)
       return BOOKING_STATUSES.BORROWER_REVIEWED
-    if (booking?.item?.status === BOOKING_STATUSES.BORROWER_REVIEWED)
+    if (booking?.status === BOOKING_STATUSES.BORROWER_REVIEWED)
       return BOOKING_STATUSES.BOTH_REVIEWED
   }
 
@@ -82,7 +82,7 @@ function ReviewLender({
   const updateBookingStatus = async () => {
     const newStatus = getNextItemStatus()
     try {
-      const { status } = await Instance.put(`/bookings/${booking.id}/status`, { status: newStatus })
+      const { status } = await Instance.patch(`/bookings/${booking.id}/status`, { status: newStatus })
       if(status !== 200) return
       getBookings()
     } catch(error) {

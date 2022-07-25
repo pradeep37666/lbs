@@ -1,15 +1,13 @@
-import React, { useEffect, useState } from "react";
-import "./ReviewBorrower.css";
-import { CircularProgress, Dialog, DialogContent, IconButton } from "@material-ui/core";
-import { Close } from "@material-ui/icons";
-import { makeStyles } from "@material-ui/styles";
-import { ReactComponent as StarOutline } from "./../../../assets/Icons/StarOutline.svg";
-import { ReactComponent as StarFilled } from "./../../../assets/Icons/StarFilled.svg";
-import Instance from "../../../util/axios";
-import useGlobalState from "../../../util/useGlobalState";
-import { async } from "validate.js";
-import { BOOKING_STATUSES } from "../../../assets/Data/LBSEnum";
-import Button from "../../Button/Button";
+import React, { useState } from "react"
+import "./ReviewBorrower.css"
+import { CircularProgress, Dialog, DialogContent, IconButton } from "@material-ui/core"
+import { Close } from "@material-ui/icons"
+import { makeStyles } from "@material-ui/styles"
+import { ReactComponent as StarOutline } from "./../../../assets/Icons/StarOutline.svg"
+import { ReactComponent as StarFilled } from "./../../../assets/Icons/StarFilled.svg"
+import Instance from "../../../util/axios"
+import { BOOKING_STATUSES } from "../../../assets/Data/LBSEnum"
+import Button from "../../Button/Button"
 
 function ReviewBorrower({
   onClick, 
@@ -17,9 +15,6 @@ function ReviewBorrower({
   open,
   getBookings,
 }) {
-  const { state } = useGlobalState()
-  const { user } = state
-  const [ comment, setComment ] = useState('')
   const [ borrowerRating, setBorrowerRating ] = useState(5)
   const [ isLoading, setIsLoading ] = useState(false)
 
@@ -49,9 +44,9 @@ function ReviewBorrower({
   const classes = useStyles()
 
   const getNextItemStatus = () => {
-    if (booking?.item?.status === BOOKING_STATUSES.ITEM_RETURNED)
+    if (booking?.status === BOOKING_STATUSES.ITEM_RETURNED)
       return BOOKING_STATUSES.LENDER_REVIEWED
-    if (booking?.item?.status === BOOKING_STATUSES.LENDER_REVIEWED)
+    if (booking?.status === BOOKING_STATUSES.LENDER_REVIEWED)
       return BOOKING_STATUSES.BOTH_REVIEWED
   }
 
@@ -78,7 +73,7 @@ function ReviewBorrower({
   const updateBookingStatus = async () => {
     const newStatus = getNextItemStatus()
     try {
-      const { status } = await Instance.put(`/bookings/${booking.id}/status`, { status: newStatus })
+      const { status } = await Instance.patch(`/bookings/${booking.id}/status`, { status: newStatus })
       if (status !== 200) return
       getBookings()
     } catch (error) {

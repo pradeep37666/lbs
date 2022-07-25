@@ -66,7 +66,7 @@ export default function Item() {
     }
 
     const getItemLikedByUser = async (itemId) => {
-        const { data } = await Instance.get(`likes?itemId=${itemId}`)
+        const { data } = await Instance.get(`/likes?itemId=${itemId}`)
         if (!data) {
             setFavourited('')
             return

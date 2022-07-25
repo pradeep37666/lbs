@@ -30,7 +30,8 @@ export default function ReviewModal({
 
     const getLenderItems = async () => {
         try{
-            const {data, status} = await Instance.get(`/items/findByUid?u_id=${item.u_id}`)
+            const {data, status} = await Instance.get(`/users/${user.id}/items`)
+            if (status !== 200) return
             setLenderItems(data)
         } catch(err) {
             console.log(err)
@@ -40,18 +41,30 @@ export default function ReviewModal({
     }
 
     useEffect(() => {
-        document.body.style.overflow = 'hidden';
-
+        document.body.style.overflow = 'hidden'
         return function releaseScroll() {
-            document.body.style.overflow = 'unset';
+            document.body.style.overflow = 'unset'
         }
-    });
+    },[])
 
     const renderLenderItems = () => {
-        return lenderItems.map(( item, index ) => {
+        return lenderItems?.map(( item, index ) => {
             return (
-            <div className="LenderItemFlex" key={index} onClick={() => history.push(`/item/${item.i_id}`)}>
-                <div><img src={getImage(item.pictures.split(',')[0])} alt="" className="LenderItemImage"/></div>
+            <div 
+                className="LenderItemFlex" 
+                key={index} 
+                onClick={() => {
+                    history.push(`/item/${item.id}`)
+                    setReviewModalOpen(false)
+                }}
+            >
+                <div>
+                    <img 
+                        src={getImage(item.images[0].imageKey)} 
+                        alt="" 
+                        className="LenderItemImage"
+                    />
+                </div>
                 <div className="LenderItemRatingFlex">
                     <div className="LenderItemName">{item.title}</div>
                     <div className="LenderRatingText">{item.rating}/5
@@ -70,22 +83,23 @@ export default function ReviewModal({
     }
 
     const renderReviews = () => {
-        return reviews.map((review, index) => {
-            console.log(review)
+        return reviews?.map((review, index) => {
+            console.log({review})
             return (
                 <div 
-                className="ReviewModalReviewCard"
-                key={index} 
-                style={{ borderBottom: (index < reviews.length -1) ? '1px solid rgba(51, 56, 79, 0.3)' : null, marginTop: index !== 0 ? '1rem' : 0 }}>
+                    className="ReviewModalReviewCard"
+                    key={index} 
+                    style={{ borderBottom: (index < reviews.length -1) ? '1px solid rgba(51, 56, 79, 0.3)' : null, marginTop: index !== 0 ? '1rem' : 0 }}
+                >
                     <div className="RatingLenderFlex">
-                        <Avatar src={review?.avatar ? getImage(review.avatar) : MissingProfile} alt="" className="ProfileIcon" />
+                        <Avatar src={review?.user?.avatar ? getImage(review.user.avatar) : MissingProfile} alt="" className="ProfileIcon" />
                         <div>
-                            <div className="RatingHeader">{review.fullName}</div>
+                            <div className="RatingHeader">{review?.user?.firstName} {review?.user?.lastName}</div>
                             <div className="RatingStarFlex">{review.rating}/5 <StarFilled fill='#E9D8B4' className="StarIconRating" /></div>
                         </div>
                     </div>
                     <div className="ReviewText">
-                        {review.content}
+                        {review.comment}
                     </div>
                 </div>
             )
@@ -110,45 +124,39 @@ export default function ReviewModal({
                     <div className="ReviewModalMain" onClick={(e) => e.stopPropagation()}>
                         <button className="CloseModalButton ReviewModalClose" onClick={() => setReviewModalOpen(false)}><CloseIcon /></button>
                         <div className="ReviewTitle">Ratings for: {item.title}</div>
-                        <div className="ReviewModalColumns">
-                            <div className="MainLenderColumn">
-                                <div className="RatingLenderFlex">
-                                    <Avatar style={{ height: 60, width: 60 }} src={getOwnerImage()} alt="" className="ProfileIconReview" />
+                            <div className="ReviewModalColumns">
+                                <div className="MainLenderColumn">
+                                    <div className="RatingLenderFlex">
+                                        <Avatar style={{ height: 60, width: 60 }} src={getOwnerImage()} alt="" className="ProfileIconReview" />
+                                        <div>
+                                            <div className="RatingHeaderReview">{isUserItem ? `${user.firstName} ${user.lastName}` : `${itemOwner.firstName} ${itemOwner.lastName}`}</div>
+                                            <div className="RatingLenderReview">{lenderRating}/5 </div>
+                                        </div>
+                                    </div>
+                                    <div className="StarsLenderReview">
+                                        {lenderRating >= 1 ? <StarFilled fill='#E9D8B4' className="StarIcon" /> : <StarOutline className="StarIcon" />}
+                                        {lenderRating >= 2 ? <StarFilled fill='#E9D8B4' className="StarIcon" /> : <StarOutline className="StarIcon" />}
+                                        {lenderRating >= 3 ? <StarFilled fill='#E9D8B4' className="StarIcon" /> : <StarOutline className="StarIcon" />}
+                                        {lenderRating >= 4 ? <StarFilled fill='#E9D8B4' className="StarIcon" /> : <StarOutline className="StarIcon" />}
+                                        {lenderRating >= 5 ? <StarFilled fill='#E9D8B4' className="StarIcon" /> : <StarOutline className="StarIcon" />}
+                                    </div>
                                     <div>
-                                        <div className="RatingHeaderReview">{isUserItem ? `${user.firstName} ${user.lastName}` : `${itemOwner.firstName} ${itemOwner.lastName}`}</div>
-                                        <div className="RatingLenderReview">{lenderRating}/5 </div>
+                                        <div className="LenderItemsHeader">Lender Items</div>
+                                        { lenderItemsLoading ? (
+                                            <CircularProgress color="inherit" />
+                                        ) : (
+                                            renderLenderItems()
+                                        )}
                                     </div>
                                 </div>
-                                <div className="StarsLenderReview">
-                                    {lenderRating >= 1 ? <StarFilled fill='#E9D8B4' className="StarIcon" /> : <StarOutline className="StarIcon" />}
-                                    {lenderRating >= 2 ? <StarFilled fill='#E9D8B4' className="StarIcon" /> : <StarOutline className="StarIcon" />}
-                                    {lenderRating >= 3 ? <StarFilled fill='#E9D8B4' className="StarIcon" /> : <StarOutline className="StarIcon" />}
-                                    {lenderRating >= 4 ? <StarFilled fill='#E9D8B4' className="StarIcon" /> : <StarOutline className="StarIcon" />}
-                                    {lenderRating >= 5 ? <StarFilled fill='#E9D8B4' className="StarIcon" /> : <StarOutline className="StarIcon" />}
-                                </div>
-                                <div>
-                                    <div className="LenderItemsHeader">Lender Items</div>
-                                    { lenderItemsLoading ? (
-                                        <CircularProgress color="inherit" />
-                                    ) : (
-                                        renderLenderItems()
-                                    )}
-                                </div>
-                            </div>
-
-
-
                             <div className="vl" />
                             <div className="MainReviewColumn">
                                 { renderReviews()}
                             </div>
-
                         </div>
                     </div>
                 </Slide>
             </div>
-            
-
         </div>
     )
 }

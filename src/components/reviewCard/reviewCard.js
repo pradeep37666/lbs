@@ -1,16 +1,18 @@
 import React from 'react'
 import './reviewCard.css'
-import {ReactComponent as StarFilled} from './../../assets/Icons/StarFilled.svg'
 import getImage from '../../util/getImage'
 import { Avatar } from '@material-ui/core'
 import MissingProfile from '../../assets/Icons/MissingProfileIcon.png'
+import RatingFiller from '../../components/ratingFiller/ratingFiller'
 
 export default function ReviewCard({ review }) {
-    console.log({review})
     return (
         <div className="ReviewCard">
-            {/* <div className="RatingLenderFlex">
-                <Avatar src={review?.user.avatar ? getImage(review.user.avatar) : MissingProfile}  className="ProfileIconSmall" />
+            <div className="RatingLenderFlex">
+                <Avatar 
+                    src={review?.user.avatar ? getImage(review.user.avatar) : MissingProfile}  
+                    className="ProfileIconSmall" 
+                />
                 <div className="ReviewSmallText">
                     <div className="RatingHeader">
                         {review.user.firstName}&nbsp;
@@ -18,13 +20,13 @@ export default function ReviewCard({ review }) {
                     </div>
                     <div className="RatingStarFlex">
                         {review.rating}/5 
-                        <StarFilled fill='#e9d8b4' className="StarIconRatingSmall" />
+                        <RatingFiller rating={review.rating}/>
                     </div>
                 </div>
             </div>
             <div className="ReviewText">
-                {review.content}
-            </div> */}
+                {review.comment}
+            </div>
         </div>
     )
 }
