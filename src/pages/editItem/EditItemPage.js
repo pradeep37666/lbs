@@ -48,8 +48,8 @@ function EditItemPage() {
     try {
       setLoading(true)
       const { data } = await Instance.get(`/items/${params.itemId}`)
-      if (!data.item) return
-      dispatch({ type: 'setInitialState', data: data.item })
+      if (!data) return
+      dispatch({ type: 'setInitialState', data: data })
     } catch(error){
       console.log(error.response)
     } finally {

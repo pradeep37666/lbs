@@ -9,6 +9,7 @@ import Instance from '../../../util/axios'
 import useGlobalState from "../../../util/useGlobalState";
 import useErrorState from "../../../util/reducers/errorContext";
 import { BOOKING_STATUSES, SNACKBAR_BUTTON_TYPES } from "../../../assets/Data/LBSEnum";
+import Button from "../../Button/Button";
 
 function TradeFailed({ onClick, isLender, open, booking, getBookings, setReportModalVisible }) {
   const { state } = useGlobalState()
@@ -100,10 +101,11 @@ function TradeFailed({ onClick, isLender, open, booking, getBookings, setReportM
         bookingId: booking.id,
         reason,
         userId: user.id,
+        reportedUserId: booking?.borrowerId === user.id ? booking?.lenderId : booking?.borrowerId,
         detail: comment,
       })
       if (status !== 201) return
-      await updateBookingStatus(BOOKING_STATUSES.REJECTED)
+      await updateBookingStatus(BOOKING_STATUSES.DISPUTED)
       setReportModalVisible(false)
     } catch(err){
       console.log(err)
@@ -125,7 +127,7 @@ function TradeFailed({ onClick, isLender, open, booking, getBookings, setReportM
     try{
         const { status } = await Instance.patch(`/bookings/${booking.id}/status`, { status: newStatus })
         if(status !== 200) return
-            getBookings()
+          getBookings()
     } catch(err) {
         console.log(err)
     }
@@ -245,17 +247,11 @@ function TradeFailed({ onClick, isLender, open, booking, getBookings, setReportM
             { isLoading ? (
               <CircularProgress color="inherit"/>
             ) : (
-              <button
-              className={!comment
-                ? "SearchButtonLargeDisabled"
-                : "SearchButtonLarge"
-              }
-              onClick={submitReport}
-              style={{ width: "auto" }}
-              disabled={!comment}
-              >
-                <div className="ItemButtonFlex">Submit Report</div>
-              </button>
+              <Button 
+                text='Submit Report'
+                onClick={submitReport}
+                isDisabled={!comment}
+              />
             )}
           </div>
         </DialogContent>

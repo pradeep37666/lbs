@@ -15,6 +15,7 @@ import DropOff from './DropOff'
 import { BOOKING_STATUSES, SNACKBAR_BUTTON_TYPES } from '../../../assets/Data/LBSEnum'
 import useErrorState from '../../../util/reducers/errorContext'
 import DisputeBookingModal from '../../modals/DisputeBookingModal/DisputeBookingModal'
+import StatusDisputed from './StatusDisputed'
 
 export const TradeCalendarStatusPanel = ({ 
     booking, 
@@ -42,6 +43,11 @@ export const TradeCalendarStatusPanel = ({
         const isHourBeforePickup = true
         const isHourBeforeDropoff = true
 
+        if (status === BOOKING_STATUSES.DISPUTED ||
+            status === BOOKING_STATUSES.RESOLVED) 
+            return <StatusDisputed 
+            
+            /> 
         if (status === BOOKING_STATUSES.APPLIED)
             return <StatusApplied 
             isOwner={isOwner} 
