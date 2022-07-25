@@ -15,6 +15,7 @@ import DropOff from './DropOff'
 import { BOOKING_STATUSES, SNACKBAR_BUTTON_TYPES } from '../../../assets/Data/LBSEnum'
 import StatusDefault from './StatusDefault'
 import useErrorState from '../../../util/reducers/errorContext'
+import DisputeBookingModal from '../../modals/DisputeBookingModal/DisputeBookingModal'
 
 export const TradeCalendarStatusPanel = ({ 
     booking, 
@@ -31,19 +32,15 @@ export const TradeCalendarStatusPanel = ({
     const { user } = state
     const isOwner = booking.lenderId === user.id
     const { errorDispatch } = useErrorState()
+    const [ isDisputeOpen, setIsDisputeOpen ] = useState(false)
 
     useEffect(() => {
         setStatus(booking.status)
     },[])
 
-    useEffect(() => {
-        console.log({status})
-    },[status])
-
     const renderStatusPanel = () => {
         // An hour before booking time
-        const isHourBefore = true
-        // const isHourBefore = isPickupTime()
+        const isHourBefore = isPickupTime()
         if(isHourBefore && 
             (status === BOOKING_STATUSES.APPROVED || 
             (isOwner && status === BOOKING_STATUSES.BORROWER_CONFIRMED) || 
@@ -58,8 +55,7 @@ export const TradeCalendarStatusPanel = ({
             />
 
         // An hour before returning time
-        const dropOff = true
-        // const dropOff = isDropoffTime()
+        const dropOff = isDropoffTime()
         if(dropOff && status === BOOKING_STATUSES.BOTH_CONFIRMED)
             return <DropOff 
                 booking={booking}
@@ -190,9 +186,24 @@ export const TradeCalendarStatusPanel = ({
     }
     
     return (
-        <div className="TradeStatusContainer">
-            {status && renderStatusPanel()}
-        </div>
+        <>
+            <div className="TradeStatusContainer">
+                {status && renderStatusPanel()}
+            </div>
+            <div className='TradeDisputeContainer'>
+                <button
+                    className='TradeDisputeBtn'
+                    onClick={() => setIsDisputeOpen(true)}
+                >
+                    Dispute Trade
+                </button>
+            </div>
+            <DisputeBookingModal 
+                open={isDisputeOpen} 
+                onClick={() => setIsDisputeOpen(false)}
+                updateBookingStatus={updateBookingStatus}
+            />
+        </>
     )
 }
 

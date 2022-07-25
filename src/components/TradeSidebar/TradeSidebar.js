@@ -39,6 +39,7 @@ export default function TradeSidebar({
         const newBookingPriceCalculator = new BookingPriceCalculator(item.price, item.discount, item.deliveryPrice, item.pickupPrice, beginDate, endDate)
         newBookingPriceCalculator.setDeliverySelected(booking.deliveryOption === DELIVERY_OPTIONS.BOTH || booking.deliveryOption === DELIVERY_OPTIONS.DELIVERY)
         newBookingPriceCalculator.setPickupSelected(booking.deliveryOption === DELIVERY_OPTIONS.BOTH || booking.deliveryOption === DELIVERY_OPTIONS.PICKUP)
+        console.log({newBookingPriceCalculator})
         setBookingPriceCalculator(newBookingPriceCalculator)
     },[item])
 
@@ -54,6 +55,19 @@ export default function TradeSidebar({
         } finally {
             setIsLoading(false)
         }
+    }
+
+    const calculateTotal = () => {
+        let total
+        if (!bookingPriceCalculator.deliveryPrice && !bookingPriceCalculator.pickupPrice)
+            total = booking.price
+        if (bookingPriceCalculator.deliveryPrice && !bookingPriceCalculator.pickupPrice)
+            total = booking.price - bookingPriceCalculator.deliveryPrice
+        if (!bookingPriceCalculator.deliveryPrice && bookingPriceCalculator.pickupPrice)
+            total = booking.price - bookingPriceCalculator.pickupPrice
+        if (bookingPriceCalculator.deliveryPrice && bookingPriceCalculator.pickupPrice)
+            total = booking.price - bookingPriceCalculator.deliveryPrice - bookingPriceCalculator.pickupPrice
+        return parseFloat(total).toFixed(2)
     }
 
     return (
@@ -90,22 +104,27 @@ export default function TradeSidebar({
                     </div>
                     <div className="TradeSidebarCostFlex">
                         <span>Cost for Item </span>
-                        <span className="ItemOverviewPrice">${booking.price}</span>
+                        <span className="ItemOverviewPrice">
+                            ${calculateTotal()}
+                        </span>
                     </div>
                     { bookingPriceCalculator.deliverySelected &&
                     <div className="TradeSidebarCostFlex">
                         <span>Item Delivery </span>
-                        <span className="ItemOverviewPrice">${bookingPriceCalculator.deliveryPrice}</span>
+                        <span className="ItemOverviewPrice">
+                            ${parseFloat(bookingPriceCalculator.deliveryPrice).toFixed(2)}
+                        </span>
                     </div>}
                     { bookingPriceCalculator.pickupSelected &&
                     <div className="TradeSidebarCostFlex">
                         <span>Item Pickup </span>
-                        <span className="ItemOverviewPrice">${bookingPriceCalculator.deliveryPrice}</span>
+                        <span className="ItemOverviewPrice">
+                            ${parseFloat(bookingPriceCalculator.pickupPrice).toFixed(2)}
+                        </span>
                     </div>}
                     <div className="TradeSidebarCostFlex" style={{ paddingTop: '1rem', borderTop: '1px solid #31364c'}}>
                         <span>Total Price</span>
                         <span className="ItemOverviewPrice">${ bookingPriceCalculator.getTotalPrice() }</span>
-
                     </div>
                 </div>
                 <div className="TradeSidebarSection">

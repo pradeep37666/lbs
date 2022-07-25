@@ -1,0 +1,25 @@
+.DisputeModalContainer {
+    border: 2px solid #ac172c;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2em;
+    width: 100%;
+    width: 550px;
+    margin: 0;
+    background-color: white;
+}
+
+.DisputeBookingModalTitle {
+    font-size: 1.4em;
+    color: #33384f;
+    font-weight: bold;
+}
+
+.DisputeBookingModalOptions {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 2em;
+}
