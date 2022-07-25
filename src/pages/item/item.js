@@ -33,6 +33,7 @@ export default function Item() {
     const [ reviews, setReviews ] = useState([])
     const [ availabilityModalVisible, setAvailabilityModalVisible] = useState(false)
     const [ availability, setAvailability ] = useState()
+    const [ yearlyAvailabilities, setYearlyAvailabilities ] = useState()
 
     useEffect(() => {
         if (!params.itemId) return
@@ -48,6 +49,7 @@ export default function Item() {
             if (!data) return
             setItem(data)
             setAvailability(data.weekly_availability)
+            setYearlyAvailabilities(data.availabilities)
             getItemReviews(itemId)
             setItemPictures(data.images)
             setIsLoading(false)
@@ -113,6 +115,7 @@ export default function Item() {
                     item={item}
                     onClick={() => setAvailabilityModalVisible(false)}
                     availability={availability}
+                    yearlyAvailabilities={yearlyAvailabilities}
                 />
             }
             {isLoading 

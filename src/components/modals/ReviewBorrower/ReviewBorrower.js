@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./ReviewBorrower.css";
 import { CircularProgress, Dialog, DialogContent, IconButton } from "@material-ui/core";
 import { Close } from "@material-ui/icons";
@@ -7,13 +7,21 @@ import { ReactComponent as StarOutline } from "./../../../assets/Icons/StarOutli
 import { ReactComponent as StarFilled } from "./../../../assets/Icons/StarFilled.svg";
 import Instance from "../../../util/axios";
 import useGlobalState from "../../../util/useGlobalState";
+import { async } from "validate.js";
+import { BOOKING_STATUSES } from "../../../assets/Data/LBSEnum";
+import Button from "../../Button/Button";
 
-function ReviewBorrower({ onClick, isLender, booking, open }) {
+function ReviewBorrower({
+  onClick, 
+  booking, 
+  open,
+  getBookings,
+}) {
   const { state } = useGlobalState()
   const { user } = state
-  const [comment, setComment] = useState("");
-  const [borrowerRating, setBorrowerRating] = useState(5);
-  const [isLoading, setIsLoading] = useState(false)
+  const [ comment, setComment ] = useState('')
+  const [ borrowerRating, setBorrowerRating ] = useState(5)
+  const [ isLoading, setIsLoading ] = useState(false)
 
   const useStyles = makeStyles({
     button: {
@@ -38,24 +46,46 @@ function ReviewBorrower({ onClick, isLender, booking, open }) {
     },
   });
 
-  const classes = useStyles();
+  const classes = useStyles()
+
+  const getNextItemStatus = () => {
+    if (booking?.item?.status === BOOKING_STATUSES.ITEM_RETURNED)
+      return BOOKING_STATUSES.LENDER_REVIEWED
+    if (booking?.item?.status === BOOKING_STATUSES.LENDER_REVIEWED)
+      return BOOKING_STATUSES.BOTH_REVIEWED
+  }
 
   const reviewBorrower = async () => {
-    setIsLoading(true)
     try{
-      const { data, status } = await Instance.post('/borrowerRating/save', {
-          b_id: booking.u_id,
-          l_id: user.id,
-          rating: borrowerRating
+      setIsLoading(true)
+      const { status } = await Instance.post('/borrower-ratings', {
+        comment: '',
+        borrowerId: booking?.borrowerId,
+        lenderId: booking?.lenderId,
+        rating: borrowerRating,
+        bookingId: booking?.id
       })
-      console.log(data, status)
+      if (status !== 201) return
+      await updateBookingStatus()
+      onClick()
     } catch(err) {
       console.log(err)
     } finally{
       setIsLoading(false)
-      onClick()
     }
   }
+
+  const updateBookingStatus = async () => {
+    const newStatus = getNextItemStatus()
+    try {
+      const { status } = await Instance.put(`/bookings/${booking.id}/status`, { status: newStatus })
+      if (status !== 200) return
+      getBookings()
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   return (
     <Dialog 
     onClose={onClick}
@@ -71,10 +101,6 @@ function ReviewBorrower({ onClick, isLender, booking, open }) {
               <Close className={classes.icon} />
             </IconButton>
           </div>
-        </div>
-        <div className="BorrowerText">
-          Here, You can give ratings to the Borrower also, you can comment the
-          details about the Borrower and the { isLender ? 'Borrowing' : 'Lending'} experience.
         </div>
         <div className="BorrowerHeader">
         Borrower Rating :&nbsp;
@@ -140,17 +166,14 @@ function ReviewBorrower({ onClick, isLender, booking, open }) {
         <div style={{ width: "100%" }}>
           <span class="BorrowerRatingText ">&nbsp;Click Your Desired Rating</span>
         </div>
-        <div className="ItemButtons" style={{ justifyContent: "center", minHeight: "4rem" }}>
+        <div className="ItemButtons" style={{ justifyContent: "center", minHeight: "4rem", marginTop: '1em' }}>
           { isLoading ? (
             <CircularProgress color="inherit"/>
           ) : (
-            <button
-            className="SearchButtonLarge"
+            <Button 
+            text='Submit Rating'
             onClick={reviewBorrower}
-            style={{ width: "auto", marginTop: '1.5rem' }}
-            >
-              <div className="ItemButtonFlex">Submit Rating</div>
-            </button>
+            />
           )}
         </div>
         </DialogContent>

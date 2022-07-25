@@ -39,7 +39,6 @@ export default function TradeSidebar({
         const newBookingPriceCalculator = new BookingPriceCalculator(item.price, item.discount, item.deliveryPrice, item.pickupPrice, beginDate, endDate)
         newBookingPriceCalculator.setDeliverySelected(booking.deliveryOption === DELIVERY_OPTIONS.BOTH || booking.deliveryOption === DELIVERY_OPTIONS.DELIVERY)
         newBookingPriceCalculator.setPickupSelected(booking.deliveryOption === DELIVERY_OPTIONS.BOTH || booking.deliveryOption === DELIVERY_OPTIONS.PICKUP)
-        console.log({newBookingPriceCalculator})
         setBookingPriceCalculator(newBookingPriceCalculator)
     },[item])
 

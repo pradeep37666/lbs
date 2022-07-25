@@ -1,22 +1,20 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import './AvailabilityModal.css'
 import DisabledAvailabilityCalendar from '../../DisabledAvailabilityCalendar/DisabledAvailabilityCalendar'
-import checkIfLeapYear from '../../../util/dateUtils/checkIfLeapYear'
 
 export const ApplicationContext = React.createContext()
 
-export default function AvailabilityModal({ item, onClick, availability }) {
+export default function AvailabilityModal({ item, onClick, availability, yearlyAvailabilities }) {
     const today = new Date()
     const currentDate = today.getDate()
     const currentMonth = today.getMonth()
     const currentYear = today.getFullYear()
-    const totalDays = checkIfLeapYear(currentYear) ? 730 : 732
-    const yearlyAvailability = Array(totalDays).fill(1)
+    const thisYearAvailability = yearlyAvailabilities.find(availability => availability.year === currentYear)
+    const yearlyAvailability = thisYearAvailability?.yearly_availability
 
     const state = {
         item,
         itemAvailability: availability,
-        // yearlyAvailability needs to be dinamic
         yearAvailability: yearlyAvailability,
         currentDate, 
         currentYear,

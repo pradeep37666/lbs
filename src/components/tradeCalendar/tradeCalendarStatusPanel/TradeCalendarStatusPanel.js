@@ -13,7 +13,6 @@ import StatusReviewed from './StatusReviewed'
 import getDateObject from '../../../util/dateUtils/getDateObject'
 import DropOff from './DropOff'
 import { BOOKING_STATUSES, SNACKBAR_BUTTON_TYPES } from '../../../assets/Data/LBSEnum'
-import StatusDefault from './StatusDefault'
 import useErrorState from '../../../util/reducers/errorContext'
 import DisputeBookingModal from '../../modals/DisputeBookingModal/DisputeBookingModal'
 
@@ -39,9 +38,52 @@ export const TradeCalendarStatusPanel = ({
     },[])
 
     const renderStatusPanel = () => {
+        // const isHourBeforePickup = isPickupTime()
+        const isHourBeforePickup = true
+        const isHourBeforeDropoff = true
+
+        if (status === BOOKING_STATUSES.APPLIED)
+            return <StatusApplied 
+            isOwner={isOwner} 
+            updateBookingStatus={updateBookingStatus} 
+            isLoading={isApproveLoading}
+            startDate={startDate}
+            endDate={endDate}
+            />
+        if (status === BOOKING_STATUSES.REJECTED)
+            return <StatusRejected 
+            userDetails={userDetails}
+            isOwner={isOwner}
+            status={status}
+            />
+        if (status === BOOKING_STATUSES.CANCELLED)
+            return <StatusRejected 
+            userDetails={userDetails}
+            isOwner={isOwner}
+            status={status}
+            />
+        if (status === BOOKING_STATUSES.TO_RESCHEDULE)
+            return <StatusReschedule 
+            isOwner={isOwner} 
+            updateBookingStatus={updateBookingStatus} 
+            booking={booking}
+            />
+        if(status === BOOKING_STATUSES.ITEM_RETURNED ||
+          (isOwner && status === BOOKING_STATUSES.BORROWER_REVIEWED) ||
+          (!isOwner && status === BOOKING_STATUSES.LENDER_REVIEWED)
+        )   return <StatusItemReturn 
+                isOwner={isOwner}
+                setReviewModalVisible={setReviewModalVisible}
+            />
+        // Booking approved but not an hour before booking time
+        if(!isHourBeforePickup && status === BOOKING_STATUSES.APPROVED)
+            return <StatusApproved 
+                isOwner={isOwner} 
+                userDetails={userDetails} 
+                startDateObj={startDate}
+            />
         // An hour before booking time
-        const isHourBefore = isPickupTime()
-        if(isHourBefore && 
+        if(isHourBeforePickup && !isHourBeforeDropoff &&
             (status === BOOKING_STATUSES.APPROVED || 
             (isOwner && status === BOOKING_STATUSES.BORROWER_CONFIRMED) || 
             (!isOwner && status === BOOKING_STATUSES.LENDER_CONFIRMED)
@@ -53,10 +95,29 @@ export const TradeCalendarStatusPanel = ({
                 setReportModalVisible={setReportModalVisible}
                 status={status}
             />
-
+        // Lender and / or Borrower confirmed pickup
+        if(!isHourBeforeDropoff &&
+            status !== BOOKING_STATUSES.ITEM_RETURNED &&
+            (status === BOOKING_STATUSES.BOTH_CONFIRMED ||
+            (isOwner && status === BOOKING_STATUSES.LENDER_CONFIRMED) ||
+            (!isOwner && status === BOOKING_STATUSES.BORROWER_CONFIRMED)
+            )
+        )   return <StatusConfirmed 
+                isOwner={isOwner}
+                userDetails={userDetails}
+                endDateObj={endDate}
+            />
+        // Display a review submitted
+        if(isHourBeforeDropoff &&
+            (status === BOOKING_STATUSES.BOTH_REVIEWED ||
+            (isOwner && status === BOOKING_STATUSES.LENDER_REVIEWED) ||
+            (!isOwner && status === BOOKING_STATUSES.BORROWER_REVIEWED)
+            )
+        )   return <StatusReviewed isOwner={isOwner} 
+            />
+        
         // An hour before returning time
-        const dropOff = isDropoffTime()
-        if(dropOff && status === BOOKING_STATUSES.BOTH_CONFIRMED)
+        if(isHourBeforeDropoff)
             return <DropOff 
                 booking={booking}
                 updateBookingStatus={updateBookingStatus}
@@ -65,70 +126,8 @@ export const TradeCalendarStatusPanel = ({
                 setReviewModalVisible={setReviewModalVisible}
                 setReportModalVisible={setReportModalVisible}
                 endDateObj={endDate}
-            />
-
-        // Booking approved but not an hour before booking time
-        if((status === BOOKING_STATUSES.APPROVED) ||
-            (isOwner && status === BOOKING_STATUSES.BORROWER_CONFIRMED) ||
-            (!isOwner && status === BOOKING_STATUSES.LENDER_CONFIRMED)
-        )   return <StatusApproved 
-                isOwner={isOwner} 
-                userDetails={userDetails} 
-                startDateObj={startDate}
-            />
-        
-        // Lender and / or Borrower confirmed pickup
-        if((status === BOOKING_STATUSES.BOTH_CONFIRMED) ||
-           (isOwner && status === BOOKING_STATUSES.LENDER_CONFIRMED) ||
-           (!isOwner && status === BOOKING_STATUSES.BORROWER_CONFIRMED)
-        )   return <StatusConfirmed 
-                isOwner={isOwner}
-                userDetails={userDetails}
-                endDateObj={endDate}
-            />
-        
-        // Display a review submitted
-        if((status === BOOKING_STATUSES.BOTH_REVIEWED) ||
-           (isOwner && status === BOOKING_STATUSES.LENDER_REVIEWED) ||
-           (!isOwner && status === BOOKING_STATUSES.BORROWER_REVIEWED)
-        ) return <StatusReviewed isOwner={isOwner} />
-
-        switch(status){
-            case BOOKING_STATUSES.APPLIED: {
-                return <StatusApplied 
-                isOwner={isOwner} 
-                updateBookingStatus={updateBookingStatus} 
                 isLoading={isApproveLoading}
-                startDate={startDate}
-                endDate={endDate}/>
-            }
-            case BOOKING_STATUSES.REJECTED: {
-                return <StatusRejected 
-                userDetails={userDetails}
-                isOwner={isOwner}
-                status={status}/>
-            }
-            case BOOKING_STATUSES.CANCELLED: {
-                return <StatusRejected 
-                userDetails={userDetails}
-                isOwner={isOwner}
-                status={status}/>
-            }
-            case BOOKING_STATUSES.TO_RESCHEDULE: {
-                return <StatusReschedule 
-                isOwner={isOwner} 
-                updateBookingStatus={updateBookingStatus} 
-                booking={booking}/>
-            }
-            case BOOKING_STATUSES.ITEM_RETURNED: {
-                return <StatusItemReturn 
-                isOwner={isOwner}
-                setReviewModalVisible={setReportModalVisible}/>
-            }
-            default: {
-                return <StatusDefault />
-            }
-        }
+            />
     }
 
     const isPickupTime = () => {
@@ -159,6 +158,7 @@ export const TradeCalendarStatusPanel = ({
 
     const updateBookingStatus = async (newStatus) => {
         try{
+            setIsApproveLoading(true)
             const { status} = await Instance.patch(`/bookings/${booking.id}/status`, { status: newStatus })
             if(status !== 200) return
             setStatus(newStatus)
@@ -182,6 +182,8 @@ export const TradeCalendarStatusPanel = ({
                     }
                 }}) 
             }
+        } finally {
+            setIsApproveLoading(false)
         }
     }
     

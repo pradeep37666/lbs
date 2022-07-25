@@ -80,11 +80,13 @@ export default function Trades() {
                 open={reviewModalVisible && !isLender}
                 setReviewModalVisible={setReviewModalVisible}
                 booking={selectedBooking}
+                getBookings={getBookings}
             />
             <ReviewBorrower 
                 open={reviewModalVisible && isLender}
                 onClick={() => setReviewModalVisible(false)}  
                 booking={selectedBooking} 
+                getBookings={getBookings}
             />
             <div className="UserShedWrapper" style={{ paddingRight: 0}}>
                 { !isMobile && 

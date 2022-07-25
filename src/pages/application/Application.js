@@ -10,7 +10,6 @@ import ApplicationFooter from '../../components/application/ApplicationFooter'
 import applicationReducer from '../../util/reducers/applicationReducer'
 import BookingPriceCalculator from '../../util/BookingPriceCalculator'
 import { useHistory, useParams } from 'react-router-dom'
-import checkIfLeapYear from '../../util/dateUtils/checkIfLeapYear'
 import { getPrevBookingPage } from '../../util/getPrevPage'
 
 export const ApplicationContext = React.createContext()
@@ -33,8 +32,6 @@ export default function Application() {
     const currentDate = today.getDate()
     const currentMonth = today.getMonth()
     const currentYear = today.getFullYear()
-    const totalDays = checkIfLeapYear(currentYear) ? 730 : 732
-    const yearlyAvailability = Array(totalDays).fill(1)
     const { page, item, confirmedStart, confirmedEnd } = state
     const { itemId } = useParams()
     const history = useHistory()
@@ -57,6 +54,8 @@ export default function Application() {
     const getItem = async () => {
         const { data, status } = await instance.get(`/items/${itemId}`)
         if(status !== 200) return
+        const thisYear = data?.availabilities?.find(availability => availability.year === currentYear)
+        const yearlyAvailability = thisYear?.yearly_availability
         dispatch({ type: 'setItem', data: data})
         dispatch({ type: 'setItemAvailability', data: data.weekly_availability})
         dispatch({ type: 'setYearAvailability', data: yearlyAvailability})

@@ -8,9 +8,9 @@ export const DropOff = ({
     isOwner, 
     updateBookingStatus,  
     userDetails, 
-    setReviewModalVisible, 
     setReportModalVisible, 
-    endDateObj
+    endDateObj,
+    isLoading
 }) => {
     const [ noPressed, setNoPressed ] = useState()
     const endTime = endDateObj.timeslot === 'morning' ? '8:00am' : '1:00pm'
@@ -48,10 +48,8 @@ export const DropOff = ({
                             <StatusButton 
                                 text='Yes'
                                 type='blue'
-                                onClick={async () => {
-                                    await updateBookingStatus(BOOKING_STATUSES.ITEM_RETURNED)
-                                    setReviewModalVisible(true)
-                                }}
+                                onClick={() => updateBookingStatus(BOOKING_STATUSES.ITEM_RETURNED)}
+                                isLoading={isLoading}
                             />
                         </div>
                     </>

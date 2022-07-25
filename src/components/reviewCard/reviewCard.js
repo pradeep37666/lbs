@@ -6,9 +6,10 @@ import { Avatar } from '@material-ui/core'
 import MissingProfile from '../../assets/Icons/MissingProfileIcon.png'
 
 export default function ReviewCard({ review }) {
+    console.log({review})
     return (
         <div className="ReviewCard">
-            <div className="RatingLenderFlex">
+            {/* <div className="RatingLenderFlex">
                 <Avatar src={review?.user.avatar ? getImage(review.user.avatar) : MissingProfile}  className="ProfileIconSmall" />
                 <div className="ReviewSmallText">
                     <div className="RatingHeader">
@@ -23,7 +24,7 @@ export default function ReviewCard({ review }) {
             </div>
             <div className="ReviewText">
                 {review.content}
-            </div>
+            </div> */}
         </div>
     )
 }

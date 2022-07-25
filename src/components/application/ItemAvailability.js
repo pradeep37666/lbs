@@ -4,9 +4,9 @@ import AvailabilityCalendar from '../availabilityCalendar/AvailabilityCalendar'
 import { ApplicationContext } from '../../pages/application/Application'
 import { CircularProgress } from '@material-ui/core'
 
-export default function ItemAvailability({ handleNextPage }) {
+export default function ItemAvailability() {
     const { state } = useContext(ApplicationContext)
-    const { item, currentDay, currentMonth, currentYear } = state
+    const { item, currentMonth, currentYear } = state
 
     const renderMonths = () => {
         const months = Array(3).fill(null)
