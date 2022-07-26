@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import './ReviewModal.css'
-import {ReactComponent as StarOutline} from './../../../assets/Icons/StarOutline.svg'
-import {ReactComponent as StarFilled} from './../../../assets/Icons/StarFilled.svg'
 import CloseIcon from '@material-ui/icons/Close'
 import { Avatar, CircularProgress, Slide } from '@material-ui/core'
 import MissingProfile from '../../../assets/Icons/MissingProfileIcon.png'
@@ -9,7 +7,7 @@ import getImage from '../../../util/getImage'
 import Instance from '../../../util/axios'
 import useGlobalState from '../../../util/useGlobalState'
 import { useHistory } from 'react-router'
-import { REVIEWS } from '../../../dammyReviews'
+import RatingFiller from '../../../components/ratingFiller/ratingFiller'
 
 export default function ReviewModal({ 
     setReviewModalOpen, 
@@ -51,53 +49,55 @@ export default function ReviewModal({
     const renderLenderItems = () => {
         return lenderItems?.map(( item, index ) => {
             return (
-            <div 
-                className="LenderItemFlex" 
-                key={index} 
-                onClick={() => {
-                    history.push(`/item/${item.id}`)
-                    setReviewModalOpen(false)
-                }}
-            >
-                <div>
-                    <img 
-                        src={getImage(item.images[0].imageKey)} 
-                        alt="" 
-                        className="LenderItemImage"
-                    />
-                </div>
-                <div className="LenderItemRatingFlex">
-                    <div className="LenderItemName">{item.title}</div>
-                    <div className="LenderRatingText">{item.rating}/5
-                    <div className="LenderItemStars">
-                        <img src={item.rating >= 1 ? StarFilled : StarOutline} alt="" className="StarIcon" />
-                        {item.rating >= 1 ? <StarFilled /> : <StarOutline />}
-                        <img src={item.rating >= 2 ? StarFilled : StarOutline} alt="" className="StarIcon" />
-                        <img src={item.rating >= 3 ? StarFilled : StarOutline} alt="" className="StarIcon" />
-                        <img src={item.rating >= 4 ? StarFilled : StarOutline} alt="" className="StarIcon" />
-                        <img src={item.rating >= 5 ? StarFilled : StarOutline} alt="" className="StarIcon" />
+                <div 
+                    className="LenderItemFlex" 
+                    key={index} 
+                    onClick={() => {
+                        history.push(`/item/${item.id}`)
+                        setReviewModalOpen(false)
+                    }}
+                >
+                    <div>
+                        <img 
+                            src={getImage(item.images[0].imageKey)} 
+                            alt="" 
+                            className="LenderItemImage"
+                        />
                     </div>
+                    <div className="LenderItemRatingFlex">
+                        <div className="LenderItemName">{item.title}</div>
+                        <div className="LenderRatingText">
+                            {item.rating}/5
+                            <RatingFiller rating={item.rating}/>
+                        </div>
                     </div>
                 </div>
-            </div>)
+            )
         })
     }
 
     const renderReviews = () => {
-        return REVIEWS?.map((review, index) => {
-        // return reviews?.map((review, index) => {
+        return reviews?.map((review, index) => {
             return (
                 <div 
                     className="ReviewModalReviewCard"
                     key={index} 
-                    style={{ borderBottom: (index < REVIEWS.length -1) ? '1px solid rgba(51, 56, 79, 0.3)' : null, marginTop: index !== 0 ? '1rem' : 0 }}
-                    // style={{ borderBottom: (index < reviews.length -1) ? '1px solid rgba(51, 56, 79, 0.3)' : null, marginTop: index !== 0 ? '1rem' : 0 }}
+                    style={{ borderBottom: (index < reviews.length -1) ? '1px solid rgba(51, 56, 79, 0.3)' : null, marginTop: index !== 0 ? '1rem' : 0 }}
                 >
                     <div className="RatingLenderFlex">
-                        <Avatar src={review?.user?.avatar ? getImage(review.user.avatar) : MissingProfile} alt="" className="ProfileIcon" />
-                        <div>
-                            <div className="RatingHeader">{review?.user?.firstName} {review?.user?.lastName}</div>
-                            <div className="RatingStarFlex">{review.rating}/5 <StarFilled fill='#E9D8B4' className="StarIconRating" /></div>
+                        <img 
+                            src={review?.user?.avatar ? getImage(review.user.avatar) : MissingProfile} 
+                            alt="" 
+                            className="ProductIcon" 
+                        />
+                        <div className='RatingDetailContainer'>
+                            <div className="RatingHeader">
+                                {review?.user?.firstName} {review?.user?.lastName}
+                            </div>
+                            <div className="ItemLenderRating">
+                                {review.rating}/5 
+                                <RatingFiller rating={review.rating} />
+                            </div>
                         </div>
                     </div>
                     <div className="ReviewText">
@@ -132,15 +132,11 @@ export default function ReviewModal({
                                         <Avatar style={{ height: 60, width: 60 }} src={getOwnerImage()} alt="" className="ProfileIconReview" />
                                         <div>
                                             <div className="RatingHeaderReview">{isUserItem ? `${user.firstName} ${user.lastName}` : `${itemOwner.firstName} ${itemOwner.lastName}`}</div>
-                                            <div className="RatingLenderReview">{lenderRating}/5 </div>
+                                            <div className="ReviewRatingTitle">
+                                                {lenderRating}/5 
+                                                <RatingFiller rating={lenderRating}/>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div className="StarsLenderReview">
-                                        {lenderRating >= 1 ? <StarFilled fill='#E9D8B4' className="StarIcon" /> : <StarOutline className="StarIcon" />}
-                                        {lenderRating >= 2 ? <StarFilled fill='#E9D8B4' className="StarIcon" /> : <StarOutline className="StarIcon" />}
-                                        {lenderRating >= 3 ? <StarFilled fill='#E9D8B4' className="StarIcon" /> : <StarOutline className="StarIcon" />}
-                                        {lenderRating >= 4 ? <StarFilled fill='#E9D8B4' className="StarIcon" /> : <StarOutline className="StarIcon" />}
-                                        {lenderRating >= 5 ? <StarFilled fill='#E9D8B4' className="StarIcon" /> : <StarOutline className="StarIcon" />}
                                     </div>
                                     <div>
                                         <div className="LenderItemsHeader">Lender Items</div>
@@ -153,7 +149,7 @@ export default function ReviewModal({
                                 </div>
                             <div className="vl" />
                             <div className="MainReviewColumn">
-                                { renderReviews()}
+                                { renderReviews() }
                             </div>
                         </div>
                     </div>

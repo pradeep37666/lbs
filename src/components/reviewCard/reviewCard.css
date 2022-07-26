@@ -1,29 +1,44 @@
-.ReviewCard {
+.ReviewCard,
+.OnlyOneCard {
     border: 1px solid #c7c7c7;
     border-radius: 10px;
     padding: .8em;
-    width: 48%;
     height: 200px;
     overflow: auto;
 }
 
+.ReviewCard {
+    width: 48%;
+}
+
+.OnlyOneCard {
+    width: 96%;
+}
+
 .ReviewText {
     padding-top: .5em;
-    font-size: 18px;
+    font-size: 0.9em;
 }
 
 .ProfileIconSmall {
     height: 37px;
     width: 37px;
-    margin-top: .5em;
-    margin-right: .5em;
+    margin: auto 0;
+    border-radius: 50%;
+    object-fit: cover;
 }
 
 .ReviewSmallText {
-    font-size: 14px;
+    font-size: 1.1em;
+    margin-left: .5em;
 }
 
 .StarIconRatingSmall {
     height: 11px;
     margin-left: .5em;
 }
+
+.ReviewRatingTitle {
+    display: flex;
+    align-items: center;
+  }

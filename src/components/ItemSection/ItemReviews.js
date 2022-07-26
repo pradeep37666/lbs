@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react'
-import { REVIEWS } from '../../dammyReviews'
+import React, { useState } from 'react'
 import NoReviews from '../NoReviews/NoReviews'
 import ReviewCard from '../reviewCard/reviewCard'
 
@@ -7,13 +6,16 @@ const ItemReviews = ({ reviews, openReviewModal }) => {
     const [ reviewPage, setReviewPage ] = useState(0)
 
     const renderReviews = () => {
-        const visibleReviews = REVIEWS.slice(reviewPage * 2, (reviewPage * 2) + 2)
-        // const visibleReviews = reviews.slice(reviewPage * 2, (reviewPage * 2) + 2)
+        const visibleReviews = reviews.slice(reviewPage * 2, (reviewPage * 2) + 2)
         if(visibleReviews.length === 0){
             return <NoReviews />
         }
         return visibleReviews.map((review, index) => {
-            return <ReviewCard review={review} key={index} />
+            if (visibleReviews.length === 1) {
+                return <ReviewCard review={review} key={index} isOnlyOne={true}/>
+            } else {
+                return <ReviewCard review={review} key={index} />
+            }
         })
     }
 
@@ -42,10 +44,6 @@ const ItemReviews = ({ reviews, openReviewModal }) => {
         }
         return content
     }
-
-    useEffect(() => {
-        console.log({reviews})
-    },[reviews])
 
     return (
         <>

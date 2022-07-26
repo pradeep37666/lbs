@@ -5,9 +5,12 @@ import { Avatar } from '@material-ui/core'
 import MissingProfile from '../../assets/Icons/MissingProfileIcon.png'
 import RatingFiller from '../../components/ratingFiller/ratingFiller'
 
-export default function ReviewCard({ review }) {
+export default function ReviewCard({ review, isOnlyOne }) {
     return (
-        <div className="ReviewCard">
+        <div className={isOnlyOne
+            ? 'OnlyOneCard'
+            : 'ReviewCard'
+        }>
             <div className="RatingLenderFlex">
                 <Avatar 
                     src={review?.user.avatar ? getImage(review.user.avatar) : MissingProfile}  
@@ -18,7 +21,7 @@ export default function ReviewCard({ review }) {
                         {review.user.firstName}&nbsp;
                         {review.user.lastName}
                     </div>
-                    <div className="RatingStarFlex">
+                    <div className="ReviewRatingTitle">
                         {review.rating}/5 
                         <RatingFiller rating={review.rating}/>
                     </div>

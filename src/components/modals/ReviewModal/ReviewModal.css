@@ -179,3 +179,7 @@
 .ProductRatings, .ItemLenderRating {
   display: flex;
 }
+
+.ItemLenderRating {
+  align-items: center;
+}
