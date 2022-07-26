@@ -72,8 +72,8 @@ export default function MapsAutocomplete(props) {
     const [ googleInstance, setGoogleInstance ] = useState('')
     const [ mapProps, setMapProps ] = useState({
         center: {
-            lat: -25.6091,
-            lng: 134.3619
+            lat: -43.532054,
+            lng: 172.636225
         },
         zoom: 4
     })

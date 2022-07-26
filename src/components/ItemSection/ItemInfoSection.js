@@ -121,39 +121,57 @@ const ItemInfoSection = ({
                         Edit Item Details
                     </button>
                 :
-                    <div className="ItemButtons">
-                        <button 
-                            className="ButtonAvailability" 
-                            onClick={openAvailabilityModal}
-                        >
-                            <div className="ItemButtonFlex">
-                                <img 
-                                    src={Calendar} 
-                                    alt='calendar' 
-                                    style={{ marginRight: '0.5em'}}
-                                />
-                                Availability
-                            </div>
-                        </button>
-                        <button 
-                        onClick={() => history.push(`/item/${params.itemId}/application`)}
-                        className="ButtonApply"
-                        >
-                            <div className="ItemButtonFlex">
-                                <Profile fill='#ffffff' />
-                                Apply Now
-                            </div>
-                        </button>
-                        <button 
-                            className="ButtonFavourite" 
-                            onClick={handleFavourite} 
-                            style={{ padding: '.5em 1em' }}
-                        >
-                            {favourited 
-                            ? <StarFilled fill='#ffffff' /> 
-                            : <StarOutline fill='#ffffff' />
-                            }
-                        </button>
+                    <div>
+
+                        <div className="ItemButtons">
+                            <button 
+                                className="ButtonAvailability" 
+                                onClick={openAvailabilityModal}
+                            >
+                                <div className="ItemButtonFlex">
+                                    <img 
+                                        src={Calendar} 
+                                        alt='calendar' 
+                                        style={{ marginRight: '0.5em'}}
+                                    />
+                                    Availability
+                                </div>
+                            </button>
+                            <button 
+                                onClick={() => history.push(`/item/${params.itemId}/application`)}
+                                className="ButtonApply"
+                            >
+                                <div className="ItemButtonFlex">
+                                    <Profile fill='#ffffff' />
+                                    Apply Now
+                                </div>
+                            </button>
+                        </div>
+                        <div className="ItemButtons">
+                            <button 
+                                className="ButtonColdChat" 
+                                onClick={openAvailabilityModal}
+                            >
+                                <div className="ChatStartButtonFlex">
+                                    <img 
+                                        src={Calendar} 
+                                        alt='calendar' 
+                                        style={{ marginRight: '0.5em'}}
+                                    />
+                                    Start Chat
+                                </div>
+                            </button>
+                            <button 
+                                className="ButtonFavourite" 
+                                onClick={handleFavourite} 
+                                style={{ padding: '.5em 1em' }}
+                            >
+                                {favourited 
+                                ? <StarFilled fill='#ffffff' /> 
+                                : <StarOutline fill='#ffffff' />
+                                }
+                            </button>
+                        </div>
                     </div>
                 }
 

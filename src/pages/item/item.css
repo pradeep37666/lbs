@@ -73,6 +73,7 @@
 
 .ItemButtons {
   display: flex;
+  margin-bottom: .5em;
 }
 
 .ItemButtons button {
@@ -92,6 +93,14 @@
   align-items: center;
 }
 
+.ChatStartButtonFlex {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 0 8%;
+  align-items: center;
+}
+
 .ItemButtons img {
   height: 30px;
 }
@@ -99,14 +108,21 @@
 .ButtonAvailability {
   border: 1px solid #33384f;
   background-color: #ffffff;
-  width: 40%;
+  width: 50%;
 }
 
 .ButtonApply {
   background-color: #33384f;
   border: none;
   color: #ffffff;
-  width: 40%;
+  width: 50%;
+}
+
+.ButtonColdChat {
+  background-color: #b43b4c;
+  border: none;
+  color: #ffffff;
+  width: 80%;
 }
 
 .ButtonFavourite {
@@ -367,7 +383,8 @@
 }
 
 @media only screen and (max-width: 1350px) {
-  .ItemButtonFlex {
+  .ItemButtonFlex,
+  .ChatStartButtonFlex {
     flex-direction: column;
   }
 }

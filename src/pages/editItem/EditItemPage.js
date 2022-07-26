@@ -18,7 +18,7 @@ import DeleteItemModal from "../../components/modals/DeleteItemModal/DeleteItemM
 
 const EditItemContext = createContext()
 function EditItemPage() {
-  const [state, dispatch] = useReducer(editItemReducer, { 
+  const [ state, dispatch ] = useReducer(editItemReducer, { 
     availability: [],
     isDiscount: false,
     newImages: [],
@@ -43,6 +43,11 @@ function EditItemPage() {
   useEffect(() => {
     getItem()
   }, [params])
+
+
+  useEffect(() => {
+    console.log({address})
+  },[address])
 
   const getItem = async () => {
     try {
@@ -92,6 +97,10 @@ function EditItemPage() {
     }
   }
 
+  const setAddress = (addressObj) => {
+    dispatch({ type: 'setAddress', data: addressObj})
+  }
+
   return (
     <EditItemContext.Provider value={{ state, dispatch }}>
       <PageWrapper>
@@ -114,7 +123,8 @@ function EditItemPage() {
                 
                 <div className="LoginMain LoginMainNoMarg" style={{ width: "100%" }} >
                   <MapsAutocomplete
-                    setAddress={newAddress => dispatch({ type: 'setAddress', data: newAddress })}
+                    setAddress={setAddress}
+                    defaultAddress={address}
                     defaultLocation={address.fullAddress}
                     defaultLat={address.lat}
                     defaultLng={address.lng}

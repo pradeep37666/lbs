@@ -39,9 +39,8 @@ export const TradeCalendarStatusPanel = ({
     },[])
 
     const renderStatusPanel = () => {
-        // const isHourBeforePickup = isPickupTime()
-        const isHourBeforePickup = true
-        const isHourBeforeDropoff = true
+        const isHourBeforePickup = isPickupTime()
+        const isHourBeforeDropoff = isDropoffTime()
 
         if (status === BOOKING_STATUSES.DISPUTED ||
             status === BOOKING_STATUSES.RESOLVED) 
