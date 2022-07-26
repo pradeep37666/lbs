@@ -1,5 +1,6 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import './AvailabilityModal.css'
+import CloseIcon from '@material-ui/icons/Close'
 import DisabledAvailabilityCalendar from '../../DisabledAvailabilityCalendar/DisabledAvailabilityCalendar'
 
 export const ApplicationContext = React.createContext()
@@ -24,7 +25,7 @@ export default function AvailabilityModal({ item, onClick, availability, yearlyA
     const renderCalendars = () => {
         const calendarArray = new Array(4).fill(null)
         let year = currentYear
-        return calendarArray.map(( item, index ) => {
+        return calendarArray.map((_,index ) => {
             let month
             if(currentMonth + index > 11){
                 month = (currentMonth + index ) - 12
@@ -33,7 +34,7 @@ export default function AvailabilityModal({ item, onClick, availability, yearlyA
             }
             if(currentMonth + index === 12) year += 1
             return (
-            <DisabledAvailabilityCalendar month={month} year={year}/>
+            <DisabledAvailabilityCalendar month={month} year={year} key={index}/>
             )
         })
     }
@@ -45,6 +46,17 @@ export default function AvailabilityModal({ item, onClick, availability, yearlyA
                     className="AvailabilityModalMain"  
                     onClick={(e) => e.stopPropagation()}
                 >
+                    <div className='AvailabilityTitleContainer'>
+                        <p className='AvailabilityTitle'>
+                            Availability
+                        </p>
+                        <button 
+                            className="AvailabilityCloseBtn"
+                            onClick={onClick}
+                        >
+                            <CloseIcon />
+                        </button>
+                    </div>
                     { renderCalendars() }
                 </div>
             </div>

@@ -140,6 +140,7 @@ export default function Item() {
                             item={item}
                             isUserItem={isUserItem}
                             itemOwner={itemOwner}
+                            itemPictures={itemPictures}
                         />
                         <hr className='hr' />
                         <ItemReviews 

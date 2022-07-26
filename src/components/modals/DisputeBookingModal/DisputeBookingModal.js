@@ -26,7 +26,10 @@ const DisputeBookingModal = ({ open, onClick, updateBookingStatus }) => {
                     <StatusButton 
                         text='Yes, Dipute'
                         type='red'
-                        onClick={() => updateBookingStatus(BOOKING_STATUSES.DISPUTED)}
+                        onClick={() => {
+                            updateBookingStatus(BOOKING_STATUSES.DISPUTED)
+                            onClick()
+                        }}
                     />
                 </div>
             </DialogContent>

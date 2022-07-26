@@ -9,6 +9,7 @@ import getImage from '../../../util/getImage'
 import Instance from '../../../util/axios'
 import useGlobalState from '../../../util/useGlobalState'
 import { useHistory } from 'react-router'
+import { REVIEWS } from '../../../dammyReviews'
 
 export default function ReviewModal({ 
     setReviewModalOpen, 
@@ -83,13 +84,14 @@ export default function ReviewModal({
     }
 
     const renderReviews = () => {
-        return reviews?.map((review, index) => {
-            console.log({review})
+        return REVIEWS?.map((review, index) => {
+        // return reviews?.map((review, index) => {
             return (
                 <div 
                     className="ReviewModalReviewCard"
                     key={index} 
-                    style={{ borderBottom: (index < reviews.length -1) ? '1px solid rgba(51, 56, 79, 0.3)' : null, marginTop: index !== 0 ? '1rem' : 0 }}
+                    style={{ borderBottom: (index < REVIEWS.length -1) ? '1px solid rgba(51, 56, 79, 0.3)' : null, marginTop: index !== 0 ? '1rem' : 0 }}
+                    // style={{ borderBottom: (index < reviews.length -1) ? '1px solid rgba(51, 56, 79, 0.3)' : null, marginTop: index !== 0 ? '1rem' : 0 }}
                 >
                     <div className="RatingLenderFlex">
                         <Avatar src={review?.user?.avatar ? getImage(review.user.avatar) : MissingProfile} alt="" className="ProfileIcon" />

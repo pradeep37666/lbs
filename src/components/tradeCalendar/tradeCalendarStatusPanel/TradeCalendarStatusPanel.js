@@ -45,9 +45,7 @@ export const TradeCalendarStatusPanel = ({
 
         if (status === BOOKING_STATUSES.DISPUTED ||
             status === BOOKING_STATUSES.RESOLVED) 
-            return <StatusDisputed 
-            
-            /> 
+            return <StatusDisputed /> 
         if (status === BOOKING_STATUSES.APPLIED)
             return <StatusApplied 
             isOwner={isOwner} 
@@ -198,6 +196,8 @@ export const TradeCalendarStatusPanel = ({
             <div className="TradeStatusContainer">
                 {status && renderStatusPanel()}
             </div>
+            {status !== BOOKING_STATUSES.DISPUTED &&
+             status !== BOOKING_STATUSES.RESOLVED &&
             <div className='TradeDisputeContainer'>
                 <button
                     className='TradeDisputeBtn'
@@ -206,6 +206,7 @@ export const TradeCalendarStatusPanel = ({
                     Dispute Trade
                 </button>
             </div>
+            }
             <DisputeBookingModal 
                 open={isDisputeOpen} 
                 onClick={() => setIsDisputeOpen(false)}

@@ -1,5 +1,4 @@
 import React from 'react'
-import Instance from '../../util/axios'
 import getImage from '../../util/getImage'
 
 const ItemImages = ({ itemPictures, openImageModal }) => {

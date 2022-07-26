@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import '../../pages/item/item.css'
 import Location from '../../assets/Icons/LocationIcon.svg'
 import Delivery from '../../assets/Icons/DeliveryIcon.svg'
@@ -36,6 +36,10 @@ const ItemInfoSection = ({
             console.log(error.response)
         }
     }
+
+    useEffect(() => {
+        console.log({item})
+    },[item])
     
     return (
         <>
@@ -80,6 +84,25 @@ const ItemInfoSection = ({
                     <span className={`${item.deliveryPrice > 0 ? '' : 'Hide'}`}>/</span>
                     <span className={`DeliveryFeeText ${item.deliveryPrice > 0 ? '' : 'Hide'}`}>
                         &nbsp;${item.deliveryPrice} Delivery Fee
+                    </span>
+                </div>
+
+                <div className="LocationDeliveryCategory">
+                    <div className="LDCIconContainer">
+                        <img 
+                            src={Delivery} 
+                            alt='delivary' 
+                            className="LDCIcon" 
+                            style={{ height: '22px' }} 
+                        />
+                    </div>
+                    {item.pickupPrice > 0 
+                        ? 'Pickup Available' 
+                        : 'Dropoff only'
+                    }&nbsp;
+                    <span className={`${item.pickupPrice > 0 ? '' : 'Hide'}`}>/</span>
+                    <span className={`DeliveryFeeText ${item.pickupPrice > 0 ? '' : 'Hide'}`}>
+                        &nbsp;${item.pickupPrice} Pickup Fee
                     </span>
                 </div>
 
