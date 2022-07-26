@@ -1,10 +1,10 @@
-.ModalWrapperMain {
+.ItemImageModalContainer {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0 , 0, 0 , 0.3);
+    background-color: rgba(0 , 0, 0 , 0.8);
     z-index: 100;
     user-select: none;
 }
@@ -13,6 +13,22 @@
     position: -webkit-sticky; /* Safari */
 	position: sticky;
 	top: 10%;
+}
+
+.ItemImageModalCloseBtn {
+    position: absolute;
+    top: -8%;
+    left: 50px;
+    border-radius: 23px;
+    width: 38px;
+    height: 38px;
+    border: none;
+    outline: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #FFF;
+    color: #b43b4c;
 }
 
 .ImageModal {
@@ -24,9 +40,12 @@
 }
 
 .ImageModalImage {
-    width: 55%;
+    width: 600px;
+    height: 500px;
     border-radius: 20px;
-    max-height: 600px;
+    object-fit: contain;
+    margin: 0 0.5em;
+    background: #181818;
 }
 
 .OffScreenForward {
@@ -38,7 +57,7 @@
 .OffScreenBackward {
     position: absolute;
     top: 0;
-    left: -45%;
+    right: 90%;
 }
 
 .OffScreenBackward:hover, .OffScreenForward:hover {
@@ -49,7 +68,7 @@
     position: absolute;
     border-radius: 34px;
     color: #FFF;
-    font-size: 25px;
+    font-size: 1.2em;
     background-color: rgba(0 , 0, 0 , 0.8);
     padding: .5em 2em;
     top: 80%;
@@ -97,9 +116,26 @@
     display: none;
 }
 
-.ImageModalClose {
-    top: -10%;
-    left: 10px;
-    background-color: #FFF;
-    color: #b43b4c;
+@media only screen and (max-width: 800px) {
+    .ItemImageModalCloseBtn {
+        top: -10%;
+    }
+    .ImageModalImage {
+        width: 400px;
+        height: 300px;
+    }
+    .ImageNumberDisplay {
+        font-size: 0.9em;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .ImageModalImage {
+        width: 100%;
+        max-height: 600px;
+        height: auto;
+        margin: 0;
+        z-index: 200;
+        border-radius: 0;
+    }
 }

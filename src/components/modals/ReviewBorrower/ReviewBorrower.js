@@ -43,13 +43,6 @@ function ReviewBorrower({
 
   const classes = useStyles()
 
-  const getNextItemStatus = () => {
-    if (booking?.status === BOOKING_STATUSES.ITEM_RETURNED)
-      return BOOKING_STATUSES.LENDER_REVIEWED
-    if (booking?.status === BOOKING_STATUSES.LENDER_REVIEWED)
-      return BOOKING_STATUSES.BOTH_REVIEWED
-  }
-
   const reviewBorrower = async () => {
     try{
       setIsLoading(true)
@@ -71,9 +64,8 @@ function ReviewBorrower({
   }
 
   const updateBookingStatus = async () => {
-    const newStatus = getNextItemStatus()
     try {
-      const { status } = await Instance.patch(`/bookings/${booking.id}/status`, { status: newStatus })
+      const { status } = await Instance.patch(`/bookings/${booking.id}/status`, { status: BOOKING_STATUSES.LENDER_REVIEWED })
       if (status !== 200) return
       getBookings()
     } catch (error) {

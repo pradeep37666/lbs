@@ -29,39 +29,10 @@ export default function TradeCalendarItemContainer({
                 currentYear={currentYear}
             />
         )
-        // return bookingItem.map(( booking, index) => {
-        //     // const prevBookings = bookings.slice(0, index)
-        //     let row = header ? 3 : 2
-        //     // prevBookings.forEach(prevBooking => {
-        //     //     if(prevBooking.start_date <= booking.start_date && prevBooking.end_date >= booking.start_date){
-        //     //         row ++
-        //     //         return
-        //     //     }
-        //     //     if(prevBooking.start_date === booking.start_date ){
-        //     //         row ++
-        //     //         return
-        //     //     }
-        //     //     if(prevBooking.start_date <= booking.end_date && prevBooking.end_date >= booking.end_date){
-        //     //         row++
-        //     //         return
-        //     //     }
-        //     // })
-        //     return (
-        //         <TradeCalendarItem 
-        //             setSelectedBooking={setSelectedBooking}
-        //             row={row}
-        //             booking={booking} 
-        //             key={index}
-        //             index={index} 
-        //             currentMonth={currentMonth}
-        //             currentYear={currentYear}
-        //         />
-        //     )
-        // })
     }
 
     const renderColumns = () => {
-        return Array(totalDates * 2).fill(null).map((value, index) => {
+        return Array(totalDates * 2).fill(null).map((_,index) => {
             return (
                 <div 
                     key={index}

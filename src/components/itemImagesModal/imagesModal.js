@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import './imagesModal.css'
-import ItemImage from './../../assets/Images/search_section_bg.jpg'
 import CloseIcon from '@material-ui/icons/Close'
 import { Fade } from '@material-ui/core'
 import getImage from '../../util/getImage'
@@ -17,7 +16,7 @@ export default function ImagesModal({ setModal, images, modal }) {
             content.push(
             <img 
                 src={getImage(itemImages[currentIndex - 1]?.imageKey)} 
-                alt="" 
+                alt="left" 
                 className="ImageModalImage OffScreenBackward" 
                 key={currentIndex - 1} 
                 onClick={(e) => {
@@ -33,7 +32,7 @@ export default function ImagesModal({ setModal, images, modal }) {
             content.push(
                 <img 
                     src={getImage(itemImages[currentIndex + 1]?.imageKey)} 
-                    alt="" 
+                    alt="right" 
                     className="ImageModalImage OffScreenForward" 
                     key={currentIndex + 1} 
                     onClick={(e) => {
@@ -48,7 +47,7 @@ export default function ImagesModal({ setModal, images, modal }) {
         content.push(
             <img 
                 src={getImage(itemImages[currentImageIndex]?.imageKey)} 
-                alt="" 
+                alt="center" 
                 className="ImageModalImage" 
                 key={currentIndex} 
                 onClick={(e) => e.stopPropagation()}
@@ -95,20 +94,22 @@ export default function ImagesModal({ setModal, images, modal }) {
 
     return (
         <div 
-            className="ModalWrapperMain" 
+            className="ItemImageModalContainer" 
             onClick={() => closeModal()}
         >
             <Fade in={modal} timeout={500}>
                 <div className="CarouselModalFlexContainer">
                     <button 
-                        className="CloseModalButton ImageModalClose" 
+                        className="ItemImageModalCloseBtn" 
                         onClick={() => closeModal()}
                     >
                         <CloseIcon />
                     </button>
                     <div className="ImageModal">
                         {getBigImages(currentImageIndex)}
-                        <div className="ImageNumberDisplay">{currentImageIndex + 1}/{itemImages.length}</div>
+                        <div className="ImageNumberDisplay">
+                            {currentImageIndex + 1}/{itemImages.length}
+                        </div>
                     </div>
                     <div className="ImageModalCarousel">
                         {getSmallImages()}

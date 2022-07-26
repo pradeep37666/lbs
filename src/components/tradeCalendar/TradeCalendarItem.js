@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import './TradeCalendarItem.css'
 import getDateObject from '../../util/dateUtils/getDateObject'
 import Arrow from '../../assets/Icons/Arrow'
@@ -19,7 +19,7 @@ export default function TradeCalendarItem({ booking, setSelectedBooking, row, cu
 
     const isLend = booking.lenderId === user.id
     const isConfirmed = booking.status === 'APPROVED'
-    const isCancelled = booking.status === 'REJECTED' || booking.status === 'CANCELLED'
+    const isCancelled = booking.status === 'REJECTED' || booking.status === 'CANCELLED' || booking.status === 'DISPUTED' || booking.status === 'RESOLVED'
     const sameTimeSlot = booking.startDateIndex === booking.endDateIndex
     
     const getBackgroundImage = () => {

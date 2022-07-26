@@ -262,31 +262,33 @@
   background-color: #ac172c;
 }
 
-.MainItemImage {
+.ItemImageMain {
   width: 100%;
+  height: 25em;
+  object-fit: cover;
   border-radius: 30px 30px 0 0;
   margin-bottom: 1em;
+  cursor: pointer;
 }
 
-.SecondaryImageFlexContainer {
+.ItemImageSecondary {
   display: flex;
   justify-content: space-between;
   margin-bottom: 2em;
 }
 
-.SecondaryItemImageDiv {
+.SecondaryItemImageContainer {
+  position: relative;
   width: 48%;
+  height: 12em;
+  cursor: pointer;
 }
 
 .SecondaryItemImage {
   width: 100%;
   display: block;
-  height: 9rem;
+  height: 100%;
   object-fit: cover;
-}
-
-.ImageModalDiv {
-  position: relative;
 }
 
 .ImageModalButton {
