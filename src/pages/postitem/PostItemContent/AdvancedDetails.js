@@ -95,7 +95,7 @@ export default function AdvancedDetails({ context }) {
                             inputType="number"
                             value={discount}
                             onChange={(e) => dispatch({ type: 'setDiscount', data: parseInt(e.target.value)})}
-                            placeholder="10%"
+                            placeholder="5%"
                             />
                         </div>
                     </Fade>

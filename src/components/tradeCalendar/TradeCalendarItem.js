@@ -73,7 +73,7 @@ export default function TradeCalendarItem({ booking, setSelectedBooking, row, cu
                 </span>
                 <Arrow 
                     rotation={sameTimeSlot ? 90 : 0} 
-                    width={ isMobile ? 20 : 40} 
+                    width={ isMobile ? 20 : 30} 
                     height={ isMobile ? 10: 20}
                 />
                 <span>

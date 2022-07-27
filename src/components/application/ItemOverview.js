@@ -150,7 +150,7 @@ export default function ItemOverview() {
                         { pickupSelected && 
                         <div className="ItemOverviewItemContainer">
                             <span className="ItemOverviewSmallText">Item Pickup</span>
-                            <span className="ItemOverviewSmallText">${item.deliveryPrice}</span>
+                            <span className="ItemOverviewSmallText">${item.pickupPrice}</span>
                         </div>}
                     </div>
                     <div className="ItemOverviewItemContainer">

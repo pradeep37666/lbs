@@ -52,7 +52,7 @@ export default function AccountDetails() {
                 routing_number: bsb,
                 account_number: accNumber,
                 account_holder_type: 'individual',
-                account_holder_name: user.fullName,
+                account_holder_name: `${user.firstName} ${user.lastName}`,
             })
             if(response.token){
                 setUpdateAccountError('')

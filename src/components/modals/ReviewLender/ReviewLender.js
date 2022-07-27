@@ -62,6 +62,7 @@ function ReviewLender({
       })
       if(lenderRateStatus === 201 && itemStatus === 201)
       await updateBookingStatus()
+      getBookings()
       setReviewModalVisible(false)
     } catch(err){
       console.log(err)
@@ -75,7 +76,6 @@ function ReviewLender({
     try {
       const { status } = await Instance.patch(`/bookings/${booking.id}/status`, { status: BOOKING_STATUSES.BORROWER_REVIEWED })
       if(status !== 200) return
-      getBookings()
     } catch(error) {
       console.log(error)
     }

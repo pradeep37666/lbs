@@ -153,29 +153,29 @@ export default function Home() {
           onClick={() => history.push('/search?category=automotive')}
           className="CategoryImageDiv Automotive">
             <div className="CategoryTitle">Automotive</div>
-            <div className="CategoryItemTotal">21,056 Items</div>
-            <CarIcon fill="#fff"/>
+            {/* <div className="CategoryItemTotal">21,056 Items</div>
+            <CarIcon fill="#fff"/> */}
           </div>
           <div 
           onClick={() => history.push('/search?category=mowing')}
           className="CategoryImageDiv Gardening">
             <div className="CategoryTitle">Mowing</div>
-            <div className="CategoryItemTotal">16,702 Items</div>
-            <img src={WateringCanIcon} alt="" className="CategoryIcon" style={{ height: '28px'}} />
+            {/* <div className="CategoryItemTotal">16,702 Items</div>
+            <img src={WateringCanIcon} alt="" className="CategoryIcon" style={{ height: '28px'}} /> */}
           </div>
           <div 
           onClick={() => history.push('/search?category=tools')}
           className="CategoryImageDiv HandTools">
             <div className="CategoryTitle">Hand Tools</div>
-            <div className="CategoryItemTotal">12,334 Items</div>
-            <HammerIcon fill="#fff" className="CategoryIcon"/>
+            {/* <div className="CategoryItemTotal">12,334 Items</div>
+            <HammerIcon fill="#fff" className="CategoryIcon"/> */}
           </div>
           <div 
           onClick={() => history.push('/search?category=Power%20Tools')}
           className="CategoryImageDiv PowerTools">
             <div className="CategoryTitle">Power Tools</div>
-            <div className="CategoryItemTotal">4,586 Items</div>
-            <DrillIcon  fill="#fff" />
+            {/* <div className="CategoryItemTotal">4,586 Items</div>
+            <DrillIcon  fill="#fff" /> */}
           </div>
         </div>
         </div>

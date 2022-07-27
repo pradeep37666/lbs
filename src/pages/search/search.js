@@ -95,7 +95,7 @@ export default function Search() {
   const getSearchResultsMain = () => {
     return (
       <div>
-        <div className="ItemCardSection" style={{ padding: "1em .5em" }}>
+        <div className="SearchItemCardSection" style={{ padding: "1em .5em" }}>
           {getSearchResultsPage()}
         </div>
 

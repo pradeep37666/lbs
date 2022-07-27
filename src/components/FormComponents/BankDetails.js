@@ -270,7 +270,7 @@ export default function BankDetails({ context, lenderUpgrade }) {
                 <div className="LoginInputValidationContainer">
                     <input 
                         type='text' 
-                        placeholder='Enter your website' 
+                        placeholder='https://www.littlebigshed.com' 
                         className="LoginInput" 
                         value={website}
                         onChange={(e) => dispatch({ type: 'setWebsite', data: e.target.value})} 

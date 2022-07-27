@@ -4,6 +4,7 @@ import CategorySelect from '../../../components/categorySelect/categorySelect'
 import Button from '../../../components/Button/Button'
 import ValidationTextInput from '../../../components/FormComponents/ValidationTextInput'
 import { POST_ITEM_PAGE } from '../../../assets/Data/LBSEnum'
+import PhoneInput from 'react-phone-input-2'
 
 export default function BasicDetails({ context }) {
     const { state, dispatch } = useContext(context)

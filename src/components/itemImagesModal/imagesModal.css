@@ -83,12 +83,17 @@
 }
 
 .ImageSmallContainer {
-    width: 9%;
+    width: 10em;
+    height: 10em;
     position: relative;
     margin: 0 1em;
+    border-radius: 20px;
+    display: flex;
+    background: #181818;
 }
 
 .ImageModalSmall {
+    object-fit: contain;
     width: 100%;
     border-radius: 10px;
     display: block;

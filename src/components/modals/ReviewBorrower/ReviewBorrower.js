@@ -55,6 +55,7 @@ function ReviewBorrower({
       })
       if (status !== 201) return
       await updateBookingStatus()
+      getBookings()
       onClick()
     } catch(err) {
       console.log(err)
@@ -67,7 +68,6 @@ function ReviewBorrower({
     try {
       const { status } = await Instance.patch(`/bookings/${booking.id}/status`, { status: BOOKING_STATUSES.LENDER_REVIEWED })
       if (status !== 200) return
-      getBookings()
     } catch (error) {
       console.log(error)
     }
