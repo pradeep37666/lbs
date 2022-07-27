@@ -44,10 +44,6 @@ function EditItemPage() {
     getItem()
   }, [params])
 
-  useEffect(() => {
-    console.log({address})
-  },[address])
-
   const getItem = async () => {
     try {
       setLoading(true)

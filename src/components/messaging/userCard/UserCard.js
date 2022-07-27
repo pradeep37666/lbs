@@ -14,7 +14,7 @@ import getImage from '../../../util/getImage'
 
 export default function UserCard({ conversation, setActiveChatUser, setConversations, setPopupOpen, popupOpen, setMessages}) {
     const dotRef = useRef()
-    const { state, dispatch } = useGlobalState()
+    const { state } = useGlobalState()
     const { user } = state
     const [isDeleting, setIsDeleting] = useState(false)
     const [anchorEl, setAnchorEl] = useState(null)
@@ -26,7 +26,8 @@ export default function UserCard({ conversation, setActiveChatUser, setConversat
 
     const getUserRating = async () => {
         try{
-            const {data, status} = await Instance.get(`user/getOneUser?id=${conversation.conversationWith.uid}`) 
+            const {data, status} = await Instance.get(`users/${conversation.conversationWith.uid}`) 
+            if (status !== 200) return
             setCardUser(data)
         } catch(e) {
             console.log(e)

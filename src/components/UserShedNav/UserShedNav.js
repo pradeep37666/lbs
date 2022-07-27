@@ -27,7 +27,6 @@ export default function UserShedNav(props) {
         localStorage.removeItem('token')
         dispatch({ type: 'setUser', data: null })
         const res = await CometChat.logout()
-        // history.push({ pathname: '/' })
     }
 
     return (

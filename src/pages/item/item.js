@@ -15,6 +15,7 @@ import ItemRating from '../../components/ItemSection/ItemRating'
 import ItemReviews from '../../components/ItemSection/ItemReviews'
 import ItemLocation from '../../components/ItemSection/ItemLocation'
 import ItemImages from '../../components/ItemSection/ItemImages'
+import ColdChatModal from '../../components/modals/ColdChatModal.js/ColdChatModal'
 
 export default function Item() {
     const { user } = useGlobalState()?.state
@@ -32,6 +33,7 @@ export default function Item() {
     const [ reviewModalOpen, setReviewModalOpen ] = useState(false)
     const [ reviews, setReviews ] = useState([])
     const [ availabilityModalVisible, setAvailabilityModalVisible] = useState(false)
+    const [ coldChatModalVisible, setColdChatModalVisible ] = useState(false)
     const [ availability, setAvailability ] = useState()
     const [ yearlyAvailabilities, setYearlyAvailabilities ] = useState()
 
@@ -118,6 +120,13 @@ export default function Item() {
                     yearlyAvailabilities={yearlyAvailabilities}
                 />
             }
+            {coldChatModalVisible &&
+                <ColdChatModal 
+                    item={item}
+                    open={coldChatModalVisible}
+                    onClick={() => setColdChatModalVisible(false)}
+                />
+            }
             {isLoading 
             ?   <div className="ItemPage__Loading__Container">
                     <CircularProgress size={75} />
@@ -134,6 +143,7 @@ export default function Item() {
                             openAvailabilityModal={() => setAvailabilityModalVisible(true)}
                             favourited={favourited}
                             getItemLikedByUser={getItemLikedByUser}
+                            setColdChatModalVisible={setColdChatModalVisible}
                         />
                         <hr className="hr" />
                         <ItemRating 

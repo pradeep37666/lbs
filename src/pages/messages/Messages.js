@@ -5,25 +5,22 @@ import UserShedNav from '../../components/UserShedNav/UserShedNav'
 import { CometChat } from '@cometchat-pro/chat'
 import UserCard from '../../components/messaging/userCard/UserCard'
 import ActiveChat from '../../components/messaging/activeChat/ActiveChat'
-import { Facebook } from 'react-content-loader'
 import { CircularProgress, ClickAwayListener } from '@material-ui/core'
 import useGlobalState from '../../util/useGlobalState'
-import Instance from '../../util/axios'
 import { isMobile } from 'react-device-detect'
 import NoContent from '../../components/NoContent/NoContent'
 import { useHistory } from 'react-router'
-// import ReviewLender from '../../components/reviewLender/ReviewLender'
 
 export default function Messages() {
     const { state } = useGlobalState()
     const { user } = state
     const history = useHistory()
-    const [accountContent, setAccountContent] = useState('Messages')
-    const [messages, setMessages] = useState(null)
-    const [isLoading, setIsLoading] = useState(true)
-    const [conversations, setConversations] = useState([])
-    const [activeChatUser, setActiveChatUser] = useState()
-    const [popupOpen, setPopupOpen] = useState(false)
+    const [ accountContent, setAccountContent ] = useState('Messages')
+    const [ messages, setMessages ] = useState(null)
+    const [ isLoading, setIsLoading ] = useState(true)
+    const [ conversations, setConversations ] = useState([])
+    const [ activeChatUser, setActiveChatUser ] = useState()
+    const [ popupOpen, setPopupOpen ] = useState(false)
 
     useEffect(() => {
         CometChat.addMessageListener(user.id,
@@ -36,13 +33,10 @@ export default function Messages() {
     }, [activeChatUser])
 
     useEffect(() => {
-        // sendMessage()
         getConversations()
-
         if(!activeChatUser) return
         getMessages()
     }, [activeChatUser])
-
     
     const getConversations = async () => {
         try{
@@ -53,7 +47,6 @@ export default function Messages() {
         } catch(e) {
             console.log(e)
         }
-        
     }
 
     const getMessages = async () => {
@@ -82,19 +75,19 @@ export default function Messages() {
     const renderCards = () => {
         return conversations.map((conversation, index) => {
             return (
-            <UserCard 
-            setActiveChatUser={setActiveChatUser}
-            conversation={conversation} 
-            setConversations={setConversations}
-            key={index}
-            popupOpen={popupOpen}
-            setPopupOpen={setPopupOpen}
-            setMessages={setMessages}
-            />
+                <UserCard 
+                setActiveChatUser={setActiveChatUser}
+                conversation={conversation} 
+                setConversations={setConversations}
+                key={index}
+                popupOpen={popupOpen}
+                setPopupOpen={setPopupOpen}
+                setMessages={setMessages}
+                />
             )
         })
     }
-    // return <ReviewLender />
+
     return (
         <PageWrapper>
             <ClickAwayListener onClickAway={() => setPopupOpen(false)}>
@@ -120,20 +113,18 @@ export default function Messages() {
                                     {renderCards()}
                                 </div>
                                 { activeChatUser && 
-                                <ActiveChat 
-                                activeChatUser={activeChatUser} 
-                                setActiveChatUser={setActiveChatUser}
-                                messages={messages} 
-                                setMessages={setMessages}
-                                getConversations={getConversations}
-                                />}
+                                    <ActiveChat 
+                                    activeChatUser={activeChatUser} 
+                                    setActiveChatUser={setActiveChatUser}
+                                    messages={messages} 
+                                    setMessages={setMessages}
+                                    getConversations={getConversations}
+                                    />
+                                }
                             </>
                         )
-                       
-                        )}
-
+                    )}
                 </div>
-
              </div>
              </ClickAwayListener>
          </PageWrapper>

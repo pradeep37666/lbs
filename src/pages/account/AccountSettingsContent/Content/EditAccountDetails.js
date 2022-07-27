@@ -107,10 +107,10 @@ export default function EditAccountDetails() {
                 email,
                 mobile: `+${phoneNumber}`
             })
-            if(data?.email.exist) {
+            if(data?.email.exist && user.email !== email) {
                 setEmailTakenError('Email is already in use')
                 return true
-            } else if(data?.mobile.exist) {
+            } else if(data?.mobile.exist && user.mobile !== phoneNumber) {
                 setPhoneTakenError('Phone Number is already in use')
                 return true
             }

@@ -20,10 +20,10 @@ export default function ActiveChat({ activeChatUser, setActiveChatUser, messages
     const messageEndRef = useRef(null)
     const { state, dispatch } = useGlobalState()
     const { user } = state
-    const [messageText, setMessageText] = useState("") 
-    const [isLoading, setIsLoading] = useState(true)
-    const [activeUserDetails, setActiveUserDetails] = useState()
-    const [messagesLoaded, setMessagesLoaded] = useState(false)
+    const [ messageText, setMessageText ] = useState("") 
+    const [ isLoading, setIsLoading ] = useState(true)
+    const [ activeUserDetails, setActiveUserDetails ] = useState()
+    const [ messagesLoaded, setMessagesLoaded ] = useState(false)
 
 
     useEffect(() => {
@@ -39,25 +39,19 @@ export default function ActiveChat({ activeChatUser, setActiveChatUser, messages
         
     },[activeChatUser, messages, messagesLoaded])
 
-    // useEffect(() => {
-        
-    // }) 
-
-    // useEffect(() => {
-    //     autoScroll()
-    // }, [])
+    useEffect(() => {
+        autoScroll()
+    }, [])
 
     const autoScroll = () => {
-        console.log('messages', messages)
         setMessagesLoaded(true)
-        console.log('a')
-        console.log(messageEndRef.current.scrollHeight) 
         messageEndRef.current.scrollTo(0, 300)
     }
     
     const getActiveUserDetails = async () => {
         try{
-            const {data, status} = await Instance.get(`user/getOneUser?id=${activeChatUser.uid}`)
+            const {data, status} = await Instance.get(`users/${activeChatUser.uid}`)
+            if (status !== 200) return
             setActiveUserDetails(data)
         } catch(e){
             console.log(e)

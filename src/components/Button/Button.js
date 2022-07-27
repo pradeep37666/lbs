@@ -1,6 +1,6 @@
-import { CircularProgress } from '@material-ui/core'
 import React from 'react'
 import './Button.css'
+import { CircularProgress } from '@material-ui/core'
 import ValidationPopup from '../ValidationPopup/ValidationPopup'
 
 export default function Button({ 

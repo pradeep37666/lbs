@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import '../../pages/item/item.css'
 import Location from '../../assets/Icons/LocationIcon.svg'
 import Delivery from '../../assets/Icons/DeliveryIcon.svg'
@@ -10,12 +10,14 @@ import StarOutline from '../../assets/Icons/StarOutline'
 import useGlobalState from '../../util/useGlobalState'
 import { useHistory, useParams } from 'react-router-dom'
 import Instance from '../../util/axios'
+import Messages from '../../assets/Icons/ChatMessages.svg'
 
 const ItemInfoSection = ({ 
     item, 
     openAvailabilityModal,
     favourited,
     getItemLikedByUser,
+    setColdChatModalVisible,
 }) => {
     const { user } = useGlobalState()?.state
     const params = useParams()
@@ -36,10 +38,6 @@ const ItemInfoSection = ({
             console.log(error.response)
         }
     }
-
-    useEffect(() => {
-        console.log({item})
-    },[item])
     
     return (
         <>
@@ -150,13 +148,13 @@ const ItemInfoSection = ({
                         <div className="ItemButtons">
                             <button 
                                 className="ButtonColdChat" 
-                                onClick={openAvailabilityModal}
+                                onClick={() => setColdChatModalVisible(true)}
                             >
                                 <div className="ChatStartButtonFlex">
                                     <img 
-                                        src={Calendar} 
+                                        src={Messages} 
                                         alt='calendar' 
-                                        style={{ marginRight: '0.5em'}}
+                                        style={{ marginRight: '0.5em', fill: 'white'}}
                                     />
                                     Start Chat
                                 </div>

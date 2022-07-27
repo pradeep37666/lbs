@@ -74,6 +74,7 @@
 .ItemButtons {
   display: flex;
   margin-bottom: .5em;
+  width: 100%;
 }
 
 .ItemButtons button {
@@ -126,6 +127,7 @@
 }
 
 .ButtonFavourite {
+  width: 20%;
   background-color: #b43b4c;
   border: none;
   display: flex;

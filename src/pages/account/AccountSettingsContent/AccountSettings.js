@@ -37,35 +37,42 @@ export default function AccountSettings() {
                     <div className="AccountSettings__UserFlex">
                         <Avatar src={`${user && user.avatar ? getImage(user.avatar) : MissingProfile }`} className="AccountSettings__Avatar" alt="ProfilePicture" />
                         <div className="AccountSettings__UserDetails">
-                            <div className="AccountSettings__UserName">{user.fullName}</div>
+                            <div className="AccountSettings__UserName">{user.firstName} {user.lastName}</div>
                             <div className="AccountSettings__Ratings">
                                 <span className="AccountSettings-Medium">
                                     Lender:
                                 </span> 
-                                {user.lender_rating}/5 
-                                <RatingFiller rating={user.lender_rating} />
+                                <div className='AccountSettingsRatingContainer'>
+                                    {user.lender_rating}/5 
+                                    <RatingFiller rating={user.lender_rating} />
+                                </div>
                             </div>
                             <div className="AccountSettings__Ratings">
                                 <span className="AccountSettings-Medium">
                                     Borrower:
                                 </span> 
-                                {user.borrower_rating}/5 
-                                <RatingFiller rating={user.borrower_rating} />
+                                <div className='AccountSettingsRatingContainer'>
+                                    {user.borrower_rating}/5 
+                                    <RatingFiller rating={user.borrower_rating} />
+                                </div>
                             </div>
                         </div>
                     </div>
                     <div className="AccountSettings__AccountProductsFlex">
                         <div>
                             <span className="AccountSettings-Medium">
-                                Account:
+                                Account:&nbsp;
                             </span> 
                             Borrower {user.isLender && '& Lender'}
                         </div>
                         <div>
                             <span className="AccountSettings-Medium">
-                                Products:
+                                {userProducts <= 1
+                                ? 'Product:'
+                                : 'Products:'
+                                }
                             </span> 
-                            {userProducts}
+                            &nbsp;{userProducts}
                         </div>
                     </div>
                 </div>
