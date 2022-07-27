@@ -44,7 +44,6 @@ function EditItemPage() {
     getItem()
   }, [params])
 
-
   useEffect(() => {
     console.log({address})
   },[address])
@@ -120,16 +119,16 @@ function EditItemPage() {
             <div className="EditItemInfoWrapper">
               <EditBasicDetails state={state} dispatch={dispatch} />
               <EditPriceDetails state={state} dispatch={dispatch} />
-                
-                <div className="LoginMain LoginMainNoMarg" style={{ width: "100%" }} >
-                  <MapsAutocomplete
-                    setAddress={setAddress}
-                    defaultAddress={address}
-                    defaultLocation={address.fullAddress}
-                    defaultLat={address.lat}
-                    defaultLng={address.lng}
-                  />
-                </div>
+              <div className="LoginMain LoginMainNoMarg" style={{ width: "100%" }} >
+                {address &&
+                <MapsAutocomplete
+                  setAddress={setAddress}
+                  defaultAddress={address}
+                  defaultLocation={address.fullAddress}
+                  defaultLat={parseFloat(address.lat)}
+                  defaultLng={parseFloat(address.lng)}
+                />}
+              </div>
             </div>
 
             <div className="EditItemPicturesWrapper">

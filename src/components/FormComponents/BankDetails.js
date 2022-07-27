@@ -220,7 +220,7 @@ export default function BankDetails({ context, lenderUpgrade }) {
                             ?   <img 
                                 src={idFrontImage.preview} 
                                 alt="id front" 
-                                className="IdFrontPicturePreview"
+                                className="IdPicturePreview"
                                 />
                             :   <CameraIcon className="CameraIcon"/>
                             }
@@ -246,7 +246,7 @@ export default function BankDetails({ context, lenderUpgrade }) {
                             ?   <img 
                                 src={idBackImage.preview} 
                                 alt="id back" 
-                                className="IdFrontPicturePreview"
+                                className="IdPicturePreview"
                                 />
                             :   <CameraIcon className="CameraIcon"/>
                             }
