@@ -1,14 +1,14 @@
-import React from 'react';
-import './footer.css';
-import Logo from './../../assets/Logos/LBS_Logo_Flat_Red.jpg';
-import GoogleButton from '../../assets/Images/GooglePlayButton.png';
-import AppleButton from '../../assets/Images/AppStoreButton.png';
-import { SvgIcon } from '@material-ui/core';
+import React from 'react'
+import './footer.css'
+import Logo from './../../assets/Logos/LBS_Logo_Flat_Red.jpg'
+import GoogleButton from '../../assets/Images/GooglePlayButton.png'
+import AppleButton from '../../assets/Images/AppStoreButton.png'
 import { isMobile } from 'react-device-detect'
 
 export default function Footer() {
   return (
     <div className="Footer">
+      
       <div className="FooterBar Advert">
         <div className="FooterWrapper">
           <div className="LogoTextContainer">
@@ -18,7 +18,6 @@ export default function Footer() {
               <div className="RegularText">Download our mobile app to borrow and lend, where ever you are!</div>
             </div>
           </div>
-          
           <div className="AppButtonsSection">
             <img src={AppleButton} alt="Google Play" className="AppButton" />
             <img src={GoogleButton} alt="Google Play" className="AppButton" />

@@ -11,9 +11,9 @@ export default function EnterCode({ setCurrentPage, phoneNumber }) {
         try{
             const { status } = await Instance.post('/auth/verifyCodeWithMobile', {
                 mobile: `+${phoneNumber}`,
-                code
+                code,
             })
-            if (status !== 200 ) return
+            if (status !== 201 ) return
             setCurrentPage("NewPassword")
         } catch(error){
             console.log(error.response)

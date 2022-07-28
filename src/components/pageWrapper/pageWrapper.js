@@ -7,11 +7,8 @@ const pageWrapper = (props) => {
   return (
     <div className="PageWrapper">
       <Header />
-
       {props.children}
-
       <Footer />
-      
     </div>
   )
 }

@@ -16,15 +16,15 @@ export default function UpdatePassword() {
     const { user } = state
     const history = useHistory()
 
-    const [currentPage, setCurrentPage] = useState('Current Password')
-    const [currentPassword, setCurrentPassword] = useState('')
-    const [isLoginLoading, setIsLoginLoading] = useState(false)
-    const [password, setPassword] = useState('')
-    const [confirmPassword, setConfirmPassword] = useState()
-    const [isUpdateLoading, setIsUpdateLoading] = useState(false)
-    const [errorMessages, setErrorMessages] = useState({})
-    const [showSuccess, setShowSuccess] = useState(false)
-    const [loginError, setLoginError] = useState('')
+    const [ currentPage, setCurrentPage ] = useState('Current Password')
+    const [ currentPassword, setCurrentPassword ] = useState('')
+    const [ isLoginLoading, setIsLoginLoading ] = useState(false)
+    const [ password, setPassword ] = useState('')
+    const [ confirmPassword, setConfirmPassword ] = useState()
+    const [ isUpdateLoading, setIsUpdateLoading ] = useState(false)
+    const [ errorMessages, setErrorMessages ] = useState({})
+    const [ showSuccess, setShowSuccess ] = useState(false)
+    const [ loginError, setLoginError ] = useState('')
 
     useEffect(() => {
         if(Object.keys(errorMessages).length > 0){
@@ -39,10 +39,11 @@ export default function UpdatePassword() {
     const loginUser = async () => {
         setIsLoginLoading(true)
         try{
-            const { data, status } = await Instance.post('/auth/signIn', {
+            const { status } = await Instance.post('/auth/signIn', {
                 email: user.email,
                 password: currentPassword
             })
+            if (status !== 201) return
             setIsLoginLoading(false)
             setLoginError('')
             setCurrentPage('New Password')
@@ -58,13 +59,19 @@ export default function UpdatePassword() {
         if(!valid) return
         setIsUpdateLoading(true)
         try{    
-            const { data, status } = await Instance.patch('user/update', { password })
-            setIsUpdateLoading(false)
+            const { status } = await Instance.patch('/auth/updatePassword', {
+                oldPassword: currentPassword,
+                password,
+                repeatPassword: confirmPassword
+            })
+            if (status !== 200) return
             setShowSuccess(true)
             setTimeout(() => history.push({ pathname: '/user/account' }), 4000);
         } catch(err){
             setIsUpdateLoading(false)
             console.log(err.response)
+        } finally {
+            setIsUpdateLoading(false)
         }
     }
 

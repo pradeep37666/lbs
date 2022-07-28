@@ -9,6 +9,7 @@
   justify-content: center;
 }
 
+
 .Advert {
   background-image: url(../../assets/TexturedBackgrounds/LBS_Illustration\ Pattern_RED.jpg);
   background-position: -200px 200px;
@@ -22,6 +23,7 @@
   background-color: #33384f;
 }
 
+
 .FooterWrapper {
   width: 65%;
   display: flex;
@@ -29,6 +31,7 @@
   margin: 50px 0;
   align-items: center;
 }
+
 .LinkWrapper {
   width: 65%;
   display: flex;
@@ -43,24 +46,29 @@
   border-radius: 20px;
 }
 
+.TextLogoWrapper {
+  display: flex;
+}
+
 .TextWrapper {
   margin: 0 1rem;
 }
 .LogoTextContainer {
   width: 80%;
   display: flex;
+  justify-content: center;
   align-items: center;
 }
 .LargeText {
-  font-size: 50px;
-  font-size: calc(2.8vw + 2rem);
+  font-size: 2.5em;
   color: #ffffff;
   font-weight: bold;
   text-align: center;
 }
 
 .RegularText {
-  font-size: 25px;
+  text-align: center;
+  font-size: 1.8em;
   color: #ffffff;
 }
 
@@ -71,7 +79,6 @@
   justify-content: space-evenly;
   height: 100%;
   min-height: 8rem;
-  /* padding: .3em 0 0 8.5em; */
 }
 
 .AppButton:hover {
@@ -122,6 +129,28 @@
   font-size: 20px;
   line-height: 1.5;
   color: #ffffff;
+}
+
+@media only screen and (max-width: 1400px) {
+  .FooterWrapper {
+    flex-direction: column;
+    width: 85%;
+  }
+
+  .RegularText {
+    display: none;
+  }
+
+  .AppButtonsSection {
+    flex-direction: row;
+    min-height: fit-content;
+  }
+
+  .AppButton {
+    width: 10em;
+    height: 2.3em;
+    margin: .5em;
+  }
 }
 
 @media only screen and (max-width: 495px) {

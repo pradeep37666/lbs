@@ -49,7 +49,7 @@ export default function NewPassword() {
                 password,
                 repeatPassword: confirmPassword
             })
-            if (status !== 200)
+            if (status !== 200) return
             history.push('/login')
         } catch (error) {
             console.log(error.response)

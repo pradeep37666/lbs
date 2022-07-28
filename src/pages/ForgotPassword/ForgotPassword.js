@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import PageWrapper from '../../components/pageWrapper/pageWrapper'
-import Instance from '../../util/axios'
 import EnterCode from './EnterCode'
 import EnterPhone from './EnterPhone'
 import NewPassword from './NewPassword'
