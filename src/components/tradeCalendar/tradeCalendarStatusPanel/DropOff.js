@@ -23,13 +23,13 @@ export const DropOff = ({
                  noPressed ? (
                     <>
                         <span style={{marginBottom: '0.5em'}}>
-                            Would you like to send a report?
+                            Would you like to dispute this trade?
                         </span>
                         <div className="TradeStatusButtonContainer">
                             <StatusButton 
-                                text='Submit Report'
+                                text='Dispute Trade'
                                 type='blue'
-                                onClick={() => setReportModalVisible(true)}
+                                onClick={() => updateBookingStatus(BOOKING_STATUSES.DISPUTED)}
                                 width='100%'
                             />
                         </div>

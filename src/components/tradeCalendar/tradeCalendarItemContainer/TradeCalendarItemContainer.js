@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import './TradeCalendarItemContainer.css'
 import TradeCalendarItem from '../TradeCalendarItem'
 import getImage from '../../../util/getImage'

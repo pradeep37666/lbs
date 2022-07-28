@@ -33,7 +33,6 @@ export default function ItemAvailability() {
                 : <CircularProgress size={30} color="#000" />
                 }
             </div>
-            
         </div>
     )
 }

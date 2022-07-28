@@ -20,7 +20,7 @@ export default function TradeCalendarItem({ booking, setSelectedBooking, row, cu
     const isLend = booking.lenderId === user.id
     const isConfirmed = booking.status === 'APPROVED'
     const isCancelled = booking.status === 'REJECTED' || booking.status === 'CANCELLED' || booking.status === 'DISPUTED' || booking.status === 'RESOLVED'
-    const sameTimeSlot = booking.startDateIndex === booking.endDateIndex
+    const sameTimeSlot = booking.startDateIndex === booking.endDateIndex || booking.startDateIndex === (booking.endDateIndex - 1)
     
     const getBackgroundImage = () => {
         if(!isCancelled) return null
