@@ -9,11 +9,12 @@ export default function EnterCode({ setCurrentPage, phoneNumber }) {
 
     const verifyCode = async () => {
         try{
-            const { status } = await Instance.post('/auth/verifyCodeWithMobile', {
+            const { data } = await Instance.post('/auth/verifyCodeWithMobileToGetToken', {
                 mobile: `+${phoneNumber}`,
                 code,
             })
-            if (status !== 201 ) return
+            if (!data) return
+            localStorage.setItem('LBSToken', data.accessToken)
             setCurrentPage("NewPassword")
         } catch(error){
             console.log(error.response)

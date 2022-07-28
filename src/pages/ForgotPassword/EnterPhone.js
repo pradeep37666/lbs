@@ -7,11 +7,10 @@ export default function EnterPhone({ setPhoneNumber, phoneNumber, setCurrentPage
 
     const sendVerificationCode = async () => {
         try{
-            // const { status } = await Instance.post('/auth/getVerificationCodeToMobile', {
-            //     mobile: `+${phoneNumber}`
-            // })
-            // if (status !== 201) return
-            const { status } = await Instance.post('/auth/verifyCodeWithMobileToGetToken')
+            const { status } = await Instance.post('/auth/getVerificationCodeToMobile', {
+                mobile: `+${phoneNumber}`
+            })
+            if (status !== 201) return
             setCurrentPage('EnterCode')
         } catch(error){
             console.log(error.response)

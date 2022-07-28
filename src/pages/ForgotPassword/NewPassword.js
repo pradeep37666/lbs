@@ -45,10 +45,7 @@ export default function NewPassword() {
         if(!valid) return
         try {
             setIsLoading(true)
-            const { status } = await Instance.patch('/auth/updatePassword', {
-                password,
-                repeatPassword: confirmPassword
-            })
+            const { status } = await Instance.patch('/users', { password })
             if (status !== 200) return
             history.push('/login')
         } catch (error) {
