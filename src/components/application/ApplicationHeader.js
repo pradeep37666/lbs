@@ -4,9 +4,12 @@ import './ApplicationHeader.css'
 import { isMobile } from 'react-device-detect'
 import { HiChevronLeft } from 'react-icons/hi'
 import { CREATE_BOOKING } from '../../assets/Data/LBSEnum'
+import { useBreakpoint } from '../../util/useBreakpoint'
 
 export default function ApplicationHeader({ page, item, prevPage }) {
     const [ pictures, setPictures ] = useState()
+
+    const breakpoint = useBreakpoint
 
     useEffect(() => {
         if(!item) return

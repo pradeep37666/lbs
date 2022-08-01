@@ -65,7 +65,7 @@ export default function SearchFilterBar({ keyWord }) {
 
   const handleSubmitFilterChange = () => {
     let string = "";
-
+    console.log({Address})
     if (keyWord) {
       string = string.concat("?keyword=" + keyWord);
     } else {

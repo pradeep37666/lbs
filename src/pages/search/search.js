@@ -39,6 +39,10 @@ export default function Search() {
         setSearchItems(searchData)
         setPriceAscending(searchData)
         setPriceDescending(searchData)
+      } else {
+        setSearchItems([])
+        setPriceAscending([])
+        setPriceDescending([])
       }
       const { data: suggestData } = await Instance.get('/items/search/?limit=4')
       if (suggestData.length) setSuggestedItems(suggestData)
