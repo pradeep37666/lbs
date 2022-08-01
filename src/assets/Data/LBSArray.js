@@ -41,4 +41,21 @@ const bookingStatusesArray = [
     'BOTH_REVIEWED'
 ]
 
-export { monthArray, dayArray, fullNameDayArray, bookingStatusesArray }
+const categoriesArray = [
+    'DIY & Garden',
+    'Outdoor & Sport',
+    'Photography',
+    'Parties & Events',
+    'Vehicle',
+    'Closet',
+    'Kitchen',
+    'Gaming & Toys',
+    'Musical',
+    'Household',
+    'Babies & Kids',
+    'Electronics',
+    'Spaces',
+    'Other',
+]
+
+export { monthArray, dayArray, fullNameDayArray, bookingStatusesArray, categoriesArray }

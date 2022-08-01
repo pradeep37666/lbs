@@ -60,7 +60,6 @@ export default function ItemOverview() {
         }
         const bookingStartTime = new Date(confirmedStart.dateObj.getTime())
         bookingStartTime.setHours(confirmedStart?.am ? 6 : 12)
-        const price = bookingPriceCalculator.getTotalPrice()
         return ({
             borrowerAddress: address ?? '',
             lenderId: item.userId,
@@ -73,7 +72,10 @@ export default function ItemOverview() {
             endDateIndex: endIndex,
             startYear: bookingYear,
             endYear: confirmedEnd.dateObj.getFullYear(),
-            price,
+            total_price: parseInt(bookingPriceCalculator.getTotalPrice()),
+            item_price: item.price,
+            delivery_price: item.deliveryPrice,
+            pickup_price: item.pickupPrice
         })
     }
 

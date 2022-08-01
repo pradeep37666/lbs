@@ -11,44 +11,60 @@ import { ReactComponent as SportingIcon } from '../Icons/SportingIcon.svg'
 
 const ITEM_CATEGORIES = [
     {
-        name: 'Painting',
+        name: 'DIY & Garden',
+        icon: <MowingIcon className="CategoryDDIcon"/>,
+    },
+    {
+        name: 'Outdoor & Sport',
+        icon: <MowingIcon className="CategoryDDIcon"/>,
+    },
+    {
+        name: 'Photography',
         icon: <PaintingIcon className="CategoryDDIcon"/>,
     },
     {
-        name: 'Office',
-        icon: <OfficeIcon className="CategoryDDIcon"/>,
+        name: 'Parties & Events',
+        icon: <PaintingIcon className="CategoryDDIcon"/>,
     },
     {
-        name: 'Tools',
-        icon: <HammerIcon fill='#ac172c' className="CategoryDDIcon"/>,
+        name: 'Vehicle',
+        icon: <CarIcon className="CategoryDDIcon"/>,
     },
     {
-        name: 'BBQ',
-        icon: <BBQIcon className="CategoryDDIcon"/>,
+        name: 'Closet',
+        icon: <PaintingIcon className="CategoryDDIcon"/>,
     },
     {
-        name: 'Automotive',
-        icon: <CarIcon fill='#ac172c' className="CategoryDDIcon" style={{height: '16px'}}/>,
+        name: 'Kitchen',
+        icon: <PaintingIcon className="CategoryDDIcon"/>,
     },
     {
-        name: 'Power Tools',
-        icon: <DrillIcon fill='#ac172c' className="CategoryDDIcon"/>,
+        name: 'Gaming & Toys',
+        icon: <PaintingIcon className="CategoryDDIcon"/>,
     },
     {
-        name: 'Creative',
-        icon: <CreativeIcon className="CategoryDDIcon"/>,
+        name: 'Musical',
+        icon: <PaintingIcon className="CategoryDDIcon"/>,
     },
     {
-        name: 'Mowing',
-        icon: <MowingIcon className="CategoryDDIcon" style={{height: '25px'}}/>,
+        name: 'Household',
+        icon: <PaintingIcon className="CategoryDDIcon"/>,
     },
     {
-        name: 'Cleaning',
-        icon: <CleaningIcon className="CategoryDDIcon"/>,
+        name: 'Babies & Kids',
+        icon: <PaintingIcon className="CategoryDDIcon"/>,
     },
     {
-        name: 'Sporting',
-        icon: <SportingIcon className="CategoryDDIcon"/>,
+        name: 'Electronics',
+        icon: <PaintingIcon className="CategoryDDIcon"/>,
+    },
+    {
+        name: 'Spaces',
+        icon: <PaintingIcon className="CategoryDDIcon"/>,
+    },
+    {
+        name: 'Other',
+        icon: <PaintingIcon className="CategoryDDIcon"/>,
     },
 ]
 

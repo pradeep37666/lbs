@@ -1,4 +1,4 @@
-import { React, useEffect, useState} from 'react'
+import React, { useState } from 'react'
 import './categorySelect.css'
 import { makeStyles, withStyles } from '@material-ui/styles'
 import Select from '@material-ui/core/Select'

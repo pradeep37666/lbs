@@ -27,6 +27,7 @@ export default function TradeSidebar({
     const [ bookingPriceCalculator, setBookingPriceCalculator ] = useState()
 
     useEffect(() => {
+        console.log({booking})
         if (!booking.item) return
         setItem(booking.item)
         getUserDetails()
@@ -59,13 +60,13 @@ export default function TradeSidebar({
     const calculateTotal = () => {
         let total
         if (!bookingPriceCalculator.deliveryPrice && !bookingPriceCalculator.pickupPrice)
-            total = booking.price
+            total = booking.total_price
         if (bookingPriceCalculator.deliveryPrice && !bookingPriceCalculator.pickupPrice)
-            total = booking.price - bookingPriceCalculator.deliveryPrice
+            total = booking.total_price - bookingPriceCalculator.deliveryPrice
         if (!bookingPriceCalculator.deliveryPrice && bookingPriceCalculator.pickupPrice)
-            total = booking.price - bookingPriceCalculator.pickupPrice
+            total = booking.total_price - bookingPriceCalculator.pickupPrice
         if (bookingPriceCalculator.deliveryPrice && bookingPriceCalculator.pickupPrice)
-            total = booking.price - bookingPriceCalculator.deliveryPrice - bookingPriceCalculator.pickupPrice
+            total = booking.total_price - bookingPriceCalculator.deliveryPrice - bookingPriceCalculator.pickupPrice
         return parseFloat(total).toFixed(2)
     }
 
@@ -123,7 +124,7 @@ export default function TradeSidebar({
                     </div>}
                     <div className="TradeSidebarCostFlex" style={{ paddingTop: '1rem', borderTop: '1px solid #31364c'}}>
                         <span>Total Price</span>
-                        <span className="ItemOverviewPrice">${ bookingPriceCalculator.getTotalPrice() }</span>
+                        <span className="ItemOverviewPrice">${parseFloat(booking.total_price).toFixed(2)}</span>
                     </div>
                 </div>
                 <div className="TradeSidebarSection">
