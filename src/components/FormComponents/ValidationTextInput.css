@@ -2,6 +2,7 @@
   padding: 0.7em;
   font-size: 18px;
   user-select: none;
+  z-index: 50;
 }
 .ValidationInputContainer {
   margin-bottom: 1em;
