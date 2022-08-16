@@ -13,7 +13,7 @@ Instance.interceptors.request.use(async (req) => {
 })
 
 export const CometChatInstance = axios.create({
-    baseURL: 'https://192491b43d1b6230.api-US.cometchat.io/v3.0',
+    baseURL: 'https://2150790c311594db.api-US.cometchat.io/v3.0',
     timeout: 18000,
 })
 
