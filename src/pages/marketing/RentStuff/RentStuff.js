@@ -35,10 +35,10 @@ const RentStuff = () => {
                     </p>
                     <div className='marketing_main_description'>
                         <p className='top_info_left_desc'>
-                        If you’re starting a DIY project, want to experiment with a new craft, or borrow hobby equipment to give a new activity a go, you’ve come to the right place. There’s no need to splash out on a brand new item you barely use or don’t have the space to store – it’s time to start borrowing!
+                        If you’re starting a DIY project, want to experiment with a new craft, or borrow hobby equipment to give a new activity a go, you've come to the right place. There’s no need to splash out on a brand new item you barely use or don’t have the space to store – it’s time to start borrowing!
                         </p>
                         <p className='top_info_right_desc'>
-                        Our sharing platform makes it easy to search and book stuff from locals nearby. You can explore our listings via keyword, category, location, cost, and rating. Learn more about how borrowing works.
+                        Our sharing platform makes it easy to search and book stuff from locals nearby. You can explore our listings via keyword, category, location, cost, and rating. Learn more about <a style={{fontWeight: '600'}} href='/#/how_it_works'>how borrowing works</a>.
                         </p>
                     </div>
                 </div>
@@ -77,8 +77,9 @@ const RentStuff = () => {
                     </p>
                     <div className='marketing_main_description text_align'>
                         <p>
-                        Anything you have in your ‘little shed’ – whether that’s a garage, a kitchen drawer or a cupboard shelf – could be useful for someone else.<br /><br /> 
-                        Why not lend your stuff to people in your area when not in use and make some extra cash on the side? We’ll take good care of you too so you can lend your items worry-free. Learn more about sharing
+                        Anything you have in your ‘little shed’ – whether that’s a garage, a kitchen drawer or a cupboard shelf – could be useful for someone else.<br/><br/>
+                        Why not lend your stuff to people in your area when not in use and make some extra cash on the side?<br/><br/>
+                        We’ll take good care of you too so you can lend your items worry-free. <a style={{fontWeight: '600'}} href='/#/how_it_works'>Learn more about sharing</a>.
                         </p>
                     </div>
                     <MarketingButton

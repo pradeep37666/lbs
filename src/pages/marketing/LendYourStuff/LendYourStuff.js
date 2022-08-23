@@ -55,7 +55,7 @@ const LendYourStuff = () => {
         </div>
       </div>
 
-      <div className='marketing_img_md_container bg_wall flex_box straight_column'>
+      <div className='marketing_img_md_container bg_white flex_box straight_column'>
         <div className='half_screen_center full_width'>
           <img src={LYSMowing} className='graphic_image responsive_img_size' alt='mowing iamge'/>
         </div>
@@ -83,7 +83,7 @@ const LendYourStuff = () => {
         </div>
       </div>
 
-      <div className='marketing_img_sm_container bg_white flex_box center_items straight_column'>
+      <div className='marketing_img_sm_container bg_wall flex_box center_items straight_column'>
         <div className='center_text_image full_width'>
           <p className='marketing_main_title text_align'>
           No Service Fees
@@ -103,16 +103,16 @@ const LendYourStuff = () => {
       </div>
 
       <div className='marketing_img_xsm_container bg_lbs'>
-        <p className='lbs_quote_text'>
+        <p className='lbs_quote_text' style={{marginTop: '0'}}>
         A Little Sharing Can Make A Big Difference To Your Pocket, Your Community And The Planet.
         </p>
       </div>
 
-      <div className='marketing_img_sm_container bg_dark flex_box center_items straight_column'>
+      <div className='marketing_img_xsm_container bg_dark flex_box center_items straight_column'>
         <div className='image_half_container full_width'>
           <img src={LYSPaint} className='picture_image no_right_padding' alt='tradie image'/>
         </div>
-        <div className='center_text_image full_width'>
+        <div className='center_text_image full_width' >
           <p className='marketing_main_title text_align dark_mode_text'>
           We’ve Got You Covered If Something Goes Wrong
           </p>

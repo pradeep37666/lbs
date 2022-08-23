@@ -1,5 +1,5 @@
 .bg_lend_your_stuff {
-    background-image: url(../../../assets/Images/Marketings/Background/lend_your_stuff_top.png);
+    background-image: url(../../../assets/Images/Marketings/Background/LEND\ YOUR\ STUFF_oneshot_10073665.jpg);
 }
 
 .bg_lbs {
@@ -7,19 +7,21 @@
 }
 
 .bg_lys_signup {
-    background-image: url(../../../assets/Images/Marketings/Background/lend_your_stuff_signup.png);
+    background-image: url(../../../assets/Images/Marketings/Images/LEND\ YOUR\ STUFF-painter\ bottom\ of\ page.jpg);
 }
 
 .button_font {
     font-size: 0.9em;
 }
 
-.description_list {
+.description_list,
+.how_it_works_list {
     padding-left: 0.5em;
     margin: 0;
 }
 
-.description_list li {
+.description_list li,
+.how_it_works_list li {
     list-style: none;
     font-size: 0.8em;
     margin: 0.3em;
@@ -28,6 +30,15 @@
 .description_list li::before {
     content: '\f00c';
     font-family: fontAwesome;
+    color: #33384F;
+    font-weight: bold;
+    display: inline-block;
+    width: 1em;
+    margin-left: -1em;
+}
+
+.how_it_works_list li::before {
+    content: '\2022';
     color: #33384F;
     font-weight: bold;
     display: inline-block;

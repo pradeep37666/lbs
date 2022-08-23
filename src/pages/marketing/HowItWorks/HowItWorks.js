@@ -17,6 +17,10 @@
       <div className='marketing_container'>
         <NavBar selected='how_it_works'/>
 
+        <meta 
+          title='Hire gear for your next adventure, hobby or DIY project'
+          content='Hire gear from our online tool rental app for your next adventure, hobby or DIY project. Sign up to save money, reduce waste, and support locals like you.'
+        />
         <div className='marketing_img_md_container bg_how_it_works'>
           <div className='main_title_section wider_section'>
             <p className='main_title'>
@@ -53,15 +57,14 @@
           </div>
         </div>
 
-        <div className='marketing_image_fit_container bg_wall'>
+        <div className='marketing_image_fit_container bg_white'>
           <div className='section_top flex_box text_height_fit'>
             <div className='half_screen_center article_section responsive_text_width'>
               <p className='marketing_main_title'>
-              Helping You To Do Your Bit And Earn Extra
+              Borrow Items and Save with our Online Tool Rental Platform
               </p>
               <p className='marketing_main_description'>
-              Did you know we use 80% of our household items less than once a month? It makes much more sense to share what we’ve already got.<br /><br /> 
-              Think about that tool you need, but don’t have the budget for. Or the outfit you’d love to make if only you had access to that overlocker. Maybe you’ve got a big shed full of tools and you want to help your neighbours out. Plus we take no service fee you get more cash in your back pocket.
+              Starting a DIY project? Want to get creative with a new craft? Keen to give a new activity a go? Look no further, our online tool rental platform is designed for you. By borrowing stuff on Little Big Shed you can:
               </p>
             </div>
             <div className='half_screen_center disable_img'>
@@ -74,34 +77,34 @@
               <img src={LBSModal} className='how_it_works_images' alt='less than once a month'/>
             </div>
             <div className='half_screen_center article_section responsive_text_width'>
-              <p className='marketing_main_title'>
-              Helping You To Do Your Bit And Earn Extra
-              </p>
-              <p className='marketing_main_description'>
-              Our Little Big Shed platform is a hub. It brings borrowers and lenders, like you, together to share tools, equipment and knowledge.<br /><br /> 
-              We don’t charge a service fee to share on our platform. This means you end up with more cash in your back pocket, and we hope it inspires you to share more! Plus our rating system and verified users make it a trusted, sharing marketplace.
-              </p>
+              <ul className='how_it_works_list'>
+                <li className='description_list_text'>
+                Create equal opportunities – by making tools, hobby gear and leisure equipment more available and affordable to everyone.
+                </li>
+                <li className='description_list_text'>
+                Build community connection and support – by sharing with your neighbours you get to meet a like-minded local, help them save space and money, and make some extra cash for yourself on the side.
+                </li>
+                <li className='description_list_text'>
+                Care for the environment – with less people buying stuff new, demand for products reduces. Sharing helps design waste out of the system before it has the chance to become rubbish.
+                </li>
+              </ul>
             </div>
           </div>
         </div>
 
-        <div className='marketing_image_fit_container bg_white'>
-          <div className='top_info_top_section flex_box'>
-            <div className='top_info_smaller_section'>
-              <p className='marketing_main_title'>
-              How It Works
-              </p>
-              <div className='marketing_main_description'>
-                <p>
-                Our hobby gear, equipment and online tool rental app makes it easy to book and borrow items from within your community.
-                </p>
-              </div>
-            </div>
-            <div className='top_section_smaller_box'>
-              <img src={AdrianClear} className='graphic_image responsive_img_sm_size disable_img' alt='lady image'/>
-            </div>
+        <div className='marketing_image_fit_container bg_wall'>
+          <div className='top_info_smaller_section'>
+            <p className='marketing_main_title'>
+            How It Works
+            </p>
+            <p className='marketing_main_description'>
+            Our hobby gear, equipment and online tool rental app makes it easy to book and borrow items from within your community.
+            </p>
           </div>
           <div className='top_info_bottom_section'>
+            <p className='marketing_main_title' style={{textAlign: 'center', marginBottom: '2rem'}}>
+            Here’s how to hire gear from our shared shed:
+            </p>
             <div className='top_grid_section'>
               {rentingProcedures.map(step => (
                 <StepCard step={step} key={step.id}/>
