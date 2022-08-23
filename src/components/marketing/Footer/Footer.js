@@ -4,7 +4,7 @@ import Logo from '../../../assets/Logos/LBS_Logo_Flat_Red.jpg'
 import AppleButton from '../../../assets/Images/AppStoreButton.png'
 import GooglePlayButton from '../../../assets/Images/GooglePlayButton.png'
 import { useHistory } from 'react-router-dom'
-import { BsFacebook, BsTwitter } from 'react-icons/bs'
+import { BsFacebook, BsLinkedin } from 'react-icons/bs'
 import { FiInstagram } from 'react-icons/fi'
 import { EmailArrowBtn, LBSBlackLogo } from '../../../assets/Images/Marketings/Marketings'
 
@@ -43,7 +43,10 @@ const Footer = () => {
                     Share stuff, do good
                     </p>
                     <p className='footer_first_desc'>
-                    Buy less, lend and borrow more. Unlock the power of sharing to make, mend, learn and care for your place and our planet together.
+                    Buy less, lend and borrow more. Unlock the power of sharing to make, mend, learn and care for your place and our planet together.<br/><br/>
+                    </p>
+                    <p className='footer_first_desc'>
+                    hello@littlebigshed.co.nz
                     </p>
                 </div>
                 <div className='footer_content_box'>
@@ -55,21 +58,17 @@ const Footer = () => {
                     </p>
                     <p 
                         className='footer_section_title'
-                        onClick={() => history.push('contact_us')}
+                        //download pdf
+                        // onClick={() => history.push('contact_us')}
                     >
-                        Contact Us
+                        Rental Agreement (the terms and conditions)
                     </p>
                     <p 
                         className='footer_section_title'
-                        onClick={() => history.push('/')}
+                        //download pdf
+                        // onClick={() => history.push('/')}
                     >
-                        Rental Agreement
-                    </p>
-                    <p 
-                        className='footer_section_title'
-                        onClick={() => history.push('/')}
-                    >
-                        Privacy Policy
+                        Privacy policy 
                     </p>
                 </div>
                 <div className='footer_content_box'>
@@ -81,21 +80,15 @@ const Footer = () => {
                     </p>
                     <p 
                         className='footer_section_title'
-                        onClick={() => history.push('/blog')}
-                    >
-                        Blog
-                    </p>
-                    <p 
-                        className='footer_section_title'
                         onClick={() => history.push('/protection')}
                     >
-                        Lender Protection
+                        Lender protection (insurance policy)
                     </p>
                     <p 
                         className='footer_section_title'
                         onClick={() => history.push('/faqs')}
                     >
-                        Guides &amp; FAQ’s
+                        FAQs
                     </p>
                     <p 
                         className='footer_section_title'
@@ -127,7 +120,7 @@ const Footer = () => {
                         className='footer_section_title'
                         onClick={() => history.push('/')}
                     >
-                        Partyware
+                        Events & Parties
                     </p>
                     <p 
                         className='footer_section_title'
@@ -139,7 +132,31 @@ const Footer = () => {
                         className='footer_section_title'
                         onClick={() => history.push('/')}
                     >
-                        Applicances
+                        Hobbies
+                    </p>
+                    <p 
+                        className='footer_section_title'
+                        onClick={() => history.push('/')}
+                    >
+                        Outdoor
+                    </p>
+                    <p 
+                        className='footer_section_title'
+                        onClick={() => history.push('/')}
+                    >
+                        Kids
+                    </p>
+                    <p 
+                        className='footer_section_title'
+                        onClick={() => history.push('/')}
+                    >
+                        Vehicle
+                    </p>
+                    <p 
+                        className='footer_section_title'
+                        onClick={() => history.push('/')}
+                    >
+                        Closet
                     </p>
                     <p 
                         className='footer_section_title'
@@ -178,7 +195,7 @@ const Footer = () => {
                     <div className='flex_box'>
                         <BsFacebook className='social_media_icons'/>
                         <FiInstagram className='social_media_icons'/>
-                        <BsTwitter className='social_media_icons'/>
+                        <BsLinkedin className='social_media_icons'/>
                     </div>
                 </div>
             </div>

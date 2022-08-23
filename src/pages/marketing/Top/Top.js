@@ -15,7 +15,11 @@ const Top = () => {
   return (
     <div className='marketing_container'>
       <NavBar />
-      
+
+      <meta
+        title='Your local tool, hobby gear and equipment rental app'
+        content='Borrow tools, hobby gear and more on our equipment share platform. Make cash when you lend with locals. Sign up to connect and care for our planet together.'
+      />
       <div className='marketing_img_md_container bg_top'>
         <div className='main_title_section'>
           <p className='main_title'>
@@ -69,14 +73,21 @@ const Top = () => {
           </p>
           <div className='marketing_main_description'>
             <p className='top_info_left_desc'>
-            A LITTLE sharing makes a BIG difference – for us, our community and the planet. That’s why we created Little Big Shed. It’s an online equipment share platform to help you borrow more, buy less, and make some extra cash when you lend your stuff.<br/><br/> 
-            Now all of us can support each other to make, mend and learn by sharing tools, hobby gear, leisure equipment and much more!<br/><br/> 
-            Our share things app is based on people using stuff only when required. This stops us needing to buy and own more stuff.
+            A LITTLE sharing makes a BIG difference – for us, our community and the planet.  
+            That’s why we created Little Big Shed. It’s an online equipment share platform to help you <a style={{fontWeight: '600'}} href='/#/rent_stuff'>borrow more</a>, 
+            buy less, and earn some extra cash when you <a style={{fontWeight: '600'}} href='/#/lend_your_stuff'>lend your stuff</a>.<br/><br/> 
+            Plus, when you share on our platform, we take no service fee – which means more money in your back pocket! <br/><br/> 
+
+            We believe that no one should be restricted from doing a DIY project, cultivating their talents or going on an adventure due to a lack of resources. 
+            Through the power of sharing <s/>
+            <a style={{fontWeight: '600'}} href='/#/'>tool</a>, <s/>
+            <a style={{fontWeight: '600'}} href='/#/'>hobby gear</a>, <s/>
+            <a style={{fontWeight: '600'}} href='/#/'>leisure equipmen</a> and much more, we can support each other to make, mend, learn (and earn!). 
             </p>
             <p className='top_info_right_desc'>
-            Otherwise that stuff just spends its time cluttering up the garage and gathering dust.<br/><br/> 
-            By pooling our resources, from lawnmowers and power tools to camping gear and pasta makers, we can make a collective neighbourhood effort to reduce waste. This puts less pressure on our planet’s natural resources and gives us some extra coin in our back pockets.<br/><br/> 
-            What do you say? Ready to connect with locals like you and help care for your place and our planet together?
+            Our share things app is based on people using stuff only when required. This stops us needing to buy and own more stuff that just ends up cluttering the shed and gathering dust.<br/><br/> 
+            By pooling our resources, from lawnmowers and power tools to camping gear and pasta makers, we can make a collective neighbourhood effort to reduce waste and put less pressure on our planets natural resources.<br/><br/> 
+            What do you say? Ready to connect with locals like you and help care for your place and our planet together?<br/><br/> 
             </p>
           </div>
           <MarketingButton
@@ -94,8 +105,11 @@ const Top = () => {
           <p className='marketing_main_title max_width'>
           Share Your Stuff, Earn Cash And Do Good
           </p>
-          <p className='marketing_main_description max_width'>
-            Our equipment rental app means that anything you have in your ‘little shed’ (whether that’s a garage, a kitchen drawer or a cupboard shelf) can become part of something much bigger — the sharing economy.<br/><br/> Why not lend your stuff to people in your area when not in use and make some extra cash on the side? We’ll take good care of you too so you can lend your items worry-free. Check out our lender protection policy to find out more about sharing with our verified users.
+          <p className='max_width' style={{fontSize: '0.8em'}}>
+          Our equipment rental app means that anything you have in your ‘little shed’ (whether that’s a garage, a kitchen drawer or a cupboard shelf) can become part of something much bigger — the sharing economy. 
+          Why not <a style={{fontWeight: '600'}} href='/#/lend_your_stuff'>lend your stuff</a> to locals in your area when not in use and make some extra cash on the side? Plus, 
+          there’s no platform service fee when you share your stuff. We cover the costs for the smooth sailing of our shed so that you get more in your back pocket. 
+          We’ll take good care of you too so you can lend your items worry-free. Check out our <a style={{fontWeight: '600'}} href='/#/option_protection'>lender protection</a> policy to find out more about sharing with our verified users.
           </p>
           <MarketingButton
             bgColor='#AC172C'
@@ -118,7 +132,7 @@ const Top = () => {
             </p>
             <div className='marketing_main_description'>
               <p>
-              Did you know that 80% of household items we own are used less than once a month? You can do your bit to reduce waste by borrowing instead of buying to kick-start your next DIY project or creative experience.<br/><br/> Just follow these four simple steps:
+              Did you know that 80% of household items we own are used less than once a month? [Circular Economy Report] You can do your bit to reduce waste by borrowing instead of buying to kick-start your next DIY project or creative experience.
               </p>
             </div>
           </div>

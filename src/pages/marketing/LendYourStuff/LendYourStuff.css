@@ -26,7 +26,8 @@
 }
 
 .description_list li::before {
-    content: '\2022';
+    content: '\f00c';
+    font-family: fontAwesome;
     color: #33384F;
     font-weight: bold;
     display: inline-block;

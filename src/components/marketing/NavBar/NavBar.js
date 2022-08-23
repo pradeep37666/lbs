@@ -30,7 +30,7 @@ const NavBar = ({ selected }) => {
             </div>
             <div className='nav_bar_box'>
                 <div className='nav_bar_left'>
-                    <Link to='/home'>
+                    <Link to='/'>
                         <img 
                             src={Logo}
                             className='nav_bar_logo'
