@@ -7,7 +7,7 @@ import Footer from '../../../components/marketing/Footer/Footer'
 import MarketingButton from '../../../components/marketing/MarketingButton/MarketingButton'
 import NavBar from '../../../components/marketing/NavBar/NavBar'
 import { FQA_TABS } from '../../../assets/Data/LBSEnum'
-import { dummyQuestions } from '../../../assets/Data/MarketSelections'
+import { dummyQuestions, FAQ_Borrower_Data, FAQ_General_Data, FAQ_Lender_Data } from '../../../assets/Data/MarketSelections'
 
 const FAQs = () => {
   const [ selectedTab, setSelectedTab ] = useState(FQA_TABS.GENERAL)
@@ -19,9 +19,10 @@ const FAQs = () => {
 
   const renderFAQs = () => {
     switch (selectedTab) {
-      case FQA_TABS.GENERAL: return 
-      default:
-        break;
+      case FQA_TABS.GENERAL:  return FAQ_General_Data
+      case FQA_TABS.LENDER:   return FAQ_Lender_Data
+      case FQA_TABS.BORROWER: return FAQ_Borrower_Data
+      default: return
     }
   }
 
@@ -53,7 +54,7 @@ const FAQs = () => {
         <div className='faqs_question_container'>
           <FAQTabBar selectedTab={selectedTab} setSelectedTab={setSelectedTab}/>
           <div className='faqs_question_list_container'>
-            {dummyQuestions.map(question => (
+            {renderFAQs().map(question => (
               <FAQCard question={question} key={question.id}/>
             ))}
           </div>
