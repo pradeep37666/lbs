@@ -13,16 +13,16 @@ const BlogCard = ({ blog, setClickedBlogId }) => {
                 className='blog_card_image'
             />
             <p className='blog_card_title'>
-                {blog.title}
+                {blog.metaTitle}
             </p>
             <p className='blog_card_category'>
                 {blog.category.join(' / ')}
             </p>
             <p className='blog_card_content'>
-                {blog.subtitle}
+                {blog.metaDesc}
             </p>
             <p className='blog_card_postedDate'>
-                {blog.postedDate}
+                {blog.publishDate}
             </p>
         </div>
     )

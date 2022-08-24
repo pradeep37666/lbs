@@ -15,15 +15,19 @@ const AboutUs = () => {
     <div className='marketing_container'>
       <NavBar selected='about_us'/>
 
+      <meta 
+        title='Our mission for zero waste, equality and sustainable living'
+        content='The power of sharing can help achieve zero waste and social equality. Learn how our free app connects communities and supports sustainable living.'
+      />
       <div className='marketing_img_md_container bg_about_us'>
         <div className='main_title_section position_lower'>
-          <p className='main_title'>
+          <p className='main_title title_shadow'>
           A Little Idea, With A Big Impact
           </p>
         </div>
       </div>
 
-      <div className='marketing_img_md_container bg_grey flex_box center_items straight_column'>
+      <div className='marketing_img_xsm_container bg_grey flex_box center_items straight_column'>
         <div className='center_text_image add_padding_right full_width'>
           <p className='marketing_main_title'>
           A Way We Can All Be Zero Waste
@@ -35,28 +39,26 @@ const AboutUs = () => {
             </p>
             <p className='top_info_right_desc'>
             What can we do about it?<br /><br /> 
-            Sharing is one of the ways we can all do our bit to help achieve zero waste. Little Big Shed does this by people using stuff only when required. We don’t all need to own the same tools, equipment or hobby gear that spend most of their life sitting in the shed!
+            Sharing is one of the ways we can all do our bit to help achieve zero waste. Little Big Shed does this by people using stuff only when required. We don’t all need to own the same tools, equipment or hobby gear that spend most of their life sitting in the shed! 
             </p>
           </div>
         </div>
-        <div className='image_half_container full_width'>
-          <img src={Chainsaw} className='picture_image no_left_padding' alt='tradie image'/>
-        </div>
       </div>
 
-      <div className='marketing_img_md_container bg_wall flex_box center_items straight_column'>
+      <div className='marketing_img_xsm_container bg_wall flex_box center_items straight_column'>
         <div className='image_half_container four_to_six full_width'>
           <img src={WashingAndSawing} className='picture_image no_left_padding' alt='tradie image'/>
         </div>
         <div className='half_screen_center six_to_four column_section align_start text_container_width'>
           <p className='marketing_main_title'>
-          The Power Of Sharing
+          Power Of Sharing
           </p>
           <p className='sharing_description'>
-          Through buying less, and lending and borrowing more, we can reimagine supply chains and make a collective effort to support sustainable living. Not only does this put less pressure on our planet’s natural resources but, by sharing within our communities, we can remove barriers of social disparity.<div /><div /> 
-          We believe that no one should be restricted from doing a DIY project, cultivating their talents or going on an adventure due to a lack of resources. By lending and borrowing within our community, everyone can afford to make, mend, learn (and earn!). Sharing should be as easy, accessible and beneficial as possible. That’s why we decided to have no platform service fee. We cover the costs for the smooth sailing of our shed so that you can earn more when you do good sharing your stuff.<br /><br /> 
-          Little Big Shed enables people to connect, share, earn and thrive, for the collective purpose of doing good. Read more about the inspiring evolution of Little Big Shed in our Founder’s Story blog.<br /><br /> 
-          A LITTLE sharing really can make a BIG difference – for us, our community and the planet. Are you ready to borrow more, buy less, and make some extra cash when you lend your stuff?
+          Through buying less, and lending and borrowing more, we can reimagine supply chains and make a collective effort to support sustainable living. Not only does this put less pressure on our planet’s natural resources but, by sharing within our communities, we can remove barriers of social disparity. <br /><br /> 
+          We believe that no one should be restricted from doing a DIY project, cultivating their talents or going on an adventure due to a lack of resources. By lending and borrowing within our community, everyone can afford to make, mend, learn (and earn!). Sharing should be as easy, accessible and beneficial as possible. 
+          That’s why we decided to have no platform service fee. We cover the costs for the smooth sailing of our shed so that you can earn more when you do good sharing your stuff.<br /><br />
+          Little Big Shed enables people to connect, share, earn and thrive, for the collective purpose of doing good. Read more about the inspiring evolution of Little Big Shed in our Founder’s Story blog.<br /><br />
+          A LITTLE sharing really can make a BIG difference – for us, our community and the planet. Are you ready to <a style={{fontWeight: '600'}} href='/#/rent_stuff'>borrow more</a>, buy less, and make some extra cash when you <a style={{fontWeight: '600'}} href='/#/lend_your_stuff'>lend your stuff</a>?
           </p>
           <MarketingButton 
             bgColor={'#AC172C'}

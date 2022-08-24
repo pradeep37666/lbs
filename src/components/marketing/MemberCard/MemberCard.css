@@ -1,5 +1,5 @@
 .member_card_container {
-    width: 18em;
+    width: 22em;
     height: 20em;
     background: #F5F5F5;    
     border-radius: 10px;
@@ -7,20 +7,22 @@
     justify-content: center;
     align-items: center;
     margin: 0 0.5em;
+    overflow-y: auto;
 }
 
 .member_avatar {
     width: 60px !important;
     height: 60px !important;
-    margin: 1em auto;
+    margin: 0.8em auto;
 }
 
 .member_name {
-    font-size: 1.2em;
+    font-size: 1.1em;
     color: #33384F;
     font-family: 'Kameron', serif;
     font-weight: bold;
     margin: 0;
+    padding: 0 1em;
 }
 
 .member_status {

@@ -12,6 +12,14 @@ import FAQTop from './Background/INFO HUB_iStock-1004381280.jpg'
 import FAQSignup from './Background/faqs_signup.png'
 import ContactUsTop from './Background/CONTACT US_TS139674_m.jpg'
 
+// Blogs
+import BlogImage1 from './Blogs/Blog 1 Intro to LBS platform.png'
+import BlogImage2 from './Blogs/Blog 2 The ‘why’ Founders Story.png'
+import BlogImage3 from './Blogs/Blog 3 Embrac Zero Waste.png'
+import BlogImage4 from './Blogs/Blog 4 How to create a successful listing.png'
+import BlogImage5 from './Blogs/Blog 5 Better Futures report.jpg'
+import BlogImage6 from './Blogs/Blog 6 Mottainai Reducing and Reusing.jpg'
+
 // Graphics
 import TopInfoGraphic from './Graphics/TopInfoGraphic.png'
 import TopMowing from './Graphics/TopMowing.png'
@@ -83,6 +91,13 @@ export {
     FAQTop,
     FAQSignup,
     ContactUsTop,
+
+    BlogImage1,
+    BlogImage2,
+    BlogImage3,
+    BlogImage4,
+    BlogImage5,
+    BlogImage6,
 
     TopInfoGraphic,
     TopMowing,

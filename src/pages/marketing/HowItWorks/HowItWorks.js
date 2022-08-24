@@ -113,7 +113,7 @@
           </div>        
         </div>
 
-        <div className='marketing_img_sm_container bg_tradie' >
+        <div className='marketing_img_xsm_container bg_dark' >
           <div className='center_quote_btn'>
             <p className='lbs_quote_lgtext'>
             Ready To Start Borrowing?
@@ -131,7 +131,7 @@
           </div>
         </div>
 
-        <div className='marketing_img_sm_container bg_wall flex_box straight_column'>
+        <div className='marketing_img_sm_container flex_box straight_column'>
           <div className='half_screen_center article_section full_width'>
             <p className='marketing_main_title'>
             The Sharing Economy Is Growing Fast Globally

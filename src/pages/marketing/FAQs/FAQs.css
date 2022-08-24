@@ -22,7 +22,7 @@
 
 .faqs_sub_title {
     margin: 0;
-    width: 35%;
+    max-width: 80%;
     font-size: 1.1em;
 }
 

@@ -17,6 +17,14 @@ const FAQs = () => {
   //   // requestion question data and store into selectedQuestions
   // },[selectedTab])
 
+  const renderFAQs = () => {
+    switch (selectedTab) {
+      case FQA_TABS.GENERAL: return 
+      default:
+        break;
+    }
+  }
+
   return (
     <div className='marketing_container'>
       <NavBar selected='info_hub' />
@@ -24,10 +32,11 @@ const FAQs = () => {
       <div className='marketing_img_md_container bg_faqs'>
         <div className='main_title_section protection_title_position'>
           <p className='main_title'>
-          No Worries If Your Item Comes Back Damaged Or Is Stolen – We’ve Got You Covered!
+          FAQs for Sharing
           </p>
           <p className='main_sub_title sub_title_width'>
-          Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.
+          Have a question or after more info on lending and borrowing on Little Big Shed? You’ve come to the right place! <br/><br/>
+          If what you’re looking for isn’t answered below, feel free to <a href='/#/contact_us'>Ask a Question</a> 
           </p>
         </div>
       </div>
@@ -35,10 +44,10 @@ const FAQs = () => {
       <div className='marketing_image_fit_container bg_dark'>
         <div className='faqs_title_container'>
           <p className='faqs_main_title'>
-          Guides And Answer From Little Big Shed
+          Protecting our Little Big Shed Users
           </p>
           <p className='faqs_sub_title'>
-          Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna.
+          Your safety and security when using our sharing platform is of high importance. We want to make sure that you feel comfortable and protected when lending and borrowing via our shed. Check out the policies below: 
           </p>
         </div>
         <div className='faqs_question_container'>

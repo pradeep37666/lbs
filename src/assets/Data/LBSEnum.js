@@ -1,8 +1,7 @@
 const FQA_TABS = {
-    GENERAL: 'General',
-    LENDER: 'Lender',
-    BORROWER: 'Borrower',
-    ACCOUNT: 'Account',
+    GENERAL: 'General FAQs',
+    LENDER: 'Lender FAQs',
+    BORROWER: 'Borrower FAQs',
 }
 
 const DELIVERY_OPTIONS = {

@@ -1,5 +1,5 @@
 .bg_protection {
-    background-image: url(../../../assets/Images/Marketings/Background/protection_top.png);
+    background-image: url(../../../assets/Images/Marketings/Images/LENDER\ PROTECTION-banner.jpg);
 }
 
 .bg_protection_signup {
@@ -36,6 +36,16 @@
     font-weight: 400;
     color: #33384F;
     line-height: 0.9em;
+}
+
+.protection_sub_title_text {
+    font-size: 1.1em;
+    width: 100%;
+    font-weight: 600;
+}
+
+.protection_sub_list {
+    margin: 0.3em;
 }
 
 @media screen and (max-width: 450px) {

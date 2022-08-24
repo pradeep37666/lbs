@@ -1,22 +1,24 @@
 import React, { useEffect, useState } from 'react'
 import '../Marketing.css'
 import './Blog.css'
-import { SawingGuiter, TopMowing } from '../../../assets/Images/Marketings/Marketings'
+import { SawingGuiter } from '../../../assets/Images/Marketings/Marketings'
 import NavBar from '../../../components/marketing/NavBar/NavBar'
-import { categories, dummyBlog, dummyCategory, howItWorksProcedures } from '../../../assets/Data/MarketSelections'
+import { categories, blogData, howItWorksProcedures } from '../../../assets/Data/MarketSelections'
 import BlogCard from '../../../components/marketing/BlogCard/BlogCard'
 import LBSStepCard from '../../../components/marketing/LBSStepCard/LBSStepCard'
 import CategoryCard from '../../../components/marketing/CategoryCard/CategoryCard'
 import MarketingButton from '../../../components/marketing/MarketingButton/MarketingButton'
 import Footer from '../../../components/marketing/Footer/Footer'
+import moment from 'moment'
 
 const Blog = () => {
   const [ clickedBlogId, setClickedBlogId ] = useState('')
   const [ selectedArticle, setSelectedArticle ] = useState('')
+  const sortedByDate = blogData.sort((a, b) => moment(b.publishDate)  - moment(a.publishDate))
 
   useEffect(() => { 
     if (clickedBlogId === '') return
-    const blogContent = dummyBlog.find(blog => blog.id === clickedBlogId)
+    const blogContent = blogData.find(blog => blog.id === clickedBlogId)
     setSelectedArticle(blogContent)
   },[clickedBlogId])
 
@@ -44,15 +46,15 @@ const Blog = () => {
               </p>
               <div className='marketing_main_description'>
                   <p>
-                  In our blog of Little Big Ideas, you can be sure to find tips for your next DIY project or hobby, insights into reducing waste, guides on creating opportunities in our neighbourhoods, plus stories and interviews from our community of sharers and carers.
+                  In our blog of Little Big Ideas, you can be sure to find tips for your next DIY project or hobby, insights into reducing waste, guides on creating opportunities in our neighbourhoods, plus stories and interviews from our community of sharers and carers. 
                   </p>
               </div>
           </div>
         </div>
 
-        <div className='marketing_image_fit_container bg_white'>
+        <div className='marketing_image_fit_container bg_white blog_scroller'>
           <div className='blog_card_flex_box'>
-          {dummyBlog.map(blog => (
+          {sortedByDate.map(blog => (
             <BlogCard 
               blog={blog} 
               key={blog.id}
@@ -65,13 +67,16 @@ const Blog = () => {
       }
       {selectedArticle !== '' &&
       <>
-        <div 
-          className='marketing_img_md_container'
-          style={{backgroundImage: `url(${selectedArticle.image})`}}
-        >
+        <div className='blog_title_container'>
+          <div className='blog_banner_image_container'>
+            <img 
+              className='blog_banner_image'
+              src={selectedArticle.image}
+            />
+          </div>
           <div className='main_title_section blog_title_position'>
-            <p className='main_title'>
-            {selectedArticle.title}
+            <p className='main_title title_shadow'>
+            {selectedArticle.bannerTitle}
             </p>
           </div>
         </div>
@@ -80,11 +85,12 @@ const Blog = () => {
           <p className='blog_article_title'>
             {selectedArticle.contentTitle}
           </p>
-          <p className='blog_article_body' dangerouslySetInnerHTML={{__html: selectedArticle.contentBody}}>
-            {/* {selectedArticle.contentBody} */}
+          <p className='blog_article_body'>
+            {selectedArticle.contentBody}
           </p>
         </div>
 
+        {selectedArticle.id === 1 && (
         <div className='blog_instraction_sections bg_white'>
           <p className='blog_instraction_title'>
           How does Little Big Shed work?
@@ -98,9 +104,11 @@ const Blog = () => {
           ))}
           </div>
           <p className='blog_instraction_desc'>
-          Plus, we’ve got you covered if something goes wrong, so no worries if your item comes back damaged or is stolen. Check out our lender protection policy to find out more about how you can lend worry-free with our verified Little Big Shed users.
+          Plus, we’ve got you covered if something goes wrong, so no worries if your item comes back damaged or is stolen. 
+          Check out our <a style={{fontWeight: '600'}} href='/#/protection'>lender protection</a> policy to find out more about how you can lend worry-free with our verified Little Big Shed users.
           </p>
         </div>
+        )}
 
         <div className='marketing_image_xlg_container height100p bg_white'>
           <div className='category_title_section'>
@@ -108,20 +116,18 @@ const Blog = () => {
             What can you lend and borrow?
             </p>
             <p className='category_sub_title'>
-            As our little shed grows into something big, you’ll be able to lend and borrow all sorts of stuff! Our categories will include listings for:
+            As our little shed grows into something big, you’ll be able to lend and borrow all sorts of stuff! Our categories will include listings for: 
             </p>
           </div>
-          <p className='blog_instraction_desc'>
-          </p>
           <div className='category_card_section'>
             {categories.map(category => (
               <CategoryCard category={category} key={category.id}/>
             ))}
           </div>
-          <p className='blog_instraction_desc'>
-          What you have in your little shed can become part of something big – the sharing economy.<br /><br /> 
-          By making a collective effort to buy less and lend and borrow more, we put less pressure on our planet’s natural resources meaning we can all contribute to protecting the planet.<br /><br />  
-          Go on, connect and share with locals like you so we can all care for our place and our planet together!
+          <p className='blog_instraction_desc_bottom'>
+          What you have in your little shed can become part of something big – the sharing economy. <br/><br/>
+          By making a collective effort to buy less and lend and borrow more, we put less pressure on our planet’s natural resources meaning we can all contribute to protecting the planet. <br/><br/>
+          Go on, connect and share with locals like you so we can all care for our place and our planet together! 
           </p>
         </div>
 
