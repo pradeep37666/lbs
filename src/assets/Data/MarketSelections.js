@@ -7,7 +7,6 @@ import {
     CameraImg,
     DollarSign,
     DummyAvatar1,
-    DummyBlog,
     Tools,
     Gardening,
     Events,
@@ -755,17 +754,168 @@ const FAQ_Lender_Data = [
         title: 'How much should I list my item for?',
         content: <p>
             Here is a recommended price list that we’ve put together for some common items to help with listing your item.<br/><br/>
-
-As a rough calculation, we recommend charging 20% of the price of the item when it is brand-new.
-
+            As a rough calculation, we recommend charging 20% of the price of the item when it is brand-new.<br/><br/>
+            There is an option to set a $0 lending fee. Note, items listed at $0 are not covered by the lender protection policy.
+        </p>
+    },
+    {
+        id: 3,
+        title: 'Can I lend for free?',
+        content: <p>
+            Yes. There is an option to set a $0 lending fee.
+        </p>
+    },
+    {
+        id: 4,
+        title: 'How to make sure your item is safe for others to use?',
+        content: <p>
+            Keeping our users safe is top priority. Follow the below tips to lend safely:<br/><br/>
+            <ul>
+                <li>
+                Check your item before the booking date to ensure there is no damage that could affect its performance and safety 
+                </li>
+                <li>
+                We encourage you to add ‘how to use’ instructions to your listing
+                </li>
+                <li>
+                When you meet the borrower in person make sure to discuss the item, show them any quirks, and answer any questions they may have
+                </li>
+                <li>
+                You can also use our in-app chat function for ‘how to use’ discussion
+                </li>
+            </ul>
+            Lending electrical equipment?<br/><br/>
+            Although not mandatory, the New Zealand Standard recommends that electrical equipment needs to be inspected prior to being hired, as well as being tested and tagged every three months.<br/><br/>
+            If your item is electrical, we recommend you get an ‘Electrical Test and Tag’. Test and tagging is a generic name given to the process of visually inspecting and electrically testing in-service electrical equipment for personal safety.<br/><br/>
+            To find where you can get this done, check out Test and Tag NZ
+        </p>
+    },
+    {
+        id: 5,
+        title: 'What to do if my item is damaged or stolen?',
+        content: <p>
+            In the unlikely situation that your item is damaged on return, or is not returned and the renter is not responding to your messages, follow our Damage and Disputes Process here.<br/><br/>
+            Rest assured that when you share your shed on our platform, we have your listed items covered against damage during the lending period if something goes wrong – up to NZ$2000 of cover per item. Read our full Lender Protection Policy
+        </p>
+    },
+    {
+        id: 6,
+        title: 'How to create a successful listing?',
+        content: <p>
+            <ul>
+                <li>
+                heck out our blog on how to create a successful listing
+                </li>
+                <li>
+                Accurately and clearly describe the item and the condition it is in
+                </li>
+                <li>
+                Price your item competitively by checking out similar items to yours, both on our shed and other platforms, such as TradeMe.
+                </li>
+                <li>
+                Ensure that all photographs truly and accurately depict the item:
+                <ul>
+                    <li>
+                    Add at least four recent photos of your item to your listing
+                    </li>
+                    <li>
+                    Make sure to include at least one photo that shows the entire item (you can add additional closeup photos to show detail)
+                    </li>
+                    <li>
+                    Image files must be high quality (make sure they are not blurry and that detail can be seen)
+                    </li>
+                </ul>
+                </li>
+            </ul>
+        </p>
+    },
+    {
+        id: 7,
+        title: 'What can I list on Little Big Shed?',
+        content: <p>
+            Anything you have in your ‘little shed’ (whether that’s a garage, a kitchen drawer or a cupboard shelf!) can be shared on our platform.<br/><br/> 
+            As long as the item is not illegal you should be good to go! Listings will be monitored by our team and if deemed as inappropriate you will be notified and the listing will be deleted. If you are unsure about listing an item get in touch.
+        </p>
+    },
+    {
+        id: 8,
+        title: 'Is there a cost to lend on Little Big Shed?',
+        content: <p>
+            As a lender, the only cost of using Little Big Shed is a 2.9% processing fee + 30c transaction fee charged by Stripe, our third party payment provider. This amount is deducted from what you get paid each time your item is rented out.
+        </p>
+    },
+    {
+        id: 9,
+        title: 'How does payment work?',
+        content: <p>
+            Once you confirm the share is complete ( there is no dispute), and you have reviewed the borrower, you will be paid directly into the bank account you provided.<br/><br/>
+            Remember a 2.9% processing fee + 30c transaction fee will be deducted from what you get paid. While we take no service fee for the use of our platform, this transaction fee is automatically charged by Stripe, our third party payment provider. 
+        </p>
+    },
+    {
+        id: 10,
+        title: 'What if I need to cancel an item a borrower has booked?',
+        content: <p>
+            If you need to cancel a rental request make sure you contact the borrower via the in-app chat at least 24 hours before they are due to collect the item.<br/><br/>
+            Little Big Shed will add a small penalty fee to your account covering the third-party payment fees incurred by the borrower. All penalty fees will be deducted from your next payment in the next Lender Payment Run.<br/><br/>
+            Before cancelling a booked item remember that your borrower may be counting on having the item for that specific rental period.
         </p>
     },
 ]
 
 const FAQ_Borrower_Data = [
     {
-
-    }
+        id: 1,
+        title: 'Can I cancel a booked item or change the rental dates?',
+        content: <p>
+            Yes, if done prior to 24 hours there is no payment, if within 24 hours, the borrower loses their 50% deposit. By cancelling a booked borrow you will forfeit the time slot that has been allocated to your borrow. You will also only be refunded 80% of your initial borrow deposit to account for our handling fees.<br/><br/>
+            To change the rental date, contact the lender via the in-app messenger to check first that the item is available for the new dates you desire and if so, cancel your current booking, rebook and you're good to go.
+        </p>
+    },
+    {
+        id: 2,
+        title: 'Item Faults Disputes and resolution',
+        content: <p>
+            What happens if the item I borrow is damaged? What happens if it breaks while I’m using it? When you pick up the item, take a photo that’s time stamped so that as the borrower you’ve got a record of what’s happened.<br/><br/>
+            If you have an issue with the item, within 12 hours of pick up of the item, you need to first contact the lender through the app message feature. Then raise a dispute by contacting Little Big Shed’s customer service team at <a href='mailto:support@littlebigshed.com'>support@littlebigshed.com</a> 
+        </p>
+    },
+    {
+        id: 3,
+        title: 'What if the item I want to rent isn’t on Little Big Shed?',
+        content: <p>
+            As our little shed grows into something big, you’ll be able to share almost anything! But as we get the ball rolling and you can’t find what you’re looking for, feel free to make a request by sending us a message. We’ll send your request to our existing network of lenders to see if someone has the item and is keen to share it with you!
+        </p>
+    },
+    {
+        id: 4,
+        title: 'Can the rental period be extended?',
+        content: <p>
+            That shouldn’t be a problem! You just need to contact the lender via our secure in-app messenger to see whether the item is available to be rented for longer. If the lender is okay with it, select the new dates, pay the extra amount, and continue your project.
+        </p>
+    },
+    {
+        id: 5,
+        title: 'What happens if I return the item late',
+        content: <p>
+            Wherever possible, try to return your item on time. But we understand, life happens.<br/><br/>
+            If for whatever reason you have to return an item late, message the lender via the app to let them know before the end of your borrow period. You will be charged for each extra day it is in your possession.
+        </p>
+    },
+    {
+        id: 6,
+        title: 'When am I charged?',
+        content: <p>
+            Once you have returned the item at the agreed time and the lender has confirmed the share is complete (and there is no dispute), the borrow fee will be automatically deducted from the bank account you provided. 
+        </p>
+    },
+    {
+        id: 7,
+        title: 'Am I liable for anything that happens to the item while borrowing it?',
+        content: <p>
+            If you wilfully damage or steal the item while it is in your possession, you will be liable for its replacement value. If the item is worth less than $2,000 and you accidentally damage it while it is in your possession, Little Big Shed’s lender protection policy will cover the damage up to the full replacement value of the item. 
+        </p>
+    },
 ]
 
 const dummyQuestions = [
@@ -810,5 +960,8 @@ export {
     teamMembers,
     categories, 
     blogData,
+    FAQ_General_Data,
+    FAQ_Lender_Data,
+    FAQ_Borrower_Data,
     dummyQuestions,
 }
