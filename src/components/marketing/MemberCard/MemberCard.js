@@ -17,12 +17,12 @@ const MemberCard = ({ member, key }) => {
 
     return (
         <div className='member_card_container'>
-            <Avatar 
+            {/* <Avatar 
                 src={member.avatar} 
                 alt='member avatar'
                 className='member_avatar'
-            />
-            <p className='member_name'>
+            /> */}
+            <p className='member_name' style={{paddingTop: '2em'}}>
                 {member.name}
             </p>
             <div className='member_description'>

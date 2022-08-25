@@ -199,7 +199,6 @@ const howItWorksProcedures = [
 const teamMembers = [
     {
         id: 1,
-        avatar: DummyAvatar1,
         name: 'Sarmuhabat Singh | Founder',
         shortBio: <p>
             Social entrepreneur and business lecturer, Sarmuhabat Singh, believes that one's success and resources should be shared within the community to help support society as a whole. He’s currently looking to borrow a pair of hedge clippers to take care of a few jobs in the garden.
@@ -217,7 +216,6 @@ const teamMembers = [
     },
     {
         id: 2,
-        avatar: DummyAvatar1,
         name: 'Kylie Bailey | Marketing Director',
         shortBio: <p>
             Journalist and communications consultant Kylie Bailey believes in using words to create a better, more connected world. She’s currently looking to borrow a surfboard because she’s just started learning to surf and is saving up to buy one.
@@ -228,7 +226,6 @@ const teamMembers = [
     },
     {
         id: 3,
-        avatar: DummyAvatar1,
         name: 'Moumita Das Roy | Lending Marketing Skills for Little Big Shed',
         shortBio: <p>
             Cross-industry marketer with local and international experience with B2B and B2C audiences, Moumita Das Roy brings her left-brain-right-brain balanced approach to work. Last season, she failed at snowboarding, that’s why she wants to try it again this year. She is looking to borrow good snow-gear before she invests on her own.
@@ -239,7 +236,6 @@ const teamMembers = [
     },
     {
         id: 4,
-        avatar: DummyAvatar1,
         name: 'Moumita Das Roy | Lending Marketing Skills for Little Big Shed',
         shortBio: <p>
             Cross-industry marketer with local and international experience with B2B and B2C audiences, Moumita Das Roy brings her left-brain-right-brain balanced approach to work. Last season, she failed at snowboarding, that’s why she wants to try it again this year. She is looking to borrow good snow-gear before she invests on her own.
@@ -250,7 +246,6 @@ const teamMembers = [
     },
     {
         id: 5,
-        avatar: DummyAvatar1,
         name: 'Moumita Das Roy | Lending Marketing Skills for Little Big Shed',
         shortBio: <p>
             Cross-industry marketer with local and international experience with B2B and B2C audiences, Moumita Das Roy brings her left-brain-right-brain balanced approach to work. Last season, she failed at snowboarding, that’s why she wants to try it again this year. She is looking to borrow good snow-gear before she invests on her own.

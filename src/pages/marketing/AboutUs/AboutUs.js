@@ -3,7 +3,7 @@ import '../Marketing.css'
 import './AboutUs.css'
 import NavBar from '../../../components/marketing/NavBar/NavBar'
 import { 
-  Chainsaw, Sarmuhabat, SignUpImg, WashingAndSawing 
+  Sarmuhabat, SignUpImg, WashingAndSawing 
 } from '../../../assets/Images/Marketings/Marketings'
 import MarketingButton from '../../../components/marketing/MarketingButton/MarketingButton'
 import { teamMembers } from '../../../assets/Data/MarketSelections'

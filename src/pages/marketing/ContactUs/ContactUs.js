@@ -26,10 +26,13 @@ const ContactUs = () => {
           <p className='main_title'>
           Get In Touch
           </p>
-          <p className='main_sub_title sub_title_width'>
-          We’re here to help! If you haven’t found what you’re looking for in our Guides and FAQs or Blog feel free to fill out the form below with your query and we’ll get back to you soon.
-          </p>
         </div>
+      </div>
+
+      <div className='marketing_img_flexible_container bg_grey flex_box center_items straight_column'>
+        <p className='contact_detail_title' style={{maxWidth: '70%', padding: '0', paddingTop: '1rem'}}>
+        We’re here to help! If you haven’t found what you’re looking for in our Guides and FAQs or Blog feel free to fill out the form below with your query and we’ll get back to you soon.
+        </p>
       </div>
 
       <div className='marketing_img_md_container bg_grey flex_box center_items responsive_contact_container'>
