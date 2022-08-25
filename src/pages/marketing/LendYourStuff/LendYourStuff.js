@@ -21,7 +21,7 @@ const LendYourStuff = () => {
       />
       <div className='marketing_img_md_container bg_lend_your_stuff'>
         <div className='main_title_section'>
-          <p className='main_title'>
+          <p className='main_title title_shadow'>
           Rent Out Your Stuff To Earn Cash And Do Good
           </p>
           <div className='flex_box'>
@@ -37,10 +37,10 @@ const LendYourStuff = () => {
             </MarketingButton>
           </div>
           <div className='download_app_section'>
-            <p className='download_main_title'>
+            <p className='download_main_title title_shadow'>
             Download our free app!
             </p>
-            <p className='download_sub_title'>
+            <p className='download_sub_title sub_title_shadow'>
             Download our mobile app to borrow and lend, where ever you are!
             </p>
             <MarketingButton 
@@ -55,15 +55,15 @@ const LendYourStuff = () => {
         </div>
       </div>
 
-      <div className='marketing_img_md_container bg_white flex_box straight_column'>
+      <div className='marketing_img_flexible_container bg_white flex_box straight_column'>
         <div className='half_screen_center full_width'>
-          <img src={LYSMowing} className='graphic_image responsive_img_size' alt='mowing iamge'/>
+          <img src={LYSMowing} className='graphic_image responsive_img_size' style={{maxHeight: '28em', maxWidth: '28em'}} alt='mowing iamge'/>
         </div>
         <div className='half_screen_center article_section full_width'>
           <p className='marketing_main_title'>
           Share Your Shed On Our Tool Borrowing App
           </p>
-          <p className='marketing_main_description'>
+          <p>
           Around the world, the sharing economy is booming. 
           People are sharing their equipment, their homes, their cars and their skills. 
           This act of sharing has significant social, economic, cultural and environmental benefits. 
@@ -83,35 +83,33 @@ const LendYourStuff = () => {
         </div>
       </div>
 
-      <div className='marketing_img_sm_container bg_wall flex_box center_items straight_column'>
+      <div className='marketing_img_flexible_container bg_wall flex_box center_items straight_column'>
         <div className='center_text_image full_width'>
           <p className='marketing_main_title text_align'>
           No Service Fees
           </p>
-          <div className='marketing_main_description text_align'>
-            <p>
+          <p>
             We believe in the power of sharing and want to make it as easy, accessible and beneficial as possible. 
             That’s why Little Big Shed has no platform service fee. 
             We cover the costs for the smooth sailing of our shed so that you can earn more when you do good sharing your stuff. 
             The only cost of using Little Big Shed is a 2.9% <a style={{fontWeight: '600'}} href=''>processing fee</a>: link to FAQ  + 30c transaction fee charged by our third party payment provider deducted from what you get paid. 
-            </p>
-          </div>
+          </p>
         </div>
         <div className='center_text_image full_width'>
-          <img src={TaneClear} className='graphic_image no_left_padding disable_guiter' alt='guiter guy image'/>
+          <img src={TaneClear} className='graphic_image no_left_padding disable_guiter' style={{maxHeight: '28em', maxWidth: '28em'}} alt='guiter guy image'/>
         </div>
       </div>
 
-      <div className='marketing_img_xsm_container bg_lbs'>
-        <p className='lbs_quote_text' style={{marginTop: '0'}}>
+      <div className='marketing_img_flexible_container bg_lbs'>
+        <p className='lbs_quote_text' >
         A Little Sharing Can Make A Big Difference To Your Pocket, Your Community And The Planet.
         </p>
       </div>
 
-      <div className='marketing_img_xsm_container bg_dark flex_box center_items straight_column'>
-        <div className='image_half_container full_width'>
-          <img src={LYSPaint} className='picture_image no_right_padding' alt='tradie image'/>
-        </div>
+      <div className='marketing_img_flexible_container bg_dark flex_box center_items straight_column'>
+          <div className='top_section_smaller_box' style={{justifyContent: 'center'}}>
+            <img src={NatalieCliear} className='graphic_image' style={{maxHeight: '28em', maxWidth: '28em'}} alt='surf borad lady image'/>
+          </div>
         <div className='center_text_image full_width' >
           <p className='marketing_main_title text_align dark_mode_text'>
           We’ve Got You Covered If Something Goes Wrong
@@ -127,15 +125,10 @@ const LendYourStuff = () => {
       </div>
 
       <div className='marketing_image_fit_container bg_white'>
-        <div className='top_info_top_section flex_box'>
-          <div className='top_info_smaller_section'>
-            <p className='marketing_main_title'>
-            Four Simple Steps To Rent Out The Stuff In Your Shed
-            </p>
-          </div>
-          <div className='top_section_smaller_box'>
-            <img src={NatalieCliear} className='graphic_image' alt='surf borad lady image'/>
-          </div>
+        <div className='top_info_smaller_section' style={{margin: '0 auto'}}>
+          <p className='marketing_main_title' style={{textAlign: 'center'}}>
+          Four Simple Steps To Rent Out The Stuff In Your Shed
+          </p>
         </div>
         <div className='top_grid_section'>
           {rentOutProcedures.map(step => (
@@ -146,7 +139,7 @@ const LendYourStuff = () => {
 
       <div className='marketing_img_sm_container bg_lys_signup'>
         <div className='center_quote_btn'>
-          <p className='lbs_quote_lgtext'>
+          <p className='lbs_quote_lgtext sub_title_shadow'>
           Ready to start earning and do good? 
           </p>
           <MarketingButton 

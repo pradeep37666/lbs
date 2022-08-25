@@ -61,7 +61,7 @@ const FAQs = () => {
         </div>
       </div>
 
-      <div className='marketing_img_xsm_container bg_dark'>
+      <div className='marketing_img_flexible_container bg_dark'>
         <div className='center_quote_btn'>
           <p className='lbs_quote_lgtext'>
           Got A Question Not Answered Here?

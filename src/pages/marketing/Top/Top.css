@@ -19,8 +19,17 @@
 
 .top_info_top_section {
     width: 100%;
-    height: 30em;
+    height: 20em;
     justify-content: center;
+}
+
+.top_info_textured_section {
+    width: 100%;
+    max-width: 35em;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
 }
 
 .top_info_smaller_section {
@@ -55,6 +64,7 @@
     margin: 0 auto;
     padding: 0 3em;
     padding-bottom: 2em;
+    gap: 1em;
 }
 
 .search_items_btn {
@@ -142,7 +152,7 @@
         display: none !important;
     }
     .top_section_smaller_box {
-        display: none;
+        display: none !important;
     }
     .top_info_smaller_section {
         width: 100%;

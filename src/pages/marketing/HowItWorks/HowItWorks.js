@@ -57,51 +57,44 @@
           </div>
         </div>
 
-        <div className='marketing_image_fit_container bg_white'>
-          <div className='section_top flex_box text_height_fit'>
-            <div className='half_screen_center article_section responsive_text_width'>
-              <p className='marketing_main_title'>
+          <div className='marketing_img_flexible_container bg_white flex_box center_items straight_column'>
+            <div className='center_text_image full_width'>
+              <p className='marketing_main_title text_align'>
               Borrow Items and Save with our Online Tool Rental Platform
               </p>
-              <p className='marketing_main_description'>
-              Starting a DIY project? Want to get creative with a new craft? Keen to give a new activity a go? Look no further, our online tool rental platform is designed for you. By borrowing stuff on Little Big Shed you can:
+              <p>
+              Starting a DIY project? Want to get creative with a new craft? 
+              Keen to give a new activity a go? 
+              Look no further, our online tool rental platform is designed for you. 
+              By borrowing stuff on Little Big Shed you can:
               </p>
             </div>
-            <div className='half_screen_center disable_img'>
-              <img src={LBS80} className='how_it_works_images' alt='less than once a month'/>
+            <div className='center_text_image full_width'>
+              <img src={LBS80} className='graphic_image no_left_padding disable_guiter' style={{maxHeight: '28em', maxWidth: '28em'}} alt='guiter guy image'/>
             </div>
           </div>
 
-          <div className='section_bottom flex_box text_height_fit'>
-            <div className='half_screen_center disable_img'>
-              <img src={LBSModal} className='how_it_works_images' alt='less than once a month'/>
+          <div className='marketing_img_flexible_container bg_white flex_box center_items straight_column'>
+            <div className='center_text_image full_width'>
+              <img src={LBSModal} className='graphic_image disable_guiter' style={{maxHeight: '35em', maxWidth: '35em'}} alt='guiter guy image'/>
             </div>
-            <div className='half_screen_center article_section responsive_text_width'>
+            <div className='center_text_image full_width'>
               <ul className='how_it_works_list'>
-                <li className='description_list_text'>
+                <li style={{fontSize: '1.1em'}}>
                 Create equal opportunities – by making tools, hobby gear and leisure equipment more available and affordable to everyone.
                 </li>
-                <li className='description_list_text'>
+                <li style={{fontSize: '1.1em'}}>
                 Build community connection and support – by sharing with your neighbours you get to meet a like-minded local, help them save space and money, and make some extra cash for yourself on the side.
                 </li>
-                <li className='description_list_text'>
+                <li style={{fontSize: '1.1em'}}>
                 Care for the environment – with less people buying stuff new, demand for products reduces. Sharing helps design waste out of the system before it has the chance to become rubbish.
                 </li>
               </ul>
             </div>
           </div>
-        </div>
 
         <div className='marketing_image_fit_container bg_wall'>
-          <div className='top_info_smaller_section'>
-            <p className='marketing_main_title'>
-            How It Works
-            </p>
-            <p className='marketing_main_description'>
-            Our hobby gear, equipment and online tool rental app makes it easy to book and borrow items from within your community.
-            </p>
-          </div>
-          <div className='top_info_bottom_section'>
+          <div className='top_info_bottom_section' style={{paddingTop: '1em'}}>
             <p className='marketing_main_title' style={{textAlign: 'center', marginBottom: '2rem'}}>
             Here’s how to hire gear from our shared shed:
             </p>
@@ -113,7 +106,7 @@
           </div>        
         </div>
 
-        <div className='marketing_img_xsm_container bg_dark' >
+        <div className='marketing_img_flexible_container bg_dark' >
           <div className='center_quote_btn'>
             <p className='lbs_quote_lgtext'>
             Ready To Start Borrowing?
@@ -136,7 +129,7 @@
             <p className='marketing_main_title'>
             The Sharing Economy Is Growing Fast Globally
             </p>
-            <p className='marketing_main_description'>
+            <p>
             We’re sharing more stuff with each other than ever before, Peer-to-peer technologies are changing the way we travel, listen to music, work, borrow money and access other people’s tools, hobby or leisure equipment.<br /><br /> 
             In 2013 the sharing economy was worth just NZ$22 billion. It is predicted to grow to more that NZ$495 billion by 2025, matching traditional hire/rental modals.
             </p>
@@ -146,9 +139,9 @@
           </div>
         </div>
 
-        <div className='marketing_img_xsm_container bg_lbs'>
+        <div className='marketing_img_flexible_container bg_lbs'>
           <div className='hiw_question_section'>
-            <div className='hiw_question_title_box'>
+            <div className='hiw_question_title_box' style={{padding: '2em 0'}}>
               <p className='hiw_question_title'>
               Still Have Questions?
               </p>
@@ -157,12 +150,6 @@
               </p>
             </div>
             <div className='flex_box space_between'>
-              <MarketingButton 
-                bgColor={'#E9D8B4'}
-                textColor={'#33384F'}
-              >
-              User Guides
-              </MarketingButton>
               <MarketingButton 
                 bgColor={'#33384F'}
                 textColor={'#FFFFFF'}
@@ -174,9 +161,9 @@
           </div>
         </div>
 
-        <div className='marketing_img_sm_container bg_grey flex_box center_items straight_column'>
+        <div className='marketing_img_flexible_container bg_grey flex_box center_items straight_column'>
           <div className='half_screen_center full_width'>
-            <img src={HIWSurf} className='how_it_works_images smaller_graphics' alt='2 people standing'/>
+            <img src={HIWSurf} className='how_it_works_images smaller_graphics' style={{maxHeight: '28em', maxWidth: '28em'}} alt='2 people standing'/>
           </div>
           <div className='half_screen_center article_section full_width'>
             <p className='marketing_main_title'>

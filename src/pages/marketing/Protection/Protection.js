@@ -25,7 +25,7 @@ const Protection = () => {
         </div>
       </div>
 
-      <div className='marketing_img_xsm_container bg_wall flex_box straight_column'>
+      <div className='marketing_img_flexible_container bg_wall flex_box straight_column'>
         <div className='half_screen_center article_section no_right_padding full_width'>
 
           <p className='marketing_main_title'>
@@ -147,7 +147,7 @@ const Protection = () => {
         </div>
       </div>
 
-      <div className='marketing_img_xsm_container bg_dark'>
+      <div className='marketing_img_flexible_container bg_dark'>
         <div className='center_quote_btn'>
           <p className='lbs_quote_lgtext'>
           Got A Question Not Answered Here?

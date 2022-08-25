@@ -36,19 +36,17 @@ const Blog = () => {
           </div>
         </div>
 
-        <div className='marketing_img_md_container bg_grey flex_box straight_column'>
+        <div className='marketing_img_flexible_container bg_grey flex_box straight_column'>
           <div className='half_screen_center full_width'>
-              <img src={SawingGuiter} className='graphic_image responsive_img_sm_size' alt='graphic image'/>
+              <img src={SawingGuiter} className='graphic_image responsive_img_sm_size' style={{maxHeight: '28em', maxWidth: '28em', padding: '0'}} alt='graphic image'/>
           </div>
           <div className='half_screen_center article_section full_width'>
               <p className='marketing_main_title'>
               Discover The Power Of Sharing
               </p>
-              <div className='marketing_main_description'>
-                  <p>
-                  In our blog of Little Big Ideas, you can be sure to find tips for your next DIY project or hobby, insights into reducing waste, guides on creating opportunities in our neighbourhoods, plus stories and interviews from our community of sharers and carers. 
-                  </p>
-              </div>
+              <p>
+              In our blog of Little Big Ideas, you can be sure to find tips for your next DIY project or hobby, insights into reducing waste, guides on creating opportunities in our neighbourhoods, plus stories and interviews from our community of sharers and carers. 
+              </p>
           </div>
         </div>
 
@@ -131,7 +129,7 @@ const Blog = () => {
           </p>
         </div>
 
-        <div className='marketing_img_sm_container bg_blog_signup'>
+        <div className='marketing_img_flexible_container bg_dark'>
           <div className='center_quote_btn'>
             <p className='lbs_quote_lgtext'>
             Ready To Start Borrowing?

@@ -1,5 +1,6 @@
 .step_card_container {
     width: 16em;
+    height: fit-content;
     background: #F5F5F5;
     border-radius: 10px;
     padding: 0.5em;
@@ -15,8 +16,8 @@
 }
 
 .step_card_icon {
-    width: 2em;
-    height: 2em;
+    width: 3em;
+    height: 3em;
 }
 
 .step_card_title {

@@ -16,7 +16,7 @@ const RentStuff = () => {
 
             <div className='marketing_img_md_container bg_rent_stuff center_items responsive_box_for_search'>
                 <div className='search_title_section'>
-                    <p className='search_title'>
+                    <p className='search_title title_shadow'>
                     Let’s Find Your Next Borrow
                     </p>
                     <div className='search_input_wrapper'>
@@ -25,19 +25,19 @@ const RentStuff = () => {
                 </div>
             </div>
 
-            <div className='marketing_img_md_container bg_grey flex_box straight_column'>
+            <div className='marketing_img_flexible_container bg_grey flex_box straight_column'>
                 <div className='half_screen_center full_width'>
-                    <img src={RSSawing} className='graphic_image responsive_img_size' alt='graphic image'/>
+                    <img src={RSSawing} className='graphic_image responsive_img_size' style={{maxHeight: '28em', maxWidth: '28em'}} alt='graphic image'/>
                 </div>
-                <div className='half_screen_center article_section full_width'>
+                <div className='half_screen_center article_section full_width' style={{paddingLeft: '0'}}>
                     <p className='marketing_main_title'>
                     Get Set For Your next DIY Project, Hobby or Adventure!
                     </p>
-                    <div className='marketing_main_description'>
-                        <p className='top_info_left_desc'>
+                    <div style={{display: 'flex'}}>
+                        <p style={{padding: '0 0.3em'}}>
                         If you’re starting a DIY project, want to experiment with a new craft, or borrow hobby equipment to give a new activity a go, you've come to the right place. There’s no need to splash out on a brand new item you barely use or don’t have the space to store – it’s time to start borrowing!
                         </p>
-                        <p className='top_info_right_desc'>
+                        <p style={{padding: '0 0.3em'}}>
                         Our sharing platform makes it easy to search and book stuff from locals nearby. You can explore our listings via keyword, category, location, cost, and rating. Learn more about <a style={{fontWeight: '600'}} href='/#/how_it_works'>how borrowing works</a>.
                         </p>
                     </div>
@@ -70,8 +70,8 @@ const RentStuff = () => {
             </div>
 
 
-            <div className='marketing_img_sm_container bg_grey flex_box center_items straight_column'>
-                <div className='center_text_image add_padding_right full_width'>
+            <div className='marketing_img_flexible_container bg_grey flex_box center_items straight_column'>
+                <div className='center_text_image full_width'>
                     <p className='marketing_main_title text_align'>
                     Want To Share Your Stuff And Earn Some Cash?
                     </p>
@@ -89,9 +89,6 @@ const RentStuff = () => {
                     >
                         Start Sharing
                     </MarketingButton>
-                </div>
-                <div className='image_half_container full_width'>
-                    <img src={CleaningWindow} className='picture_image no_left_padding' alt='tradie image'/>
                 </div>
             </div>
 

@@ -20,7 +20,7 @@ const Footer = () => {
         <div className='footer_container'>
             <div className='footer_header_container'>
                 <div className='footer_header_left_section'>
-                    <img src={Logo} alt='logo' className='footer_header_logo'/>
+                    <img src={Logo} alt='logo' className='footer_header_logo' style={{marginRight: '1rem'}}/>
                     <div className='footer_header_title_box'>
                         <p className='footer_header_main_title'>
                         Little Big Shed in your pocket!
@@ -63,13 +63,12 @@ const Footer = () => {
                     >
                         Rental Agreement (the terms and conditions)
                     </p>
-                    <p 
+                    <a 
                         className='footer_section_title'
-                        //download pdf
-                        // onClick={() => history.push('/')}
-                    >
+                        download='Little Big Shed _ Privacy Policy.pdf'
+                        href='/public/Policies/PrivacyPolicy.pdf'                    >
                         Privacy policy 
-                    </p>
+                    </a>
                 </div>
                 <div className='footer_content_box'>
                     <p 
