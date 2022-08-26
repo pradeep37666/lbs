@@ -1,7 +1,7 @@
 import React from 'react'
 import './LendYourStuff.css'
 import { 
-  Android, Apple, LYSMowing, LYSPaint, 
+  Android, Apple, LYSMowing, 
   NatalieCliear, SignUpImg, TaneClear
 } from '../../../assets/Images/Marketings/Marketings'
 import MarketingButton from '../../../components/marketing/MarketingButton/MarketingButton'
@@ -106,16 +106,16 @@ const LendYourStuff = () => {
         </p>
       </div>
 
-      <div className='marketing_img_flexible_container bg_dark flex_box center_items straight_column'>
+      <div className='marketing_img_flexible_container bg_white flex_box center_items straight_column'>
           <div className='top_section_smaller_box' style={{justifyContent: 'center'}}>
             <img src={NatalieCliear} className='graphic_image' style={{maxHeight: '28em', maxWidth: '28em'}} alt='surf borad lady image'/>
           </div>
         <div className='center_text_image full_width' >
-          <p className='marketing_main_title text_align dark_mode_text'>
+          <p className='marketing_main_title text_align'>
           We’ve Got You Covered If Something Goes Wrong
           </p>
           <div className='marketing_main_description text_align dark_mode_text'>
-            <p>
+            <p style={{color: 'black'}}>
             Our tool borrowing app means that anything you have in your little shed can easily be shared with your neighbours when not in use. Plus, you can do it all worry-free! <br /><br />
             Rest assured that when you share your shed on our platform, we have your listed items covered against damage during the lending period if something goes wrong – up to NZ$2000 of cover per item.<br /><br /> 
             Check out our full <a style={{fontWeight: '600'}} href='/#/protection'>lender protection policy</a> to find out more about sharing with our verified Little Big Shed users.

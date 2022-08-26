@@ -69,32 +69,33 @@
               By borrowing stuff on Little Big Shed you can:
               </p>
             </div>
-            <div className='center_text_image full_width'>
-              <img src={LBS80} className='graphic_image no_left_padding disable_guiter' style={{maxHeight: '28em', maxWidth: '28em'}} alt='guiter guy image'/>
+            <div className='center_text_image full_width' style={{paddingTop: '1rem'}}>
+              <img src={LBS80} className='graphic_image no_left_padding disable_guiter' style={{maxHeight: '28em', maxWidth: '28em', padding: '0'}} alt='guiter guy image'/>
             </div>
           </div>
 
           <div className='marketing_img_flexible_container bg_white flex_box center_items straight_column'>
-            <div className='center_text_image full_width'>
-              <img src={LBSModal} className='graphic_image disable_guiter' style={{maxHeight: '35em', maxWidth: '35em'}} alt='guiter guy image'/>
+            <div className='center_text_image full_width' style={{padding: '0'}}>
+              <img src={LBSModal} className='graphic_image disable_guiter' style={{maxHeight: '35em', maxWidth: '35em', padding: '0'}} alt='guiter guy image'/>
             </div>
             <div className='center_text_image full_width'>
               <ul className='how_it_works_list'>
                 <li style={{fontSize: '1.1em'}}>
-                Create equal opportunities – by making tools, hobby gear and leisure equipment more available and affordable to everyone.
+                Make, mend and learn – without the hefty costs of buying items new or requiring space to store things you hardly use.
                 </li>
                 <li style={{fontSize: '1.1em'}}>
-                Build community connection and support – by sharing with your neighbours you get to meet a like-minded local, help them save space and money, and make some extra cash for yourself on the side.
+                Support your community – borrowing from your neighbours means that they get to make some money while you get to save. Plus, it’s a great excuse to connect with locals like you and build trust in your hood!
                 </li>
                 <li style={{fontSize: '1.1em'}}>
-                Care for the environment – with less people buying stuff new, demand for products reduces. Sharing helps design waste out of the system before it has the chance to become rubbish.
+                Care for the environment – through buying less and borrowing more, demand for products reduces. Sharing helps remove waste out of the whole supply chain before it has the chance to do damage.
                 </li>
               </ul>
+              Our hobby gear, equipment and online tool rental app makes it easy to book and borrow items from within your community.
             </div>
           </div>
 
         <div className='marketing_image_fit_container bg_wall'>
-          <div className='top_info_bottom_section' style={{paddingTop: '1em'}}>
+          <div className='top_info_bottom_section' style={{padding: '2em 0'}}>
             <p className='marketing_main_title' style={{textAlign: 'center', marginBottom: '2rem'}}>
             Here’s how to hire gear from our shared shed:
             </p>
@@ -106,7 +107,7 @@
           </div>        
         </div>
 
-        <div className='marketing_img_flexible_container bg_dark' >
+        <div className='marketing_img_flexible_container bg_dark' style={{padding: '2em 0'}}>
           <div className='center_quote_btn'>
             <p className='lbs_quote_lgtext'>
             Ready To Start Borrowing?
@@ -134,8 +135,9 @@
             In 2013 the sharing economy was worth just NZ$22 billion. It is predicted to grow to more that NZ$495 billion by 2025, matching traditional hire/rental modals.
             </p>
           </div>
-          <div className='half_screen_center full_width'>
+          <div className='half_screen_center full_width' style={{display: 'flex', flexDirection: 'column', paddingBottom: '1rem'}}>
             <img src={LBSEconomy} className='how_it_works_images responsive_img_size' alt='less than once a month'/>
+            <a href='https://www.nzherald.co.nz/business/share-and-share-alike/RL5VZMKYIQWBC33CAEXCEEDYDY/' style={{fontWeight: 'bold'}} target='_blank'>Share And Share Alike</a>
           </div>
         </div>
 

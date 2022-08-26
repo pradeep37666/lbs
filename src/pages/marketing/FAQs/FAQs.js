@@ -32,10 +32,10 @@ const FAQs = () => {
 
       <div className='marketing_img_md_container bg_faqs'>
         <div className='main_title_section protection_title_position'>
-          <p className='main_title'>
+          <p className='main_title title_shadow'>
           FAQs for Sharing
           </p>
-          <p className='main_sub_title sub_title_width'>
+          <p className='main_sub_title sub_title_width sub_title_shadow'>
           Have a question or after more info on lending and borrowing on Little Big Shed? You’ve come to the right place! <br/><br/>
           If what you’re looking for isn’t answered below, feel free to <a href='/#/contact_us'>Ask a Question</a> 
           </p>

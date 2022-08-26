@@ -113,8 +113,8 @@ const rentingProcedures = [
         title: '2. Book and Pay',
         procedureDesc: <p>
             When you’ve found an item you’d like to borrow, send a booking request to the lender.<br />
-            You’ll receive a notification when your booking has been accepted. It’ll automatically be added to your in-app calendar and the lender fee will be deducted from your account
-            At the time of booking a 10% deposit is taken. The remaining balance is paid once the share is complete.<br /><br />
+            When your booking has been accepted, It’ll be automatically added to your trade dashboard. 
+            Once booked Little Big Shed will take the funds directly from your allocated account, ready for your trade to commence.<br /><br />
 
             If you change your mind, no worries. Find out more about our cancellation policy: link to FAQs section.<br />
             Use the chat function in the app to ask the lender any questions and arrange handover details. <br />
