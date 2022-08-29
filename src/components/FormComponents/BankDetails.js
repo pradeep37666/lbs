@@ -28,6 +28,8 @@ export default function BankDetails({ context, lenderUpgrade }) {
     const [ cardCvc, setCardCvc ] = useState()
     const [ cardName, setCardName ] = useState()
     const [ cardNameError, setCardNameError ] = useState(false)
+    const [ frontImageError, setFrontImageError ] = useState('')
+    const [ backImageError, setBackImageError ] = useState('')
 
     const stripe = useStripe()
     const elements = useElements()
@@ -112,9 +114,11 @@ export default function BankDetails({ context, lenderUpgrade }) {
                     <div className="LoginInputValidationContainer">
                         <input type='text' placeholder='Name on Card' className="LoginInput" onChange={(e) => setCardName(e.target.value)} />
                         <div className={`triangleLeft ${!cardNameError ? '' : 'ValidationTextHide'}`} /> 
-                        <ValidationPopup errorText={"Please enter a card name"} errorHeader='Invalid Card Name' hide={!cardNameError} />
+                        {cardNameError && (
+                            <ValidationPopup errorText={"Please enter a card name"} errorHeader='Invalid Card Name'/>
+                        )}
                     </div>
-                    <div className="LoginHeader LoginHeader--NoMargin">Number on Card</div>
+                    <div className="LoginHeader LoginHeader--NoMargin" style={{marginTop: '1rem'}}>Number on Card</div>
                     <div className="LoginInputValidationContainer">
                         <CardNumberElement 
                         className="LoginInput" 
@@ -122,14 +126,16 @@ export default function BankDetails({ context, lenderUpgrade }) {
                         options={cardElementOptions}
                         />
                         <div className={`triangleLeft ${!cardNumber?.error ? '' : 'ValidationTextHide'}`} /> 
-                        <ValidationPopup errorText={cardNumber?.error?.message} errorHeader='Invalid Card Number' hide={!cardNumber?.error} />
+                        {cardNumber?.error?.message && (
+                            <ValidationPopup errorText={cardNumber?.error?.message} errorHeader='Invalid Card Number'/>
+                        )}
                     </div>
-                    <div className="ExpiryCCVFlex">
+                    <div className="ExpiryCCVFlex" style={{marginTop: '1rem'}}>
                         <div className="LoginHeader">Expiry</div>
                         <div className="LoginHeader">CCV</div>
                     </div>
-                    <div className="LoginInputValidationContainer">
-                        <div className="ExpiryCCVFlex">
+                    <div className="LoginInputValidationContainer" style={{marginBottom: '1rem'}}>
+                        <div className="ExpiryCCVFlex" style={{marginBottom: '1rem'}}>
                             <CardExpiryElement
                             className="LoginInput" 
                             onChange={cardExpiryObj => setCardExpiry(cardExpiryObj)} 
@@ -142,17 +148,22 @@ export default function BankDetails({ context, lenderUpgrade }) {
                             />
                             
                         </div>
-                        <div className={`triangleLeft ${!cardExpiry?.error ? '' : 'ValidationTextHide'}`} />
-                        <ValidationPopup errorText={cardExpiry?.error?.message} errorHeader='Invalid Expiry Date' hide={!cardExpiry?.error} />
-                        <div className={`triangleLeft ${!cardCvc?.error ? '' : 'ValidationTextHide'}`} />
-                        <ValidationPopup errorText={cardCvc?.error?.message} errorHeader='Invalid CCV' hide={!cardCvc?.error} />
-                    </div>
-                    { !isLenderUpgrade && 
-                    <Button 
-                    isLoading={isLoading}
-                    onClick={createPaymentMethod}
-                    text="Next"
-                    />}
+                        <div className={`triangleLeft ${!cardExpiry?.error ? '' : 'ValidationTextHide'}`} style={{marginBottom: '1rem'}}/>
+                            {cardExpiry?.error?.message && (
+                                <ValidationPopup errorText={cardExpiry?.error?.message} errorHeader='Invalid Expiry Date'/>
+                            )}
+                            <div className={`triangleLeft ${!cardCvc?.error ? '' : 'ValidationTextHide'}`} />
+                            {cardCvc?.error?.message && (
+                                <ValidationPopup errorText={cardCvc?.error?.message} errorHeader='Invalid CCV'/>
+                            )}
+                        </div>
+                        {!isLenderUpgrade && 
+                        <Button 
+                            isLoading={isLoading}
+                            onClick={createPaymentMethod}
+                            text="Next"
+                        />
+                        }
                 </div>
                 }
             </>
@@ -216,14 +227,17 @@ export default function BankDetails({ context, lenderUpgrade }) {
                     <div className="LoginHeader">Front Identity Image</div>
                     <div className="IdProvideInputContainer">
                         <div className="IdProvideImageSquare" >
-                            {idFrontImage 
-                            ?   <img 
-                                src={idFrontImage.preview} 
-                                alt="id front" 
-                                className="IdPicturePreview"
+                            {idFrontImage ? (
+                                <img 
+                                    src={idFrontImage.preview} 
+                                    alt="id front" 
+                                    className="IdPicturePreview"
+                                    onLoad={() => setFrontImageError('')}
+                                    onError={(e) => setFrontImageError(e)}
                                 />
-                            :   <CameraIcon className="CameraIcon"/>
-                            }
+                            ) : (
+                                <CameraIcon className="CameraIcon"/>
+                            )}
                         </div>
                         <input 
                             type="file" 
@@ -238,18 +252,27 @@ export default function BankDetails({ context, lenderUpgrade }) {
                             Upload
                         </button>
                     </div>
+                    {frontImageError ? (
+                        <ValidationPopup 
+                            errorText='Please try again.' 
+                            errorHeader='Failed to upload an image'
+                        />
+                    ) : null}
 
                     <div className="LoginHeader">Back Identity Image</div>
                     <div className="IdProvideInputContainer">
                         <div className="IdProvideImageSquare">
-                            {idBackImage 
-                            ?   <img 
-                                src={idBackImage.preview} 
-                                alt="id back" 
-                                className="IdPicturePreview"
+                            {idBackImage ? (
+                                <img 
+                                    src={idBackImage.preview} 
+                                    alt="id back" 
+                                    className="IdPicturePreview"
+                                    onLoad={() => setBackImageError('')}
+                                    onError={(e) => setBackImageError(e)}
                                 />
-                            :   <CameraIcon className="CameraIcon"/>
-                            }
+                            ) : (
+                                <CameraIcon className="CameraIcon"/>
+                            )}
                         </div>
                         <input 
                             type="file" 
@@ -264,10 +287,16 @@ export default function BankDetails({ context, lenderUpgrade }) {
                             Upload
                         </button>
                     </div>
+                    {backImageError ? (
+                        <ValidationPopup 
+                            errorText='Please try again.' 
+                            errorHeader='Failed to upload an image'
+                        />
+                    ) : null}
                 </div>
 
                 <div className="LoginHeader LoginHeader--NoMargin">Website (Social Media)</div>
-                <div className="LoginInputValidationContainer">
+                <div className="LoginInputValidationContainer" style={{marginBottom: '1rem'}}>
                     <input 
                         type='text' 
                         placeholder='https://www.littlebigshed.com' 
@@ -275,8 +304,6 @@ export default function BankDetails({ context, lenderUpgrade }) {
                         value={website}
                         onChange={(e) => dispatch({ type: 'setWebsite', data: e.target.value})} 
                     />
-                    <div className={`triangleLeft ${!cardCvc?.error ? '' : 'ValidationTextHide'}`} />
-                    <ValidationPopup errorText={cardCvc?.error?.message} errorHeader='Invalid CCV' hide={!cardCvc?.error} />
                 </div>
                 <Button 
                 text="Next"

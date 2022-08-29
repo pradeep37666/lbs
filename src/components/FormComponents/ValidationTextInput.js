@@ -31,7 +31,7 @@ export default function ValidationTextInput({
                             className="PasswordInput"
                             value={value}
                             onChange={onChange}/>
-                            <ShowPasswordIcon onClick={() => setIsInputHidden(!isInputHidden)} />
+                            <ShowPasswordIcon onClick={() => setIsInputHidden(!isInputHidden)}/>
                         </div>
                     ) : (
                         <input 
@@ -44,15 +44,13 @@ export default function ValidationTextInput({
                         onWheel={e => e.target.blur()}
                         />
                     )}
-                    { errorMessage && !inLineError ? (
-                        <ValidationPopup errorText={errorMessage} hide={false} errorHeader={errorHeader ||  `Invalid ${label}`}/>
-                    ) : null }
                 </div>
-                {errorMessage && inLineError ? (
-                    <div className="InLineErrorContainer">
-                        <div className="ValidationPopup__Header">{errorHeader || `Invalid ${label}`}</div>
-                        { errorMessage }
-                    </div>
+                {errorMessage && !inLineError ? (
+                    <ValidationPopup 
+                        errorText={errorMessage} 
+                        errorHeader={errorHeader} 
+                        label={label} 
+                    />
                 ) : null}
             </div>
         </div>

@@ -1,8 +1,10 @@
 .InLineErrorContainer {
+  background-color: #f7e7e9;
+  border-radius: 10px;
   padding: 0.7em;
+  margin-top: 0.2em;
   font-size: 18px;
   user-select: none;
-  z-index: 50;
 }
 .ValidationInputContainer {
   margin-bottom: 1em;

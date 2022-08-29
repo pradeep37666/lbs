@@ -11,6 +11,7 @@ import { FileService } from '../../services/FileService'
 import PhoneNumberInput from '../phoneNumberInput/PhoneNumberInput'
 import { REGISTER_PAGES, SNACKBAR_BUTTON_TYPES } from '../../assets/Data/LBSEnum'
 import useErrorState from '../../util/reducers/errorContext'
+import ValidationPopup from '../ValidationPopup/ValidationPopup'
 
 export default function BasicDetails({ context }) {
     const { state, dispatch } = useContext(context)
@@ -19,6 +20,7 @@ export default function BasicDetails({ context }) {
     const [ isLoading, setIsLoading ] = useState(false)
     const [ emailTakenError, setEmailTakenError ] = useState()
     const [ phoneTakenError, setPhoneTakenError ] = useState()
+    const [ imageError, setImageError ] = useState('')
     const { 
         firstName, lastName, email, phoneNumber, 
         password, confirmPassword, image, isLenderUpgrade
@@ -146,11 +148,17 @@ export default function BasicDetails({ context }) {
                 <div className="LoginHeader">Profile Picture</div>
                 <div className="ProfilePictureFlex">
                     <div className="ProfilePictureCircle" >
-                        {image ? 
-                    
-                        <img src={image.preview} alt="" className="ProfilePicturePreview"/>
-                    
-                        : <CameraIcon className="CameraIcon"/>}
+                        {image ? (
+                            <img 
+                                src={image.preview} 
+                                alt="" 
+                                className="ProfilePicturePreview"
+                                onLoad={() => setImageError('')}
+                                onError={(e) => setImageError(e)}
+                            />
+                        ) : (
+                            <CameraIcon className="CameraIcon"/>
+                        )}
                     </div>
                     <input 
                         type="file" 
@@ -165,6 +173,12 @@ export default function BasicDetails({ context }) {
                         Upload
                     </button>
                 </div>
+                {imageError ? (
+                    <ValidationPopup 
+                        errorText='Please try again.' 
+                        errorHeader='Failed to upload an image'
+                    />
+                ) : null}
             </div>
 
             <div className="LoginMain LoginMainNoMarg">

@@ -26,7 +26,7 @@ export default function Register() {
     const { errorDispatch } = useErrorState()
     const [ state, dispatch ] = useReducer(registerReducer, { 
         isLenderUpgrade: false,
-        currentPage: REGISTER_PAGES.BASIC,
+        currentPage: REGISTER_PAGES.BANK,
         dateOfBirth: new Date(1990, 0, 1),
         availability: Array(14).fill(0),
         firstName: '', 

@@ -34,6 +34,7 @@ export default function Button({
                 <button 
                 className={getButtonClassName()} 
                 onClick={handleButtonClick}
+                disabled={isDisabled}
                 >
                     { isLoading ? (
                         <CircularProgress color="inherit" size={20} />

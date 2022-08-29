@@ -1,11 +1,13 @@
-import React from 'react';
-import './ValidationPopup.css';
+import React from 'react'
+import './ValidationPopup.css'
 
-export default function ValidationPopup(props) {
+export default function ValidationPopup({ errorHeader, errorText, label }) {
     return (
-        <div className={`VerificationText__Main ${props.hide ? '' : 'ValidationTextShow'}`}>
-                <div className="ValidationPopup__Header">{props.errorHeader}</div>
-                <div>{props.errorText}</div>
+        <div className="InLineErrorContainer">
+            <div className="ValidationPopup__Header">
+                { label ? `Invalid ${label}` : errorHeader }
+            </div>
+            { errorText }
         </div>
     )
 }
