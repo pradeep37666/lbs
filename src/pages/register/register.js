@@ -26,7 +26,7 @@ export default function Register() {
     const { errorDispatch } = useErrorState()
     const [ state, dispatch ] = useReducer(registerReducer, { 
         isLenderUpgrade: false,
-        currentPage: REGISTER_PAGES.BANK,
+        currentPage: REGISTER_PAGES.BASIC,
         dateOfBirth: new Date(1990, 0, 1),
         availability: Array(14).fill(0),
         firstName: '', 
@@ -180,7 +180,7 @@ export default function Register() {
                 <Logo height='50px' width='50px' style={{marginBottom: '1em'}}/>
                 <div className="LoginHeader">Account Created</div>
                 <div className="LoginText">You have successfully created your Little Big Shed account and are now ready to start borrowing!</div>
-                    <button className="LoginFormButton" onClick={() => history.push({pathname: '/user/account'})}>
+                    <button className="LoginFormButton" onClick={() => history.push({pathname: '/search'})}>
                         Continue
                     </button>
                 </div>

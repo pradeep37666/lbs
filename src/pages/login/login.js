@@ -37,7 +37,7 @@ export default function Login() {
             setLoginError("")
             localStorage.setItem('LBSToken', data.token.accessToken)
             dispatch({ type: 'setUser', data: data.user })
-            history.push({pathname: '/user/account'})
+            history.push({pathname: '/search'})
         } catch(error) {
             console.log(error)
             setLoginError("An error occurred while logging in, please try again")
