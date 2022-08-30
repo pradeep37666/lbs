@@ -41,9 +41,6 @@ const ItemLocation = ({ item }) => {
         }
     }
 
-    useEffect(() => {
-        console.log({item})
-    },[item])
     return (
         <>
             <div className="ItemDetailsHeader">Location</div>

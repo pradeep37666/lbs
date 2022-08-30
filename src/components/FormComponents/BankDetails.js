@@ -206,8 +206,8 @@ export default function BankDetails({ context, lenderUpgrade }) {
                 </div>
 
                 <ValidationTextInput 
-                    label="Account Number"
                     value={accountNumber}
+                    label="Account Number"
                     placeholder="123 456 789"
                     onChange={e => dispatch({ type: 'setAccountNumber', data: e.target.value })}
                 />

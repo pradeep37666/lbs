@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { ReactComponent as Logo } from '../../../assets/Logos/LogoRed.svg';
 import LBSSwitch from '../../../components/LBSSwitch/LBSSwitch';
 import { Fade } from '@material-ui/core';
@@ -7,14 +7,44 @@ import ValidationTextInput from '../../../components/FormComponents/ValidationTe
 import { DELIVERY_OPTIONS } from '../../../assets/Data/LBSSelectOptions';
 import LBSSelectBox from '../../../components/LBSSelectBox/LBSSelectBox';
 import { POST_ITEM_PAGE } from '../../../assets/Data/LBSEnum';
+import { validate } from 'validate.js';
+import { discountConstraints } from '../../../util/validationConstraints';
 
 export default function AdvancedDetails({ context }) {
     const { state, dispatch } = useContext(context)
+    const [ errorMessages, setErrorMessages ] = useState({})
     const { 
         description, price, discount,
         deliveryPrice, pickupPrice, deliveryOption,
     } = state
     const [isDiscount, setIsDiscount] = useState(false)
+
+    useEffect(() => {
+        if (Object.keys(errorMessages).length > 0) {
+            const valid = validateInputs()
+            if (valid) {
+                setErrorMessages({})
+                return
+            }
+        }
+    },[description, price, discount, deliveryPrice, pickupPrice, deliveryOption])
+
+    const getErrorMessage = (inputName) => {
+        if (Object.keys(errorMessages).length === 0) return null
+        for (const key in errorMessages) {
+            if (Object.keys(errorMessages)[0] === inputName) return errorMessages[key][0]
+        }
+    }
+
+    const validateInputs = () => {
+        const validationErrors = validate({ discount }, discountConstraints)
+        if (validationErrors) {
+            setErrorMessages(validationErrors)
+            return false
+        }
+        setErrorMessages({})
+        return true
+    }
 
     const disabledDeliveryOption = () => {
         if (!deliveryOption) return true
@@ -96,6 +126,7 @@ export default function AdvancedDetails({ context }) {
                             value={discount}
                             onChange={(e) => dispatch({ type: 'setDiscount', data: parseInt(e.target.value)})}
                             placeholder="5%"
+                            errorMessage={getErrorMessage('discount')}
                             />
                         </div>
                     </Fade>
@@ -146,7 +177,11 @@ export default function AdvancedDetails({ context }) {
                 }
                 <Button 
                 text="Next"
-                onClick={() => dispatch({ type: 'setCurrentPage', data: POST_ITEM_PAGE.LOCATION })}
+                onClick={() => {
+                    const valid = validateInputs()
+                    if (!valid) return
+                    dispatch({ type: 'setCurrentPage', data: POST_ITEM_PAGE.LOCATION })
+                }}
                 isDisabled={!description || !price || disabledDeliveryOption()}
                 />
             </div>

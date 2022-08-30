@@ -3,10 +3,19 @@
   margin-bottom: 5px;
 }
 
+.ReactIconCategory {
+  width: 2rem;
+  height: 2rem;
+  max-width: 30px;
+  margin-bottom: 5px;
+  color: #b03b4b;
+}
+
 .CatIconContainer {
   width: 30%;
   display: flex;
   justify-content: center;
+  align-items: center;
   min-height: 32px;
 }
 

@@ -1,70 +1,83 @@
-import { ReactComponent as PaintingIcon } from '../Icons/PaintingIcon.svg'
-import { ReactComponent as OfficeIcon } from '../Icons/OfficeIcon.svg'
-import { ReactComponent as HammerIcon } from '../Icons/HammerIcon.svg'
-import { ReactComponent as BBQIcon } from '../Icons/BBQIcon.svg'
-import { ReactComponent as CarIcon } from '../Icons/AutomotiveIcon.svg'
-import { ReactComponent as DrillIcon } from '../Icons/DrillIcon.svg'
-import { ReactComponent as CreativeIcon } from '../Icons/CreativeIcon.svg'
-import { ReactComponent as MowingIcon } from '../Icons/MowingIcon.svg'
-import { ReactComponent as CleaningIcon } from '../Icons/CleaningIcon.svg'
-import { ReactComponent as SportingIcon } from '../Icons/SportingIcon.svg'
+import { 
+    GiGardeningShears as GardeningIcon,
+    GiPartyPopper as PartyIcon,
+} from 'react-icons/gi'
+import { 
+    MdSportsTennis as SportIcon,
+    MdOutlineOutdoorGrill as BBQIcon,
+} from 'react-icons/md'
+import { 
+    AiOutlineCamera as CameraIcon,
+    AiOutlineCar as CarIcon,
+} from 'react-icons/ai'
+import { BiCloset as ClosetIcon } from 'react-icons/bi'
+import { TbToolsKitchen2 as KitchenIcon } from 'react-icons/tb'
+import { IoGameControllerOutline as GameIcon } from 'react-icons/io5'
+import { TbMusic as MusicIcon } from 'react-icons/tb'
+import { BsHouseDoor as HouseholdIcon } from 'react-icons/bs'
+import { 
+    MdElectricalServices as ElectronicsIcon,
+    MdWorkspacesOutline as SpaceIcon,
+    MdOutlineOtherHouses as OthersIcon,
+} from 'react-icons/md'
+
 
 const ITEM_CATEGORIES = [
     {
         name: 'DIY & Garden',
-        icon: <MowingIcon className="CategoryDDIcon"/>,
+        icon: <GardeningIcon className="ReactIconCategory"/>,
     },
     {
         name: 'Outdoor & Sport',
-        icon: <MowingIcon className="CategoryDDIcon"/>,
+        icon: <SportIcon className="ReactIconCategory"/>,
     },
     {
         name: 'Photography',
-        icon: <PaintingIcon className="CategoryDDIcon"/>,
+        icon: <CameraIcon className="ReactIconCategory"/>,
     },
     {
         name: 'Parties & Events',
-        icon: <PaintingIcon className="CategoryDDIcon"/>,
+        icon: <PartyIcon className="ReactIconCategory"/>,
     },
     {
         name: 'Vehicle',
-        icon: <CarIcon className="CategoryDDIcon"/>,
+        icon: <CarIcon className="ReactIconCategory"/>,
     },
     {
         name: 'Closet',
-        icon: <PaintingIcon className="CategoryDDIcon"/>,
+        icon: <ClosetIcon className="ReactIconCategory"/>,
     },
     {
         name: 'Kitchen',
-        icon: <PaintingIcon className="CategoryDDIcon"/>,
+        icon: <KitchenIcon className="ReactIconCategory"/>,
     },
     {
         name: 'Gaming & Toys',
-        icon: <PaintingIcon className="CategoryDDIcon"/>,
+        icon: <GameIcon className="ReactIconCategory"/>,
     },
     {
         name: 'Musical',
-        icon: <PaintingIcon className="CategoryDDIcon"/>,
+        icon: <MusicIcon className="ReactIconCategory"/>,
     },
     {
         name: 'Household',
-        icon: <PaintingIcon className="CategoryDDIcon"/>,
+        icon: <HouseholdIcon className="ReactIconCategory"/>,
     },
     {
         name: 'Babies & Kids',
-        icon: <PaintingIcon className="CategoryDDIcon"/>,
+        icon: <BBQIcon className="ReactIconCategory"/>,
     },
     {
         name: 'Electronics',
-        icon: <PaintingIcon className="CategoryDDIcon"/>,
+        icon: <ElectronicsIcon className="ReactIconCategory"/>,
     },
     {
         name: 'Spaces',
-        icon: <PaintingIcon className="CategoryDDIcon"/>,
+        icon: <SpaceIcon className="ReactIconCategory"/>,
     },
     {
         name: 'Other',
-        icon: <PaintingIcon className="CategoryDDIcon"/>,
+        icon: <OthersIcon className="ReactIconCategory"/>,
     },
 ]
 

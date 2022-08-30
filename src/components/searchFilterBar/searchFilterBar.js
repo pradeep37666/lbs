@@ -18,6 +18,7 @@ import { useHistory } from "react-router";
 import MapsAutocomplete from "../mapsAutocomplete/MapsAutocomplete";
 import { useLocation } from "react-router";
 import Geocode from 'react-geocode'
+import { ITEM_CATEGORIES } from "../../assets/Data/LBSSelectOptions";
 
 const LocationSlider = withStyles({
   root: {
@@ -158,7 +159,7 @@ export default function SearchFilterBar({ keyWord }) {
   ];
 
   const renderCategories = () => {
-    return categories.map((category, index) => {
+    return ITEM_CATEGORIES.map((category, index) => {
       return (
         <div
         key={index}
@@ -171,8 +172,10 @@ export default function SearchFilterBar({ keyWord }) {
             console.log("Category Clicked : ", Category);
           }}
         >
-          <img src={category.icon} alt="" className="CategoryFilterIcon" />
+          {category.icon}
+          <p style={{marginLeft: '0.5rem'}}>
           {category.name}
+          </p>
         </div>
       );
     });

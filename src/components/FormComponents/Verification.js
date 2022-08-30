@@ -56,7 +56,7 @@ export default function Verification({ context }) {
                     <div className="LoginText">Log in or create an account to start sharing and borrowing from Little Big Shed.</div>
 
                     <div className="LoginHeader">Verification Code</div>
-                    <input type='text' placeholder='12345678' className="LoginInput" onChange={e => setVerificationCode(e.target.value)}/>
+                    <input type='text' placeholder='12345678' className="LoginInput" onChange={e => setVerificationCode(e.target.value)} style={{marginBottom: '1rem'}}/>
 
                     <Button
                     isLoading={isLoading}
