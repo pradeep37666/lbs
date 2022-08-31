@@ -3,9 +3,7 @@ import clsx from 'clsx'
 import { makeStyles } from '@material-ui/core/styles'
 import Checkbox from '@material-ui/core/Checkbox'
 import './tcSection.css'
-import { Document, Page } from 'react-pdf/dist/esm/entry.webpack'
-import { pdfjs } from 'react-pdf'
-// import TnC from '../../../public/Policies/LBS_TermsConditions.pdf'
+import TnC from './TnC'
 
 const useStyles = makeStyles({
   root: {
@@ -57,12 +55,7 @@ export default function CustomizedCheckbox({ onClick, termsChecked }) {
   return (
     <div>
       <div className="TCScrollDiv">
-        <Document 
-          file={'../../../public/Policies/LBS_TermsConditions.pdf'}
-          // file={'http://www.pdf995.com/samples/pdf.pdf'}
-          onLoadError={(e) => console.log({e})}
-          options={{ workerSrc: `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js` }}
-        />
+        <TnC />
       </div>
       <div className="TCCheckboxFlex">
       <Checkbox

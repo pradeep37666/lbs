@@ -1,0 +1,70 @@
+.tnc_container {
+    width: 100%;
+    height: 100%;
+}
+
+.tnc_main_title,
+.tnc_main_body,
+.tnc_section_title,
+.tnc_section_sub_title,
+.tnc_info {
+    margin: 0;
+    width: 100%;
+}
+
+.tnc_main_title {
+    width: 100%;
+    text-align: center;
+}
+
+.tnc_main_title {
+    color: #ac172c;
+    font-weight: 600;
+    font-size: 1.2em;
+    padding: 1em 0;
+}
+
+.tnc_main_body {
+    font-size: 0.9em;
+}
+
+.tnc_section_title {
+    font-weight: 500;
+    margin-top: 1rem;
+}
+
+.tnc_section_sub_title {
+    padding: 1em 0;
+}
+
+.tnc_section_list_box {
+    width: 100%;
+    counter-reset: list;
+    margin: 0;
+    padding-bottom: 1rem;
+}
+
+.tnc_section_list_box > li {
+    list-style: none;
+    position: relative;
+    margin: 0.5em 0;
+    font-size: 0.9em;
+}
+
+.tnc_section_list_box > li:before {
+    counter-increment: list;
+    content: counter(list, lower-alpha) ')';
+    position: absolute;
+    left: -1.6em;
+}
+
+.tnc_section_sub_list {
+    position: relative;
+    width: 100%;
+    padding-left: 2rem;
+}
+
+.tnc_section_bullet {
+    position: absolute;
+    left: 0;
+}
