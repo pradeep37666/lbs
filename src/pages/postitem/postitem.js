@@ -16,11 +16,13 @@ import { POST_ITEM_PAGE, SNACKBAR_BUTTON_TYPES } from '../../assets/Data/LBSEnum
 import { getPrevPostItemPage } from '../../util/getPrevPage'
 import { useHistory } from 'react-router-dom'
 import useErrorState from '../../util/reducers/errorContext'
+import AgreementModal from '../../components/modals/AgreementModal/AgreementModal'
  
 const FormContext = createContext()
 
 export default function PostItem() {
-    const [isCreateItemLoading, setIsCreateItemLoading] = useState(false)
+    const [ isCreateItemLoading, setIsCreateItemLoading ] = useState(false)
+    const [ isModalVisible, setIsModalVisible ] = useState(false)
     const { user } = useGlobalState().state
     const history = useHistory()
     const { errorDispatch } = useErrorState()
@@ -86,6 +88,7 @@ export default function PostItem() {
             }})
         } finally {
             setIsCreateItemLoading(false)
+            setIsModalVisible(false)
         }
     }
 
@@ -102,8 +105,7 @@ export default function PostItem() {
             case POST_ITEM_PAGE.AVAILABILITY:
                 return <Availability 
                 context={FormContext}
-                createItem={createItem}
-                isCreateItemLoading={isCreateItemLoading}
+                openModal={() => setIsModalVisible(true)}
                 />
             case POST_ITEM_PAGE.COMPLETE:
                 return <Complete 
@@ -129,6 +131,16 @@ export default function PostItem() {
                     prevPage={() => getPrevPostItemPage(currentPage, dispatch, history)}
                 />
                 {renderCurrentPage()}
+                {isModalVisible && (
+                <AgreementModal 
+                    title={'Lenders Agreement'}
+                    content={"Be sure to read over your lender's rights (Found on our website) and that you have the right licencing and permissions to operate this item. By tapping the Yes button you agree that you understand these terms."}
+                    isLoading={isCreateItemLoading}
+                    open={isModalVisible}
+                    onClose={() => setIsModalVisible(false)}
+                    onClick={createItem}
+                />
+                )}
             </PageWrapper>
         </FormContext.Provider>
     )

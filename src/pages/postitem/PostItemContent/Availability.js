@@ -1,13 +1,12 @@
-import React, { useState, useEffect, useContext } from "react";
-import { ReactComponent as Logo } from "../../../assets/Logos/LogoRed.svg";
-import ProductSlots from "../../../components/productSlots/productSlots";
-import useGlobalState from "../../../util/useGlobalState";
-import Button from "../../../components/Button/Button";
+import React, { useState, useContext } from 'react'
+import { ReactComponent as Logo } from '../../../assets/Logos/LogoRed.svg'
+import ProductSlots from '../../../components/productSlots/productSlots'
+import Button from '../../../components/Button/Button'
 
-export default function Availability({ context, createItem, isCreateItemLoading }) {
+export const Availability = ({ context, openModal }) => {
   const { state, dispatch } = useContext(context)
   const { availability } = state
-  const [keepTimes, setKeepTimes] = useState(true);
+  const [ keepTimes, setKeepTimes ] = useState(true);
 
 
   return (
@@ -28,15 +27,13 @@ export default function Availability({ context, createItem, isCreateItemLoading 
           </div>
           <Button 
           text="Keep Set Times"
-          onClick={() => { createItem() }}
+          onClick={openModal}
           style={{ marginBottom: '1rem'}}
-          isLoading={isCreateItemLoading}
           />
           <Button 
           invertedColors
           onClick={() => setKeepTimes(false)}
           text="Set Custom Times"
-          
           />
         </div>
       ) : (
@@ -59,13 +56,14 @@ export default function Availability({ context, createItem, isCreateItemLoading 
           <div className="SkipNextButtonFlex">
               <Button 
               text="Next"
-              onClick={() => { createItem() }}
-              isLoading={isCreateItemLoading}
+              onClick={openModal}
               />
           </div>
 
         </div>
       )}
     </div>
-  );
+  )
 }
+
+export default Availability

@@ -56,7 +56,10 @@ export default function ItemOptions() {
                             <span className="OptionsItemHeader">
                                 Delivery <span className="OptionsPrice">${item.deliveryPrice}</span>
                             </span>
-                            <p>Have your item delivered to you</p>
+                            <p>
+                                Have your item delivered to you<br/>
+                                Where would you like this item to be delivered to?
+                            </p>
                         </div>
                         <CheckBox 
                         checked={deliverySelected} 
@@ -68,7 +71,10 @@ export default function ItemOptions() {
                             <span className="OptionsItemHeader"> 
                                 Pickup <span className="OptionsPrice">${item.pickupPrice}</span>
                             </span>
-                            <p>Have your item picked up from you</p>
+                            <p>
+                                Have your item picked up from you<br/>
+                                Where would you like this item to be collected from?
+                            </p>
                         </div>
                         <CheckBox 
                         checked={pickupSelected} 
@@ -83,7 +89,10 @@ export default function ItemOptions() {
                             <span className="OptionsItemHeader">
                                 Delivery <span className="OptionsPrice">${item.deliveryPrice}</span>
                             </span>
-                            <p>Have your item delivered to you</p>
+                            <p>
+                                Have your item delivered to you<br/>
+                                Where would you like this item to be delivered to?
+                            </p>
                         </div>
                         <CheckBox 
                         checked={deliverySelected} 
@@ -97,7 +106,10 @@ export default function ItemOptions() {
                             <span className="OptionsItemHeader"> 
                                 Pickup <span className="OptionsPrice">${item.pickupPrice}</span>
                             </span>
-                            <p>Have your item picked up from you</p>
+                            <p>
+                                Have your item picked up from you<br/>
+                                Where would you like this item to be collected from?
+                            </p>
                         </div>
                         <CheckBox 
                         checked={pickupSelected} 

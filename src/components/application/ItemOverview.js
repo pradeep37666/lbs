@@ -14,9 +14,11 @@ import { fullNameDayArray, monthArray } from '../../assets/Data/LBSArray'
 import { BOOKING_STATUSES, SNACKBAR_BUTTON_TYPES } from '../../assets/Data/LBSEnum'
 import Instance, { CometChatInstance } from '../../util/axios'
 import useErrorState from '../../util/reducers/errorContext'
+import AgreementModal from '../modals/AgreementModal/AgreementModal'
 
 export default function ItemOverview() {
     const [ isLoading, setIsLoading ] = useState(false)
+    const [ isModalVisible, setIsModalVisible ] = useState(false)
     const { state, dispatch } = useContext(ApplicationContext)
     const { errorDispatch } = useErrorState()
     const globalState = useGlobalState()
@@ -61,7 +63,7 @@ export default function ItemOverview() {
         const bookingStartTime = new Date(confirmedStart.dateObj.getTime())
         bookingStartTime.setHours(confirmedStart?.am ? 6 : 12)
         return ({
-            borrowerAddress: address ?? '',
+            borrowerAddress: address,
             lenderId: item.userId,
             borrowerId: user.id,
             itemId: item.id,
@@ -128,50 +130,51 @@ export default function ItemOverview() {
     }
 
     return (
-            <div className="ApplicationOverviewContainer">
-                <div className="ItemOverviewCardContainer">
-                    <span className="ApplicationOverviewHeader">Application Overview</span>
-                    <ApplicationItemCard item={item}/>
+        <div className="ApplicationOverviewContainer">
+            <div className="ItemOverviewCardContainer">
+                <span className="ApplicationOverviewHeader">Application Overview</span>
+                <ApplicationItemCard item={item}/>
+            </div>
+            <div>
+                <span className="ApplicationOverviewSubHeader">Itemised Costs</span>
+                <div className="ItemOverviewItemContainer">
+                    <p>Cost for items</p>
+                    <span className="ItemOverviewPrice">${bookingPriceCalculator.getPriceWithoutExtras()}</span>
                 </div>
-                <div>
-                    <span className="ApplicationOverviewSubHeader">Itemised Costs</span>
+                <div className="ItemOverviewBorrowContainer">
                     <div className="ItemOverviewItemContainer">
-                        <p>Cost for items</p>
-                        <span className="ItemOverviewPrice">${bookingPriceCalculator.getPriceWithoutExtras()}</span>
+                        <p>Borrow options total</p>
+                        <span className="ItemOverviewPrice">${bookingPriceCalculator.getPriceOfExtras()}</span>
                     </div>
-                    <div className="ItemOverviewBorrowContainer">
-                        <div className="ItemOverviewItemContainer">
-                            <p>Borrow options total</p>
-                            <span className="ItemOverviewPrice">${bookingPriceCalculator.getPriceOfExtras()}</span>
-                        </div>
-                        { deliverySelected && 
-                        <div className="ItemOverviewItemContainer">
-                            <span className="ItemOverviewSmallText">Item Delivery</span>
-                            <span className="ItemOverviewSmallText">${item.deliveryPrice}</span>
-                        </div>}
-                        { pickupSelected && 
-                        <div className="ItemOverviewItemContainer">
-                            <span className="ItemOverviewSmallText">Item Pickup</span>
-                            <span className="ItemOverviewSmallText">${item.pickupPrice}</span>
-                        </div>}
-                    </div>
+                    { deliverySelected && (
                     <div className="ItemOverviewItemContainer">
-                        <span className="ItemOverviewSmallText">Off Peak Discount </span>
-                        <span className="ItemOverviewSmallText">-${bookingPriceCalculator.getOffPeakDiscount()}</span>
-
+                        <span className="ItemOverviewSmallText">Item Delivery</span>
+                        <span className="ItemOverviewSmallText">${item.deliveryPrice}</span>
                     </div>
+                    )}
+                    { pickupSelected && (
                     <div className="ItemOverviewItemContainer">
-                        <p>Total Price</p>
-                        <span className="ItemOverviewPrice">${bookingPriceCalculator.getTotalPrice()}</span>
+                        <span className="ItemOverviewSmallText">Item Pickup</span>
+                        <span className="ItemOverviewSmallText">${item.pickupPrice}</span>
                     </div>
-                    <div className="ItemOverviewItemContainer">
-                        <span className="ApplicationOverviewSubHeader">Dates</span>
-                        <span 
-                        onClick={() => dispatch({ type: 'setPage', data: 'ItemAvailability'})}
-                        className="ItemOverviewEditButton"
-                        >
-                            Edit Dates
-                        </span>
+                    )}
+                </div>
+                <div className="ItemOverviewItemContainer">
+                    <span className="ItemOverviewSmallText">Off Peak Discount </span>
+                    <span className="ItemOverviewSmallText">-${bookingPriceCalculator.getOffPeakDiscount()}</span>
+                </div>
+                <div className="ItemOverviewItemContainer">
+                    <p>Total Price</p>
+                    <span className="ItemOverviewPrice">${bookingPriceCalculator.getTotalPrice()}</span>
+                </div>
+                <div className="ItemOverviewItemContainer">
+                    <span className="ApplicationOverviewSubHeader">Dates</span>
+                    <span 
+                    onClick={() => dispatch({ type: 'setPage', data: 'ItemAvailability'})}
+                    className="ItemOverviewEditButton"
+                    >
+                        Edit Dates
+                    </span>
                 </div>
                 <div className="ApplicationFooterDetailsContainer">
                     <div className="ApplicationFooterDetails">
@@ -202,11 +205,18 @@ export default function ItemOverview() {
                 </div>
             </div>
             <Button 
-            onClick={saveBooking}
-            text="Send"
-            isLoading={isLoading}
-            style={{ width: '75%', alignSelf: 'center', marginTop: '1rem'}}
+                onClick={() => setIsModalVisible(true)}
+                text="Next"
+                style={{ width: '75%', alignSelf: 'center', marginTop: '1rem'}}
             />
-            </div>
+            <AgreementModal 
+                title={'Borrowers Agreement'}
+                content={"Be sure to read over your borrower's rights (Found on our website) and that you have the right licencing and permissions to operate this item. By tapping the Yes button you agree that you understand these terms."}
+                isLoading={isLoading}
+                open={isModalVisible}
+                onClose={() => setIsModalVisible(false)}
+                onClick={saveBooking}
+            />
+        </div>
     )
 }

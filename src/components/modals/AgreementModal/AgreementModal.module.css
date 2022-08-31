@@ -1,0 +1,57 @@
+.modal_title {
+    color: #33384f;
+    font-size: 1.2em;
+    font-weight: bold;
+    width: 100%;
+    margin: 0;
+    padding: 1em;
+}
+
+.modal_content {
+    margin: 0;
+    padding: 0 1em 1em;
+}
+
+.modal_btn_container {
+    display: flex;
+    padding: 1em;
+}
+
+.modal_loading,
+.modal_btn_yes,
+.modal_btn_no {
+    width: 10rem;
+    height: 2.5rem;
+    padding: 0.5em;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    cursor: no-drop;
+}
+
+.modal_loading {
+    background-color: #B43B4C;
+    color: white;
+    margin-right: 1rem;
+}
+
+.modal_btn_yes {
+    color: white;
+    border: none;
+    outline: none;
+    margin-right: 1rem;
+    background-color: #B43B4C;
+    transition: background-color 0.3s;
+}
+
+.modal_btn_no {
+    color: #B43B4C;
+    border: 1px solid #B43B4C;
+    outline: none;
+}
+
+.modal_btn_yes:hover {
+    background-color: #AC172C;
+}

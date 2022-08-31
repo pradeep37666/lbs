@@ -137,7 +137,7 @@ export default function AdvancedDetails({ context }) {
 
                 <div className="LoginHeader">Item Delivery &amp; Pickup</div>
                 <div className="LoginText">
-                    Enter the price you would like to charge out pick up and delivery. 
+                    Enter the price you would like to charge out delivery and pick up. 
                     If you don’t want to offer this service, select "None".
                 </div>
                 <LBSSelectBox 
