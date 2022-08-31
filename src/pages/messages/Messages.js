@@ -10,6 +10,7 @@ import useGlobalState from '../../util/useGlobalState'
 import { isMobile } from 'react-device-detect'
 import NoContent from '../../components/NoContent/NoContent'
 import { useHistory } from 'react-router'
+import { async } from 'validate.js'
 
 export default function Messages() {
     const { state } = useGlobalState()
@@ -50,14 +51,22 @@ export default function Messages() {
     }
 
     const getMessages = async () => {
-        // setIsLoading(true)
         try{
             const messagesRequest = new CometChat.MessagesRequestBuilder().setLimit(0).setUID(activeChatUser.uid).build()
-            const res = await messagesRequest.fetchPrevious()
-            setMessages(res)
-            // setIsLoading(false)
+            const response = await messagesRequest.fetchPrevious()
+            setMessages(response)
+            const lastMessage = response[response.length - 1];
+            markAsRead(lastMessage)
         } catch(e) {
             console.log('error fetching messages', e)
+        }
+    }
+
+    const markAsRead = async (lastMessage) => {
+        try {
+          CometChat.markAsRead(lastMessage)
+        } catch (error) {
+          console.log({error})
         }
     }
 
@@ -67,6 +76,7 @@ export default function Messages() {
         }
         try{        
            getConversations()
+           await markAsRead(msg)
         } catch(e) {
             console.log(e)
         }

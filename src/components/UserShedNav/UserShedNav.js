@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './UserShedNav.css'
 import { ReactComponent as Trades } from '../../assets/Icons/Trades.svg'
 import { ReactComponent as Messages } from '../../assets/Icons/Messages.svg'
@@ -19,7 +19,7 @@ export default function UserShedNav(props) {
     const url = urlArr[urlArr.length - 1]
     const history = useHistory()
     const { state, dispatch } = useGlobalState()
-    const { user } = state
+    const { user, unReadMessageCount } = state
 
     const [activeMain, setActiveMain] = useState(url)
 
@@ -41,6 +41,9 @@ export default function UserShedNav(props) {
             <Link to='/user/messages'>
                 <div className={`UserShedNav__LinkFlex ${activeMain === 'messages' ? 'UserShedNav__LinkFlex--Active' : ''}`} onClick={() => setActiveMain('messages')}>
                     <Messages height="50px" width="50px" className="UserShedNav__Icon" />
+                    {unReadMessageCount > 0 && (
+                        <span className='UserShedNav__NewMessage'></span>
+                    )}
                     Messages
                 </div>
             </Link>

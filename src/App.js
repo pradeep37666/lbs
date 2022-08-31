@@ -43,6 +43,8 @@ import EditItemPage from './pages/editItem/EditItemPage'
 import Instance from './util/axios'
 import ForgotPassword from './pages/ForgotPassword/ForgotPassword'
 import LBSSnackBar from './components/LBSSnackBar/LBSSnackBar'
+import { async } from 'validate.js'
+import { GiReturnArrow } from 'react-icons/gi'
 
 const SentryRoute = Sentry.withSentryRouting(Route)
 const history = createBrowserHistory()
@@ -84,6 +86,10 @@ function App() {
     setupCometChat()
     getCurrentUser()
   }, [])
+  
+  useEffect(() => {
+    user && getUnReadMessageCount()
+  },[user])
 
   const getCurrentUser = async () => {
     try{
@@ -108,6 +114,21 @@ function App() {
         console.log("Initialization failed with error:", error);
       }
     );
+  }
+
+  const getUnReadMessageCount = async () => {
+    try {
+      const cometUser = await CometChat.getUser(user?.id)
+      if (!cometUser) return
+      const countObject = await CometChat.getUnreadMessageCount()
+      if (typeof Object.values(countObject?.users)[0] === 'undefined') return
+      dispatch({
+        type: 'setUnReadMessageCount',
+        data: Object.values(countObject?.users)[0]
+      })
+    } catch (error) {
+      console.log({error})
+    } 
   }
 
   function AuthRoute({ component: Component, ...rest }) {

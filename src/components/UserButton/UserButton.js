@@ -11,14 +11,32 @@ import { ReactComponent as Account } from '../../assets/Icons/Account.svg'
 import { Link } from 'react-router-dom'
 import useGlobalState from '../../util/useGlobalState'
 import getImage from '../../util/getImage'
-import { Avatar } from '@material-ui/core'
+import { Avatar, Badge, styled } from '@material-ui/core'
 import { isMobile } from 'react-device-detect'
 import { CometChat } from '@cometchat-pro/chat'
 import { useHistory } from 'react-router'
 
+const StyledBadge = styled(Badge)(({ theme }) => ({
+    '& .MuiBadge-badge': {
+      backgroundColor: '#b03b4b',
+      color: '#b03b4b',
+      boxShadow: `0 0 0 2px ${theme.palette.background.paper}`,
+      '&::after': {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        width: '100%',
+        height: '100%',
+        borderRadius: '50%',
+        border: '1px solid currentColor',
+        content: '""',
+      },
+    },
+  }))
+
 export default function UserButton() {
     const { state, dispatch } = useGlobalState()
-    const { user } = state
+    const { user, unReadMessageCount } = state
     const firstName = user.firstName
     const history = useHistory()
 
@@ -33,20 +51,30 @@ export default function UserButton() {
     return (
         <div className="UserButton__Container">
             <button className={`UserButton ${menuOpen ? 'UserButton--Active' : ''}`} onClick={() => setMenuOpen(!menuOpen)}>
-
-                <Avatar 
-                src={`${!user.avatar ? MissingProfile : getImage(user.avatar)}`} 
-                className="UserButton_ProfilePicture" 
-                alt="ProfilePicture" 
-                />
-
+                {unReadMessageCount > 0 ? (
+                <StyledBadge
+                    overlap="circular"
+                    anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+                    variant="dot"
+                >
+                    <Avatar 
+                        src={`${!user.avatar ? MissingProfile : getImage(user.avatar)}`} 
+                        className="UserButton_ProfilePicture" 
+                        alt="ProfilePicture" 
+                    />
+                </StyledBadge>
+                ) : (
+                    <Avatar 
+                        src={`${!user.avatar ? MissingProfile : getImage(user.avatar)}`} 
+                        className="UserButton_ProfilePicture" 
+                        alt="ProfilePicture" 
+                    />
+                )}
                 {!isMobile && 
                 <div className="UserButton__FirstName">
                     {firstName}
                 </div>}
-
                 <KeyboardArrowDownIcon />
-
             </button>
 
             <div className={`UserButton__Menu__Wrapper ${menuOpen ? 'UserButton__Menu--Active' : ''}`}>

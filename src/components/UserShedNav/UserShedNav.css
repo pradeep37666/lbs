@@ -8,6 +8,7 @@
 }
 
 .UserShedNav__LinkFlex {
+  position: relative;
   display: flex;
   align-items: center;
   padding: 0.5em 2em 0.5em 2em;
@@ -30,6 +31,16 @@
 .UserShedNav__Icon {
   margin-right: 1em;
   min-width: 3rem;
+}
+
+.UserShedNav__NewMessage {
+  position: absolute;
+  top: 5px;
+  left: 80px;
+  width: 17px;
+  height: 17px;
+  background:  rgba(176, 59, 75, 1);
+  border-radius: 50%;
 }
 
 .LogoutButton {

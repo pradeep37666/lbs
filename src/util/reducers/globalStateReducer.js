@@ -6,6 +6,12 @@ export default function reducer(state, action) {
                 user: action.data
             }
         }
+        case 'setUnReadMessageCount': {
+            return {
+                ...state,
+                unReadMessageCount: action.data
+            }
+        }
         default:
             return state
     }
