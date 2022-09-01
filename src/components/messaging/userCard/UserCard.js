@@ -1,24 +1,27 @@
 import React, { useRef, useState, useEffect } from 'react'
-import { Avatar, CircularProgress, Popover } from '@material-ui/core'
 import './UserCard.css'
-import axios from 'axios'
-import userEvent from '@testing-library/user-event'
+import { Avatar, CircularProgress, Popover } from '@material-ui/core'
 import useGlobalState from '../../../util/useGlobalState'
 import Instance from '../../../util/axios'
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
+import ChevronRightIcon from '@material-ui/icons/ChevronRight'
+import MoreHorizIcon from '@material-ui/icons/MoreHoriz'
 import MissingProfile from '../../../assets/Icons/MissingProfileIcon.png'
 import { CometChat } from '@cometchat-pro/chat'
 import getImage from '../../../util/getImage'
 
-
-export default function UserCard({ conversation, setActiveChatUser, setConversations, setPopupOpen, popupOpen, setMessages}) {
+export default function UserCard({ 
+    conversation, 
+    setActiveChatUser, 
+    setPopupOpen, 
+    popupOpen, 
+    setMessages
+}) {
     const dotRef = useRef()
     const { state } = useGlobalState()
     const { user } = state
-    const [isDeleting, setIsDeleting] = useState(false)
-    const [anchorEl, setAnchorEl] = useState(null)
-    const [cardUser, setCardUser] = useState()
+    const [ isDeleting, setIsDeleting ] = useState(false)
+    const [ anchorEl, setAnchorEl ] = useState(null)
+    const [ cardUser, setCardUser ] = useState()
 
     useEffect(() => {
         getUserRating()
@@ -46,9 +49,7 @@ export default function UserCard({ conversation, setActiveChatUser, setConversat
         }
     }
 
-
     const renderLastMessage = () => {
-        
         if(conversation.lastMessage.data.metadata?.enquiry){
            return conversation.lastMessage.sender.uid === user.id ? (
                // User has enquired about someone else's item
@@ -70,7 +71,6 @@ export default function UserCard({ conversation, setActiveChatUser, setConversat
 
              </span>
             </>
-      
         ) : (
             <>
                 <span className="LastMessageOwner">{conversation.conversationWith.name}: </span>
@@ -85,7 +85,11 @@ export default function UserCard({ conversation, setActiveChatUser, setConversat
     }
 
     return (
-        <div style={isDeleting ? { alignItems: 'center', justifyContent: 'center' } : null } className="UserCard" onClick={handleCardClick}>
+        <div 
+            style={isDeleting ? { alignItems: 'center', justifyContent: 'center' } : null } 
+            className="UserCard" 
+            onClick={handleCardClick}
+        >
 
             { isDeleting ? (
                 <CircularProgress  size={30}/>
@@ -96,20 +100,13 @@ export default function UserCard({ conversation, setActiveChatUser, setConversat
                         <div className="UserCardTop" >
                             <Avatar src={cardUser && cardUser.avatar ? getImage(cardUser.avatar) :  MissingProfile} style={{ height: 50, width: 50}}></Avatar>
                             <div className="UserCardDetails">
-                                
                                 <span>{conversation.conversationWith.name}</span>
-                               
                             </div>
-                            
-                            <div>
-
-                            </div> 
                         </div>
                         <div className="UserCardBottom">
                             <div>
                                 {renderLastMessage()}
                             </div>
-                            
                         </div>
                     </div>
                     <div className="UserCardIconContainer">

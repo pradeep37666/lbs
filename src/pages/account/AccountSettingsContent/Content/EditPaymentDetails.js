@@ -135,7 +135,9 @@ export default function EditPaymentDetails() {
                             <div className="LoginInputValidationContainer">
                                 <input type='text' placeholder='Name on Card' className="LoginInput" onChange={(e) => setCardName(e.target.value)} />
                                 <div className={`triangleLeft ${!cardNameError ? '' : 'ValidationTextHide'}`} /> 
-                                <ValidationPopup errorText={"Please enter a card name"} errorHeader='Invalid Card Name' hide={!cardNameError} />
+                                {cardNameError && (
+                                    <ValidationPopup errorText={"Please enter a card name"} errorHeader='Invalid Card Name' hide={!cardNameError} />
+                                )}
                             </div>
 
 
@@ -147,7 +149,9 @@ export default function EditPaymentDetails() {
                                 options={cardElementOptions}
                                 />
                                 <div className={`triangleLeft ${!cardNumber?.error ? '' : 'ValidationTextHide'}`} /> 
-                                <ValidationPopup errorText={cardNumber?.error?.message} errorHeader='Invalid Card Number' hide={!cardNumber?.error} />
+                                {cardNumber?.error?.message && (
+                                    <ValidationPopup errorText={cardNumber?.error?.message} errorHeader='Invalid Card Number' hide={!cardNumber?.error} />
+                                )}
                             </div>
                             <div className="ExpiryCCVFlex">
                                 <div className="LoginHeader">Expiry</div>
@@ -168,13 +172,17 @@ export default function EditPaymentDetails() {
                                     
                                 </div>
                                 <div className={`triangleLeft ${!cardExpiry?.error ? '' : 'ValidationTextHide'}`} />
-                                <ValidationPopup errorText={cardExpiry?.error?.message} errorHeader='Invalid Expiry Date' hide={!cardExpiry?.error} />
+                                {cardExpiry?.error?.message && (
+                                    <ValidationPopup errorText={cardExpiry?.error?.message} errorHeader='Invalid Expiry Date' hide={!cardExpiry?.error} />
+                                )}
                                 <div className={`triangleLeft ${!cardCvc?.error ? '' : 'ValidationTextHide'}`} />
-                                <ValidationPopup errorText={cardCvc?.error?.message} errorHeader='Invalid CCV' hide={!cardCvc?.error} />
+                                {cardCvc?.error?.message && (
+                                    <ValidationPopup errorText={cardCvc?.error?.message} errorHeader='Invalid CCV' hide={!cardCvc?.error} />
+                                )}
 
                             </div> 
 
-                            <div className="AccountSettings__ButtonFlex">
+                            <div className="AccountSettings__ButtonFlex" style={{marginTop: '1em'}}>
                                 <Button 
                                 onClick={createPaymentMethod}
                                 text="Save Card" 

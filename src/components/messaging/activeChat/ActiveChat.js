@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react'
 import './ActiveChat.css'
-import { CometChat, CometChatConstants } from '@cometchat-pro/chat'
+import { CometChat } from '@cometchat-pro/chat'
 import useGlobalState from '../../../util/useGlobalState'
 import { Avatar, CircularProgress } from '@material-ui/core'
 import ReceivedMessage from '../receivedMessage/ReceivedMessage'
@@ -10,21 +10,18 @@ import MissingProfile from '../../../assets/Icons/MissingProfileIcon.png'
 import Instance from '../../../util/axios'
 import {ReactComponent as StarFilled} from '../../../assets/Icons/StarFilled.svg';
 import getImage from '../../../util/getImage'
-import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
-import ScrollToBottom from 'react-scroll-to-bottom'
-import { ArrowLeft } from '@material-ui/icons'
+import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward'
 import Arrow from '../../../assets/Icons/Arrow'
 import { isMobile } from 'react-device-detect'
 
 export default function ActiveChat({ activeChatUser, setActiveChatUser, messages, setMessages, getConversations }) {
     const messageEndRef = useRef(null)
-    const { state, dispatch } = useGlobalState()
+    const { state } = useGlobalState()
     const { user } = state
     const [ messageText, setMessageText ] = useState("") 
     const [ isLoading, setIsLoading ] = useState(true)
     const [ activeUserDetails, setActiveUserDetails ] = useState()
     const [ messagesLoaded, setMessagesLoaded ] = useState(false)
-
 
     useEffect(() => {
         setMessageText('')
@@ -45,7 +42,11 @@ export default function ActiveChat({ activeChatUser, setActiveChatUser, messages
 
     const autoScroll = () => {
         setMessagesLoaded(true)
-        messageEndRef.current.scrollTo(0, 300)
+        // messageEndRef?.current?.scrollTo(0, 300);\
+        console.log(messageEndRef.current);
+        // window.scrollTo({
+        //     top: messageEndRef
+        // })
     }
     
     const getActiveUserDetails = async () => {
@@ -90,7 +91,6 @@ export default function ActiveChat({ activeChatUser, setActiveChatUser, messages
                 message.sender.uid === user.id ? (
                    <div key={index}>
                         <SentMessage message={message.data.text}/>
-
                     </div> 
                 ) : (
                     <div key={index}>
@@ -124,13 +124,13 @@ export default function ActiveChat({ activeChatUser, setActiveChatUser, messages
                 </div>
             </div>}
             
-            <div ref={messageEndRef} style={ isLoading ? { justifyContent: 'center', alignItems: 'center'} : null} className="ActiveChatMessageContainer">
+            <div style={ isLoading ? { justifyContent: 'center', alignItems: 'center'} : null} className="ActiveChatMessageContainer">
                 {isLoading ? (
                     <CircularProgress size={30}/>
                 ) : (
                     <>
                     {messages && renderMessages() }
-                    
+                    <div ref={messageEndRef}/>
                     </>
                 )}
             

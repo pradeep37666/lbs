@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useMemo } from 'react'
 import './messages.css'
 import PageWrapper from '../../components/pageWrapper/pageWrapper'
 import UserShedNav from '../../components/UserShedNav/UserShedNav'
@@ -13,7 +13,7 @@ import { useHistory } from 'react-router'
 import { async } from 'validate.js'
 
 export default function Messages() {
-    const { state } = useGlobalState()
+    const { state, dispatch } = useGlobalState()
     const { user } = state
     const history = useHistory()
     const [ accountContent, setAccountContent ] = useState('Messages')
@@ -38,15 +38,34 @@ export default function Messages() {
         if(!activeChatUser) return
         getMessages()
     }, [activeChatUser])
+
+    const getUnReadMessageCount = async () => {
+        try {
+            const countObject = await CometChat.getUnreadMessageCount()
+            const userUnreadCount = Object.values(countObject?.users)[0]
+            if (typeof userUnreadCount === undefined) return
+            if (state.unReadMessageCount === userUnreadCount) return
+            dispatch({
+                type: 'setUnReadMessageCount',
+                data: userUnreadCount
+            })
+        } catch (error) {
+          console.log({error})
+        } 
+    }
+    const handleNotificationBadge = useMemo(() => getUnReadMessageCount(), [])
     
     const getConversations = async () => {
         try{
            let conversationRequest = new CometChat.ConversationsRequestBuilder().setLimit(10).build()
             const conversations = await conversationRequest.fetchNext()
-            setConversations(conversations) 
-            setIsLoading(false)
+            setConversations(conversations)
+            // getUnReadMessageCount()
+            handleNotificationBadge()
         } catch(e) {
             console.log(e)
+        } finally {
+            setIsLoading(false)
         }
     }
 
@@ -74,9 +93,9 @@ export default function Messages() {
         if(activeChatUser && ((msg.sender.uid === activeChatUser.uid) || (msg.sender.uid === user.id))){
             setMessages(prevMessages => [...prevMessages, msg])
         }
-        try{        
-           getConversations()
-           await markAsRead(msg)
+        try{      
+            getConversations()
+            // await markAsRead(msg)
         } catch(e) {
             console.log(e)
         }
@@ -88,7 +107,6 @@ export default function Messages() {
                 <UserCard 
                 setActiveChatUser={setActiveChatUser}
                 conversation={conversation} 
-                setConversations={setConversations}
                 key={index}
                 popupOpen={popupOpen}
                 setPopupOpen={setPopupOpen}
