@@ -40,6 +40,7 @@ export default function Messages() {
     }, [activeChatUser])
 
     const getUnReadMessageCount = async () => {
+        console.log('this is called')
         try {
             const countObject = await CometChat.getUnreadMessageCount()
             const userUnreadCount = Object.values(countObject?.users)[0]
