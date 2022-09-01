@@ -102,6 +102,10 @@ export default function UserCard({
                             <div className="UserCardDetails">
                                 <span>{conversation.conversationWith.name}</span>
                             </div>
+                            {
+                                
+                            }
+                            <span className='NewMessageNotification'></span>
                         </div>
                         <div className="UserCardBottom">
                             <div>

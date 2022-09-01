@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react'
+import React, { useState, useEffect } from 'react'
 import './messages.css'
 import PageWrapper from '../../components/pageWrapper/pageWrapper'
 import UserShedNav from '../../components/UserShedNav/UserShedNav'
@@ -10,11 +10,10 @@ import useGlobalState from '../../util/useGlobalState'
 import { isMobile } from 'react-device-detect'
 import NoContent from '../../components/NoContent/NoContent'
 import { useHistory } from 'react-router'
-import { async } from 'validate.js'
 
 export default function Messages() {
     const { state, dispatch } = useGlobalState()
-    const { user } = state
+    const { user, unReadMessageCount } = state
     const history = useHistory()
     const [ accountContent, setAccountContent ] = useState('Messages')
     const [ messages, setMessages ] = useState(null)
@@ -38,14 +37,28 @@ export default function Messages() {
         if(!activeChatUser) return
         getMessages()
     }, [activeChatUser])
-
+   
+    const getConversations = async () => {
+        try{
+           let conversationRequest = new CometChat.ConversationsRequestBuilder().setLimit(10).build()
+            const conversations = await conversationRequest.fetchNext()
+            setConversations(conversations)
+            getUnReadMessageCount()
+        } catch(e) {
+            console.log(e)
+        } finally {
+            setIsLoading(false)
+        }
+    }
+    
     const getUnReadMessageCount = async () => {
-        console.log('this is called')
         try {
+            const cometUser = await CometChat.getUser(user?.id)
+            if (!cometUser) return
             const countObject = await CometChat.getUnreadMessageCount()
             const userUnreadCount = Object.values(countObject?.users)[0]
             if (typeof userUnreadCount === undefined) return
-            if (state.unReadMessageCount === userUnreadCount) return
+            if (unReadMessageCount === userUnreadCount) return
             dispatch({
                 type: 'setUnReadMessageCount',
                 data: userUnreadCount
@@ -53,21 +66,6 @@ export default function Messages() {
         } catch (error) {
           console.log({error})
         } 
-    }
-    const handleNotificationBadge = useMemo(() => getUnReadMessageCount(), [])
-    
-    const getConversations = async () => {
-        try{
-           let conversationRequest = new CometChat.ConversationsRequestBuilder().setLimit(10).build()
-            const conversations = await conversationRequest.fetchNext()
-            setConversations(conversations)
-            // getUnReadMessageCount()
-            handleNotificationBadge()
-        } catch(e) {
-            console.log(e)
-        } finally {
-            setIsLoading(false)
-        }
     }
 
     const getMessages = async () => {

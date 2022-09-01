@@ -18,6 +18,14 @@
   margin-left: 1rem;
 }
 
+.NewMessageNotification {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #ac172c;
+  margin-left: 1rem;
+}
+
 .UserCardTop {
   display: flex;
   flex-direction: row;
