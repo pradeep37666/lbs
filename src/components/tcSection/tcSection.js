@@ -53,7 +53,7 @@ export default function CustomizedCheckbox({ onClick, termsChecked }) {
   const classes = useStyles()
 
   return (
-    <div>
+    <>
       <div className="TCScrollDiv">
         <TnC />
       </div>
@@ -68,8 +68,8 @@ export default function CustomizedCheckbox({ onClick, termsChecked }) {
           inputProps={{ 'aria-label': 'decorative checkbox' }}
           checked={termsChecked}
       />
-          <div>Sit in cillum quis consequat magna aute sint veniam deserunt nulla pariatur.</div>
+          <div>I agree to the terms and conditions</div>
       </div>
-    </div>         
+    </>         
   )
 }
