@@ -14,7 +14,13 @@ import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward'
 import Arrow from '../../../assets/Icons/Arrow'
 import { isMobile } from 'react-device-detect'
 
-export default function ActiveChat({ activeChatUser, setActiveChatUser, messages, setMessages, getConversations }) {
+export default function ActiveChat({ 
+    activeChatUser, 
+    setActiveChatUser, 
+    messages, 
+    setMessages, 
+    getConversations 
+}) {
     const messageEndRef = useRef(null)
     const { state } = useGlobalState()
     const { user } = state
@@ -33,20 +39,15 @@ export default function ActiveChat({ activeChatUser, setActiveChatUser, messages
             setActiveUserDetails(null)
             getActiveUserDetails()
         }
-        
     },[activeChatUser, messages, messagesLoaded])
-
+    
     useEffect(() => {
         autoScroll()
-    }, [])
+    },[messages])
 
     const autoScroll = () => {
         setMessagesLoaded(true)
-        // messageEndRef?.current?.scrollTo(0, 300);\
-        console.log(messageEndRef.current);
-        // window.scrollTo({
-        //     top: messageEndRef
-        // })
+        messageEndRef.current?.scrollIntoView({behavior: 'smooth'})
     }
     
     const getActiveUserDetails = async () => {
@@ -124,16 +125,17 @@ export default function ActiveChat({ activeChatUser, setActiveChatUser, messages
                 </div>
             </div>}
             
-            <div style={ isLoading ? { justifyContent: 'center', alignItems: 'center'} : null} className="ActiveChatMessageContainer">
-                {isLoading ? (
+            <div 
+                style={ isLoading ? { justifyContent: 'center', alignItems: 'center'} : null} 
+                className="ActiveChatMessageContainer"
+            >
+                {/* {isLoading ? (
                     <CircularProgress size={30}/>
                 ) : (
-                    <>
-                    {messages && renderMessages() }
-                    <div ref={messageEndRef}/>
-                    </>
-                )}
-            
+                    messages && renderMessages()
+                )} */}
+                {messages && renderMessages()}
+                {/* <div ref={messageEndRef}/> */}
             </div>
              
             <div className="ActiveChatInputContainer">
@@ -151,9 +153,7 @@ export default function ActiveChat({ activeChatUser, setActiveChatUser, messages
                 <div className="ActiveChatButton" onClick={handleSubmit}>
                     <ArrowUpwardIcon style={{ color: 'white' }}/>
                 </div>
-            
             </div>
-            
         </div>
     )
 }

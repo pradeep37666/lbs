@@ -11,9 +11,9 @@ import { isMobile } from 'react-device-detect'
 import NoContent from '../../components/NoContent/NoContent'
 import { useHistory } from 'react-router'
 
-export default function Messages() {
-    const { state, dispatch } = useGlobalState()
-    const { user, unReadMessageCount } = state
+export const Messages = () => {
+    const { state } = useGlobalState()
+    const { user } = state
     const history = useHistory()
     const [ accountContent, setAccountContent ] = useState('Messages')
     const [ messages, setMessages ] = useState(null)
@@ -21,6 +21,7 @@ export default function Messages() {
     const [ conversations, setConversations ] = useState([])
     const [ activeChatUser, setActiveChatUser ] = useState()
     const [ popupOpen, setPopupOpen ] = useState(false)
+    const [ unReadUsers, setUnReadUsers ] = useState([])
 
     useEffect(() => {
         CometChat.addMessageListener(user.id,
@@ -40,32 +41,30 @@ export default function Messages() {
    
     const getConversations = async () => {
         try{
-           let conversationRequest = new CometChat.ConversationsRequestBuilder().setLimit(10).build()
+            const conversationRequest = new CometChat.ConversationsRequestBuilder().setLimit(10).build()
             const conversations = await conversationRequest.fetchNext()
             setConversations(conversations)
-            getUnReadMessageCount()
+            getUnReadMessageUsers()
         } catch(e) {
             console.log(e)
         } finally {
             setIsLoading(false)
         }
     }
-    
-    const getUnReadMessageCount = async () => {
+
+    const getUnReadMessageUsers = async () => {
         try {
             const cometUser = await CometChat.getUser(user?.id)
             if (!cometUser) return
             const countObject = await CometChat.getUnreadMessageCount()
-            const userUnreadCount = Object.values(countObject?.users)[0]
-            if (typeof userUnreadCount === undefined) return
-            if (unReadMessageCount === userUnreadCount) return
-            dispatch({
-                type: 'setUnReadMessageCount',
-                data: userUnreadCount
-            })
+            const unReadMessageUsers = Object.keys(countObject?.users)
+            if (unReadMessageUsers.length <= 0 || 
+                unReadMessageUsers === undefined
+            ) setUnReadUsers([])
+            else setUnReadUsers(unReadMessageUsers)
         } catch (error) {
-          console.log({error})
-        } 
+            console.log({error})
+        }
     }
 
     const getMessages = async () => {
@@ -73,10 +72,10 @@ export default function Messages() {
             const messagesRequest = new CometChat.MessagesRequestBuilder().setLimit(0).setUID(activeChatUser.uid).build()
             const response = await messagesRequest.fetchPrevious()
             setMessages(response)
-            const lastMessage = response[response.length - 1];
+            const lastMessage = response[response.length - 1]
             markAsRead(lastMessage)
-        } catch(e) {
-            console.log('error fetching messages', e)
+        } catch(error) {
+            console.log({error})
         }
     }
 
@@ -94,7 +93,6 @@ export default function Messages() {
         }
         try{      
             getConversations()
-            // await markAsRead(msg)
         } catch(e) {
             console.log(e)
         }
@@ -104,10 +102,11 @@ export default function Messages() {
         return conversations.map((conversation, index) => {
             return (
                 <UserCard 
-                setActiveChatUser={setActiveChatUser}
-                conversation={conversation} 
                 key={index}
+                conversation={conversation} 
                 popupOpen={popupOpen}
+                unReadUsers={unReadUsers}
+                setActiveChatUser={setActiveChatUser}
                 setPopupOpen={setPopupOpen}
                 setMessages={setMessages}
                 />
@@ -152,8 +151,10 @@ export default function Messages() {
                         )
                     )}
                 </div>
-             </div>
-             </ClickAwayListener>
-         </PageWrapper>
-     )
+            </div>
+            </ClickAwayListener>
+        </PageWrapper>
+    )
  }
+
+ export default Messages

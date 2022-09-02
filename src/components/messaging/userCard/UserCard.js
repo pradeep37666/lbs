@@ -11,10 +11,11 @@ import getImage from '../../../util/getImage'
 
 export default function UserCard({ 
     conversation, 
+    popupOpen, 
+    unReadUsers,
     setActiveChatUser, 
     setPopupOpen, 
-    popupOpen, 
-    setMessages
+    setMessages,
 }) {
     const dotRef = useRef()
     const { state } = useGlobalState()
@@ -22,6 +23,7 @@ export default function UserCard({
     const [ isDeleting, setIsDeleting ] = useState(false)
     const [ anchorEl, setAnchorEl ] = useState(null)
     const [ cardUser, setCardUser ] = useState()
+    const uid = conversation?.conversationWith?.uid
 
     useEffect(() => {
         getUserRating()
@@ -102,10 +104,9 @@ export default function UserCard({
                             <div className="UserCardDetails">
                                 <span>{conversation.conversationWith.name}</span>
                             </div>
-                            {
-                                
-                            }
+                            {unReadUsers.includes(uid) && (
                             <span className='NewMessageNotification'></span>
+                            )}
                         </div>
                         <div className="UserCardBottom">
                             <div>
@@ -140,7 +141,6 @@ export default function UserCard({
                     </div>
                 </>
             )}
-            
         </div>
     )
 }
