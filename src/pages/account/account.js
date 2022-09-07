@@ -6,6 +6,7 @@ import AccountSettings from './AccountSettingsContent/AccountSettings'
 import TermsConditions from './TermsConditions/TermsConditions'
 import AccountAvailability from './AccountAailability/AccountAvailability'
 import { isMobile } from 'react-device-detect'
+import Support from './Support/Support'
 
 export default function Account() {
     const [accountContent, setAccountContent] = useState('Account')
@@ -19,7 +20,7 @@ export default function Account() {
             case 'Terms & Conditions':
                 return <TermsConditions />
             case 'Support':
-                return 'Support'
+                return <Support />
             default:
                 return 'account page'
         }

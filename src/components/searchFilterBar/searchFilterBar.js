@@ -65,12 +65,11 @@ export default function SearchFilterBar({ keyWord }) {
   const [updateLocation, setUpdateLocation] = useState(false)
 
   const handleSubmitFilterChange = () => {
-    let string = "";
-    console.log({Address})
+    let string = ''
     if (keyWord) {
-      string = string.concat("?keyword=" + keyWord);
+      string = string.concat("?keyword=" + keyWord)
     } else {
-      string = string.concat("?keyword=");
+      string = string.concat("?keyword=")
     }
     if (Category) string = string.concat("&category=" + Category)
     if (Address) string = string.concat(`&lat=${Address.lat}&lng=${Address.lng}&distance=${SearchRadius}`)
@@ -81,22 +80,18 @@ export default function SearchFilterBar({ keyWord }) {
     else if (Delivery === true) {
       string = string.concat("&delivery=1")
     } else {
-      string = string.concat("&delivery=0");
+      string = string.concat("&delivery=0")
     }
     history.push(`/search/${string}`)
   }
 
   const handleFilterClick = (filter) => {
     if (ActiveFilter === filter) {
-      setActiveFilter("none");
+      setActiveFilter("none")
     } else {
-      setActiveFilter(filter);
+      setActiveFilter(filter)
     }
-  };
-
-  // use effect below resets the search when you first get to the page, e.g. from filters on home page
-  // we need to make it research whenever one of the filters is changed, butr without the useeffect as that will always fire at the start
-  // and wipe whatever filters we had already set on the home page
+  }
 
   const getGeoLocation = (input) => {
     Geocode.setApiKey(process.env.REACT_APP_GOOGLE_API_KEY)
@@ -130,19 +125,19 @@ export default function SearchFilterBar({ keyWord }) {
   useEffect(() => {
     if (Delivery === '1') setDelivery(true)
     if (Delivery === '0') setDelivery(false)
-    handleSubmitFilterChange();
-  }, [Delivery, Category, Rating, Address, updateLocation]);
+    handleSubmitFilterChange()
+  }, [Delivery, Category, Rating, Address, updateLocation])
 
   const handlePriceMinChange = (e) => {
-    let price = e.target.validity.valid ? e.target.value : PriceMin;
-    price = price.slice(0, 4);
-    setPriceMin(price);
+    let price = e.target.validity.valid ? e.target.value : PriceMin
+    price = price.slice(0, 4)
+    setPriceMin(price)
   };
 
   const handlePriceMaxChange = (e) => {
-    let price = e.target.validity.valid ? e.target.value : PriceMax;
-    price = price.slice(0, 4);
-    setPriceMax(price);
+    let price = e.target.validity.valid ? e.target.value : PriceMax
+    price = price.slice(0, 4)
+    setPriceMax(price)
   };
 
   const categories = [
@@ -177,9 +172,9 @@ export default function SearchFilterBar({ keyWord }) {
           {category.name}
           </p>
         </div>
-      );
-    });
-  };
+      )
+    })
+  }
 
   const getCategoryPopout = () => {
     return (
@@ -192,8 +187,8 @@ export default function SearchFilterBar({ keyWord }) {
           <div className="CategoryFiltersFlex">{renderCategories()}</div>
         </div>
       </div>
-    );
-  };
+    )
+  }
 
   const getLocationPopout = () => {
     return (
