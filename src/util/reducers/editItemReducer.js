@@ -30,10 +30,20 @@ const editItemReducer = (state, action) => {
                 ...state,
                 discount: action.data
             }
+        case 'setDeliveryOption' :
+            return {
+                ...state,
+                deliveryOption: action.data
+            }
         case 'setDeliveryPrice' :
             return {
                 ...state,
                 deliveryPrice: action.data
+            }
+        case 'setPickupPrice' :
+            return {
+                ...state,
+                pickupPrice: action.data
             }
         case 'setAvailability' : 
             return {
@@ -78,8 +88,9 @@ const editItemReducer = (state, action) => {
         case 'setInitialState' :
             const { 
                 title, category, description, 
-                price, deliveryPrice, discount, 
-                address, weekly_availability, images
+                price, discount, address, images,
+                weekly_availability, deliveryOption, 
+                deliveryPrice, pickupPrice,
             } = action.data
             return {
                 ...state,
@@ -89,11 +100,13 @@ const editItemReducer = (state, action) => {
                 description,
                 images,
                 price,
-                deliveryPrice,
                 isDiscount: Boolean(discount),
                 discount,
                 address,
                 availability: weekly_availability.split('').map(str => parseInt(str)),
+                deliveryOption,
+                deliveryPrice,
+                pickupPrice,
             }
         default : return state
     }

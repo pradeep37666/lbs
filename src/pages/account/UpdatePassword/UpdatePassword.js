@@ -111,7 +111,7 @@ export default function UpdatePassword() {
                     onChange={e => setCurrentPassword(e.target.value)}
                     errorMessage={errorMessages?.password}
                     />
-                    <div className="LoginText">Forgot password?<span className="RetrieveLink"> Retrieve here</span></div>
+                    <div className="LoginText">Forgot password?<a className="RetrieveLink" href='/#/forgotpassword'> Retrieve here</a></div>
                     <Button 
                     isDisabled={!currentPassword}
                     onClick={loginUser}

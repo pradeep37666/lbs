@@ -15,6 +15,9 @@ import EditBasicDetails from "../../components/EditItemComponents/EditBasicDetai
 import EditPriceDetails from "../../components/EditItemComponents/EditPriceDetails"
 import EditItemPictures from "../../components/EditItemComponents/EditItemImages"
 import DeleteItemModal from "../../components/modals/DeleteItemModal/DeleteItemModal"
+import LBSSelectBox from "../../components/LBSSelectBox/LBSSelectBox"
+import { DELIVERY_OPTIONS } from "../../assets/Data/LBSSelectOptions"
+import ValidationTextInput from "../../components/FormComponents/ValidationTextInput"
 
 const EditItemContext = createContext()
 function EditItemPage() {
@@ -29,7 +32,8 @@ function EditItemPage() {
     title, category, description, 
     price, deliveryPrice, discount, 
     address, availability, titleText,
-    newImageLinks, deletedImages
+    newImageLinks, deletedImages,
+    deliveryOption, pickupPrice
   } = state
 
   const params = useParams()
@@ -73,12 +77,14 @@ function EditItemPage() {
       category,
       description,
       price,
-      deliveryPrice,
       discount,
       weekly_availability: availability.join(''),
       address,
       images: newImageLinks ?? [],
-      imagesToDelete: deletedImages ?? []
+      imagesToDelete: deletedImages ?? [],
+      deliveryOption,
+      deliveryPrice: deliveryOption === 'NONE' ? 0 : deliveryPrice,
+      pickupPrice: deliveryOption === 'NONE' ? 0 : pickupPrice,
     }
     try{
       setIsLoading(true)
@@ -139,16 +145,39 @@ function EditItemPage() {
                   You can provide an optional delivery service of your item to
                   help your borrowers out.
                 </div>
-
-                <div className="LoginHeader">Price ($)</div>
-                <input
-                  type="number"
-                  min="1"
-                  step="any"
-                  defaultValue={deliveryPrice}
-                  className="LoginInput"
-                  onChange={(e) => dispatch({ type: 'setDeliveryPrice', data: e.target.value})}
+                <LBSSelectBox 
+                  selectOption={DELIVERY_OPTIONS}
+                  width='100%'
+                  fontSize='18px'
+                  margin='0 0 2em 0'
+                  thinBorder
+                  value={deliveryOption ?? ''}
+                  onChange={option => dispatch({type: 'setDeliveryOption', data: option})}
                 />
+                {((deliveryOption === 'DELIVERY') ||
+                 (deliveryOption === 'BOTH')) && (
+                  <>
+                    <div className="LoginHeader">Delivery Fee ($)</div>
+                    <ValidationTextInput 
+                      inputType="number"
+                      value={deliveryPrice}
+                      onChange={(e) => dispatch({ type: 'setDeliveryPrice', data: e.target.value })}
+                      placeholder="$10"
+                    />
+                  </>
+                )}
+                {((deliveryOption === 'PICKUP') ||
+                 (deliveryOption === 'BOTH')) && (
+                  <>
+                    <div className="LoginHeader">Pickup Fee ($)</div>
+                    <ValidationTextInput 
+                      inputType="number"
+                      value={pickupPrice}
+                      onChange={(e) => dispatch({ type: 'setPickupPrice', data: e.target.value })}
+                      placeholder="$10"
+                    />
+                  </>
+                )}
               </div>
               <div
                 className="LoginMain LoginMainNoMarg"

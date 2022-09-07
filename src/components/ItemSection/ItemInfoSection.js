@@ -77,7 +77,7 @@ const ItemInfoSection = ({
                     </div>
                     {item.deliveryPrice > 0 
                         ? 'Delivery Available' 
-                        : 'Pickup only'
+                        : 'Delivery Not Available'
                     }&nbsp;
                     <span className={`${item.deliveryPrice > 0 ? '' : 'Hide'}`}>/</span>
                     <span className={`DeliveryFeeText ${item.deliveryPrice > 0 ? '' : 'Hide'}`}>
@@ -96,7 +96,7 @@ const ItemInfoSection = ({
                     </div>
                     {item.pickupPrice > 0 
                         ? 'Pickup Available' 
-                        : 'Dropoff only'
+                        : 'Pickup Not Available'
                     }&nbsp;
                     <span className={`${item.pickupPrice > 0 ? '' : 'Hide'}`}>/</span>
                     <span className={`DeliveryFeeText ${item.pickupPrice > 0 ? '' : 'Hide'}`}>

@@ -118,6 +118,7 @@ export default function ItemPictures({ context }) {
         <input
           type="file"
           id="selectFile"
+          accept='image/*'
           multiple
           style={{ display: "none" }}
           onChange={handleChange}
