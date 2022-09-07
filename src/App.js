@@ -29,10 +29,11 @@ import UpgradeLender from './pages/account/UpgradeLender/UpgradeLender'
 import UpdatePassword from './pages/account/UpdatePassword/UpdatePassword'
 import ScrollToTop from './util/ScrollToTop'
 import Application from './pages/application/Application'
+import InvalidRoutePage from './pages/InvalidRoutePage'
 import {
   HashRouter as Router,
   Route,
-  Redirect
+  Redirect,
 } from "react-router-dom"
 import reducer from './util/reducers/globalStateReducer'
 import snackbarReducer from './util/reducers/snackbarReducer'
@@ -43,8 +44,6 @@ import EditItemPage from './pages/editItem/EditItemPage'
 import Instance from './util/axios'
 import ForgotPassword from './pages/ForgotPassword/ForgotPassword'
 import LBSSnackBar from './components/LBSSnackBar/LBSSnackBar'
-import { async } from 'validate.js'
-import { GiReturnArrow } from 'react-icons/gi'
 
 const SentryRoute = Sentry.withSentryRouting(Route)
 const history = createBrowserHistory()
@@ -208,14 +207,15 @@ function App() {
             <AuthRedirectRoute path="/login" component={Login} />
             <Route path="/register" component={RegisterPage} />
             
-            {/* <Redirect to='/top'/> */}
+            {/* <Route path="*" component={<Redirect to={{ pathname: '/' }}/>}/> */}
+
           </ScrollToTop>
         </Router>
         }
       </GlobalStateContext.Provider>
       </GlobalErrorContext.Provider>
     </Elements>
-  );
+  )
 }
 
 export default App;

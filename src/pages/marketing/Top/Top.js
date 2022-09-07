@@ -131,7 +131,9 @@ const Top = () => {
             Borrow Items To Learn, Make And Mend
             </p>
             <p >
-            Did you know that 80% of household items we own are used less than once a month? [Circular Economy Report] You can do your bit to reduce waste by borrowing instead of buying to kick-start your next DIY project or creative experience.
+            Did you know that 80% of household items we own are used less than once a month? 
+            &nbsp;<a target='_blank' href='https://circulareconomy.europa.eu/platform/sites/default/files/emaf_ce-in-cities-factsheets-products_all_mar19.pdf'>[Circular Economy Report]</a>&nbsp;
+            You can do your bit to reduce waste by borrowing instead of buying to kick-start your next DIY project or creative experience.
             </p>
           </div>
           <div className='top_section_smaller_box' style={{display: 'flex', justifyContent: 'center'}}>

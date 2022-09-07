@@ -162,7 +162,7 @@
         padding: 1em 3em;
     }
     .top_info_top_section {
-        height: 10em;
+        height: fit-content;
     }
 }
 
