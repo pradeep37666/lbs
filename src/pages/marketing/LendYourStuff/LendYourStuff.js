@@ -92,7 +92,7 @@ const LendYourStuff = () => {
             We believe in the power of sharing and want to make it as easy, accessible and beneficial as possible. 
             That’s why Little Big Shed has no platform service fee. 
             We cover the costs for the smooth sailing of our shed so that you can earn more when you do good sharing your stuff. 
-            The only cost of using Little Big Shed is a 2.9% <a style={{fontWeight: '600'}} href=''>processing fee</a>: link to FAQ  + 30c transaction fee charged by our third party payment provider deducted from what you get paid. 
+            The only cost of using Little Big Shed is a 2.9% <a style={{fontWeight: '600'}} href='/#/faqs'>processing fee</a> + 30c transaction fee charged by our third party payment provider deducted from what you get paid. 
           </p>
         </div>
         <div className='center_text_image full_width'>

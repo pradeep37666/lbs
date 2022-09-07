@@ -29,7 +29,7 @@ const RentStuff = () => {
                 <div className='half_screen_center full_width'>
                     <img src={RSSawing} className='graphic_image responsive_img_size' style={{maxHeight: '28em', maxWidth: '28em'}} alt='graphic image'/>
                 </div>
-                <div className='half_screen_center article_section full_width' style={{paddingLeft: '0'}}>
+                <div className='half_screen_center article_section full_width' style={{padding: '0.5em'}}>
                     <p className='marketing_main_title'>
                     Get Set For Your next DIY Project, Hobby or Adventure!
                     </p>

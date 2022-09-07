@@ -59,7 +59,7 @@ const rentOutProcedures = [
             To start sharing <a style={{fontWeight: '600'}} href='/#/register'>create an account</a> and follow the steps to verify your identity and payment details.<br /><br />
             You can select the days and times you are available to share – giving you full control over lending out your shed.<br /><br />
             To list an item, click the ‘post item’ button – select a category, upload photos, write a description, and set your price with the help of our handy calculator tool.<br /><br />
-            Learn more about how to successfully rent out your items in our <a style={{fontWeight: '600'}} href='/#/register'>listing tips</a>: link to FAQs section on images and description etc…
+            Learn more about how to successfully rent out your items in our <a style={{fontWeight: '600'}} href='/#/faqs'>listing tips</a> section on images and description etc…
         </p>
     },
     {
@@ -70,7 +70,7 @@ const rentOutProcedures = [
             You'll receive an alert notification in the app when your item has been requested. You can choose to confirm or decline the booking.<br /><br />
             Once confirmed, the booking will automatically be added to your in-app calendar.<br /><br />
             Use the chat function in the app to respond to any questions from the borrower and to arrange handover details.<br /><br />
-            You can also choose to deliver and/or pick up your item from the borrower for an additional fee – which also supports contactless sharing:link to Covid FAQ.
+            You can also choose to deliver and/or pick up your item from the borrower for an additional fee – which also supports <a style={{fontWeight: '600'}} href='/#/faqs'>contactless sharing</a>.
         </p>
     },
     {
@@ -80,7 +80,7 @@ const rentOutProcedures = [
         procedureDesc: <p>
             If you’ve arranged to meet the borrower in person, it’s a good chance to show them any tips/quirks about using your item.<br /><br />
             You can also upload additional ‘how to use’ instructions on the item listing.<br /><br />
-            Once the handover is complete, sit back and relax worry-free, knowing that we have you covered if something goes wrong! Check out our <a style={{fontWeight: '600'}} href='/#/lend_your_stuff'>lender protection</a> policy to find out more about sharing with our verified users.
+            Once the handover is complete, sit back and relax worry-free, knowing that we have you covered if something goes wrong! Check out our <a style={{fontWeight: '600'}} href='/#/protection'>lender protection</a> policy to find out more about sharing with our verified users.
         </p>
     },
     {
@@ -91,7 +91,7 @@ const rentOutProcedures = [
             Once your item is safely returned, build trust in your neighbourhood by reviewing the borrower via our 5-star rating system.<br /><br />
             When you have confirmed the share is complete, you’ll be paid for doing good directly into your bank account.<br /><br />
             We take no platform service fee but a 2.9% payment processing fee + 30c transaction fee will be deducted by our third party provider from what you get paid.<br /><br />
-            Learn more about how payment works: link to FAQs section on lender payment. 
+            Learn more about <a style={{fontWeight: '600'}} href='/#/faqs'>how payment works</a> section on lender payment. 
         </p>
     },
 ]
@@ -116,9 +116,9 @@ const rentingProcedures = [
             You’ll receive a notification when your booking has been accepted. 
             It’ll automatically be added to your trade dashboard and the full payment deducted from your account.<br /><br />
 
-            If you change your mind, no worries. Find out more about our cancellation policy: link to FAQs section.<br />
+            If you change your mind, no worries. Find out more about our <a style={{fontWeight: '600'}} href='/#/faqs'>cancellation policy</a> section.<br />
             Use the chat function in the app to ask the lender any questions and arrange handover details. <br />
-            You can choose to have your item delivered and/or picked up from the lender for an additional fee or arrange contactless sharing:link to Covid FAQ.<br /><br />
+            You can choose to have your item delivered and/or picked up from the lender for an additional fee or arrange <a style={{fontWeight: '600'}} href='/#/protection'>contactless sharing</a>.<br /><br />
         </p>
     },
     {
@@ -128,7 +128,7 @@ const rentingProcedures = [
         procedureDesc: <p>
             Now you’re ready to make, mend or learn!<br /><br />
             If you’ve arranged to meet the lender in person, it’s a good chance to ask them about any tips/quirks for using the item.<br />
-            When using the item, take care and show respect as if it was your own. If you come across any issues during your borrow, learn what to do: link to FAQs section about disputes.
+            When using the item, take care and show respect as if it was your own. If you come across any issues during your borrow, learn <a style={{fontWeight: '600'}} href='/#/faqs'>what to do</a> section about disputes.
         </p>
     },
     {

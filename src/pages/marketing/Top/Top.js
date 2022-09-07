@@ -79,7 +79,7 @@ const Top = () => {
             Through the power of sharing <s/>
             <a style={{fontWeight: '600'}} href='/#/'>tool</a>, <s/>
             <a style={{fontWeight: '600'}} href='/#/'>hobby gear</a>, <s/>
-            <a style={{fontWeight: '600'}} href='/#/'>leisure equipmen</a> and much more, we can support each other to make, mend, learn (and earn!). 
+            <a style={{fontWeight: '600'}} href='/#/search/?keyword=&category=Outdoor%20&%20Sport'>leisure equipmen</a> and much more, we can support each other to make, mend, learn (and earn!). 
             </p>
             <p className='top_info_right_desc'>
             Our share things app is based on people using stuff only when required. This stops us needing to buy and own more stuff that just ends up cluttering the shed and gathering dust.<br/><br/> 
@@ -112,7 +112,7 @@ const Top = () => {
           Our equipment rental app means that anything you have in your ‘little shed’ (whether that’s a garage, a kitchen drawer or a cupboard shelf) can become part of something much bigger — the sharing economy. 
           Why not <a style={{fontWeight: '600'}} href='/#/lend_your_stuff'>lend your stuff</a> to locals in your area when not in use and make some extra cash on the side? Plus, 
           there’s no platform service fee when you share your stuff. We cover the costs for the smooth sailing of our shed so that you get more in your back pocket. 
-          We’ll take good care of you too so you can lend your items worry-free. Check out our <a style={{fontWeight: '600'}} href='/#/option_protection'>lender protection</a> policy to find out more about sharing with our verified users.
+          We’ll take good care of you too so you can lend your items worry-free. Check out our <a style={{fontWeight: '600'}} href='/#/protection'>lender protection</a> policy to find out more about sharing with our verified users.
           </p>
           <MarketingButton
             bgColor='#AC172C'

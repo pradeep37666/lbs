@@ -303,9 +303,9 @@
 }
 
 @media screen and (max-width: 600px) {
-    .marketing_img_md_container {
+    /* .marketing_img_md_container {
         height: 35vh;
-    }
+    } */
     .main_title_section {
         width: 55%;
         height: auto;

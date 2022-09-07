@@ -7,10 +7,13 @@ import {ReactComponent as StarOutline} from './../../assets/Icons/StarOutline.sv
 import {ReactComponent as StarFilled} from './../../assets/Icons/StarFilled.svg';
 import { Link } from 'react-router-dom';
 import getImage from '../../util/getImage';
+import useGlobalState from '../../util/useGlobalState';
 
 export default function ItemCard({ item, favourited, userId }) {
   const [ itemImage, setItemImage ] = useState('')
   const [ itemSuburb, setItemSuburb ] = useState('')
+  const { state } = useGlobalState()
+  const { user } = state
   
   useEffect(() => {
     if (item?.images?.length > 0) {
@@ -24,7 +27,7 @@ export default function ItemCard({ item, favourited, userId }) {
   return (
     <div className="ItemCard">
       <Link 
-        to={`/item/${item.id}`} 
+        to={user ? `/item/${item.id}` : '/search'} 
         style={{position:"relative"}}
       >
         <img 
