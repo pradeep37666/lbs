@@ -6,6 +6,11 @@ html {
 }
 /* Font imports */
 
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
 @font-face {
   font-family: "DMSans";
   src: url(/src/assets/Fonts/DMSans-Regular.ttf);
