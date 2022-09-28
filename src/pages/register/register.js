@@ -122,7 +122,7 @@ export default function Register() {
         await setupCometChat()
         const signupDetails = getUserDetails()
         try{
-            const { data, status } = await Instance.post(isLenderUpgrade ? '/auth/lenderSignUp' : '/auth/signUp', signupDetails)
+            const { data, status } = await Instance.post(isLenderUpgrade ? '/auth/lender/signUp' : '/auth/borrower/signUp', signupDetails)
             if(status === 201) {
                 globalDispatch({ type: 'setUser', data: data.user })
                 localStorage.setItem('LBSToken', data.token.accessToken)
