@@ -3,7 +3,7 @@ import './pageWrapper.css';
 import Header from './../header/header.js';
 import Footer from '../footer/footer'
 
-const pageWrapper = (props) => {
+const PageWrapper = (props) => {
   return (
     <div className="PageWrapper">
       <Header />
@@ -13,4 +13,4 @@ const pageWrapper = (props) => {
   )
 }
 
-export default pageWrapper;
+export default PageWrapper;

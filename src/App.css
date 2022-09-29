@@ -1,8 +1,10 @@
 html {
-  box-sizing: border-box;
+	box-sizing: border-box;
 }
-*, *:before, *:after {
-  box-sizing: inherit;
+*,
+*:before,
+*:after {
+	box-sizing: inherit;
 }
 /* Font imports */
 
@@ -10,92 +12,96 @@ html {
 @tailwind components;
 @tailwind utilities;
 
-
 @font-face {
-  font-family: "DMSans";
-  src: url(/src/assets/Fonts/DMSans-Regular.ttf);
-  font-weight: normal;
-  font-style: normal;
-}
-   
-@font-face {
-  font-family: "DMSans";
-  src: url(/src/assets/Fonts/DMSans-Bold.ttf);
-  font-weight: bold;
-  font-style: normal;
+	font-family: 'DMSans';
+	src: url(/src/assets/Fonts/DMSans-Regular.ttf);
+	font-weight: normal;
+	font-style: normal;
 }
 
 @font-face {
-  font-family: "DMSans";
-  src: url(/src/assets/Fonts/DMSans-BoldItalic.ttf);
-  font-weight: bold;
-  font-style: italic;
+	font-family: 'DMSans';
+	src: url(/src/assets/Fonts/DMSans-Bold.ttf);
+	font-weight: bold;
+	font-style: normal;
 }
 
 @font-face {
-  font-family: "DMSans";
-  src: url(/src/assets/Fonts/DMSans-Italic.ttf);
-  font-weight: normal;
-  font-style: italic;
+	font-family: 'DMSans';
+	src: url(/src/assets/Fonts/DMSans-BoldItalic.ttf);
+	font-weight: bold;
+	font-style: italic;
 }
 
 @font-face {
-  font-family: "DMSans";
-  src: url(/src/assets/Fonts/DMSans-Medium.ttf);
-  font-weight: 500;
-  font-style: normal;
+	font-family: 'DMSans';
+	src: url(/src/assets/Fonts/DMSans-Italic.ttf);
+	font-weight: normal;
+	font-style: italic;
 }
 
 @font-face {
-  font-family: "DMSans";
-  src: url(/src/assets/Fonts/DMSans-MediumItalic.ttf);
-  font-weight: 500;
-  font-style: italic;
+	font-family: 'DMSans';
+	src: url(/src/assets/Fonts/DMSans-Medium.ttf);
+	font-weight: 500;
+	font-style: normal;
 }
 
 @font-face {
-  font-family: "Kameron";
-  src: url(/src/assets/Fonts/Kameron-Regular.ttf);
-  font-weight: normal;
-  font-style: normal;
+	font-family: 'DMSans';
+	src: url(/src/assets/Fonts/DMSans-MediumItalic.ttf);
+	font-weight: 500;
+	font-style: italic;
 }
 
 @font-face {
-  font-family: "Kameron";
-  src: url(/src/assets/Fonts/Kameron-Bold.ttf);
-  font-weight: bold;
-  font-style: italic;
+	font-family: 'Kameron';
+	src: url(/src/assets/Fonts/Kameron-Regular.ttf);
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'Kameron';
+	src: url(/src/assets/Fonts/Kameron-Bold.ttf);
+	font-weight: bold;
+	font-style: italic;
 }
 
 body {
-  margin: 0;
-  font-family: "DMSans", sans-serif;
+	margin: 0;
+	font-family: 'DMSans', sans-serif;
 }
 
 button {
-  outline: none;
+	outline: none;
 }
 
 button:hover {
-  cursor: pointer;
-  box-shadow: 0px 2px 4px -1px rgb(0 0 0 / 20%), 0px 2px 5px 0px rgb(0 0 0 / 14%), 0px 1px 10px 0px rgb(0 0 0 / 12%);
+	cursor: pointer;
+	box-shadow: 0px 2px 4px -1px rgb(0 0 0 / 20%), 0px 2px 5px 0px rgb(0 0 0 / 14%),
+		0px 1px 10px 0px rgb(0 0 0 / 12%);
 }
 
 a {
-  color: inherit;
-  text-decoration: inherit;
+	color: inherit;
+	text-decoration: inherit;
 }
 
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 10px;
+	width: 8px;
+	height: 10px;
 }
 ::-webkit-scrollbar-thumb {
-  border-radius: 10px;
-  background: #c2c9d2;
+	border-radius: 10px;
+	background: #c2c9d2;
 }
 
 @keyframes FadeIn {
-  0% {opacity: 0;}
-  100% {opacity: 1;}
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
 }
