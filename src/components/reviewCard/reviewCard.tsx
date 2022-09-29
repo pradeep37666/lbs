@@ -3,9 +3,15 @@ import './reviewCard.css'
 import getImage from '../../util/getImage'
 import { Avatar } from '@material-ui/core'
 import MissingProfile from '../../assets/Icons/MissingProfileIcon.png'
-import RatingFiller from '../../components/ratingFiller/ratingFiller'
+import RatingFiller from '../ratingFiller/ratingFiller'
+import { Rating } from '../../types/Rating'
 
-export default function ReviewCard({ review, isOnlyOne }) {
+type Props = {
+    review: Rating,
+    isOnlyOne: boolean,
+}
+
+export default function ReviewCard({ review, isOnlyOne }: Props ) {
     return (
         <div className={isOnlyOne
             ? 'OnlyOneCard'

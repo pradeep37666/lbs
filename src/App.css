@@ -68,6 +68,16 @@ html {
 	font-style: italic;
 }
 
+@layer components {
+	.btn-primary {
+		@apply bg-red-base border-[1px] border-red-base px-[1.5rem] py-2 rounded-[8px] text-[#FFF] mb-1 font-dmSans text-[14px] transition-all w-full  flex gap-2 justify-center cursor-pointer hover:scale-[1.03] duration-300 hover:bg-red-highlight hover:border-red-highlight hover:shadow-lg;
+	}
+
+	/* .input-primary {
+	  @apply bg-grey-light border-[1px] border-grey-base88 text-black-base placeholder-grey-base88 px-3 py-3 rounded-lg mb-1 w-full outline-none focus:border-gold-base focus:shadow-md transition-all duration-300;
+	} */
+}
+
 body {
 	margin: 0;
 	font-family: 'DMSans', sans-serif;
