@@ -31,7 +31,7 @@ import ScrollToTop from './util/ScrollToTop'
 import Application from './pages/application/Application'
 import InvalidRoutePage from './pages/InvalidRoutePage'
 import {
-  HashRouter as Router,
+  BrowserRouter as Router,
   Route,
   Redirect,
 } from "react-router-dom"
@@ -44,6 +44,7 @@ import EditItemPage from './pages/editItem/EditItemPage'
 import Instance from './util/axios'
 import ForgotPassword from './pages/ForgotPassword/ForgotPassword'
 import LBSSnackBar from './components/LBSSnackBar/LBSSnackBar'
+import LenderShed from './pages/lender-shed/lender-shed'
 
 const SentryRoute = Sentry.withSentryRouting(Route)
 const history = createBrowserHistory()
@@ -202,6 +203,9 @@ function App() {
 
             {/* post an item */}
             <AuthRoute path="/postitem" component={PostItem}/>
+
+            {/* Lender Shed */}
+            <AuthRoute path="/lender-shed/:lenderId" component={LenderShed}/>
 
             {/* Routes for login/register should redirect to user page if user is logged in */}
             <AuthRedirectRoute path="/login" component={Login} />
