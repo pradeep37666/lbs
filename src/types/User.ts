@@ -8,13 +8,13 @@ export type User = {
 	salt: string
 	avatar: string
 	mobile: string
-	address: USERADDRESS
+	address: UserAddress
 	lat: number
 	lng: number
 	suburb: string
 	isLender: boolean
-	borrower_rating: number
-	lender_rating: number
+	borrowerRating: number
+	lenderRating: number
 }
 
 export type BlockedAvailabilityCreate = {
@@ -104,7 +104,7 @@ export type BlockedAvailabilityTime =
 	| '13:00:00'
 	| '17:00:00'
 
-export type USERADDRESS = {
+export type UserAddress = {
 	id: string
 	createdAt: Date
 	updatedAt: Date

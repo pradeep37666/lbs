@@ -1,11 +1,10 @@
 .RatingStars {
-  margin-left: 5%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
 .StarIcon {
-  height: 28px;
-  padding: 2px;
+	height: 28px;
+	padding: 2px;
 }
