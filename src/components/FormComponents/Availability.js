@@ -1,5 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react'
-import ProductSlots from '../productSlots/productSlots'
+import { useState, useEffect, useContext } from 'react'
 import { ReactComponent as Logo } from './../../assets/Logos/LogoRed.svg'
 import Button from '../Button/Button'
 import useGlobalState from '../../util/useGlobalState'
@@ -18,11 +17,11 @@ export default function Availability({
   const [initialAvailability, setInitialAvailability] = useState()
 
   const { state, dispatch } = useContext(context)
-  const { availability } = state
+  const { blockedAvailabilities } = state
   const { user } = useGlobalState().state
 
   useEffect(() => {
-    setInitialAvailability(availability)
+    setInitialAvailability(blockedAvailabilities)
   }, [])
 
   return (
@@ -39,14 +38,8 @@ export default function Availability({
           Select the days and enter the times you are available for trades.
         </div>
 
-        {/* <ProductSlots
-          availability={availability}
-          onAvailabilityChange={newAvailability =>
-            dispatch({ type: 'setBlockedAvailability', data: newAvailability })
-          }
-        /> */}
         <TimeSlots
-          blockedAvailabilities={availability}
+          blockedAvailabilities={blockedAvailabilities}
           onTimeSlotBlocked={blockedAvailability => {
             dispatch({
               type: 'setBlockedAvailability',
@@ -76,7 +69,7 @@ export default function Availability({
             </>
           ) : (
             <Button
-              isDisabled={!availability.includes(1)}
+              isDisabled={!blockedAvailabilities.length}
               text="Next"
               isLoading={isUpgradeLoading}
               onClick={() =>

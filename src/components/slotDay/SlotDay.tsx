@@ -17,7 +17,7 @@ export const SlotDay: React.FC<SlotDayProps> = ({
     onPress,
     blockedAvailabilities,
     onTimeSlotBlocked
-}) => {
+}) => {    
     const isMorningBlocked = blockedAvailabilities.some(availability => {
         return (
             weekDay === availability.weekDay &&
@@ -73,15 +73,15 @@ export const SlotDay: React.FC<SlotDayProps> = ({
                         `}
                     />
                 </div>
-                {open && (
-                    <TimeSlotPicker 
-                        isMorningBlocked={isMorningBlocked}
-                        isAfternoonBlocked={isAfternoonBlocked}
-                        morningClick={() => handlePress('morning')}
-                        afternoonClick={() => handlePress('afternoon')}
-                    />
-                )}
             </div>
+            {open && (
+                <TimeSlotPicker 
+                    isMorningBlocked={isMorningBlocked}
+                    isAfternoonBlocked={isAfternoonBlocked}
+                    morningClick={() => handlePress('morning')}
+                    afternoonClick={() => handlePress('afternoon')}
+                />
+            )}
         </div>
     )
 }

@@ -49,8 +49,8 @@ const TimeSlotPicker: React.FC<TimeSlotPickerProps> = ({
                 </div>
                 <div
                     className={`TimeSlotDiv 
-                ${isAfternoonBlocked ? 'BackgroundAfternoon' : ''}
-                ${afternoonUnavailable ? 'AfternoonUnavailable' : 'Pointer'}`}
+                    ${isAfternoonBlocked ? 'BackgroundAfternoon' : ''}
+                    ${afternoonUnavailable ? 'AfternoonUnavailable' : 'Pointer'}`}
                     onClick={handleAfternoonClick}
                 >
                     <AfternoonIcon color={afternoonUnavailable ? 'gray' : ''} />

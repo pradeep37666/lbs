@@ -32,7 +32,7 @@ const TimeSlots: React.FC<TimeSlotsProps> = ({
             'SATURDAY',
             'SUNDAY',
         ]
-
+        
         return weekdays.map((weekDay, index) => {
             return (
                 <SlotDay

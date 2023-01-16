@@ -24,8 +24,8 @@ export default function UpgradeLender() {
   const [state, dispatch] = useReducer(lenderUpgradeReducer, {
     isLenderUpgrade: true,
     currentPage: 'Bank Details',
-    dateOfBirth: new Date(1990, 1, 1),
-    availability: new Array(14).fill(0),
+    dateOfBirth: new Date(1990, 0, 1),
+    blockedAvailabilities: [],
   })
   const globalDispatch = useGlobalState().dispatch
   const globalState = useGlobalState().state
@@ -41,7 +41,9 @@ export default function UpgradeLender() {
     idFrontImageLink,
     idBackImageLink,
     dateOfBirth,
+    blockedAvailabilities,
   } = state
+  const userService = new UserService()
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -79,6 +81,7 @@ export default function UpgradeLender() {
         email: user.email,
         mobile: user.mobile,
         isLender: true,
+        role: 'COMMON',
       },
       stripeDetails: {
         day: dateOfBirth.getDate(),
@@ -94,20 +97,25 @@ export default function UpgradeLender() {
     }
     try {
       setIsUpgradeLoading(true)
-      const { user, blocked } = await UserService.borrowerUpgrade({
+      await userService.borrowerUpgrade({
         userData,
         userId: user.id,
-        blockedAvailabilities: [],
+        blockedAvailabilities: blockedAvailabilities,
       })
-      console.log({user})
-      console.log({blocked})
+      // const { user, blocked } = await userService.borrowerUpgrade({
+      //   userData,
+      //   userId: user.id,
+      //   blockedAvailabilities: blockedAvailabilities,
+      // })
+      // console.log({result: user})
+      // console.log({result: blocked})
       // const { data, status } = await Instance.post(
       //   '/users/borrower-upgrade',
       //   userData
       // )
       // if (status !== 201) return
       // globalDispatch({ type: 'setUser', data })
-      dispatch({ type: 'setCurrentPage', data: 'Complete!' })
+      // dispatch({ type: 'setCurrentPage', data: 'Complete!' })
     } catch (error) {
       const messageType = error?.response?.data?.message?.split(':')[0]
       if (messageType === 'Invalid request to stripe') {

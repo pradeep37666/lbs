@@ -4,6 +4,7 @@ import { Rating } from '../types/Rating'
 import { BlockedAvailabilityCreate, UpgradeUser, User } from '../types/User'
 import Instance from '../util/axios'
 import Crudable from './crudable'
+import { async } from 'validate.js'
 
 const networkErrorMessage =
 	'There was an error with your connection, please try again'
@@ -84,10 +85,18 @@ class UserService implements Crudable<User> {
 					blockedAvailabilities
 				})
 			])
-			if (!user || !blocked) throw Error
-			return { user, blocked }
+			console.log({user})
+			console.log({blocked})
+			
+			// if (!user || !blocked) throw Error
+			// return { user, blocked }
 		} catch (error: any) {
-			console.log({ error })
+			if (error && axios.isAxiosError(error)) {
+				if (error?.code === 'ERR_NETWORK' || error?.code === 'ECONNABORTED')
+					throw Error(networkErrorMessage)
+			}
+
+			throw Error('Error fetching user details')
 		}
 	}
 
