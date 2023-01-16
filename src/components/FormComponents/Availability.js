@@ -4,6 +4,7 @@ import { ReactComponent as Logo } from './../../assets/Logos/LogoRed.svg'
 import Button from '../Button/Button'
 import useGlobalState from '../../util/useGlobalState'
 import { REGISTER_PAGES } from '../../assets/Data/LBSEnum'
+import TimeSlots from '../timeSlots/TimeSlots'
 
 export default function Availability({
   context,
@@ -38,11 +39,20 @@ export default function Availability({
           Select the days and enter the times you are available for trades.
         </div>
 
-        <ProductSlots
+        {/* <ProductSlots
           availability={availability}
           onAvailabilityChange={newAvailability =>
             dispatch({ type: 'setBlockedAvailability', data: newAvailability })
           }
+        /> */}
+        <TimeSlots
+          blockedAvailabilities={availability}
+          onTimeSlotBlocked={blockedAvailability => {
+            dispatch({
+              type: 'setBlockedAvailability',
+              data: blockedAvailability,
+            })
+          }}
         />
         <div
           className="SkipNextButtonFlex"

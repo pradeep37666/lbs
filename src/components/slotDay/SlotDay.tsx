@@ -1,6 +1,7 @@
 import React from 'react'
 import './slotDay.css'
 import { BlockedAvailabilityCreate, BlockedAvailabilityWeekday } from '../../types/User'
+import TimeSlotPicker from '../timeSlotPicker/TimeSlotPicker'
 
 type SlotDayProps = {
     weekDay: BlockedAvailabilityWeekday
@@ -10,7 +11,7 @@ type SlotDayProps = {
     onTimeSlotBlocked: (blockedAvailavility: BlockedAvailabilityCreate) => void
 }
 
-const SlotDay: React.FC<SlotDayProps> = ({
+export const SlotDay: React.FC<SlotDayProps> = ({
     weekDay,
     open,
     onPress,
@@ -49,10 +50,10 @@ const SlotDay: React.FC<SlotDayProps> = ({
     return (
         <div>
             <div className="DayDotsFlex">
-                <div 
-                    className={`DayInactive ${isMorningBlocked || isAfternoonBlocked 
-                        ? 'DayActive' 
-                        : ''}`} 
+                <div
+                    className={`DayInactive ${isMorningBlocked || isAfternoonBlocked
+                        ? 'DayActive'
+                        : ''}`}
                     onClick={onPress}
                 >
                     {capitalizeFirstLetter(weekDay)}
@@ -60,18 +61,26 @@ const SlotDay: React.FC<SlotDayProps> = ({
                 </div>
                 <div className="DotsFlex">
                     <div className={`AvailabilityDot 
-                        ${isMorningBlocked 
-                        ? 'DotMorningActive' 
-                        : ''}
-                        `} 
+                        ${isMorningBlocked
+                            ? 'DotMorningActive'
+                            : ''}
+                        `}
                     />
                     <div className={`AvailabilityDot 
-                        ${isAfternoonBlocked 
-                        ? 'DotAfternoonActive' 
-                        : ''}
-                        `} 
+                        ${isAfternoonBlocked
+                            ? 'DotAfternoonActive'
+                            : ''}
+                        `}
                     />
                 </div>
+                {open && (
+                    <TimeSlotPicker 
+                        isMorningBlocked={isMorningBlocked}
+                        isAfternoonBlocked={isAfternoonBlocked}
+                        morningClick={() => handlePress('morning')}
+                        afternoonClick={() => handlePress('afternoon')}
+                    />
+                )}
             </div>
         </div>
     )

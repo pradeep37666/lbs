@@ -45,7 +45,7 @@ export default function UpgradeLender() {
 
   useEffect(() => {
     window.scrollTo(0, 0)
-  }, [currentPage, state])
+  }, [currentPage])
 
   const getComplete = () => {
     return (
@@ -106,7 +106,7 @@ export default function UpgradeLender() {
       //   userData
       // )
       // if (status !== 201) return
-      globalDispatch({ type: 'setUser', data })
+      // globalDispatch({ type: 'setUser', data })
       dispatch({ type: 'setCurrentPage', data: 'Complete!' })
     } catch (error) {
       const messageType = error?.response?.data?.message?.split(':')[0]
