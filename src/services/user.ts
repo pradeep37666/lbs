@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { Item } from '../types/Item'
 import { Rating } from '../types/Rating'
-import { User } from '../types/User'
+import { BlockedAvailabilityCreate, UpgradeUser, User } from '../types/User'
 import Instance from '../util/axios'
 import Crudable from './crudable'
 
@@ -71,6 +71,35 @@ class UserService implements Crudable<User> {
 		// delete a user
 		throw Error('Not Implemented')
 	}
+
+	borrowerUpgrade = async (
+		userData: UpgradeUser,
+		userId: string,
+		blockedAvailabilities: BlockedAvailabilityCreate[]
+	) => {
+		try {
+			const [user, blocked] = await Promise.all([
+				Instance.post('/users/borrower-upgrade', userData),
+				Instance.post(`/blocked-availability/users/${userId}`, {
+					blockedAvailabilities
+				})
+			])
+			if (!user || !blocked) throw Error
+			return { user, blocked }
+		} catch (error: any) {
+			console.log({ error })
+		}
+	}
+
+	// blockAvailability = async (userId: string, blockedAvailabilities: BlockedAvailabilityCreate) => {
+	// 	try {
+	// 		const result = await Instance.post(`/blocked-availability/users/${userId}`)
+	// 		console.log({ result })
+
+	// 	} catch (error) {
+
+	// 	}
+	// }
 }
 
 export default UserService

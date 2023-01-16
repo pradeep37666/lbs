@@ -55,7 +55,7 @@ const lenderUpgradeReducer = (state, action) => {
                 ...state,
                 address: action.data
             }
-        case 'setAvailability' :
+        case 'setBlockedAvailability' :
             return {
                 ...state,
                 availability: action.data

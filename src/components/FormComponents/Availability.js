@@ -1,20 +1,20 @@
-import React, { useState, useEffect, useContext } from "react";
-import ProductSlots from "../productSlots/productSlots";
-import { ReactComponent as Logo } from "./../../assets/Logos/LogoRed.svg";
-import Button from "../Button/Button";
-import useGlobalState from "../../util/useGlobalState";
-import { REGISTER_PAGES } from "../../assets/Data/LBSEnum";
+import React, { useState, useEffect, useContext } from 'react'
+import ProductSlots from '../productSlots/productSlots'
+import { ReactComponent as Logo } from './../../assets/Logos/LogoRed.svg'
+import Button from '../Button/Button'
+import useGlobalState from '../../util/useGlobalState'
+import { REGISTER_PAGES } from '../../assets/Data/LBSEnum'
 
-export default function Availability({ 
-  context, 
-  style,  
-  submitUpgrade, 
-  isUpgradeLoading, 
-  isEditItem, 
+export default function Availability({
+  context,
+  style,
+  submitUpgrade,
+  isUpgradeLoading,
+  isEditItem,
   onCancel,
   type,
 }) {
-  const [ initialAvailability, setInitialAvailability ] = useState()
+  const [initialAvailability, setInitialAvailability] = useState()
 
   const { state, dispatch } = useContext(context)
   const { availability } = state
@@ -22,12 +22,12 @@ export default function Availability({
 
   useEffect(() => {
     setInitialAvailability(availability)
-  },[])
+  }, [])
 
   return (
     <div className="RegistrationWrapper">
-      <div className="LoginMain" style={ style }>
-        <Logo height="50px" width="50px" style={{ marginBottom: ".5em" }} />
+      <div className="LoginMain" style={style}>
+        <Logo height="50px" width="50px" style={{ marginBottom: '.5em' }} />
 
         <div className="LoginHeader">General Product Availability</div>
         <div className="LoginText LoginTextSmall">
@@ -38,37 +38,49 @@ export default function Availability({
           Select the days and enter the times you are available for trades.
         </div>
 
-        <ProductSlots 
-        availability={availability}
-        onAvailabilityChange={(newAvailability) => dispatch({ type: 'setAvailability', data: newAvailability })}
+        <ProductSlots
+          availability={availability}
+          onAvailabilityChange={newAvailability =>
+            dispatch({ type: 'setBlockedAvailability', data: newAvailability })
+          }
         />
-        <div className="SkipNextButtonFlex" style={ style ? { justifyContent: 'center'} : null }>
-          { isEditItem ? (
+        <div
+          className="SkipNextButtonFlex"
+          style={style ? { justifyContent: 'center' } : null}
+        >
+          {isEditItem ? (
             <>
-              <Button 
-              text="Cancel"
-              invertedColors
-              style={{ marginRight: '0.5rem'}}
-              onClick={() => {
-                dispatch({ type: 'setAvailability', data: initialAvailability })
-                onCancel()
-              }}
+              <Button
+                text="Cancel"
+                invertedColors
+                style={{ marginRight: '0.5rem' }}
+                onClick={() => {
+                  dispatch({
+                    type: 'setAvailability',
+                    data: initialAvailability,
+                  })
+                  onCancel()
+                }}
               />
-              <Button 
-              text="Save"
-              onClick={() => onCancel()}
-              />
+              <Button text="Save" onClick={() => onCancel()} />
             </>
           ) : (
-            <Button 
-            isDisabled={!availability.includes(1)}
-            text="Next"
-            isLoading={isUpgradeLoading}
-            onClick={() => (user && type === 'upgrateLender') ? submitUpgrade() : dispatch({ type: 'setCurrentPage', data: REGISTER_PAGES.TNC})}
+            <Button
+              isDisabled={!availability.includes(1)}
+              text="Next"
+              isLoading={isUpgradeLoading}
+              onClick={() =>
+                user && type === 'upgrateLender'
+                  ? submitUpgrade()
+                  : dispatch({
+                      type: 'setCurrentPage',
+                      data: REGISTER_PAGES.TNC,
+                    })
+              }
             />
           )}
         </div>
       </div>
     </div>
-  );
+  )
 }
