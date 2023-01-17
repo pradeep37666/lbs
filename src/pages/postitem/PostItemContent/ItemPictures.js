@@ -1,45 +1,45 @@
-import React, { useContext, useState } from "react";
-import { ReactComponent as Logo } from "../../../assets/Logos/LogoRed.svg";
-import IconButton from "@material-ui/core/IconButton";
-import AddIcon from "@material-ui/icons/Add";
-import RemoveIcon from "@material-ui/icons/Remove";
-import { makeStyles } from "@material-ui/styles";
-import Button from "../../../components/Button/Button";
-import { FileService } from "../../../services/FileService";
+import { useContext, useState } from 'react'
+import { ReactComponent as Logo } from '../../../assets/Logos/LogoRed.svg'
+import IconButton from '@material-ui/core/IconButton'
+import AddIcon from '@material-ui/icons/Add'
+import RemoveIcon from '@material-ui/icons/Remove'
+import { makeStyles } from '@material-ui/styles'
+import Button from '../../../components/Button/Button'
+import { FileService } from '../../../services/FileService'
 import { v4 as uuidv4 } from 'uuid'
-import { CircularProgress } from "@material-ui/core";
-import { POST_ITEM_PAGE } from "../../../assets/Data/LBSEnum";
+import { CircularProgress } from '@material-ui/core'
+import { POST_ITEM_PAGE } from '../../../assets/Data/LBSEnum'
 
 const useStyles = makeStyles({
   button: {
     width: 80,
     height: 80,
-    backgroundColor: "#B43B4C",
-    "&:hover": {
-      backgroundColor: "#cf3247",
+    backgroundColor: '#B43B4C',
+    '&:hover': {
+      backgroundColor: '#cf3247',
     },
   },
   icon: {
     fontSize: 40,
-    color: "#FFF",
+    color: '#FFF',
   },
   buttonDelete: {
-    position: "absolute",
+    position: 'absolute',
     top: -20,
     right: -20,
     width: 40,
     height: 40,
-    backgroundColor: "#B43B4C",
-    "&:hover": {
-      backgroundColor: "#cf3247",
+    backgroundColor: '#B43B4C',
+    '&:hover': {
+      backgroundColor: '#cf3247',
     },
   },
-});
+})
 
 export default function ItemPictures({ context }) {
-  const [ isUploading, setIsUploading ] = useState(false)
+  const [isUploading, setIsUploading] = useState(false)
   const { state, dispatch } = useContext(context)
-  const { pictures } = state
+  const { postItemImages } = state
   const classes = useStyles()
 
   const handleChange = async ({ target }) => {
@@ -49,7 +49,7 @@ export default function ItemPictures({ context }) {
       if (!files.length) return
       const fileLinks = await FileService.uploadMultipleImages(files)
       if (!fileLinks) return
-      let newPictures = pictures.map((picture) => picture)
+      let newPictures = postItemImages.map(picture => picture)
       for (let i = 0; i < files.length; i++) {
         newPictures.push({
           preview: URL.createObjectURL(files[i]),
@@ -57,8 +57,8 @@ export default function ItemPictures({ context }) {
           id: uuidv4(),
         })
       }
-      dispatch({ type: 'setPictures', data: newPictures })
-      dispatch({ type: 'setPictureLinks', data: fileLinks })
+      dispatch({ type: 'setPostItemImages', data: newPictures })
+      dispatch({ type: 'setPostItemImageLinks', data: fileLinks })
     } catch (error) {
       console.log(error.response)
     } finally {
@@ -66,79 +66,78 @@ export default function ItemPictures({ context }) {
     }
   }
 
-  const handleDelete = (id) => {
-    const newPictures = pictures.filter(picture => picture.id !== id)
-    dispatch({ type: 'setPictures', data: newPictures })
+  const handleDelete = id => {
+    const newPictures = postItemImages.filter(picture => picture.id !== id)
+    dispatch({ type: 'setPostItemImages', data: newPictures })
   }
 
   return (
-    <div className="RegistrationWrapper">
-      <div className="LoginMain">
-        <Logo height="50px" width="50px" style={{ marginBottom: ".5em" }} />
+    <div className='RegistrationWrapper'>
+      <div className='LoginMain'>
+        <Logo height='50px' width='50px' style={{ marginBottom: '.5em' }} />
 
-        <div className="LoginHeader">Item Pictures</div>
-        <div className="LoginText">
+        <div className='LoginHeader'>Item Pictures</div>
+        <div className='LoginText'>
           Please provide us with as many photos you can of your item. Your first
           image will be used as your main product image. Recommended image size
           is at least 300 x 300 pixels.
         </div>
 
-        <div className="PostItem__ItemPictures__Container">
-          {pictures.map((picture, index) => {
+        <div className='PostItem__ItemPictures__Container'>
+          {postItemImages.map((picture, index) => {
             return (
-              <div 
-                className="PostItem__ItemPictures__Preview" 
-                key={index}
-              >
+              <div className='PostItem__ItemPictures__Preview' key={index}>
                 <IconButton
-                  aria-label="delete"
+                  aria-label='delete'
                   className={classes.buttonDelete}
                   onClick={() => handleDelete(picture.id)}
                 >
                   <RemoveIcon className={classes.icon} />
                 </IconButton>
-                  <img
-                    src={picture.preview}
-                    alt="posting item"
-                    className="ProfilePicturePreview"
-                    loading="lazy"
-                  />
+                <img
+                  src={picture.preview}
+                  alt='posting item'
+                  className='ProfilePicturePreview'
+                  loading='lazy'
+                />
               </div>
             )
           })}
           {isUploading && (
-            <div 
-              className="PostItem__ItemPictures__Preview"
-              style={{ display: 'flex', justifyContent: 'center'}}
+            <div
+              className='PostItem__ItemPictures__Preview'
+              style={{ display: 'flex', justifyContent: 'center' }}
             >
-              <CircularProgress color="inherit" />
+              <CircularProgress color='inherit' />
             </div>
           )}
         </div>
         <input
-          type="file"
-          id="selectFile"
+          type='file'
+          id='selectFile'
           accept='image/*'
           multiple
-          style={{ display: "none" }}
+          style={{ display: 'none' }}
           onChange={handleChange}
         />
 
-        <div className="PostItem__ItemPictures__Add__Container">
+        <div className='PostItem__ItemPictures__Add__Container'>
           <IconButton
-            aria-label="delete"
+            aria-label='delete'
             className={classes.button}
-            onClick={() => document.getElementById("selectFile").click()}
+            onClick={() => document.getElementById('selectFile').click()}
           >
             <AddIcon className={classes.icon} />
           </IconButton>
         </div>
-        <Button 
-        text="Next"
-        onClick={() => dispatch({ type: 'setCurrentPage', data: POST_ITEM_PAGE.ADVANCE})}
-        isDisabled={pictures.length === 0}
+        <Button
+          text='Next'
+          onClick={() =>
+            dispatch({ type: 'setCurrentPage', data: POST_ITEM_PAGE.ADVANCE })
+          }
+          isDisabled={postItemImages.length === 0}
         />
       </div>
     </div>
-  );
+  )
 }
