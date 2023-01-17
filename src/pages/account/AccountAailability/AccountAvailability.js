@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import './AccountAvailability.css'
 import useGlobalState from '../../../util/useGlobalState'
 import Button from '../../../components/Button/Button'
@@ -28,10 +28,6 @@ export default function Availability({ setAccountContent }) {
     })
   )
   const userService = new UserService()
-
-  useEffect(() => {
-    console.log({ user })
-  }, [user])
 
   const updateBlockedAvailabilities = blockedAvailability => {
     const existingBlockedAvailabilityIndex = blockedAvailabilities.findIndex(

@@ -1,10 +1,9 @@
 import axios from 'axios'
 import { Item } from '../types/Item'
 import { Rating } from '../types/Rating'
-import { BlockedAvailabilityCreate, BlockedAvailabilityNumberFormat, UpgradeUser, User } from '../types/User'
+import { BlockedAvailabilityNumberFormat, UpgradeUser, User } from '../types/User'
 import Instance from '../util/axios'
 import Crudable from './crudable'
-import { async } from 'validate.js'
 
 const networkErrorMessage =
 	'There was an error with your connection, please try again'
