@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { Item } from '../types/Item'
 import { Rating } from '../types/Rating'
-import { BlockedAvailabilityCreate, UpgradeUser, User } from '../types/User'
+import { BlockedAvailabilityCreate, BlockedAvailabilityNumberFormat, UpgradeUser, User } from '../types/User'
 import Instance from '../util/axios'
 import Crudable from './crudable'
 import { async } from 'validate.js'
@@ -76,7 +76,7 @@ class UserService implements Crudable<User> {
 	borrowerUpgrade = async (
 		userData: UpgradeUser,
 		userId: string,
-		blockedAvailabilities: BlockedAvailabilityCreate[]
+		blockedAvailabilities: BlockedAvailabilityNumberFormat[]
 	) => {
 		try {
 			const [user, blocked] = await Promise.all([
@@ -85,30 +85,16 @@ class UserService implements Crudable<User> {
 					blockedAvailabilities
 				})
 			])
-			console.log({user})
-			console.log({blocked})
-			
-			// if (!user || !blocked) throw Error
-			// return { user, blocked }
+			if (user.status !== 201 || blocked.status !== 201) throw Error
+			return { user, blocked }
 		} catch (error: any) {
 			if (error && axios.isAxiosError(error)) {
 				if (error?.code === 'ERR_NETWORK' || error?.code === 'ECONNABORTED')
 					throw Error(networkErrorMessage)
 			}
-
 			throw Error('Error fetching user details')
 		}
 	}
-
-	// blockAvailability = async (userId: string, blockedAvailabilities: BlockedAvailabilityCreate) => {
-	// 	try {
-	// 		const result = await Instance.post(`/blocked-availability/users/${userId}`)
-	// 		console.log({ result })
-
-	// 	} catch (error) {
-
-	// 	}
-	// }
 }
 
 export default UserService

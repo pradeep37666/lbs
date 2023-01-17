@@ -16,6 +16,7 @@ import {
 import { getPrevUpgradeLenderPage } from '../../../util/getPrevPage'
 import useErrorState from '../../../util/reducers/errorContext'
 import UserService from '../../../services/user'
+import { BlockedAvailabilityToNumber } from '../../../types/User'
 
 const FormContext = createContext()
 
@@ -95,30 +96,30 @@ export default function UpgradeLender() {
         documentBackImage: idBackImageLink,
       },
     }
+
+    const userBlockedAvailability = blockedAvailabilities.map(availability => {
+      return {
+        weekDay: BlockedAvailabilityToNumber(availability.weekDay),
+        startTime: availability.startTime,
+        endTime: availability.endTime,
+      }
+    })
+
     try {
       setIsUpgradeLoading(true)
-      await userService.borrowerUpgrade({
+      const result = await userService.borrowerUpgrade(
         userData,
-        userId: user.id,
-        blockedAvailabilities: blockedAvailabilities,
-      })
-      // const { user, blocked } = await userService.borrowerUpgrade({
-      //   userData,
-      //   userId: user.id,
-      //   blockedAvailabilities: blockedAvailabilities,
-      // })
-      // console.log({result: user})
-      // console.log({result: blocked})
-      // const { data, status } = await Instance.post(
-      //   '/users/borrower-upgrade',
-      //   userData
-      // )
-      // if (status !== 201) return
-      // globalDispatch({ type: 'setUser', data })
-      // dispatch({ type: 'setCurrentPage', data: 'Complete!' })
+        user.id,
+        userBlockedAvailability
+      )
+      globalDispatch({ type: 'setUser', data: result.user.data })
+      dispatch({ type: 'setCurrentPage', data: 'Complete!' })
     } catch (error) {
       const messageType = error?.response?.data?.message?.split(':')[0]
-      if (messageType === 'Invalid request to stripe') {
+      if (
+        messageType === 'Invalid request to stripe' ||
+        messageType === 'Error when creating stripe account'
+      ) {
         errorDispatch({
           type: 'openSnackBar',
           data: {

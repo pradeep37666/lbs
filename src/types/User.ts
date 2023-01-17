@@ -17,6 +17,26 @@ export type User = {
 	lenderRating: number
 }
 
+export type UserData = {
+	id: string
+	createdAt: Date
+	updatedAt: Date
+	email: string
+	firstName: string
+	lastName: string
+	avatar: string
+	mobile: string
+	isLender: boolean
+	lenderRating: number
+	borrowerRating: number
+	address: UserAddress & {
+		id: string
+		createdAt: Date
+		updatedAt: Date
+		userId: string
+	}
+}
+
 export type UpgradeUser = {
 	borrowerDetails: {
 		address: UserAddress
