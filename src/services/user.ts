@@ -95,6 +95,25 @@ class UserService implements Crudable<User> {
 			throw Error('Error fetching user details')
 		}
 	}
+
+	updateUserBlockedAvailability = async (
+		userId: string,
+		blockedAvailabilities: BlockedAvailabilityNumberFormat[]
+	) => {
+		try {
+			const result = await Instance.post(`/blocked-availability/users/${userId}`, {
+				blockedAvailabilities
+			})
+			if (result.status !== 201) throw Error
+			return result.data
+		} catch (error) {
+			if (error && axios.isAxiosError(error)) {
+				if (error?.code === 'ERR_NETWORK' || error?.code === 'ECONNABORTED')
+					throw Error(networkErrorMessage)
+			}
+			throw Error('Error fetching user details')
+		}
+	}
 }
 
 export default UserService
