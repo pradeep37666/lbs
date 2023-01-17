@@ -91,7 +91,7 @@ export default function PostItem() {
       price: postItemPrice,
       deliveryPrice: postItemDeliveryPrice ?? 0,
       pickupPrice: postItemPickupPrice,
-      deliveryOption: postItemDeliveryOption,
+      deliveryOption: postItemDeliveryOption ?? 'NONE',
       rating: 5,
       discount: postItemDiscount ?? 0,
       is_deleted: false,

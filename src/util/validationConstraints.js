@@ -16,50 +16,50 @@ const passwordConstraints = {
 }
 
 const validationConstraints = {
-    firstName: {
-      presence: {
-        allowEmpty: false,
-        message: "^Required"
-      }
+  firstName: {
+    presence: {
+      allowEmpty: false,
+      message: '^Required',
     },
-    lastName: {
-      presence: {
-        allowEmpty: false,
-        message: "^Required"
-      }
+  },
+  lastName: {
+    presence: {
+      allowEmpty: false,
+      message: '^Required',
+    },
+  },
+  email: {
+    presence: {
+      allowEmpty: false,
+      message: '^Required',
     },
     email: {
-      presence: {
-        allowEmpty: false,
-        message: "^Required"
-      },
-      email: {
-        message: "^Must be a valid email address"
-      }
+      message: '^Must be a valid email address',
     },
-    phoneNumber: {
-      presence: {
-        allowEmpty: false,
-        message: "^Required",
-      },
-      format: {
-        pattern: /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im,
-        message: "^Must be a valid phone number"
-      }
+  },
+  phoneNumber: {
+    presence: {
+      allowEmpty: false,
+      message: '^Required',
     },
-    password: passwordConstraints,
-    confirmPassword: {
-      equality: 'password'
+    format: {
+      pattern: /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im,
+      message: '^Must be a valid phone number',
     },
-    currentPassword: passwordConstraints,
-    discount: {
-      numericality: {
-        onlyInteger: true,
-        greaterThan: 0,
-        lessThanOrEqualTo: 99,
-        message: 'Must be less than or equal to 99%'
-      }
-    }
+  },
+  password: passwordConstraints,
+  confirmPassword: {
+    equality: 'password',
+  },
+  currentPassword: passwordConstraints,
+  postItemDiscount: {
+    numericality: {
+      onlyInteger: true,
+      greaterThan: 0,
+      lessThanOrEqualTo: 99,
+      message: 'Must be less than or equal to 99%',
+    },
+  },
 }
 
 const createValidationObject = (fields) => {
@@ -74,4 +74,4 @@ export const loginConstraints = createValidationObject(['email', 'password'])
 export const registrationConstraints = createValidationObject([ 'firstName', 'lastName', 'email', 'phoneNumber', 'password', 'confirmPassword', ])
 export const newPasswordConstraints = createValidationObject([ 'password', 'confirmPassword' ])
 export const updateUserDetailsConstraints = createValidationObject(['firstName', 'lastName', 'email', 'phoneNumber',])
-export const discountConstraints = createValidationObject(['discount'])
+export const discountConstraints = createValidationObject(['postItemDiscount'])

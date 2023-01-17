@@ -59,7 +59,7 @@ export interface PostItemState {
   postItemImageLinks: string[]
   postItemDescription: string
   postItemPrice: number | undefined
-  postItemDiscount: number | undefined
+  postItemDiscount: number
   postItemDeliveryPrice: number | undefined
   postItemAddress: any
   postItemSuburb: string
@@ -87,7 +87,7 @@ export const InitialPostItemState: PostItemState = {
   postItemImageLinks: [],
   postItemDescription: '',
   postItemPrice: undefined,
-  postItemDiscount: undefined,
+  postItemDiscount: 0,
   postItemDeliveryPrice: undefined,
   postItemAddress: '',
   postItemSuburb: '',
@@ -319,7 +319,7 @@ const postItemReducer = (
         postItemImageLinks: [],
         postItemDescription: '',
         postItemPrice: undefined,
-        postItemDiscount: undefined,
+        postItemDiscount: 0,
         postItemDeliveryPrice: undefined,
         postItemAddress: '',
         postItemSuburb: '',
