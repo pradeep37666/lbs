@@ -18,19 +18,9 @@ export type actions =
   | 'setPostItemDeliveryPrice'
   | 'setPostItemAddress'
   | 'setPostItemAvailability'
-  | 'setPostItemSuburb'
-  | 'setPostItemLat'
-  | 'setPostItemLng'
   | 'setUser'
-  | 'setCreatedItem'
   | 'setPostItemState'
-  | 'setPostItemCountry'
-  | 'setPostItemCity'
-  | 'setPostItemPostCode'
-  | 'setPostItemStreetNumber'
-  | 'setPostItemFullAddress'
-  | 'setPostItemStreetName'
-  | 'setPostItemStateName'
+  | 'setCreatedItem'
   | 'setPostItemPickupPrice'
   | 'setPostItemDeliveryOption'
   | 'updateItemBlockedAvailability'
@@ -62,18 +52,7 @@ export interface PostItemState {
   postItemDiscount: number
   postItemDeliveryPrice: number | undefined
   postItemAddress: any
-  postItemSuburb: string
-  postItemLat: number
-  postItemLng: number
   createdItem: ItemCreated
-  postItemState: any
-  postItemCountry: string
-  postItemCity: string
-  postItemPostCode: string
-  postItemStreetNumber: string
-  postItemFullAddress: string
-  postItemStreetName: string
-  postItemStateName: string
   postItemDeliveryOption: DeliveryOption
   postItemPickupPrice: number
   postItemBlockedAvailabilities: BlockedAvailabilityCreate[]
@@ -90,9 +69,6 @@ export const InitialPostItemState: PostItemState = {
   postItemDiscount: 0,
   postItemDeliveryPrice: undefined,
   postItemAddress: '',
-  postItemSuburb: '',
-  postItemLat: 0,
-  postItemLng: 0,
   createdItem: {
     userId: { id: '', email: '', exp: 0, role: '' },
     title: '',
@@ -132,14 +108,6 @@ export const InitialPostItemState: PostItemState = {
     updatedAt: new Date(),
     rating: 0,
   },
-  postItemState: null,
-  postItemCountry: '',
-  postItemCity: '',
-  postItemPostCode: '',
-  postItemStreetNumber: '',
-  postItemFullAddress: '',
-  postItemStreetName: '',
-  postItemStateName: '',
   postItemDeliveryOption: 'NONE',
   postItemPickupPrice: 0,
   postItemBlockedAvailabilities: [],
@@ -205,26 +173,6 @@ const postItemReducer = (
         postItemAddress: action.data,
       }
     }
-    case 'setPostItemSuburb': {
-      return {
-        ...state,
-        postItemSuburb: action.data,
-      }
-    }
-    case 'setPostItemLat': {
-      return {
-        ...state,
-        postItemLat: action.data,
-      }
-    }
-
-    case 'setPostItemLng': {
-      return {
-        ...state,
-        postItemLng: action.data,
-      }
-    }
-
     case 'setCreatedItem': {
       return {
         ...state,
@@ -232,48 +180,6 @@ const postItemReducer = (
       }
     }
 
-    case 'setPostItemCountry': {
-      return {
-        ...state,
-        postItemCountry: action.data,
-      }
-    }
-    case 'setPostItemCity': {
-      return {
-        ...state,
-        postItemCity: action.data,
-      }
-    }
-    case 'setPostItemPostCode': {
-      return {
-        ...state,
-        postItemPostCode: action.data,
-      }
-    }
-    case 'setPostItemStreetNumber': {
-      return {
-        ...state,
-        postItemStreetNumber: action.data,
-      }
-    }
-    case 'setPostItemFullAddress': {
-      return {
-        ...state,
-        postItemFullAddress: action.data,
-      }
-    }
-    case 'setPostItemStreetName': {
-      return {
-        ...state,
-        postItemStreetName: action.data,
-      }
-    }
-    case 'setPostItemStateName': {
-      return {
-        ...state,
-        postItemStateName: action.data,
-      }
-    }
     case 'setPostItemDeliveryOption': {
       return {
         ...state,
@@ -322,9 +228,6 @@ const postItemReducer = (
         postItemDiscount: 0,
         postItemDeliveryPrice: undefined,
         postItemAddress: '',
-        postItemSuburb: '',
-        postItemLat: 0,
-        postItemLng: 0,
         createdItem: {
           userId: { id: '', email: '', exp: 0, role: '' },
           title: '',
@@ -364,14 +267,6 @@ const postItemReducer = (
           updatedAt: new Date(),
           rating: 0,
         },
-        postItemState: null,
-        postItemCity: '',
-        postItemCountry: '',
-        postItemPostCode: '',
-        postItemFullAddress: '',
-        postItemStreetName: '',
-        postItemStreetNumber: '',
-        postItemStateName: '',
         postItemDeliveryOption: 'NONE',
         postItemPickupPrice: 0,
         postItemBlockedAvailabilities: [],

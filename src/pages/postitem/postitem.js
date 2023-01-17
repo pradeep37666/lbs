@@ -32,6 +32,7 @@ const FormContext = createContext()
 export default function PostItem() {
   const [isCreateItemLoading, setIsCreateItemLoading] = useState(false)
   const [isModalVisible, setIsModalVisible] = useState(false)
+  const [itemID, setItemID] = useState(null)
   const { user } = useGlobalState().state
   const history = useHistory()
   const { errorDispatch } = useErrorState()
@@ -61,23 +62,12 @@ export default function PostItem() {
     postItemPrice,
     postItemDiscount,
     postItemDeliveryPrice,
-    postItemLat,
-    postItemLng,
-    postItemSuburb,
-    postItemCity,
-    postItemCountry,
-    postItemFullAddress,
-    postItemPostCode,
-    postItemStreetName,
-    postItemStreetNumber,
-    postItemStateName,
     postItemPickupPrice,
     postItemDeliveryOption,
+    postItemAddress,
     postItemBlockedAvailabilities,
     currentPage,
   } = state
-
-  const [itemID, setItemID] = useState(null)
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -96,18 +86,7 @@ export default function PostItem() {
       discount: postItemDiscount ?? 0,
       is_deleted: false,
       images: postItemImageLinks,
-      address: {
-        streetNumber: postItemStreetNumber,
-        streetName: postItemStreetName,
-        city: postItemCity,
-        suburb: postItemSuburb,
-        state: postItemStateName,
-        postCode: postItemPostCode,
-        country: postItemCountry,
-        fullAddress: postItemFullAddress,
-        lat: postItemLat,
-        lng: postItemLng,
-      },
+      address: parseAddressComponent(postItemAddress),
     }
     return itemData
   }
@@ -175,7 +154,7 @@ export default function PostItem() {
             title={postItemTitle}
             picture={postItemImages[0]}
             price={postItemPrice}
-            city={postItemSuburb}
+            city={postItemAddress?.suburb}
             category={postItemCategory}
             deliveryPrice={postItemDeliveryPrice}
             pickupPrice={postItemPickupPrice}
@@ -190,7 +169,7 @@ export default function PostItem() {
     <FormContext.Provider value={{ state, dispatch }}>
       <PageWrapper>
         <Banner
-          textBold="Post Item"
+          textBold='Post Item'
           textNormal={currentPage}
           prevPage={() => getPrevPostItemPage(currentPage, dispatch, history)}
         />

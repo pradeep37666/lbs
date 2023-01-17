@@ -55,7 +55,7 @@ const validationConstraints = {
   postItemDiscount: {
     numericality: {
       onlyInteger: true,
-      greaterThan: 0,
+      greaterThanOrEqualTo: 0,
       lessThanOrEqualTo: 99,
       message: 'Must be less than or equal to 99%',
     },
