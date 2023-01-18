@@ -35,10 +35,7 @@ const EditItemPage = () => {
   const { errorDispatch } = useErrorState()
   const [state, dispatch] = useReducer(editItemReducer, InitialEditItemState)
   const {
-    isOfferButtonNOActive,
     deletedImages,
-    newImages,
-    editItemImages,
     newImageLinks,
     editItemTitle,
     editItemCategory,
@@ -51,6 +48,7 @@ const EditItemPage = () => {
     editItemPickupPrice,
   } = state
   const itemService = new ItemService()
+  const [address, setAddress] = useState(editItemAddress)
 
   useEffect(() => {
     getItem()
@@ -97,19 +95,19 @@ const EditItemPage = () => {
           ? editItemDeliveryPrice
           : 0,
       discount: editItemDiscount,
-      imagesToDelete: deletedImages,
-      images: newImageLinks,
+      imagesToDelete: deletedImages ?? [],
+      images: newImageLinks ?? [],
       address: {
-        suburb: editItemAddress.suburb,
-        lat: editItemAddress.lat,
-        lng: editItemAddress.lng,
-        country: editItemAddress.country,
-        state: editItemAddress.state,
-        city: editItemAddress.city,
-        postCode: editItemAddress.postCode,
-        streetNumber: editItemAddress.streetNumber,
-        fullAddress: editItemAddress.fullAddress,
-        streetName: editItemAddress.streetName,
+        suburb: address.suburb,
+        lat: address.lat,
+        lng: address.lng,
+        country: address.country,
+        state: address.state,
+        city: address.city,
+        postCode: address.postCode,
+        streetNumber: address.streetNumber,
+        fullAddress: address.fullAddress,
+        streetName: address.streetName,
       },
     }
     return itemData
@@ -142,10 +140,6 @@ const EditItemPage = () => {
     }
   }
 
-  const setAddress = addressObj => {
-    dispatch({ type: 'setEditItemAddress', data: addressObj })
-  }
-
   return (
     <EditItemContext.Provider value={{ state, dispatch }}>
       <PageWrapper>
@@ -169,15 +163,30 @@ const EditItemPage = () => {
                 className='LoginMain LoginMainNoMarg'
                 style={{ width: '100%' }}
               >
-                {editItemAddress && (
+                <MapsAutocomplete
+                  setAddress={setAddress}
+                  defaultAddress={editItemAddress}
+                  defaultLocation={editItemAddress.fullAddress}
+                  defaultLat={parseFloat(editItemAddress.lat)}
+                  defaultLng={parseFloat(editItemAddress.lng)}
+                />
+                {/* {defaultAddress ? (
                   <MapsAutocomplete
-                    setAddress={setAddress}
-                    defaultAddress={editItemAddress}
-                    defaultLocation={editItemAddress.fullAddress}
-                    defaultLat={parseFloat(editItemAddress.lat)}
-                    defaultLng={parseFloat(editItemAddress.lng)}
+                    setAddress={address =>
+                      dispatch({ type: 'setEditItemAddress', data: address })
+                    }
+                    defaultAddress={defaultAddress}
+                    defaultLocation={defaultAddress.fullAddress}
+                    defaultLat={parseFloat(defaultAddress.lat)}
+                    defaultLng={parseFloat(defaultAddress.lng)}
                   />
-                )}
+                ) : (
+                  <MapsAutocomplete
+                    setAddress={address =>
+                      dispatch({ type: 'setEditItemAddress', data: address })
+                    }
+                  />
+                )} */}
               </div>
             </div>
 
