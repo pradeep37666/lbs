@@ -12,7 +12,6 @@ import useGlobalState from '../../util/useGlobalState'
 import postItemReducer, {
   InitialPostItemState,
 } from '../../util/reducers/postItemReducer'
-import parseAddressComponent from '../../util/parseAddressComponent'
 import {
   POST_ITEM_PAGE,
   SNACKBAR_BUTTON_TYPES,
@@ -86,7 +85,18 @@ export default function PostItem() {
       discount: postItemDiscount ?? 0,
       is_deleted: false,
       images: postItemImageLinks,
-      address: parseAddressComponent(postItemAddress),
+      address: {
+        streetNumber: postItemAddress?.streetNumber ?? '',
+        streetName: postItemAddress?.streetName ?? '',
+        city: postItemAddress?.city ?? '',
+        suburb: postItemAddress?.suburb ?? '',
+        state: postItemAddress?.state ?? '',
+        postCode: postItemAddress?.postCode ?? '',
+        country: postItemAddress?.country ?? '',
+        fullAddress: postItemAddress?.fullAddress ?? '',
+        lat: postItemAddress?.lat ?? 0,
+        lng: postItemAddress?.lng ?? 0,
+      },
     }
     return itemData
   }
@@ -103,17 +113,12 @@ export default function PostItem() {
       })
     try {
       setIsCreateItemLoading(true)
-      const item = await itemService.createOne(
+      const { item } = await itemService.createNewItem(
         itemData,
         itemBlockedAvailabilitiesNumberFormat
       )
       setItemID(item.id)
       dispatch({ type: 'setCreatedItem', data: item })
-      const availability = await itemService.updateItemBlockedAvailability(
-        item.id,
-        itemBlockedAvailabilitiesNumberFormat
-      )
-      if (!availability) throw Error
       dispatch({ type: 'setCurrentPage', data: POST_ITEM_PAGE.COMPLETE })
     } catch (error) {
       errorDispatch({

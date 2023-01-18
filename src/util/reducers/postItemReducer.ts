@@ -48,9 +48,9 @@ export interface PostItemState {
   postItemImages: string[]
   postItemImageLinks: string[]
   postItemDescription: string
-  postItemPrice: number | undefined
+  postItemPrice: number
   postItemDiscount: number
-  postItemDeliveryPrice: number | undefined
+  postItemDeliveryPrice: number
   postItemAddress: any
   createdItem: ItemCreated
   postItemDeliveryOption: DeliveryOption
@@ -65,9 +65,9 @@ export const InitialPostItemState: PostItemState = {
   postItemImages: [],
   postItemImageLinks: [],
   postItemDescription: '',
-  postItemPrice: undefined,
+  postItemPrice: 0,
   postItemDiscount: 0,
-  postItemDeliveryPrice: undefined,
+  postItemDeliveryPrice: 0,
   postItemAddress: '',
   createdItem: {
     userId: { id: '', email: '', exp: 0, role: '' },
@@ -224,9 +224,9 @@ const postItemReducer = (
         postItemImages: [],
         postItemImageLinks: [],
         postItemDescription: '',
-        postItemPrice: undefined,
+        postItemPrice: 0,
         postItemDiscount: 0,
-        postItemDeliveryPrice: undefined,
+        postItemDeliveryPrice: 0,
         postItemAddress: '',
         createdItem: {
           userId: { id: '', email: '', exp: 0, role: '' },

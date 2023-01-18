@@ -2,23 +2,14 @@ import axios from 'axios'
 import { ItemCreateArgs, ItemCreated } from '../types/Item'
 import Crudable from './crudable'
 import Instance from '../util/axios'
-import { BlockedAvailability, BlockedAvailabilityNumberFormat } from '../types/User'
+import { BlockedAvailabilityNumberFormat } from '../types/User'
 
 const networkErrorMessage =
     'There was an error with your connection, please try again'
 
 class ItemService implements Crudable<ItemCreated> {
     createOne = async (itemData: ItemCreateArgs): Promise<ItemCreated> => {
-        try {
-            const { data } = await Instance.post('/item', itemData)
-            return data
-        } catch (error) {
-            if (error && axios.isAxiosError(error)) {
-                if (error?.code === 'ERR_NETWORK' || error?.code === 'ECONNABORTED')
-                    throw Error(networkErrorMessage)
-            }
-            throw Error('Error fetching user details')
-        }
+        throw Error('Not Implemented')
     }
 
     getOne = async (itemId: string): Promise<ItemCreated> => {
@@ -31,6 +22,27 @@ class ItemService implements Crudable<ItemCreated> {
 
     deleteOne = async (itemId: string): Promise<ItemCreated> => {
         throw Error('Not Implemented')
+    }
+
+    createNewItem = async (
+        itemData: ItemCreateArgs,
+        blockedAvailabilities: BlockedAvailabilityNumberFormat[]
+    ) => {
+        try {
+            const item = await Instance.post('/items', itemData)
+            if (item.status !== 201) throw Error
+            const blocked = await Instance.post(`/blocked-availability/items/${item.data.id}`, {
+                blockedAvailabilities
+            })
+            if (blocked.status !== 201) throw Error
+            return { item, blocked }
+        } catch (error) {
+            if (error && axios.isAxiosError(error)) {
+                if (error?.code === 'ERR_NETWORK' || error?.code === 'ECONNABORTED')
+                    throw Error(networkErrorMessage)
+            }
+            throw Error('Error fetching item details')
+        }
     }
 
     updateItemBlockedAvailability = async (
