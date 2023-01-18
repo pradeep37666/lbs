@@ -113,7 +113,7 @@ export default function PostItem() {
       })
     try {
       setIsCreateItemLoading(true)
-      const { item } = await itemService.createNewItem(
+      const item = await itemService.createNewItem(
         itemData,
         itemBlockedAvailabilitiesNumberFormat
       )

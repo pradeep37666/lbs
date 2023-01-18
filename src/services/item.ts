@@ -35,7 +35,7 @@ class ItemService implements Crudable<ItemCreated> {
                 blockedAvailabilities
             })
             if (blocked.status !== 201) throw Error
-            return { item, blocked }
+            return item.data
         } catch (error) {
             if (error && axios.isAxiosError(error)) {
                 if (error?.code === 'ERR_NETWORK' || error?.code === 'ECONNABORTED')
