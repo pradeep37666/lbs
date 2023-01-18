@@ -20,7 +20,7 @@ export default function Account() {
             case 'Terms & Conditions':
                 return <TermsConditions />
             case 'Support':
-                return <Support />
+                return <Support setAccountContent={setAccountContent} />
             default:
                 return 'account page'
         }
