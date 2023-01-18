@@ -34,7 +34,7 @@ export type actions =
   | 'setEditItemDeliveryOption'
   | 'setEditItemPickupPrice'
   | 'setItemDetails'
-  | 'updateItemBlockedAvailability'
+  | 'setBlockedAvailability'
 
 export interface EditItemState {
   editItemTitle: string
@@ -57,7 +57,7 @@ export interface EditItemState {
   isOfferButtonNOActive: boolean
   editItemPickupPrice: number
   editItemDeliveryOption: DeliveryOption
-  editItemBlockedAvailabilities: BlockedAvailabilityCreate[]
+  blockedAvailabilities: BlockedAvailabilityCreate[]
 }
 
 export const InitialEditItemState: EditItemState = {
@@ -96,7 +96,7 @@ export const InitialEditItemState: EditItemState = {
   isOfferButtonNOActive: false,
   editItemPickupPrice: 0,
   editItemDeliveryOption: 'NONE',
-  editItemBlockedAvailabilities: [],
+  blockedAvailabilities: [],
 }
 
 const editItemReducer = (
@@ -221,11 +221,11 @@ const editItemReducer = (
         editItemPickupPrice: action.data,
       }
     }
-    case 'updateItemBlockedAvailability': {
+    case 'setBlockedAvailability': {
       const blockedAvailability = action.data
 
       const existingBlockedAvailabilityIndex =
-        state.editItemBlockedAvailabilities.findIndex(availability => {
+        state.blockedAvailabilities.findIndex(availability => {
           return (
             blockedAvailability.weekDay === availability.weekDay &&
             blockedAvailability.startTime === availability.startTime &&
@@ -235,18 +235,18 @@ const editItemReducer = (
 
       if (existingBlockedAvailabilityIndex !== -1) {
         const filteredBlockedAvailabilities =
-          state.editItemBlockedAvailabilities.filter(
+          state.blockedAvailabilities.filter(
             (_, index) => index !== existingBlockedAvailabilityIndex,
           )
         return {
           ...state,
-          editItemBlockedAvailabilities: filteredBlockedAvailabilities,
+          blockedAvailabilities: filteredBlockedAvailabilities,
         }
       } else {
         return {
           ...state,
-          editItemBlockedAvailabilities: [
-            ...state.editItemBlockedAvailabilities,
+          blockedAvailabilities: [
+            ...state.blockedAvailabilities,
             blockedAvailability,
           ],
         }
@@ -289,7 +289,7 @@ const editItemReducer = (
         isOfferButtonNOActive: false,
         editItemPickupPrice: 0,
         editItemDeliveryOption: 'NONE',
-        editItemBlockedAvailabilities: [],
+        blockedAvailabilities: [],
       }
     }
     case 'setItemDetails': {
@@ -308,7 +308,7 @@ const editItemReducer = (
         editItemImages: action.data.images,
         editItemDeliveryOption: action.data.deliveryOption,
         editItemPickupPrice: action.data.pickupPrice,
-        editItemBlockedAvailabilities: action.data.itemBlockedAvailability.map(
+        blockedAvailabilities: action.data.itemBlockedAvailability.map(
           (blockedAvailability: BlockedAvailability) => {
             return {
               weekDay: BlockedAvailabilityToString(

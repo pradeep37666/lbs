@@ -5,7 +5,7 @@ import useGlobalState from '../../util/useGlobalState'
 import { REGISTER_PAGES } from '../../assets/Data/LBSEnum'
 import TimeSlots from '../timeSlots/TimeSlots'
 
-export default function Availability({
+const Availability = ({
   context,
   style,
   submitUpgrade,
@@ -13,7 +13,7 @@ export default function Availability({
   isEditItem,
   onCancel,
   type,
-}) {
+}) => {
   const [initialAvailability, setInitialAvailability] = useState()
 
   const { state, dispatch } = useContext(context)
@@ -25,16 +25,16 @@ export default function Availability({
   }, [])
 
   return (
-    <div className="RegistrationWrapper">
-      <div className="LoginMain" style={style}>
-        <Logo height="50px" width="50px" style={{ marginBottom: '.5em' }} />
+    <div className='RegistrationWrapper'>
+      <div className='LoginMain' style={style}>
+        <Logo height='50px' width='50px' style={{ marginBottom: '.5em' }} />
 
-        <div className="LoginHeader">General Product Availability</div>
-        <div className="LoginText LoginTextSmall">
+        <div className='LoginHeader'>General Product Availability</div>
+        <div className='LoginText LoginTextSmall'>
           Little big shed lets you have control over the days you want to lend
           out your products.
         </div>
-        <div className="LoginText LoginTextSmall">
+        <div className='LoginText LoginTextSmall'>
           Select the days and enter the times you are available for trades.
         </div>
 
@@ -48,13 +48,13 @@ export default function Availability({
           }}
         />
         <div
-          className="SkipNextButtonFlex"
+          className='SkipNextButtonFlex'
           style={style ? { justifyContent: 'center' } : null}
         >
           {isEditItem ? (
             <>
               <Button
-                text="Cancel"
+                text='Cancel'
                 invertedColors
                 style={{ marginRight: '0.5rem' }}
                 onClick={() => {
@@ -65,12 +65,12 @@ export default function Availability({
                   onCancel()
                 }}
               />
-              <Button text="Save" onClick={() => onCancel()} />
+              <Button text='Save' onClick={() => onCancel()} />
             </>
           ) : (
             <Button
               isDisabled={!blockedAvailabilities.length}
-              text="Next"
+              text='Next'
               isLoading={isUpgradeLoading}
               onClick={() =>
                 user && type === 'upgrateLender'
@@ -87,3 +87,5 @@ export default function Availability({
     </div>
   )
 }
+
+export default Availability

@@ -20,6 +20,9 @@ import DeleteItemModal from '../../components/modals/DeleteItemModal/DeleteItemM
 import LBSSelectBox from '../../components/LBSSelectBox/LBSSelectBox'
 import { DELIVERY_OPTIONS } from '../../assets/Data/LBSSelectOptions'
 import ValidationTextInput from '../../components/FormComponents/ValidationTextInput'
+import ItemService from '../../services/item'
+import useErrorState from '../../util/reducers/errorContext'
+import { SNACKBAR_BUTTON_TYPES } from '../../assets/Data/LBSEnum'
 
 const EditItemContext = createContext()
 const EditItemPage = () => {
@@ -29,6 +32,7 @@ const EditItemPage = () => {
   const [loading, setLoading] = useState(true)
   const params = useParams()
   const history = useHistory()
+  const { errorDispatch } = useErrorState()
   const [state, dispatch] = useReducer(editItemReducer, InitialEditItemState)
   const {
     isOfferButtonNOActive,
@@ -46,6 +50,7 @@ const EditItemPage = () => {
     editItemDeliveryOption,
     editItemPickupPrice,
   } = state
+  const itemService = new ItemService()
 
   useEffect(() => {
     getItem()
@@ -54,10 +59,9 @@ const EditItemPage = () => {
   const getItem = async () => {
     try {
       setLoading(true)
-      const { data } = await Instance.get(`/items/${params.itemId}`)
-      console.log({data})
+      const data = await itemService.getItem(params.itemId)
       if (!data) return
-      dispatch({ type: 'setItemDetails', data: data })
+      dispatch({ type: 'setItemDetails', data })
     } catch (error) {
       console.log(error.response)
     } finally {
@@ -112,17 +116,27 @@ const EditItemPage = () => {
   }
 
   const applyChanges = async () => {
-    const
+    const newItemDetails = getItemData()
     try {
       setIsLoading(true)
-      const { status } = await Instance.patch(
-        `/items/${params.itemId}`
-        // newItemDetails
+      const data = await itemService.updateItemDetails(
+        params.itemId,
+        newItemDetails
       )
-      if (status !== 200) return
+      if (!data) throw Error
       history.push(`/item/${params.itemId}`)
     } catch (error) {
-      console.log(error.response)
+      errorDispatch({
+        type: 'openSnackBar',
+        data: {
+          message:
+            'Failed to update the item. Please check your details and try again later.',
+          btnText: SNACKBAR_BUTTON_TYPES.CLOSE,
+          btnFunc: () => {
+            errorDispatch({ type: 'closeSnackBar' })
+          },
+        },
+      })
     } finally {
       setIsLoading(false)
     }
@@ -251,9 +265,9 @@ const EditItemPage = () => {
                   >
                     <DialogContent>
                       <Availability
+                        context={EditItemContext}
                         style={{ width: '100%', marginTop: '1rem' }}
                         isEditItem
-                        context={EditItemContext}
                         onCancel={() =>
                           setEditAvailabilityOpen(!editAvailabilityOpen)
                         }

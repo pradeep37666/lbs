@@ -108,7 +108,6 @@ function TradeFailed({ onClick, isLender, open, booking, getBookings, setReportM
       await updateBookingStatus(BOOKING_STATUSES.DISPUTED)
       setReportModalVisible(false)
     } catch(err){
-      console.log(err)
       errorDispatch({type: 'openSnackBar', data: {
         message: 'Failed to submit a report. Please try again later.',
         btnText: SNACKBAR_BUTTON_TYPES.CLOSE,

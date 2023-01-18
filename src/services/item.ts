@@ -1,29 +1,12 @@
 import axios from 'axios'
-import { ItemCreateArgs, ItemCreated } from '../types/Item'
-import Crudable from './crudable'
+import { ItemCreateArgs, ItemUpdateArgs } from '../types/Item'
 import Instance from '../util/axios'
 import { BlockedAvailabilityNumberFormat } from '../types/User'
 
 const networkErrorMessage =
     'There was an error with your connection, please try again'
 
-class ItemService implements Crudable<ItemCreated> {
-    createOne = async (itemData: ItemCreateArgs): Promise<ItemCreated> => {
-        throw Error('Not Implemented')
-    }
-
-    getOne = async (itemId: string): Promise<ItemCreated> => {
-        throw Error('Not Implemented')
-    }
-
-    updateOne = async (): Promise<ItemCreated> => {
-        throw Error('Not Implemented')
-    }
-
-    deleteOne = async (itemId: string): Promise<ItemCreated> => {
-        throw Error('Not Implemented')
-    }
-
+class ItemService {
     createNewItem = async (
         itemData: ItemCreateArgs,
         blockedAvailabilities: BlockedAvailabilityNumberFormat[]
@@ -45,6 +28,20 @@ class ItemService implements Crudable<ItemCreated> {
         }
     }
 
+    getItem = async (itemId: string) => {
+        try {
+            const { data, status } = await Instance.get(`/items/${itemId}`)
+            if (status !== 200) throw Error
+            return data
+        } catch (error) {
+            if (error && axios.isAxiosError(error)) {
+                if (error?.code === 'ERR_NETWORK' || error?.code === 'ECONNABORTED')
+                    throw Error(networkErrorMessage)
+            }
+            throw Error('Error fetching item details')
+        }
+    }
+
     updateItemBlockedAvailability = async (
         itemId: string,
         blockedAvailabilities: BlockedAvailabilityNumberFormat[]
@@ -55,6 +52,23 @@ class ItemService implements Crudable<ItemCreated> {
             })
             if (result.status !== 201) throw Error
             return result.data
+        } catch (error) {
+            if (error && axios.isAxiosError(error)) {
+                if (error?.code === 'ERR_NETWORK' || error?.code === 'ECONNABORTED')
+                    throw Error(networkErrorMessage)
+            }
+            throw Error('Error fetching user details')
+        }
+    }
+
+    updateItemDetails = async (
+        itemId: string,
+        newItemDetails: ItemUpdateArgs
+    ) => {
+        try {
+            const { data, status } = await Instance.patch(`/items/${itemId}`, newItemDetails)
+            if (status !== 201) throw Error
+            return data
         } catch (error) {
             if (error && axios.isAxiosError(error)) {
                 if (error?.code === 'ERR_NETWORK' || error?.code === 'ECONNABORTED')
