@@ -1,48 +1,51 @@
-import React, { createContext, useEffect, useReducer, useState } from "react"
-import "./editItem.css"
-import { useParams } from "react-router"
-import Banner from "../../components/bannerText/bannerText"
-import PageWrapper from "../../components/pageWrapper/pageWrapper"
-import Instance from "../../util/axios"
-import MapsAutocomplete from "../../components/mapsAutocomplete/MapsAutocomplete"
-import DialogContent from "@material-ui/core/DialogContent"
-import Dialog from "@material-ui/core/Dialog"
-import Availability from "../../components/FormComponents/Availability"
-import { useHistory } from "react-router"
-import { CircularProgress } from "@material-ui/core"
-import editItemReducer from "../../util/reducers/editItemReducer"
-import EditBasicDetails from "../../components/EditItemComponents/EditBasicDetails"
-import EditPriceDetails from "../../components/EditItemComponents/EditPriceDetails"
-import EditItemPictures from "../../components/EditItemComponents/EditItemImages"
-import DeleteItemModal from "../../components/modals/DeleteItemModal/DeleteItemModal"
-import LBSSelectBox from "../../components/LBSSelectBox/LBSSelectBox"
-import { DELIVERY_OPTIONS } from "../../assets/Data/LBSSelectOptions"
-import ValidationTextInput from "../../components/FormComponents/ValidationTextInput"
+import { createContext, useEffect, useReducer, useState } from 'react'
+import './editItem.css'
+import { useParams } from 'react-router'
+import Banner from '../../components/bannerText/bannerText'
+import PageWrapper from '../../components/pageWrapper/pageWrapper'
+import Instance from '../../util/axios'
+import MapsAutocomplete from '../../components/mapsAutocomplete/MapsAutocomplete'
+import DialogContent from '@material-ui/core/DialogContent'
+import Dialog from '@material-ui/core/Dialog'
+import Availability from '../../components/FormComponents/Availability'
+import { useHistory } from 'react-router'
+import { CircularProgress } from '@material-ui/core'
+import editItemReducer, {
+  InitialEditItemState,
+} from '../../util/reducers/editItemReducer'
+import EditBasicDetails from '../../components/EditItemComponents/EditBasicDetails'
+import EditPriceDetails from '../../components/EditItemComponents/EditPriceDetails'
+import EditItemPictures from '../../components/EditItemComponents/EditItemImages'
+import DeleteItemModal from '../../components/modals/DeleteItemModal/DeleteItemModal'
+import LBSSelectBox from '../../components/LBSSelectBox/LBSSelectBox'
+import { DELIVERY_OPTIONS } from '../../assets/Data/LBSSelectOptions'
+import ValidationTextInput from '../../components/FormComponents/ValidationTextInput'
 
 const EditItemContext = createContext()
-function EditItemPage() {
-  const [ state, dispatch ] = useReducer(editItemReducer, { 
-    availability: [],
-    isDiscount: false,
-    newImages: [],
-    images: [],
-    deletedImages: []
-  })
-  const { 
-    title, category, description, 
-    price, deliveryPrice, discount, 
-    address, availability, titleText,
-    newImageLinks, deletedImages,
-    deliveryOption, pickupPrice
-  } = state
-
+const EditItemPage = () => {
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
+  const [editAvailabilityOpen, setEditAvailabilityOpen] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
+  const [loading, setLoading] = useState(true)
   const params = useParams()
   const history = useHistory()
-  const [ loading, setLoading ] = useState(true)
-
-  const [ isDeleteModalOpen, setIsDeleteModalOpen ] = useState(false)
-  const [ editAvailabilityOpen, setEditAvailabilityOpen ] = useState(false)
-  const [ isLoading, setIsLoading ] = useState(false)
+  const [state, dispatch] = useReducer(editItemReducer, InitialEditItemState)
+  const {
+    isOfferButtonNOActive,
+    deletedImages,
+    newImages,
+    editItemImages,
+    newImageLinks,
+    editItemTitle,
+    editItemCategory,
+    editItemDescription,
+    editItemPrice,
+    editItemDeliveryPrice,
+    editItemDiscount,
+    editItemAddress,
+    editItemDeliveryOption,
+    editItemPickupPrice,
+  } = state
 
   useEffect(() => {
     getItem()
@@ -52,9 +55,10 @@ function EditItemPage() {
     try {
       setLoading(true)
       const { data } = await Instance.get(`/items/${params.itemId}`)
+      console.log({data})
       if (!data) return
-      dispatch({ type: 'setInitialState', data: data })
-    } catch(error){
+      dispatch({ type: 'setItemDetails', data: data })
+    } catch (error) {
       console.log(error.response)
     } finally {
       setLoading(false)
@@ -62,160 +66,211 @@ function EditItemPage() {
   }
 
   const deleteItem = async () => {
-    try{
+    try {
       const { status } = await Instance.delete(`/items/${params.itemId}`)
       if (status !== 200) return
       history.push(`/user/your_shed`)
-    } catch(error){
+    } catch (error) {
       console.log(error.response)
     }
   }
-  
-  const applyChanges = async () => {
-    const newItemDetails = {
-      title,
-      category,
-      description,
-      price,
-      discount,
-      weekly_availability: availability.join(''),
-      address,
-      images: newImageLinks ?? [],
-      imagesToDelete: deletedImages ?? [],
-      deliveryOption,
-      deliveryPrice: deliveryOption === 'NONE' ? 0 : deliveryPrice,
-      pickupPrice: deliveryOption === 'NONE' ? 0 : pickupPrice,
+
+  const getItemData = () => {
+    const itemData = {
+      id: params.itemId,
+      title: editItemTitle,
+      category: editItemCategory,
+      description: editItemDescription,
+      price: editItemPrice,
+      deliveryOption: editItemDeliveryOption,
+      pickupPrice:
+        editItemDeliveryOption === 'BOTH' || editItemDeliveryOption === 'PICKUP'
+          ? editItemPickupPrice
+          : 0,
+      deliveryPrice:
+        editItemDeliveryOption === 'BOTH' ||
+        editItemDeliveryOption === 'DELIVERY'
+          ? editItemDeliveryPrice
+          : 0,
+      discount: editItemDiscount,
+      imagesToDelete: deletedImages,
+      images: newImageLinks,
+      address: {
+        suburb: editItemAddress.suburb,
+        lat: editItemAddress.lat,
+        lng: editItemAddress.lng,
+        country: editItemAddress.country,
+        state: editItemAddress.state,
+        city: editItemAddress.city,
+        postCode: editItemAddress.postCode,
+        streetNumber: editItemAddress.streetNumber,
+        fullAddress: editItemAddress.fullAddress,
+        streetName: editItemAddress.streetName,
+      },
     }
-    try{
+    return itemData
+  }
+
+  const applyChanges = async () => {
+    const
+    try {
       setIsLoading(true)
-      const { status } = await Instance.patch(`/items/${params.itemId}`, newItemDetails)
+      const { status } = await Instance.patch(
+        `/items/${params.itemId}`
+        // newItemDetails
+      )
       if (status !== 200) return
       history.push(`/item/${params.itemId}`)
-    } catch(error) {
+    } catch (error) {
       console.log(error.response)
-    } finally{
+    } finally {
       setIsLoading(false)
     }
   }
 
-  const setAddress = (addressObj) => {
-    dispatch({ type: 'setAddress', data: addressObj})
+  const setAddress = addressObj => {
+    dispatch({ type: 'setEditItemAddress', data: addressObj })
   }
 
   return (
     <EditItemContext.Provider value={{ state, dispatch }}>
       <PageWrapper>
         <Banner
-          textBold="Editing Item"
-          textNormal={titleText}
-          button={"Apply Changes"}
+          textBold='Editing Item'
+          textNormal={editItemTitle}
+          button={'Apply Changes'}
           buttonClick={() => applyChanges()}
           buttonLoading={isLoading}
         />
         {loading ? (
-          <div className="ItemPage__Loading__Container">
-            <CircularProgress size={75} color="inherit" />
+          <div className='ItemPage__Loading__Container'>
+            <CircularProgress size={75} color='inherit' />
           </div>
         ) : (
-          <div className="EditItemMainWrapper">
-            <div className="EditItemInfoWrapper">
+          <div className='EditItemMainWrapper'>
+            <div className='EditItemInfoWrapper'>
               <EditBasicDetails state={state} dispatch={dispatch} />
               <EditPriceDetails state={state} dispatch={dispatch} />
-              <div className="LoginMain LoginMainNoMarg" style={{ width: "100%" }} >
-                {address &&
-                <MapsAutocomplete
-                  setAddress={setAddress}
-                  defaultAddress={address}
-                  defaultLocation={address.fullAddress}
-                  defaultLat={parseFloat(address.lat)}
-                  defaultLng={parseFloat(address.lng)}
-                />}
+              <div
+                className='LoginMain LoginMainNoMarg'
+                style={{ width: '100%' }}
+              >
+                {editItemAddress && (
+                  <MapsAutocomplete
+                    setAddress={setAddress}
+                    defaultAddress={editItemAddress}
+                    defaultLocation={editItemAddress.fullAddress}
+                    defaultLat={parseFloat(editItemAddress.lat)}
+                    defaultLng={parseFloat(editItemAddress.lng)}
+                  />
+                )}
               </div>
             </div>
 
-            <div className="EditItemPicturesWrapper">
+            <div className='EditItemPicturesWrapper'>
               <EditItemPictures state={state} dispatch={dispatch} />
 
               <div
-                className="LoginMain LoginMainNoMarg"
-                style={{ width: "100%" }}
+                className='LoginMain LoginMainNoMarg'
+                style={{ width: '100%' }}
               >
-                <div className="LoginHeader">Item Delivery &amp; Pickup</div>
-                <div className="LoginText">
+                <div className='LoginHeader'>Item Delivery &amp; Pickup</div>
+                <div className='LoginText'>
                   You can provide an optional delivery service of your item to
                   help your borrowers out.
                 </div>
-                <LBSSelectBox 
+                <LBSSelectBox
                   selectOption={DELIVERY_OPTIONS}
                   width='100%'
                   fontSize='18px'
                   margin='0 0 2em 0'
                   thinBorder
-                  value={deliveryOption ?? ''}
-                  onChange={option => dispatch({type: 'setDeliveryOption', data: option})}
+                  value={editItemDeliveryOption ?? ''}
+                  onChange={option =>
+                    dispatch({
+                      type: 'setEditItemDeliveryOption',
+                      data: option,
+                    })
+                  }
                 />
-                {((deliveryOption === 'DELIVERY') ||
-                 (deliveryOption === 'BOTH')) && (
+                {(editItemDeliveryOption === 'DELIVERY' ||
+                  editItemDeliveryOption === 'BOTH') && (
                   <>
-                    <div className="LoginHeader">Delivery Fee ($)</div>
-                    <ValidationTextInput 
-                      inputType="number"
-                      value={deliveryPrice}
-                      onChange={(e) => dispatch({ type: 'setDeliveryPrice', data: e.target.value })}
-                      placeholder="$10"
+                    <div className='LoginHeader'>Delivery Fee ($)</div>
+                    <ValidationTextInput
+                      inputType='number'
+                      value={editItemDeliveryPrice}
+                      onChange={e =>
+                        dispatch({
+                          type: 'setEditItemDeliveryPrice',
+                          data: e.target.value,
+                        })
+                      }
+                      placeholder='$10'
                     />
                   </>
                 )}
-                {((deliveryOption === 'PICKUP') ||
-                 (deliveryOption === 'BOTH')) && (
+                {(editItemDeliveryOption === 'PICKUP' ||
+                  editItemDeliveryOption === 'BOTH') && (
                   <>
-                    <div className="LoginHeader">Pickup Fee ($)</div>
-                    <ValidationTextInput 
-                      inputType="number"
-                      value={pickupPrice}
-                      onChange={(e) => dispatch({ type: 'setPickupPrice', data: e.target.value })}
-                      placeholder="$10"
+                    <div className='LoginHeader'>Pickup Fee ($)</div>
+                    <ValidationTextInput
+                      inputType='number'
+                      value={editItemPickupPrice}
+                      onChange={e =>
+                        dispatch({
+                          type: 'setEditItemPickupPrice',
+                          data: e.target.value,
+                        })
+                      }
+                      placeholder='$10'
                     />
                   </>
                 )}
               </div>
               <div
-                className="LoginMain LoginMainNoMarg"
-                style={{ width: "100%" }}
+                className='LoginMain LoginMainNoMarg'
+                style={{ width: '100%' }}
               >
-                <div className="LoginHeader">Other Options</div>
-                <div className="ItemButtons">
+                <div className='LoginHeader'>Other Options</div>
+                <div className='ItemButtons'>
                   <button
-                    className="ButtonAvailability"
-                    onClick={() => setEditAvailabilityOpen(!editAvailabilityOpen)}
-                    style={{ width: "57%" }}
+                    className='ButtonAvailability'
+                    onClick={() =>
+                      setEditAvailabilityOpen(!editAvailabilityOpen)
+                    }
+                    style={{ width: '57%' }}
                   >
-                    <div className="ItemButtonFlex">Edit Item Availability</div>
+                    <div className='ItemButtonFlex'>Edit Item Availability</div>
                   </button>
                   <Dialog
                     open={editAvailabilityOpen}
-                    onClose={() => setEditAvailabilityOpen(!editAvailabilityOpen)}
+                    onClose={() =>
+                      setEditAvailabilityOpen(!editAvailabilityOpen)
+                    }
                   >
                     <DialogContent>
                       <Availability
-                        style={{ width: '100%', marginTop: '1rem', }}
+                        style={{ width: '100%', marginTop: '1rem' }}
                         isEditItem
                         context={EditItemContext}
-                        onCancel={() => setEditAvailabilityOpen(!editAvailabilityOpen)}
+                        onCancel={() =>
+                          setEditAvailabilityOpen(!editAvailabilityOpen)
+                        }
                       />
                     </DialogContent>
                   </Dialog>
                   <button
-                    className="SearchButtonLarge"
+                    className='SearchButtonLarge'
                     onClick={() => setIsDeleteModalOpen(!isDeleteModalOpen)}
-                    style={{ width: "57%" }}
+                    style={{ width: '57%' }}
                   >
                     <div>Delete Item</div>
                   </button>
-                  <DeleteItemModal 
-                  isDeleteModalOpen={isDeleteModalOpen} 
-                  setIsDeleteModalOpen={setIsDeleteModalOpen} 
-                  deleteItem={deleteItem} 
+                  <DeleteItemModal
+                    isDeleteModalOpen={isDeleteModalOpen}
+                    setIsDeleteModalOpen={setIsDeleteModalOpen}
+                    deleteItem={deleteItem}
                   />
                 </div>
               </div>
@@ -227,4 +282,4 @@ function EditItemPage() {
   )
 }
 
-export default EditItemPage;
+export default EditItemPage
