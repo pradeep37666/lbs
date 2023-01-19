@@ -1,15 +1,15 @@
-import { useState, useContext } from 'react'
+import { useState, useContext, useEffect } from 'react'
 import { ReactComponent as Logo } from '../../../assets/Logos/LogoRed.svg'
 import Button from '../../../components/Button/Button'
 import TimeSlots from '../../../components/timeSlots/TimeSlots'
 import { BlockedAvailabilityToString } from '../../../types/User'
 
 export const Availability = ({ context, openModal }) => {
-  const { state } = useContext(context)
-  const { postItemBlockedAvailabilities } = state
+  const { state, dispatch } = useContext(context)
+  const { newPostItemBlockedAvailabilities } = state
   const [keepTimes, setKeepTimes] = useState(true)
   const [blockedAvailabilities, setBlockedAvailabilities] = useState(
-    postItemBlockedAvailabilities?.map(availability => {
+    newPostItemBlockedAvailabilities?.map(availability => {
       return {
         weekDay: BlockedAvailabilityToString(
           availability.weekDay
@@ -41,6 +41,14 @@ export const Availability = ({ context, openModal }) => {
     }
   }
 
+  const storeBlockedAvailabilities = isNewTime => {
+    dispatch({
+      type: 'setNewPostItemBlockedAvailabilities',
+      data: blockedAvailabilities,
+    })
+    openModal(isNewTime)
+  }
+
   return (
     <div className='RegistrationWrapper'>
       {keepTimes ? (
@@ -59,7 +67,7 @@ export const Availability = ({ context, openModal }) => {
           </div>
           <Button
             text='Keep Set Times'
-            onClick={openModal}
+            onClick={() => openModal(false)}
             style={{ marginBottom: '1rem' }}
           />
           <Button
@@ -88,7 +96,7 @@ export const Availability = ({ context, openModal }) => {
             }}
           />
           <div className='SkipNextButtonFlex'>
-            <Button text='Next' onClick={openModal} />
+            <Button text='Next' onClick={() => storeBlockedAvailabilities(true)} />
           </div>
         </div>
       )}

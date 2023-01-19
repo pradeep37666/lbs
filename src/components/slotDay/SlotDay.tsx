@@ -51,7 +51,7 @@ export const SlotDay: React.FC<SlotDayProps> = ({
         <div>
             <div className="DayDotsFlex">
                 <div
-                    className={`DayInactive ${isMorningBlocked || isAfternoonBlocked
+                    className={`DayInactive ${!isMorningBlocked || !isAfternoonBlocked
                         ? 'DayActive'
                         : ''}`}
                     onClick={onPress}
@@ -61,13 +61,13 @@ export const SlotDay: React.FC<SlotDayProps> = ({
                 </div>
                 <div className="DotsFlex">
                     <div className={`AvailabilityDot 
-                        ${isMorningBlocked
+                        ${!isMorningBlocked
                             ? 'DotMorningActive'
                             : ''}
                         `}
                     />
                     <div className={`AvailabilityDot 
-                        ${isAfternoonBlocked
+                        ${!isAfternoonBlocked
                             ? 'DotAfternoonActive'
                             : ''}
                         `}

@@ -16,14 +16,15 @@ export type actions =
   | 'setPostItemPrice'
   | 'setPostItemDiscount'
   | 'setPostItemDeliveryPrice'
-  | 'setPostItemAddress'
+  | 'setShedAddress'
   | 'setPostItemAvailability'
   | 'setUser'
   | 'setPostItemState'
   | 'setCreatedItem'
   | 'setPostItemPickupPrice'
   | 'setPostItemDeliveryOption'
-  | 'updateItemBlockedAvailability'
+  | 'setPostItemBlockedAvailabilities'
+  | 'setNewPostItemBlockedAvailabilities'
   | 'setCurrentPage'
 
 export type ItemCategory =
@@ -51,11 +52,12 @@ export interface PostItemState {
   postItemPrice: number
   postItemDiscount: number
   postItemDeliveryPrice: number
-  postItemAddress: any
+  shedAddress: any
   createdItem: ItemCreated
   postItemDeliveryOption: DeliveryOption
   postItemPickupPrice: number
   postItemBlockedAvailabilities: BlockedAvailabilityCreate[]
+  newPostItemBlockedAvailabilities: BlockedAvailabilityCreate[]
   currentPage: string
 }
 
@@ -68,7 +70,7 @@ export const InitialPostItemState: PostItemState = {
   postItemPrice: 0,
   postItemDiscount: 0,
   postItemDeliveryPrice: 0,
-  postItemAddress: '',
+  shedAddress: '',
   createdItem: {
     userId: { id: '', email: '', exp: 0, role: '' },
     title: '',
@@ -111,6 +113,7 @@ export const InitialPostItemState: PostItemState = {
   postItemDeliveryOption: 'NONE',
   postItemPickupPrice: 0,
   postItemBlockedAvailabilities: [],
+  newPostItemBlockedAvailabilities: [],
   currentPage: POST_ITEM_PAGE.BASIC
 }
 
@@ -167,10 +170,10 @@ const postItemReducer = (
         postItemDeliveryPrice: action.data,
       }
     }
-    case 'setPostItemAddress': {
+    case 'setShedAddress': {
       return {
         ...state,
-        postItemAddress: action.data,
+        shedAddress: action.data,
       }
     }
     case 'setCreatedItem': {
@@ -186,7 +189,7 @@ const postItemReducer = (
         postItemDeliveryOption: action.data,
       }
     }
-    case 'updateItemBlockedAvailability': {
+    case 'setPostItemBlockedAvailabilities': {
       const blockedAvailability = action.data
 
       const existingBlockedAvailabilityIndex =
@@ -217,6 +220,13 @@ const postItemReducer = (
         }
       }
     }
+    case 'setNewPostItemBlockedAvailabilities': {
+      const blockedAvailability = action.data
+      return {
+        ...state,
+        newPostItemBlockedAvailabilities: blockedAvailability,
+      }
+    }
     case 'setPostItemState': {
       return {
         postItemTitle: '',
@@ -227,7 +237,7 @@ const postItemReducer = (
         postItemPrice: 0,
         postItemDiscount: 0,
         postItemDeliveryPrice: 0,
-        postItemAddress: '',
+        shedAddress: '',
         createdItem: {
           userId: { id: '', email: '', exp: 0, role: '' },
           title: '',
@@ -270,6 +280,7 @@ const postItemReducer = (
         postItemDeliveryOption: 'NONE',
         postItemPickupPrice: 0,
         postItemBlockedAvailabilities: [],
+        newPostItemBlockedAvailabilities: [],
         currentPage: POST_ITEM_PAGE.BASIC
       }
     }

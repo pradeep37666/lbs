@@ -29,6 +29,7 @@ import ItemService from '../../services/item'
 const FormContext = createContext()
 
 export default function PostItem() {
+  const [isNewSchedule, setIsNewSchedule] = useState(false)
   const [isCreateItemLoading, setIsCreateItemLoading] = useState(false)
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [itemID, setItemID] = useState(null)
@@ -63,8 +64,9 @@ export default function PostItem() {
     postItemDeliveryPrice,
     postItemPickupPrice,
     postItemDeliveryOption,
-    postItemAddress,
+    shedAddress,
     postItemBlockedAvailabilities,
+    newPostItemBlockedAvailabilities,
     currentPage,
   } = state
 
@@ -86,16 +88,16 @@ export default function PostItem() {
       is_deleted: false,
       images: postItemImageLinks,
       address: {
-        streetNumber: postItemAddress?.streetNumber ?? '',
-        streetName: postItemAddress?.streetName ?? '',
-        city: postItemAddress?.city ?? '',
-        suburb: postItemAddress?.suburb ?? '',
-        state: postItemAddress?.state ?? '',
-        postCode: postItemAddress?.postCode ?? '',
-        country: postItemAddress?.country ?? '',
-        fullAddress: postItemAddress?.fullAddress ?? '',
-        lat: postItemAddress?.lat ?? 0,
-        lng: postItemAddress?.lng ?? 0,
+        streetNumber: shedAddress?.streetNumber ?? '',
+        streetName: shedAddress?.streetName ?? '',
+        city: shedAddress?.city ?? '',
+        suburb: shedAddress?.suburb ?? '',
+        state: shedAddress?.state ?? '',
+        postCode: shedAddress?.postCode ?? '',
+        country: shedAddress?.country ?? '',
+        fullAddress: shedAddress?.fullAddress ?? '',
+        lat: shedAddress?.lat ?? 0,
+        lng: shedAddress?.lng ?? 0,
       },
     }
     return itemData
@@ -103,8 +105,11 @@ export default function PostItem() {
 
   const createItem = async () => {
     const itemData = getItemData()
+    const selectedBlockedAvailabilities = isNewSchedule
+      ? newPostItemBlockedAvailabilities
+      : postItemBlockedAvailabilities
     const itemBlockedAvailabilitiesNumberFormat =
-      postItemBlockedAvailabilities.map(availability => {
+      selectedBlockedAvailabilities.map(availability => {
         return {
           weekDay: BlockedAvailabilityToNumber(availability.weekDay),
           startTime: availability.startTime,
@@ -150,7 +155,10 @@ export default function PostItem() {
         return (
           <Availability
             context={FormContext}
-            openModal={() => setIsModalVisible(true)}
+            openModal={isNewTime => {
+              setIsNewSchedule(isNewTime)
+              setIsModalVisible(true)
+            }}
           />
         )
       case POST_ITEM_PAGE.COMPLETE:
@@ -159,7 +167,7 @@ export default function PostItem() {
             title={postItemTitle}
             picture={postItemImages[0]}
             price={postItemPrice}
-            city={postItemAddress?.suburb}
+            city={shedAddress?.suburb}
             category={postItemCategory}
             deliveryPrice={postItemDeliveryPrice}
             pickupPrice={postItemPickupPrice}

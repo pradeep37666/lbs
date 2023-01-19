@@ -64,7 +64,6 @@ const Availability = ({
             </>
           ) : (
             <Button
-              isDisabled={!blockedAvailabilities.length}
               text='Next'
               isLoading={isUpgradeLoading}
               onClick={() =>

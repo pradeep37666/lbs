@@ -39,7 +39,7 @@ const TimeSlotPicker: React.FC<TimeSlotPickerProps> = ({
             <div className="MorningAfternoonFlex">
                 <div
                     className={`TimeSlotDiv 
-                    ${isMorningBlocked ? 'BackgroundMorning' : ''}
+                    ${!isMorningBlocked ? 'BackgroundMorning' : ''}
                     ${morningUnavailable ? 'MorningUnavailable' : 'Pointer'}`}
                     onClick={handleMorningClick}
                 >
@@ -49,7 +49,7 @@ const TimeSlotPicker: React.FC<TimeSlotPickerProps> = ({
                 </div>
                 <div
                     className={`TimeSlotDiv 
-                    ${isAfternoonBlocked ? 'BackgroundAfternoon' : ''}
+                    ${!isAfternoonBlocked ? 'BackgroundAfternoon' : ''}
                     ${afternoonUnavailable ? 'AfternoonUnavailable' : 'Pointer'}`}
                     onClick={handleAfternoonClick}
                 >

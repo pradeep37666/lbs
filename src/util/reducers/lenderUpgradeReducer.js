@@ -50,10 +50,10 @@ const lenderUpgradeReducer = (state, action) => {
         ...state,
         idBackImageLink: action.data,
       }
-    case 'setAddress':
+    case 'setShedAddress':
       return {
         ...state,
-        address: action.data,
+        shedAddress: action.data,
       }
     case 'setBlockedAvailability':
       const blockedAvailability = action.data
@@ -71,10 +71,10 @@ const lenderUpgradeReducer = (state, action) => {
           state.blockedAvailabilities.filter(
             (_, index) => index !== existingBlockedAvailabilityIndex
           )
-          return {
-            ...state,
-            blockedAvailabilities: filteredBlockedAvailabilities
-          }
+        return {
+          ...state,
+          blockedAvailabilities: filteredBlockedAvailabilities,
+        }
       } else {
         return {
           ...state,

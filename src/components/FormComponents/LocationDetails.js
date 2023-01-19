@@ -7,7 +7,7 @@ import { POST_ITEM_PAGE } from '../../assets/Data/LBSEnum'
 
 export default function LocationDetails({ context }) {
     const { state, dispatch } = useContext(context)
-    const { postItemAddress } = state
+    const { shedAddress } = state
     const user = useGlobalState().state.user
 
     return (
@@ -24,7 +24,7 @@ export default function LocationDetails({ context }) {
           {user?.address ? (
             <MapsAutocomplete
               setAddress={address =>
-                dispatch({ type: 'setPostItemAddress', data: address })
+                dispatch({ type: 'setShedAddress', data: address })
               }
               defaultAddress={user.address}
               defaultLocation={user.address.fullAddress}
@@ -34,13 +34,13 @@ export default function LocationDetails({ context }) {
           ) : (
             <MapsAutocomplete
               setAddress={address =>
-                dispatch({ type: 'setPostItemAddress', data: address })
+                dispatch({ type: 'setShedAddress', data: address })
               }
             />
           )}
           <Button
             text='Next'
-            isDisabled={!postItemAddress?.fullAddress}
+            isDisabled={!shedAddress?.fullAddress}
             onClick={() => {
               dispatch({
                 type: 'setCurrentPage',

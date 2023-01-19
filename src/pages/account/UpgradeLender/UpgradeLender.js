@@ -34,7 +34,7 @@ export default function UpgradeLender() {
   const { errorDispatch } = useErrorState()
   const {
     currentPage,
-    address,
+    shedAddress,
     accountNumber,
     BSB,
     website,
@@ -51,18 +51,18 @@ export default function UpgradeLender() {
 
   const getComplete = () => {
     return (
-      <div className="RegistrationWrapper">
-        <div className="LoginMain">
-          <Logo height="50px" width="50px" style={{ marginBottom: '1em' }} />
+      <div className='RegistrationWrapper'>
+        <div className='LoginMain'>
+          <Logo height='50px' width='50px' style={{ marginBottom: '1em' }} />
 
-          <div className="LoginHeader">Lender Upgrade Complete!</div>
-          <div className="LoginText">
+          <div className='LoginHeader'>Lender Upgrade Complete!</div>
+          <div className='LoginText'>
             You have successfully updated your Little Big Shed account and are
             now ready to start lending!
           </div>
 
           <button
-            className="LoginFormButton"
+            className='LoginFormButton'
             onClick={() => history.push({ pathname: '/user/account' })}
           >
             Continue
@@ -75,7 +75,7 @@ export default function UpgradeLender() {
   const submitUpgrade = async () => {
     const userData = {
       borrowerDetails: {
-        address,
+        address: shedAddress,
         firstName: user.firstName,
         lastName: user.lastName,
         email: user.email,
@@ -112,6 +112,10 @@ export default function UpgradeLender() {
         userBlockedAvailability
       )
       globalDispatch({ type: 'setUser', data: result.user.data })
+      globalDispatch({
+        type: 'setUserBlockedAvailability',
+        data: result.blocked.data,
+      })
       dispatch({ type: 'setCurrentPage', data: 'Complete!' })
     } catch (error) {
       const messageType = error?.response?.data?.message?.split(':')[0]
@@ -173,7 +177,7 @@ export default function UpgradeLender() {
     <FormContext.Provider value={{ state, dispatch }}>
       <PageWrapper>
         <Banner
-          textBold="Lender Upgrade"
+          textBold='Lender Upgrade'
           textNormal={currentPage}
           prevPage={() =>
             getPrevUpgradeLenderPage(currentPage, dispatch, history)
