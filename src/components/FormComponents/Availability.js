@@ -1,74 +1,85 @@
-import React, { useState, useEffect, useContext } from "react";
-import ProductSlots from "../productSlots/productSlots";
-import { ReactComponent as Logo } from "./../../assets/Logos/LogoRed.svg";
-import Button from "../Button/Button";
-import useGlobalState from "../../util/useGlobalState";
-import { REGISTER_PAGES } from "../../assets/Data/LBSEnum";
+import { useState, useEffect, useContext } from 'react'
+import { ReactComponent as Logo } from './../../assets/Logos/LogoRed.svg'
+import Button from '../Button/Button'
+import useGlobalState from '../../util/useGlobalState'
+import { REGISTER_PAGES } from '../../assets/Data/LBSEnum'
+import TimeSlots from '../timeSlots/TimeSlots'
 
-export default function Availability({ 
-  context, 
-  style,  
-  submitUpgrade, 
-  isUpgradeLoading, 
-  isEditItem, 
+const Availability = ({
+  context,
+  style,
+  submitUpgrade,
+  isUpgradeLoading,
+  isEditItem,
   onCancel,
+  onSave,
   type,
-}) {
-  const [ initialAvailability, setInitialAvailability ] = useState()
+}) => {
+  const [initialAvailability, setInitialAvailability] = useState()
 
   const { state, dispatch } = useContext(context)
-  const { availability } = state
+  const { blockedAvailabilities } = state
   const { user } = useGlobalState().state
 
   useEffect(() => {
-    setInitialAvailability(availability)
-  },[])
+    setInitialAvailability(blockedAvailabilities)
+  }, [])
 
   return (
-    <div className="RegistrationWrapper">
-      <div className="LoginMain" style={ style }>
-        <Logo height="50px" width="50px" style={{ marginBottom: ".5em" }} />
+    <div className='RegistrationWrapper'>
+      <div className='LoginMain' style={style}>
+        <Logo height='50px' width='50px' style={{ marginBottom: '.5em' }} />
 
-        <div className="LoginHeader">General Product Availability</div>
-        <div className="LoginText LoginTextSmall">
+        <div className='LoginHeader'>General Product Availability</div>
+        <div className='LoginText LoginTextSmall'>
           Little big shed lets you have control over the days you want to lend
           out your products.
         </div>
-        <div className="LoginText LoginTextSmall">
+        <div className='LoginText LoginTextSmall'>
           Select the days and enter the times you are available for trades.
         </div>
 
-        <ProductSlots 
-        availability={availability}
-        onAvailabilityChange={(newAvailability) => dispatch({ type: 'setAvailability', data: newAvailability })}
+        <TimeSlots
+          blockedAvailabilities={blockedAvailabilities}
+          onTimeSlotBlocked={blockedAvailability => {
+            dispatch({
+              type: 'setBlockedAvailability',
+              data: blockedAvailability,
+            })
+          }}
         />
-        <div className="SkipNextButtonFlex" style={ style ? { justifyContent: 'center'} : null }>
-          { isEditItem ? (
+        <div
+          className='SkipNextButtonFlex'
+          style={style ? { justifyContent: 'center' } : null}
+        >
+          {isEditItem ? (
             <>
-              <Button 
-              text="Cancel"
-              invertedColors
-              style={{ marginRight: '0.5rem'}}
-              onClick={() => {
-                dispatch({ type: 'setAvailability', data: initialAvailability })
-                onCancel()
-              }}
+              <Button
+                text='Cancel'
+                invertedColors
+                style={{ marginRight: '0.5rem' }}
+                onClick={onCancel}
               />
-              <Button 
-              text="Save"
-              onClick={() => onCancel()}
-              />
+              <Button text='Save' onClick={onSave} />
             </>
           ) : (
-            <Button 
-            isDisabled={!availability.includes(1)}
-            text="Next"
-            isLoading={isUpgradeLoading}
-            onClick={() => (user && type === 'upgrateLender') ? submitUpgrade() : dispatch({ type: 'setCurrentPage', data: REGISTER_PAGES.TNC})}
+            <Button
+              text='Next'
+              isLoading={isUpgradeLoading}
+              onClick={() =>
+                user && type === 'upgrateLender'
+                  ? submitUpgrade()
+                  : dispatch({
+                      type: 'setCurrentPage',
+                      data: REGISTER_PAGES.TNC,
+                    })
+              }
             />
           )}
         </div>
       </div>
     </div>
-  );
+  )
 }
+
+export default Availability

@@ -7,7 +7,7 @@ const MarketingButton = ({ bgColor, textColor, width, linkTo, children, onClick 
     <Link 
       className='marketing_btn_container' 
       style={{background: bgColor, color: textColor, width: width}}
-      to={linkTo}
+      to={linkTo ?? ''}
       onClick={onClick}
     >
         {children}

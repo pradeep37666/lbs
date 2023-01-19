@@ -1,8 +1,8 @@
 import {
-	BlockedAvailability,
 	BlockedAvailabilityNumber,
 	BlockedAvailabilityTime,
 } from './User'
+import { ItemCategory } from '../util/reducers/postItemReducer'
 
 export type ItemImage = {
 	id: string
@@ -84,6 +84,70 @@ export type ItemAvailability = {
 	yearly_availability: string
 	year: number
 	itemId: string
+}
+
+export type ItemCreateArgs = {
+	title: string
+	category: ItemCategory
+	description: string
+	price: 0
+	deliveryPrice: 0
+	pickupPrice: 0
+	deliveryOption: DeliveryOption
+	rating: 0
+	discount: 0
+	weekly_availability: string
+	is_deleted: true
+	images: [
+		{
+			imageKey: string
+		}
+	]
+	address: {
+		streetNumber: string
+		streetName: string
+		city: string
+		suburb: string
+		state: string
+		postCode: string
+		country: string
+		fullAddress: string
+		lat: 0
+		lng: 0
+	}
+}
+
+export type ItemUpdateArgs = {
+	imagesToDelete: string[]
+	address: {
+		streetNumber: string
+		streetName: string
+		city: string
+		suburb: string
+		state: string
+		postCode: string
+		country: string
+		fullAddress: string
+		lat: number
+		lng: number
+	}
+	title: string
+	category: ItemCategory
+	description: string
+	price: number
+	deliveryPrice: number
+	pickupPrice: number
+	deliveryOption: DeliveryOption
+	rating: number
+	discount: number
+	weekly_availability: string
+	is_deleted: boolean
+	userId: string
+	images: [
+		{
+			imageKey: string
+		}
+	]
 }
 
 export type ItemCreated = {

@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { Item } from '../types/Item'
 import { Rating } from '../types/Rating'
-import { User } from '../types/User'
+import { BlockedAvailabilityNumberFormat, UpgradeUser, User } from '../types/User'
 import Instance from '../util/axios'
 import Crudable from './crudable'
 
@@ -70,6 +70,48 @@ class UserService implements Crudable<User> {
 	deleteOne = async () => {
 		// delete a user
 		throw Error('Not Implemented')
+	}
+
+	borrowerUpgrade = async (
+		userData: UpgradeUser,
+		userId: string,
+		blockedAvailabilities: BlockedAvailabilityNumberFormat[]
+	) => {
+		try {
+			const [user, blocked] = await Promise.all([
+				Instance.post('/users/borrower-upgrade', userData),
+				Instance.post(`/blocked-availability/users/${userId}`, {
+					blockedAvailabilities
+				})
+			])
+			if (user.status !== 201 || blocked.status !== 201) throw Error
+			return { user, blocked }
+		} catch (error: any) {
+			if (error && axios.isAxiosError(error)) {
+				if (error?.code === 'ERR_NETWORK' || error?.code === 'ECONNABORTED')
+					throw Error(networkErrorMessage)
+			}
+			throw Error('Error fetching user details')
+		}
+	}
+
+	updateUserBlockedAvailability = async (
+		userId: string,
+		blockedAvailabilities: BlockedAvailabilityNumberFormat[]
+	) => {
+		try {
+			const result = await Instance.post(`/blocked-availability/users/${userId}`, {
+				blockedAvailabilities
+			})
+			if (result.status !== 201) throw Error
+			return result.data
+		} catch (error) {
+			if (error && axios.isAxiosError(error)) {
+				if (error?.code === 'ERR_NETWORK' || error?.code === 'ECONNABORTED')
+					throw Error(networkErrorMessage)
+			}
+			throw Error('Error fetching user details')
+		}
 	}
 }
 

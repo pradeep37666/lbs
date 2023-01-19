@@ -2,64 +2,48 @@ import React from 'react'
 import './AvailabilityModal.css'
 import CloseIcon from '@material-ui/icons/Close'
 import DisabledAvailabilityCalendar from '../../DisabledAvailabilityCalendar/DisabledAvailabilityCalendar'
+import MonthCalendar from '../../calendar/MonthCalendar'
 
 export const ApplicationContext = React.createContext()
 
-export default function AvailabilityModal({ item, onClick, availability, yearlyAvailabilities }) {
+export default function AvailabilityModal({ item, isVisible, setIsVisible }) {
+  const renderMonthCalendars = () => {
     const today = new Date()
-    const currentDate = today.getDate()
     const currentMonth = today.getMonth()
     const currentYear = today.getFullYear()
-    const thisYearAvailability = yearlyAvailabilities.find(availability => availability.year === currentYear)
-    const yearlyAvailability = thisYearAvailability?.yearly_availability
+    return Array(1)
+      .fill(null)
+      .map((_, index) => {
+        let calendarMonth = currentMonth + index
+        let calendarYear = currentYear
+        if (calendarMonth > 11) {
+          calendarMonth -= 12
+          calendarYear += 1
+        }
+        return (
+          <MonthCalendar
+            key={index}
+            year={calendarYear}
+            month={calendarMonth}
+            isEditable={false}
+            item={item}
+            isViewing={true}
+          />
+        )
+      })
+  }
 
-    const state = {
-        item,
-        itemAvailability: availability,
-        yearAvailability: yearlyAvailability,
-        currentDate, 
-        currentYear,
-        currentMonth
-    }
-
-    const renderCalendars = () => {
-        const calendarArray = new Array(4).fill(null)
-        let year = currentYear
-        return calendarArray.map((_,index ) => {
-            let month
-            if(currentMonth + index > 11){
-                month = (currentMonth + index ) - 12
-            } else{
-                month = currentMonth + index
-            }
-            if(currentMonth + index === 12) year += 1
-            return (
-            <DisabledAvailabilityCalendar month={month} year={year} key={index}/>
-            )
-        })
-    }
-
-    return (
-        <ApplicationContext.Provider value={{ state }}>
-            <div className="ModalWrapperMain" onClick={onClick}>
-                <div 
-                    className="AvailabilityModalMain"  
-                    onClick={(e) => e.stopPropagation()}
-                >
-                    <div className='AvailabilityTitleContainer'>
-                        <p className='AvailabilityTitle'>
-                            Availability
-                        </p>
-                        <button 
-                            className="AvailabilityCloseBtn"
-                            onClick={onClick}
-                        >
-                            <CloseIcon />
-                        </button>
-                    </div>
-                    { renderCalendars() }
-                </div>
-            </div>
-        </ApplicationContext.Provider>
-    )
+  return (
+    <div className='ModalWrapperMain'>
+      <div className='AvailabilityModalMain' onClick={e => e.stopPropagation()}>
+        <div className='AvailabilityTitleContainer'>
+          <p className='AvailabilityTitle'>Availability</p>
+          <button className='AvailabilityCloseBtn'>
+            <CloseIcon onClick={() => setIsVisible(false)} />
+          </button>
+        </div>
+        {renderMonthCalendars()}
+      </div>
+    </div>
+  )
 }

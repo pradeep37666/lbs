@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react'
 import CalendarItem from './CalendarItem'
-import TimeSlotPicker from '../timeSlotPicker/timeSlotPicker'
+import TimeSlotPicker from '../timeSlotPicker/TimeSlotPicker'
 import { ApplicationContext } from '../../pages/application/Application'
 import compareDates from '../../util/compareDates'
 import ValidationPopup from '../ValidationPopup/ValidationPopup'

@@ -17,6 +17,57 @@ export type User = {
 	lenderRating: number
 }
 
+export type UserData = {
+	id: string
+	createdAt: Date
+	updatedAt: Date
+	email: string
+	firstName: string
+	lastName: string
+	avatar: string
+	mobile: string
+	isLender: boolean
+	lenderRating: number
+	borrowerRating: number
+	address: UserAddress & {
+		id: string
+		createdAt: Date
+		updatedAt: Date
+		userId: string
+	}
+}
+
+export type UpgradeUser = {
+	borrowerDetails: {
+		address: UserAddress
+		firstName: string
+		lastName: string
+		email: string
+		mobile: string
+		isLender: boolean
+		role: UserRole
+	},
+	stripeDetails: StripeDetails
+}
+
+enum UserRole {
+	ADMIN = 'ADMIN',
+	GOD = 'GOD',
+	COMMON = 'COMMON'
+}
+
+export type StripeDetails = {
+	day: number
+	month: number
+	year: number
+	bsb: string
+	accountNumber: string
+	mcc: string
+	website: string
+	documentFrontImage: string
+	documentBackImage: string
+}
+
 export type BlockedAvailabilityCreate = {
 	startTime: BlockedAvailabilityTime
 	endTime: BlockedAvailabilityTime
@@ -105,17 +156,14 @@ export type BlockedAvailabilityTime =
 	| '17:00:00'
 
 export type UserAddress = {
-	id: string
-	createdAt: Date
-	updatedAt: Date
-	streetNumber: string
-	streetName: string
-	city: string
-	suburb: string
-	state: string
-	postCode: string
-	country: string
-	fullAddress: string
-	lat: number
+	streetNumber: string,
+	streetName: string,
+	city: string,
+	suburb: string,
+	state: string,
+	postCode: string,
+	country: string,
+	fullAddress: string,
+	lat: number,
 	lng: number
 }
