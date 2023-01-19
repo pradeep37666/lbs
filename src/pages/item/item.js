@@ -33,11 +33,8 @@ export default function Item() {
   const [ImageModal, setImageModal] = useState(false)
   const [reviewModalOpen, setReviewModalOpen] = useState(false)
   const [reviews, setReviews] = useState([])
-  const [availabilityModalVisible, setAvailabilityModalVisible] =
-    useState(false)
+  const [isAvailableModalOpen, setIsAvailableModalOpen] = useState(false)
   const [coldChatModalVisible, setColdChatModalVisible] = useState(false)
-  const [availability, setAvailability] = useState()
-  const [yearlyAvailabilities, setYearlyAvailabilities] = useState()
   const itemService = new ItemService()
 
   useEffect(() => {
@@ -52,11 +49,7 @@ export default function Item() {
       await getItemLikedByUser(itemId)
       const data = await itemService.getItem(itemId)
       if (!data) throw Error
-	  const blockedAvailabilities = data.itemBlockedAvailability
-	  console.log({data})
       setItem(data)
-    //   setAvailability(data.weekly_availability)
-    //   setYearlyAvailabilities(data.availabilities)
       getItemReviews(itemId)
       setItemPictures(data.images)
       setIsLoading(false)
@@ -117,11 +110,11 @@ export default function Item() {
           itemOwner={itemOwner}
         />
       )}
-      {availabilityModalVisible && item && (
+      {isAvailableModalOpen && item && (
         <AvailabilityModal
           item={item}
-          setIsVisible={setAvailabilityModalVisible}
-          isVisible={availabilityModalVisible}
+          setIsVisible={setIsAvailableModalOpen}
+          isVisible={isAvailableModalOpen}
         />
       )}
       {coldChatModalVisible && (
@@ -145,7 +138,7 @@ export default function Item() {
           <div className='ItemInfoWrapper'>
             <ItemInfoSection
               item={item}
-              openAvailabilityModal={() => setAvailabilityModalVisible(true)}
+              openAvailabilityModal={() => setIsAvailableModalOpen(true)}
               favourited={favourited}
               getItemLikedByUser={getItemLikedByUser}
               setColdChatModalVisible={setColdChatModalVisible}
