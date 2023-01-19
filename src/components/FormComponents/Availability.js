@@ -12,6 +12,7 @@ const Availability = ({
   isUpgradeLoading,
   isEditItem,
   onCancel,
+  onSave,
   type,
 }) => {
   const [initialAvailability, setInitialAvailability] = useState()
@@ -57,15 +58,9 @@ const Availability = ({
                 text='Cancel'
                 invertedColors
                 style={{ marginRight: '0.5rem' }}
-                onClick={() => {
-                  dispatch({
-                    type: 'setAvailability',
-                    data: initialAvailability,
-                  })
-                  onCancel()
-                }}
+                onClick={onCancel}
               />
-              <Button text='Save' onClick={() => onCancel()} />
+              <Button text='Save' onClick={onSave} />
             </>
           ) : (
             <Button

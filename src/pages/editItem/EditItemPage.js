@@ -3,7 +3,6 @@ import './editItem.css'
 import { useParams } from 'react-router'
 import Banner from '../../components/bannerText/bannerText'
 import PageWrapper from '../../components/pageWrapper/pageWrapper'
-import Instance from '../../util/axios'
 import MapsAutocomplete from '../../components/mapsAutocomplete/MapsAutocomplete'
 import DialogContent from '@material-ui/core/DialogContent'
 import Dialog from '@material-ui/core/Dialog'
@@ -23,6 +22,7 @@ import ValidationTextInput from '../../components/FormComponents/ValidationTextI
 import ItemService from '../../services/item'
 import useErrorState from '../../util/reducers/errorContext'
 import { SNACKBAR_BUTTON_TYPES } from '../../assets/Data/LBSEnum'
+import { BlockedAvailabilityToNumber } from '../../types/User'
 
 const EditItemContext = createContext()
 const EditItemPage = () => {
@@ -46,6 +46,7 @@ const EditItemPage = () => {
     editItemAddress,
     editItemDeliveryOption,
     editItemPickupPrice,
+    blockedAvailabilities,
   } = state
   const itemService = new ItemService()
   const [address, setAddress] = useState(editItemAddress)
@@ -69,8 +70,8 @@ const EditItemPage = () => {
 
   const deleteItem = async () => {
     try {
-      const { status } = await Instance.delete(`/items/${params.itemId}`)
-      if (status !== 200) return
+      const result = await itemService.deleteItem(params.itemId)
+      if (!result) throw Error
       history.push(`/user/your_shed`)
     } catch (error) {
       console.log(error.response)
@@ -140,6 +141,42 @@ const EditItemPage = () => {
     }
   }
 
+  const updateBlockedItemAvailability = async () => {
+    const itemBlockedAvailabilityNumberFormat = blockedAvailabilities.map(
+      availability => {
+        return {
+          weekDay: BlockedAvailabilityToNumber(availability.weekDay),
+          startTime: availability.startTime,
+          endTime: availability.endTime,
+        }
+      }
+    )
+    try {
+      const itemAvailability = await itemService.updateItemBlockedAvailability(
+        params.itemId,
+        itemBlockedAvailabilityNumberFormat
+      )
+      if (!itemAvailability) throw Error
+      dispatch({
+        type: 'setBlockedAvailability',
+        data: itemAvailability
+      })
+      setEditAvailabilityOpen(!editAvailabilityOpen)
+    } catch (error) {
+      errorDispatch({
+        type: 'openSnackBar',
+        data: {
+          message:
+            'Failed to update item availability. Please check your details and try again later.',
+          btnText: SNACKBAR_BUTTON_TYPES.CLOSE,
+          btnFunc: () => {
+            errorDispatch({ type: 'closeSnackBar' })
+          },
+        },
+      })
+    }
+  }
+
   return (
     <EditItemContext.Provider value={{ state, dispatch }}>
       <PageWrapper>
@@ -147,7 +184,7 @@ const EditItemPage = () => {
           textBold='Editing Item'
           textNormal={editItemTitle}
           button={'Apply Changes'}
-          buttonClick={() => applyChanges()}
+          buttonClick={applyChanges}
           buttonLoading={isLoading}
         />
         {loading ? (
@@ -170,23 +207,6 @@ const EditItemPage = () => {
                   defaultLat={parseFloat(editItemAddress.lat)}
                   defaultLng={parseFloat(editItemAddress.lng)}
                 />
-                {/* {defaultAddress ? (
-                  <MapsAutocomplete
-                    setAddress={address =>
-                      dispatch({ type: 'setEditItemAddress', data: address })
-                    }
-                    defaultAddress={defaultAddress}
-                    defaultLocation={defaultAddress.fullAddress}
-                    defaultLat={parseFloat(defaultAddress.lat)}
-                    defaultLng={parseFloat(defaultAddress.lng)}
-                  />
-                ) : (
-                  <MapsAutocomplete
-                    setAddress={address =>
-                      dispatch({ type: 'setEditItemAddress', data: address })
-                    }
-                  />
-                )} */}
               </div>
             </div>
 
@@ -280,6 +300,7 @@ const EditItemPage = () => {
                         onCancel={() =>
                           setEditAvailabilityOpen(!editAvailabilityOpen)
                         }
+                        onSave={updateBlockedItemAvailability}
                       />
                     </DialogContent>
                   </Dialog>

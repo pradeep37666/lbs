@@ -67,8 +67,24 @@ class ItemService {
     ) => {
         try {
             const { data, status } = await Instance.patch(`/items/${itemId}`, newItemDetails)
-            if (status !== 201) throw Error
+            if (status !== 200) throw Error
             return data
+        } catch (error) {
+            if (error && axios.isAxiosError(error)) {
+                if (error?.code === 'ERR_NETWORK' || error?.code === 'ECONNABORTED')
+                    throw Error(networkErrorMessage)
+            }
+            throw Error('Error fetching user details')
+        }
+    }
+
+    deleteItem = async (itemId: string) => {
+        try {
+            const { data, status } = await Instance.delete(`/items/${itemId}`)
+            console.log({status})
+            // FIXME: this api isn't working
+            if (status !== 200) throw Error
+            return data  
         } catch (error) {
             if (error && axios.isAxiosError(error)) {
                 if (error?.code === 'ERR_NETWORK' || error?.code === 'ECONNABORTED')

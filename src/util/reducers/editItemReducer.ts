@@ -300,6 +300,7 @@ const editItemReducer = (
         editItemDescription: action.data.description,
         editItemPrice: action.data.price,
         editItemDiscount: action.data.discount,
+        isEditItemDiscount: action.data.discount ? true : false,
         editItemAddress: action.data.address,
         editItemSuburb: action.data.address.suburb,
         editItemDeliveryPrice: action.data.deliveryPrice,
