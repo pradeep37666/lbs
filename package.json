@@ -1,5 +1,5 @@
 {
-  "name": "LittleBigShed",
+  "name": "little-big-shed",
   "version": "0.1.0",
   "private": true,
   "homepage": "./",
@@ -12,8 +12,6 @@
     "@material-ui/icons": "^4.11.2",
     "@material-ui/pickers": "^3.3.10",
     "@material-ui/styles": "^4.11.4",
-    "@sentry/react": "^7.3.1",
-    "@sentry/tracing": "^7.3.1",
     "@stripe/react-stripe-js": "^1.5.0",
     "@stripe/stripe-js": "^1.18.0",
     "@testing-library/jest-dom": "^5.14.1",

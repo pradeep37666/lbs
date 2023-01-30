@@ -7,9 +7,10 @@ type MonthCalendarProps = {
   isEditable: boolean
   item: Item
   isViewing: boolean
+  bookingDates?: { startDate: string; endDate: string }[]
 }
 
-const MonthCalendar:React.FC<MonthCalendarProps> = ({
+const MonthCalendar: React.FC<MonthCalendarProps> = ({
   month,
   year,
   isEditable,
