@@ -1,7 +1,4 @@
 import React, { useReducer, useEffect, useState } from 'react'
-import { createBrowserHistory } from 'history'
-import * as Sentry from '@sentry/react'
-import { BrowserTracing } from '@sentry/tracing'
 import './App.css'
 
 import Top from './pages/marketing/Top/Top'
@@ -41,17 +38,6 @@ import Instance from './util/axios'
 import ForgotPassword from './pages/ForgotPassword/ForgotPassword'
 import LBSSnackBar from './components/LBSSnackBar/LBSSnackBar'
 import LenderShed from './pages/lender-shed/lender-shed'
-
-const SentryRoute = Sentry.withSentryRouting(Route)
-const history = createBrowserHistory()
-Sentry.init({
-  integrations: [
-    new BrowserTracing({
-      routingInstrumentation: Sentry.reactRouterV5Instrumentation(history),
-    }),
-  ],
-  tracesSampleRate: 1.0,
-})
 
 export const GlobalStateContext = React.createContext()
 export const GlobalErrorContext = React.createContext()
@@ -198,36 +184,36 @@ function App() {
           {loadingUser ? (
             ''
           ) : (
-            <Router history={history}>
+            <Router>
               <LBSSnackBar timeout={10000} />
               <ScrollToTop>
                 {/* marketing pages here with different routers */}
-                <SentryRoute exact path="/" component={Top} />
-                <SentryRoute
+                <Route exact path="/" component={Top} />
+                <Route
                   exact
                   path="/lend_your_stuff"
                   component={LendYourStuff}
                 />
-                <SentryRoute exact path="/rent_stuff" component={RentStuff} />
-                <SentryRoute
+                <Route exact path="/rent_stuff" component={RentStuff} />
+                <Route
                   exact
                   path="/how_it_works"
                   component={HowItWorks}
                 />
-                <SentryRoute exact path="/about_us" component={AboutUs} />
-                <SentryRoute exact path="/blog" component={Blog} />
-                <SentryRoute exact path="/protection" component={Protection} />
-                <SentryRoute exact path="/faqs" component={FAQs} />
-                <SentryRoute exact path="/contact_us" component={ContactUs} />
+                <Route exact path="/about_us" component={AboutUs} />
+                <Route exact path="/blog" component={Blog} />
+                <Route exact path="/protection" component={Protection} />
+                <Route exact path="/faqs" component={FAQs} />
+                <Route exact path="/contact_us" component={ContactUs} />
 
-                <SentryRoute exact path="/home" component={Home} />
-                <SentryRoute exact path="/item/:itemId" component={ItemPage} />
-                <SentryRoute
+                <Route exact path="/home" component={Home} />
+                <Route exact path="/item/:itemId" component={ItemPage} />
+                <Route
                   exact
                   path="/search/:searchParams?"
                   component={Search}
                 />
-                <SentryRoute
+                <Route
                   exact
                   path="/forgotpassword"
                   component={ForgotPassword}
