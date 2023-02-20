@@ -2,8 +2,8 @@ import { DeliveryOption, ItemCreated, ItemAddress } from '../../types/Item'
 import {
   BlockedAvailability,
   BlockedAvailabilityCreate,
-  BlockedAvailabilityToString,
 } from '../../types/User'
+import { blockedAvailabilityToString } from '../blockedAvailabilityToString'
 import { ItemCategory } from './postItemReducer'
 
 type Action = {
@@ -101,7 +101,7 @@ export const InitialEditItemState: EditItemState = {
 
 const editItemReducer = (
   state: EditItemState,
-  action: Action,
+  action: Action
 ): EditItemState => {
   switch (action.type) {
     case 'setEditItemTitle': {
@@ -137,7 +137,7 @@ const editItemReducer = (
     case 'setNewImageLinks': {
       return {
         ...state,
-        newImageLinks: action.data
+        newImageLinks: action.data,
       }
     }
     case 'setEditItemDescription': {
@@ -236,7 +236,7 @@ const editItemReducer = (
       if (existingBlockedAvailabilityIndex !== -1) {
         const filteredBlockedAvailabilities =
           state.blockedAvailabilities.filter(
-            (_, index) => index !== existingBlockedAvailabilityIndex,
+            (_, index) => index !== existingBlockedAvailabilityIndex
           )
         return {
           ...state,
@@ -312,13 +312,13 @@ const editItemReducer = (
         blockedAvailabilities: action.data.itemBlockedAvailability.map(
           (blockedAvailability: BlockedAvailability) => {
             return {
-              weekDay: BlockedAvailabilityToString(
-                blockedAvailability.blockedAvailability.weekDay,
+              weekDay: blockedAvailabilityToString(
+                blockedAvailability.blockedAvailability.weekDay
               ),
               startTime: blockedAvailability.blockedAvailability.startTime,
               endTime: blockedAvailability.blockedAvailability.endTime,
             }
-          },
+          }
         ),
       }
     }

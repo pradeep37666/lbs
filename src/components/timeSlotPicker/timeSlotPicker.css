@@ -46,6 +46,13 @@
   font-size: 14px;
 }
 
+
+.TimeSlotDiv .DaySelectedText {
+  font-size: 17px;
+  font-weight: bold;
+  color: "white"
+}
+
 .BackgroundMorning {
   background-color: #33384f;
   color: #fff;

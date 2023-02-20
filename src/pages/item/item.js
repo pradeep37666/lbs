@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import './item.css'
 import PageWrapper from '../../components/pageWrapper/pageWrapper.js'
 import ItemImageModal from '../../components/itemImagesModal/imagesModal.js'
@@ -29,6 +29,7 @@ export default function Item() {
   const [favourited, setFavourited] = useState('')
   const [isUserItem, setIsUserItem] = useState(false)
   const [itemOwner, setItemOwner] = useState(null)
+  const [bookedDates, setBookedDates] = useState([])
   const [isLoading, setIsLoading] = useState(true)
   const [ImageModal, setImageModal] = useState(false)
   const [reviewModalOpen, setReviewModalOpen] = useState(false)
@@ -53,6 +54,7 @@ export default function Item() {
       getItemReviews(itemId)
       setItemPictures(data.images)
       setIsLoading(false)
+      getItemBookings(itemId)
       if (data.userId !== user.id) {
         getItemOwner(data)
         return
@@ -62,6 +64,15 @@ export default function Item() {
       console.log(error.response)
     } finally {
       setIsLoading(false)
+    }
+  }
+
+  const getItemBookings = async itemId => {
+    try {
+      const bookingDetails = await itemService.getItemBookedDates(itemId)
+      setBookedDates(bookingDetails)
+    } catch (error) {
+      console.log({ error })
     }
   }
 
@@ -114,7 +125,7 @@ export default function Item() {
         <AvailabilityModal
           item={item}
           setIsVisible={setIsAvailableModalOpen}
-          isVisible={isAvailableModalOpen}
+          bookedDates={bookedDates}
         />
       )}
       {coldChatModalVisible && (

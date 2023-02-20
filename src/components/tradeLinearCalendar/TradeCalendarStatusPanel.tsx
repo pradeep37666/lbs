@@ -1,24 +1,36 @@
-import React, { useEffect, useState } from 'react'
-import './TradeCalendarStatusPanel.css'
-import Instance from '../../../util/axios'
-import useGlobalState from '../../../util/useGlobalState'
-import StatusRejected from './StatusRejected'
-import StatusApplied from './StatusApplied'
-import StatusReschedule from './StatusReschedule'
-import StatusApproved from './StatusApproved'
-import Pickup from './Pickup'
-import StatusConfirmed from './StatusConfirmed'
-import StatusItemReturn from './StatusItemReturn'
-import StatusReviewed from './StatusReviewed'
-import getDateObject from '../../../util/dateUtils/getDateObject'
-import DropOff from './DropOff'
+import moment from 'moment'
+import React, { SetStateAction, useEffect, useState } from 'react'
 import {
   BOOKING_STATUSES,
   SNACKBAR_BUTTON_TYPES,
-} from '../../../assets/Data/LBSEnum'
-import useErrorState from '../../../util/reducers/errorContext'
-import DisputeBookingModal from '../../modals/DisputeBookingModal/DisputeBookingModal'
-import StatusDisputed from './StatusDisputed'
+} from '../../assets/Data/LBSEnum'
+import { Booking } from '../../types/Booking'
+import Instance from '../../util/axios'
+import useErrorState from '../../util/reducers/errorContext'
+import useGlobalState from '../../util/useGlobalState'
+import { BookingStatus } from '../../types/Booking'
+import DisputeBookingModal from '../modals/DisputeBookingModal/DisputeBookingModal'
+import DropOff from '../tradeCalendar/tradeCalendarStatusPanel/DropOff'
+import Pickup from '../tradeCalendar/tradeCalendarStatusPanel/Pickup'
+import StatusApplied from '../tradeCalendar/tradeCalendarStatusPanel/StatusApplied'
+import StatusApproved from '../tradeCalendar/tradeCalendarStatusPanel/StatusApproved'
+import StatusConfirmed from '../tradeCalendar/tradeCalendarStatusPanel/StatusConfirmed'
+import StatusDisputed from '../tradeCalendar/tradeCalendarStatusPanel/StatusDisputed'
+import StatusItemReturn from '../tradeCalendar/tradeCalendarStatusPanel/StatusItemReturn'
+import StatusRejected from '../tradeCalendar/tradeCalendarStatusPanel/StatusRejected'
+import StatusReschedule from '../tradeCalendar/tradeCalendarStatusPanel/StatusReschedule'
+import StatusReviewed from '../tradeCalendar/tradeCalendarStatusPanel/StatusReviewed'
+import './TradeCalendarStatusPanel.css'
+
+type Props = {
+  booking: Booking
+  userDetails: any
+  getBookings: () => void
+  setReportModalVisible: React.Dispatch<SetStateAction<boolean>>
+  setReviewModalVisible: React.Dispatch<SetStateAction<boolean>>
+  startDate: string
+  endDate: string
+}
 
 export const TradeCalendarStatusPanel = ({
   booking,
@@ -28,8 +40,8 @@ export const TradeCalendarStatusPanel = ({
   setReviewModalVisible,
   startDate,
   endDate,
-}) => {
-  const [status, setStatus] = useState()
+}: Props) => {
+  const [status, setStatus] = useState<string>('')
   const [isApproveLoading, setIsApproveLoading] = useState(false)
   const { state } = useGlobalState()
   const { user } = state
@@ -60,15 +72,10 @@ export const TradeCalendarStatusPanel = ({
           endDate={endDate}
         />
       )
-    if (status === BOOKING_STATUSES.REJECTED)
-      return (
-        <StatusRejected
-          userDetails={userDetails}
-          isOwner={isOwner}
-          status={status}
-        />
-      )
-    if (status === BOOKING_STATUSES.CANCELLED)
+    if (
+      status === BOOKING_STATUSES.REJECTED ||
+      status === BOOKING_STATUSES.CANCELLED
+    )
       return (
         <StatusRejected
           userDetails={userDetails}
@@ -101,7 +108,7 @@ export const TradeCalendarStatusPanel = ({
         <StatusApproved
           isOwner={isOwner}
           userDetails={userDetails}
-          startDateObj={startDate}
+          startDate={startDate}
         />
       )
     // An hour before booking time
@@ -133,7 +140,7 @@ export const TradeCalendarStatusPanel = ({
         <StatusConfirmed
           isOwner={isOwner}
           userDetails={userDetails}
-          endDateObj={endDate}
+          endDate={endDate}
         />
       )
     // Display a review submitted
@@ -149,11 +156,9 @@ export const TradeCalendarStatusPanel = ({
     if (isHourBeforeDropoff)
       return (
         <DropOff
-          booking={booking}
           updateBookingStatus={updateBookingStatus}
           isOwner={isOwner}
           userDetails={userDetails}
-          setReviewModalVisible={setReviewModalVisible}
           setReportModalVisible={setReportModalVisible}
           endDateObj={endDate}
           isLoading={isApproveLoading}
@@ -162,26 +167,20 @@ export const TradeCalendarStatusPanel = ({
   }
 
   const isPickupTime = () => {
-    const startSlot = getDateObject(booking.startDateIndex)
-    if (startSlot?.morning) startSlot.dateObj.setHours(8, 0, 0)
-    else startSlot.dateObj.setHours(13, 0, 0)
-    const now = new Date()
-    const oneHour = 60 * 60 * 1000
-    if (startSlot.dateObj.getTime() - oneHour < now.getTime()) return true
+    const startDateMoment = moment(startDate)
+    const now = moment()
+    if (startDateMoment.isSameOrBefore(now.subtract(1, 'hour'))) return true
     return false
   }
 
   const isDropoffTime = () => {
-    const endSlot = getDateObject(booking.endDateIndex)
-    if (endSlot?.morning) endSlot.dateObj.setHours(12, 0, 0)
-    else endSlot.dateObj.setHours(17, 0, 0)
-    const now = new Date()
-    const oneHour = 60 * 60 * 1000
-    if (endSlot.dateObj.getTime() - oneHour < now.getTime()) return true
+    const endDateMoment = moment(startDate)
+    const now = moment()
+    if (endDateMoment.isSameOrBefore(now.subtract(1, 'hour'))) return true
     return false
   }
 
-  const updateBookingStatus = async newStatus => {
+  const updateBookingStatus = async (newStatus: BookingStatus) => {
     try {
       setIsApproveLoading(true)
       const { status } = await Instance.patch(
@@ -191,7 +190,7 @@ export const TradeCalendarStatusPanel = ({
       if (status !== 200) return
       setStatus(newStatus)
       getBookings()
-    } catch (error) {
+    } catch (error: any) {
       console.log(error.response)
       if (newStatus === 'APPROVED' && error?.response?.status === 400) {
         errorDispatch({

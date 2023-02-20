@@ -8,78 +8,110 @@ import LendStripes from '../../assets/Images/LendStripes.png'
 import BorrowStripes from '../../assets/Images/BorrowStripes.png'
 import { isMobile } from 'react-device-detect'
 
-export default function TradeCalendarItem({ booking, setSelectedBooking, row, currentMonth, currentYear }) {
-    const { state } = useGlobalState()
-    const { user } = state
+export default function TradeCalendarItem({
+  booking,
+  setSelectedBooking,
+  row,
+  currentMonth,
+  currentYear,
+}) {
+  const { state } = useGlobalState()
+  const { user } = state
 
-    const currentMonthDateIndex = getDateIndex({
-        dateObj: new Date(currentYear, currentMonth), 
-        timeslot: 'morning'
-    })
+  const currentMonthDateIndex = getDateIndex({
+    dateObj: new Date(currentYear, currentMonth),
+    timeslot: 'morning',
+  })
 
-    const isLend = booking.lenderId === user.id
-    const isConfirmed = booking.status === 'APPROVED'
-    const isCancelled = booking.status === 'REJECTED' || booking.status === 'CANCELLED' || booking.status === 'DISPUTED' || booking.status === 'RESOLVED'
-    const sameTimeSlot = booking.startDateIndex === booking.endDateIndex || booking.startDateIndex === (booking.endDateIndex - 1)
-    
-    const getBackgroundImage = () => {
-        if(!isCancelled) return null
-        return isLend ? `url(${LendStripes})` : `url(${BorrowStripes})`
+  console.log('BOOKING', JSON.stringify(booking, null, 2))
+
+  const isLend = booking.lenderId === user.id
+  const isConfirmed = booking.status === 'APPROVED'
+  const isCancelled =
+    booking.status === 'REJECTED' ||
+    booking.status === 'CANCELLED' ||
+    booking.status === 'DISPUTED' ||
+    booking.status === 'RESOLVED'
+  const sameTimeSlot =
+    booking.startDateIndex === booking.endDateIndex ||
+    booking.startDateIndex === booking.endDateIndex - 1
+
+  const getBackgroundImage = () => {
+    if (!isCancelled) return null
+    return isLend ? `url(${LendStripes})` : `url(${BorrowStripes})`
+  }
+
+  const getBookingStartPosition = () => {
+    if (booking.startDateIndex <= currentMonthDateIndex) {
+      return 1
     }
-    
-    const getBookingStartPosition = () => {
-        if(booking.startDateIndex <= currentMonthDateIndex){
-            return 1
-        }
-        return booking.startDateIndex - currentMonthDateIndex + 1
-    }
+    return booking.startDateIndex - currentMonthDateIndex + 1
+  }
 
-    const getBookingEndPosition = () => {
-         return booking.endDateIndex - currentMonthDateIndex + 2
-    }
+  const getBookingEndPosition = () => {
+    return booking.endDateIndex - currentMonthDateIndex + 2
+  }
 
-    const isVertical = () => {
-        if((booking.startDateIndex <= currentMonthDateIndex) && (booking.endDateIndex - currentMonthDateIndex === 1)){
-            return true
-        }
-        if(sameTimeSlot){
-            return true
-        }
-        return false
+  const isVertical = () => {
+    if (
+      booking.startDateIndex <= currentMonthDateIndex &&
+      booking.endDateIndex - currentMonthDateIndex === 1
+    ) {
+      return true
     }
-
-    const getCalendarItemClass = () => {
-        if(isCancelled){
-            return isLend ? 'TradeCalendarItemLendCancelled' : 'TradeCalendarItemBorrowCancelled'
-        }
-        if(isConfirmed){
-            return isLend ? "TradeCalendarItemLend" : "TradeCalendarItemBorrow"
-        }
-        return 'TradeCalendarItemPending'
+    if (sameTimeSlot) {
+      return true
     }
+    return false
+  }
 
-    return (
-        <div 
-            onClick={() => setSelectedBooking(booking)}
-            className="TradeCalendarItem"
-            style={{ gridRowStart: row, gridColumnStart: getBookingStartPosition(), gridColumnEnd: getBookingEndPosition()}}
-        >
-            <div 
-                style={{ flexDirection: isVertical() ? 'column' : null , backgroundImage: getBackgroundImage(), backgroundSize: 'auto', padding: sameTimeSlot ? '0.5rem 0' : '0.5rem'}} 
-                className={getCalendarItemClass()}
-            >
-                <span>
-                    {getDateObject(booking.startDateIndex)?.timeslot === 'morning' ? '8am' : '1pm'}
-                </span>
-                <Arrow 
-                    rotation={sameTimeSlot ? 90 : 0} 
-                    width={ isMobile ? 20 : 30} 
-                    height={ isMobile ? 10: 20}
-                />
-                <span>
-                    {getDateObject(booking.endDateIndex)?.timeslot === 'morning' ? '12pm' : '5pm'}
-                </span>
-            </div>
-        </div>
-    )
+  const getCalendarItemClass = () => {
+    if (isCancelled) {
+      return isLend
+        ? 'TradeCalendarItemLendCancelled'
+        : 'TradeCalendarItemBorrowCancelled'
+    }
+    if (isConfirmed) {
+      return isLend ? 'TradeCalendarItemLend' : 'TradeCalendarItemBorrow'
+    }
+    return 'TradeCalendarItemPending'
+  }
+
+  return (
+    <div
+      onClick={() => setSelectedBooking(booking)}
+      className='TradeCalendarItem'
+      style={{
+        gridRowStart: row,
+        gridColumnStart: getBookingStartPosition(),
+        gridColumnEnd: getBookingEndPosition(),
+      }}
+    >
+      <div
+        style={{
+          flexDirection: isVertical() ? 'column' : null,
+          backgroundImage: getBackgroundImage(),
+          backgroundSize: 'auto',
+          padding: sameTimeSlot ? '0.5rem 0' : '0.5rem',
+        }}
+        className={getCalendarItemClass()}
+      >
+        <span>
+          {getDateObject(booking.startDateIndex)?.timeslot === 'morning'
+            ? '8am'
+            : '1pm'}
+        </span>
+        <Arrow
+          rotation={sameTimeSlot ? 90 : 0}
+          width={isMobile ? 20 : 30}
+          height={isMobile ? 10 : 20}
+        />
+        <span>
+          {getDateObject(booking.endDateIndex)?.timeslot === 'morning'
+            ? '12pm'
+            : '5pm'}
+        </span>
+      </div>
+    </div>
+  )
 }

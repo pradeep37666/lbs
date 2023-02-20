@@ -2,14 +2,12 @@ import { useState } from 'react'
 import './AccountAvailability.css'
 import useGlobalState from '../../../util/useGlobalState'
 import Button from '../../../components/Button/Button'
-import {
-  BlockedAvailabilityToNumber,
-  BlockedAvailabilityToString,
-} from '../../../types/User'
 import TimeSlots from '../../../components/timeSlots/TimeSlots'
 import UserService from '../../../services/user'
 import useErrorState from '../../../util/reducers/errorContext'
 import { SNACKBAR_BUTTON_TYPES } from '../../../assets/Data/LBSEnum'
+import { blockedAvailabilityToString } from '../../../util/blockedAvailabilityToString'
+import { blockedAvailabilityToNumber } from '../../../util/blockedAvailabilityToNumber'
 
 export default function Availability({ setAccountContent }) {
   const [isLoading, setIsLoading] = useState(false)
@@ -19,7 +17,7 @@ export default function Availability({ setAccountContent }) {
   const [blockedAvailabilities, setBlockedAvailabilities] = useState(
     user.userBlockedAvailability?.map(availability => {
       return {
-        weekDay: BlockedAvailabilityToString(
+        weekDay: blockedAvailabilityToString(
           availability.blockedAvailability.weekDay
         ),
         startTime: availability.blockedAvailability.startTime,
@@ -56,7 +54,7 @@ export default function Availability({ setAccountContent }) {
       const userBlockedAvailabilityNumberFormat = blockedAvailabilities?.map(
         availability => {
           return {
-            weekDay: BlockedAvailabilityToNumber(availability.weekDay),
+            weekDay: blockedAvailabilityToNumber(availability.weekDay),
             startTime: availability.startTime,
             endTime: availability.endTime,
           }
@@ -88,13 +86,13 @@ export default function Availability({ setAccountContent }) {
   }
 
   return (
-    <div className="Availability__Container">
-      <div className="LoginHeader">General Product Availability</div>
-      <div className="LoginText LoginTextSmall">
+    <div className='Availability__Container'>
+      <div className='LoginHeader'>General Product Availability</div>
+      <div className='LoginText LoginTextSmall'>
         Little big shed lets you have control over the days you want to lend out
         your products.
       </div>
-      <div className="LoginText LoginTextSmall">
+      <div className='LoginText LoginTextSmall'>
         Select the days and enter the times you are available for trades.
       </div>
       <TimeSlots
@@ -104,13 +102,13 @@ export default function Availability({ setAccountContent }) {
         }}
       />
       <Button
-        text="Save"
+        text='Save'
         isLoading={isLoading}
         style={{ marginBottom: '1em' }}
         onClick={updateUserBlockedAvailability}
       />
       <Button
-        text="Cancel Changes"
+        text='Cancel Changes'
         isLoading={isLoading}
         invertedColors
         onClick={() => setAccountContent('Account')}

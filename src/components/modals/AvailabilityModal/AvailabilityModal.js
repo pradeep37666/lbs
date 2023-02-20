@@ -6,7 +6,7 @@ import MonthCalendar from '../../calendar/MonthCalendar'
 
 export const ApplicationContext = React.createContext()
 
-export default function AvailabilityModal({ item, isVisible, setIsVisible }) {
+export default function AvailabilityModal({ setIsVisible, item, bookedDates }) {
   const renderMonthCalendars = () => {
     const today = new Date()
     const currentMonth = today.getMonth()
@@ -28,6 +28,12 @@ export default function AvailabilityModal({ item, isVisible, setIsVisible }) {
             isEditable={false}
             item={item}
             isViewing={true}
+            bookingDates={bookedDates.map(bookingDetail => {
+              return {
+                startDate: bookingDetail.startDate,
+                endDate: bookingDetail.endDate,
+              }
+            })}
           />
         )
       })

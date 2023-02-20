@@ -5,7 +5,7 @@ const Instance = axios.create({
   timeout: 18000,
 })
 
-Instance.interceptors.request.use(async (req) => {
+Instance.interceptors.request.use(async req => {
   const token = localStorage.getItem('LBSToken')
   if (!token) return req
   req.headers.Authorization = `Bearer ${token}`
@@ -17,7 +17,7 @@ export const CometChatInstance = axios.create({
   timeout: 18000,
 })
 
-CometChatInstance.interceptors.request.use(async (req) => {
+CometChatInstance.interceptors.request.use(async req => {
   const token = localStorage.getItem('LBSToken')
   if (!token) return req
   req.headers.Authorization = `Bearer ${token}`

@@ -20,11 +20,9 @@ import { getPrevPostItemPage } from '../../util/getPrevPage'
 import { useHistory } from 'react-router-dom'
 import useErrorState from '../../util/reducers/errorContext'
 import AgreementModal from '../../components/modals/AgreementModal/AgreementModal'
-import {
-  BlockedAvailabilityToNumber,
-  BlockedAvailabilityToString,
-} from '../../types/User'
 import ItemService from '../../services/item'
+import { blockedAvailabilityToNumber } from '../../util/blockedAvailabilityToNumber'
+import { blockedAvailabilityToString } from '../../util/blockedAvailabilityToString'
 
 const FormContext = createContext()
 
@@ -39,7 +37,7 @@ export default function PostItem() {
   const blockedAvailabilities = user.userBlockedAvailability.map(
     availability => {
       return {
-        weekDay: BlockedAvailabilityToString(
+        weekDay: blockedAvailabilityToString(
           availability.blockedAvailability.weekDay
         ),
         startTime: availability.blockedAvailability.startTime,
@@ -111,7 +109,7 @@ export default function PostItem() {
     const itemBlockedAvailabilitiesNumberFormat =
       selectedBlockedAvailabilities.map(availability => {
         return {
-          weekDay: BlockedAvailabilityToNumber(availability.weekDay),
+          weekDay: blockedAvailabilityToNumber(availability.weekDay),
           startTime: availability.startTime,
           endTime: availability.endTime,
         }

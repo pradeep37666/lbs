@@ -81,10 +81,24 @@ class ItemService {
     deleteItem = async (itemId: string) => {
         try {
             const { data, status } = await Instance.delete(`/items/${itemId}`)
-            console.log({status})
+            console.log({ status })
             // FIXME: this api isn't working
             if (status !== 200) throw Error
-            return data  
+            return data
+        } catch (error) {
+            if (error && axios.isAxiosError(error)) {
+                if (error?.code === 'ERR_NETWORK' || error?.code === 'ECONNABORTED')
+                    throw Error(networkErrorMessage)
+            }
+            throw Error('Error fetching user details')
+        }
+    }
+
+    getItemBookedDates = async (itemId: string) => {
+        try {
+            const { data, status } = await Instance.get(`/items/${itemId}/bookings`)
+            if (status !== 200) throw Error
+            return data
         } catch (error) {
             if (error && axios.isAxiosError(error)) {
                 if (error?.code === 'ERR_NETWORK' || error?.code === 'ECONNABORTED')

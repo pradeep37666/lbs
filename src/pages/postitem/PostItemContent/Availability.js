@@ -2,7 +2,7 @@ import { useState, useContext, useEffect } from 'react'
 import { ReactComponent as Logo } from '../../../assets/Logos/LogoRed.svg'
 import Button from '../../../components/Button/Button'
 import TimeSlots from '../../../components/timeSlots/TimeSlots'
-import { BlockedAvailabilityToString } from '../../../types/User'
+import { blockedAvailabilityToString } from '../../../util/blockedAvailabilityToString'
 
 export const Availability = ({ context, openModal }) => {
   const { state, dispatch } = useContext(context)
@@ -11,9 +11,7 @@ export const Availability = ({ context, openModal }) => {
   const [blockedAvailabilities, setBlockedAvailabilities] = useState(
     newPostItemBlockedAvailabilities?.map(availability => {
       return {
-        weekDay: BlockedAvailabilityToString(
-          availability.weekDay
-        ),
+        weekDay: blockedAvailabilityToString(availability.weekDay),
         startTime: availability.startTime,
         endTime: availability.endTime,
       }
@@ -96,7 +94,10 @@ export const Availability = ({ context, openModal }) => {
             }}
           />
           <div className='SkipNextButtonFlex'>
-            <Button text='Next' onClick={() => storeBlockedAvailabilities(true)} />
+            <Button
+              text='Next'
+              onClick={() => storeBlockedAvailabilities(true)}
+            />
           </div>
         </div>
       )}

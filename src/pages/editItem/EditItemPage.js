@@ -22,7 +22,7 @@ import ValidationTextInput from '../../components/FormComponents/ValidationTextI
 import ItemService from '../../services/item'
 import useErrorState from '../../util/reducers/errorContext'
 import { SNACKBAR_BUTTON_TYPES } from '../../assets/Data/LBSEnum'
-import { BlockedAvailabilityToNumber } from '../../types/User'
+import { blockedAvailabilityToNumber } from '../../util/blockedAvailabilityToNumber'
 
 const EditItemContext = createContext()
 const EditItemPage = () => {
@@ -145,7 +145,7 @@ const EditItemPage = () => {
     const itemBlockedAvailabilityNumberFormat = blockedAvailabilities.map(
       availability => {
         return {
-          weekDay: BlockedAvailabilityToNumber(availability.weekDay),
+          weekDay: blockedAvailabilityToNumber(availability.weekDay),
           startTime: availability.startTime,
           endTime: availability.endTime,
         }
@@ -159,7 +159,7 @@ const EditItemPage = () => {
       if (!itemAvailability) throw Error
       dispatch({
         type: 'setBlockedAvailability',
-        data: itemAvailability
+        data: itemAvailability,
       })
       setEditAvailabilityOpen(!editAvailabilityOpen)
     } catch (error) {

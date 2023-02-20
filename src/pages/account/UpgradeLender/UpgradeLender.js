@@ -15,7 +15,7 @@ import {
 import { getPrevUpgradeLenderPage } from '../../../util/getPrevPage'
 import useErrorState from '../../../util/reducers/errorContext'
 import UserService from '../../../services/user'
-import { BlockedAvailabilityToNumber } from '../../../types/User'
+import { blockedAvailabilityToNumber } from '../../../util/blockedAvailabilityToNumber'
 
 const FormContext = createContext()
 
@@ -98,7 +98,7 @@ export default function UpgradeLender() {
 
     const userBlockedAvailability = blockedAvailabilities.map(availability => {
       return {
-        weekDay: BlockedAvailabilityToNumber(availability.weekDay),
+        weekDay: blockedAvailabilityToNumber(availability.weekDay),
         startTime: availability.startTime,
         endTime: availability.endTime,
       }
