@@ -1,23 +1,27 @@
 import React, { useState } from 'react'
-import { BOOKING_STATUSES } from '../../../assets/Data/LBSEnum'
 import StatusButton from './StatusButton'
 import BookingDatesPanel from '../../BookingDatesPanel/BookingDatesPanel'
-import { BookingStatus } from '../../../types/Booking'
+import { Booking, BookingAction, BookingStatus } from '../../../types/Booking'
+import BookingService from '../../../services/booking'
 
 type Props = {
-  isOwner: boolean
-  updateBookingStatus: (newStatus: BookingStatus) => Promise<void>
+  isBorrower: boolean
+  handleBookingAction: (action: BookingAction) => Promise<void>
+  updateBookingStatus: (status: BookingStatus) => Promise<void>
   isLoading: boolean
   startDate: string
   endDate: string
+  selectedBooking: Booking
 }
 
 export const StatusApplied = ({
-  isOwner,
+  isBorrower,
   updateBookingStatus,
+  handleBookingAction,
   isLoading,
   startDate,
   endDate,
+  selectedBooking,
 }: Props) => {
   const [cancelPressed, setCancelPressed] = useState(false)
 
@@ -38,17 +42,20 @@ export const StatusApplied = ({
 
   const bookingDetailsContent = (
     <>
-      <BookingDatesPanel startDate={startDate} endDate={endDate} />
+      <BookingDatesPanel
+        startDate={new Date(startDate)}
+        endDate={new Date(endDate)}
+      />
       <div className='TradeStatusButtonContainer'>
         <StatusButton
           text='Decline'
           type='white'
-          onClick={() => setCancelPressed(true)}
+          onClick={() => handleBookingAction('REJECT')}
         />
         <StatusButton
           text='Approve'
           type='red'
-          onClick={() => updateBookingStatus('APPROVED')}
+          onClick={() => handleBookingAction('APPROVE')}
           isLoading={isLoading}
         />
       </div>
@@ -78,11 +85,11 @@ export const StatusApplied = ({
 
   return (
     <>
-      {isOwner
+      {isBorrower
         ? cancelPressed
           ? cancelPressedContent
-          : bookingDetailsContent
-        : noOwnerContent}
+          : noOwnerContent
+        : bookingDetailsContent}
     </>
   )
 }

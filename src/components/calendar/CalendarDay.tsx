@@ -53,14 +53,22 @@ const CalendarDay = ({
     if (!selectedDay) return
     setIsSelected(isEqualDate(day, selectedDay))
   }, [selectedDay])
+
+  const getBookedSlots = () => {
+    if (bookingDates && bookingDates.length >= 1 && bookedDates.length === 0) {
+      return bookingDates
+    }
+    return bookedDates
+  }
+
   useEffect(() => {
     const { isMorningBooked, isAfternoonBooked } = checkIfSlotBooked(
-      bookingDates ? bookingDates : bookedDates,
+      getBookedSlots(),
       day
     )
     setIsMorningBooked(isMorningBooked)
     setIsAfternoonBooked(isAfternoonBooked)
-  }, [])
+  }, [selectedDay, bookedDates])
 
   const isMorningBlocked = itemBlockedAvailabilities
     ? itemBlockedAvailabilities.some(availability => {
@@ -101,13 +109,16 @@ const CalendarDay = ({
       moment(day).isSameOrBefore(moment(endDate, 'day')) &&
       moment(day).isSameOrAfter(moment(startDate, 'day'))
     ) {
-      if (isEqualDate(endDate, day)) {
+      if (moment(endDate).isSame(day, 'day')) {
         return 'ItemApplicationPeriodEnd'
-      } else if (startDate.setHours(0, 0, 0, 0) === day.setHours(0, 0, 0, 0)) {
-        return 'ItemApplicationPeriodStart'
-      } else {
-        return 'ItemApplicationPeriod'
       }
+      return 'ItemApplicationPeriod'
+    }
+    if (moment(startDate).isSame(day, 'day')) {
+      if (moment(startDate).isSame(endDate, 'day')) {
+        return ''
+      }
+      return 'ItemApplicationPeriodStart'
     }
     return ''
   }
@@ -162,22 +173,14 @@ const CalendarDay = ({
         </span>
         <div className='ItemAvailabilityContainer'>
           <div
-            className={`${
-              inThePast || isMorningBooked || isMorningBlocked
-                ? 'ItemBooked'
-                : ''
-            } ${
+            className={`${inThePast ? 'ItemBooked' : ''} ${
               isMorningBooked || isMorningBlocked
                 ? 'ItemAMUnavailable'
                 : 'ItemAMAvailable'
             }`}
           />
           <div
-            className={`${
-              inThePast || isAfternoonBooked || isAfternoonBlocked
-                ? 'ItemBooked'
-                : ''
-            } ${
+            className={`${inThePast ? 'ItemBooked' : ''} ${
               moment(day) <= moment(new Date()) ||
               isAfternoonBooked ||
               isAfternoonBlocked

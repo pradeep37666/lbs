@@ -1,16 +1,30 @@
 import React from 'react'
 import './AvailabilityModal.css'
 import CloseIcon from '@material-ui/icons/Close'
-import DisabledAvailabilityCalendar from '../../DisabledAvailabilityCalendar/DisabledAvailabilityCalendar'
 import MonthCalendar from '../../calendar/MonthCalendar'
+import { Item } from '../../../types/Item'
+import getMappedBookingTimes from '../../../util/tradeUtils/getMappedBookingTimes'
+import { BookingDetail } from '../../../types/Booking'
 
-export const ApplicationContext = React.createContext()
+type Props = {
+  toggleVisibility: () => void
+  item: Item
+  bookedDates: BookingDetail[]
+}
 
-export default function AvailabilityModal({ setIsVisible, item, bookedDates }) {
+export const ApplicationContext = React.createContext(null)
+
+export default function AvailabilityModal({
+  toggleVisibility,
+  item,
+  bookedDates,
+}: Props) {
   const renderMonthCalendars = () => {
     const today = new Date()
     const currentMonth = today.getMonth()
     const currentYear = today.getFullYear()
+    const bookedDatesToStartAndEnd = getMappedBookingTimes(bookedDates)
+
     return Array(1)
       .fill(null)
       .map((_, index) => {
@@ -28,12 +42,7 @@ export default function AvailabilityModal({ setIsVisible, item, bookedDates }) {
             isEditable={false}
             item={item}
             isViewing={true}
-            bookingDates={bookedDates.map(bookingDetail => {
-              return {
-                startDate: bookingDetail.startDate,
-                endDate: bookingDetail.endDate,
-              }
-            })}
+            bookingDates={bookedDatesToStartAndEnd}
           />
         )
       })
@@ -45,7 +54,7 @@ export default function AvailabilityModal({ setIsVisible, item, bookedDates }) {
         <div className='AvailabilityTitleContainer'>
           <p className='AvailabilityTitle'>Availability</p>
           <button className='AvailabilityCloseBtn'>
-            <CloseIcon onClick={() => setIsVisible(false)} />
+            <CloseIcon onClick={toggleVisibility} />
           </button>
         </div>
         {renderMonthCalendars()}

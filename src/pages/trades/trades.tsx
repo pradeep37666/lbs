@@ -14,17 +14,20 @@ import NoContent from '../../components/NoContent/NoContent'
 import ReviewLender from '../../components/modals/ReviewLender/ReviewLender'
 import { bookingStatusesArray } from '../../assets/Data/LBSArray'
 import TradeSidebar from '../../components/tradeLinearCalendar/TradeSidebar'
+import { Booking } from '../../types/Booking'
 
 export default function Trades() {
   const { state } = useGlobalState()
   const { user } = state
   const history = useHistory()
-  const [reportModalVisible, setReportModalVisible] = useState(false)
+  const [isReportModalVisible, setIsReportModalVisible] = useState(false)
   const [reviewModalVisible, setReviewModalVisible] = useState(false)
   const [accountContent, setAccountContent] = useState('Trades')
-  const [selectedBooking, setSelectedBooking] = useState(null)
-  const [lenderBookingItems, setLenderBookingItems] = useState([])
-  const [borrowerBookingItems, setBorrowerBookingItems] = useState([])
+  const [selectedBooking, setSelectedBooking] = useState<null | Booking>(null)
+  const [lenderBookingItems, setLenderBookingItems] = useState<Booking[]>([])
+  const [borrowerBookingItems, setBorrowerBookingItems] = useState<Booking[]>(
+    []
+  )
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
@@ -37,11 +40,20 @@ export default function Trades() {
     setIsLoading(false)
   }
 
+  const toggleReportModal = () => {
+    setIsReportModalVisible(!isReportModalVisible)
+  }
+
+  const toggleReviewModal = () => {
+    setReviewModalVisible(!reviewModalVisible)
+  }
+
   const getLenderBookings = async () => {
     try {
       const { data, status } = await Instance.get(
         `/users/${user.id}/bookings/lender`,
         {
+          // @ts-ignore
           status: bookingStatusesArray,
         }
       )
@@ -49,7 +61,7 @@ export default function Trades() {
       console.log('LENDER BOOKING ITEMS', data)
       setLenderBookingItems(data)
     } catch (error) {
-      console.log('LENDER ERROR', error.response)
+      console.log('LENDER ERROR', error)
     }
   }
 
@@ -58,31 +70,32 @@ export default function Trades() {
       const { data, status } = await Instance.get(
         `/users/${user.id}/bookings/borrower`,
         {
+          // @ts-ignore
           status: bookingStatusesArray,
         }
       )
       if (status !== 200) return
-      console.log('BORROWER BOOKING ITEMS', data)
+      console.log('BORROWER BOOKING ITEMS', JSON.stringify(data, null, 2))
       setBorrowerBookingItems(data)
     } catch (error) {
-      console.log(error.response)
+      console.log(error)
     }
   }
 
   const noBookings =
     lenderBookingItems.length === 0 && borrowerBookingItems.length === 0
-  const isLender = selectedBooking?.lenderId === user.id
+  const isLender = selectedBooking?.item.userId === user.id ?? false
 
   return (
     <PageWrapper>
       {selectedBooking && (
         <TradeFailed
-          open={reportModalVisible}
-          onClick={() => setReportModalVisible(false)}
-          isLender={selectedBooking.lenderId === user.id}
+          open={isReportModalVisible}
+          onClick={() => toggleReportModal()}
+          isLender={selectedBooking.item.userId === user.id}
           booking={selectedBooking}
           getBookings={getBookings}
-          setReportModalVisible={setReportModalVisible}
+          toggleReportModal={() => toggleReportModal()}
         />
       )}
       <ReviewLender
@@ -115,7 +128,7 @@ export default function Trades() {
                 }
               : noBookings
               ? { width: '100%' }
-              : null
+              : undefined
           }
         >
           {isLoading ? (
@@ -141,13 +154,16 @@ export default function Trades() {
         {isMobile ? (
           <SwipeableDrawer
             anchor='right'
-            open={selectedBooking}
+            open={selectedBooking ? true : false}
             onClose={() => setSelectedBooking(null)}
+            onOpen={() => null}
           >
             {selectedBooking && (
               <TradeSidebar
                 getBookings={getBookings}
                 booking={selectedBooking}
+                toggleReportModal={toggleReportModal}
+                toggleReviewModal={toggleReviewModal}
               />
             )}
           </SwipeableDrawer>
@@ -156,8 +172,8 @@ export default function Trades() {
             <TradeSidebar
               getBookings={getBookings}
               booking={selectedBooking}
-              setReportModalVisible={setReportModalVisible}
-              setReviewModalVisible={setReviewModalVisible}
+              toggleReportModal={toggleReportModal}
+              toggleReviewModal={toggleReviewModal}
             />
           )
         )}

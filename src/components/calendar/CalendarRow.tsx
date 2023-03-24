@@ -18,13 +18,14 @@ import {
   BlockedAvailabilityTime,
 } from '../../types/User'
 import { blockedAvailabilityToString } from '../../util/blockedAvailabilityToString'
+import { BookingDate } from '../../types/Booking'
 
 type Props = {
   days: Date[]
   isEditable: boolean
   isViewing: boolean
   itemData: Item
-  bookingDates?: { startDate: string; endDate: string }[]
+  bookingDates?: BookingDate[]
 }
 
 const CalendarRow: FunctionComponent<Props> = ({
@@ -57,7 +58,7 @@ const CalendarRow: FunctionComponent<Props> = ({
     }
     const isRowSelected = days.some(day => isEqualDate(day, selectedDay))
     if (!isRowSelected) {
-      return
+      return setIsTimePickerOpen(false)
     }
     setIsTimePickerOpen(true)
   }, [selectedDay])
@@ -169,6 +170,7 @@ const CalendarRow: FunctionComponent<Props> = ({
           item={itemData}
           isViewing={isViewing}
           itemBlockedAvailabilities={itemBlockedAvailabilities}
+          bookingDates={bookingDates}
           onClick={handleDayClick}
         />
       ))}

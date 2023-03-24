@@ -1,22 +1,28 @@
-import React from 'react'
+import React, { SetStateAction } from 'react'
 import './TradeCalendarItemContainer.css'
 import getImage from '../../../util/getImage'
 import useGlobalState from '../../../util/useGlobalState'
 import { isMobile } from 'react-device-detect'
 import TradeCalendarItem from '../../tradeLinearCalendar/TradeCalendarItem'
+import { Booking } from '../../../types/Booking'
+
+type Props = {
+  bookingItem: Booking
+  setSelectedBooking: React.Dispatch<SetStateAction<Booking | null>>
+  totalDates: number
+  header: boolean
+}
 
 export default function TradeCalendarItemContainer({
   bookingItem,
   setSelectedBooking,
   totalDates,
   header,
-  currentMonth,
-  currentYear,
-}) {
+}: Props) {
   const { state } = useGlobalState()
   const { user } = state
   const itemImages = bookingItem?.item?.images ?? []
-  const isLender = user.id === bookingItem.lenderId
+  const isLender = user.id !== bookingItem.borrowerId
 
   const renderBookings = () => {
     const row = header ? 3 : 2
@@ -73,7 +79,7 @@ export default function TradeCalendarItemContainer({
       >
         <img
           className='TradeCalendarItemPicture'
-          src={getImage(itemImages.length === 0 ? '' : itemImages[0].imageKey)}
+          src={getImage(itemImages.length === 0 ? '' : itemImages[0]?.imageKey)}
         />
         <span>{bookingItem?.item?.title}</span>
       </div>

@@ -3,6 +3,7 @@ import { Item } from '../../types/Item'
 import { BlockedAvailabilityCreate } from '../../types/User'
 import { blockedAvailabilityToString } from '../blockedAvailabilityToString'
 import BookingCalculator from '../calculator/BookingCalculator'
+import getMappedBookingTimes from '../tradeUtils/getMappedBookingTimes'
 
 export type TimeSlot = {
   date: Date
@@ -139,12 +140,7 @@ const bookingReducer = (
         currentMonth: today.getMonth(),
         currentYear: today.getFullYear(),
         blockedAvailabilities: blockedAvailability,
-        bookedDates: bookingDetails.map(bookingDetail => {
-          return {
-            startDate: bookingDetail.startDate,
-            endDate: bookingDetail.endDate,
-          }
-        }),
+        bookedDates: getMappedBookingTimes(bookingDetails),
       }
     }
     case 'setSelectedDay': {

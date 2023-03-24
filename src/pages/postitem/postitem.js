@@ -34,7 +34,7 @@ export default function PostItem() {
   const { user } = useGlobalState().state
   const history = useHistory()
   const { errorDispatch } = useErrorState()
-  const blockedAvailabilities = user.userBlockedAvailability.map(
+  const blockedAvailabilities = user.userBlockedAvailability?.map(
     availability => {
       return {
         weekDay: blockedAvailabilityToString(

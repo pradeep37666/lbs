@@ -7,6 +7,7 @@ import BorrowStripes from '../../assets/Images/BorrowStripes.png'
 import { isMobile } from 'react-device-detect'
 import { Booking } from '../../types/Booking'
 import moment from 'moment'
+import getBookingDuration from '../../util/tradeUtils/getBookingDuration'
 
 type Props = {
   booking: Booking
@@ -22,13 +23,13 @@ export default function TradeCalendarItem({
   const { state } = useGlobalState()
   const { user } = state
 
-  const isLend = booking.lenderId === user.id
+  const bookingDuration = getBookingDuration(booking.bookingDurations)
+  const isLend = booking.borrowerId !== user.id
   const isConfirmed = booking.status === 'APPROVED'
   const isCancelled =
-    booking.status === 'REJECTED' ||
-    booking.status === 'CANCELLED' ||
-    booking.status === 'DISPUTED' ||
-    booking.status === 'RESOLVED'
+    booking.status === 'REJECTED' || booking.status === 'CANCELLED'
+  // booking.status === 'DISPUTED' ||
+  // booking.status === 'RESOLVED'
 
   useEffect(() => {
     getBookingSlotDifference()
@@ -36,12 +37,14 @@ export default function TradeCalendarItem({
 
   const sameDate =
     // Compare dates irrespective of time
-    new Date(booking.startDate).toDateString() ===
-    new Date(booking.endDate).toDateString()
+    bookingDuration &&
+    new Date(bookingDuration.startDate).toDateString() ===
+      new Date(bookingDuration.endDate).toDateString()
 
   const sameTimeSlot = () => {
-    const startDateHours = moment(booking.startDate).hours()
-    const endDateHours = moment(booking.endDate).hours()
+    if (!bookingDuration) return
+    const startDateHours = moment(bookingDuration.startDate).hours()
+    const endDateHours = moment(bookingDuration.endDate).hours()
     if (sameDate && startDateHours === 8 && endDateHours === 12) {
       return true
     } else if (sameDate && startDateHours === 13 && endDateHours === 17) {
@@ -62,9 +65,13 @@ export default function TradeCalendarItem({
   - then handle different timeslots by incrementing accordingly
   */
   const getBookingStartPosition = () => {
+    if (!bookingDuration) return
     const differenceInDays =
-      moment(booking.startDate).diff(moment().startOf('month'), 'days') * 2
-    const afternoonSlot = moment(booking.startDate).hours() === 13
+      moment(bookingDuration.startDate).diff(
+        moment().startOf('month'),
+        'days'
+      ) * 2
+    const afternoonSlot = moment(bookingDuration.startDate).hours() === 13
 
     // Shift by two to account for timeslot
     if (afternoonSlot) {
@@ -75,10 +82,12 @@ export default function TradeCalendarItem({
   }
 
   const getBookingEndPosition = () => {
+    if (!bookingDuration) return
     const differenceInDays =
-      moment(booking.endDate).diff(moment().startOf('month'), 'days') * 2
-    const afternoonSlot = moment(booking.endDate).hours() === 17
-    const morningSlot = moment(booking.endDate).hours() === 12
+      moment(bookingDuration.endDate).diff(moment().startOf('month'), 'days') *
+      2
+    const afternoonSlot = moment(bookingDuration.endDate).hours() === 17
+    const morningSlot = moment(bookingDuration.endDate).hours() === 12
 
     // If true, increment by 3 to account for start position incrementing by two
     if (afternoonSlot && sameDate) {
@@ -95,8 +104,9 @@ export default function TradeCalendarItem({
   /* To account for text overflow issues for dates that occupy 2
   or 3 slots and cannot be displayed vertically */
   const getBookingSlotDifference = () => {
-    const startDate = moment(booking.startDate)
-    const endDate = moment(booking.endDate)
+    if (!bookingDuration) return
+    const startDate = moment(bookingDuration.startDate)
+    const endDate = moment(bookingDuration.endDate)
     if (
       endDate.days() - startDate.days() !== 0 &&
       endDate.days() - startDate.days() <= 1
@@ -145,12 +155,10 @@ export default function TradeCalendarItem({
         >
           {/* Change rendered text if vertical or same day to handle overflow */}
           {shortenText
-            ? moment(booking.startDate).hours() === 8
-              ? `8am `
-              : `1pm `
-            : moment(booking.startDate).hours() === 8
-            ? `8:00am `
-            : `1:00pm `}
+            ? moment(bookingDuration?.startDate).hours() === 8
+              ? '8am '
+              : '1pm '
+            : moment(bookingDuration?.startDate).format('h:mmA '.toLowerCase())}
         </span>
         <Arrow
           onClick={() => null}
@@ -162,12 +170,10 @@ export default function TradeCalendarItem({
           className={isVertical || sameDate ? 'TradeCalendarVerticalText' : ''}
         >
           {shortenText
-            ? moment(booking.endDate).hours() === 17
-              ? `5pm `
-              : `12pm `
-            : moment(booking.endDate).hours() === 17
-            ? `5:00pm `
-            : `12:00pm `}
+            ? moment(bookingDuration?.endDate).hours() === 17
+              ? '5pm '
+              : '12pm '
+            : moment(bookingDuration?.endDate).format('h:mmA '.toLowerCase())}
         </span>
       </div>
     </div>

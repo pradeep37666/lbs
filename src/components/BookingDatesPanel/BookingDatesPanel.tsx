@@ -4,7 +4,12 @@ import { monthArray } from '../../assets/Data/LBSArray'
 import Arrow from '../../assets/Icons/Arrow'
 import getDateSuffix from '../../util/dateUtils/getDateSuffix'
 
-export default function BookingDatesPanel({ startDate, endDate }) {
+type Props = {
+  startDate: Date
+  endDate: Date
+}
+
+export default function BookingDatesPanel({ startDate, endDate }: Props) {
   const dayArray = [
     'Sunday',
     'Monday',

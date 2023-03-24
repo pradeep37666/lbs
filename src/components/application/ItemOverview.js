@@ -1,7 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
 import './ItemOverview.css'
-import checkIfLeapYear from '../../util/dateUtils/checkIfLeapYear'
-import getDateIndex from '../../util/dateUtils/getDateIndex'
 import Arrow from '../../assets/Icons/Arrow'
 import ApplicationItemCard from './ApplicationItemCard'
 import { useHistory } from 'react-router'
@@ -46,18 +44,7 @@ export default function ItemOverview() {
   const setBorrowerAddressFallback = () =>
     dispatch({
       type: 'setBorrowerAddress',
-      data: {
-        streetNumber: user?.address.streetNumber,
-        streetName: user?.address.streetName,
-        city: user?.address.suburb,
-        suburb: user?.address.suburb,
-        state: user?.address.state,
-        postCode: user?.address.postCode,
-        country: user?.address.country,
-        fullAddress: user?.address.fullAddress,
-        lat: user?.address.lat,
-        lng: user?.address.lng,
-      },
+      data: item.address,
     })
 
   useEffect(() => {
@@ -69,6 +56,7 @@ export default function ItemOverview() {
 
   const saveBooking = async () => {
     const bookingInfo = getBookingInfo()
+    console.log('BOOKING INFO', JSON.stringify(bookingInfo, null, 2))
     try {
       setIsLoading(true)
       await makeBooking(bookingInfo, item)
@@ -105,10 +93,10 @@ export default function ItemOverview() {
           : 'NONE',
       startDate: startDate,
       endDate: endDate,
-      total_price: bookingCalculator.getUpdatedTotalPrice(),
-      item_price: item.price,
-      delivery_price: isDeliverySelected ? item.deliveryPrice : 0,
-      pickup_price: isPickupSelected ? item.pickupPrice : 0,
+      totalPrice: bookingCalculator.getUpdatedTotalPrice(),
+      itemPrice: item.price,
+      deliveryPrice: isDeliverySelected ? item.deliveryPrice : 0,
+      pickupPrice: isPickupSelected ? item.pickupPrice : 0,
     }
   }
 

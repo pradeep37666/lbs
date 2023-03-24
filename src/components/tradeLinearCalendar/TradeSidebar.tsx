@@ -5,8 +5,6 @@ import ApplicationItemCard from '../application/ApplicationItemCard'
 import { Avatar, CircularProgress } from '@material-ui/core'
 import getImage from '../../util/getImage'
 import useGlobalState from '../../util/useGlobalState'
-import RatingFiller from '../ratingFiller/ratingFiller'
-import MissingProfile from '../../assets/Icons/MissingProfileIcon.png'
 import BookingDatesPanel from '../BookingDatesPanel/BookingDatesPanel'
 import { DELIVERY_OPTIONS } from '../../assets/Data/LBSEnum'
 import BookingCalculator from '../../util/calculator/BookingCalculator'
@@ -14,33 +12,38 @@ import { Item } from '../../types/Item'
 import { Booking } from '../../types/Booking'
 import TradeSidebarPaymentPanel from './TradeSidebarPaymentPanel'
 import TradeCalendarStatusPanel from './TradeCalendarStatusPanel'
+import ApplicantOverview from './ApplicantOverview'
+import { UserTradeData } from '../../types/User'
+import getBookingDuration from '../../util/tradeUtils/getBookingDuration'
 
 type Props = {
   booking: Booking
   getBookings: () => void
-  setReportModalVisible: React.Dispatch<SetStateAction<boolean>>
-  setReviewModalVisible: React.Dispatch<SetStateAction<boolean>>
+  toggleReportModal: () => void
+  toggleReviewModal: () => void
 }
 
 export default function TradeSidebar({
   booking,
   getBookings,
-  setReportModalVisible,
-  setReviewModalVisible,
+  toggleReportModal,
+  toggleReviewModal,
 }: Props) {
   const { state } = useGlobalState()
   const { user } = state
   const [item, setItem] = useState<Item | null>(null)
-  const [userDetails, setUserDetails] = useState<any>()
+  const [userDetails, setUserDetails] = useState<UserTradeData | null>(null)
   const [isLoading, setIsLoading] = useState<boolean>(true)
+  const firstBookingDuration = getBookingDuration(booking.bookingDurations)
   const [bookingPriceCalculator, setBookingPriceCalculator] =
     useState<BookingCalculator>()
 
   useEffect(() => {
-    console.log('BOOKING', { booking })
     if (!booking.item) return
     setItem(booking.item)
-    getUserDetails()
+    getUserDetails(
+      booking.borrowerId === user.id ? booking.item.userId : booking.borrowerId
+    )
   }, [booking])
 
   const isDeliverySelected =
@@ -52,13 +55,16 @@ export default function TradeSidebar({
       ? true
       : false
 
+  const isApplicantOverview =
+    userDetails && userDetails.id !== user.id && booking.item.userId === user.id
+
   useEffect(() => {
     if (!item) return
     const bookingPriceCalculator = new BookingCalculator(
-      new Date(booking.startDate),
-      new Date(booking.endDate),
-      item.deliveryPrice,
-      item.pickupPrice,
+      new Date(firstBookingDuration?.startDate ?? new Date()),
+      new Date(firstBookingDuration?.endDate ?? new Date()),
+      booking.deliveryPrice,
+      booking.pickupPrice,
       item.price,
       item.discount,
       isDeliverySelected,
@@ -67,9 +73,7 @@ export default function TradeSidebar({
     setBookingPriceCalculator(bookingPriceCalculator)
   }, [item])
 
-  const getUserDetails = async () => {
-    const userId =
-      user.id === booking.lenderId ? booking.borrowerId : booking.lenderId
+  const getUserDetails = async (userId: string) => {
     try {
       setIsLoading(true)
       const { data, status } = await Instance.get(`users/${userId}`)
@@ -132,17 +136,19 @@ export default function TradeSidebar({
               />
             )}
           </div>
-          <div className='TradeSidebarSection'>
-            <TradeCalendarStatusPanel
-              getBookings={getBookings}
-              booking={booking}
-              userDetails={userDetails}
-              setReportModalVisible={setReportModalVisible}
-              setReviewModalVisible={setReviewModalVisible}
-              startDate={booking.startDate}
-              endDate={booking.endDate}
-            />
-          </div>
+          {firstBookingDuration && (
+            <div className='TradeSidebarSection'>
+              <TradeCalendarStatusPanel
+                getBookings={getBookings}
+                selectedBooking={booking}
+                userDetails={userDetails}
+                toggleReportModal={toggleReportModal}
+                toggleReviewModal={toggleReviewModal}
+                startDate={firstBookingDuration.startDate}
+                endDate={firstBookingDuration.endDate}
+              />
+            </div>
+          )}
           {bookingPriceCalculator && item && (
             <TradeSidebarPaymentPanel
               bookingPriceCalculator={bookingPriceCalculator}
@@ -153,10 +159,10 @@ export default function TradeSidebar({
           )}
           <div className='TradeSidebarSection'>
             <span className='TradeSidebarHeading'>Dates</span>
-            {booking && (
+            {booking && firstBookingDuration && (
               <BookingDatesPanel
-                startDate={new Date(booking.startDate)}
-                endDate={new Date(booking.endDate)}
+                startDate={new Date(firstBookingDuration.startDate)}
+                endDate={new Date(firstBookingDuration.endDate)}
               />
             )}
           </div>
@@ -167,39 +173,8 @@ export default function TradeSidebar({
               </div>
             </div>
           )}
-          {userDetails && (
-            <div className='TradeSidebarSection'>
-              <div className='TradeSidebarHeading'>
-                <span>Applicant Overview</span>
-              </div>
-              <div className='TradeSidebarUserContainer'>
-                <div className='TradeSidebarUserAvatar'>
-                  <Avatar
-                    sizes=''
-                    src={
-                      userDetails.avatar
-                        ? getImage(userDetails.avatar)
-                        : MissingProfile
-                    }
-                  />
-                </div>
-                <div>
-                  <span className='TradeSidebarUserName'>
-                    {userDetails.fullName}
-                  </span>
-                  <div className='TradeSidebarUserRatingContainer'>
-                    <span>Lender:</span>
-                    <span> {userDetails.lender_rating}/5</span>
-                    <RatingFiller rating={userDetails.lender_rating} />
-                  </div>
-                  <div className='TradeSidebarUserRatingContainer'>
-                    <span>Borrower: </span>
-                    <span>{userDetails.borrower_rating}/5</span>
-                    <RatingFiller rating={userDetails.borrower_rating} />
-                  </div>
-                </div>
-              </div>
-            </div>
+          {isApplicantOverview && (
+            <ApplicantOverview userDetails={userDetails} />
           )}
         </>
       )}

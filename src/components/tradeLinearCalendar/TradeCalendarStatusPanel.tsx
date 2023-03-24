@@ -4,11 +4,18 @@ import {
   BOOKING_STATUSES,
   SNACKBAR_BUTTON_TYPES,
 } from '../../assets/Data/LBSEnum'
-import { Booking } from '../../types/Booking'
+import BookingService from '../../services/booking'
+import {
+  Booking,
+  BookingAction,
+  BookingEventStatus,
+  BookingStatus,
+} from '../../types/Booking'
+import { UserTradeData } from '../../types/User'
 import Instance from '../../util/axios'
 import useErrorState from '../../util/reducers/errorContext'
+import getMostRecentBookingEvent from '../../util/tradeUtils/getMostRecentBookingEvent'
 import useGlobalState from '../../util/useGlobalState'
-import { BookingStatus } from '../../types/Booking'
 import DisputeBookingModal from '../modals/DisputeBookingModal/DisputeBookingModal'
 import DropOff from '../tradeCalendar/tradeCalendarStatusPanel/DropOff'
 import Pickup from '../tradeCalendar/tradeCalendarStatusPanel/Pickup'
@@ -23,39 +30,48 @@ import StatusReviewed from '../tradeCalendar/tradeCalendarStatusPanel/StatusRevi
 import './TradeCalendarStatusPanel.css'
 
 type Props = {
-  booking: Booking
-  userDetails: any
+  selectedBooking: Booking
+  userDetails: UserTradeData | null
   getBookings: () => void
-  setReportModalVisible: React.Dispatch<SetStateAction<boolean>>
-  setReviewModalVisible: React.Dispatch<SetStateAction<boolean>>
+  toggleReportModal: () => void
+  toggleReviewModal: () => void
   startDate: string
   endDate: string
 }
 
 export const TradeCalendarStatusPanel = ({
-  booking,
+  selectedBooking,
   userDetails,
   getBookings,
-  setReportModalVisible,
-  setReviewModalVisible,
+  toggleReportModal,
+  toggleReviewModal,
   startDate,
   endDate,
 }: Props) => {
-  const [status, setStatus] = useState<string>('')
+  const [status, setStatus] = useState<BookingEventStatus>(
+    BookingEventStatus.APPLIED
+  )
   const [isApproveLoading, setIsApproveLoading] = useState(false)
   const { state } = useGlobalState()
   const { user } = state
-  const isOwner = booking.lenderId === user.id
+  const isOwner = selectedBooking.borrowerId === user.id
+  const isBorrower = selectedBooking.borrowerId === user.id
+  const isLender = selectedBooking.item.userId === user.id
   const { errorDispatch } = useErrorState()
   const [isDisputeOpen, setIsDisputeOpen] = useState(false)
+  const bookingStatus = getMostRecentBookingEvent(
+    selectedBooking.bookingEvents
+  )?.event
 
   useEffect(() => {
-    setStatus(booking.status)
+    setStatus(bookingStatus ?? BookingEventStatus.APPLIED)
   }, [])
 
   const renderStatusPanel = () => {
     const isHourBeforePickup = isPickupTime()
     const isHourBeforeDropoff = isDropoffTime()
+
+    if (!userDetails) return
 
     if (
       status === BOOKING_STATUSES.DISPUTED ||
@@ -65,11 +81,13 @@ export const TradeCalendarStatusPanel = ({
     if (status === BOOKING_STATUSES.APPLIED)
       return (
         <StatusApplied
-          isOwner={isOwner}
+          isBorrower={isBorrower}
+          handleBookingAction={handleBookingAction}
           updateBookingStatus={updateBookingStatus}
           isLoading={isApproveLoading}
           startDate={startDate}
           endDate={endDate}
+          selectedBooking={selectedBooking}
         />
       )
     if (
@@ -79,7 +97,7 @@ export const TradeCalendarStatusPanel = ({
       return (
         <StatusRejected
           userDetails={userDetails}
-          isOwner={isOwner}
+          isLender={isLender}
           status={status}
         />
       )
@@ -88,7 +106,7 @@ export const TradeCalendarStatusPanel = ({
         <StatusReschedule
           isOwner={isOwner}
           updateBookingStatus={updateBookingStatus}
-          booking={booking}
+          booking={selectedBooking}
         />
       )
     if (
@@ -99,14 +117,14 @@ export const TradeCalendarStatusPanel = ({
       return (
         <StatusItemReturn
           isOwner={isOwner}
-          setReviewModalVisible={setReviewModalVisible}
+          toggleReviewModal={toggleReviewModal}
         />
       )
     // Booking approved but not an hour before booking time
     if (!isHourBeforePickup && status === BOOKING_STATUSES.APPROVED)
       return (
         <StatusApproved
-          isOwner={isOwner}
+          isLender={isLender}
           userDetails={userDetails}
           startDate={startDate}
         />
@@ -122,9 +140,10 @@ export const TradeCalendarStatusPanel = ({
       return (
         <Pickup
           isOwner={isOwner}
+          // @ts-ignore
           updateBookingStatus={updateBookingStatus}
           userDetails={userDetails}
-          setReportModalVisible={setReportModalVisible}
+          toggleReportModal={toggleReportModal}
           status={status}
         />
       )
@@ -159,8 +178,7 @@ export const TradeCalendarStatusPanel = ({
           updateBookingStatus={updateBookingStatus}
           isOwner={isOwner}
           userDetails={userDetails}
-          setReportModalVisible={setReportModalVisible}
-          endDateObj={endDate}
+          endDate={endDate}
           isLoading={isApproveLoading}
         />
       )
@@ -180,15 +198,59 @@ export const TradeCalendarStatusPanel = ({
     return false
   }
 
+  // New function to handle booking actions
+
+  const handleBookingAction = async (action: BookingAction) => {
+    try {
+      setIsApproveLoading(true)
+      switch (action) {
+        case 'REJECT':
+          const res = await BookingService.rejectBooking(selectedBooking.id)
+          setStatus(BookingEventStatus.REJECTED)
+          getBookings()
+          break
+        case 'APPROVE':
+          if (!selectedBooking.bookingDurations[0]) return
+          const approveRes = await BookingService.approveBooking(
+            selectedBooking.id,
+            selectedBooking.bookingDurations[0].id
+          )
+          setStatus(BookingEventStatus.APPROVED)
+          getBookings()
+          break
+        case 'COMPLETE':
+          await BookingService.completeBooking(selectedBooking.id)
+          getBookings()
+          break
+      }
+    } catch (error) {
+      console.log('BOOKING ACTION ERROR', error)
+      errorDispatch({
+        type: 'openSnackBar',
+        data: {
+          message: 'Something went wrong...',
+          btnText: SNACKBAR_BUTTON_TYPES.CLOSE,
+          btnFunc: () => {
+            errorDispatch({ type: 'closeSnackBar' })
+          },
+        },
+      })
+    } finally {
+      setIsApproveLoading(false)
+    }
+  }
+
+  // TODO - old booking action function keep for typesafety - slowly remove as
+  // more backend routes added
   const updateBookingStatus = async (newStatus: BookingStatus) => {
     try {
       setIsApproveLoading(true)
       const { status } = await Instance.patch(
-        `/bookings/${booking.id}/status`,
+        `/bookings/${selectedBooking.id}/status`,
         { status: newStatus }
       )
       if (status !== 200) return
-      setStatus(newStatus)
+      // setStatus(newStatus)
       getBookings()
     } catch (error: any) {
       console.log(error.response)

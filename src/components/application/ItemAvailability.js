@@ -6,9 +6,12 @@ import { BookingContext } from '../../pages/application/Application'
 
 export default function ItemAvailability() {
   const { state } = useContext(BookingContext)
-  const { item, currentMonth, currentYear } = state
-
+  const { item, bookedDates } = state
+  console.log(bookedDates)
   const renderMonths = () => {
+    const today = new Date()
+    const currentMonth = today.getMonth()
+    const currentYear = today.getFullYear()
     const months = Array(3).fill(null)
     return months.map((_, i) => {
       let calendarMonth = currentMonth + i
@@ -23,7 +26,7 @@ export default function ItemAvailability() {
           isEditable
           isViewing
           item={item}
-          bookingDates={[]}
+          bookingDates={[state.bookedDates]}
           month={calendarMonth}
           year={calendarYear}
         />

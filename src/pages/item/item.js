@@ -9,7 +9,7 @@ import useGlobalState from '../../util/useGlobalState'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import ApplicationModal from '../../components/modals/ApplicationModal/ApplicationModal'
 import { isMobile } from 'react-device-detect'
-import AvailabilityModal from '../../components/modals/AvailabilityModal/AvailabilityModal.js'
+import AvailabilityModal from '../../components/modals/AvailabilityModal/AvailabilityModal'
 import ItemInfoSection from '../../components/ItemSection/ItemInfoSection'
 import ItemRating from '../../components/ItemSection/ItemRating'
 import ItemReviews from '../../components/ItemSection/ItemReviews'
@@ -70,6 +70,7 @@ export default function Item() {
   const getItemBookings = async itemId => {
     try {
       const bookingDetails = await itemService.getItemBookedDates(itemId)
+      console.log('THESE ARE THE BOOKING DATES', bookingDetails)
       setBookedDates(bookingDetails)
     } catch (error) {
       console.log({ error })
@@ -124,7 +125,9 @@ export default function Item() {
       {isAvailableModalOpen && item && (
         <AvailabilityModal
           item={item}
-          setIsVisible={setIsAvailableModalOpen}
+          toggleVisibility={() =>
+            setIsAvailableModalOpen(!isAvailableModalOpen)
+          }
           bookedDates={bookedDates}
         />
       )}

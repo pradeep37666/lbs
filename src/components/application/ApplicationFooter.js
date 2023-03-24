@@ -28,7 +28,10 @@ export default function ApplicationFooter() {
   const handleClick = () => {
     let route
     if (page === 'ItemAvailability') {
-      route = item.deliveryPrice > 0 ? 'ItemOptions' : 'ItemOverview'
+      route =
+        item.deliveryPrice || item.pickupPrice > 0
+          ? 'ItemOptions'
+          : 'ItemOverview'
     }
     if (page === 'ItemOptions') {
       if (

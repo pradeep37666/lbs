@@ -1,13 +1,13 @@
 import moment from 'moment'
 import React from 'react'
 import { dayArray, monthArray } from '../../../assets/Data/LBSArray'
-import { User } from '../../../types/User'
+import { User, UserTradeData } from '../../../types/User'
 import getDateSuffix from '../../../util/dateUtils/getDateSuffix'
 import StatusButton from './StatusButton'
 
 type Props = {
   isOwner: boolean
-  userDetails: User | undefined
+  userDetails: UserTradeData | null
   endDate: string
 }
 

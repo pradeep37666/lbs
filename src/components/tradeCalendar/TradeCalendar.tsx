@@ -3,17 +3,24 @@ import './TradeCalendar.css'
 import TradeCalendarItemContainer from './tradeCalendarItemContainer/TradeCalendarItemContainer'
 import { isMobile } from 'react-device-detect'
 import { dayArray, monthArray } from '../../assets/Data/LBSArray'
+import { Booking } from '../../types/Booking'
+
+type Props = {
+  borrowerBookingItems: Booking[]
+  lenderBookingItems: Booking[]
+  setSelectedBooking: React.Dispatch<React.SetStateAction<null | Booking>>
+}
 
 export default function TradeCalendar({
   borrowerBookingItems,
   lenderBookingItems,
   setSelectedBooking,
-}) {
-  const tradeCalendarRef = useRef()
-  const [currentDate, setCurrentDate] = useState()
-  const [currentMonth, setCurrentMonth] = useState()
-  const [currentYear, setCurrentYear] = useState()
-  const [totalDates, setTotalDates] = useState()
+}: Props) {
+  const tradeCalendarRef = useRef<HTMLDivElement>(null)
+  const [currentDate, setCurrentDate] = useState<number | null>(null)
+  const [currentMonth, setCurrentMonth] = useState<number | null>(null)
+  const [currentYear, setCurrentYear] = useState<number | null>(null)
+  const [totalDates, setTotalDates] = useState<number>(0)
 
   useEffect(() => {
     const today = new Date()
@@ -26,7 +33,7 @@ export default function TradeCalendar({
   }, [])
 
   useEffect(() => {
-    if (!tradeCalendarRef.current) return
+    if (!tradeCalendarRef.current || !currentDate) return
     if (currentDate < 7) return
     tradeCalendarRef.current.scrollTo(
       (currentDate * 2 - 8) * (isMobile ? 25 : 50),
@@ -34,7 +41,7 @@ export default function TradeCalendar({
     )
   }, [currentYear])
 
-  function getDaysInMonth(month, year) {
+  function getDaysInMonth(month: number, year: number) {
     var date = new Date(year, month, 1)
     var days = []
     while (date.getMonth() === month) {
@@ -44,8 +51,8 @@ export default function TradeCalendar({
     return days
   }
 
-  const renderBookingItemContainers = bookingItems => {
-    return bookingItems.map((bookingItem, index) => {
+  const renderBookingItemContainers = (bookingItems: Booking[]) => {
+    return bookingItems.map((bookingItem: Booking, index: number) => {
       return (
         <TradeCalendarItemContainer
           header={index === 0}
@@ -53,14 +60,13 @@ export default function TradeCalendar({
           bookingItem={bookingItem}
           key={index}
           totalDates={totalDates}
-          currentMonth={currentMonth}
-          currentYear={currentYear}
         />
       )
     })
   }
 
   const getAllDays = () => {
+    if (!currentYear || !currentMonth) return
     const dates = []
     const date = new Date(currentYear, currentMonth, 1)
     for (let i = 0; i < 3; i++) {
@@ -75,12 +81,14 @@ export default function TradeCalendar({
   const renderDates = () => {
     if (currentMonth === undefined || !currentYear || !currentDate) return
     const dates = getAllDays()
+    if (!dates || dates.length === 0) return
     if (!totalDates) setTotalDates(dates.length)
     const arr = []
     for (let i = 0; i < totalDates; i++) {
+      const date = dates[i]
+      if (!date) continue
       const isCurrentDay =
-        dates[i].getMonth() === currentMonth &&
-        dates[i].getDate() === currentDate
+        date.getMonth() === currentMonth && date.getDate() === currentDate
       arr.push(
         <div
           className='TradeCalendarDayItemContainer'
@@ -91,14 +99,14 @@ export default function TradeCalendar({
           }}
           key={i}
         >
-          {dates[i].getDate() === 1 && (
+          {date.getDate() === 1 && (
             <span className='TradeCalendarMonthLabel'>
-              {monthArray[dates[i].getMonth()]}
+              {monthArray[date.getMonth()]}
             </span>
           )}
           <div className='TradeCalendarDayItem'>
             <span className='TradeCalendarDayItemName'>
-              {dayArray[dates[i].getDay()]}
+              {dayArray[date.getDay()]}
             </span>
             <div
               className={
@@ -107,7 +115,7 @@ export default function TradeCalendar({
                   : 'TradeCalendarDayItemDate'
               }
             >
-              <span>{dates[i].getDate()}</span>
+              <span>{date.getDate()}</span>
             </div>
           </div>
         </div>

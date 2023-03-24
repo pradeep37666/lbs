@@ -20,42 +20,42 @@ export default function UserShedNav(props) {
   const [activeMain, setActiveMain] = useState(url)
 
   const handleLogout = async () => {
-    localStorage.removeItem('token')
+    localStorage.removeItem('LBSToken')
     dispatch({ type: 'setUser', data: null })
     const res = await CometChat.logout()
   }
 
   return (
-    <div className="UserShedNav" style={props.style}>
-      <Link to="/user/trades">
+    <div className='UserShedNav' style={props.style}>
+      <Link to='/user/trades'>
         <div
           className={`UserShedNav__LinkFlex ${
             activeMain === 'trades' ? 'UserShedNav__LinkFlex--Active' : ''
           }`}
           onClick={() => setActiveMain('trades')}
         >
-          <Trades height="50px" width="50px" className="UserShedNav__Icon" />
+          <Trades height='50px' width='50px' className='UserShedNav__Icon' />
           Trades
         </div>
       </Link>
 
-      <Link to="/user/messages">
+      <Link to='/user/messages'>
         <div
           className={`UserShedNav__LinkFlex ${
             activeMain === 'messages' ? 'UserShedNav__LinkFlex--Active' : ''
           }`}
           onClick={() => setActiveMain('messages')}
         >
-          <Messages height="50px" width="50px" className="UserShedNav__Icon" />
+          <Messages height='50px' width='50px' className='UserShedNav__Icon' />
           {unReadMessageCount > 0 && (
-            <span className="UserShedNav__NewMessage"></span>
+            <span className='UserShedNav__NewMessage'></span>
           )}
           Messages
         </div>
       </Link>
 
       {user.isLender && (
-        <Link to="/user/your_shed">
+        <Link to='/user/your_shed'>
           <div
             className={`UserShedNav__LinkFlex ${
               activeMain === 'your_shed' ? 'UserShedNav__LinkFlex--Active' : ''
@@ -63,16 +63,16 @@ export default function UserShedNav(props) {
             onClick={() => setActiveMain('your_shed')}
           >
             <YourShed
-              height="50px"
-              width="50px"
-              className="UserShedNav__Icon"
+              height='50px'
+              width='50px'
+              className='UserShedNav__Icon'
             />
             Your Shed
           </div>
         </Link>
       )}
 
-      <Link to="/user/favourites">
+      <Link to='/user/favourites'>
         <div
           className={`UserShedNav__LinkFlex ${
             activeMain === 'favourites' ? 'UserShedNav__LinkFlex--Active' : ''
@@ -80,22 +80,22 @@ export default function UserShedNav(props) {
           onClick={() => setActiveMain('favourites')}
         >
           <Favourites
-            height="50px"
-            width="50px"
-            className="UserShedNav__Icon"
+            height='50px'
+            width='50px'
+            className='UserShedNav__Icon'
           />
           Favourites
         </div>
       </Link>
 
-      <Link to="/user/account">
+      <Link to='/user/account'>
         <div
           className={`UserShedNav__LinkFlex ${
             activeMain === 'account' ? 'UserShedNav__LinkFlex--Active' : ''
           }`}
           onClick={() => setActiveMain('account')}
         >
-          <Account height="50px" width="50px" className="UserShedNav__Icon" />
+          <Account height='50px' width='50px' className='UserShedNav__Icon' />
           Account
         </div>
       </Link>
@@ -116,9 +116,9 @@ export default function UserShedNav(props) {
             </div>
           </div>
 
-          <div className="HL" />
+          <div className='HL' />
           {!user.isLender ? (
-            <Link to="/user/upgrade_to_lender">
+            <Link to='/user/upgrade_to_lender'>
               <div>
                 <div
                   className={`UserShedNav__SecondaryLink ${
@@ -149,7 +149,7 @@ export default function UserShedNav(props) {
             </div>
           )}
 
-          <div className="HL" />
+          <div className='HL' />
           <div>
             <div
               className={`UserShedNav__SecondaryLink ${
@@ -164,7 +164,7 @@ export default function UserShedNav(props) {
             </div>
           </div>
 
-          <div className="HL" />
+          <div className='HL' />
           <div>
             <div
               className={`UserShedNav__SecondaryLink ${
@@ -179,14 +179,14 @@ export default function UserShedNav(props) {
             </div>
           </div>
 
-          <div className="HL" />
+          <div className='HL' />
         </div>
       ) : (
         ''
       )}
 
-      <button className="LogoutButton" onClick={() => handleLogout()}>
-        <Logout height="40px" width="43px" style={{ marginRight: '1em' }} />
+      <button className='LogoutButton' onClick={() => handleLogout()}>
+        <Logout height='40px' width='43px' style={{ marginRight: '1em' }} />
         Logout
       </button>
     </div>

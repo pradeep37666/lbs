@@ -1,13 +1,20 @@
 import React from 'react'
 
-export default function Arrow({ rotation, width, height, onClick }) {
+type Props = {
+  rotation?: number
+  width?: number
+  height?: number
+  onClick?: () => void
+}
+
+export default function Arrow({ rotation, width, height, onClick }: Props) {
   return (
     <div
       style={{
-        transform: rotation ? `rotate(${rotation}deg` : null,
+        transform: `rotate(${rotation}deg` ?? null,
         cursor: 'pointer',
       }}
-      onClick={onClick ? onClick : null}
+      onClick={onClick}
     >
       <svg
         xmlns='http://www.w3.org/2000/svg'

@@ -77,7 +77,7 @@ export default function Application() {
   const getItemBookings = async (item: Item) => {
     try {
       const { data, status } = await Instance.get(`/items/${itemId}/bookings`)
-      console.log('BOOKINGS', data)
+      // console.log('BOOKINGS DETAILS', data)
       dispatch({
         type: 'setInitialState',
         data: { item, bookingDetails: data },
@@ -90,7 +90,11 @@ export default function Application() {
   const getItem = async () => {
     try {
       const { data, status } = await instance.get(`/items/${itemId}`)
-      getItemBookings(data)
+      const bookings = getItemBookings(data)
+      // dispatch({
+      //   type: 'setInitialState',
+      //   data: { item: data, bookingDetails: [] },
+      // })
     } catch (error) {
       console.log(error)
     }

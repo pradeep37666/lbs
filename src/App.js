@@ -18,7 +18,7 @@ import Login from './pages/login/login'
 import RegisterPage from './pages/register/register.js'
 import AccountPage from './pages/account/account.js'
 import PostItem from './pages/postitem/postitem'
-import TradesPage from './pages/trades/trades.js'
+import TradesPage from './pages/trades/trades'
 import Messages from './pages/messages/Messages.js'
 import YourshedPage from './pages/yourshed/yourshed.js'
 import FavouritesPage from './pages/favourites/favourites.js'
@@ -96,7 +96,7 @@ function App() {
       () => {
         console.log('Initialization completed successfully')
       },
-      (error) => {
+      error => {
         console.log('Initialization failed with error:', error)
       }
     )
@@ -121,7 +121,7 @@ function App() {
     return (
       <Route
         {...rest}
-        render={(props) =>
+        render={props =>
           user ? (
             <Component {...props} />
           ) : (
@@ -141,7 +141,7 @@ function App() {
     return (
       <Route
         {...rest}
-        render={(props) =>
+        render={props =>
           user ? (
             <Redirect
               to={{
@@ -161,7 +161,7 @@ function App() {
     return (
       <Route
         {...rest}
-        render={(props) =>
+        render={props =>
           user && user.isLender ? (
             <Redirect
               to={{
@@ -188,72 +188,64 @@ function App() {
               <LBSSnackBar timeout={10000} />
               <ScrollToTop>
                 {/* marketing pages here with different routers */}
-                <Route exact path="/" component={Top} />
+                <Route exact path='/' component={Top} />
                 <Route
                   exact
-                  path="/lend_your_stuff"
+                  path='/lend_your_stuff'
                   component={LendYourStuff}
                 />
-                <Route exact path="/rent_stuff" component={RentStuff} />
-                <Route
-                  exact
-                  path="/how_it_works"
-                  component={HowItWorks}
-                />
-                <Route exact path="/about_us" component={AboutUs} />
-                <Route exact path="/blog" component={Blog} />
-                <Route exact path="/protection" component={Protection} />
-                <Route exact path="/faqs" component={FAQs} />
-                <Route exact path="/contact_us" component={ContactUs} />
+                <Route exact path='/rent_stuff' component={RentStuff} />
+                <Route exact path='/how_it_works' component={HowItWorks} />
+                <Route exact path='/about_us' component={AboutUs} />
+                <Route exact path='/blog' component={Blog} />
+                <Route exact path='/protection' component={Protection} />
+                <Route exact path='/faqs' component={FAQs} />
+                <Route exact path='/contact_us' component={ContactUs} />
 
-                <Route exact path="/home" component={Home} />
-                <Route exact path="/item/:itemId" component={ItemPage} />
+                <Route exact path='/home' component={Home} />
+                <Route exact path='/item/:itemId' component={ItemPage} />
+                <Route exact path='/search/:searchParams?' component={Search} />
                 <Route
                   exact
-                  path="/search/:searchParams?"
-                  component={Search}
-                />
-                <Route
-                  exact
-                  path="/forgotpassword"
+                  path='/forgotpassword'
                   component={ForgotPassword}
                 />
                 <AuthRoute
                   exact
-                  path="/item/edit/:itemId"
+                  path='/item/edit/:itemId'
                   component={EditItemPage}
                 />
-                <AuthRoute path="/user/trades" component={TradesPage} />
-                <AuthRoute path="/user/messages" component={Messages} />
-                <AuthRoute path="/user/your_shed" component={YourshedPage} />
-                <AuthRoute path="/user/favourites" component={FavouritesPage} />
-                <AuthRoute path="/user/account" component={AccountPage} />
+                <AuthRoute path='/user/trades' component={TradesPage} />
+                <AuthRoute path='/user/messages' component={Messages} />
+                <AuthRoute path='/user/your_shed' component={YourshedPage} />
+                <AuthRoute path='/user/favourites' component={FavouritesPage} />
+                <AuthRoute path='/user/account' component={AccountPage} />
                 <AuthRoute
-                  path="/user/update_password"
+                  path='/user/update_password'
                   component={UpdatePassword}
                 />
                 {/* if the user is already a lender they should be unable to access the upgrade to lender page */}
                 <RedirectBecomeLender
-                  path="/user/upgrade_to_lender"
+                  path='/user/upgrade_to_lender'
                   component={UpgradeLender}
                 />
                 <AuthRoute
-                  path="/item/:itemId/application"
+                  path='/item/:itemId/application'
                   component={Application}
                 />
 
                 {/* post an item */}
-                <AuthRoute path="/postitem" component={PostItem} />
+                <AuthRoute path='/postitem' component={PostItem} />
 
                 {/* Lender Shed */}
                 <AuthRoute
-                  path="/lender-shed/:lenderId"
+                  path='/lender-shed/:lenderId'
                   component={LenderShed}
                 />
 
                 {/* Routes for login/register should redirect to user page if user is logged in */}
-                <AuthRedirectRoute path="/login" component={Login} />
-                <Route path="/register" component={RegisterPage} />
+                <AuthRedirectRoute path='/login' component={Login} />
+                <Route path='/register' component={RegisterPage} />
 
                 {/* <Route path="*" component={<Redirect to={{ pathname: '/' }}/>}/> */}
               </ScrollToTop>

@@ -5,20 +5,20 @@ import getDateSuffix from '../../../util/dateUtils/getDateSuffix'
 import StatusButton from './StatusButton'
 
 type Props = {
-  isOwner: boolean
+  isLender: boolean
   userDetails: any
   startDate: string
 }
 
-export const StatusApproved = ({ isOwner, userDetails, startDate }: Props) => {
+export const StatusApproved = ({ isLender, userDetails, startDate }: Props) => {
   const startTime = moment(startDate).hours() === 8 ? '8:00am' : '1:00pm'
   const startDay = dayArray[new Date(startDate).getDay()]
-  const startDateWithSuffix = getDateSuffix(startDate)
+  const startDateWithSuffix = getDateSuffix(new Date(startDate))
   const startMonth = monthArray[new Date(startDate).getMonth()]
 
   return (
     <div className='TradeStatusContentContainer'>
-      {isOwner && userDetails ? (
+      {isLender && userDetails ? (
         <>
           <div style={{ marginBottom: '0.5em' }}>
             <span>Get the product ready to be borrowed by </span>
@@ -37,7 +37,7 @@ export const StatusApproved = ({ isOwner, userDetails, startDate }: Props) => {
                   {startTime}&nbsp;
                 </p>
                 <p style={{ fontWeight: 'bold', margin: '0' }}>
-                  {startDateWithSuffix}&nbsp;
+                  {startDay}&nbsp;
                 </p>
                 <p style={{ margin: '0' }}>{startDateWithSuffix}</p>
                 <p style={{ margin: '0' }}>&nbsp; - &nbsp;</p>

@@ -56,6 +56,24 @@ enum UserRole {
   COMMON = 'COMMON',
 }
 
+export type UserTradeData = {
+  id: string
+  createdAt: string
+  updatedAt: string
+  email: string
+  firstName: string
+  lastName: string
+  avatar: string | null
+  mobile: string
+  isLender: boolean
+  lenderRating: number
+  borrowerRating: number
+  address: UserAddress
+  stripe: StripeDetails
+  role: UserRole
+  userBlockedAvailability: BlockedAvailability[]
+}
+
 export type StripeDetails = {
   day: number
   month: number
