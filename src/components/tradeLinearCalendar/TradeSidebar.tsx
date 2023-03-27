@@ -59,10 +59,10 @@ export default function TradeSidebar({
     userDetails && userDetails.id !== user.id && booking.item.userId === user.id
 
   useEffect(() => {
-    if (!item) return
+    if (!item || !firstBookingDuration) return
     const bookingPriceCalculator = new BookingCalculator(
-      new Date(firstBookingDuration?.startDate ?? new Date()),
-      new Date(firstBookingDuration?.endDate ?? new Date()),
+      new Date(firstBookingDuration.startDate),
+      new Date(firstBookingDuration.endDate),
       booking.deliveryPrice,
       booking.pickupPrice,
       item.price,
@@ -130,7 +130,7 @@ export default function TradeSidebar({
             {item && (
               <ApplicationItemCard
                 onClick={() => null}
-                extra={false}
+                isExtraSelected={false}
                 price={item.price}
                 item={item}
               />
@@ -149,12 +149,13 @@ export default function TradeSidebar({
               />
             </div>
           )}
-          {bookingPriceCalculator && item && (
+          {bookingPriceCalculator && firstBookingDuration && item && (
             <TradeSidebarPaymentPanel
               bookingPriceCalculator={bookingPriceCalculator}
               isDeliverySelected={isDeliverySelected}
               isPickupSelected={isPickupSelected}
               item={item}
+              selectedBookingDuration={firstBookingDuration}
             />
           )}
           <div className='TradeSidebarSection'>

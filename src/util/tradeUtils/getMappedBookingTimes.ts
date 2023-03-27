@@ -2,17 +2,19 @@ import { BookingDate, BookingDetail } from '../../types/Booking'
 
 const getMappedBookingTimes = (bookingDetails: BookingDetail[]) => {
   const mappedBookingTimes = bookingDetails
-    .filter(
-      bookingDetail =>
-        bookingDetail.bookingDurations &&
-        bookingDetail.bookingDurations.length > 0 &&
-        bookingDetail.bookingDurations[0] &&
-        bookingDetail.bookingDurations[0].status === 'APPROVED'
-    )
+    .filter(bookingDetail => {
+      const approvedBookingDuration = bookingDetail.bookingDurations?.find(
+        bookingDuration => bookingDuration.status === 'APPROVED'
+      )
+      return approvedBookingDuration != null
+    })
     .map(bookingDetail => {
+      const approvedBookingDuration = bookingDetail.bookingDurations?.find(
+        bookingDuration => bookingDuration.status === 'APPROVED'
+      )
       return {
-        startDate: bookingDetail.bookingDurations[0]?.startDate ?? '',
-        endDate: bookingDetail.bookingDurations[0]?.endDate ?? '',
+        startDate: approvedBookingDuration?.startDate ?? '',
+        endDate: approvedBookingDuration?.endDate ?? '',
       }
     })
     .filter(

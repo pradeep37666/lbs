@@ -28,7 +28,8 @@ const TimeSlotPicker: FunctionComponent<Props> = ({
   bookingDates,
 }) => {
   const { state } = useContext(BookingContext)
-  const { selectedDay, blockedAvailabilities, bookedDates } = state
+  const { selectedDay, blockedAvailabilities, bookedDates, appliedEndDate } =
+    state
   const [isMorningBooked, setIsMorningBooked] = useState<boolean>(false)
   const [isAfternoonBooked, setIsAfternoonBooked] = useState<boolean>(false)
   const weekDay = shortToLongDay(
@@ -44,6 +45,10 @@ const TimeSlotPicker: FunctionComponent<Props> = ({
     setIsMorningBooked(isMorningBooked)
     setIsAfternoonBooked(isAfternoonBooked)
   }, [selectedDay, bookedDates])
+
+  useEffect(() => {
+    if (!appliedEndDate) return
+  }, [appliedEndDate])
 
   const isMorningBlocked = blockedAvailabilities.some(availability => {
     return (

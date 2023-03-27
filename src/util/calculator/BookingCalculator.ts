@@ -26,7 +26,7 @@ export default class BookingCalculator {
     this.isPickupSelected = isPickupSelected
   }
 
-  getUpdatedTotalPrice() {
+  calculateTotalPrice() {
     const start = moment(this.startDate)
     const end = moment(this.endDate)
     const msInDay = 24 * 60 * 60 * 1000
@@ -103,5 +103,29 @@ export default class BookingCalculator {
       }
     }
     return discount
+  }
+
+  calculateItemCostsWithoutOptions = () => {
+    let itemCost = Number(this.calculateTotalPrice())
+    if (this.isDeliverySelected && this.isPickupSelected) {
+      itemCost -= this.pickupPrice + this.deliveryPrice
+    } else if (this.isDeliverySelected) {
+      itemCost -= this.deliveryPrice
+    } else if (this.isPickupSelected) {
+      itemCost -= this.pickupPrice
+    }
+
+    return itemCost
+  }
+
+  calculateBorrowOptions = () => {
+    if (this.isDeliverySelected && this.isPickupSelected) {
+      return this.deliveryPrice + this.pickupPrice
+    } else if (this.isDeliverySelected) {
+      return this.deliveryPrice
+    } else if (this.isPickupSelected) {
+      return this.pickupPrice
+    }
+    return 0
   }
 }

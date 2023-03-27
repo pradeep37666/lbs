@@ -1,9 +1,6 @@
 import moment from 'moment'
 import React, { SetStateAction, useEffect, useState } from 'react'
-import {
-  BOOKING_STATUSES,
-  SNACKBAR_BUTTON_TYPES,
-} from '../../assets/Data/LBSEnum'
+import { SNACKBAR_BUTTON_TYPES } from '../../assets/Data/LBSEnum'
 import BookingService from '../../services/booking'
 import {
   Booking,
@@ -14,7 +11,11 @@ import {
 import { UserTradeData } from '../../types/User'
 import Instance from '../../util/axios'
 import useErrorState from '../../util/reducers/errorContext'
+import getBookingDuration from '../../util/tradeUtils/getBookingDuration'
 import getMostRecentBookingEvent from '../../util/tradeUtils/getMostRecentBookingEvent'
+import isBothConfirmed from '../../util/tradeUtils/getIsBothConfirmed'
+import isDropoffTime from '../../util/tradeUtils/isDropoffTime'
+import isPickupTime from '../../util/tradeUtils/isPickupTime'
 import useGlobalState from '../../util/useGlobalState'
 import DisputeBookingModal from '../modals/DisputeBookingModal/DisputeBookingModal'
 import DropOff from '../tradeCalendar/tradeCalendarStatusPanel/DropOff'
@@ -28,6 +29,8 @@ import StatusRejected from '../tradeCalendar/tradeCalendarStatusPanel/StatusReje
 import StatusReschedule from '../tradeCalendar/tradeCalendarStatusPanel/StatusReschedule'
 import StatusReviewed from '../tradeCalendar/tradeCalendarStatusPanel/StatusReviewed'
 import './TradeCalendarStatusPanel.css'
+import getIsBothConfirmed from '../../util/tradeUtils/getIsBothConfirmed'
+import StatusExtension from '../tradeCalendar/extension/StatusExtension'
 
 type Props = {
   selectedBooking: Booking
@@ -48,10 +51,12 @@ export const TradeCalendarStatusPanel = ({
   startDate,
   endDate,
 }: Props) => {
-  const [status, setStatus] = useState<BookingEventStatus>(
-    BookingEventStatus.APPLIED
+  const [status, setStatus] = useState<BookingStatus>(selectedBooking.status)
+  const [isBothConfirmed, setIsBothConfirmed] = useState(
+    getIsBothConfirmed(selectedBooking.bookingEvents)
   )
   const [isApproveLoading, setIsApproveLoading] = useState(false)
+  const [isDisputed, setIsDisputed] = useState(false)
   const { state } = useGlobalState()
   const { user } = state
   const isOwner = selectedBooking.borrowerId === user.id
@@ -59,41 +64,36 @@ export const TradeCalendarStatusPanel = ({
   const isLender = selectedBooking.item.userId === user.id
   const { errorDispatch } = useErrorState()
   const [isDisputeOpen, setIsDisputeOpen] = useState(false)
-  const bookingStatus = getMostRecentBookingEvent(
+  const bookingDuration = getBookingDuration(selectedBooking.bookingDurations)
+  const bookingEventStatus = getMostRecentBookingEvent(
     selectedBooking.bookingEvents
   )?.event
 
-  useEffect(() => {
-    setStatus(bookingStatus ?? BookingEventStatus.APPLIED)
-  }, [])
+  console.log('SELECTED', JSON.stringify(selectedBooking, null, 2))
 
   const renderStatusPanel = () => {
-    const isHourBeforePickup = isPickupTime()
-    const isHourBeforeDropoff = isDropoffTime()
+    if (!bookingDuration) return
+    // const isHourBeforePickup = isPickupTime(bookingDuration.startDate)
+    const isHourBeforePickup = false
+    const isHourBeforeDropoff = isDropoffTime(bookingDuration.endDate)
+
+    // TODO - Use backend flow diagram to refactor and reconfigure if chain to mimic new booking flow
 
     if (!userDetails) return
 
-    if (
-      status === BOOKING_STATUSES.DISPUTED ||
-      status === BOOKING_STATUSES.RESOLVED
-    )
-      return <StatusDisputed />
-    if (status === BOOKING_STATUSES.APPLIED)
+    if (isDisputed) return <StatusDisputed />
+    if (status === 'APPLIED')
       return (
         <StatusApplied
-          isBorrower={isBorrower}
+          isLender={isLender}
           handleBookingAction={handleBookingAction}
-          updateBookingStatus={updateBookingStatus}
           isLoading={isApproveLoading}
           startDate={startDate}
           endDate={endDate}
           selectedBooking={selectedBooking}
         />
       )
-    if (
-      status === BOOKING_STATUSES.REJECTED ||
-      status === BOOKING_STATUSES.CANCELLED
-    )
+    if (status === 'REJECTED' || status === 'CANCELLED')
       return (
         <StatusRejected
           userDetails={userDetails}
@@ -101,7 +101,7 @@ export const TradeCalendarStatusPanel = ({
           status={status}
         />
       )
-    if (status === BOOKING_STATUSES.TO_RESCHEDULE)
+    if (status === 'TO_RESCHEDULE')
       return (
         <StatusReschedule
           isOwner={isOwner}
@@ -110,9 +110,9 @@ export const TradeCalendarStatusPanel = ({
         />
       )
     if (
-      status === BOOKING_STATUSES.ITEM_RETURNED ||
-      (isOwner && status === BOOKING_STATUSES.BORROWER_REVIEWED) ||
-      (!isOwner && status === BOOKING_STATUSES.LENDER_REVIEWED)
+      (isOwner &&
+        bookingEventStatus === BookingEventStatus.BORROWER_REVIEWED) ||
+      (!isOwner && bookingEventStatus === BookingEventStatus.LENDER_REVIEWED)
     )
       return (
         <StatusItemReturn
@@ -120,8 +120,9 @@ export const TradeCalendarStatusPanel = ({
           toggleReviewModal={toggleReviewModal}
         />
       )
+
     // Booking approved but not an hour before booking time
-    if (!isHourBeforePickup && status === BOOKING_STATUSES.APPROVED)
+    if (!isHourBeforePickup && status === 'APPROVED') {
       return (
         <StatusApproved
           isLender={isLender}
@@ -129,45 +130,74 @@ export const TradeCalendarStatusPanel = ({
           startDate={startDate}
         />
       )
+    }
+
     // An hour before booking time
     if (
       isHourBeforePickup &&
       !isHourBeforeDropoff &&
-      (status === BOOKING_STATUSES.APPROVED ||
-        (isOwner && status === BOOKING_STATUSES.BORROWER_CONFIRMED) ||
-        (!isOwner && status === BOOKING_STATUSES.LENDER_CONFIRMED))
+      (status === 'IN_PROGRESS' ||
+        (isLender &&
+          bookingEventStatus === BookingEventStatus.BORROWER_CONFIRMED) ||
+        (isBorrower &&
+          bookingEventStatus === BookingEventStatus.LENDER_CONFIRMED))
     )
       return (
         <Pickup
-          isOwner={isOwner}
+          isLender={isLender}
           // @ts-ignore
           updateBookingStatus={updateBookingStatus}
+          handleBookingAction={handleBookingAction}
           userDetails={userDetails}
           toggleReportModal={toggleReportModal}
-          status={status}
+          status={bookingEventStatus}
         />
       )
+
     // Lender and / or Borrower confirmed pickup
     if (
       !isHourBeforeDropoff &&
-      status !== BOOKING_STATUSES.ITEM_RETURNED &&
-      (status === BOOKING_STATUSES.BOTH_CONFIRMED ||
-        (isOwner && status === BOOKING_STATUSES.LENDER_CONFIRMED) ||
-        (!isOwner && status === BOOKING_STATUSES.BORROWER_CONFIRMED))
-    )
+      status === 'IN_PROGRESS' &&
+      (isBothConfirmed ||
+        (isLender &&
+          bookingEventStatus === BookingEventStatus.LENDER_CONFIRMED) ||
+        (isBorrower &&
+          bookingEventStatus === BookingEventStatus.BORROWER_CONFIRMED))
+    ) {
+      if (
+        bookingEventStatus === BookingEventStatus.EXTENSION_APPROVED ||
+        bookingEventStatus === BookingEventStatus.EXTENSION_REJECTED ||
+        bookingEventStatus === BookingEventStatus.EXTENSION_REQUESTED
+      ) {
+        return (
+          <StatusExtension
+            extensionStatus={bookingEventStatus}
+            isLender={isLender}
+            handleBookingAction={handleBookingAction}
+            userDetails={userDetails}
+            endDate={endDate}
+            selectedBooking={selectedBooking}
+            bookingDuration={bookingDuration}
+          />
+        )
+      }
       return (
         <StatusConfirmed
-          isOwner={isOwner}
+          bookingDuration={bookingDuration}
+          isLender={isLender}
           userDetails={userDetails}
           endDate={endDate}
+          selectedBooking={selectedBooking}
         />
       )
+    }
+
     // Display a review submitted
     if (
       isHourBeforeDropoff &&
-      (status === BOOKING_STATUSES.BOTH_REVIEWED ||
-        (isOwner && status === BOOKING_STATUSES.LENDER_REVIEWED) ||
-        (!isOwner && status === BOOKING_STATUSES.BORROWER_REVIEWED))
+      ((isOwner && bookingEventStatus === BookingEventStatus.LENDER_REVIEWED) ||
+        (!isOwner &&
+          bookingEventStatus === BookingEventStatus.BORROWER_REVIEWED))
     )
       return <StatusReviewed isOwner={isOwner} />
 
@@ -184,20 +214,6 @@ export const TradeCalendarStatusPanel = ({
       )
   }
 
-  const isPickupTime = () => {
-    const startDateMoment = moment(startDate)
-    const now = moment()
-    if (startDateMoment.isSameOrBefore(now.subtract(1, 'hour'))) return true
-    return false
-  }
-
-  const isDropoffTime = () => {
-    const endDateMoment = moment(startDate)
-    const now = moment()
-    if (endDateMoment.isSameOrBefore(now.subtract(1, 'hour'))) return true
-    return false
-  }
-
   // New function to handle booking actions
 
   const handleBookingAction = async (action: BookingAction) => {
@@ -205,23 +221,44 @@ export const TradeCalendarStatusPanel = ({
       setIsApproveLoading(true)
       switch (action) {
         case 'REJECT':
-          const res = await BookingService.rejectBooking(selectedBooking.id)
+          await BookingService.rejectBooking(selectedBooking.id)
           setStatus(BookingEventStatus.REJECTED)
+          getBookings()
+          break
+        case 'CANCEL':
+          await BookingService.cancelBooking(selectedBooking.id)
+          setStatus(BookingEventStatus.CANCELLED)
           getBookings()
           break
         case 'APPROVE':
           if (!selectedBooking.bookingDurations[0]) return
-          const approveRes = await BookingService.approveBooking(
+          await BookingService.approveBooking(
             selectedBooking.id,
             selectedBooking.bookingDurations[0].id
           )
           setStatus(BookingEventStatus.APPROVED)
           getBookings()
           break
+        case 'BORROWER_CONFIRM':
+          await BookingService.borrowerConfirm(selectedBooking.id)
+          setStatus('IN_PROGRESS')
+          break
+        case 'LENDER_CONFIRM':
+          await BookingService.lenderConfirm(selectedBooking.id)
+          break
+        case 'BOTH_CONFIRM':
+          bookingEventStatus === BookingEventStatus.BORROWER_CONFIRMED
+            ? await BookingService.lenderConfirm(selectedBooking.id)
+            : await BookingService.borrowerConfirm(selectedBooking.id)
+          setIsBothConfirmed(true)
+          break
         case 'COMPLETE':
           await BookingService.completeBooking(selectedBooking.id)
           getBookings()
           break
+        default: {
+          throw Error('unhandled error')
+        }
       }
     } catch (error) {
       console.log('BOOKING ACTION ERROR', error)
@@ -287,8 +324,8 @@ export const TradeCalendarStatusPanel = ({
       <div className='TradeStatusContainer'>
         {status && renderStatusPanel()}
       </div>
-      {status !== BOOKING_STATUSES.DISPUTED &&
-        status !== BOOKING_STATUSES.RESOLVED && (
+      {bookingEventStatus !== BookingEventStatus.DISPUTED &&
+        bookingEventStatus !== BookingEventStatus.RESOLVED && (
           <div className='TradeDisputeContainer'>
             <button
               className='TradeDisputeBtn'

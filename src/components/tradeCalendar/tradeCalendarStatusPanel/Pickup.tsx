@@ -1,55 +1,36 @@
 import React, { useState } from 'react'
-import { BOOKING_STATUSES } from '../../../assets/Data/LBSEnum'
-import { BookingEventStatus, BookingStatus } from '../../../types/Booking'
+import {
+  BookingAction,
+  BookingEventStatus,
+  BookingStatus,
+} from '../../../types/Booking'
 import { UserTradeData } from '../../../types/User'
 import StatusButton from './StatusButton'
 
 type Props = {
-  isOwner: boolean
+  isLender: boolean
   userDetails: UserTradeData
-  updateBookingStatus: (status: BookingEventStatus | string) => Promise<void>
-  status: string
+  isBothConfirmed: boolean
+  updateBookingStatus: (status: BookingEventStatus) => Promise<void>
+  handleBookingAction: (action: BookingAction) => Promise<void>
+  bookingEventStatus: BookingEventStatus
   toggleReportModal: () => void
 }
 
 export const Pickup = ({
-  isOwner,
+  isLender,
   userDetails,
   updateBookingStatus,
+  handleBookingAction,
   toggleReportModal,
-  status,
+  bookingEventStatus,
 }: Props) => {
-  const [isNotPressed, setIsNotPressed] = useState(false)
-  const confirmationStatus = () => {
-    if (isOwner) {
-      switch (status) {
-        case BookingEventStatus.APPROVED:
-          return BookingEventStatus.LENDER_CONFIRMED
-        case BookingEventStatus.BORROWER_CONFIRMED:
-          return BookingEventStatus.BOTH_CONFIRMED
-        default:
-          return BookingEventStatus.APPROVED
-      }
-    } else {
-      switch (status) {
-        case BookingEventStatus.APPROVED:
-          return BookingEventStatus.BORROWER_CONFIRMED
-        case BookingEventStatus.LENDER_CONFIRMED:
-          return BookingEventStatus.BOTH_CONFIRMED
-        default:
-          return BookingEventStatus.APPROVED
-      }
-    }
-  }
-
-  if (!userDetails) {
-    return <div />
-  }
+  const [isDisputeClicked, setIsDisputeClicked] = useState(false)
 
   return (
     <div className='TradeStatusContentContainer'>
-      {isOwner ? (
-        isNotPressed ? (
+      {isLender ? (
+        isDisputeClicked ? (
           <>
             <span style={{ marginBottom: '0.5em' }}>
               Would you like to dispute this trade?
@@ -73,17 +54,25 @@ export const Pickup = ({
               <StatusButton
                 text='No'
                 type='white'
-                onClick={() => setIsNotPressed(true)}
+                onClick={() => setIsDisputeClicked(true)}
               />
               <StatusButton
                 text='Yes'
                 type='blue'
-                onClick={() => updateBookingStatus(confirmationStatus())}
+                onClick={() =>
+                  handleBookingAction(
+                    bookingEventStatus ===
+                      BookingEventStatus.BORROWER_CONFIRMED ||
+                      bookingEventStatus === BookingEventStatus.IN_PROGRESS
+                      ? 'LENDER_CONFIRM'
+                      : 'BORROWER_CONFIRM'
+                  )
+                }
               />
             </div>
           </>
         )
-      ) : isNotPressed ? (
+      ) : isDisputeClicked ? (
         <>
           <span style={{ marginBottom: '0.5em' }}>
             Would you like to dispute this trade?
@@ -107,12 +96,18 @@ export const Pickup = ({
             <StatusButton
               text='No'
               type='white'
-              onClick={() => setIsNotPressed(true)}
+              onClick={() => setIsDisputeClicked(true)}
             />
             <StatusButton
               text='Yes'
               type='blue'
-              onClick={() => updateBookingStatus(confirmationStatus())}
+              onClick={() =>
+                handleBookingAction(
+                  bookingEventStatus === BookingEventStatus.LENDER_CONFIRMED
+                    ? 'BOTH_CONFIRM'
+                    : 'BORROWER_CONFIRM'
+                )
+              }
             />
           </div>
         </>

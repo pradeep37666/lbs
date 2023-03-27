@@ -2,9 +2,11 @@ import React from 'react'
 import { Item } from '../../types/Item'
 import './TradeSidebar.css'
 import BookingCalculator from '../../util/calculator/BookingCalculator'
+import { BookingDuration } from '../../types/Booking'
 
 type Props = {
   bookingPriceCalculator: BookingCalculator
+  selectedBookingDuration: BookingDuration
   isDeliverySelected: boolean
   isPickupSelected: boolean
   item: Item
@@ -15,7 +17,9 @@ const TradeSidebarPaymentPanel = ({
   isDeliverySelected,
   isPickupSelected,
   item,
+  selectedBookingDuration,
 }: Props) => {
+  const itemCost = bookingPriceCalculator.calculateItemCostsWithoutOptions()
   return (
     <div className='TradeSidebarSection'>
       <div className='TradeSidebarSubHeading'>
@@ -23,21 +27,8 @@ const TradeSidebarPaymentPanel = ({
       </div>
       <div className='TradeSidebarCostFlex'>
         <span>Cost for Item </span>
-        {bookingPriceCalculator?.getUpdatedTotalPrice() && item && (
-          <span className='ItemOverviewPrice'>
-            $
-            {isDeliverySelected && isPickupSelected
-              ? parseInt(bookingPriceCalculator?.getUpdatedTotalPrice()) -
-                item.pickupPrice -
-                item.deliveryPrice
-              : isDeliverySelected
-              ? parseInt(bookingPriceCalculator?.getUpdatedTotalPrice()) -
-                item.deliveryPrice
-              : isPickupSelected
-              ? parseInt(bookingPriceCalculator?.getUpdatedTotalPrice()) -
-                item.pickupPrice
-              : bookingPriceCalculator?.getUpdatedTotalPrice()}
-          </span>
+        {bookingPriceCalculator?.calculateTotalPrice() && item && (
+          <span className='ItemOverviewPrice'>${itemCost}</span>
         )}
       </div>
       {isDeliverySelected && item && (
@@ -68,7 +59,7 @@ const TradeSidebarPaymentPanel = ({
       <div className='TradeSidebarCostFlex' style={{ paddingTop: '0.5rem' }}>
         <span>Total Price</span>
         <span className='ItemOverviewPrice'>
-          ${bookingPriceCalculator?.getUpdatedTotalPrice()}
+          ${selectedBookingDuration.totalPrice}
         </span>
       </div>
     </div>

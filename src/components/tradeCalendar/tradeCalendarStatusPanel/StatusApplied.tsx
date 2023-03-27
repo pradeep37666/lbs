@@ -5,9 +5,8 @@ import { Booking, BookingAction, BookingStatus } from '../../../types/Booking'
 import BookingService from '../../../services/booking'
 
 type Props = {
-  isBorrower: boolean
+  isLender: boolean
   handleBookingAction: (action: BookingAction) => Promise<void>
-  updateBookingStatus: (status: BookingStatus) => Promise<void>
   isLoading: boolean
   startDate: string
   endDate: string
@@ -15,15 +14,14 @@ type Props = {
 }
 
 export const StatusApplied = ({
-  isBorrower,
-  updateBookingStatus,
+  isLender,
   handleBookingAction,
   isLoading,
   startDate,
   endDate,
   selectedBooking,
 }: Props) => {
-  const [cancelPressed, setCancelPressed] = useState(false)
+  const [isCancelPressed, setIsCancelPressed] = useState(false)
 
   const noOwnerContent = (
     <div className='TradeStatusContentContainer'>
@@ -34,7 +32,7 @@ export const StatusApplied = ({
       <StatusButton
         text='Cancel Borrow'
         type='white'
-        onClick={() => updateBookingStatus('CANCELLED')}
+        onClick={() => handleBookingAction('CANCEL')}
         width='100%'
       />
     </div>
@@ -50,7 +48,8 @@ export const StatusApplied = ({
         <StatusButton
           text='Decline'
           type='white'
-          onClick={() => handleBookingAction('REJECT')}
+          onClick={() => setIsCancelPressed(true)}
+          isLoading={isLoading}
         />
         <StatusButton
           text='Approve'
@@ -72,12 +71,12 @@ export const StatusApplied = ({
         <StatusButton
           text='Completely Cancel'
           type='white'
-          onClick={() => updateBookingStatus('REJECTED')}
+          onClick={() => handleBookingAction('REJECT')}
         />
         <StatusButton
           text='Ask to Book New Times'
           type='blue'
-          onClick={() => updateBookingStatus('TO_RESCHEDULE')}
+          onClick={() => handleBookingAction('REJECT')}
         />
       </div>
     </div>
@@ -85,8 +84,8 @@ export const StatusApplied = ({
 
   return (
     <>
-      {isBorrower
-        ? cancelPressed
+      {isLender
+        ? isCancelPressed
           ? cancelPressedContent
           : noOwnerContent
         : bookingDetailsContent}

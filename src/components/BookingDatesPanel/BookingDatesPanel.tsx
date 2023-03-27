@@ -7,9 +7,16 @@ import getDateSuffix from '../../util/dateUtils/getDateSuffix'
 type Props = {
   startDate: Date
   endDate: Date
+  collectText?: string
+  returnText?: string
 }
 
-export default function BookingDatesPanel({ startDate, endDate }: Props) {
+export default function BookingDatesPanel({
+  startDate,
+  endDate,
+  collectText,
+  returnText,
+}: Props) {
   const dayArray = [
     'Sunday',
     'Monday',
@@ -23,7 +30,9 @@ export default function BookingDatesPanel({ startDate, endDate }: Props) {
   return (
     <div className='ApplicationFooterDetailsContainer'>
       <div className='ApplicationFooterDetails'>
-        <span className='ApplicationFooterDetailsHeader'>Collect</span>
+        <span className='ApplicationFooterDetailsHeader'>
+          {collectText ?? 'Collect'}
+        </span>
         <div style={{ textAlign: 'center' }}>
           <span className='ApplicationFooterTime'>
             {moment(startDate).hours() === 8 ? `8:00am ` : `1:00pm `}{' '}
@@ -41,7 +50,9 @@ export default function BookingDatesPanel({ startDate, endDate }: Props) {
         <Arrow />
       </div>
       <div className='ApplicationFooterDetails'>
-        <span className='ApplicationFooterDetailsHeader'>Return</span>
+        <span className='ApplicationFooterDetailsHeader'>
+          {returnText ?? 'Return'}
+        </span>
         <div style={{ textAlign: 'center' }}>
           <span className='ApplicationFooterTime'>
             {moment(endDate).hours() === 12 ? `12:00pm ` : `5:00pm `}{' '}

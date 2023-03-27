@@ -38,6 +38,7 @@ import Instance from './util/axios'
 import ForgotPassword from './pages/ForgotPassword/ForgotPassword'
 import LBSSnackBar from './components/LBSSnackBar/LBSSnackBar'
 import LenderShed from './pages/lender-shed/lender-shed'
+import ExtendBookingApplication from './pages/extension/ExtendBookingApplication'
 
 export const GlobalStateContext = React.createContext()
 export const GlobalErrorContext = React.createContext()
@@ -214,6 +215,11 @@ function App() {
                   exact
                   path='/item/edit/:itemId'
                   component={EditItemPage}
+                />
+                <AuthRoute
+                  exact
+                  path='/booking/extend/:bookingId'
+                  component={ExtendBookingApplication}
                 />
                 <AuthRoute path='/user/trades' component={TradesPage} />
                 <AuthRoute path='/user/messages' component={Messages} />

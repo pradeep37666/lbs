@@ -15,25 +15,26 @@ const ItemApplicationCosts = ({
   isPickupSelected,
   bookingCalculator,
 }: Props) => {
+  const getTotalPrice = () => {
+    if (!item) return
+    const basePrice = parseInt(bookingCalculator?.calculateTotalPrice())
+    let totalPrice = basePrice
+    if (isDeliverySelected && isPickupSelected) {
+      totalPrice -= item.pickupPrice + item.deliveryPrice
+    } else if (isDeliverySelected) {
+      totalPrice -= item.deliveryPrice
+    } else if (isPickupSelected) {
+      totalPrice -= item.pickupPrice
+    }
+    return totalPrice
+  }
+
   return (
     <div className='ItemOverviewItemContainer'>
       <p>Cost for items</p>
 
-      {bookingCalculator?.getUpdatedTotalPrice() && item && (
-        <span className='ItemOverviewPrice'>
-          $
-          {isDeliverySelected && isPickupSelected
-            ? parseInt(bookingCalculator?.getUpdatedTotalPrice()) -
-              item.pickupPrice -
-              item.deliveryPrice
-            : isDeliverySelected
-            ? parseInt(bookingCalculator?.getUpdatedTotalPrice()) -
-              item.deliveryPrice
-            : isPickupSelected
-            ? parseInt(bookingCalculator?.getUpdatedTotalPrice()) -
-              item.pickupPrice
-            : bookingCalculator?.getUpdatedTotalPrice()}
-        </span>
+      {bookingCalculator?.calculateTotalPrice() && item && (
+        <span className='ItemOverviewPrice'>${getTotalPrice()}</span>
       )}
     </div>
   )

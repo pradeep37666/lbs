@@ -1,5 +1,9 @@
-import { BookingDetail } from '../../types/Booking'
-import { Item } from '../../types/Item'
+import {
+  BookingDetail,
+  BookingDuration,
+  BookingMode,
+} from '../../types/Booking'
+import { DeliveryCosts, Item } from '../../types/Item'
 import { BlockedAvailabilityCreate } from '../../types/User'
 import { blockedAvailabilityToString } from '../blockedAvailabilityToString'
 import BookingCalculator from '../calculator/BookingCalculator'
@@ -39,14 +43,27 @@ export type BookingState = {
   blockedAvailabilities: BlockedAvailabilityCreate[]
   startDate: Date | null
   endDate: Date | null
+  appliedStartDate: Date | null
+  appliedEndDate: Date | null
   bookedDates: { startDate: string; endDate: string }[]
   page: string
+  mode: BookingMode
+  bookingDuration?: BookingDuration
 }
 
 export type BookingAction =
   | {
       type: 'setInitialState'
       data: { item: Item; bookingDetails: BookingDetail[] }
+    }
+  | {
+      type: 'setExtensionInitialState'
+      data: {
+        item: Item
+        bookingDetails: BookingDetail[]
+        bookingDuration: BookingDuration
+        deliveryCosts: DeliveryCosts
+      }
     }
   | { type: 'setSelectedDay'; data: Date | undefined }
   | { type: 'setStartSlot'; data: TimeSlot }
@@ -111,8 +128,11 @@ export const bookingInitialState: BookingState = {
   blockedAvailabilities: [],
   startDate: null,
   endDate: null,
+  appliedStartDate: null,
+  appliedEndDate: null,
   bookedDates: [],
   page: 'ItemAvailability',
+  mode: 'APPLY',
 }
 
 const bookingReducer = (
@@ -141,6 +161,38 @@ const bookingReducer = (
         currentYear: today.getFullYear(),
         blockedAvailabilities: blockedAvailability,
         bookedDates: getMappedBookingTimes(bookingDetails),
+      }
+    }
+    case 'setExtensionInitialState': {
+      const { item, bookingDetails, bookingDuration, deliveryCosts } =
+        action.data
+      const today = new Date()
+      let blockedAvailability: BlockedAvailabilityCreate[] =
+        item.itemBlockedAvailability.map(blockedAvailability => {
+          return {
+            startTime: blockedAvailability.blockedAvailability.startTime,
+            endTime: blockedAvailability.blockedAvailability.endTime,
+            weekDay: blockedAvailabilityToString(
+              blockedAvailability.blockedAvailability.weekDay
+            ),
+          }
+        })
+      return {
+        ...state,
+        item,
+        currentDate: today.getDate(),
+        currentMonth: today.getMonth(),
+        currentYear: today.getFullYear(),
+        blockedAvailabilities: blockedAvailability,
+        bookedDates: getMappedBookingTimes(bookingDetails),
+        startDate: new Date(bookingDuration.startDate),
+        endDate: new Date(bookingDuration.endDate),
+        appliedStartDate: new Date(bookingDuration.startDate),
+        appliedEndDate: new Date(bookingDuration.endDate),
+        mode: 'EXTEND',
+        bookingDuration: bookingDuration,
+        isDeliverySelected: deliveryCosts.deliveryPrice > 0 ? true : false,
+        isPickupSelected: deliveryCosts.pickupPrice > 0 ? true : false,
       }
     }
     case 'setSelectedDay': {

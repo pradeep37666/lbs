@@ -37,7 +37,8 @@ const CalendarRow: FunctionComponent<Props> = ({
 }) => {
   const [isTimePickerOpen, setIsTimePickerOpen] = useState(false)
   const { state, dispatch } = useContext(BookingContext)
-  const { selectedDay, item, startDate, endDate, bookedDates } = state
+  const { selectedDay, item, startDate, endDate, bookedDates, appliedEndDate } =
+    state
   const { errorDispatch } = useErrorState()
 
   const itemBlockedAvailabilities: BlockedAvailabilityCreate[] =

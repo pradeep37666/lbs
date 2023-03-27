@@ -1,17 +1,27 @@
 import moment from 'moment'
 import React from 'react'
+import { Link } from 'react-router-dom'
+import { Booking, BookingDuration } from '../../../types/Booking'
 import { dayArray, monthArray } from '../../../assets/Data/LBSArray'
 import { User, UserTradeData } from '../../../types/User'
 import getDateSuffix from '../../../util/dateUtils/getDateSuffix'
 import StatusButton from './StatusButton'
 
 type Props = {
-  isOwner: boolean
+  isLender: boolean
   userDetails: UserTradeData | null
   endDate: string
+  selectedBooking: Booking
+  bookingDuration: BookingDuration
 }
 
-export const StatusConfirmed = ({ isOwner, userDetails, endDate }: Props) => {
+export const StatusConfirmed = ({
+  isLender,
+  userDetails,
+  endDate,
+  selectedBooking,
+  bookingDuration,
+}: Props) => {
   const endTime = moment(endDate).hours() === 12 ? `12:00pm ` : `5:00pm `
   const endDay = dayArray[new Date(endDate).getDay()]
   const endDateWithSuffix = getDateSuffix(new Date(endDate))
@@ -19,7 +29,7 @@ export const StatusConfirmed = ({ isOwner, userDetails, endDate }: Props) => {
   return (
     <div className='TradeStatusContentContainer'>
       <div className='TradeStatusContentContainer'>
-        {isOwner && userDetails ? (
+        {isLender && userDetails ? (
           <>
             <span style={{ marginBottom: '0.5em' }}>
               Currently {`${userDetails.firstName} ${userDetails.lastName}`} has
@@ -71,7 +81,7 @@ export const StatusConfirmed = ({ isOwner, userDetails, endDate }: Props) => {
                         {endTime}&nbsp;
                       </p>
                       <p style={{ fontWeight: 'bold', margin: '0' }}>
-                        {endDateWithSuffix}&nbsp;
+                        {endDay}&nbsp;
                       </p>
                       <p style={{ margin: '0' }}>{endDateWithSuffix}</p>
                       <p style={{ margin: '0' }}>&nbsp; - &nbsp;</p>
@@ -81,6 +91,37 @@ export const StatusConfirmed = ({ isOwner, userDetails, endDate }: Props) => {
                 }
                 nonBtn={true}
               />
+              <div className='mt-5' />
+              <Link
+                className='w-full'
+                to={{
+                  pathname: `/item/${selectedBooking.itemId}/application`,
+                  state: {
+                    bookingDuration: bookingDuration,
+                    deliveryCosts: {
+                      deliveryPrice: selectedBooking.deliveryPrice,
+                      pickupPrice: selectedBooking.pickupPrice,
+                    },
+                  },
+                }}
+                replace
+              >
+                <StatusButton
+                  type='blue'
+                  text={
+                    <p
+                      style={{
+                        fontWeight: 'bold',
+                        margin: '0',
+                        color: 'white',
+                      }}
+                    >
+                      Extend Borrow
+                    </p>
+                  }
+                  width='100%'
+                />
+              </Link>
             </>
           )
         )}

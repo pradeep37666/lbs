@@ -1,4 +1,6 @@
+import { BorrowerAddress } from '../util/reducers/bookingReducer'
 import { DeliveryOption, Item, ItemAddress } from './Item'
+import { UserAddress } from './User'
 
 export type BookingDurationStatus =
   | 'APPLIED'
@@ -21,30 +23,50 @@ export enum BookingEventStatus {
   REJECTED = 'REJECTED',
   CANCELLED = 'CANCELLED',
   TO_RESCHEDULE = 'TO_RESCHEDULE',
-  LENDER_CONFIRMED = 'LENDER_CONFIRMED',
-  BORROWER_CONFIRMED = 'BORROWER_CONFIRMED',
-  BOTH_CONFIRMED = 'BOTH_CONFIRMED',
-  ITEM_RETURNED = 'ITEM_RETURNED',
-  BORROWER_REVIEWED = 'BORROWER_REVIEWED',
-  LENDER_REVIEWED = 'LENDER_REVIEWED',
-  BOTH_REVIEWED = 'BOTH_REVIEWED',
-  DISPUTED = 'DISPUTED',
-  RESOLVED = 'RESOLVED',
   IN_PROGRESS = 'IN_PROGRESS',
   ENDED = 'ENDED',
+  LENDER_CONFIRMED = 'LENDER_CONFIRMED',
+  BORROWER_CONFIRMED = 'BORROWER_CONFIRMED',
+  BORROWER_REVIEWED = 'BORROWER_REVIEWED',
+  LENDER_REVIEWED = 'LENDER_REVIEWED',
   EXTENSION_REQUESTED = 'EXTENSION_REQUESTED',
   EXTENSION_APPROVED = 'EXTENSION_APPROVED',
   EXTENSION_REJECTED = 'EXTENSION_REJECTED',
+  DISPUTED = 'DISPUTED',
+  RESOLVED = 'RESOLVED',
 }
 
 export type BookingAction =
   | 'APPROVE'
   | 'REJECT'
+  | 'CANCEL'
   | 'COMPLETE'
   | 'EXTEND'
   | 'LENDER_CONFIRM'
   | 'BORROWER_CONFIRM'
   | 'BOTH_CONFIRM'
+
+export type CreateBooking = {
+  borrowerAddress: BorrowerAddress | null
+  borrowerId: string
+  itemId: string
+  status: string
+  error: boolean
+  deliveryOption: string
+  startDate: Date | null
+  endDate: Date | null
+  totalPrice: string | undefined
+  itemPrice: number
+  deliveryPrice: number
+  pickupPrice: number
+}
+
+export type RequestExtension = {
+  endDate: string
+  startDate: string
+  totalPrice: number
+  itemPrice: number
+}
 
 export type BookingDetail = {
   bookingDurations: BookingDuration[]
@@ -108,3 +130,5 @@ export type BookingDate = {
   startDate: string
   endDate: string
 }
+
+export type BookingMode = 'APPLY' | 'EXTEND'

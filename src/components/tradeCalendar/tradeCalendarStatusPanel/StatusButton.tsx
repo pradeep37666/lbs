@@ -1,4 +1,4 @@
-import React, { JSXElementConstructor } from 'react'
+import React, { JSXElementConstructor, ReactNode } from 'react'
 import './StatusButton.css'
 import { CircularProgress } from '@material-ui/core'
 
@@ -6,7 +6,7 @@ type ButtonType = 'red' | 'white' | 'blue'
 
 type Props = {
   type?: ButtonType
-  text: any
+  text: ReactNode
   onClick?: () => void
   isLoading?: boolean
   nonBtn?: boolean

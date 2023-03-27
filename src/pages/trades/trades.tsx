@@ -9,19 +9,24 @@ import { CircularProgress, SwipeableDrawer } from '@material-ui/core'
 import TradeFailed from '../../components/modals/TradeFailed/TradeFailed'
 import useGlobalState from '../../util/useGlobalState'
 import ReviewBorrower from '../../components/modals/ReviewBorrower/ReviewBorrower'
-import { useHistory } from 'react-router'
+import { useHistory, useLocation } from 'react-router'
 import NoContent from '../../components/NoContent/NoContent'
 import ReviewLender from '../../components/modals/ReviewLender/ReviewLender'
-import { bookingStatusesArray } from '../../assets/Data/LBSArray'
 import TradeSidebar from '../../components/tradeLinearCalendar/TradeSidebar'
 import { Booking } from '../../types/Booking'
+import ExtensionModal from '../../components/modals/ExtensionModal/ExtensionModal'
 
 export default function Trades() {
   const { state } = useGlobalState()
   const { user } = state
   const history = useHistory()
+  const location = useLocation()
+
+  const extensionRequested = location.state?.extensionCreated
+
   const [isReportModalVisible, setIsReportModalVisible] = useState(false)
   const [reviewModalVisible, setReviewModalVisible] = useState(false)
+  const [isExtensionModalVisible, setIsExtensionModalVisible] = useState(false)
   const [accountContent, setAccountContent] = useState('Trades')
   const [selectedBooking, setSelectedBooking] = useState<null | Booking>(null)
   const [lenderBookingItems, setLenderBookingItems] = useState<Booking[]>([])
@@ -31,6 +36,7 @@ export default function Trades() {
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
+    if (extensionRequested) setIsExtensionModalVisible(true)
     getBookings()
   }, [])
 
@@ -48,17 +54,16 @@ export default function Trades() {
     setReviewModalVisible(!reviewModalVisible)
   }
 
+  const toggleExtensionModal = () => {
+    setIsExtensionModalVisible(!isExtensionModalVisible)
+  }
+
   const getLenderBookings = async () => {
     try {
       const { data, status } = await Instance.get(
-        `/users/${user.id}/bookings/lender`,
-        {
-          // @ts-ignore
-          status: bookingStatusesArray,
-        }
+        `/users/${user.id}/bookings/lender`
       )
       if (status !== 200) return
-      console.log('LENDER BOOKING ITEMS', data)
       setLenderBookingItems(data)
     } catch (error) {
       console.log('LENDER ERROR', error)
@@ -68,14 +73,9 @@ export default function Trades() {
   const getBorrowerBookings = async () => {
     try {
       const { data, status } = await Instance.get(
-        `/users/${user.id}/bookings/borrower`,
-        {
-          // @ts-ignore
-          status: bookingStatusesArray,
-        }
+        `/users/${user.id}/bookings/borrower`
       )
       if (status !== 200) return
-      console.log('BORROWER BOOKING ITEMS', JSON.stringify(data, null, 2))
       setBorrowerBookingItems(data)
     } catch (error) {
       console.log(error)
@@ -178,6 +178,11 @@ export default function Trades() {
           )
         )}
       </div>
+      <ExtensionModal
+        onClose={() => toggleExtensionModal()}
+        isOpen={isExtensionModalVisible}
+        price={0}
+      />
     </PageWrapper>
   )
 }

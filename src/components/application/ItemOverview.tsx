@@ -1,23 +1,25 @@
 import React, { useContext, useEffect, useState } from 'react'
 import './ItemOverview.css'
-import Arrow from '../../assets/Icons/Arrow'
 import ApplicationItemCard from './ApplicationItemCard'
 import { useHistory } from 'react-router'
 import { CometChat } from '@cometchat-pro/chat'
 import useGlobalState from '../../util/useGlobalState'
 import Button from '../Button/Button'
-import getDateSuffix from '../../util/dateUtils/getDateSuffix'
-import { fullNameDayArray, monthArray } from '../../assets/Data/LBSArray'
-import {
-  BOOKING_STATUSES,
-  SNACKBAR_BUTTON_TYPES,
-} from '../../assets/Data/LBSEnum'
+import { SNACKBAR_BUTTON_TYPES } from '../../assets/Data/LBSEnum'
 import Instance, { CometChatInstance } from '../../util/axios'
 import useErrorState from '../../util/reducers/errorContext'
 import AgreementModal from '../modals/AgreementModal/AgreementModal'
 import { BookingContext } from '../../pages/application/Application'
-import moment from 'moment'
-import ItemApplicationCosts from './ItemApplicationCosts'
+import { Item } from '../../types/Item'
+import BorrowApplicationCosts from './BorrowApplicationCosts'
+import ExtendApplicationCosts from './ExtendApplicationCosts'
+import BookingService from '../../services/booking'
+import BorrowOverviewFooter from './BorrowOverviewFooter'
+import ExtendOverviewFooter from './ExtendOverviewFooter'
+import calculateExtensionPrice from '../../util/tradeUtils/calculateExtensionPrice'
+import axios from 'axios'
+import { CreateBooking } from '../../types/Booking'
+import getDeliveryOption from '../../util/getDeliveryOption'
 
 export default function ItemOverview() {
   const [isLoading, setIsLoading] = useState(false)
@@ -33,12 +35,18 @@ export default function ItemOverview() {
     isDeliverySelected,
     isPickupSelected,
     borrowerAddress,
-    currentYear,
     bookingCalculator,
-    currentMonth,
+    mode,
+    appliedEndDate,
+    bookingDuration,
   } = state
 
   const history = useHistory()
+
+  const extensionPrice = calculateExtensionPrice({
+    bookingCalculator,
+    bookingDuration,
+  })
 
   // Set borrower address if address has not been set
   const setBorrowerAddressFallback = () =>
@@ -60,8 +68,8 @@ export default function ItemOverview() {
     try {
       setIsLoading(true)
       await makeBooking(bookingInfo, item)
-    } catch (e) {
-      console.log(e.response)
+    } catch (error) {
+      console.log(error)
       errorDispatch({
         type: 'openSnackBar',
         data: {
@@ -83,17 +91,10 @@ export default function ItemOverview() {
       itemId: item.id,
       status: 'APPLIED',
       error: false,
-      deliveryOption:
-        isDeliverySelected && isPickupSelected
-          ? 'BOTH'
-          : isDeliverySelected
-          ? 'DELIVERY'
-          : isPickupSelected
-          ? 'PICKUP'
-          : 'NONE',
+      deliveryOption: getDeliveryOption(isDeliverySelected, isPickupSelected),
       startDate: startDate,
       endDate: endDate,
-      totalPrice: bookingCalculator.getUpdatedTotalPrice(),
+      totalPrice: bookingCalculator?.calculateTotalPrice(),
       itemPrice: item.price,
       deliveryPrice: isDeliverySelected ? item.deliveryPrice : 0,
       pickupPrice: isPickupSelected ? item.pickupPrice : 0,
@@ -108,7 +109,7 @@ export default function ItemOverview() {
       const blockedUsers = await blockedUsersRequest.fetchNext()
       let userId, blockedId
       // Applicant has blocked the item owner
-      if (blockedUsers.find(user => user.uid === item.userId)) {
+      if (blockedUsers.find(user => user.getUid() === item.userId)) {
         userId = user.id
         blockedId = item.userId
       } else {
@@ -125,29 +126,65 @@ export default function ItemOverview() {
     }
   }
 
-  const sendEnquiry = async item => {
+  const sendEnquiry = async (item: Item, type: 'BORROW' | 'EXTENSION') => {
     await unblockUser()
     const textMessage = new CometChat.TextMessage(
       item.userId,
-      `${user.firstName} ${user.lastName} has enquired about your ${item.title}`,
+      type === 'BORROW'
+        ? `${user.firstName} ${user.lastName} has enquired about your ${item.title}`
+        : `${user.firstName} ${user.lastName} has requested an extension about your ${item.title}`,
       CometChat.RECEIVER_TYPE.USER
     )
     textMessage.setMetadata({ enquiry: true, itemName: item.title })
     try {
       await CometChat.sendMessage(textMessage)
-    } catch (e) {
-      console.log(e.response)
+    } catch (error) {
+      console.log(error)
     }
   }
 
-  const makeBooking = async (bookingInfo, item) => {
+  const makeBooking = async (bookingInfo: CreateBooking, item: Item) => {
     const { data } = await Instance.post('/bookings', bookingInfo)
-    await sendEnquiry(item)
+    await sendEnquiry(item, 'BORROW')
     if (!data) return
     history.push({
       pathname: `/item/${item.id}`,
-      state: { bookingCreated: true, price: bookingInfo.price },
+      state: { bookingCreated: true, price: bookingInfo.totalPrice },
     })
+  }
+
+  const requestExtension = async () => {
+    if (!bookingDuration || !endDate || !appliedEndDate || !bookingCalculator)
+      return
+    try {
+      setIsLoading(true)
+      await BookingService.requestExtension(bookingDuration.bookingId, {
+        endDate: endDate.toISOString(),
+        startDate: appliedEndDate.toISOString(),
+        itemPrice: item.price,
+        totalPrice: parseInt(bookingCalculator.calculateTotalPrice()),
+      })
+      await sendEnquiry(item, 'EXTENSION')
+      history.push({
+        pathname: `/user/trades`,
+        state: { extensionCreated: true },
+      })
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        console.log(error.response)
+      }
+      errorDispatch({
+        type: 'openSnackBar',
+        data: {
+          message:
+            'Failed to apply an extension to this item. Please check details and try again.',
+          btnText: SNACKBAR_BUTTON_TYPES.CLOSE,
+          btnFunc: () => errorDispatch({ type: 'closeSnackBar' }),
+        },
+      })
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   return (
@@ -158,55 +195,18 @@ export default function ItemOverview() {
       </div>
       <div>
         <span className='ApplicationOverviewSubHeader'>Itemised Costs</span>
-        <ItemApplicationCosts
-          item={item}
-          isDeliverySelected={isDeliverySelected}
-          isPickupSelected={isPickupSelected}
-          bookingCalculator={bookingCalculator}
-        />
-        <div className='ItemOverviewBorrowContainer'>
-          <div className='ItemOverviewItemContainer'>
-            <p>Borrow options total</p>
-            {bookingCalculator?.getUpdatedTotalPrice() && item && (
-              <span className='ItemOverviewPrice'>
-                $
-                {isDeliverySelected && isPickupSelected
-                  ? item.pickupPrice + item.deliveryPrice
-                  : isDeliverySelected
-                  ? item.deliveryPrice
-                  : isPickupSelected
-                  ? item.pickupPrice
-                  : 0}
-              </span>
-            )}
-          </div>
-          {isDeliverySelected && (
-            <div className='ItemOverviewItemContainer'>
-              <span className='ItemOverviewSmallText'>Item Delivery</span>
-              <span className='ItemOverviewSmallText'>
-                ${item.deliveryPrice}
-              </span>
-            </div>
-          )}
-          {isPickupSelected && (
-            <div className='ItemOverviewItemContainer'>
-              <span className='ItemOverviewSmallText'>Item Pickup</span>
-              <span className='ItemOverviewSmallText'>${item.pickupPrice}</span>
-            </div>
-          )}
-        </div>
-        <div className='ItemOverviewItemContainer'>
-          <span className='ItemOverviewSmallText'>Off Peak Discount </span>
-          <span className='ItemOverviewSmallText'>
-            -${bookingCalculator.calculateOffPeakDiscount()}
-          </span>
-        </div>
-        <div className='ItemOverviewItemContainer'>
-          <p>Total Price</p>
-          <span className='ItemOverviewPrice'>
-            ${bookingCalculator.getUpdatedTotalPrice()}
-          </span>
-        </div>
+        {mode === 'APPLY' && bookingCalculator ? (
+          <BorrowApplicationCosts
+            item={item}
+            isDeliverySelected={isDeliverySelected}
+            isPickupSelected={isPickupSelected}
+            bookingCalculator={bookingCalculator}
+          />
+        ) : (
+          bookingCalculator && (
+            <ExtendApplicationCosts extensionPrice={extensionPrice} />
+          )
+        )}
         <div className='ItemOverviewItemContainer'>
           <span className='ApplicationOverviewSubHeader'>Dates</span>
           <span
@@ -218,37 +218,18 @@ export default function ItemOverview() {
             Edit Dates
           </span>
         </div>
-        <div className='ApplicationFooterDetailsContainer'>
-          <div className='ApplicationFooterDetails'>
-            <p>Collect</p>
-            <div>
-              <span className='ApplicationFooterTime'>
-                {moment(startDate).hours() === 8 ? `8:00am ` : `1:00pm `}{' '}
-              </span>
-              <span>{fullNameDayArray[startDate.getDay()]}</span>
-            </div>
-            <div>
-              <span>{getDateSuffix(startDate)} </span>
-              <span>{monthArray[startDate.getMonth()]}</span>
-            </div>
-          </div>
-          <div className='ApplicationFooterArrowContainer'>
-            <Arrow />
-          </div>
-          <div className='ApplicationFooterDetails'>
-            <p>Return</p>
-            <div>
-              <span className='ApplicationFooterTime'>
-                {moment(endDate).hours() === 12 ? `12:00pm ` : `5:00pm `}{' '}
-              </span>
-              <span>{fullNameDayArray[endDate.getDay()]}</span>
-            </div>
-            <div>
-              <span>{getDateSuffix(endDate)} </span>
-              <span>{monthArray[endDate.getMonth()]} </span>
-            </div>
-          </div>
-        </div>
+        {mode === 'APPLY'
+          ? startDate &&
+            endDate && (
+              <BorrowOverviewFooter startDate={startDate} endDate={endDate} />
+            )
+          : endDate &&
+            appliedEndDate && (
+              <ExtendOverviewFooter
+                endDate={endDate}
+                originalEndDate={appliedEndDate}
+              />
+            )}
       </div>
       <Button
         onClick={() => setIsModalVisible(true)}
@@ -263,7 +244,7 @@ export default function ItemOverview() {
         isLoading={isLoading}
         open={isModalVisible}
         onClose={() => setIsModalVisible(false)}
-        onClick={saveBooking}
+        onClick={() => (mode === 'APPLY' ? saveBooking() : requestExtension())}
       />
     </div>
   )

@@ -21,7 +21,7 @@ export const SlotDay: React.FC<SlotDayProps> = ({
   blockedAvailabilities,
   onTimeSlotBlocked,
 }) => {
-  const isMorningBlocked = blockedAvailabilities.some(availability => {
+  const isMorningBlocked = blockedAvailabilities?.some(availability => {
     return (
       weekDay === availability.weekDay &&
       availability.startTime === '08:00:00' &&
@@ -29,7 +29,7 @@ export const SlotDay: React.FC<SlotDayProps> = ({
     )
   })
 
-  const isAfternoonBlocked = blockedAvailabilities.some(availability => {
+  const isAfternoonBlocked = blockedAvailabilities?.some(availability => {
     return (
       weekDay === availability.weekDay &&
       availability.startTime === '13:00:00' &&

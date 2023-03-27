@@ -63,6 +63,7 @@
 }
 
 .TradeCalendarVerticalText {
+  display: block;
   font-weight: bold;
   font-size: 10;
 }

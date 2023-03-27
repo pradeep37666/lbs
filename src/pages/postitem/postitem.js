@@ -107,7 +107,7 @@ export default function PostItem() {
       ? newPostItemBlockedAvailabilities
       : postItemBlockedAvailabilities
     const itemBlockedAvailabilitiesNumberFormat =
-      selectedBlockedAvailabilities.map(availability => {
+      selectedBlockedAvailabilities?.map(availability => {
         return {
           weekDay: blockedAvailabilityToNumber(availability.weekDay),
           startTime: availability.startTime,

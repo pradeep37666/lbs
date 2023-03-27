@@ -12,7 +12,7 @@ import ItemOverview from '../../components/application/ItemOverview'
 import PageWrapper from '../../components/pageWrapper/pageWrapper'
 import BookingCalculator from '../../util/calculator/BookingCalculator'
 import instance from '../../util/axios'
-import { useHistory, useParams } from 'react-router-dom'
+import { useHistory, useLocation, useParams } from 'react-router-dom'
 import { getPrevBookingPage } from '../../util/getPrevPage'
 import bookingReducer, {
   BookingAction,
@@ -22,7 +22,8 @@ import bookingReducer, {
 import ItemAvailability from '../../components/application/ItemAvailability'
 import ApplicationFooter from '../../components/application/ApplicationFooter'
 import Instance from '../../util/axios'
-import { Item } from '../../types/Item'
+import { DeliveryCosts, Item } from '../../types/Item'
+import { BookingDuration, BookingMode } from '../../types/Booking'
 
 type Params = {
   itemId: string
@@ -47,10 +48,17 @@ export default function Application() {
     endDate,
     isDeliverySelected,
     isPickupSelected,
-    currentYear,
+    mode,
   } = state
   const { itemId } = useParams<Params>()
   const history = useHistory()
+  const location = useLocation()
+  const bookingDuration = location.state?.bookingDuration as
+    | BookingDuration
+    | undefined
+  const deliveryCosts = location.state?.deliveryCosts as
+    | DeliveryCosts
+    | undefined
 
   useEffect(() => {
     if (!startDate || !endDate) return
@@ -77,11 +85,22 @@ export default function Application() {
   const getItemBookings = async (item: Item) => {
     try {
       const { data, status } = await Instance.get(`/items/${itemId}/bookings`)
-      // console.log('BOOKINGS DETAILS', data)
-      dispatch({
-        type: 'setInitialState',
-        data: { item, bookingDetails: data },
-      })
+      if (bookingDuration && deliveryCosts) {
+        dispatch({
+          type: 'setExtensionInitialState',
+          data: {
+            item,
+            bookingDetails: data,
+            bookingDuration: bookingDuration,
+            deliveryCosts: deliveryCosts,
+          },
+        })
+      } else {
+        dispatch({
+          type: 'setInitialState',
+          data: { item, bookingDetails: data },
+        })
+      }
     } catch (error) {
       console.log({ error })
     }
@@ -125,10 +144,12 @@ export default function Application() {
         <ApplicationHeader
           item={item ? item : null}
           page={page}
-          prevPage={() => getPrevBookingPage(page, dispatch, history, itemId)}
+          prevPage={() =>
+            getPrevBookingPage(page, dispatch, history, itemId, mode)
+          }
         />
         <div className='ApplicationContainer'>{renderApplication()}</div>
-        {startDate && page !== 'ItemOverview' ? <ApplicationFooter /> : null}
+        {startDate && page !== 'ItemOverview' && <ApplicationFooter />}
       </PageWrapper>
     </BookingContext.Provider>
   )
