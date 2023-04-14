@@ -8,23 +8,28 @@ type Props = {
   endDate: string
 }
 
-const StatusExtensionRejected = ({ isLender, userDetails, endDate }: Props) => {
+const StatusExtensionCancelled = ({
+  isLender,
+  userDetails,
+  endDate,
+}: Props) => {
   return (
     <div className='flex flex-col items-center p-2 text-center'>
       {isLender ? (
         <div>
           <span>
-            You have rejected{' '}
-            {`${userDetails.firstName} ${userDetails.lastName}`}'s booking
-            extension. The prior booking still stands.
+            {`${userDetails.firstName} ${userDetails.lastName}`} has cancelled
+            their extension request. The prior booking still stands.
           </span>
+          <div className='mt-3' />
           <EndDateCard endDate={endDate} isLender={isLender} />
         </div>
       ) : (
         <div>
           <span className='mb-3'>
-            Your booking extension request has been rejected.
+            You have cancelled your extension request.
           </span>
+          <div className='mt-2' />
           <EndDateCard endDate={endDate} isLender={isLender} />
         </div>
       )}
@@ -32,4 +37,4 @@ const StatusExtensionRejected = ({ isLender, userDetails, endDate }: Props) => {
   )
 }
 
-export default StatusExtensionRejected
+export default StatusExtensionCancelled

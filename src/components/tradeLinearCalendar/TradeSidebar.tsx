@@ -1,9 +1,8 @@
-import React, { SetStateAction, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './TradeSidebar.css'
 import Instance from '../../util/axios'
 import ApplicationItemCard from '../application/ApplicationItemCard'
-import { Avatar, CircularProgress } from '@material-ui/core'
-import getImage from '../../util/getImage'
+import { CircularProgress } from '@material-ui/core'
 import useGlobalState from '../../util/useGlobalState'
 import BookingDatesPanel from '../BookingDatesPanel/BookingDatesPanel'
 import { DELIVERY_OPTIONS } from '../../assets/Data/LBSEnum'
@@ -18,7 +17,7 @@ import getBookingDuration from '../../util/tradeUtils/getBookingDuration'
 
 type Props = {
   booking: Booking
-  getBookings: () => void
+  getBookings: () => Promise<void>
   toggleReportModal: () => void
   toggleReviewModal: () => void
 }

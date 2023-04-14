@@ -99,14 +99,14 @@ export default function Trades() {
         />
       )}
       <ReviewLender
-        open={reviewModalVisible && !isLender}
-        setReviewModalVisible={setReviewModalVisible}
+        isOpen={reviewModalVisible && !isLender}
+        onClose={() => setReviewModalVisible(false)}
         booking={selectedBooking}
         getBookings={getBookings}
       />
       <ReviewBorrower
-        open={reviewModalVisible && isLender}
-        onClick={() => setReviewModalVisible(false)}
+        isOpen={reviewModalVisible && isLender}
+        onClose={() => setReviewModalVisible(false)}
         booking={selectedBooking}
         getBookings={getBookings}
       />

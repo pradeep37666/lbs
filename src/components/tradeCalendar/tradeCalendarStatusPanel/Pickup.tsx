@@ -1,29 +1,22 @@
 import React, { useState } from 'react'
-import {
-  BookingAction,
-  BookingEventStatus,
-  BookingStatus,
-} from '../../../types/Booking'
+import { BookingAction } from '../../../types/Booking'
 import { UserTradeData } from '../../../types/User'
 import StatusButton from './StatusButton'
 
 type Props = {
   isLender: boolean
   userDetails: UserTradeData
-  isBothConfirmed: boolean
-  updateBookingStatus: (status: BookingEventStatus) => Promise<void>
   handleBookingAction: (action: BookingAction) => Promise<void>
-  bookingEventStatus: BookingEventStatus
-  toggleReportModal: () => void
+  toggleDisputeModal: () => void
+  isLoading: boolean
 }
 
 export const Pickup = ({
   isLender,
   userDetails,
-  updateBookingStatus,
   handleBookingAction,
-  toggleReportModal,
-  bookingEventStatus,
+  toggleDisputeModal,
+  isLoading,
 }: Props) => {
   const [isDisputeClicked, setIsDisputeClicked] = useState(false)
 
@@ -39,7 +32,7 @@ export const Pickup = ({
               <StatusButton
                 text='Dispute Trade'
                 type='blue'
-                onClick={() => updateBookingStatus(BookingEventStatus.DISPUTED)}
+                onClick={() => toggleDisputeModal()}
                 width='100%'
               />
             </div>
@@ -59,15 +52,8 @@ export const Pickup = ({
               <StatusButton
                 text='Yes'
                 type='blue'
-                onClick={() =>
-                  handleBookingAction(
-                    bookingEventStatus ===
-                      BookingEventStatus.BORROWER_CONFIRMED ||
-                      bookingEventStatus === BookingEventStatus.IN_PROGRESS
-                      ? 'LENDER_CONFIRM'
-                      : 'BORROWER_CONFIRM'
-                  )
-                }
+                isLoading={isLoading}
+                onClick={() => handleBookingAction('LENDER_CONFIRM')}
               />
             </div>
           </>
@@ -81,7 +67,7 @@ export const Pickup = ({
             <StatusButton
               text='Dispute Trade'
               type='blue'
-              onClick={() => updateBookingStatus(BookingEventStatus.DISPUTED)}
+              onClick={() => toggleDisputeModal()}
               width='100%'
             />
           </div>
@@ -101,13 +87,8 @@ export const Pickup = ({
             <StatusButton
               text='Yes'
               type='blue'
-              onClick={() =>
-                handleBookingAction(
-                  bookingEventStatus === BookingEventStatus.LENDER_CONFIRMED
-                    ? 'BOTH_CONFIRM'
-                    : 'BORROWER_CONFIRM'
-                )
-              }
+              onClick={() => handleBookingAction('BORROWER_CONFIRM')}
+              isLoading={isLoading}
             />
           </div>
         </>

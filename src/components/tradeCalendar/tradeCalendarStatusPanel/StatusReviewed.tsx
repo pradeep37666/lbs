@@ -1,16 +1,18 @@
 import React from 'react'
 
 type Props = {
-  isOwner: boolean
+  isLender: boolean
 }
 
-export const StatusReviewed = ({ isOwner }: Props) => {
+export const StatusReviewed = ({ isLender }: Props) => {
   return (
     <div className='TradeStatusContentContainer'>
-      {isOwner ? (
-        <span>Item returned, thank you for using little big shed</span>
+      {isLender ? (
+        <span>
+          Thank you for your review. Thanks for using Little Big Shed.
+        </span>
       ) : (
-        <span>Borrow complete</span>
+        <span>Thank you for you review. Borrow complete.</span>
       )}
     </div>
   )

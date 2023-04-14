@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import StatusButton from './StatusButton'
 import BookingDatesPanel from '../../BookingDatesPanel/BookingDatesPanel'
 import { Booking, BookingAction, BookingStatus } from '../../../types/Booking'
-import BookingService from '../../../services/booking'
 
 type Props = {
   isLender: boolean
@@ -10,7 +9,6 @@ type Props = {
   isLoading: boolean
   startDate: string
   endDate: string
-  selectedBooking: Booking
 }
 
 export const StatusApplied = ({
@@ -19,7 +17,6 @@ export const StatusApplied = ({
   isLoading,
   startDate,
   endDate,
-  selectedBooking,
 }: Props) => {
   const [isCancelPressed, setIsCancelPressed] = useState(false)
 
@@ -76,7 +73,7 @@ export const StatusApplied = ({
         <StatusButton
           text='Ask to Book New Times'
           type='blue'
-          onClick={() => handleBookingAction('REJECT')}
+          onClick={() => handleBookingAction('RESCHEDULE')}
         />
       </div>
     </div>
@@ -87,8 +84,8 @@ export const StatusApplied = ({
       {isLender
         ? isCancelPressed
           ? cancelPressedContent
-          : noOwnerContent
-        : bookingDetailsContent}
+          : bookingDetailsContent
+        : noOwnerContent}
     </>
   )
 }

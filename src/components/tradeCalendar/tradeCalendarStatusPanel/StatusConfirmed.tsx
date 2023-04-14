@@ -23,9 +23,10 @@ export const StatusConfirmed = ({
   bookingDuration,
 }: Props) => {
   const endTime = moment(endDate).hours() === 12 ? `12:00pm ` : `5:00pm `
-  const endDay = dayArray[new Date(endDate).getDay()]
+  const endDay = dayArray[moment(endDate).day()]
   const endDateWithSuffix = getDateSuffix(new Date(endDate))
   const endMonth = monthArray[new Date(endDate).getMonth()]
+
   return (
     <div className='TradeStatusContentContainer'>
       <div className='TradeStatusContentContainer'>
@@ -34,7 +35,7 @@ export const StatusConfirmed = ({
             <span style={{ marginBottom: '0.5em' }}>
               Currently {`${userDetails.firstName} ${userDetails.lastName}`} has
               your item, be a helpful lender and lend a hand to them if they
-              have any questions.
+              have any questions. The item is due back at:
             </span>
             <StatusButton
               text={
@@ -49,7 +50,7 @@ export const StatusConfirmed = ({
                     {endTime}&nbsp;
                   </p>
                   <p style={{ fontWeight: 'bold', margin: '0' }}>
-                    {endDateWithSuffix}&nbsp;
+                    {endDay}&nbsp;
                   </p>
                   <p style={{ margin: '0' }}>{endDateWithSuffix}</p>
                   <p style={{ margin: '0' }}>&nbsp; - &nbsp;</p>

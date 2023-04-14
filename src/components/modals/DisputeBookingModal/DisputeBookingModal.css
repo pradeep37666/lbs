@@ -6,9 +6,15 @@
     align-items: center;
     padding: 2em;
     width: 100%;
-    width: 550px;
+    max-width: 550px;
     margin: 0;
     background-color: white;
+}
+
+.DisputeBookingModalContent{
+    padding: 0.5em 1em 0 1em;
+    width: 100%;
+    max-width: 550px;
 }
 
 .DisputeBookingModalTitle {
@@ -22,4 +28,5 @@
     display: flex;
     justify-content: space-between;
     margin-bottom: 2em;
+    margin-top: 1em
 }

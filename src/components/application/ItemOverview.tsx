@@ -70,6 +70,7 @@ export default function ItemOverview() {
       await makeBooking(bookingInfo, item)
     } catch (error) {
       console.log(error)
+      if (axios.isAxiosError(error)) console.log(error.response?.data)
       errorDispatch({
         type: 'openSnackBar',
         data: {

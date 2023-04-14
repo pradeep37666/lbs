@@ -9,6 +9,7 @@ type Props = {
   endDate: Date
   collectText?: string
   returnText?: string
+  isExtension?: boolean
 }
 
 export default function BookingDatesPanel({
@@ -16,6 +17,7 @@ export default function BookingDatesPanel({
   endDate,
   collectText,
   returnText,
+  isExtension,
 }: Props) {
   const dayArray = [
     'Sunday',
@@ -35,7 +37,13 @@ export default function BookingDatesPanel({
         </span>
         <div style={{ textAlign: 'center' }}>
           <span className='ApplicationFooterTime'>
-            {moment(startDate).hours() === 8 ? `8:00am ` : `1:00pm `}{' '}
+            {isExtension
+              ? moment(startDate).hours() === 17
+                ? `5:00pm `
+                : `1:00pm `
+              : moment(startDate).hours() === 8
+              ? `8:00am `
+              : `1:00pm `}{' '}
           </span>
           <span className='ApplicationFooterDay'>
             {dayArray[startDate.getDay()]}

@@ -5,9 +5,10 @@ import useGlobalState from '../../util/useGlobalState'
 import LendStripes from '../../assets/Images/LendStripes.png'
 import BorrowStripes from '../../assets/Images/BorrowStripes.png'
 import { isMobile } from 'react-device-detect'
-import { Booking } from '../../types/Booking'
+import { Booking, BookingEventStatus } from '../../types/Booking'
 import moment from 'moment'
 import getBookingDuration from '../../util/tradeUtils/getBookingDuration'
+import getExtensionApprovedDuration from '../../util/tradeUtils/getExtensionApprovedDuration'
 
 type Props = {
   booking: Booking
@@ -23,13 +24,17 @@ export default function TradeCalendarItem({
   const { state } = useGlobalState()
   const { user } = state
 
-  const bookingDuration = getBookingDuration(booking.bookingDurations)
-  const isLend = booking.borrowerId !== user.id
-  const isConfirmed = booking.status === 'APPROVED'
+  const bookingDuration = booking.bookingEvents?.some(
+    bookingEvent => bookingEvent.event === BookingEventStatus.EXTENSION_APPROVED
+  )
+    ? getExtensionApprovedDuration(booking.bookingDurations)
+    : getBookingDuration(booking.bookingDurations)
+
+  const isLender = booking.borrowerId !== user.id
+  const isConfirmed =
+    booking.status === 'APPROVED' || booking.status === 'IN_PROGRESS'
   const isCancelled =
     booking.status === 'REJECTED' || booking.status === 'CANCELLED'
-  // booking.status === 'DISPUTED' ||
-  // booking.status === 'RESOLVED'
 
   useEffect(() => {
     getBookingSlotDifference()
@@ -41,7 +46,7 @@ export default function TradeCalendarItem({
     new Date(bookingDuration.startDate).toDateString() ===
       new Date(bookingDuration.endDate).toDateString()
 
-  const sameTimeSlot = () => {
+  const isSameTimeSlot = () => {
     if (!bookingDuration) return
     const startDateHours = moment(bookingDuration.startDate).hours()
     const endDateHours = moment(bookingDuration.endDate).hours()
@@ -56,7 +61,7 @@ export default function TradeCalendarItem({
 
   const getBackgroundImage = () => {
     if (!isCancelled) return
-    return isLend ? `url(${LendStripes})` : `url(${BorrowStripes})`
+    return isLender ? `url(${LendStripes})` : `url(${BorrowStripes})`
   }
 
   /*
@@ -107,26 +112,35 @@ export default function TradeCalendarItem({
     if (!bookingDuration) return
     const startDate = moment(bookingDuration.startDate)
     const endDate = moment(bookingDuration.endDate)
-    if (
-      endDate.days() - startDate.days() !== 0 &&
-      endDate.days() - startDate.days() <= 1
-    ) {
+    if (endDate.days() - startDate.days() <= 1) {
       return true
     }
     return false
   }
 
-  const isVertical = sameTimeSlot() ? true : false
-  const shortenText = sameTimeSlot() || getBookingSlotDifference() || sameDate
+  const getIsVertical = () => {
+    const bookingStartPosition = getBookingStartPosition()
+    const bookingEndPostion = getBookingEndPosition()
+    if (!bookingStartPosition || !bookingEndPostion) return
+
+    if (bookingEndPostion - bookingStartPosition <= 3) {
+      return true
+    } else {
+      return false
+    }
+  }
+
+  const isVertical = getIsVertical()
+  const shortenText = isSameTimeSlot() || sameDate
 
   const getCalendarItemClass = () => {
     if (isCancelled) {
-      return isLend
+      return isLender
         ? 'TradeCalendarItemLendCancelled'
         : 'TradeCalendarItemBorrowCancelled'
     }
     if (isConfirmed) {
-      return isLend ? 'TradeCalendarItemLend' : 'TradeCalendarItemBorrow'
+      return isLender ? 'TradeCalendarItemLend' : 'TradeCalendarItemBorrow'
     }
     return 'TradeCalendarItemPending'
   }
@@ -146,7 +160,7 @@ export default function TradeCalendarItem({
           flexDirection: isVertical ? 'column' : 'row',
           backgroundImage: getBackgroundImage(),
           backgroundSize: 'auto',
-          padding: sameTimeSlot() ? '0.5rem 0' : '0.5rem',
+          padding: isSameTimeSlot() ? '0.5rem 0' : '0.5rem',
         }}
         className={getCalendarItemClass()}
       >
@@ -162,7 +176,7 @@ export default function TradeCalendarItem({
         </span>
         <Arrow
           onClick={() => null}
-          rotation={sameTimeSlot() ? 90 : 0}
+          rotation={isSameTimeSlot() ? 90 : 0}
           width={isMobile ? 20 : 30}
           height={isMobile ? 10 : 20}
         />

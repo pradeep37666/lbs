@@ -2,17 +2,17 @@ import React, { SetStateAction } from 'react'
 import StatusButton from './StatusButton'
 
 type Props = {
-  isOwner: boolean
+  isLender: boolean
   toggleReviewModal: () => void
 }
 
-export const StatusItemReturn = ({ isOwner, toggleReviewModal }: Props) => {
+export const StatusItemReturn = ({ isLender, toggleReviewModal }: Props) => {
   return (
     <div className='TradeStatusContentContainer'>
-      {isOwner ? (
+      {isLender ? (
         <>
           <span style={{ marginBottom: '0.5em' }}>
-            Fantastic! Your item has returned.
+            Fantastic! Your item has been returned!
           </span>
           <StatusButton
             text='Rate borrower'

@@ -1,17 +1,17 @@
 import React from 'react'
 import { useHistory } from 'react-router'
-import { Booking, BookingStatus } from '../../../types/Booking'
+import { Booking, BookingAction } from '../../../types/Booking'
 import StatusButton from './StatusButton'
 
 type Props = {
-  isOwner: boolean
-  updateBookingStatus: (status: BookingStatus) => Promise<void>
+  isLender: boolean
+  handleBookingAction: (action: BookingAction) => Promise<void>
   booking: Booking
 }
 
 export const StatusReschedule = ({
-  isOwner,
-  updateBookingStatus,
+  isLender,
+  handleBookingAction,
   booking,
 }: Props) => {
   const itemId = booking.itemId
@@ -19,7 +19,7 @@ export const StatusReschedule = ({
 
   return (
     <div className='TradeStatusContentContainer'>
-      {isOwner ? (
+      {isLender ? (
         <div className='TradeStatusContentContainer'>
           <span style={{ marginBottom: '0.5em' }}>
             You have asked for new times from this borrower, they have 24hrs to
@@ -30,13 +30,13 @@ export const StatusReschedule = ({
       ) : (
         <>
           <span style={{ marginBottom: '0.5em' }}>
-            The owner has re-scheduled the booking
+            The owner has asked that you reschedule the booking.
           </span>
           <div className='TradeStatusButtonContainer'>
             <StatusButton
               text='Cancel'
               type='white'
-              onClick={() => updateBookingStatus('REJECTED')}
+              onClick={() => handleBookingAction('CANCEL')}
             />
             <StatusButton
               text='Apply Again'

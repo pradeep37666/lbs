@@ -32,6 +32,7 @@ export enum BookingEventStatus {
   EXTENSION_REQUESTED = 'EXTENSION_REQUESTED',
   EXTENSION_APPROVED = 'EXTENSION_APPROVED',
   EXTENSION_REJECTED = 'EXTENSION_REJECTED',
+  EXTENSION_CANCELLED = 'EXTENSION_CANCELLED',
   DISPUTED = 'DISPUTED',
   RESOLVED = 'RESOLVED',
 }
@@ -44,7 +45,8 @@ export type BookingAction =
   | 'EXTEND'
   | 'LENDER_CONFIRM'
   | 'BORROWER_CONFIRM'
-  | 'BOTH_CONFIRM'
+  | 'RESCHEDULE'
+  | 'DISPUTE'
 
 export type CreateBooking = {
   borrowerAddress: BorrowerAddress | null
@@ -94,6 +96,7 @@ export interface Booking {
   item: Item
   bookingDurations: BookingDuration[]
   bookingEvents: BookingEvent[]
+  disputes: Dispute[]
   borrowerAddress: ItemAddress
 }
 
@@ -132,3 +135,32 @@ export type BookingDate = {
 }
 
 export type BookingMode = 'APPLY' | 'EXTEND'
+
+export type RateLenderInfo = {
+  lenderRating: {
+    lenderId: string
+    borrowerId: string
+    rating: number
+  }
+  itemRating: {
+    itemId: string
+    comment: string
+    rating: number
+    userId: string
+    bookingId: string
+  }
+}
+
+export type RateBorrowerInfo = {
+  lenderId: string
+  borrowerId: string
+  rating: number
+}
+
+export type Dispute = {
+  id: string
+  createdAt: string
+  updatedAt: string
+  isResolved: boolean
+  bookingId: string
+}

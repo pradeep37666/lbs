@@ -50,8 +50,11 @@ export const StatusApproved = ({ isLender, userDetails, startDate }: Props) => {
       ) : (
         <>
           <div style={{ marginBottom: '0.5em' }}>
-            <span>Get ready to pick up your item from </span>
-            <span>{`${userDetails.firstName} ${userDetails.lastName}`}</span>
+            <span>
+              Your booking has been approved. Get ready to pick up your item
+              from{' '}
+            </span>
+            <span>{`${userDetails.firstName} ${userDetails.lastName}.`}</span>
           </div>
           <StatusButton
             text={

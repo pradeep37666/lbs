@@ -7,6 +7,7 @@ import {
 } from '../../../types/Booking'
 import { UserTradeData } from '../../../types/User'
 import StatusExtensionApproved from './StatusExtensionApproved'
+import StatusExtensionCancelled from './StatusExtensionCancelled'
 import StatusExtensionRejected from './StatusExtensionRejected'
 import StatusExtensionRequested from './StatusExtensionRequested'
 
@@ -15,12 +16,17 @@ type Props = {
     | BookingEventStatus.EXTENSION_REQUESTED
     | BookingEventStatus.EXTENSION_REJECTED
     | BookingEventStatus.EXTENSION_APPROVED
+    | BookingEventStatus.EXTENSION_CANCELLED
   isLender: boolean
-  handleBookingAction: (action: BookingAction) => Promise<void>
+  handleBookingAction: (
+    action: BookingAction,
+    event?: BookingEventStatus
+  ) => Promise<void>
   userDetails: UserTradeData
   endDate: string
   selectedBooking: Booking
   bookingDuration: BookingDuration
+  isLoading: boolean
 }
 
 const StatusExtension = ({
@@ -31,8 +37,8 @@ const StatusExtension = ({
   endDate,
   selectedBooking,
   bookingDuration,
+  isLoading,
 }: Props) => {
-  // TODO - pass handleBookingAction into components when backend endpoints have been created
   switch (extensionStatus) {
     case BookingEventStatus.EXTENSION_REQUESTED:
       return (
@@ -42,6 +48,7 @@ const StatusExtension = ({
           selectedBooking={selectedBooking}
           handleBookingAction={handleBookingAction}
           existingEndDate={endDate}
+          isLoading={isLoading}
         />
       )
     case BookingEventStatus.EXTENSION_APPROVED:
@@ -50,7 +57,6 @@ const StatusExtension = ({
           isLender={isLender}
           userDetails={userDetails}
           endDate={endDate}
-          selectedBooking={selectedBooking}
           bookingDuration={bookingDuration}
         />
       )
@@ -59,8 +65,20 @@ const StatusExtension = ({
         <StatusExtensionRejected
           isLender={isLender}
           userDetails={userDetails}
+          endDate={endDate}
         />
       )
+    case BookingEventStatus.EXTENSION_CANCELLED:
+      return (
+        <StatusExtensionCancelled
+          isLender={isLender}
+          userDetails={userDetails}
+          endDate={endDate}
+        />
+      )
+    default: {
+      throw Error('Unhandled error')
+    }
   }
 }
 

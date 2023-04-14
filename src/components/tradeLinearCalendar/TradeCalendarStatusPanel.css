@@ -56,6 +56,11 @@
   box-shadow: none;
 }
 
+.TradeDisputeBtn:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
 .TradeStatusContentContainer {
   display: flex;
   flex-direction: column;
