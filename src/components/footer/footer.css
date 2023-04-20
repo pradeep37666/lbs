@@ -121,9 +121,16 @@
   font-weight: bold;
 }
 
+.LinkContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 5;
+}
+
 .LinkText {
   font-size: 18px;
   color: #33384f;
+  padding-bottom: 12px;
 }
 .Copyright {
   font-size: 20px;

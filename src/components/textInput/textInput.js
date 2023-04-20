@@ -1,6 +1,6 @@
-import React from 'react';
-import './textInput.css';
-import { makeStyles } from '@material-ui/styles';
+import React from 'react'
+import './textInput.css'
+import { makeStyles } from '@material-ui/styles'
 
 const useStyles = makeStyles({
   textInput: props => ({
@@ -14,23 +14,28 @@ const useStyles = makeStyles({
     maxHeight: '74px',
   }),
   inputLabel: props => ({
-    display: (props.label === '') ? 'none' : 'block',
+    display: props.label === '' ? 'none' : 'block',
     position: 'absolute',
-    top: '10px', 
+    top: '10px',
     left: '20px',
     fontWeight: 'bold',
     color: '#bcbcbc',
     fontSize: '10px',
-  })
+  }),
 })
 
 export default function TextInput(props) {
-  const classes = useStyles(props);
+  const classes = useStyles(props)
   return (
     <div className={`${classes.inputDiv}`}>
-    <label className={`${classes.inputLabel}`}>{props.label}</label>
-    <input type='text' placeholder={props.placeholder} className={`TextInput ${classes.textInput}`} onChange={props.onChange}></input>
+      <label className={`${classes.inputLabel}`}>{props.label}</label>
+      <input
+        type='text'
+        value={props.value}
+        placeholder={props.placeholder}
+        className={`TextInput ${classes.textInput}`}
+        onChange={props.onChange}
+      ></input>
     </div>
-    
   )
 }

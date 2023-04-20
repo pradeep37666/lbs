@@ -177,3 +177,20 @@ export type DeliveryCosts = {
   deliveryPrice: number
   pickupPrice: number
 }
+
+export enum ItemCategoriesEnum {
+  DIY_GARDEN = 'DIY & Garden',
+  OUTDOOR_SPORT = 'Outdoor & Sport',
+  PHOTOGRAPHY = 'Photography',
+  PARTIES_EVENTS = 'Parties & Events',
+  VEHICLE = 'Vehicle',
+  CLOSET = 'Closet',
+  KITCHEN = 'Kitchen',
+  GAMING_TOYS = 'Gaming & Toys',
+  MUSICAL = 'Musical',
+  HOUSEHOLD = 'Household',
+  BABIES_KIDS = 'Babies & Kids',
+  ELECTRONICS = 'Electronics',
+  SPACES = 'Spaces',
+  OTHER = 'Other',
+}
