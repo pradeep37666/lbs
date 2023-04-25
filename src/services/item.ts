@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { ItemCreateArgs, ItemUpdateArgs } from '../types/Item'
+import { ItemCreateArgs, ItemCreated, ItemUpdateArgs } from '../types/Item'
 import Instance from '../util/axios'
 import { BlockedAvailabilityNumberFormat } from '../types/User'
 
@@ -28,6 +28,46 @@ class ItemService {
           throw Error(networkErrorMessage)
       }
       throw Error('Error fetching item details')
+    }
+  }
+
+  createItem = async (
+    itemData: ItemCreateArgs
+  ): Promise<ItemCreated | boolean> => {
+    try {
+      const { data } = await Instance.post('/items', itemData)
+      return data
+    } catch (error: any) {
+      console.log(
+        'Error While creating your item, please try again',
+        JSON.stringify(error.response.data, null, 3)
+      )
+      return false
+    }
+  }
+
+  setItemBlockedAvailability = async (
+    itemId: string,
+    blockedAvailabilitiesNumberFormat: BlockedAvailabilityNumberFormat[]
+  ): Promise<BlockedAvailabilityNumberFormat[]> => {
+    try {
+      const response = await Instance.post(
+        `/blocked-availability/items/${itemId}`,
+        {
+          blockedAvailabilities: blockedAvailabilitiesNumberFormat,
+        }
+      )
+      console.log(
+        'Response from the server while updating the availability for the item',
+        JSON.stringify(response.data, null, 3)
+      )
+      return response.data
+    } catch (error: any) {
+      console.log(
+        'Error while setting the availability for the item',
+        JSON.stringify(error, null, 3)
+      )
+      throw Error
     }
   }
 

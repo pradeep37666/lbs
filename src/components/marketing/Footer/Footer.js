@@ -3,9 +3,9 @@ import './Footer.css'
 import Logo from '../../../assets/Logos/LBS_Logo_Flat_Red.jpg'
 import AppleButton from '../../../assets/Images/AppStoreButton.png'
 import GooglePlayButton from '../../../assets/Images/GooglePlayButton.png'
-import { useHistory } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import { BsFacebook, BsLinkedin } from 'react-icons/bs'
-import { FiInstagram } from 'react-icons/fi'
+import { FiFacebook, FiInstagram } from 'react-icons/fi'
 import {
   EmailArrowBtn,
   LBSBlackLogo,
@@ -64,29 +64,29 @@ const Footer = () => {
           </p>
           <p className='footer_first_desc'>hello@littlebigshed.co.nz</p>
         </div>
-        <div className='footer_content_box'>
+        <div className='footer_content_box flex flex-col gap-0'>
           <p
             className='footer_section_title_main'
             onClick={() => history.push('/about_us')}
           >
             About Us
           </p>
-          <p
+          <a
             className='footer_section_title'
-            //download pdf
-            // onClick={() => history.push('contact_us')}
+            download='Little Big Shed _ Terms & Conditions.pdf'
+            href='/Policies/LBS_Terms&Conditions.pdf'
           >
             Rental Agreement (the terms and conditions)
-          </p>
+          </a>
           <a
             className='footer_section_title'
             download='Little Big Shed _ Privacy Policy.pdf'
-            href='/public/Policies/PrivacyPolicy.pdf'
+            href='/Policies/LBS_PrivacyPolicy.pdf'
           >
             Privacy policy
           </a>
         </div>
-        <div className='footer_content_box'>
+        <div className='footer_content_box flex flex-col'>
           <p
             className='footer_section_title_main'
             onClick={() => history.push('/how_it_works')}
@@ -112,43 +112,64 @@ const Footer = () => {
             Sign Up / Login
           </p>
         </div>
-        <div className='footer_content_box'>
+        <div className='footer_content_box flex flex-col'>
           <p
             className='footer_section_title_main'
             onClick={() => history.push('/')}
           >
             Top Categories
           </p>
-          <p className='footer_section_title' onClick={() => history.push('/')}>
-            Tools
-          </p>
-          <p className='footer_section_title' onClick={() => history.push('/')}>
-            Gardening
-          </p>
-          <p className='footer_section_title' onClick={() => history.push('/')}>
+          <Link
+            className='footer_section_title'
+            to={`/search?category=${encodeURIComponent('DIY & Garden')}`}
+          >
+            Tools & Garden
+          </Link>
+          <Link
+            className='footer_section_title'
+            to={`/search?category=${encodeURIComponent('Photography')}`}
+          >
+            Photography
+          </Link>
+          <Link
+            className='footer_section_title'
+            to={`/search?category=${encodeURIComponent('Parties & Events')}`}
+          >
             Events & Parties
-          </p>
-          <p className='footer_section_title' onClick={() => history.push('/')}>
+          </Link>
+          <Link
+            className='footer_section_title'
+            to={'/search/?keyword=&category=Other'}
+          >
             Hobbies
-          </p>
-          <p className='footer_section_title' onClick={() => history.push('/')}>
-            Hobbies
-          </p>
-          <p className='footer_section_title' onClick={() => history.push('/')}>
+          </Link>
+          <Link
+            className='footer_section_title'
+            to={`/search?category=${encodeURIComponent('Outdoor & Sport')}`}
+          >
             Outdoor
-          </p>
-          <p className='footer_section_title' onClick={() => history.push('/')}>
+          </Link>
+          <Link
+            className='footer_section_title'
+            to={`/search?category=${encodeURIComponent('Babies & Kids')}`}
+          >
             Kids
-          </p>
-          <p className='footer_section_title' onClick={() => history.push('/')}>
+          </Link>
+          <Link
+            className='footer_section_title'
+            to={'/search/?keyword=&category=Vehicle'}
+          >
             Vehicle
-          </p>
-          <p className='footer_section_title' onClick={() => history.push('/')}>
+          </Link>
+          <Link
+            className='footer_section_title'
+            to={'/search/?keyword=&category=Closet'}
+          >
             Closet
-          </p>
-          <p className='footer_section_title' onClick={() => history.push('/')}>
+          </Link>
+          <Link className='footer_section_title' to={'/search/?keyword='}>
             Browse All
-          </p>
+          </Link>
         </div>
         <div className='footer_content_box'>
           <p className='footer_last_title'>Stay Connected</p>
@@ -177,6 +198,9 @@ const Footer = () => {
             </a>
             <a href='https://www.linkedin.com/company/little-big-shed/'>
               <BsLinkedin className='social_media_icons' />
+            </a>
+            <a href='https://www.facebook.com/LittleBigShed'>
+              <BsFacebook className='social_media_icons' />
             </a>
           </div>
         </div>

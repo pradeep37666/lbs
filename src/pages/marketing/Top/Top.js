@@ -16,6 +16,7 @@ import CategoryCard from '../../../components/marketing/CategoryCard/CategoryCar
 import Footer from '../../../components/marketing/Footer/Footer'
 import ItemService from '../../../services/item'
 import Instance from '../../../util/axios'
+import { Link } from 'react-router-dom'
 
 const Top = () => {
   const [itemCountByCategories, setItemCountByCategories] = useState([])
@@ -93,13 +94,13 @@ const Top = () => {
               A LITTLE sharing makes a BIG difference – for us, our community
               and the planet. That’s why we created Little Big Shed. It’s an
               online equipment share platform to help you{' '}
-              <a style={{ fontWeight: '600' }} href='/#/rent_stuff'>
+              <Link style={{ fontWeight: '600' }} to={'/rent_stuff'}>
                 borrow more
-              </a>
-              , buy less, and earn some extra cash when you{' '}
-              <a style={{ fontWeight: '600' }} href='/#/lend_your_stuff'>
+              </Link>
+              , buy less, and make some extra cash when you{' '}
+              <Link style={{ fontWeight: '600' }} to={'/lend_your_stuff'}>
                 lend your stuff
-              </a>
+              </Link>
               .<br />
               <br />
               Plus, when you share on our platform, we take no service fee –
@@ -108,20 +109,23 @@ const Top = () => {
               We believe that no one should be restricted from doing a DIY
               project, cultivating their talents or going on an adventure due to
               a lack of resources. Through the power of sharing <s />
-              <a style={{ fontWeight: '600' }} href='/#/'>
-                tool
-              </a>
-              , <s />
-              <a style={{ fontWeight: '600' }} href='/#/'>
-                hobby gear
-              </a>
-              , <s />
-              <a
+              <Link
                 style={{ fontWeight: '600' }}
-                href='/#/search/?keyword=&category=Outdoor%20&%20Sport'
+                to={`/search?category=${encodeURIComponent('DIY & Garden')}`}
               >
-                leisure equipmen
-              </a>{' '}
+                tool
+              </Link>
+              , <s />
+              <Link style={{ fontWeight: '600' }} to={`/search?category=Other`}>
+                hobby gear
+              </Link>
+              , <s />
+              <Link
+                style={{ fontWeight: '600' }}
+                to={`/search?category=${encodeURIComponent('Outdoor & Sport')}`}
+              >
+                leisure equipment
+              </Link>{' '}
               and much more, we can support each other to make, mend, learn (and
               earn!).
             </p>
@@ -177,15 +181,19 @@ const Top = () => {
             ‘little shed’ (whether that’s a garage, a kitchen drawer or a
             cupboard shelf) can become part of something much bigger — the
             sharing economy. Why not{' '}
-            <a style={{ fontWeight: '600' }} href='/#/lend_your_stuff'>
+            <Link style={{ fontWeight: '600' }} to={`/lend_your_stuff`}>
               lend your stuff
-            </a>{' '}
+            </Link>{' '}
             to locals in your area when not in use and make some extra cash on
             the side? Plus, there’s no platform service fee when you share your
             stuff. We cover the costs for the smooth sailing of our shed so that
             you get more in your back pocket. We’ll take good care of you too so
             you can lend your items worry-free. Check out our{' '}
-            <a style={{ fontWeight: '600' }} href='/#/protection'>
+            <a
+              style={{ fontWeight: '600' }}
+              href='/Policies/LBS_LenderProtectionPolicy.pdf'
+              download='LBS _ Lender Protection Policy.pdf'
+            >
               lender protection
             </a>{' '}
             policy to find out more about sharing with our verified users.
@@ -216,7 +224,7 @@ const Top = () => {
                 target='_blank'
                 href='https://circulareconomy.europa.eu/platform/sites/default/files/emaf_ce-in-cities-factsheets-products_all_mar19.pdf'
               >
-                [Circular Economy Report]
+                [Circular Economy Report].
               </a>
               &nbsp; You can do your bit to reduce waste by borrowing instead of
               buying to kick-start your next DIY project or creative experience.

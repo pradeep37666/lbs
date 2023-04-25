@@ -51,21 +51,53 @@ export default function Footer() {
           </div>
           <div>
             <div className='LinkHeader'>Conditions</div>
-            <div className='LinkText'>
-              <div>Terms and Conditions</div>
-              <div>Privacy Policy</div>
-              <div>Location Policy</div>
-              <div>Conditions</div>
+            <div className='flex flex-col'>
+              <a
+                className='LinkText'
+                download='Little Big Shed _ Terms & Conditions.pdf'
+                href='/Policies/LBS_Terms&Conditions.pdf'
+              >
+                Terms and Condtions
+              </a>
+              <a
+                className='LinkText'
+                download='Little Big Shed _ Privacy Policy.pdf'
+                href='/Policies/LBS_PrivacyPolicy.pdf'
+              >
+                Privacy Policy
+              </a>
+              <a
+                className='LinkText'
+                download='LBS _ Lender Protection Policy.pdf'
+                href='/Policies/LBS_LenderProtectionPolicy.pdf'
+              >
+                Lender Agreement
+              </a>
+              <a
+                className='LinkText'
+                href='Policies/LBS_Cancelleations&RefundPolicy.pdf'
+                download='Little Big Shed _ Cancellations and Refund Policy.pdf'
+              >
+                Cancellation and Refund Policy
+              </a>
             </div>
           </div>
 
           <div>
             <div className='LinkHeader'>Discover</div>
-            <div className='LinkText'>
-              <div>New Items</div>
-              <div>Top Items</div>
-              <div>Search</div>
-              <div>Discover</div>
+            <div className='flex flex-col'>
+              <Link className='LinkText' to={'/search/?keyword='}>
+                New Items
+              </Link>
+              <Link className='LinkText' to={'/search/?keyword='}>
+                Top Items
+              </Link>
+              <Link className='LinkText' to={'/search/?keyword='}>
+                Search
+              </Link>
+              <Link className='LinkText' to={'/search/?keyword='}>
+                Discover
+              </Link>
             </div>
           </div>
 

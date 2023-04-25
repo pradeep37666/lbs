@@ -116,12 +116,13 @@ export default function PostItem() {
       })
     try {
       setIsCreateItemLoading(true)
-      const item = await itemService.createNewItem(
-        itemData,
-        itemBlockedAvailabilitiesNumberFormat
-      )
+      const item = await itemService.createItem(itemData)
       setItemID(item.id)
       dispatch({ type: 'setCreatedItem', data: item })
+      await itemService.setItemBlockedAvailability(
+        item.id,
+        itemBlockedAvailabilitiesNumberFormat
+      )
       dispatch({ type: 'setCurrentPage', data: POST_ITEM_PAGE.COMPLETE })
     } catch (error) {
       errorDispatch({

@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import {
   Search,
   Message,
@@ -73,14 +74,13 @@ const rentOutProcedures = [
         <br />
         <br />
         To list an item, click the ‘post item’ button – select a category,
-        upload photos, write a description, and set your price with the help of
-        our handy calculator tool.
+        upload photos, write a description, and set your price.
         <br />
         <br />
         Learn more about how to successfully rent out your items in our{' '}
-        <a style={{ fontWeight: '600' }} href='/#/faqs'>
+        <Link style={{ fontWeight: '600' }} to={'/faqs'}>
           listing tips
-        </a>{' '}
+        </Link>{' '}
         section on images and description etc…
       </p>
     ),
@@ -105,9 +105,9 @@ const rentOutProcedures = [
         <br />
         You can also choose to deliver and/or pick up your item from the
         borrower for an additional fee – which also supports{' '}
-        <a style={{ fontWeight: '600' }} href='/#/faqs'>
+        <Link style={{ fontWeight: '600' }} to={'/faqs'}>
           contactless sharing
-        </a>
+        </Link>
         .
       </p>
     ),
@@ -122,15 +122,11 @@ const rentOutProcedures = [
         show them any tips/quirks about using your item.
         <br />
         <br />
-        You can also upload additional ‘how to use’ instructions on the item
-        listing.
-        <br />
-        <br />
         Once the handover is complete, sit back and relax worry-free, knowing
         that we have you covered if something goes wrong! Check out our{' '}
-        <a style={{ fontWeight: '600' }} href='/#/protection'>
+        <Link style={{ fontWeight: '600' }} to={'/protection'}>
           lender protection
-        </a>{' '}
+        </Link>{' '}
         policy to find out more about sharing with our verified users.
       </p>
     ),
@@ -155,9 +151,9 @@ const rentOutProcedures = [
         <br />
         <br />
         Learn more about{' '}
-        <a style={{ fontWeight: '600' }} href='/#/faqs'>
+        <Link style={{ fontWeight: '600' }} to={'/faqs'}>
           how payment works
-        </a>{' '}
+        </Link>{' '}
         section on lender payment.
       </p>
     ),
@@ -172,9 +168,9 @@ const rentingProcedures = [
     procedureDesc: (
       <p>
         To book your first borrow{' '}
-        <a style={{ fontWeight: '600' }} href='/#/register'>
+        <Link style={{ fontWeight: '600' }} to={'/register'}>
           create an account
-        </a>{' '}
+        </Link>{' '}
         and follow the steps to verify your identity and payment details. Search
         for your item on our little big platform via category, location, and
         price. You can add an item to ‘your favourites’ before requesting a
@@ -197,18 +193,18 @@ const rentingProcedures = [
         <br />
         <br />
         If you change your mind, no worries. Find out more about our{' '}
-        <a style={{ fontWeight: '600' }} href='/#/faqs'>
+        <Link style={{ fontWeight: '600' }} to={'/faqs'}>
           cancellation policy
-        </a>{' '}
+        </Link>{' '}
         section.
         <br />
         Use the chat function in the app to ask the lender any questions and
         arrange handover details. <br />
         You can choose to have your item delivered and/or picked up from the
         lender for an additional fee or arrange{' '}
-        <a style={{ fontWeight: '600' }} href='/#/protection'>
+        <Link style={{ fontWeight: '600' }} to={'/protection'}>
           contactless sharing
-        </a>
+        </Link>
         .<br />
         <br />
       </p>
@@ -228,9 +224,9 @@ const rentingProcedures = [
         <br />
         When using the item, take care and show respect as if it was your own.
         If you come across any issues during your borrow, learn{' '}
-        <a style={{ fontWeight: '600' }} href='/#/faqs'>
+        <Link style={{ fontWeight: '600' }} to={'/faqs'}>
           what to do
-        </a>{' '}
+        </Link>{' '}
         section about disputes.
       </p>
     ),
