@@ -16,6 +16,7 @@ import { getPrevUpgradeLenderPage } from '../../../util/getPrevPage'
 import useErrorState from '../../../util/reducers/errorContext'
 import UserService from '../../../services/user'
 import { blockedAvailabilityToNumber } from '../../../util/blockedAvailabilityToNumber'
+import SignupLocationDetails from '../../../components/FormComponents/SignupLocationDetails'
 
 const FormContext = createContext()
 
@@ -82,6 +83,7 @@ export default function UpgradeLender() {
         mobile: user.mobile,
         isLender: true,
         role: 'COMMON',
+        countryCode: shedAddress.country,
       },
       stripeDetails: {
         day: dateOfBirth.getDate(),
@@ -111,6 +113,7 @@ export default function UpgradeLender() {
         user.id,
         userBlockedAvailability
       )
+      console.log('DATA WE ARE SENDING', JSON.stringify(userData, null, 3))
       globalDispatch({ type: 'setUser', data: result.user.data })
       globalDispatch({
         type: 'setUserBlockedAvailability',
@@ -156,7 +159,7 @@ export default function UpgradeLender() {
       case UPGRADE_LENDER.BANK:
         return <BankDetails context={FormContext} lenderUpgrade={true} />
       case UPGRADE_LENDER.LOCATION:
-        return <LocationDetails context={FormContext} />
+        return <SignupLocationDetails context={FormContext} />
       case UPGRADE_LENDER.AVAILABILITY:
         return (
           <Availability

@@ -114,36 +114,36 @@ export default function BankDetails({ context, lenderUpgrade }) {
   }
 
   return (
-    <div className="RegistrationWrapper">
+    <div className='RegistrationWrapper'>
       <>
-        <div className="LoginMain">
-          <Logo height="50px" width="50px" style={{ marginBottom: '.5em' }} />
-          <div className="LoginHeader">Payment Details</div>
-          <div className="LoginText">
+        <div className='LoginMain'>
+          <Logo height='50px' width='50px' style={{ marginBottom: '.5em' }} />
+          <div className='LoginHeader'>Payment Details</div>
+          <div className='LoginText'>
             If you would like to share your shed with users, Little big shed
             will need to know your payment and banking details to allow you to
             send and receive money for Little Big Shed trades.
           </div>
-          <div className="LoginText">
+          <div className='LoginText'>
             However if you only want to borrow items from other users, we will
             only need your card details.
           </div>
         </div>
         {!lenderUpgrade && (
-          <div className="LoginMain LoginMainNoMarg">
-            <div className="LoginHeader">Card Details</div>
-            <div className="LoginText">
+          <div className='LoginMain LoginMainNoMarg'>
+            <div className='LoginHeader'>Card Details</div>
+            <div className='LoginText'>
               We need these details to make a successful trade between 2
               parties.
             </div>
-            <div className="LoginHeader LoginHeader--NoMargin">
+            <div className='LoginHeader LoginHeader--NoMargin'>
               Name on Card
             </div>
-            <div className="LoginInputValidationContainer">
+            <div className='LoginInputValidationContainer'>
               <input
-                type="text"
-                placeholder="Name on Card"
-                className="LoginInput"
+                type='text'
+                placeholder='Name on Card'
+                className='LoginInput'
                 onChange={e => setCardName(e.target.value)}
               />
               <div
@@ -154,19 +154,19 @@ export default function BankDetails({ context, lenderUpgrade }) {
               {cardNameError && (
                 <ValidationPopup
                   errorText={'Please enter a card name'}
-                  errorHeader="Invalid Card Name"
+                  errorHeader='Invalid Card Name'
                 />
               )}
             </div>
             <div
-              className="LoginHeader LoginHeader--NoMargin"
+              className='LoginHeader LoginHeader--NoMargin'
               style={{ marginTop: '1rem' }}
             >
               Number on Card
             </div>
-            <div className="LoginInputValidationContainer">
+            <div className='LoginInputValidationContainer'>
               <CardNumberElement
-                className="LoginInput"
+                className='LoginInput'
                 onChange={cardNumberObj => setCardNumber(cardNumberObj)}
                 options={cardElementOptions}
               />
@@ -178,26 +178,26 @@ export default function BankDetails({ context, lenderUpgrade }) {
               {cardNumber?.error?.message && (
                 <ValidationPopup
                   errorText={cardNumber?.error?.message}
-                  errorHeader="Invalid Card Number"
+                  errorHeader='Invalid Card Number'
                 />
               )}
             </div>
-            <div className="ExpiryCCVFlex" style={{ marginTop: '1rem' }}>
-              <div className="LoginHeader">Expiry</div>
-              <div className="LoginHeader">CCV</div>
+            <div className='ExpiryCCVFlex' style={{ marginTop: '1rem' }}>
+              <div className='LoginHeader'>Expiry</div>
+              <div className='LoginHeader'>CCV</div>
             </div>
             <div
-              className="LoginInputValidationContainer"
+              className='LoginInputValidationContainer'
               style={{ marginBottom: '1rem' }}
             >
-              <div className="ExpiryCCVFlex" style={{ marginBottom: '1rem' }}>
+              <div className='ExpiryCCVFlex' style={{ marginBottom: '1rem' }}>
                 <CardExpiryElement
-                  className="LoginInput"
+                  className='LoginInput'
                   onChange={cardExpiryObj => setCardExpiry(cardExpiryObj)}
                   options={cardElementOptions}
                 />
                 <CardCvcElement
-                  className="LoginInput"
+                  className='LoginInput'
                   onChange={cardCvcObj => setCardCvc(cardCvcObj)}
                   options={cardElementOptions}
                 />
@@ -211,7 +211,7 @@ export default function BankDetails({ context, lenderUpgrade }) {
               {cardExpiry?.error?.message && (
                 <ValidationPopup
                   errorText={cardExpiry?.error?.message}
-                  errorHeader="Invalid Expiry Date"
+                  errorHeader='Invalid Expiry Date'
                 />
               )}
               <div
@@ -222,7 +222,7 @@ export default function BankDetails({ context, lenderUpgrade }) {
               {cardCvc?.error?.message && (
                 <ValidationPopup
                   errorText={cardCvc?.error?.message}
-                  errorHeader="Invalid CCV"
+                  errorHeader='Invalid CCV'
                 />
               )}
             </div>
@@ -230,7 +230,7 @@ export default function BankDetails({ context, lenderUpgrade }) {
               <Button
                 isLoading={isLoading}
                 onClick={createPaymentMethod}
-                text="Next"
+                text='Next'
               />
             )}
           </div>
@@ -239,20 +239,20 @@ export default function BankDetails({ context, lenderUpgrade }) {
 
       {isLenderUpgrade && (
         <div
-          className="LoginMain"
+          className='LoginMain'
           style={!user || lenderUpgrade ? { marginTop: 0 } : null}
         >
-          <div className="LoginHeader">Date of Birth</div>
+          <div className='LoginHeader'>Date of Birth</div>
           <ThemeProvider theme={datePickerTheme}>
             <MuiPickersUtilsProvider utils={MomentUtils}>
               <KeyboardDatePicker
                 disableToolbar
-                variant="inline"
-                format="DD/MM/yyyy"
+                variant='inline'
+                format='DD/MM/yyyy'
                 maxDate={getMinDate()}
-                maxDateMessage="You must be at least 13 years old to create an account"
-                margin="normal"
-                id="date-picker-inline"
+                maxDateMessage='You must be at least 13 years old to create an account'
+                margin='normal'
+                id='date-picker-inline'
                 value={dateOfBirth}
                 disableFuture
                 onChange={chosenDate => {
@@ -272,54 +272,56 @@ export default function BankDetails({ context, lenderUpgrade }) {
             </MuiPickersUtilsProvider>
           </ThemeProvider>
 
-          <div className="BankDetailMainTitle">Bank Deposit Details</div>
-          <div className="BankDetailSubTitle">
+          <div className='BankDetailMainTitle'>Bank Deposit Details</div>
+          <div className='BankDetailSubTitle'>
             Bank details will allow you to upgrade to a lender account.
           </div>
 
           <ValidationTextInput
             value={accountNumber}
-            label="Account Number"
-            placeholder="123 456 789"
+            label='Account Number'
+            placeholder='123 456 789'
             onChange={e =>
               dispatch({ type: 'setAccountNumber', data: e.target.value })
             }
           />
-          <ValidationTextInput
-            value={BSB}
-            label="BSB"
-            placeholder="123 456"
-            onChange={e => dispatch({ type: 'setBSB', data: e.target.value })}
-          />
+          {(!accountNumber || accountNumber.length < 10) && (
+            <ValidationTextInput
+              value={BSB}
+              label='BSB'
+              placeholder='123 456'
+              onChange={e => dispatch({ type: 'setBSB', data: e.target.value })}
+            />
+          )}
           <div>
-            <p className="IdProviderMainTitle">Identity Documents</p>
-            <p className="IdProviderSubTitle">
+            <p className='IdProviderMainTitle'>Identity Documents</p>
+            <p className='IdProviderSubTitle'>
               Attach a front and back image of a valid identity type (e.g.
               driver’s licence or passport).
             </p>
-            <div className="LoginHeader">Front Identity Image</div>
-            <div className="IdProvideInputContainer">
-              <div className="IdProvideImageSquare">
+            <div className='LoginHeader'>Front Identity Image</div>
+            <div className='IdProvideInputContainer'>
+              <div className='IdProvideImageSquare'>
                 {idFrontImage ? (
                   <img
                     src={idFrontImage.preview}
-                    alt="id front"
-                    className="IdPicturePreview"
+                    alt='id front'
+                    className='IdPicturePreview'
                     onLoad={() => setFrontImageError('')}
                     onError={e => setFrontImageError(e)}
                   />
                 ) : (
-                  <CameraIcon className="CameraIcon" />
+                  <CameraIcon className='CameraIcon' />
                 )}
               </div>
               <input
-                type="file"
-                id="selectIdFront"
+                type='file'
+                id='selectIdFront'
                 style={{ display: 'none' }}
                 onChange={e => uploadIdImages(e, 'front')}
               />
               <button
-                className="LoginFormButton UploadButton"
+                className='LoginFormButton UploadButton'
                 onClick={() => document.getElementById('selectIdFront').click()}
               >
                 Upload
@@ -327,34 +329,34 @@ export default function BankDetails({ context, lenderUpgrade }) {
             </div>
             {frontImageError ? (
               <ValidationPopup
-                errorText="Please try again."
-                errorHeader="Failed to upload an image"
+                errorText='Please try again.'
+                errorHeader='Failed to upload an image'
               />
             ) : null}
 
-            <div className="LoginHeader">Back Identity Image</div>
-            <div className="IdProvideInputContainer">
-              <div className="IdProvideImageSquare">
+            <div className='LoginHeader'>Back Identity Image</div>
+            <div className='IdProvideInputContainer'>
+              <div className='IdProvideImageSquare'>
                 {idBackImage ? (
                   <img
                     src={idBackImage.preview}
-                    alt="id back"
-                    className="IdPicturePreview"
+                    alt='id back'
+                    className='IdPicturePreview'
                     onLoad={() => setBackImageError('')}
                     onError={e => setBackImageError(e)}
                   />
                 ) : (
-                  <CameraIcon className="CameraIcon" />
+                  <CameraIcon className='CameraIcon' />
                 )}
               </div>
               <input
-                type="file"
-                id="selectIdBack"
+                type='file'
+                id='selectIdBack'
                 style={{ display: 'none' }}
                 onChange={e => uploadIdImages(e, 'back')}
               />
               <button
-                className="LoginFormButton UploadButton"
+                className='LoginFormButton UploadButton'
                 onClick={() => document.getElementById('selectIdBack').click()}
               >
                 Upload
@@ -362,23 +364,23 @@ export default function BankDetails({ context, lenderUpgrade }) {
             </div>
             {backImageError ? (
               <ValidationPopup
-                errorText="Please try again."
-                errorHeader="Failed to upload an image"
+                errorText='Please try again.'
+                errorHeader='Failed to upload an image'
               />
             ) : null}
           </div>
 
-          <div className="LoginHeader LoginHeader--NoMargin">
+          <div className='LoginHeader LoginHeader--NoMargin'>
             Website (Social Media)
           </div>
           <div
-            className="LoginInputValidationContainer"
+            className='LoginInputValidationContainer'
             style={{ marginBottom: '1rem' }}
           >
             <input
-              type="text"
-              placeholder="https://www.littlebigshed.com"
-              className="LoginInput"
+              type='text'
+              placeholder='https://www.littlebigshed.com'
+              className='LoginInput'
               value={website}
               onChange={e =>
                 dispatch({ type: 'setWebsite', data: e.target.value })
@@ -386,14 +388,10 @@ export default function BankDetails({ context, lenderUpgrade }) {
             />
           </div>
           <Button
-            text="Next"
+            text='Next'
             isLoading={isLoading}
             isDisabled={
-              !accountNumber ||
-              !BSB ||
-              !idFrontImage ||
-              !idBackImage ||
-              !website
+              !accountNumber || !idFrontImage || !idBackImage || !website
             }
             onClick={() =>
               user
