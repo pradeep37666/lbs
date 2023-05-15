@@ -99,9 +99,25 @@ export default function Search() {
       searchQuery = searchQuery.concat('?keyword=')
     }
     if (category) {
-      searchQuery = searchQuery.concat(
-        '&category=' + encodeURIComponent(category)
-      )
+      switch (String(category.trim())) {
+        case 'DIY':
+          searchQuery += `&category=${encodeURIComponent('DIY & Garden')}`
+          break
+        case 'Babies':
+          searchQuery += `&category=${encodeURIComponent('Babies & Kids')}`
+          break
+        case 'Gaming':
+          searchQuery += `&category=${encodeURIComponent('Gaming & Toys')}`
+          break
+        case 'Parties':
+          searchQuery += `&category=${encodeURIComponent('Parties & Events')}`
+          break
+        case 'Outdoor':
+          searchQuery += `&category=${encodeURIComponent('Outdoor & Sport')}`
+          break
+        default:
+          searchQuery += `&category=${encodeURIComponent(category)}`
+      }
     }
     if (rating) {
       searchQuery = searchQuery.concat('&rating=' + rating)

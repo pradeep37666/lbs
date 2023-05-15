@@ -121,7 +121,7 @@ export default function PostItem() {
       dispatch({ type: 'setCreatedItem', data: item })
       await itemService.setItemBlockedAvailability(
         item.id,
-        itemBlockedAvailabilitiesNumberFormat
+        itemBlockedAvailabilitiesNumberFormat ?? []
       )
       dispatch({ type: 'setCurrentPage', data: POST_ITEM_PAGE.COMPLETE })
     } catch (error) {
