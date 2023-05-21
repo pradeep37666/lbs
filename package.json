@@ -2,7 +2,6 @@
   "name": "little-big-shed",
   "version": "0.1.0",
   "private": true,
-  "homepage": "./",
   "types": "./types/BookingPriceCalculator.d.ts",
   "dependencies": {
     "@cometchat-pro/chat": "^3.0.0",
