@@ -1,42 +1,41 @@
 .step_card_container {
-    width: 16em;
-    height: fit-content;
-    background: #F5F5F5;
-    border-radius: 10px;
-    padding: 0.5em;
-    margin: 0 auto;
+  width: 16em;
+  height: fit-content;
+  background: #f5f5f5;
+  border-radius: 10px;
+  padding: 0.5em;
+  margin: 0 auto;
 }
 
 .step_card_image_box {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 0.5rem;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 0.5rem;
 }
 
 .step_card_icon {
-    width: 3em;
-    height: 3em;
+  width: 3em;
 }
 
 .step_card_title {
-    color: #33384F;
-    font-size: 1.2em;
-    font-family: 'Kameron', serif;
-    font-weight: bold;
-    margin: 0;
-    padding: 0.5em;
-    padding-bottom: 0;
+  color: #33384f;
+  font-size: 1.2em;
+  font-family: 'Kameron', serif;
+  font-weight: bold;
+  margin: 0;
+  padding: 0.5em;
+  padding-bottom: 0;
 }
 
 .step_card_description,
 .step_card_long_description {
-    margin: 0.2em 0;
-    padding: 0 0.8em;
+  margin: 0.2em 0;
+  padding: 0 0.8em;
 }
 
 .step_card_long_description {
-    margin-bottom: 0.8em;
-    font-size: 0.8em;
+  margin-bottom: 0.8em;
+  font-size: 0.8em;
 }

@@ -9,11 +9,12 @@ const MarketingButton = ({
   linkTo,
   children,
   onClick,
+  height,
 }) => {
   return (
     <Link
       className='marketing_btn_container'
-      style={{ background: bgColor, color: textColor, width: width }}
+      style={{ background: bgColor, color: textColor, width, height }}
       to={linkTo ?? ''}
       onClick={onClick}
     >

@@ -136,7 +136,7 @@ export default function Footer() {
       <div className='FooterBar Copyright'>
         <div className='FooterWrapper' style={{ margin: '30px 0' }}>
           <div>Support Team</div>
-          <div>Copyright 2020 Little Big Shed</div>
+          <div>Copyright 2023 Little Big Shed</div>
         </div>
       </div>
     </div>

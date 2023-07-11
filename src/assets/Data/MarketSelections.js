@@ -7,7 +7,6 @@ import {
   MowingImg,
   CameraImg,
   DollarSign,
-  DummyAvatar1,
   Tools,
   Gardening,
   Events,
@@ -184,9 +183,6 @@ const rentingProcedures = [
     title: '2. Book and Pay',
     procedureDesc: (
       <p>
-        When you’ve found an item you’d like to borrow, send a booking request
-        to the lender.
-        <br />
         You’ll receive a notification when your booking has been accepted. It’ll
         automatically be added to your trade dashboard and the full payment
         deducted from your account.
@@ -250,31 +246,63 @@ const rentingProcedures = [
 const damagedProcedures = [
   {
     id: 1,
-    icon: ThumbsUp,
-    title: '1. Photos Or Videos',
-    description:
-      'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.',
+    icon: CameraImg,
+    title: '1. Take photos or videos',
+    description: (
+      <p>
+        Take clear photos or videos of the item(s) on your mobile phone or
+        camera with a timestamp immediately (and no more than 24 hours) before
+        the rental to prove they were in your possession undamaged at that time.
+      </p>
+    ),
   },
   {
     id: 2,
-    icon: Message,
-    title: '2. When do I report?',
-    description:
-      'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.',
+    icon: CameraImg,
+    title: '2. Take photos and videos of the damage on return',
+    description: (
+      <p>
+        ● Take clear photos or videos on your mobile phone or camera with a
+        timestamp immediately (and no more than 24 hours) after the rental to
+        prove the damage happened during the rental and not during your own
+        subsequent use.
+        <br />● In the case of theft, report the incident to the police as soon
+        as reasonably possible, and obtain a crime reference number from them.)
+      </p>
+    ),
   },
   {
     id: 3,
-    icon: MowingImg,
-    title: '3. Borrower Communication',
-    description:
-      'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.',
+    icon: Message,
+    title: '3. Raise a dispute',
+    description: (
+      <p>
+        ● Immediately raise a dispute with the borrower via the chat function
+        seeking compensation for any damage, loss or theft of your items during
+        the rental period.
+        <br />● Immediately raise a dispute with Little Big Shed by contacting
+        support@littlebigshed.com.
+        <br />● Do not post on social media, online, or make public information
+        about your claim before the claim process has completed.'
+      </p>
+    ),
   },
   {
     id: 4,
-    icon: DollarSign,
-    title: '4. Reach Out To Us',
-    description:
-      'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.',
+    icon: Message,
+    title: '4. Provide documents',
+    description: (
+      <p>
+        Provide Little Big Shed with the appropriate documentation to support
+        the claim. This is included but not limited to:
+        <br />
+        ○ An itemised breakdown of all items that have suffered damage, loss or
+        theft;
+        <br />
+        ○ Evidence of the value when you purchased the items;
+        <br />○ Serial numbers on item.
+      </p>
+    ),
   },
 ]
 
@@ -838,7 +866,7 @@ const blogData = [
         <br />
         But sharing is one of the ways we can all do our bit to help achieve
         zero waste. We don’t all need to own the same tools, equipment or hobby
-        gear that spend most of their life sitting in the shed! With less people
+        gear that spends most of its life sitting in the shed! With less people
         buying stuff new, and lending and borrowing more, demand for products
         reduces. This, in turn, leads to factories manufacturing and supplying
         less stuff (that we don't really need). Ultimately, less stuff ends up

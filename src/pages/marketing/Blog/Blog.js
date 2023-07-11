@@ -3,7 +3,11 @@ import '../Marketing.css'
 import './Blog.css'
 import { SawingGuiter } from '../../../assets/Images/Marketings/Marketings'
 import NavBar from '../../../components/marketing/NavBar/NavBar'
-import { categories, blogData, howItWorksProcedures } from '../../../assets/Data/MarketSelections'
+import {
+  categories,
+  blogData,
+  howItWorksProcedures,
+} from '../../../assets/Data/MarketSelections'
 import BlogCard from '../../../components/marketing/BlogCard/BlogCard'
 import LBSStepCard from '../../../components/marketing/LBSStepCard/LBSStepCard'
 import CategoryCard from '../../../components/marketing/CategoryCard/CategoryCard'
@@ -12,138 +16,154 @@ import Footer from '../../../components/marketing/Footer/Footer'
 import moment from 'moment'
 
 const Blog = () => {
-  const [ clickedBlogId, setClickedBlogId ] = useState('')
-  const [ selectedArticle, setSelectedArticle ] = useState('')
-  const sortedByDate = blogData.sort((a, b) => moment(b.publishDate)  - moment(a.publishDate))
+  const [clickedBlogId, setClickedBlogId] = useState('')
+  const [selectedArticle, setSelectedArticle] = useState('')
+  const sortedByDate = blogData.sort(
+    (a, b) => moment(b.publishDate) - moment(a.publishDate)
+  )
 
-  useEffect(() => { 
+  useEffect(() => {
     if (clickedBlogId === '') return
     const blogContent = blogData.find(blog => blog.id === clickedBlogId)
     setSelectedArticle(blogContent)
-  },[clickedBlogId])
+  }, [clickedBlogId])
 
   return (
     <div className='marketing_container'>
-      <NavBar selected='info_hub'/>
+      <NavBar selected='info_hub' />
 
-      {clickedBlogId === '' &&
-      <>
-        <div className='marketing_img_md_container bg_blog'>
-          <div className='main_title_section position_lower'>
-            <p className='main_title'>
-            Little Big Ideas
-            </p>
+      {clickedBlogId === '' && (
+        <>
+          <div className='marketing_img_md_container bg_blog'>
+            <div className='main_title_section position_lower'>
+              <p className='main_title'>Little big ideas</p>
+            </div>
           </div>
-        </div>
 
-        <div className='marketing_img_flexible_container bg_grey flex_box straight_column'>
-          <div className='half_screen_center full_width'>
-              <img src={SawingGuiter} className='graphic_image responsive_img_sm_size' style={{maxHeight: '28em', maxWidth: '28em', padding: '0'}} alt='graphic image'/>
-          </div>
-          <div className='half_screen_center article_section full_width'>
+          <div className='marketing_img_flexible_container bg_grey flex_box straight_column'>
+            <div className='half_screen_center full_width'>
+              <img
+                src={SawingGuiter}
+                className='graphic_image responsive_img_sm_size'
+                style={{ maxHeight: '28em', maxWidth: '28em', padding: '0' }}
+                alt='graphic image'
+              />
+            </div>
+            <div className='half_screen_center article_section full_width'>
               <p className='marketing_main_title'>
-              Discover The Power Of Sharing
+                Discover The Power Of Sharing
               </p>
               <p>
-              In our blog of Little Big Ideas, you can be sure to find tips for your next DIY project or hobby, insights into reducing waste, guides on creating opportunities in our neighbourhoods, plus stories and interviews from our community of sharers and carers. 
+                In our blog of Little Big Ideas, you can be sure to find tips
+                for your next DIY project or hobby, insights into reducing
+                waste, guides on creating opportunities in our neighbourhoods,
+                plus stories and interviews from our community of sharers and
+                carers.
               </p>
+            </div>
           </div>
-        </div>
 
-        <div className='marketing_image_fit_container bg_white blog_scroller'>
-          <div className='blog_card_flex_box'>
-          {sortedByDate.map(blog => (
-            <BlogCard 
-              blog={blog} 
-              key={blog.id}
-              setClickedBlogId={setClickedBlogId}
-            />
-          ))}
+          <div className='marketing_image_fit_container bg_white blog_scroller'>
+            <div className='blog_card_flex_box'>
+              {sortedByDate.map(blog => (
+                <BlogCard
+                  blog={blog}
+                  key={blog.id}
+                  setClickedBlogId={setClickedBlogId}
+                />
+              ))}
+            </div>
           </div>
-        </div>
-      </>
-      }
-      {selectedArticle !== '' &&
-      <>
-        <div className='blog_title_container'>
-          <div className='blog_banner_image_container'>
-            <img 
-              className='blog_banner_image'
-              src={selectedArticle.image}
-            />
+        </>
+      )}
+      {selectedArticle !== '' && (
+        <>
+          <div className='blog_title_container'>
+            <div className='blog_banner_image_container'>
+              <img className='blog_banner_image' src={selectedArticle.image} />
+            </div>
+            <div className='main_title_section blog_title_position'>
+              <p className='main_title title_shadow'>
+                {selectedArticle.bannerTitle}
+              </p>
+            </div>
           </div>
-          <div className='main_title_section blog_title_position'>
-            <p className='main_title title_shadow'>
-            {selectedArticle.bannerTitle}
+
+          <div className='blog_article_container bg_white'>
+            <p className='blog_article_title'>{selectedArticle.contentTitle}</p>
+            <p className='blog_article_body'>{selectedArticle.contentBody}</p>
+          </div>
+
+          {selectedArticle.id === 1 && (
+            <div className='blog_instraction_sections bg_white'>
+              <p className='blog_instraction_title'>
+                How does Little Big Shed work?
+              </p>
+              <p className='blog_instraction_desc'>
+                If you’re starting a DIY project power tools, want to experiment
+                with a new craft creative/hobbies, or borrow hobby equipment
+                sporting to give a new activity a go but don’t want to create
+                waste by buying new, this platform is for you. It’ll help you
+                save money by not buying something that will hardly get used or
+                that you don’t have the storage space for.
+              </p>
+              <div className='blog_instraction_flex_box'>
+                {howItWorksProcedures.map(step => (
+                  <LBSStepCard step={step} key={step.id} />
+                ))}
+              </div>
+              <p className='blog_instraction_desc'>
+                Plus, we’ve got you covered if something goes wrong, so no
+                worries if your item comes back damaged or is stolen. Check out
+                our{' '}
+                <a style={{ fontWeight: '600' }} href='/#/protection'>
+                  lender protection
+                </a>{' '}
+                policy to find out more about how you can lend worry-free with
+                our verified Little Big Shed users.
+              </p>
+            </div>
+          )}
+
+          <div className='marketing_image_xlg_container height100p bg_white'>
+            <div className='category_title_section'>
+              <p className='category_main_title'>
+                What can you lend and borrow?
+              </p>
+              <p className='category_sub_title'>
+                As our little shed grows into something big, you’ll be able to
+                lend and borrow all sorts of stuff! Our categories will include
+                listings for:
+              </p>
+            </div>
+            <div className='category_card_section'>
+              {categories.map(category => (
+                <CategoryCard category={category} key={category.id} />
+              ))}
+            </div>
+            <p className='blog_instraction_desc_bottom'>
+              What you have in your little shed can become part of something big
+              – the sharing economy. <br />
+              <br />
+              By making a collective effort to buy less and lend and borrow
+              more, we put less pressure on our planet’s natural resources
+              meaning we can all contribute to protecting the planet. <br />
+              <br />
+              Go on, connect and share with locals like you so we can all care
+              for our place and our planet together!
             </p>
           </div>
-        </div>
 
-        <div className='blog_article_container bg_white'>
-          <p className='blog_article_title'>
-            {selectedArticle.contentTitle}
-          </p>
-          <p className='blog_article_body'>
-            {selectedArticle.contentBody}
-          </p>
-        </div>
-
-        {selectedArticle.id === 1 && (
-        <div className='blog_instraction_sections bg_white'>
-          <p className='blog_instraction_title'>
-          How does Little Big Shed work?
-          </p>
-          <p className='blog_instraction_desc'>
-          If you’re starting a DIY project power tools, want to experiment with a new craft creative/hobbies, or borrow hobby equipment sporting to give a new activity a go but don’t want to create waste by buying new, this platform is for you. It’ll help you save money by not buying something that will hardly get used or that you don’t have the storage space for.
-          </p>
-          <div className='blog_instraction_flex_box'>
-          {howItWorksProcedures.map(step => (
-            <LBSStepCard step={step} key={step.id}/>
-          ))}
+          <div className='marketing_img_flexible_container bg_dark'>
+            <div className='center_quote_btn'>
+              <p className='lbs_quote_lgtext'>Ready To Start Borrowing?</p>
+              <MarketingButton bgColor={'#AC172C'} textColor={'#FFFFFF'}>
+                Sign Up To Start Sharing
+              </MarketingButton>
+            </div>
           </div>
-          <p className='blog_instraction_desc'>
-          Plus, we’ve got you covered if something goes wrong, so no worries if your item comes back damaged or is stolen. 
-          Check out our <a style={{fontWeight: '600'}} href='/#/protection'>lender protection</a> policy to find out more about how you can lend worry-free with our verified Little Big Shed users.
-          </p>
-        </div>
-        )}
-
-        <div className='marketing_image_xlg_container height100p bg_white'>
-          <div className='category_title_section'>
-            <p className='category_main_title'>
-            What can you lend and borrow?
-            </p>
-            <p className='category_sub_title'>
-            As our little shed grows into something big, you’ll be able to lend and borrow all sorts of stuff! Our categories will include listings for: 
-            </p>
-          </div>
-          <div className='category_card_section'>
-            {categories.map(category => (
-              <CategoryCard category={category} key={category.id}/>
-            ))}
-          </div>
-          <p className='blog_instraction_desc_bottom'>
-          What you have in your little shed can become part of something big – the sharing economy. <br/><br/>
-          By making a collective effort to buy less and lend and borrow more, we put less pressure on our planet’s natural resources meaning we can all contribute to protecting the planet. <br/><br/>
-          Go on, connect and share with locals like you so we can all care for our place and our planet together! 
-          </p>
-        </div>
-
-        <div className='marketing_img_flexible_container bg_dark'>
-          <div className='center_quote_btn'>
-            <p className='lbs_quote_lgtext'>
-            Ready To Start Borrowing?
-            </p>
-            <MarketingButton 
-              bgColor={'#AC172C'}
-              textColor={'#FFFFFF'}
-            >
-              Sign Up To Start Sharing
-            </MarketingButton>
-          </div>
-        </div>        
-      </>
-      }
+        </>
+      )}
 
       <Footer />
     </div>

@@ -46,7 +46,7 @@ const Top = () => {
       <div className='marketing_img_md_container bg_top'>
         <div className='main_title_section'>
           <p className='main_title title_shadow'>
-            Let’s Share Stuff And Do Good
+            Let’s share stuff and do good
           </p>
           <p className='main_sub_title sub_title_shadow'>
             Buy less, lend and borrow more. Care for your place and our planet

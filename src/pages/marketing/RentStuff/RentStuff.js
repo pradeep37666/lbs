@@ -68,11 +68,11 @@ const RentStuff = () => {
 
       <div className='marketing_image_xlg_container bg_white height100p'>
         <div className='category_title_section'>
-          <p className='category_main_title'>Checkout Our Categories</p>
-          <h2 className='get_start_title'>
+          <h2 className='get_start_title pt-9'>
             Explore and Find As our little shed grows into something big, you’ll
             be able to find all sorts of stuff!
           </h2>
+          <p className='category_main_title pt-0'>Checkout Our Categories</p>
         </div>
         <div className='category_card_section'>
           {categories.map(category => (

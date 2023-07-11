@@ -98,7 +98,7 @@ export default function Home() {
     <PageWrapper>
       <div className='SearchSection'>
         <div className='SearchSectionWrapper'>
-          <div className='SearchSectionTitle'>Let's Find Your Next Borrow</div>
+          <div className='SearchSectionTitle'>Let's find your next borrow</div>
           <div className='SearchSectionFilters'>
             <div className='SearchFiltersRowFlex'>
               <div className='SearchInputContainer'>

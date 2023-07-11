@@ -104,7 +104,7 @@ const AboutUs = () => {
           <div className='marketing_img_md_container bg_about_us'>
             <div className='main_title_section position_lower'>
               <p className='main_title title_shadow'>
-                A Little Idea, With A Big Impact
+                A little idea, with a big impact
               </p>
             </div>
           </div>

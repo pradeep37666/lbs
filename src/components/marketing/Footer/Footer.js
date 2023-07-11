@@ -1,11 +1,11 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import './Footer.css'
 import Logo from '../../../assets/Logos/LBS_Logo_Flat_Red.jpg'
 import AppleButton from '../../../assets/Images/AppStoreButton.png'
 import GooglePlayButton from '../../../assets/Images/GooglePlayButton.png'
 import { Link, useHistory } from 'react-router-dom'
 import { BsFacebook, BsLinkedin } from 'react-icons/bs'
-import { FiFacebook, FiInstagram } from 'react-icons/fi'
+import { FiInstagram } from 'react-icons/fi'
 import {
   EmailArrowBtn,
   LBSBlackLogo,
@@ -103,7 +103,7 @@ const Footer = () => {
             className='footer_section_title'
             onClick={() => history.push('/faqs')}
           >
-            FAQs
+            FAQs for sharing
           </p>
           <p
             className='footer_section_title'
@@ -207,7 +207,7 @@ const Footer = () => {
       </div>
       <div className='footer_bottom_container'>
         <p className='footer_bottom_left'>Support Team</p>
-        <p className='footer_bottom_right'>Copyright 2020 Little big shed</p>
+        <p className='footer_bottom_right'>Copyright 2023 Little big shed</p>
       </div>
     </div>
   )

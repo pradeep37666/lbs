@@ -27,7 +27,7 @@ const LendYourStuff = () => {
       <div className='marketing_img_md_container bg_lend_your_stuff'>
         <div className='main_title_section'>
           <p className='main_title title_shadow'>
-            Rent Out Your Stuff To Earn Cash And Do Good
+            Rent out your stuff to earn cash and do good
           </p>
           <div className='flex_box'>
             <MarketingButton
@@ -97,7 +97,7 @@ const LendYourStuff = () => {
 
       <div className='marketing_img_flexible_container bg_wall flex_box center_items straight_column'>
         <div className='center_text_image full_width'>
-          <p className='marketing_main_title text_align'>No Service Fees</p>
+          <p className='marketing_main_title text_align'>No Service Fee</p>
           <p>
             We believe in the power of sharing and want to make it as easy,
             accessible and beneficial as possible. That’s why Little Big Shed

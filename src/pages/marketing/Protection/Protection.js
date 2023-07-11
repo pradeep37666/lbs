@@ -16,7 +16,7 @@ const Protection = () => {
 
       <div className='marketing_img_md_container bg_protection'>
         <div className='main_title_section protection_title_position'>
-          <p className='main_title title_shadow'>Lender Protection</p>
+          <p className='main_title title_shadow'>Lender protection</p>
           <p className='main_sub_title sub_title_width sub_title_shadow'>
             No worries if your item comes back damaged or is stolen – we’ve got
             you covered!
@@ -131,8 +131,9 @@ const Protection = () => {
             What To Do If My Item Is Returned Damaged.
           </p>
           <p className='damaged_steps_description'>
-            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
-            nonumy eirmod tempor invidunt ut labore et dolore magna.
+            Now you know what’s covered, learn how to raise a dispute for a
+            damaged or stolen item, by following the four easy steps outlined
+            below.
           </p>
         </div>
         <div className='category_card_section no_bottom_padding'>
@@ -144,10 +145,13 @@ const Protection = () => {
           <MarketingButton
             bgColor='#33384F'
             textColor='#FFFFFF'
-            width='23em'
+            width='26em'
+            height='2.9em'
             onClick={() => lenderProtectionLinkRef.current?.click()}
           >
-            Read our full lender protection policy here
+            Check out our full{'\u00A0'}
+            <u> lender protection policy</u>
+            {'\u00A0'}here.
           </MarketingButton>
           <a
             href='/Policies/LBS_LenderProtectionPolicy.pdf'

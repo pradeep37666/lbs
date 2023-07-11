@@ -28,8 +28,8 @@ const HowItWorks = () => {
       />
       <div className='marketing_img_md_container bg_how_it_works'>
         <div className='main_title_section wider_section'>
-          <p className='main_title'>Hire Gear For Your Next Adventure</p>
-          <p className='main_title'>Or DIY Project</p>
+          <p className='main_title'>Hire gear for your next adventure</p>
+          <p className='main_title'>or DIY project</p>
           <div className='flex_box'>
             <MarketingButton
               bgColor={'#AC172C'}
@@ -174,13 +174,6 @@ const HowItWorks = () => {
             className='how_it_works_images responsive_img_size'
             alt='less than once a month'
           />
-          <a
-            href='https://www.nzherald.co.nz/business/share-and-share-alike/RL5VZMKYIQWBC33CAEXCEEDYDY/'
-            style={{ fontWeight: 'bold' }}
-            target='_blank'
-          >
-            Share And Share Alike
-          </a>
         </div>
       </div>
 
@@ -198,7 +191,7 @@ const HowItWorks = () => {
               textColor={'#FFFFFF'}
               linkTo={'/faqs'}
             >
-              FAQ’s
+              FAQs for sharing
             </MarketingButton>
           </div>
         </div>
