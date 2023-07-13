@@ -173,7 +173,6 @@ const Protection = () => {
           </MarketingButton>
         </div>
       </div>
-
       <Footer />
     </div>
   )

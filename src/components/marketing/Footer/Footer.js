@@ -18,7 +18,9 @@ const Footer = () => {
   const sendSubscribeEmail = () => {
     // send email
   }
-
+  const openNewWindow = url => {
+    window.open(url, '_blank')
+  }
   return (
     <div className='footer_container'>
       <div className='footer_header_container'>
@@ -64,27 +66,26 @@ const Footer = () => {
           </p>
           <p className='footer_first_desc'>hello@littlebigshed.co.nz</p>
         </div>
-        <div className='footer_content_box flex flex-col gap-0'>
+        <div className='footer_content_box flex flex-col'>
           <p
             className='footer_section_title_main'
             onClick={() => history.push('/about_us')}
           >
             About Us
           </p>
-          <a
-            className='footer_section_title'
-            download='Little Big Shed _ Terms & Conditions.pdf'
-            href='/Policies/LBS_Terms&Conditions.pdf'
-          >
-            Rental Agreement (the terms and conditions)
-          </a>
-          <a
-            className='footer_section_title'
-            download='Little Big Shed _ Privacy Policy.pdf'
-            href='/Policies/LBS_PrivacyPolicy.pdf'
-          >
-            Privacy policy
-          </a>
+
+          <Link className='footer_section_title' to='/privacy_policy'>
+            Privacy Policy
+          </Link>
+          <Link className='footer_section_title' to='/rental_agreement'>
+            Rental Agreement
+          </Link>
+          <Link className='footer_section_title' to='/cancellation_policy'>
+            Cancellation Policy
+          </Link>
+          <Link className='footer_section_title' to='/damages_and_disputes'>
+            Damages And Disputes
+          </Link>
         </div>
         <div className='footer_content_box flex flex-col'>
           <p
@@ -205,6 +206,7 @@ const Footer = () => {
           </div>
         </div>
       </div>
+
       <div className='footer_bottom_container'>
         <p className='footer_bottom_left'>Support Team</p>
         <p className='footer_bottom_right'>Copyright 2023 Little big shed</p>

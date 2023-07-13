@@ -39,6 +39,10 @@ import ForgotPassword from './pages/ForgotPassword/ForgotPassword'
 import LBSSnackBar from './components/LBSSnackBar/LBSSnackBar'
 import LenderShed from './pages/lender-shed/lender-shed'
 import ExtendBookingApplication from './pages/extension/ExtendBookingApplication'
+import CancellationPolicy from './components/marketing/Footer/CancellationPolicy'
+import DamagesAndDisputes from './components/marketing/Footer/DamagesAndDisputes'
+import RentalAgreement from './components/marketing/Footer/RentalAgreement'
+import PrivacyPolicy from './components/marketing/Footer/PrivacyPolicy'
 
 export const GlobalStateContext = React.createContext()
 export const GlobalErrorContext = React.createContext()
@@ -194,6 +198,22 @@ function App() {
                   exact
                   path='/lend_your_stuff'
                   component={LendYourStuff}
+                />
+                <Route exact path='/privacy_policy' component={PrivacyPolicy} />
+                <Route
+                  exact
+                  path='/rental_agreement'
+                  component={RentalAgreement}
+                />
+                <Route
+                  exact
+                  path='/cancellation_policy'
+                  component={CancellationPolicy}
+                />
+                <Route
+                  exact
+                  path='/damages_and_disputes'
+                  component={DamagesAndDisputes}
                 />
                 <Route exact path='/rent_stuff' component={RentStuff} />
                 <Route exact path='/how_it_works' component={HowItWorks} />
