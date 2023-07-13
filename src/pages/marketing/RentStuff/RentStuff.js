@@ -73,11 +73,13 @@ const RentStuff = () => {
 
       <div className='marketing_image_xlg_container bg_white height100p'>
         <div className='category_title_section'>
-          <h2 className='get_start_title pt-9'>
-            Explore and Find As our little shed grows into something big, you’ll
-            be able to find all sorts of stuff!
+          <p className='marketing_main_title pt-9'>Explore and Find </p>
+          <h2 className='get_start_title_light'>
+            As our little shed grows into something big, you’ll be able to find
+            all sorts of stuff!
           </h2>
-          <p className='category_main_title pt-0'>Checkout Our Categories</p>
+          <p className='category_sub_heading pt-7'>Checkout Our Categories</p>
+          <p className='category_sub_heading'>▼</p>
         </div>
         <div className='category_card_section'>
           {categories.map(category => (
@@ -124,13 +126,15 @@ const RentStuff = () => {
               .
             </p>
           </div>
-          <MarketingButton
-            bgColor='#AC172C'
-            textColor='#FFFFFF'
-            linkTo={'/lend_your_stuff'}
-          >
-            Start Sharing
-          </MarketingButton>
+          <div style={{ alignSelf: 'center' }}>
+            <MarketingButton
+              bgColor='#AC172C'
+              textColor='#FFFFFF'
+              linkTo={'/lend_your_stuff'}
+            >
+              Start Sharing
+            </MarketingButton>
+          </div>
         </div>
       </div>
 

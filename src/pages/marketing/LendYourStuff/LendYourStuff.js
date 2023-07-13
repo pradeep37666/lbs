@@ -19,7 +19,6 @@ const LendYourStuff = () => {
   return (
     <div className='marketing_container'>
       <NavBar selected='lend_your_stuff' />
-
       <meta
         title='Rent out hobby gear and equipment on our tool borrowing app'
         content='Rent out your hobby gear, appliances and equipment on our tool borrowing app. Sign up to share, earn cash and do good for your community and our planet.'
@@ -34,6 +33,8 @@ const LendYourStuff = () => {
               bgColor={'#AC172C'}
               textColor={'#FFFFFF'}
               linkTo={'/register'}
+              width='16em'
+              height='3em'
             >
               <p className='button_font'>Sign Up To Start Sharing</p>
               <img src={SignUpImg} className='app_icons' alt='signup icon' />
@@ -46,7 +47,12 @@ const LendYourStuff = () => {
             <p className='download_sub_title sub_title_shadow'>
               Download our mobile app to borrow and lend, where ever you are!
             </p>
-            <MarketingButton bgColor={'#E9D8B4'} textColor={'#33384F'}>
+            <MarketingButton
+              bgColor={'#E9D8B4'}
+              textColor={'#33384F'}
+              width='13.5em'
+              height='3em'
+            >
               Download Now!
               <img src={Apple} className='app_icons' alt='apple icon' />
               <img src={Android} className='app_icons' alt='android icon' />
@@ -54,7 +60,6 @@ const LendYourStuff = () => {
           </div>
         </div>
       </div>
-
       <div className='marketing_img_flexible_container bg_white flex_box straight_column'>
         <div className='half_screen_center full_width'>
           <img
@@ -94,7 +99,6 @@ const LendYourStuff = () => {
           </ul>
         </div>
       </div>
-
       <div className='marketing_img_flexible_container bg_wall flex_box center_items straight_column'>
         <div className='center_text_image full_width'>
           <p className='marketing_main_title text_align'>No Service Fee</p>
@@ -120,14 +124,12 @@ const LendYourStuff = () => {
           />
         </div>
       </div>
-
       <div className='marketing_img_flexible_container bg_lbs'>
         <p className='lbs_quote_text'>
           A Little Sharing Can Make A Big Difference To Your Pocket, Your
           Community And The Planet.
         </p>
       </div>
-
       <div className='marketing_img_flexible_container bg_white flex_box center_items straight_column'>
         <div
           className='top_section_smaller_box'
@@ -169,7 +171,6 @@ const LendYourStuff = () => {
           </div>
         </div>
       </div>
-
       <div className='marketing_image_fit_container bg_white'>
         <div className='top_info_smaller_section' style={{ margin: '0 auto' }}>
           <p className='marketing_main_title' style={{ textAlign: 'center' }}>
@@ -182,7 +183,6 @@ const LendYourStuff = () => {
           ))}
         </div>
       </div>
-
       <div className='marketing_img_sm_container bg_lys_signup'>
         <div className='center_quote_btn'>
           <p className='lbs_quote_lgtext sub_title_shadow'>
@@ -192,13 +192,32 @@ const LendYourStuff = () => {
             bgColor={'#AC172C'}
             textColor={'#FFFFFF'}
             linkTo={'/register'}
+            width='16em'
+            height='3em'
           >
-            <p className='button_font'>Sign Up To Start Sharing</p>
+            <p className='button_font'>Sign up to start sharing</p>
             <img src={SignUpImg} className='app_icons' alt='signup icon' />
           </MarketingButton>
         </div>
       </div>
-
+      <div className='marketing_img_flexible_container'>
+        <div className='hiw_question_section'>
+          <div className='hiw_question_title_box' style={{ padding: '2em 0' }}>
+            <p className='hiw_question_title' style={{ color: '#33384F' }}>
+              Have more questions?
+            </p>
+          </div>
+          <div className='flex_box space_between'>
+            <MarketingButton
+              bgColor={'#33384F'}
+              textColor={'#FFFFFF'}
+              linkTo={'/faqs'}
+            >
+              Check out our FAQs
+            </MarketingButton>
+          </div>
+        </div>
+      </div>
       <Footer />
     </div>
   )

@@ -35,6 +35,8 @@ const HowItWorks = () => {
               bgColor={'#AC172C'}
               textColor={'#FFFFFF'}
               linkTo={'/register'}
+              width='16em'
+              height='3em'
             >
               <p className='button_font'>Sign Up To Start Sharing</p>
               <img src={SignUpImg} className='app_icons' alt='signup icon' />
@@ -45,7 +47,12 @@ const HowItWorks = () => {
             <p className='download_sub_title'>
               Download our mobile app to borrow and lend, where ever you are!
             </p>
-            <MarketingButton bgColor={'#E9D8B4'} textColor={'#33384F'}>
+            <MarketingButton
+              bgColor={'#E9D8B4'}
+              textColor={'#33384F'}
+              width='13.5em'
+              height='3em'
+            >
               Download Now!
               <img src={Apple} className='app_icons' alt='apple icon' />
               <img src={Android} className='app_icons' alt='android icon' />
@@ -141,6 +148,8 @@ const HowItWorks = () => {
             bgColor={'#AC172C'}
             textColor={'#FFFFFF'}
             linkTo={'/register'}
+            width='16em'
+            height='3em'
           >
             <p className='button_font'>Sign Up To Start Sharing</p>
             <img src={SignUpImg} className='app_icons' alt='signup icon' />

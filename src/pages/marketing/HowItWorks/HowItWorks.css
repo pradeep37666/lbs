@@ -1,91 +1,91 @@
 .bg_how_it_works {
-    background-image: url(../../../assets/Images/Marketings/Background/HOW\ IT\ WORKS_oneshot_10143787.jpg);
+  background-image: url(../../../assets/Images/Marketings/Background/HOW\ IT\ WORKS_oneshot_10143787.jpg);
 }
 
 .bg_tradie {
-    background-image: url(../../../assets/Images/Marketings/Images/tradieImage.png);
+  background-image: url(../../../assets/Images/Marketings/Images/tradieImage.png);
 }
 
 .wider_section {
-    width: 60%;
+  width: 60%;
 }
 
 .section_top,
 .section_bottom {
-    width: 100%;
-    height: 30em;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
+  width: 100%;
+  height: 30em;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
 }
 
 .how_it_works_images {
-    width: 100%;
-    height: 100%;
-    padding: 1em;
-    object-fit: contain;
+  width: 100%;
+  height: 100%;
+  padding: 1em;
+  object-fit: contain;
 }
 
 .mb_md {
-    margin-bottom: 2em;    
+  margin-bottom: 2em;
 }
 
 .hiw_question_section {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .hiw_question_title_box {
-    max-width: 20em;
-    margin-right: 2em;
+  max-width: 21em;
+  margin-right: 2em;
 }
 
 .hiw_question_title {
-    color: #FFFFFF;
-    font-family: 'Kameron', serif;
-    font-weight: bold;
-    font-size: 1.9em;
-    margin: 0;
+  color: #ffffff;
+  font-family: 'Kameron', serif;
+  font-weight: bold;
+  font-size: 1.9em;
+  margin: 0;
 }
 
 .hiw_question_sub_title {
-    color: #FFFFFF;
-    font-size: 0.8em;
-    margin: 0;
+  color: #ffffff;
+  font-size: 0.8em;
+  margin: 0;
 }
 
 @media screen and (max-width: 768px) {
-    .hiw_question_section {
-        flex-direction: column;
-    }
-    .space_between {
-        margin: 0.5em 0;
-    }
-    .smaller_graphics {
-        width: 20em;
-        height: 20em;
-    }
+  .hiw_question_section {
+    flex-direction: column;
+  }
+  .space_between {
+    margin: 0.5em 0;
+  }
+  .smaller_graphics {
+    width: 20em;
+    height: 20em;
+  }
 }
 
 @media screen and (max-width: 600px) {
-    .text_height_fit {
-        height: 15em;
-        padding-top: 1em;
-    }
-    .responsive_text_width {
-        width: 90%;
-    }
+  .text_height_fit {
+    height: 15em;
+    padding-top: 1em;
+  }
+  .responsive_text_width {
+    width: 90%;
+  }
 }
 
 @media screen and (max-width: 450px) {
-    .hiw_question_title_box {
-        text-align: center;
-    }
-    .space_between {
-        flex-direction: column;
-    }
+  .hiw_question_title_box {
+    text-align: center;
+  }
+  .space_between {
+    flex-direction: column;
+  }
 }
