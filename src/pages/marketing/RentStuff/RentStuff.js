@@ -21,7 +21,7 @@ const RentStuff = () => {
       <div className='marketing_img_md_container bg_rent_stuff center_items responsive_box_for_search'>
         <div className='search_title_section'>
           <p className='search_title title_shadow'>
-            Let’s Find Your Next Borrow
+            Let’s find your next borrow
           </p>
           <div className='search_input_wrapper'>
             <SearchInput />
@@ -45,7 +45,7 @@ const RentStuff = () => {
           <p className='marketing_main_title'>
             Get Set For Your Next DIY Project, Hobby Or Adventure!
           </p>
-          <div style={{ display: 'flex' }}>
+          <div>
             <p style={{ padding: '0 0.3em' }}>
               If you’re starting a DIY project, want to experiment with a new
               craft, or borrow hobby equipment to give a new activity a go,
@@ -53,11 +53,16 @@ const RentStuff = () => {
               brand new item you barely use or don’t have the space to store –
               it’s time to start borrowing!
             </p>
+            <br />
             <p style={{ padding: '0 0.3em' }}>
               Our sharing platform makes it easy to search and book stuff from
               locals nearby. You can explore our listings via keyword, category,
               location, cost, and rating. Learn more about{' '}
-              <Link style={{ fontWeight: '600' }} to={'/how_it_works'}>
+              <Link
+                class='underline_link'
+                style={{ fontWeight: '600' }}
+                to={'/how_it_works'}
+              >
                 how borrowing works
               </Link>
               .
@@ -109,7 +114,11 @@ const RentStuff = () => {
               <br />
               We’ll take good care of you too so you can lend your items
               worry-free.{' '}
-              <Link style={{ fontWeight: '600' }} to={'/how_it_works'}>
+              <Link
+                class='underline_link'
+                style={{ fontWeight: '600' }}
+                to={'/how_it_works'}
+              >
                 Learn more about sharing
               </Link>
               .

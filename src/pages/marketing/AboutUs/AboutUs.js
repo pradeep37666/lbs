@@ -175,11 +175,19 @@ const AboutUs = () => {
                 <br />
                 <br />A LITTLE sharing really can make a BIG difference – for
                 us, our community and the planet. Are you ready to{' '}
-                <Link style={{ fontWeight: '600' }} to={'/rent_stuff'}>
+                <Link
+                  class='underline_link'
+                  style={{ fontWeight: '600' }}
+                  to={'/rent_stuff'}
+                >
                   borrow more
                 </Link>
                 , buy less, and make some extra cash when you{' '}
-                <Link style={{ fontWeight: '600' }} to={'/lend_your_stuff'}>
+                <Link
+                  class='underline_link'
+                  style={{ fontWeight: '600' }}
+                  to={'/lend_your_stuff'}
+                >
                   lend your stuff
                 </Link>
                 ?

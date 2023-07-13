@@ -1,136 +1,139 @@
 .bg_blog {
-    background-image: url(../../../assets/Images/Marketings/Background/BLOG_iStock-1181715676.jpg);
+  background-image: url(../../../assets/Images/Marketings/Background/BLOG_iStock-1181715676.jpg);
 }
 
 .bg_blog_signup {
-    background-image: url(../../../assets/Images/Marketings/Background/protection_signup_bg.png);
+  background-image: url(../../../assets/Images/Marketings/Background/protection_signup_bg.png);
 }
 
 .blog_scroller {
-    max-height: 1200px;
-    overflow-y: auto;
+  max-height: 1200px;
+  overflow-y: auto;
 }
 
 .blog_title_container {
-    display: block;
-    width: 100%;
-    height: auto;
-    position: relative;
-    overflow: hidden;
-    padding: 34.37% 0 0 0;
+  display: block;
+  width: 100%;
+  height: auto;
+  position: relative;
+  overflow: hidden;
+  padding: 34.37% 0 0 0;
 }
 
 .blog_banner_image_container {
-    display: block;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
+  display: block;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
 }
 
 .blog_banner_image {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    backdrop-filter: blur(8px);
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  backdrop-filter: blur(8px);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .blog_card_image {
-    object-fit: cover;
-    width: 100%;
-    height: 250px;
+  object-fit: cover;
+  width: 100%;
+  height: 250px;
 }
 
 .blog_card_flex_box {
-    display: flex;
-    flex-wrap: wrap;
-    width: 100%;
-    max-width: 1300px;
-    gap: 1em;
-    flex-direction: row;
-    justify-content: flex-start;
-    padding: 0 2em;
-    padding-bottom: 3em;
-    margin: 0 auto;
-    margin-top: 4em;
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  max-width: 1300px;
+  gap: 1em;
+  flex-direction: row;
+  justify-content: flex-start;
+  padding: 0 2em;
+  padding-bottom: 3em;
+  margin: 0 auto;
+  margin-top: 4em;
 }
 
 .blog_title_position {
-    top: 45%;
-    width: 55%;
+  top: 45%;
+  width: 55%;
 }
 
 .blog_article_container {
-    width: 55%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-content: center;
-    margin: 3em auto;
-    color: #33384F;
+  width: 55%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+  margin: 3em auto;
+  color: #33384f;
 }
 
 .blog_article_title {
-    margin: 0;
-    text-align: center;
-    color: #33384F;
-    font-family: 'Kameron', serif;
-    font-weight: bold;
-    font-size: 1.8em;
+  margin: 0;
+  text-align: center;
+  color: #33384f;
+  font-family: 'Kameron', serif;
+  font-weight: bold;
+  font-size: 1.8em;
 }
 
 .blog_instraction_sections {
-    width: 55%;
-    margin: 0 auto;
-    height: 100%;
-
+  width: 55%;
+  margin: 0 auto;
+  height: 100%;
 }
 
 .blog_instraction_title {
-    color: #33384F;
-    font-family: 'Kameron', serif;
-    font-weight: bold;
-    font-size: 1.8em;
-    margin-bottom: 0;
+  color: #33384f;
+  font-family: 'Kameron', serif;
+  font-weight: bold;
+  font-size: 1.8em;
+  margin-bottom: 0;
 }
 
 .blog_instraction_desc {
-    margin: 0.5em 0;
-    margin-bottom: 1.5em;
-    color: #33384F;
-    font-size: 0.9em;
+  margin: 0.5em 0;
+  margin-bottom: 1.5em;
+  color: #33384f;
+  font-size: 0.9em;
 }
 
 .blog_instraction_desc_bottom {
-    min-width: 350px;
-    max-width: 650px;
-    color: #33384F;
-    font-size: 0.9em;
-    margin: 0 auto;
-    padding-bottom: 3rem;
+  min-width: 350px;
+  max-width: 650px;
+  color: #33384f;
+  font-size: 0.9em;
+  margin: 0 auto;
+  padding-bottom: 3rem;
 }
 
 .blog_instraction_flex_box {
-    width: 100%;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
+.underline_link {
+  color: #b4132e;
+  text-decoration: underline;
+}
 @media screen and (max-width: 800px) {
-    .blog_article_container {
-        width: 80%;
-    }
+  .blog_article_container {
+    width: 80%;
+  }
 }
 
 @media screen and (max-width: 600px) {
-    .blog_title_position {
-        top: 35%;
-        width: 70%;
-    }
+  .blog_title_position {
+    top: 35%;
+    width: 70%;
+  }
 }

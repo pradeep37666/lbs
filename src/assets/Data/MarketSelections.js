@@ -6,7 +6,7 @@ import {
   ThumbsUp,
   MowingImg,
   CameraImg,
-  DollarSign,
+  ShareImg,
   Tools,
   Gardening,
   Events,
@@ -62,7 +62,11 @@ const rentOutProcedures = [
     procedureDesc: (
       <p>
         To start sharing{' '}
-        <a style={{ fontWeight: '600' }} href='/#/register'>
+        <a
+          class='underline_link'
+          style={{ fontWeight: '600' }}
+          href='/#/register'
+        >
           create an account
         </a>{' '}
         and follow the steps to verify your identity and payment details.
@@ -77,7 +81,7 @@ const rentOutProcedures = [
         <br />
         <br />
         Learn more about how to successfully rent out your items in our{' '}
-        <Link style={{ fontWeight: '600' }} to={'/faqs'}>
+        <Link class='underline_link' style={{ fontWeight: '600' }} to={'/faqs'}>
           listing tips
         </Link>{' '}
         section on images and description etc…
@@ -104,7 +108,7 @@ const rentOutProcedures = [
         <br />
         You can also choose to deliver and/or pick up your item from the
         borrower for an additional fee – which also supports{' '}
-        <Link style={{ fontWeight: '600' }} to={'/faqs'}>
+        <Link class='underline_link' style={{ fontWeight: '600' }} to={'/faqs'}>
           contactless sharing
         </Link>
         .
@@ -113,7 +117,7 @@ const rentOutProcedures = [
   },
   {
     id: 3,
-    icon: DollarSign,
+    icon: ShareImg,
     title: '3. Connect and Share ',
     procedureDesc: (
       <p>
@@ -123,7 +127,11 @@ const rentOutProcedures = [
         <br />
         Once the handover is complete, sit back and relax worry-free, knowing
         that we have you covered if something goes wrong! Check out our{' '}
-        <Link style={{ fontWeight: '600' }} to={'/protection'}>
+        <Link
+          class='underline_link'
+          style={{ fontWeight: '600' }}
+          to={'/protection'}
+        >
           lender protection
         </Link>{' '}
         policy to find out more about sharing with our verified users.
@@ -150,7 +158,7 @@ const rentOutProcedures = [
         <br />
         <br />
         Learn more about{' '}
-        <Link style={{ fontWeight: '600' }} to={'/faqs'}>
+        <Link class='underline_link' style={{ fontWeight: '600' }} to={'/faqs'}>
           how payment works
         </Link>{' '}
         section on lender payment.
@@ -167,7 +175,11 @@ const rentingProcedures = [
     procedureDesc: (
       <p>
         To book your first borrow{' '}
-        <Link style={{ fontWeight: '600' }} to={'/register'}>
+        <Link
+          class='underline_link'
+          style={{ fontWeight: '600' }}
+          to={'/register'}
+        >
           create an account
         </Link>{' '}
         and follow the steps to verify your identity and payment details. Search
@@ -189,7 +201,7 @@ const rentingProcedures = [
         <br />
         <br />
         If you change your mind, no worries. Find out more about our{' '}
-        <Link style={{ fontWeight: '600' }} to={'/faqs'}>
+        <Link class='underline_link' style={{ fontWeight: '600' }} to={'/faqs'}>
           cancellation policy
         </Link>{' '}
         section.
@@ -198,7 +210,11 @@ const rentingProcedures = [
         arrange handover details. <br />
         You can choose to have your item delivered and/or picked up from the
         lender for an additional fee or arrange{' '}
-        <Link style={{ fontWeight: '600' }} to={'/protection'}>
+        <Link
+          class='underline_link'
+          style={{ fontWeight: '600' }}
+          to={'/protection'}
+        >
           contactless sharing
         </Link>
         .<br />
@@ -208,7 +224,7 @@ const rentingProcedures = [
   },
   {
     id: 3,
-    icon: DollarSign,
+    icon: ShareImg,
     title: '3. Collect and Enjoy',
     procedureDesc: (
       <p>
@@ -220,7 +236,7 @@ const rentingProcedures = [
         <br />
         When using the item, take care and show respect as if it was your own.
         If you come across any issues during your borrow, learn{' '}
-        <Link style={{ fontWeight: '600' }} to={'/faqs'}>
+        <Link class='underline_link' style={{ fontWeight: '600' }} to={'/faqs'}>
           what to do
         </Link>{' '}
         section about disputes.
@@ -762,11 +778,19 @@ const blogData = [
         <br />
         <br />A LITTLE sharing really can make a BIG difference – for us, our
         community and the planet. Are you ready to{' '}
-        <a style={{ fontWeight: '600' }} href='/#/rent_stuff'>
+        <a
+          style={{ fontWeight: '600' }}
+          class='underline_link'
+          href='/#/rent_stuff'
+        >
           borrow more
         </a>
         , buy less, and make some extra cash when you{' '}
-        <a style={{ fontWeight: '600' }} href='/#/lend_your_stuff'>
+        <a
+          style={{ fontWeight: '600' }}
+          class='underline_link'
+          href='/#/lend_your_stuff'
+        >
           lend your stuff
         </a>
         ?
@@ -794,11 +818,19 @@ const blogData = [
         At Little Big Shed, we want to make it easy for locals like you to share
         your stuff and support your neighbours to make, mend and learn. Our
         peer-to-peer online sharing platform is designed to help everyone{' '}
-        <a style={{ fontWeight: '600' }} href='/#/rent_stuff'>
+        <a
+          class='underline_link'
+          style={{ fontWeight: '600' }}
+          href='/#/rent_stuff'
+        >
           borrow more
         </a>
         , buy less, and earn some extra cash when you{' '}
-        <a style={{ fontWeight: '600' }} href='/#/lend_your_stuff'>
+        <a
+          class='underline_link'
+          style={{ fontWeight: '600' }}
+          href='/#/lend_your_stuff'
+        >
           lend your stuff
         </a>
         . Plus, when you share on our platform, we take no service fee – which
@@ -824,7 +856,11 @@ const blogData = [
         <br />
         Maybe you have a big shed full of tools that would be useful to your
         neighbours and could earn you some extra cash on the side when you{' '}
-        <a style={{ fontWeight: '600' }} href='/#/lend_your_stuff'>
+        <a
+          class='underline_link'
+          style={{ fontWeight: '600' }}
+          href='/#/lend_your_stuff'
+        >
           lend your stuff
         </a>
         . By pooling our resources, from weed eaters gardening and electric
@@ -1015,6 +1051,7 @@ const blogData = [
         listed items covered against damage during the lending period if
         something goes wrong. Check out our full{' '}
         <a
+          class='underline_link'
           style={{ fontWeight: '600', fontSize: '1.1em' }}
           href='/#/protection'
         >
@@ -1159,7 +1196,11 @@ const blogData = [
         <br />
         So… are you ready to lend your stuff? <br />
         <br />
-        <a style={{ fontWeight: '600', fontSize: '1.1em' }} href='/#/register'>
+        <a
+          class='underline_link'
+          style={{ fontWeight: '600', fontSize: '1.1em' }}
+          href='/#/register'
+        >
           Join us
         </a>
       </p>
@@ -1318,7 +1359,11 @@ const blogData = [
         you share tomorrow?
         <br />
         <br />
-        <a style={{ fontWeight: '600' }} href='/#/register'>
+        <a
+          class='underline_link'
+          style={{ fontWeight: '600' }}
+          href='/#/register'
+        >
           Join the movement
         </a>{' '}
         - internal hyperlink to registration screen - and connect with locals
@@ -1438,7 +1483,11 @@ const blogData = [
         <br />
         <br />
         Ready to connect with other locals like you to start sharing now?{' '}
-        <a style={{ fontWeight: '600' }} href='/#/register'>
+        <a
+          class='underline_link'
+          style={{ fontWeight: '600' }}
+          href='/#/register'
+        >
           Join the movement
         </a>{' '}
         - internal link to registration page
@@ -1546,7 +1595,10 @@ const FAQ_General_Data = [
         During the uncertain climate of Coid-19, we encourage you to take extra
         care when sharing your items with neighbours. Follow the government
         guidelines for{' '}
-        <a href='https://covid19.govt.nz/traffic-lights/life-at-orange/'>
+        <a
+          class='underline_link'
+          href='https://covid19.govt.nz/traffic-lights/life-at-orange/'
+        >
           life at orange
         </a>
         .<br />
@@ -1583,7 +1635,10 @@ const FAQ_Lender_Data = [
         </ul>
         Tip - it’s good practice to take time-stamped photo/s of your item
         before each share as part of your{' '}
-        <a href='/#/lend_your_stuff'>lender protection</a>.
+        <a class='underline_link' href='/#/lend_your_stuff'>
+          lender protection
+        </a>
+        .
       </p>
     ),
   },
@@ -1805,7 +1860,9 @@ const FAQ_Borrower_Data = [
         item, you need to first contact the lender through the app message
         feature. Then raise a dispute by contacting Little Big Shed’s customer
         service team at{' '}
-        <a href='mailto:support@littlebigshed.com'>support@littlebigshed.com</a>
+        <a class='underline_link' href='mailto:support@littlebigshed.com'>
+          support@littlebigshed.com
+        </a>
       </p>
     ),
   },

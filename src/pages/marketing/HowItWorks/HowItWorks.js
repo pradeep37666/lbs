@@ -89,25 +89,29 @@ const HowItWorks = () => {
           />
         </div>
         <div className='center_text_image full_width'>
-          <ul className='how_it_works_list'>
-            <li style={{ fontSize: '1.1em' }}>
+          <ul className='description_list' style={{ fontSize: '1.1em' }}>
+            <li className='description_list_text'>
               Make, mend and learn – without the hefty costs of buying items new
               or requiring space to store things you hardly use.
             </li>
-            <li style={{ fontSize: '1.1em' }}>
+
+            <li className='description_list_text'>
               Support your community – borrowing from your neighbours means that
               they get to make some money while you get to save. Plus, it’s a
               great excuse to connect with locals like you and build trust in
               your hood!
             </li>
-            <li style={{ fontSize: '1.1em' }}>
+            <li className='description_list_text'>
               Care for the environment – through buying less and borrowing more,
               demand for products reduces. Sharing helps remove waste out of the
               whole supply chain before it has the chance to do damage.
             </li>
+            <br />
           </ul>
-          Our hobby gear, equipment and online tool rental app makes it easy to
-          book and borrow items from within your community.
+          <p style={{ fontSize: '1.1em' }}>
+            Our hobby gear, equipment and online tool rental app makes it easy
+            to book and borrow items from within your community.
+          </p>
         </div>
       </div>
 

@@ -14,7 +14,6 @@ import { categories, procedures } from '../../../assets/Data/MarketSelections'
 import StepCard from '../../../components/marketing/StepCard/StepCard'
 import CategoryCard from '../../../components/marketing/CategoryCard/CategoryCard'
 import Footer from '../../../components/marketing/Footer/Footer'
-import ItemService from '../../../services/item'
 import Instance from '../../../util/axios'
 import { Link } from 'react-router-dom'
 
@@ -45,10 +44,8 @@ const Top = () => {
       />
       <div className='marketing_img_md_container bg_top'>
         <div className='main_title_section'>
-          <p className='main_title title_shadow'>
-            Let’s share stuff and do good
-          </p>
-          <p className='main_sub_title sub_title_shadow'>
+          <p className='main_title dark_title'>Let’s share stuff and do good</p>
+          <p className='main_sub_title dark_sub_title'>
             Buy less, lend and borrow more. Care for your place and our planet
             together.
           </p>
@@ -69,10 +66,10 @@ const Top = () => {
             </MarketingButton>
           </div>
           <div className='download_app_section'>
-            <p className='download_main_title title_shadow'>
+            <p className='download_main_title dark_title '>
               Download our free app!
             </p>
-            <p className='download_sub_title sub_title_shadow'>
+            <p className='download_sub_title dark_sub_title'>
               Download our mobile app to borrow and lend, where ever you are!
             </p>
             <MarketingButton bgColor={'#E9D8B4'} textColor={'#33384F'}>
@@ -104,7 +101,8 @@ const Top = () => {
               .<br />
               <br />
               Plus, when you share on our platform, we take no service fee –
-              which means more money in your back pocket! <br />
+              which means more money in your back pocket!
+              <br />
               <br />
               We believe that no one should be restricted from doing a DIY
               project, cultivating their talents or going on an adventure due to
@@ -113,7 +111,7 @@ const Top = () => {
                 style={{ fontWeight: '600' }}
                 to={`/search?category=${encodeURIComponent('DIY & Garden')}`}
               >
-                tool
+                tools
               </Link>
               , <s />
               <Link style={{ fontWeight: '600' }} to={`/search?category=Other`}>
@@ -126,7 +124,7 @@ const Top = () => {
               >
                 leisure equipment
               </Link>{' '}
-              and much more, we can support each other to make, mend, learn (and
+              and more, we can support each other to make, mend, learn (and
               earn!).
             </p>
             <p className='top_info_right_desc'>

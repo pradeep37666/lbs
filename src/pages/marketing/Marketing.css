@@ -64,12 +64,15 @@
   font-size: 3.5em;
 }
 
+.dark_title {
+  color: #2d3144;
+}
 .title_shadow {
-  text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.7);
+  text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.9);
 }
 
 .sub_title_shadow {
-  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.9);
 }
 
 .download_main_title {
@@ -81,6 +84,10 @@
   color: #ffffff;
   font-size: 1.1em;
   margin: 0;
+}
+
+.dark_sub_title {
+  color: #2d3144;
 }
 
 .download_app_section {
@@ -120,6 +127,7 @@
   font-size: 2.5em;
   font-weight: bold;
   margin: 0;
+  padding-bottom: 0.5em;
   margin-top: 0.5em;
   line-height: 1em;
 }

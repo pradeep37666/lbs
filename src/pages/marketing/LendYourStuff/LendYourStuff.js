@@ -156,7 +156,11 @@ const LendYourStuff = () => {
               <br />
               <br />
               Check out our full{' '}
-              <Link style={{ fontWeight: '600' }} to={'/protection'}>
+              <Link
+                class='underline_link'
+                style={{ fontWeight: '600' }}
+                to={'/protection'}
+              >
                 lender protection policy
               </Link>{' '}
               to find out more about sharing with our verified Little Big Shed
