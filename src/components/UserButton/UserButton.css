@@ -1,13 +1,13 @@
 .UserButton {
-  background-color: #33384f;
+  background-color: var(--color-dark);
   border: none;
   outline: none;
   border-radius: 10px;
   padding: 1em 10%;
-  color: #ffffff;
+  color: var(--color-white);
   width: 100%;
   font-size: 18px;
-  font-family: "DMSans", sans-serif;
+  font-family: 'DMSans', sans-serif;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -45,10 +45,10 @@
 }
 
 .UserButton__Menu {
-  background-color: #fff;
+  background-color: var(--color-white);
   border-radius: 10px;
-  border: 2px solid #ac172c;
-  color: #33384f;
+  border: 2px solid var(--color-accent);
+  color: var(--color-dark);
   text-align: left;
   font-weight: bold;
   font-size: 15px;

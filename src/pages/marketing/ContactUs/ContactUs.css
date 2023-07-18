@@ -1,145 +1,144 @@
 .bg_contact_us {
-    background-image: url(../../../assets/Images/Marketings/Background/CONTACT\ US_TS139674_m.jpg);
+  background-image: url(../../../assets/Images/Marketings/Background/CONTACT\ US_TS139674_m.jpg);
 }
 
 .contact_img_bg {
-    background-image: url(../../../assets/Images/Marketings/Graphics/lys_mowing.png);
-    background-size: cover;
-    margin: 5em;
+  background-image: url(../../../assets/Images/Marketings/Graphics/lys_mowing.png);
+  background-size: cover;
+  margin: 5em;
 }
 
 .contact_input_container {
-    width: 50%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 1em;
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 1em;
 }
 
 .contact_input_box {
-    width: 100%;
-    padding: 0 1em;
-    margin-bottom: 2em;
+  width: 100%;
+  padding: 0 1em;
+  margin-bottom: 2em;
 }
 
 .input_fields_left,
 .input_fields_right {
-    width: 50%;
+  width: 50%;
 }
 
 .contact_details_box {
-    display: flex;
-    width: 100%;
-    justify-content: center;
+  display: flex;
+  width: 100%;
+  justify-content: center;
 }
 
 .contact_number_box,
 .contact_email_box {
-    margin: 0 1em;
+  margin: 0 1em;
 }
 
 .contact_detail_title {
-    font-size: 1.3em;
-    color: #33384F;
-    font-weight: bold;
-    margin: 0;
+  font-size: 1.3em;
+  color: var(--color-dark);
+  font-weight: bold;
+  margin: 0;
 }
 
 .contact_detail_content {
-    margin: 0;
-    font-size: 1.3em;    
+  margin: 0;
+  font-size: 1.3em;
 }
 
 .submit_btn_container {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 
 .submit_message_btn {
-    width: 12em;
-    height: 3.3em;
-    margin: 1em 0;
-    font-weight: bold;
-    color: #FFFFFF;
-    background-color: #AC172C;
-    border-radius: 10px;
-    outline: none;
-    border: none;
-    cursor: pointer;
-    transition: box-shadow 0.3s ease-in;
+  width: 12em;
+  height: 3.3em;
+  margin: 1em 0;
+  font-weight: bold;
+  color: var(--color-white);
+  background-color: var(--color-accent);
+  border-radius: 10px;
+  outline: none;
+  border: none;
+  cursor: pointer;
+  transition: box-shadow 0.3s ease-in;
 }
 
 .submit_message_btn:hover {
-    box-shadow: 15px 15px 25px 0px rgba(0,0,0,0.1);
+  box-shadow: 15px 15px 25px 0px rgba(0, 0, 0, 0.1);
 }
 
 .news_letter_box {
-    display: flex;
+  display: flex;
 }
 
 .news_title_box {
-    max-width: 80%;
+  max-width: 80%;
 }
 
 .news_main_title,
 .news_sub_title {
-    margin: 0;
-    padding: 0 1em;
+  margin: 0;
+  padding: 0 1em;
 }
 
 .news_main_title {
-    color: #33384F;
-    font-weight: bold;
+  color: var(--color-dark);
+  font-weight: bold;
 }
 
 .news_sub_title {
-    font-size: 0.8em;
+  font-size: 0.8em;
 }
 
 .news_checkbox_container {
-    position: relative;
-    max-width: 20%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    user-select: none;
+  position: relative;
+  max-width: 20%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  user-select: none;
 }
 
 .news_checkbox_input {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 @media screen and (max-width: 1440px) {
-    .contact_details_box {
-        flex-direction: column;
-        align-items: center;
-    }
-    .contact_number_box {
-        text-align: center;
-    }
+  .contact_details_box {
+    flex-direction: column;
+    align-items: center;
+  }
+  .contact_number_box {
+    text-align: center;
+  }
 }
 
 @media screen and (max-width: 1124px) {
-    .responsive_contact_container {
-        height: 100%;
-    }
-    .contact_box_responsive {
-        flex-direction: column;
-    }
-    .input_fields_left,
-    .input_fields_right {
-        width: 100%;
-    }
+  .responsive_contact_container {
+    height: 100%;
+  }
+  .contact_box_responsive {
+    flex-direction: column;
+  }
+  .input_fields_left,
+  .input_fields_right {
+    width: 100%;
+  }
 }
 
 @media screen and (max-width: 800px) {
-    .contact_img_bg {
-        display: none;
-    }
-    .contact_input_container {
-        width: 100%;
-    }
+  .contact_img_bg {
+    display: none;
+  }
+  .contact_input_container {
+    width: 100%;
+  }
 }

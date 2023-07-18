@@ -1,22 +1,22 @@
 .lbs_step_card_container {
-    max-width: 20em;
-    margin: 1em;
+  max-width: 20em;
+  margin: 1em;
 }
 
 .lbs_step_card_icon {
-    width: 2.5em;
-    height: 2.5em;
+  width: 2.5em;
+  height: 2.5em;
 }
 
 .lbs_step_card_title {
-    color: #33384F;
-    font-family: 'Kameron', serif;
-    font-weight: bold;
-    font-size: 1.6em;
-    margin: 0;
+  color: var(--color-dark);
+  font-family: 'Kameron', serif;
+  font-weight: bold;
+  font-size: 1.6em;
+  margin: 0;
 }
 
 .lbs_step_card_description {
-    margin: 0;
-    font-size: 0.9em;
+  margin: 0;
+  font-size: 0.9em;
 }

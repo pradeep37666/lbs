@@ -25,14 +25,14 @@
 }
 
 .category_card_title {
-  color: #ffffff;
+  color: var(--color-white);
   font-weight: bold;
   font-size: 1.4em;
   margin: 0;
 }
 
 .category_card_items {
-  color: #ffffff;
+  color: var(--color-white);
   font-size: 0.9em;
   margin: 0;
 }

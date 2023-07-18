@@ -1,5 +1,5 @@
 .InLineErrorContainer {
-  background-color: #f7e7e9;
+  background-color: var(--color-light);
   border-radius: 10px;
   padding: 0.7em;
   margin-top: 0.2em;
@@ -14,9 +14,9 @@
   width: 100%;
   padding: 0.7em;
   border-radius: 10px;
-  border: 1px solid #ac172c;
+  border: 1px solid var(--color-accent);
   outline: none;
-  font-family: "DMSans", sans-serif;
+  font-family: 'DMSans', sans-serif;
   font-weight: bold;
   font-size: 18px;
 }
@@ -25,13 +25,13 @@
   border-radius: 10px;
   border-width: 0;
   outline: none;
-  font-family: "DMSans", sans-serif;
+  font-family: 'DMSans', sans-serif;
   font-weight: bold;
   font-size: 18px;
 }
 
 .ValidationInputErrorContainer {
-  background-color: #f7e7e9;
+  background-color: var(--color-light);
   border-radius: 10px;
 }
 .PasswordInputContainer {
@@ -40,23 +40,23 @@
   width: 100%;
   padding: 0.7em;
   border-radius: 10px;
-  border: 1px solid #ac172c;
+  border: 1px solid var(--color-accent);
   outline: none;
-  font-family: "DMSans", sans-serif;
+  font-family: 'DMSans', sans-serif;
   font-weight: bold;
   font-size: 18px;
 }
 
 .IdProvideInputContainer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    margin-bottom: 0.5em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 0.5em;
 }
 
 .IdProvideImageSquare {
-  border: 1px solid #ac172c;
+  border: 1px solid var(--color-accent);
   height: 120px;
   width: 120px;
   border-radius: 10px;
@@ -82,13 +82,13 @@
 
 .IdProviderMainTitle,
 .BankDetailMainTitle {
-  color: #33384f;
+  color: var(--color-dark);
   font-size: 20px;
   font-weight: bold;
   width: 100%;
 }
 
 .red_bg {
-  background-color: #f7e7e9;
+  background-color: var(--color-light);
   border-radius: 10px;
 }

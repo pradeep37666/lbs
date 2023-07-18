@@ -1,4 +1,3 @@
-import React, { SetStateAction } from 'react'
 import StatusButton from './StatusButton'
 
 type Props = {

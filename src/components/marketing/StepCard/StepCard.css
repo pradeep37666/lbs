@@ -20,7 +20,7 @@
 }
 
 .step_card_title {
-  color: #33384f;
+  color: var(--color-dark);
   font-size: 1.2em;
   font-family: 'Kameron', serif;
   font-weight: bold;

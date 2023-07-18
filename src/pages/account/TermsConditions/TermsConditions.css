@@ -1,16 +1,16 @@
 .TermsConditions__Container {
-    border-radius: 10px;
-    border: 1px solid #c7c7c7;
-    padding: 2em;
-    width: 70%;
-    height: 100%;
+  border-radius: 10px;
+  border: 1px solid #c7c7c7;
+  padding: 2em;
+  width: 70%;
+  height: 100%;
 }
 
 .TermsConditionsScroll {
-    width: 100%;
-    height: 700px;
-    overflow: auto;
-    border: 1px solid #ac172c;
-    border-radius: 10px;
-    padding: 1em;
+  width: 100%;
+  height: 700px;
+  overflow: auto;
+  border: 1px solid var(--color-accent);
+  border-radius: 10px;
+  padding: 1em;
 }

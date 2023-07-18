@@ -9,7 +9,7 @@
 
 .TradeSidebarSubHeading {
   font-size: 20px;
-  color: #33384f;
+  color: var(--color-dark);
   font-weight: bold;
   margin-bottom: 20px;
 }
@@ -28,7 +28,7 @@
 
 .TradeSidebarHeading {
   font-size: 22px;
-  color: #33384f;
+  color: var(--color-dark);
   font-weight: bold;
   margin-bottom: 10px;
 }
@@ -45,7 +45,7 @@
 .TradeSidebarUserName {
   font-size: 20px;
   font-weight: bold;
-  color: #33384f;
+  color: var(--color-dark);
 }
 .TradeSidebarUserContainer {
   display: flex;

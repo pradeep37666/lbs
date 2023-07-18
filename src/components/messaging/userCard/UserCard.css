@@ -22,7 +22,7 @@
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  background: #ac172c;
+  background: var(--color-accent);
   margin-left: 1rem;
 }
 

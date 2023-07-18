@@ -1,5 +1,5 @@
 .AppicationModalCheck {
-  background-color: #33384f;
+  background-color: var(--color-dark);
   border-radius: 50%;
   height: 100px;
   width: 100px;
@@ -23,7 +23,7 @@
 }
 .ApplicationModalTitle {
   font-size: 25px;
-  color: #33384f;
+  color: var(--color-dark);
   font-weight: bold;
 }
 .ApplicationModalText {
@@ -34,8 +34,8 @@
   position: -webkit-sticky; /* Safari */
   position: sticky;
   top: 15%;
-  background-color: #fff;
-  color: #000;
+  background-color: var(--color-white);
+  color: var(--color-text);
   max-height: max-content;
   border: 2px solid #9e1e29;
   border-radius: 15px;
@@ -49,7 +49,7 @@
   align-items: center;
 }
 .ApplicationModalButton {
-  background-color: #9e1e29;
+  background-color: var(--color-accent);
   width: 60%;
   min-height: 50px;
   display: flex;
@@ -59,7 +59,7 @@
   cursor: pointer;
 }
 .ApplicationModalButtonText {
-  color: white;
+  color: var(--color-white);
   font-size: 15px;
 }
 

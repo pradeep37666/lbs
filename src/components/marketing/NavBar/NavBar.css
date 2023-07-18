@@ -1,157 +1,161 @@
 .nav_bar_container {
-    position: -webkit-sticky; /* Safari */
-    position: sticky;
-    top: 0;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    z-index: 100;
+  position: -webkit-sticky; /* Safari */
+  position: sticky;
+  top: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  z-index: 100;
 }
 
 .register_bar_container {
-    width: 100%;
-    height: 2.5em;
-    display: flex;
-    align-items: center;
-    color: #FFFFFF;
-    background: #33384F;
+  width: 100%;
+  height: 2.5em;
+  display: flex;
+  align-items: center;
+  color: var(--color-white);
+  background: var(--color-dark);
 }
 
 .register_title {
-    padding: 0.1em 0;
-    margin-left: 1em;
-    cursor: pointer;
+  padding: 0.1em 0;
+  margin-left: 1em;
+  cursor: pointer;
 }
 
 .register_title:last-child {
-    margin-left: 2em;
+  margin-left: 2em;
 }
 
 .nav_bar_container {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    background-image: url(../../../assets/TexturedBackgrounds/LBS_Illustration\ Pattern_RED.jpg);
-    background-position: -200px -200px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  background-image: url(../../../assets/TexturedBackgrounds/LBS_Illustration\ Pattern_RED.jpg);
+  background-position: -200px -200px;
 }
 
 .nav_bar_logo {
-    margin: 1.5em 2em;
-    max-width: 3.5em;
+  margin: 1.5em 2em;
+  max-width: 3.5em;
 }
 
 .nav_bar_box {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .nav_bar_left {
-    display: flex;
+  display: flex;
 }
 
 .link_title_box {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .link_title,
 .info_hub_container {
-    align-items: center;
-    font-weight: bold;
-    color: #FFFFFF;
-    margin: 0 1.5em;
-    font-size: 1.1em;
-    cursor: pointer;
+  align-items: center;
+  font-weight: bold;
+  color: var(--color-white);
+  margin: 0 1.5em;
+  font-size: 1.1em;
+  cursor: pointer;
 }
 
 .info_hub_container {
-    position: relative;
+  position: relative;
 }
 
 .info_hub_title {
-    display: flex;
+  display: flex;
 }
 
 .selected {
-    color: #E9D8B4;
+  color: var(--color-bg-light);
 }
 
 .link_title_icon {
-    margin: 0 0.3em;
-    transform: scale(1.2);
+  margin: 0 0.3em;
+  transform: scale(1.2);
 }
 
 .nav_popup_opend {
-    width: 10em;
-    position: absolute;
-    top: 1.5em;
-    left: -1em;
-    display: flex;
-    flex-direction: column;
-    border: 2px solid #AC172C;
-    border-radius: 10px;
-    cursor: pointer;
-    background: #FFFFFF;
-    animation: fadeIn 0.5s;
+  width: 10em;
+  position: absolute;
+  top: 1.5em;
+  left: -1em;
+  display: flex;
+  flex-direction: column;
+  border: 2px solid var(--color-accent);
+  border-radius: 10px;
+  cursor: pointer;
+  background: var(--color-white);
+  animation: fadeIn 0.5s;
 }
 
 .nav_popup_closed {
-    display: none;
+  display: none;
 }
 
 .option_blog,
 .option_protection,
 .option_faqs {
-    margin: 0;
-    font-size: 0.9em;
-    color: #33384F;
-    padding: 0.7em 0;
-    margin: 0 1em;
+  margin: 0;
+  font-size: 0.9em;
+  color: var(--color-dark);
+  padding: 0.7em 0;
+  margin: 0 1em;
 }
 
 @keyframes fadeIn {
-    0% { opacity: 0; }
-    100% { opacity: 1; }
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
 .option_protection {
-    border-top: 1px solid #B4B4B4;
-    border-bottom: 1px solid #B4B4B4;
-    border-top-width: 70%;
-    border-bottom-width: 70%;
+  border-top: 1px solid #b4b4b4;
+  border-bottom: 1px solid #b4b4b4;
+  border-top-width: 70%;
+  border-bottom-width: 70%;
 }
 
 .nav_bar_sm_menu {
-    display: none;
+  display: none;
 }
 
 @media screen and (max-width: 1250px) {
-    .link_title,
-    .info_hub_container {
-        margin: 0 0.8em;
-    }
+  .link_title,
+  .info_hub_container {
+    margin: 0 0.8em;
+  }
 }
 
 @media screen and (max-width: 1110px) {
-    .link_title_box {
-        display: none;
-    }
+  .link_title_box {
+    display: none;
+  }
 
-    .nav_bar_sm_menu {
-        display: block;
-        color: #FFFFFF;
-        width: 2em;
-        height: 2em;
-        margin-right: 1.5em;
-        cursor: pointer;
-    }
+  .nav_bar_sm_menu {
+    display: block;
+    color: var(--color-white);
+    width: 2em;
+    height: 2em;
+    margin-right: 1.5em;
+    cursor: pointer;
+  }
 }
 
 @media screen and (max-width: 400px) {
-    .nav_bar_logo {
-        margin: 0;
-        padding: 0.3em;
-    }
+  .nav_bar_logo {
+    margin: 0;
+    padding: 0.3em;
+  }
 }

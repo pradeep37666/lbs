@@ -1,9 +1,9 @@
 .Button {
   padding: 0.8em;
   width: 100%;
-  background-color: #ac172c;
+  background-color: var(--color-accent);
   font-size: 15px;
-  color: #fff;
+  color: var(--color-white);
   font-weight: bold;
   border-radius: 10px;
   border: none;
@@ -17,12 +17,12 @@
 .ButtonInverted {
   padding: 0.8em;
   width: 100%;
-  background-color: white;
+  background-color: var(--color-white);
   font-size: 15px;
-  color: #ac172c;
+  color: var(--color-accent);
   font-weight: bold;
   border-radius: 10px;
-  border: 1px solid #ac172c;
+  border: 1px solid var(--color-accent);
   outline: none;
   display: flex;
   justify-content: center;
@@ -30,7 +30,7 @@
   min-height: 3.2em;
 }
 .ButtonErrorContainer {
-  background-color: #f7e7e9;
+  background-color: var(--color-white);
   border-radius: 10px;
 }
 

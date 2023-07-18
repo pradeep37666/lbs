@@ -1,11 +1,10 @@
-import React from 'react';
-import './pageWrapper.css';
-import Header from './../header/header.js';
+import './pageWrapper.css'
+import Header from './../header/header.js'
 import Footer from '../footer/footer'
 
-const PageWrapper = (props) => {
+const PageWrapper = props => {
   return (
-    <div className="PageWrapper">
+    <div className='PageWrapper'>
       <Header />
       {props.children}
       <Footer />
@@ -13,4 +12,4 @@ const PageWrapper = (props) => {
   )
 }
 
-export default PageWrapper;
+export default PageWrapper

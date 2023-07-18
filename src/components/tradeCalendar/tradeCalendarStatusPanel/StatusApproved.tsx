@@ -1,5 +1,4 @@
 import moment from 'moment'
-import React from 'react'
 import { dayArray, monthArray } from '../../../assets/Data/LBSArray'
 import getDateSuffix from '../../../util/dateUtils/getDateSuffix'
 import StatusButton from './StatusButton'

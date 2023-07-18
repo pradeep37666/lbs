@@ -1,5 +1,4 @@
 import { Avatar } from '@material-ui/core'
-import React from 'react'
 import './TradeSidebar.css'
 import RatingFiller from '../ratingFiller/ratingFiller'
 import MissingProfile from '../../assets/Icons/MissingProfileIcon.png'

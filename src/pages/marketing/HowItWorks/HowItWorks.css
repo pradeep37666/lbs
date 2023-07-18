@@ -45,7 +45,7 @@
 }
 
 .hiw_question_title {
-  color: #ffffff;
+  color: var(--color-white);
   font-family: 'Kameron', serif;
   font-weight: bold;
   font-size: 1.9em;
@@ -53,7 +53,7 @@
 }
 
 .hiw_question_sub_title {
-  color: #ffffff;
+  color: var(--color-white);
   font-size: 0.8em;
   margin: 0;
 }

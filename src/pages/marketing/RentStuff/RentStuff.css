@@ -13,7 +13,7 @@
 }
 
 .search_title {
-  color: #ffffff;
+  color: var(--color-white);
   font-weight: bold;
   font-family: 'Kameron', serif;
   font-size: 3em;
@@ -30,7 +30,7 @@
 }
 
 .get_start_title {
-  color: #33384f;
+  color: var(--color-dark);
   font-family: 'Kameron', serif;
   font-weight: bold;
   font-size: 1.5em;
@@ -38,7 +38,7 @@
 }
 
 .get_start_title_light {
-  color: #33384f;
+  color: var(--color-dark);
   font-family: 'Kameron', serif;
   font-size: 1.5em;
   margin: 0;

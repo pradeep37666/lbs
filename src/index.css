@@ -1,5 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Kameron:wght@400;700&display=swap');
 
+:root {
+  --color-dark: #33384f;
+  --color-bg-light: #e9d8b4;
+  --color-light: #f7e7e9;
+  --color-white: #fff;
+  --color-grey: #858585;
+  --color-text: #000;
+  --color-accent: #ac172c;
+}
 body {
   position: relative;
   margin: 0;
@@ -10,4 +19,3 @@ body {
   -moz-osx-font-smoothing: grayscale;
   min-width: 320px;
 }
-

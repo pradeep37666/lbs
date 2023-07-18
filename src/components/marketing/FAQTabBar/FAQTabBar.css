@@ -1,57 +1,57 @@
 .faq_tab_section {
-    display: flex;
-    padding-left: 3em;
-    width: 100%;
+  display: flex;
+  padding-left: 3em;
+  width: 100%;
 }
 
 .faq_tab_title {
-    position: relative;
-    font-family: 'Kameron', serif;
-    font-weight: bold;
-    font-size: 1.8em;
-    color: #FFFFFF;
-    cursor: pointer;
-    margin: 0.5em 1em;
-    padding-bottom: 0.1em;
+  position: relative;
+  font-family: 'Kameron', serif;
+  font-weight: bold;
+  font-size: 1.8em;
+  color: var(--color-white);
+  cursor: pointer;
+  margin: 0.5em 1em;
+  padding-bottom: 0.1em;
 }
 
 .faq_tab_selected::before {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    border-bottom: 5px solid #E7D3AB;
-    animation: border_anim 0.3s ease-in-out forwards;
-    border-radius: 3px;
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  border-bottom: 5px solid #e7d3ab;
+  animation: border_anim 0.3s ease-in-out forwards;
+  border-radius: 3px;
 }
 
 @keyframes border_anim {
-    0% {
-        width: 0%;
-    }
-    100% {
-        width: 100%;
-    }
+  0% {
+    width: 0%;
+  }
+  100% {
+    width: 100%;
+  }
 }
 
 @media screen and (max-width: 800px) {
-    .faq_tab_title {
-        margin: 0.5em;
-    }
-    .faq_tab_section {
-        padding-left: 0;
-        justify-content: center;
-    }
+  .faq_tab_title {
+    margin: 0.5em;
+  }
+  .faq_tab_section {
+    padding-left: 0;
+    justify-content: center;
+  }
 }
 
 @media screen and (max-width: 600px) {
-    .faq_tab_title {
-        font-size: 1.2em;
-    }
+  .faq_tab_title {
+    font-size: 1.2em;
+  }
 }
 
 @media screen and (max-width: 400px) {
-    .faq_tab_title {
-        font-size: 0.9em;
-    }
+  .faq_tab_title {
+    font-size: 0.9em;
+  }
 }

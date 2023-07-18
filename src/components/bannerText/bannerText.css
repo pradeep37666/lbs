@@ -1,5 +1,5 @@
 .Banner {
-  border-bottom: 2px solid #ac172c;
+  border-bottom: 2px solid var(--color-accent);
   width: 100%;
   display: flex;
   justify-content: center;

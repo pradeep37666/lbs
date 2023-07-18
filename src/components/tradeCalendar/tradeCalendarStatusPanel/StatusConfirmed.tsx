@@ -1,9 +1,8 @@
 import moment from 'moment'
-import React from 'react'
 import { Link } from 'react-router-dom'
 import { Booking, BookingDuration } from '../../../types/Booking'
 import { dayArray, monthArray } from '../../../assets/Data/LBSArray'
-import { User, UserTradeData } from '../../../types/User'
+import { UserTradeData } from '../../../types/User'
 import getDateSuffix from '../../../util/dateUtils/getDateSuffix'
 import StatusButton from './StatusButton'
 

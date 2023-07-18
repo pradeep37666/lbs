@@ -6,7 +6,7 @@
 }
 
 .SearchFilterBar {
-  border-bottom: 2px solid #ac172c;
+  border-bottom: 2px solid var(--color-accent);
   width: 100%;
   display: flex;
   justify-content: center;
@@ -76,10 +76,10 @@
 .FilterPopout {
   position: absolute;
   top: 79px;
-  border: 2px solid #ac172c;
+  border: 2px solid var(--color-accent);
   border-top: none;
   border-radius: 0 0 15px 15px;
-  background-color: #fff;
+  background-color: var(--color-white);
   z-index: 11;
   display: flex;
   justify-content: center;
@@ -136,7 +136,7 @@
   align-items: center;
   border-radius: 10px;
   padding: 0.5em 1em;
-  background-color: #fff;
+  background-color: var(--color-white);
   border: 1px solid #c7c7c7;
   margin: 0 1em 1em 0;
   height: 3.5em;
@@ -156,14 +156,14 @@
 }
 
 .FilterButtonSave {
-  font-family: "DMSans", sans-serif;
+  font-family: 'DMSans', sans-serif;
   font-size: 20px;
-  color: #fff;
+  color: var(--color-white);
   padding: 0.7em 2em;
   border-radius: 10px;
   border: none;
   outline: none;
-  background-color: #ac172c;
+  background-color: var(--color-accent);
 }
 
 .PostcodeFlex {
@@ -174,7 +174,7 @@
 
 .PostcodeText {
   font-size: 18px;
-  color: #33384f;
+  color: var(--color-dark);
   font-weight: bold;
   margin-bottom: 0.5em;
 }
@@ -185,7 +185,7 @@
 
 .PostcodeInput {
   font-size: 20px;
-  font-family: "DMSans", sans-serif;
+  font-family: 'DMSans', sans-serif;
   font-weight: bold;
   text-align: center;
   border: 1px solid #c7c7c7;
@@ -226,7 +226,7 @@
 
 .PriceInput {
   font-size: 20px;
-  font-family: "DMSans", sans-serif;
+  font-family: 'DMSans', sans-serif;
   font-weight: bold;
   text-align: center;
   border: 1px solid #c7c7c7;
@@ -253,9 +253,9 @@
 
 .DeliveryButton {
   padding: 1em;
-  color: #e9d8b4;
-  background-color: #ac172c;
-  border: 1px solid #ac172c;
+  color: var(--color-bg-light);
+  background-color: var(--color-accent);
+  border: 1px solid var(--color-accent);
   font-size: 20px;
   font-weight: bold;
   border-radius: 10px;
@@ -263,7 +263,7 @@
 }
 
 .DeliveryButtonInactive {
-  background-color: #fff;
+  background-color: var(--color-white);
   font-weight: normal;
   color: #000;
 }

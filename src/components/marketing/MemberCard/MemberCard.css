@@ -1,37 +1,37 @@
 .member_card_container {
-    width: 22em;
-    height: 18em;
-    background: #F5F5F5;    
-    border-radius: 10px;
-    text-align: center;
-    justify-content: center;
-    align-items: center;
-    margin: 0 0.5em;
-    overflow-y: auto;
+  width: 22em;
+  height: 18em;
+  background: #f5f5f5;
+  border-radius: 10px;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  margin: 0 0.5em;
+  overflow-y: auto;
 }
 
 .member_avatar {
-    width: 60px !important;
-    height: 60px !important;
-    margin: 0.8em auto;
+  width: 60px !important;
+  height: 60px !important;
+  margin: 0.8em auto;
 }
 
 .member_name {
-    font-size: 1.1em;
-    color: #33384F;
-    font-family: 'Kameron', serif;
-    font-weight: bold;
-    margin: 0;
-    padding: 0 1em;
+  font-size: 1.1em;
+  color: var(--color-dark);
+  font-family: 'Kameron', serif;
+  font-weight: bold;
+  margin: 0;
+  padding: 0 1em;
 }
 
 .member_status {
-    font-weight: bold;
-    font-size: 0.9em;
-    margin: 0;
+  font-weight: bold;
+  font-size: 0.9em;
+  margin: 0;
 }
 
 .member_description {
-    padding: 0 1em;
-    font-size: 0.8em;
+  padding: 0 1em;
+  font-size: 0.8em;
 }

@@ -1,32 +1,32 @@
 .faq_card_container {
-    width: 30em;
-    height: fit-content;
-    background: #F5F5F5;
-    border-radius: 10px;
-    padding: 0.5em 1em;
+  width: 30em;
+  height: fit-content;
+  background: #f5f5f5;
+  border-radius: 10px;
+  padding: 0.5em 1em;
 }
 
 .faq_card_main_title {
-    font-family: 'Kameron', serif;
-    font-weight: bold;
-    color: #33384F;
-    font-size: 1.4em;
-    margin: 0.3em 0;
+  font-family: 'Kameron', serif;
+  font-weight: bold;
+  color: var(--color-dark);
+  font-size: 1.4em;
+  margin: 0.3em 0;
 }
 
 .faq_card_sub_title {
-    margin: 0;
-    font-size: 0.9em;
+  margin: 0;
+  font-size: 0.9em;
 }
 
 @media screen and (max-width: 500px) {
-    .faq_card_container {
-        width: 90%;
-    }
-    .faq_card_main_title {
-        font-size: 1.2em;
-    }
-    .faq_card_sub_title {
-        font-size: 0.7em;
-    }
+  .faq_card_container {
+    width: 90%;
+  }
+  .faq_card_main_title {
+    font-size: 1.2em;
+  }
+  .faq_card_sub_title {
+    font-size: 0.7em;
+  }
 }

@@ -1,4 +1,3 @@
-import React from 'react'
 import { Item } from '../../types/Item'
 import './TradeSidebar.css'
 import BookingCalculator from '../../util/calculator/BookingCalculator'

@@ -22,7 +22,7 @@
 }
 
 .LoginHeader {
-  color: #33384f;
+  color: var(--color-dark);
   font-size: 20px;
   font-weight: bold;
   width: 100%;
@@ -30,7 +30,7 @@
 }
 
 .LoginHeader--NoMargin {
-  color: #33384f;
+  color: var(--color-dark);
   font-size: 20px;
   font-weight: bold;
   width: 100%;
@@ -38,16 +38,16 @@
 
 .RetrieveLink {
   font-weight: bold;
-  color: #33384f;
+  color: var(--color-dark);
 }
 
 .LoginInput {
   width: 100%;
   padding: 0.7em;
   border-radius: 10px;
-  border: 1px solid #ac172c;
+  border: 1px solid var(--color-accent);
   outline: none;
-  font-family: "DMSans", sans-serif;
+  font-family: 'DMSans', sans-serif;
   font-weight: bold;
   font-size: 18px;
 }
@@ -55,9 +55,9 @@
 .LoginFormButton {
   padding: 1em;
   width: 100%;
-  background-color: #ac172c;
+  background-color: var(--color-accent);
   font-size: 15px;
-  color: #fff;
+  color: var(--color-white);
   font-weight: bold;
   border-radius: 10px;
   border: none;
@@ -65,9 +65,9 @@
 }
 
 .LoginFormButtonInverted {
-  color: #ac172c;
-  background-color: #fff;
-  border: 1px solid #ac172c;
+  color: var(--color-accent);
+  background-color: var(--color-white);
+  border: 1px solid var(--color-accent);
 }
 
 @media only screen and (max-width: 495px) {

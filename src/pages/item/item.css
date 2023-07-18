@@ -7,7 +7,7 @@
 
 .ItemInfoWrapper {
   width: 45%;
-  font-family: "DMSans", sans-serif;
+  font-family: 'DMSans', sans-serif;
 }
 
 .ItemPicturesWrapper {
@@ -35,7 +35,7 @@
 .ItemPriceTextBig {
   /* font-size: 70px; */
   font-size: calc(2.2vw + 2rem);
-  color: #33384f;
+  color: var(--color-dark);
 }
 
 .ItemRateTextBig {
@@ -45,7 +45,7 @@
 
 .ItemDiscountText {
   font-size: 18px;
-  color: #ac172c;
+  color: var(--color-accent);
   height: 50%;
   display: flex;
   flex-direction: column;
@@ -73,7 +73,7 @@
 
 .ItemButtons {
   display: flex;
-  margin-bottom: .5em;
+  margin-bottom: 0.5em;
   width: 100%;
 }
 
@@ -81,7 +81,7 @@
   padding: 0.5em;
   border-radius: 10px;
   outline: none;
-  font-family: "DMSans", sans-serif;
+  font-family: 'DMSans', sans-serif;
   font-size: 18px;
   margin-right: 10px;
 }
@@ -107,28 +107,28 @@
 }
 
 .ButtonAvailability {
-  border: 1px solid #33384f;
-  background-color: #ffffff;
+  border: 1px solid var(--color-dark);
+  background-color: var(--color-white);
   width: 50%;
 }
 
 .ButtonApply {
-  background-color: #33384f;
+  background-color: var(--color-dark);
   border: none;
-  color: #ffffff;
+  color: var(--color-white);
   width: 50%;
 }
 
 .ButtonColdChat {
-  background-color: #b43b4c;
+  background-color: var(--color-accent);
   border: none;
-  color: #ffffff;
+  color: var(--color-white);
   width: 80%;
 }
 
 .ButtonFavourite {
   width: 20%;
-  background-color: #b43b4c;
+  background-color: var(--color-accent);
   border: none;
   display: flex;
   justify-content: center;
@@ -143,7 +143,7 @@
 .ItemDetailsHeader {
   font-weight: bold;
   font-size: 25px;
-  color: #33384f;
+  color: var(--color-dark);
   margin-bottom: 0.5em;
 }
 
@@ -180,7 +180,7 @@
     justify-content: center;
   }
   .RatingLenderFlex {
-    margin-top: .5em;
+    margin-top: 0.5em;
   }
   .RatingDetailContainer {
     margin-left: 1.5em;
@@ -222,7 +222,7 @@
 }
 
 .RatingDetailContainer {
-  margin-left: .5em;
+  margin-left: 0.5em;
 }
 
 .ReviewCardSection {
@@ -238,8 +238,8 @@
   text-align: center;
   font-size: 14px;
   border-radius: 10px;
-  background-color: #ffffff;
-  font-family: "DMSans", sans-serif;
+  background-color: var(--color-white);
+  font-family: 'DMSans', sans-serif;
 }
 
 .ReviewCarousel {
@@ -269,15 +269,15 @@
   width: 16px;
   border-radius: 50%;
   margin: 0 0.2em;
-  color: #ffffff;
+  color: var(--color-white);
 }
 
 .ReviewPageInactive {
-  border: 1px solid #ac172c;
+  border: 1px solid var(--color-accent);
 }
 
 .ReviewPageActive {
-  background-color: #ac172c;
+  background-color: var(--color-accent);
 }
 
 .ItemImageMain {
@@ -311,13 +311,13 @@
 
 .ImageModalButton {
   width: 45%;
-  color: #fff;
+  color: var(--color-white);
   border-radius: 10px;
-  background-color: #ac172c;
+  background-color: var(--color-accent);
   padding: 1em;
   border: none;
   outline: none;
-  font-family: "DMSans", sans-serif;
+  font-family: 'DMSans', sans-serif;
 }
 
 .NavyOverlay {
@@ -359,18 +359,18 @@
   width: 39px;
   height: 39px;
   border-radius: 50%;
-  background: "#B03B4B";
+  background: '#B03B4B';
 }
 .editButton {
   width: 100%;
-  background-color: #33384f;
+  background-color: var(--color-dark);
   border: none;
-  color: #fff;
+  color: var(--color-white);
   font-size: 18px;
   padding: 0.5em;
   border-radius: 10px;
   outline: none;
-  font-family: "DMSans", sans-serif;
+  font-family: 'DMSans', sans-serif;
   font-size: 18px;
 }
 .ItemPage__Loading__Container {

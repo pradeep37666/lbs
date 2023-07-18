@@ -1,47 +1,48 @@
 .snackbar_container {
-    position: fixed;
-    bottom: 1rem;
-    left: 1.5rem;
-    background-color: #f7e7e9;
-    color: #33384f;
-    width: fit-content;
-    max-width: 400px;
-    border-radius: 10px;
-    padding: 0.5em 1em;
-    display: flex;
-    animation: fadein 0.8s, fadeout 0.8s;
-    transition: background-color 0.3s;
-    z-index: 100;
+  position: fixed;
+  bottom: 1rem;
+  left: 1.5rem;
+  background-color: var(--color-light);
+  color: var(--color-dark);
+  width: fit-content;
+  max-width: 400px;
+  border-radius: 10px;
+  padding: 0.5em 1em;
+  display: flex;
+  animation: fadein 0.8s, fadeout 0.8s;
+  transition: background-color 0.3s;
+  z-index: 100;
 }
 
 .snackbar_container:hover {
-    color: white;
+  color: white;
 }
 
 .snackbar_message {
-    padding-right: 0.5em;
-    font-weight: 500;
+  padding-right: 0.5em;
+  font-weight: 500;
 }
 
 .snackbar_button {
-    border: none;
-    background-color: rgba(172, 23, 44, 0);
-    font-weight: bold;
-    font-size: 0.9em;
-    color: #3284FF;
-    cursor: pointer;
+  border: none;
+  background-color: rgba(172, 23, 44, 0);
+  font-weight: bold;
+  font-size: 0.9em;
+  color: #3284ff;
+  cursor: pointer;
 }
 
 .snackbar_button:hover {
-    box-shadow: none;
+  box-shadow: none;
 }
 
 @keyframes fadeout {
-    from {
-        left: 0rem;
-        opacity: 0;
-    } to {
-        left: 1.5rem;
-        opacity: 1;
-    }
+  from {
+    left: 0rem;
+    opacity: 0;
+  }
+  to {
+    left: 1.5rem;
+    opacity: 1;
+  }
 }

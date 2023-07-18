@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import './TradeFailed.css'
 import clsx from 'clsx'
 import {

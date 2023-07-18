@@ -72,13 +72,13 @@
   justify-content: center;
   align-content: center;
   margin: 3em auto;
-  color: #33384f;
+  color: var(--color-dark);
 }
 
 .blog_article_title {
   margin: 0;
   text-align: center;
-  color: #33384f;
+  color: var(--color-dark);
   font-family: 'Kameron', serif;
   font-weight: bold;
   font-size: 1.8em;
@@ -91,7 +91,7 @@
 }
 
 .blog_instraction_title {
-  color: #33384f;
+  color: var(--color-dark);
   font-family: 'Kameron', serif;
   font-weight: bold;
   font-size: 1.8em;
@@ -101,14 +101,14 @@
 .blog_instraction_desc {
   margin: 0.5em 0;
   margin-bottom: 1.5em;
-  color: #33384f;
+  color: var(--color-dark);
   font-size: 0.9em;
 }
 
 .blog_instraction_desc_bottom {
   min-width: 350px;
   max-width: 650px;
-  color: #33384f;
+  color: var(--color-dark);
   font-size: 0.9em;
   margin: 0 auto;
   padding-bottom: 3rem;

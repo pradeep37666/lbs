@@ -21,7 +21,6 @@ const BootstrapInput = withStyles(theme => ({
     borderRadius: '10px',
     position: 'relative',
     backgroundColor: '#FFF',
-    border: 'none',
     fontSize: '16px',
     width: '100%',
     padding: '1.2em',

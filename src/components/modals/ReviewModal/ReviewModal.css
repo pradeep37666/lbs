@@ -8,9 +8,9 @@
 }
 
 .ReviewModalMain {
-  background-color: #fff;
-  color: #000;
-  border: 2px solid #9e1e29;
+  background-color: var(--color-white);
+  color: var(--color-text);
+  border: 2px solid var(--color-accent);
   border-radius: 15px;
   width: 60%;
   padding: 1em 2em;
@@ -19,7 +19,7 @@
 }
 
 .ReviewTitle {
-  color: #33384f;
+  color: var(--color-dark);
   font-size: 25px;
   font-weight: bold;
   margin-bottom: 0.5em;
@@ -86,7 +86,7 @@
 .LenderItemsHeader {
   font-size: 20px;
   font-weight: bold;
-  color: #33384f;
+  color: var(--color-dark);
   margin-bottom: 0.5em;
 }
 
@@ -106,7 +106,7 @@
 .LenderItemName {
   font-size: 16px;
   font-weight: bold;
-  color: #000000;
+  color: var(--color-text);
   width: 100%;
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -167,8 +167,8 @@
 .ReviewModalClose {
   right: 5px;
   top: 5px;
-  background-color: #b43b4c;
-  color: white;
+  background-color: var(--color-accent);
+  color: var(--color-white);
 }
 
 .ReviewModalReviewCard {
@@ -176,7 +176,8 @@
   padding-bottom: 1rem;
 }
 
-.ProductRatings, .ItemLenderRating {
+.ProductRatings,
+.ItemLenderRating {
   display: flex;
 }
 

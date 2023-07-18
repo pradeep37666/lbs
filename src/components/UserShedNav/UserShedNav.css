@@ -4,7 +4,7 @@
   margin-right: 4em;
   padding: 1em 0;
   font-size: 20px;
-  color: #33384f;
+  color: var(--color-dark);
 }
 
 .UserShedNav__LinkFlex {
@@ -39,28 +39,28 @@
   left: 80px;
   width: 17px;
   height: 17px;
-  background:  rgba(176, 59, 75, 1);
+  background: rgba(176, 59, 75, 1);
   border-radius: 50%;
 }
 
 .LogoutButton {
   width: 100%;
-  background-color: #ac172c;
+  background-color: var(--color-accent);
   font-size: 18px;
-  font-family: "DMSans";
+  font-family: 'DMSans';
   font-weight: bold;
   display: flex;
   align-items: center;
   justify-content: center;
   border: none;
   outline: none;
-  color: #fff;
+  color: var(--color-white);
   border-radius: 10px;
   padding: 0.5em 0;
 }
 
 .UserShedNav__SecondaryLink {
-  color: #33384f;
+  color: var(--color-dark);
   font-size: 20px;
   display: flex;
   align-items: center;

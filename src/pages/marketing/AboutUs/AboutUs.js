@@ -228,7 +228,7 @@ const AboutUs = () => {
                 src={Sarmuhabat}
                 className='picture_image'
                 style={{ objectFit: 'contain' }}
-                alt='tradie image'
+                alt='tradie'
               />
             </div>
           </div>

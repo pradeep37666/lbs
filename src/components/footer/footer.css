@@ -9,20 +9,18 @@
   justify-content: center;
 }
 
-
 .Advert {
   background-image: url(../../assets/TexturedBackgrounds/LBS_Illustration\ Pattern_RED.jpg);
   background-position: -200px 200px;
 }
 
 .Links {
-  background-color: #e9d8b4;
+  background-color: var(--color-bg-light);
 }
 
 .Copyright {
-  background-color: #33384f;
+  background-color: var(--color-dark);
 }
-
 
 .FooterWrapper {
   width: 65%;
@@ -61,7 +59,7 @@
 }
 .LargeText {
   font-size: 2.5em;
-  color: #ffffff;
+  color: var(--color-white);
   font-weight: bold;
   text-align: center;
 }
@@ -69,7 +67,7 @@
 .RegularText {
   text-align: center;
   font-size: 1.8em;
-  color: #ffffff;
+  color: var(--color-white);
 }
 
 .AppButtonsSection {
@@ -86,8 +84,8 @@
 }
 
 .Apple {
-  background-color: #000000;
-  color: #ffffff;
+  background-color: var(--color-text);
+  color: var(--color-white);
 }
 
 .AppIcon {
@@ -96,8 +94,8 @@
 }
 
 .Google {
-  background: #ffffff;
-  font-family: "Product Sans", sans-serif;
+  background: var(--color-white);
+  font-family: 'Product Sans', sans-serif;
 }
 
 .AppButtonFlex {
@@ -107,7 +105,7 @@
 
 .AppButtonText {
   margin: auto;
-  font-family: "DMSans";
+  font-family: 'DMSans';
   font-weight: bold;
   font-size: 14px;
 }
@@ -129,13 +127,13 @@
 
 .LinkText {
   font-size: 18px;
-  color: #33384f;
+  color: var(--color-dark);
   padding-bottom: 12px;
 }
 .Copyright {
   font-size: 20px;
   line-height: 1.5;
-  color: #ffffff;
+  color: var(--color-white);
 }
 
 @media only screen and (max-width: 1400px) {
@@ -156,7 +154,7 @@
   .AppButton {
     width: 10em;
     height: 2.3em;
-    margin: .5em;
+    margin: 0.5em;
   }
 }
 

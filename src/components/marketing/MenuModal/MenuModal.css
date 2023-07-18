@@ -1,71 +1,75 @@
 .modal_box {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    outline: none;
-    color: #FFFFFF;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  outline: none;
+  color: var(--color-white);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 }
 
 .modal_close_icon {
-    width: 2.5em;
-    height: 2.5em;
-    cursor: pointer;
+  width: 2.5em;
+  height: 2.5em;
+  cursor: pointer;
 }
 
 .modal_text,
 .modal_info_hub_container {
-    font-size: 1.5em;
-    font-weight: bold;
-    margin: 0.3em 0;
-    padding: 0.5em 1em;
-    cursor: pointer;
+  font-size: 1.5em;
+  font-weight: bold;
+  margin: 0.3em 0;
+  padding: 0.5em 1em;
+  cursor: pointer;
 }
 
 .modal_text:hover,
 .modal_info_hub_container:hover {
-    border-radius: 5px;
-    background: #AC172C;
+  border-radius: 5px;
+  background: var(--color-white);
 }
 
 .modal_info_hub_container {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 .modal_popup_opend {
-    width: 10em;
-    position: absolute;
-    bottom: -7.5em;
-    display: flex;
-    flex-direction: column;
-    border: 2px solid #AC172C;
-    border-radius: 10px;
-    cursor: pointer;
-    background: #FFFFFF;
-    animation: fadeIn 0.5s;
+  width: 10em;
+  position: absolute;
+  bottom: -7.5em;
+  display: flex;
+  flex-direction: column;
+  border: 2px solid var(--color-white);
+  border-radius: 10px;
+  cursor: pointer;
+  background: var(--color-white);
+  animation: fadeIn 0.5s;
 }
 
 .modal_popup_closed {
-    display: none;
+  display: none;
 }
 
 .option_blog,
 .option_protection,
 .option_faqs {
-    margin: 0;
-    font-size: 0.9em;
-    color: #33384F;
-    padding: 0.7em 0;
-    margin: 0 1em;
+  margin: 0;
+  font-size: 0.9em;
+  color: var(--color-dark);
+  padding: 0.7em 0;
+  margin: 0 1em;
 }
 
 @keyframes fadeIn {
-    0% { opacity: 0; }
-    100% { opacity: 1; }
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }

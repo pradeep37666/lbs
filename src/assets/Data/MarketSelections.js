@@ -587,12 +587,12 @@ const categories = [
 const blogData = [
   {
     id: 1,
-    publishDate: '28-Mar-2022',
+    publishDate: '27-Mar-2022',
     image: BlogImage1,
     category: ['Making sharing the norm'],
-    metaTitle: 'Intro to LBS platform',
+    metaTitle: 'Little Big Shed Launches New Online Community Sharing App',
     metaDesc:
-      'Our equipment rental app helps you share stuff and do good. Everyone can afford to make, mend and learn by sharing tools, hobby gear and more locally.',
+      'We want to let you enjoy the power of sharing so we can all do something positive together – for us, our community and the planet. That’s why we’ve been inspired to create Little Big Shed, an online sharing platform to help you share stuff and do good.',
     bannerTitle: 'Little Big Shed Launches New Online Community Sharing App',
     contentTitle: 'Equipment rental, hobby gear and tool sharing in your hood',
     contentBody: (
@@ -664,10 +664,10 @@ const blogData = [
     id: 2,
     publishDate: '28-Mar-2022',
     image: BlogImage2,
-    category: ['Creating equal opportunitiesm'],
-    metaTitle: 'The ‘why’ Founders Story',
+    category: ['Creating equal opportunities'],
+    metaTitle: 'The Origins of Little Big Shed: Founders Story',
     metaDesc:
-      'Sharing on our tool borrowing app puts less pressure on our planet’s natural resources and helps create equal access for all to create and explore.',
+      'We believe that no one should be restricted from doing a DIY project, cultivating their talents or going on an adventure due to a lack of resources. By sharing with each other we can help communities, farmers, and small businesses access resources to fulfil their true potential.',
     bannerTitle: 'The Origins of Little Big Shed – Founders Story',
     contentTitle: 'Equipment and tool borrowing app to make, mend and learn',
     contentBody: (
@@ -802,9 +802,9 @@ const blogData = [
     publishDate: '10-May-2022',
     image: BlogImage3,
     category: ['Zero waste', 'connecting community'],
-    metaTitle: 'Infographic',
+    metaTitle: 'Go Zero Waste With Sharing',
     metaDesc:
-      'A little sharing makes a big difference to support zero waste, create stronger community connections and enable DIY projects and experiences for all.',
+      'All around the world people are buying less and sharing more. What’s really cool about this is not only can we do something that’s zero waste but we can also create stronger community connections too. Find out how Little Big Shed helps you do just that.',
     bannerTitle: 'Why Sharing is Caring',
     contentTitle: 'Embrace zero waste through the power of sharing',
     contentBody: (
@@ -1075,9 +1075,9 @@ const blogData = [
     publishDate: '19-Aug-2022',
     image: BlogImage4,
     category: ['Sharing', 'Equipment rental', 'Equipment sharing services'],
-    metaTitle: 'How to create a successful listing blog',
+    metaTitle: 'How to create a successful listing',
     metaDesc:
-      'At Little Big Shed, we are an equipment sharing service. We are creating change - forging a circular economy that is about buying less and encouraging equipment rental. One person buys and then shares with many.',
+      'Here are the steps to list stuff on the Little Big Shed website, and why it is important to normalise the concept of sharing over buying.',
     bannerTitle: 'What if sharing, not buying, was the norm?',
     contentTitle: 'Share your Shed - Lend with us in Four Simple Steps',
     contentBody: (
@@ -1211,9 +1211,9 @@ const blogData = [
     publishDate: '19-Aug-2022',
     image: BlogImage5,
     category: ['Better Futures', 'Kantar', 'Sustainable Business Council'],
-    metaTitle: 'Better Futures Blog',
+    metaTitle: 'Why more of us care about waste minimisation than ever before',
     metaDesc:
-      'The findings from the Better Futures 2022 Report, published by Kantar & the Sustainable Business Council summarises that New Zealanders and Australians value the environment as something that needs protecting now and is among their top 10 concerns.',
+      'Summary of the findings of the Better Futures Report and shows how it is better to share than to buy and pile up stuff that we use very less.',
     bannerTitle:
       'More people are showing they want big changes in dealing with waste.',
     contentTitle:
@@ -1381,7 +1381,7 @@ const blogData = [
     category: ['Better Futures', 'Kantar', 'Sustainable Business Council'],
     metaTitle: 'The Japanese philosophy of Mottainai: Reduce, Reuse, Recycle',
     metaDesc:
-      'The findings from the Better Futures 2022 Report, published by Kantar & the Sustainable Business Council summarises that New Zealanders and Australians value the environment as something that needs protecting now and is among their top 10 concerns.',
+      'Introducing people to the philosophy of Mottainai and drawing similarities with Little Big Shed to show how the platform works and positively impacts the community and planet.',
     bannerTitle: '',
     contentTitle: '',
     contentBody: (

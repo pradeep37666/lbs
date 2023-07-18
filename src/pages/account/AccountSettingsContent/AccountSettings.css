@@ -20,7 +20,7 @@
 .AccountSettings__Title {
   font-weight: bold;
   font-size: 25px;
-  color: #33384f;
+  color: var(--color-dark);
   margin-bottom: 0.5em;
 }
 
@@ -38,14 +38,14 @@
 
 .AccountSettings__UserDetails {
   margin-left: 1em;
-  margin-right: .5em;
+  margin-right: 0.5em;
   min-width: 16em;
 }
 
 .AccountSettings__UserName {
   font-size: 20px;
   text-transform: capitalize;
-  color: #33384f;
+  color: var(--color-dark);
   font-weight: bold;
 }
 
@@ -80,7 +80,7 @@
 .AccountSettings__UpdateHeader {
   font-weight: bold;
   font-size: 15px;
-  color: #33384f;
+  color: var(--color-dark);
   margin-bottom: 0.5em;
 }
 
@@ -100,18 +100,16 @@
   align-items: center;
   font-size: 20px;
   font-weight: bold;
-  color: #33384f;
+  color: var(--color-dark);
 }
 .AccountSettings__SavedCard {
-  border: 1px solid #ac172c;
+  border: 1px solid var(--color-accent);
   display: flex;
-  color: #33384f;
+  color: var(--color-dark);
   padding: 1rem;
   border-radius: 10px;
   margin: 1rem 0;
   position: relative;
-}
-.AccountSettings__Icon {
 }
 
 .AccountSettings__SyncButton__Text {

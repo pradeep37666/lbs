@@ -1,6 +1,6 @@
 .NoContentButton {
   cursor: pointer;
-  background-color: #ac172c;
+  background-color: var(--color-accent);
   color: white;
   border-radius: 10px;
   padding: 1.4rem 1rem;
@@ -35,7 +35,7 @@
 .NoContentHeaderText {
   font-weight: bold;
   font-size: 25px;
-  color: #33384f;
+  color: var(--color-dark);
   margin-bottom: 0.6rem;
 }
 .NoContentImage {

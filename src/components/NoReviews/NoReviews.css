@@ -9,7 +9,7 @@
   font-size: 25px;
   font-weight: bold;
   margin-bottom: 0.5rem;
-  color: #33384f;
+  color: var(--color-dark);
 }
 
 .NoReviewsText {

@@ -21,8 +21,8 @@
 .TradeCalendarCurrentDay {
   font-size: 22px;
   font-weight: bold;
-  color: #33384f;
-  background: #e9d8b4;
+  color: var(--color-dark);
+  background: var(--color-bg-light);
   height: 40px;
   width: 40px;
   display: flex;
@@ -43,12 +43,12 @@
 .TradeCalendarDayItemDate {
   font-size: 22px;
   font-weight: bold;
-  color: #33384f;
+  color: var(--color-dark);
 }
 
 .TradeCalendarBorrowHeader {
   font-size: 16px;
-  color: #33384f;
+  color: var(--color-dark);
   font-weight: bold;
 }
 
@@ -57,7 +57,7 @@
   position: absolute;
   top: -25px;
   left: 5px;
-  color: #33384f;
+  color: var(--color-dark);
   font-size: 21px;
   font-weight: bold;
 }

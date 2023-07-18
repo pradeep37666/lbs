@@ -1,4 +1,3 @@
-import React from 'react'
 import './TradeCalendarItem.css'
 import getDateObject from '../../util/dateUtils/getDateObject'
 import Arrow from '../../assets/Icons/Arrow'

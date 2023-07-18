@@ -1,4 +1,3 @@
-import React from 'react'
 import { useHistory } from 'react-router'
 import { Booking, BookingAction } from '../../../types/Booking'
 import StatusButton from './StatusButton'

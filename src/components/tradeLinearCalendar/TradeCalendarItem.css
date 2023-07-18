@@ -19,7 +19,7 @@
 .TradeCalendarItemLend {
   display: flex;
   align-items: center;
-  background-color: #33384f;
+  background-color: var(--color-dark);
   padding: 0.5rem;
   color: white;
   border-radius: 10px;
@@ -27,18 +27,18 @@
 .TradeCalendarItemBorrow {
   display: flex;
   align-items: center;
-  background-color: #e9d8b4;
+  background-color: var(--color-bg-light);
   padding: 0.5rem;
-  color: #33384f;
+  color: var(--color-dark);
   border-radius: 10px;
 }
 .TradeCalendarItemPending {
   display: flex;
   align-items: center;
   padding: 0.5rem;
-  color: #33384f;
+  color: var(--color-dark);
   background-color: white;
-  border: 1px solid #33384f;
+  border: 1px solid var(--color-dark);
   border-radius: 10px;
 }
 
@@ -46,9 +46,9 @@
   display: flex;
   align-items: center;
   padding: 0.5rem 0;
-  background-color: #33384f;
+  background-color: var(--color-dark);
   color: white;
-  border: 1px solid #33384f;
+  border: 1px solid var(--color-dark);
   border-radius: 10px;
   flex-wrap: wrap;
 }
@@ -57,8 +57,8 @@
   display: flex;
   align-items: center;
   padding: 0.5rem;
-  background-color: #e9d8b4;
-  color: #33384f;
+  background-color: var(--color-bg-light);
+  color: var(--color-dark);
   border-radius: 10px;
 }
 

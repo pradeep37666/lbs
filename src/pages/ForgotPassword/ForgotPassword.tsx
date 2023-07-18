@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import PageWrapper from '../../components/pageWrapper/pageWrapper'
 import EnterCode from './EnterCode'
-import EnterPhone from './EnterPhone'
 import NewPassword from './NewPassword'
 import EnterEmail from './EnterEmail'
 

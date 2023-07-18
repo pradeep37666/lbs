@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import StatusButton from './StatusButton'
 import BookingDatesPanel from '../../BookingDatesPanel/BookingDatesPanel'
-import { Booking, BookingAction, BookingStatus } from '../../../types/Booking'
+import { BookingAction } from '../../../types/Booking'
 
 type Props = {
   isLender: boolean

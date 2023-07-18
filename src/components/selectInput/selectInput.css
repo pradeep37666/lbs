@@ -5,13 +5,13 @@
   outline: none;
   padding: 1.3em 0 0.7em 0;
   width: 100%;
-  font-family: "DMSans", sans-serif;
-  background-color: #FFFFFF;
+  font-family: 'DMSans', sans-serif;
+  background-color: var(--color-white);
   padding-left: 1em;
 }
 
 .SelectInput--Thin {
-  padding: .7em;
+  padding: 0.7em;
 }
 
 .hl {

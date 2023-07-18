@@ -1,13 +1,13 @@
 .LoginButton {
-  background-color: #33384f;
+  background-color: var(--color-dark);
   border: none;
   outline: none;
   border-radius: 10px;
   padding: 1em;
-  color: #ffffff;
+  color: var(--color-white);
   width: 100%;
   font-size: 18px;
-  font-family: "DMSans", sans-serif;
+  font-family: 'DMSans', sans-serif;
   display: flex;
   align-items: center;
   justify-content: center;

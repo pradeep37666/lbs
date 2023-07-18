@@ -30,7 +30,7 @@
 .description_list li::before {
   content: '\f00c';
   font-family: fontAwesome;
-  color: #33384f;
+  color: var(--color-dark);
   font-weight: bold;
   display: inline-block;
   width: 1em;
@@ -39,7 +39,7 @@
 
 .how_it_works_list li::before {
   content: '\2022';
-  color: #33384f;
+  color: var(--color-dark);
   font-weight: bold;
   display: inline-block;
   margin-left: -1em;
@@ -51,7 +51,7 @@
   justify-content: center;
   align-items: center;
   text-align: center;
-  color: #ffffff;
+  color: var(--color-white);
   font-family: 'Kameron', serif;
   font-weight: bold;
   font-size: 2em;
@@ -62,7 +62,7 @@
   justify-content: center;
   align-items: center;
   text-align: center;
-  color: #ffffff;
+  color: var(--color-white);
   font-family: 'Kameron', serif;
   font-weight: bold;
   font-size: 2em;
@@ -91,7 +91,7 @@
 }
 
 .dark_mode_text {
-  color: #ffffff;
+  color: var(--color-white);
 }
 
 .center_quote_btn {

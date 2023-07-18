@@ -1,13 +1,13 @@
 .ApplicationFooter {
   position: sticky;
-  background-color: white;
+  background-color: var(--color-white);
   width: 100%;
   margin-bottom: 10px;
   bottom: 10px;
   display: flex;
   justify-content: center;
-  border-top: 3px solid #ac172c;
-  border-bottom: 3px solid #ac172c;
+  border-top: 3px solid var(--color-accent);
+  border-bottom: 3px solid var(--color-accent);
   padding-top: 10px;
   padding-bottom: 10px;
 }
@@ -28,7 +28,7 @@
 }
 .ApplicationFooterClearButton {
   cursor: pointer;
-  border: 1px solid #ac172c;
+  border: 1px solid var(--color-accent);
   border-radius: 10px;
   min-width: 45%;
   display: flex;
@@ -44,7 +44,7 @@
 }
 .ApplicationFooterNextButton {
   cursor: pointer;
-  background-color: #ac172c;
+  background-color: var(--color-accent);
   color: white;
   border-radius: 10px;
   min-width: 45%;
@@ -69,13 +69,13 @@
   text-align: center;
 }
 .ApplicationFooterTime {
-  color: #ac172c;
+  color: var(--color-accent);
   font-size: 16px;
   font-weight: bold;
 }
 
 .ApplciationFooterArrow {
-  color: #ac172c;
+  color: var(--color-accent);
   font-size: 35px;
 }
 .ApplicationFooterArrowContainer {
@@ -86,10 +86,10 @@
 .ApplicatonFooterPrice {
   font-size: 20px;
   font-weight: bold;
-  color: #33384f;
+  color: var(--color-dark);
 }
 .ApplicationFooterDetailsHeader {
-  color: #33384f;
+  color: var(--color-dark);
   font-size: 17px;
   font-weight: bold;
 }

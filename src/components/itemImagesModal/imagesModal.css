@@ -1,146 +1,146 @@
 .ItemImageModalContainer {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0 , 0, 0 , 0.8);
-    z-index: 100;
-    user-select: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  z-index: 100;
+  user-select: none;
 }
 
 .CarouselModalFlexContainer {
-    position: -webkit-sticky; /* Safari */
-	position: sticky;
-	top: 10%;
+  position: -webkit-sticky; /* Safari */
+  position: sticky;
+  top: 10%;
 }
 
 .ItemImageModalCloseBtn {
-    position: absolute;
-    top: -8%;
-    left: 50px;
-    border-radius: 23px;
-    width: 38px;
-    height: 38px;
-    border: none;
-    outline: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #FFF;
-    color: #b43b4c;
+  position: absolute;
+  top: -8%;
+  left: 50px;
+  border-radius: 23px;
+  width: 38px;
+  height: 38px;
+  border: none;
+  outline: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-white);
+  color: #b43b4c;
 }
 
 .ImageModal {
-    display: flex;
-    justify-content: center;
-    position: relative;
-    overflow: hidden;
-    margin: 2em 0;
+  display: flex;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  margin: 2em 0;
 }
 
 .ImageModalImage {
-    width: 600px;
-    height: 500px;
-    border-radius: 20px;
-    object-fit: contain;
-    margin: 0 0.5em;
-    background: #181818;
+  width: 600px;
+  height: 500px;
+  border-radius: 20px;
+  object-fit: contain;
+  margin: 0 0.5em;
+  background: #181818;
 }
 
 .OffScreenForward {
-    position: absolute;
-    top: 0;
-    left: 90%;
+  position: absolute;
+  top: 0;
+  left: 90%;
 }
 
 .OffScreenBackward {
-    position: absolute;
-    top: 0;
-    right: 90%;
+  position: absolute;
+  top: 0;
+  right: 90%;
 }
 
-.OffScreenBackward:hover, .OffScreenForward:hover {
-    cursor: pointer;
+.OffScreenBackward:hover,
+.OffScreenForward:hover {
+  cursor: pointer;
 }
 
 .ImageNumberDisplay {
-    position: absolute;
-    border-radius: 34px;
-    color: #FFF;
-    font-size: 1.2em;
-    background-color: rgba(0 , 0, 0 , 0.8);
-    padding: .5em 2em;
-    top: 80%;
+  position: absolute;
+  border-radius: 34px;
+  color: var(--color-white);
+  font-size: 1.2em;
+  background-color: rgba(0, 0, 0, 0.8);
+  padding: 0.5em 2em;
+  top: 80%;
 }
 
 .ImageModalCarousel {
-    display: flex;
-    justify-content: center;
-    flex-grow: 1;
-    overflow: hidden;
-    align-items: center;
+  display: flex;
+  justify-content: center;
+  flex-grow: 1;
+  overflow: hidden;
+  align-items: center;
 }
 
 .ImageSmallContainer {
-    width: 10em;
-    height: 10em;
-    position: relative;
-    margin: 0 1em;
-    border-radius: 20px;
-    display: flex;
-    background: #181818;
+  width: 10em;
+  height: 10em;
+  position: relative;
+  margin: 0 1em;
+  border-radius: 20px;
+  display: flex;
+  background: #181818;
 }
 
 .ImageModalSmall {
-    object-fit: contain;
-    width: 100%;
-    border-radius: 10px;
-    display: block;
+  object-fit: contain;
+  width: 100%;
+  border-radius: 10px;
+  display: block;
 }
 
 .SmallImageInactive {
-    position: absolute;
-    top: 0;
-    background-color: rgba( 20, 25, 31, 0.5);
-    border-radius: 10px;
-    height: 100%;
-    width: 100%;
+  position: absolute;
+  top: 0;
+  background-color: rgba(20, 25, 31, 0.5);
+  border-radius: 10px;
+  height: 100%;
+  width: 100%;
 }
 
 .SmallImageActive {
-   border: 2px solid #FFF;
-   
+  border: 2px solid var(--color-white);
 }
 
 .SmallImageInactive:hover {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .HideOverlay {
-    display: none;
+  display: none;
 }
 
 @media only screen and (max-width: 800px) {
-    .ItemImageModalCloseBtn {
-        top: -10%;
-    }
-    .ImageModalImage {
-        width: 400px;
-        height: 300px;
-    }
-    .ImageNumberDisplay {
-        font-size: 0.9em;
-    }
+  .ItemImageModalCloseBtn {
+    top: -10%;
+  }
+  .ImageModalImage {
+    width: 400px;
+    height: 300px;
+  }
+  .ImageNumberDisplay {
+    font-size: 0.9em;
+  }
 }
 
 @media only screen and (max-width: 600px) {
-    .ImageModalImage {
-        width: 100%;
-        max-height: 600px;
-        height: auto;
-        margin: 0;
-        z-index: 200;
-        border-radius: 0;
-    }
+  .ImageModalImage {
+    width: 100%;
+    max-height: 600px;
+    height: auto;
+    margin: 0;
+    z-index: 200;
+    border-radius: 0;
+  }
 }

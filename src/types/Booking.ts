@@ -1,6 +1,5 @@
 import { BorrowerAddress } from '../util/reducers/bookingReducer'
 import { DeliveryOption, Item, ItemAddress } from './Item'
-import { UserAddress } from './User'
 
 export type BookingDurationStatus =
   | 'APPLIED'

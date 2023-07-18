@@ -1,4 +1,3 @@
-import React from 'react'
 import { UserTradeData } from '../../../types/User'
 import getCancelledText from '../../../util/tradeUtils/getCancelledText'
 import StatusButton from './StatusButton'

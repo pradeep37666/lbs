@@ -19,7 +19,7 @@
 }
 .ApplicationItemPrice {
   font-size: 18px;
-  color: #ac172c;
+  color: var(--color-accent);
 }
 .ApplicationItemExtra {
   font-size: 14px;

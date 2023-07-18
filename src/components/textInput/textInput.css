@@ -4,7 +4,6 @@
   outline: none;
   padding: 1.3em 0.6em 0.7em 1em;
   width: 100%;
-  font-family: "DMSans", sans-serif;
-  background-color: #FFFFFF;
+  font-family: 'DMSans', sans-serif;
+  background-color: var(--color-white);
 }
-

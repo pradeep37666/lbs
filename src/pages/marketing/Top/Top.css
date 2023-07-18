@@ -82,7 +82,7 @@
 
 .category_main_title {
   font-family: 'Kameron', serif;
-  color: #33384f;
+  color: var(--color-dark);
   font-weight: bold;
   font-size: 2.5em;
   padding-top: 0.2em;
@@ -90,7 +90,7 @@
 }
 
 .category_sub_heading {
-  color: #33384f;
+  color: var(--color-dark);
   font-family: 'Kameron', serif;
   font-weight: bold;
   font-size: 1.5em;

@@ -42,13 +42,13 @@
 }
 
 .DividingLine {
-  border: solid 1px #ffffff;
+  border: solid 1px var(--color-white);
   opacity: 0.3;
 }
 
 .PriceFilterSearch {
   width: 45%;
-  background-color: #ffffff;
+  background-color: var(--color-white);
   border-radius: 15px;
   border: 2px solid #95272f;
   display: flex;
@@ -85,13 +85,13 @@
 }
 
 .SearchButtonLarge {
-  background-color: #ac172c;
+  background-color: var(--color-accent);
   border: none;
   outline: none;
   border-radius: 10px;
   padding: 0.6em 2em;
   font-family: 'DMSans', sans-serif;
-  color: #ffffff;
+  color: var(--color-white);
   width: max-content;
   font-size: 24px;
 }
@@ -102,7 +102,7 @@
   border-radius: 10px;
   padding: 0.6em 2em;
   font-family: 'DMSans', sans-serif;
-  color: #33384f;
+  color: var(--color-dark);
   width: max-content;
   font-size: 24px;
 }
@@ -112,7 +112,7 @@
 }
 
 .CategoryInputField {
-  color: #33384f;
+  color: var(--color-dark);
   font-size: 20px;
   font-weight: bold;
 }
@@ -184,7 +184,7 @@
   padding: 1em;
   margin-right: 20px;
   border-radius: 10px;
-  color: #ffffff;
+  color: var(--color-white);
   background-repeat: no-repeat;
 }
 

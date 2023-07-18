@@ -2,7 +2,7 @@
   padding-top: 0.5em;
   padding-bottom: 0.5em;
   display: flex;
-  border-bottom: 2px solid #ac172c;
+  border-bottom: 2px solid var(--color-accent);
   width: 100%;
   justify-content: center;
   margin-bottom: 20px;
@@ -11,7 +11,6 @@
 .FlexBookingContainer {
   flex-direction: column;
 }
-
 
 .HeaderTextContainer {
   display: flex;
@@ -59,7 +58,6 @@
     text-align: center;
   }
 }
-
 
 .BannerBackBtn {
   position: relative;

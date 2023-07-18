@@ -1,6 +1,6 @@
 .PickerMain {
   border-radius: 20px;
-  background-color: #e9d8b4;
+  background-color: var(--color-bg-light);
   width: 330px;
   margin-bottom: 1em;
   user-select: none;
@@ -10,7 +10,7 @@
   display: flex;
   justify-content: center;
   font-size: 17px;
-  color: #33384f;
+  color: var(--color-dark);
   font-weight: bold;
   padding: 1em 0;
 }
@@ -23,13 +23,13 @@
 
 .TimeSlotDiv {
   width: 48%;
-  background-color: #fff;
+  background-color: var(--color-white);
   border-radius: 20px;
   padding: 0 1em;
   display: flex;
   flex-direction: column;
   align-items: center;
-  color: #33384f;
+  color: var(--color-dark);
   user-select: none;
 }
 
@@ -46,26 +46,25 @@
   font-size: 14px;
 }
 
-
 .TimeSlotDiv .DaySelectedText {
   font-size: 17px;
   font-weight: bold;
-  color: "white"
+  color: 'white';
 }
 
 .BackgroundMorning {
-  background-color: #33384f;
-  color: #fff;
+  background-color: var(--color-dark);
+  color: var(--color-white);
 }
 
 .BackgroundAfternoon {
-  background-color: #AC172C;
-  color: #fff;
+  background-color: var(--color-accent);
+  color: var(--color-white);
 }
 
 .MorningUnavailable {
   background-color: rgb(211, 211, 211);
-  color: gray;
+  color: var;
 }
 .AfternoonUnavailable {
   background-color: rgb(211, 211, 211);

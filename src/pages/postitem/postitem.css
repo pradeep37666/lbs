@@ -16,7 +16,7 @@
 .PostItem__ItemPictures__Preview {
   width: 45%;
   margin-bottom: 1em;
-  border: 1px solid #ac172c;
+  border: 1px solid var(--color-accent);
   border-radius: 5px;
   padding: 0.5em;
   position: relative;

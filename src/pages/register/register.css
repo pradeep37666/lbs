@@ -22,7 +22,7 @@
   height: 450px;
   overflow-y: auto;
   overflow-x: hidden;
-  border: 1px solid #ac172c;
+  border: 1px solid var(--color-accent);
   border-radius: 10px;
   padding: 0.5em;
 }
@@ -47,7 +47,7 @@
 }
 
 .ProfilePictureCircle {
-  border: 1px solid #ac172c;
+  border: 1px solid var(--color-accent);
   height: 120px;
   width: 120px;
   border-radius: 50%;
@@ -118,7 +118,7 @@
 }
 
 .ValidationText {
-  color: #ac172c;
+  color: var(--color-accent);
   font-size: 14px;
   width: 100%;
   margin-bottom: 1em;
@@ -144,10 +144,10 @@
   width: 30%;
   padding: 0.7em;
   border-radius: 10px;
-  border: 1px solid #ac172c;
+  border: 1px solid var(--color-accent);
   margin-bottom: 1em;
   outline: none;
-  font-family: "DMSans", sans-serif;
+  font-family: 'DMSans', sans-serif;
   font-weight: bold;
   font-size: 18px;
 }
@@ -156,7 +156,7 @@
   width: 30%;
   margin-bottom: 0.5em;
   margin-left: 0.5em;
-  color: #33384f;
+  color: var(--color-dark);
   font-size: 14px;
   font-weight: bold;
 }

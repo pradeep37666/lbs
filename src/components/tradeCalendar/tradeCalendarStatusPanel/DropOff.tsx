@@ -1,8 +1,8 @@
 import moment from 'moment'
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { dayArray, monthArray } from '../../../assets/Data/LBSArray'
-import { BookingAction, BookingStatus } from '../../../types/Booking'
-import { User, UserTradeData } from '../../../types/User'
+import { BookingAction } from '../../../types/Booking'
+import { UserTradeData } from '../../../types/User'
 import getDateSuffix from '../../../util/dateUtils/getDateSuffix'
 import StatusButton from './StatusButton'
 

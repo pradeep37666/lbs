@@ -1,5 +1,5 @@
 .VerificationText__Main {
-  background-color: #f7e7e9;
+  background-color: var(--color-light);
   border-radius: 10px;
   padding: 0.7em;
   font-size: 18px;
@@ -17,7 +17,7 @@
 }
 
 .ValidationPopup__Header {
-  color: #ac172c;
+  color: var(--color-accent);
   font-weight: bold;
 }
 
@@ -25,7 +25,7 @@
 
 .triangleLeft {
   position: absolute;
-  background-color: #f7e7e9;
+  background-color: var(--color-light);
   text-align: left;
   left: 105%;
   top: 35%;
@@ -33,7 +33,7 @@
 }
 .triangleLeft:before,
 .triangleLeft:after {
-  content: "";
+  content: '';
   position: absolute;
   background-color: inherit;
 }

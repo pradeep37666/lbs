@@ -1,4 +1,4 @@
-import React, { JSXElementConstructor, ReactNode } from 'react'
+import { ReactNode } from 'react'
 import './StatusButton.css'
 import { CircularProgress } from '@material-ui/core'
 

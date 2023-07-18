@@ -26,11 +26,11 @@
 }
 
 .DotMorningActive {
-  background-color: #33384f;
+  background-color: var(--color-dark);
 }
 
 .DotAfternoonActive {
-  background-color: #AC172C;
+  background-color: var(--color-accent);
 }
 
 .DayInactive {
@@ -39,36 +39,24 @@
 }
 
 .DayActive {
-  color: #33384f;
+  color: var(--color-dark);
 }
 
 .DayInactive:hover {
   cursor: pointer;
-  color: #858585;
+  color: var(--color-grey);
 }
-
-/* .SlotTriangle {
-    width: 0;
-    height: 0;
-    border-left: 50px solid transparent;
-    border-right: 50px solid transparent;
-    border-bottom: 100px solid #e9d8b4;
-    border-radius: 50%;
-    border-top-right-radius: 50%;
-} */
-
-/* Triangle marker styles */
 
 .triangle {
   position: absolute;
-  background-color: #e9d8b4;
+  background-color: var(--color-bg-light);
   text-align: left;
   left: 40%;
   top: 120%;
 }
 .triangle:before,
 .triangle:after {
-  content: "";
+  content: '';
   position: absolute;
   background-color: inherit;
 }

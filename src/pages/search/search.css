@@ -3,7 +3,7 @@
   display: flex;
   justify-content: center;
   flex-direction: column;
-  margin-bottom: "28%";
+  margin-bottom: '28%';
 }
 
 .SearchSortFlex {
@@ -46,9 +46,9 @@
 .PaginationArrow {
   width: 35px;
   height: 35px;
-  background-color: #ac172c;
+  background-color: var(--color-accent);
   border-radius: 10px;
-  color: #fff;
+  color: var(--color-white);
   font-size: 25px;
   display: flex;
   justify-content: center;
