@@ -15,6 +15,7 @@
   color: var(--color-dark);
   font-size: 1.8em;
   line-height: 1em;
+  padding-top: 0.7em;
 }
 
 .blog_card_category {

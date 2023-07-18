@@ -5,7 +5,7 @@ import NavBar from '../../../components/marketing/NavBar/NavBar'
 import {
   Android,
   Apple,
-  ArohaClear,
+  Screenshots,
   TopInfoGraphic,
   TopMowing,
 } from '../../../assets/Images/Marketings/Marketings'
@@ -157,7 +157,7 @@ const Top = () => {
           <img
             src={TopInfoGraphic}
             className='graphic_image responsive_img_size'
-            alt='graphic image'
+            alt='graphic'
           />
         </div>
       </div>
@@ -207,7 +207,7 @@ const Top = () => {
       </div>
 
       <div
-        className='marketing_img_flexible_container bg_wall'
+        className='marketing_img_flexible_container bg_wall marketing_screenshot'
         style={{ flexDirection: 'column' }}
       >
         <div className='top_info_top_section flex_box'>
@@ -233,10 +233,10 @@ const Top = () => {
             style={{ display: 'flex', justifyContent: 'center' }}
           >
             <img
-              src={ArohaClear}
-              className='graphic_image responsive_img_sm_size disable_img'
-              style={{ padding: '0' }}
-              alt='lady image'
+              src={Screenshots}
+              className='screenshot_image responsive_img_sm_size disable_img'
+              style={{ padding: '50' }}
+              alt='screenshots'
             />
           </div>
         </div>

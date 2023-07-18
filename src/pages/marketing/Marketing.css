@@ -43,6 +43,10 @@
   justify-content: center;
 }
 
+.marketing_screenshot {
+  padding-top: 4em;
+}
+
 .main_title_section {
   position: absolute;
   height: 100%;
@@ -112,6 +116,11 @@
 
 .graphic_image {
   padding: 3em;
+  height: 100%;
+}
+
+.screenshot_image {
+  padding: 1em;
   height: 100%;
 }
 

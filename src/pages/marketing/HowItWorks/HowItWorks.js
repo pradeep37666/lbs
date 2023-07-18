@@ -1,9 +1,7 @@
-import React from 'react'
 import '../Marketing.css'
 import './HowItWorks.css'
 import NavBar from '../../../components/marketing/NavBar/NavBar'
 import {
-  AdrianClear,
   Android,
   Apple,
   HIWSurf,
@@ -66,36 +64,13 @@ const HowItWorks = () => {
           <p className='marketing_main_title text_align'>
             Borrow Items and Save with our Online Tool Rental Platform
           </p>
-          <p>
+          <p style={{ fontSize: '1.1em' }}>
             Starting a DIY project? Want to get creative with a new craft? Keen
             to give a new activity a go? Look no further, our online tool rental
             platform is designed for you. By borrowing stuff on Little Big Shed
             you can:
           </p>
-        </div>
-        <div
-          className='center_text_image full_width'
-          style={{ paddingTop: '1rem' }}
-        >
-          <img
-            src={LBS80}
-            className='graphic_image no_left_padding disable_guiter'
-            style={{ maxHeight: '28em', maxWidth: '28em', padding: '0' }}
-            alt='guiter guy image'
-          />
-        </div>
-      </div>
-
-      <div className='marketing_img_flexible_container bg_white flex_box center_items straight_column'>
-        <div className='center_text_image full_width' style={{ padding: '0' }}>
-          <img
-            src={LBSModal}
-            className='graphic_image disable_guiter'
-            style={{ maxHeight: '35em', maxWidth: '35em', padding: '0' }}
-            alt='guiter guy image'
-          />
-        </div>
-        <div className='center_text_image full_width'>
+          <br />
           <ul className='description_list' style={{ fontSize: '1.1em' }}>
             <li className='description_list_text'>
               Make, mend and learn – without the hefty costs of buying items new
@@ -119,6 +94,17 @@ const HowItWorks = () => {
             Our hobby gear, equipment and online tool rental app makes it easy
             to book and borrow items from within your community.
           </p>
+        </div>
+        <div
+          className='center_text_image full_width'
+          style={{ paddingTop: '1rem' }}
+        >
+          <img
+            src={LBSModal}
+            className='graphic_image disable_guiter'
+            style={{ maxHeight: '36em', maxWidth: '36em', padding: '0' }}
+            alt='Infographic'
+          />
         </div>
       </div>
 

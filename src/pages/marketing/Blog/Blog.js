@@ -37,23 +37,7 @@ const Blog = () => {
           <div className='marketing_img_md_container bg_blog'>
             <div className='main_title_section position_lower'>
               <p className='main_title'>Little big ideas</p>
-            </div>
-          </div>
-
-          <div className='marketing_img_flexible_container bg_grey flex_box straight_column'>
-            <div className='half_screen_center full_width'>
-              <img
-                src={SawingGuiter}
-                className='graphic_image responsive_img_sm_size'
-                style={{ maxHeight: '28em', maxWidth: '28em', padding: '0' }}
-                alt='graphic image'
-              />
-            </div>
-            <div className='half_screen_center article_section full_width'>
-              <p className='marketing_main_title'>
-                Discover The Power Of Sharing
-              </p>
-              <p>
+              <p className='main_sub_title'>
                 In our blog of Little Big Ideas, you can be sure to find tips
                 for your next DIY project or hobby, insights into reducing
                 waste, guides on creating opportunities in our neighbourhoods,

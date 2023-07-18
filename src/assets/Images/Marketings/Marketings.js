@@ -24,6 +24,7 @@ import BlogImage6 from './Blogs/Blog 6 Mottainai Reducing and Reusing.jpg'
 import TopInfoGraphic from './Graphics/TopInfoGraphic.png'
 import TopMowing from './Graphics/TopMowing.png'
 import ArohaClear from './Graphics/Aroha_Clear.png'
+import Screenshots from './Graphics/Screenshots.png'
 import LYSMowing from './Graphics/lys_mowing.png'
 import TaneClear from './Graphics/Tane_Clear.png'
 import NatalieCliear from './Graphics/Natalie_Clear.png'
@@ -101,6 +102,7 @@ export {
   TopInfoGraphic,
   TopMowing,
   ArohaClear,
+  Screenshots,
   LYSMowing,
   TaneClear,
   NatalieCliear,
