@@ -26,21 +26,10 @@
   position: relative;
   height: 3em;
   width: 3em;
-  margin: 0 1em;
-  background: var(--color-accent);
-  border-radius: 10px;
+  margin: 0 0.4em;
   outline: none;
   border: none;
   cursor: pointer;
-  box-shadow: -5px -5px 15px var(--color-accent), 5px 5px 15px #95272f,
-    inset 5px 5px 10px var(--color-accent), inset -5px -5px 10px #95272f;
-  transition: box-shadow 0.3s ease;
-}
-
-.search_bar_btn:hover {
-  box-shadow: 0 0 20px 5px rgba(190, 32, 54, 1);
-  -webkit-box-shadow: 0 0 20px 5px rgba(190, 32, 54, 1);
-  -moz-box-shadow: 0 0 20px 5px rgba(190, 32, 54, 1);
 }
 
 .search_bar_icon {

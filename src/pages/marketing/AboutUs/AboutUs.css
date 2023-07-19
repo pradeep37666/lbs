@@ -1,62 +1,58 @@
 .bg_about_us {
-    background-image: url(../../../assets/Images/Marketings/Background/ABOUT_TS122380_m.jpg);
-}
-
-.bg_about_us_signup {
-    background-image: url(../../../assets/Images/Marketings/Images/ABOUT-bottom\ of\ page.jpg);
+  background-image: url(../../../assets/Images/Marketings/Background/ABOUT_TS122380_m.jpg);
 }
 
 .position_lower {
-    top: 60%;
+  top: 60%;
 }
 
 .smaller_width {
-    padding-left: 10em;
+  padding-left: 10em;
 }
 
-.padding_sm  {
-    padding: 3em;
+.padding_sm {
+  padding: 3em;
 }
 
 .insert_image_width_height {
-    width: 80%;
-    height: 80%;
+  width: 80%;
+  height: 80%;
 }
 
 .six_to_four {
-    width: 60%;
+  width: 60%;
 }
 
 .four_to_six {
-    width: 40%;
+  width: 40%;
 }
 
 .sharing_description {
-    font-size: 0.8em;
+  font-size: 0.8em;
 }
 
 .text_container_width {
-    padding-right: 10em;
+  padding-right: 10em;
 }
 
 .center_member_items {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 @media screen and (max-width: 1024px) {
-    .text_container_width {
-        padding-right: 3em;
-    }
+  .text_container_width {
+    padding-right: 3em;
+  }
 }
 
 @media screen and (max-width: 768px) {
-    .six_to_four {
-        width: 100%;
-    }
-    .text_container_width {
-        padding: 1em 2em;
-    }
+  .six_to_four {
+    width: 100%;
+  }
+  .text_container_width {
+    padding: 1em 2em;
+  }
 }

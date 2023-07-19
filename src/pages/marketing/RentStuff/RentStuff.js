@@ -18,7 +18,7 @@ const RentStuff = () => {
     <div className='marketing_container'>
       <NavBar selected='rent_stuff' />
 
-      <div className='marketing_img_md_container bg_rent_stuff center_items responsive_box_for_search'>
+      <div className='marketing_img_md_find bg_rent_stuff center_items responsive_box_for_search'>
         <div className='search_title_section'>
           <p className='search_title title_shadow'>
             Let’s find your next borrow
@@ -35,17 +35,17 @@ const RentStuff = () => {
             src={RSSawing}
             className='graphic_image responsive_img_size'
             style={{ maxHeight: '28em', maxWidth: '28em' }}
-            alt='graphic image'
+            alt='graphic'
           />
         </div>
         <div
-          className='half_screen_center article_section full_width'
+          className='eight_two_screen_center article_section full_width'
           style={{ padding: '0.5em' }}
         >
           <p className='marketing_main_title'>
             Get Set For Your Next DIY Project, Hobby Or Adventure!
           </p>
-          <div>
+          <div style={{ paddingRight: '20px' }}>
             <p style={{ padding: '0 0.3em' }}>
               If you’re starting a DIY project, want to experiment with a new
               craft, or borrow hobby equipment to give a new activity a go,
@@ -78,10 +78,16 @@ const RentStuff = () => {
             As our little shed grows into something big, you’ll be able to find
             all sorts of stuff!
           </h2>
-          <p className='category_sub_heading pt-7'>Checkout Our Categories</p>
-          <p className='category_sub_heading'>▼</p>
+          <p className='category_sub_heading pt-7'>
+            Checkout Our Categories{' '}
+            <span style={{ paddingTop: '10px', fontSize: '18px' }}>▼</span>
+          </p>
+          <p className='category_sub_heading'></p>
         </div>
-        <div className='category_card_section'>
+        <div
+          className='category_card_section'
+          style={{ marginBottom: '-30px', marginTop: '-20px' }}
+        >
           {categories.map(category => (
             <CategoryCard category={category} key={category.id} />
           ))}
@@ -100,22 +106,16 @@ const RentStuff = () => {
 
       <div className='marketing_img_flexible_container bg_grey flex_box center_items straight_column'>
         <div className='center_text_image full_width'>
-          <p className='marketing_main_title text_align'>
+          <p className='marketing_main_title text_align pt-5'>
             Want To Share Your Stuff And Earn Some Cash?
           </p>
           <div className='marketing_main_description text_align'>
             <p>
               Anything you have in your ‘little shed’ – whether that’s a garage,
               a kitchen drawer or a cupboard shelf – could be useful for someone
-              else.
-              <br />
-              <br />
-              Why not lend your stuff to people in your area when not in use and
-              make some extra cash on the side?
-              <br />
-              <br />
-              We’ll take good care of you too so you can lend your items
-              worry-free.{' '}
+              else. Why not lend your stuff to people in your area when not in
+              use and make some extra cash on the side? We’ll take good care of
+              you too so you can lend your items worry-free.{' '}
               <Link
                 class='underline_link'
                 style={{ fontWeight: '600' }}
@@ -126,7 +126,7 @@ const RentStuff = () => {
               .
             </p>
           </div>
-          <div style={{ alignSelf: 'center' }}>
+          <div className='pb-6' style={{ alignSelf: 'center' }}>
             <MarketingButton
               bgColor='#AC172C'
               textColor='#FFFFFF'

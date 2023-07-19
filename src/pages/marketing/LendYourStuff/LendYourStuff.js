@@ -1,4 +1,3 @@
-import React from 'react'
 import './LendYourStuff.css'
 import {
   Android,
@@ -33,8 +32,6 @@ const LendYourStuff = () => {
               bgColor={'#AC172C'}
               textColor={'#FFFFFF'}
               linkTo={'/register'}
-              width='16em'
-              height='3em'
             >
               <p className='button_font'>Sign Up To Start Sharing</p>
               <img src={SignUpImg} className='app_icons' alt='signup icon' />
@@ -47,16 +44,13 @@ const LendYourStuff = () => {
             <p className='download_sub_title sub_title_shadow'>
               Download our mobile app to borrow and lend, where ever you are!
             </p>
-            <MarketingButton
-              bgColor={'#E9D8B4'}
-              textColor={'#33384F'}
-              width='13.5em'
-              height='3em'
-            >
-              Download Now!
-              <img src={Apple} className='app_icons' alt='apple icon' />
-              <img src={Android} className='app_icons' alt='android icon' />
-            </MarketingButton>
+            <div className='flex_box'>
+              <MarketingButton bgColor={'#E9D8B4'} textColor={'#33384F'}>
+                Download Now!
+                <img src={Apple} className='app_icons' alt='apple icon' />
+                <img src={Android} className='app_icons' alt='android icon' />
+              </MarketingButton>
+            </div>
           </div>
         </div>
       </div>
@@ -70,7 +64,7 @@ const LendYourStuff = () => {
           />
         </div>
         <div className='half_screen_center article_section full_width'>
-          <p className='marketing_main_title'>
+          <p className='marketing_main_title pt-8'>
             Share Your Shed On Our Tool Borrowing App
           </p>
           <p>
@@ -91,7 +85,7 @@ const LendYourStuff = () => {
               space and money, and make some extra cash for yourself on the
               side.
             </li>
-            <li className='description_list_text'>
+            <li className='description_list_text pb-9'>
               Care for the environment – with less people buying stuff new,
               demand for products reduces. Sharing helps design waste out of the
               system before it has the chance to become rubbish.
@@ -118,14 +112,18 @@ const LendYourStuff = () => {
         <div className='center_text_image full_width'>
           <img
             src={TaneClear}
-            className='graphic_image no_left_padding disable_guiter'
-            style={{ maxHeight: '28em', maxWidth: '28em' }}
-            alt='guiter guy image'
+            className='graphic_image disable_guiter'
+            style={{
+              maxHeight: '26em',
+              maxWidth: '26em',
+              paddingLeft: '90px',
+            }}
+            alt='guiter guy'
           />
         </div>
       </div>
-      <div className='marketing_img_flexible_container bg_lbs'>
-        <p className='lbs_quote_text'>
+      <div className='marketing_img_flexible_banner bg_lbs'>
+        <p className='lbs_quote_text' style={{ color: 'white' }}>
           A Little Sharing Can Make A Big Difference To Your Pocket, Your
           Community And The Planet.
         </p>
@@ -139,7 +137,7 @@ const LendYourStuff = () => {
             src={NatalieCliear}
             className='graphic_image'
             style={{ maxHeight: '28em', maxWidth: '28em' }}
-            alt='surf borad lady image'
+            alt='surf borad lady'
           />
         </div>
         <div className='center_text_image full_width'>
@@ -173,7 +171,10 @@ const LendYourStuff = () => {
       </div>
       <div className='marketing_image_fit_container bg_white'>
         <div className='top_info_smaller_section' style={{ margin: '0 auto' }}>
-          <p className='marketing_main_title' style={{ textAlign: 'center' }}>
+          <p
+            className='marketing_main_title pb-5'
+            style={{ textAlign: 'center' }}
+          >
             Four Simple Steps To Rent Out The Stuff In Your Shed
           </p>
         </div>
@@ -183,24 +184,25 @@ const LendYourStuff = () => {
           ))}
         </div>
       </div>
-      <div className='marketing_img_sm_container bg_lys_signup'>
+      <div className='marketing_img_sm_banner mt-10'>
         <div className='center_quote_btn'>
-          <p className='lbs_quote_lgtext sub_title_shadow'>
+          <p
+            className='lbs_quote_lgtext'
+            style={{ color: 'var(--color-dark)' }}
+          >
             Ready to start earning and do good?
           </p>
           <MarketingButton
-            bgColor={'#AC172C'}
+            bgColor={'var(--color-dark)'}
             textColor={'#FFFFFF'}
             linkTo={'/register'}
-            width='16em'
-            height='3em'
           >
             <p className='button_font'>Sign up to start sharing</p>
             <img src={SignUpImg} className='app_icons' alt='signup icon' />
           </MarketingButton>
         </div>
       </div>
-      <div className='marketing_img_flexible_container'>
+      {/* <div className='marketing_img_flexible_container'>
         <div className='hiw_question_section'>
           <div className='hiw_question_title_box' style={{ padding: '2em 0' }}>
             <p className='hiw_question_title' style={{ color: '#33384F' }}>
@@ -217,7 +219,7 @@ const LendYourStuff = () => {
             </MarketingButton>
           </div>
         </div>
-      </div>
+      </div> */}
       <Footer />
     </div>
   )

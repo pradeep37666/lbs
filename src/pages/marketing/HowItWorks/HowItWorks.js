@@ -26,14 +26,15 @@ const HowItWorks = () => {
       />
       <div className='marketing_img_md_container bg_how_it_works'>
         <div className='main_title_section wider_section'>
-          <p className='main_title'>Hire gear for your next adventure</p>
-          <p className='main_title'>or DIY project</p>
+          <p className='main_title title_shadow'>
+            Hire gear for your next adventure
+          </p>
+          <p className='main_title title_shadow'>or DIY project</p>
           <div className='flex_box'>
             <MarketingButton
               bgColor={'#AC172C'}
               textColor={'#FFFFFF'}
               linkTo={'/register'}
-              width='16em'
               height='3em'
             >
               <p className='button_font'>Sign Up To Start Sharing</p>
@@ -41,27 +42,30 @@ const HowItWorks = () => {
             </MarketingButton>
           </div>
           <div className='download_app_section'>
-            <p className='download_main_title'>Download our free app!</p>
-            <p className='download_sub_title'>
+            <p className='download_main_title title_shadow'>
+              Download our free app!
+            </p>
+            <p className='download_sub_title sub_title_shadow'>
               Download our mobile app to borrow and lend, where ever you are!
             </p>
-            <MarketingButton
-              bgColor={'#E9D8B4'}
-              textColor={'#33384F'}
-              width='13.5em'
-              height='3em'
-            >
-              Download Now!
-              <img src={Apple} className='app_icons' alt='apple icon' />
-              <img src={Android} className='app_icons' alt='android icon' />
-            </MarketingButton>
+            <div className='flex_box'>
+              <MarketingButton
+                bgColor={'#E9D8B4'}
+                textColor={'#33384F'}
+                height='3em'
+              >
+                Download Now!
+                <img src={Apple} className='app_icons' alt='apple icon' />
+                <img src={Android} className='app_icons' alt='android icon' />
+              </MarketingButton>
+            </div>
           </div>
         </div>
       </div>
 
       <div className='marketing_img_flexible_container bg_white flex_box center_items straight_column'>
-        <div className='center_text_image full_width'>
-          <p className='marketing_main_title text_align'>
+        <div className='center_text_image full_width pb-8'>
+          <p className='marketing_main_title text_align pt-8'>
             Borrow Items and Save with our Online Tool Rental Platform
           </p>
           <p style={{ fontSize: '1.1em' }}>
@@ -134,8 +138,6 @@ const HowItWorks = () => {
             bgColor={'#AC172C'}
             textColor={'#FFFFFF'}
             linkTo={'/register'}
-            width='16em'
-            height='3em'
           >
             <p className='button_font'>Sign Up To Start Sharing</p>
             <img src={SignUpImg} className='app_icons' alt='signup icon' />

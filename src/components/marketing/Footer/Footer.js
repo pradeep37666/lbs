@@ -55,7 +55,7 @@ const Footer = () => {
           <img
             src={LBSBlackLogo}
             alt='lbs footer logo'
-            className='footer_middle_logo'
+            className='footer_middle_logo pb-2'
           />
           <p className='footer_first_title'>Share stuff, do good</p>
           <p className='footer_first_desc'>
@@ -68,7 +68,7 @@ const Footer = () => {
         </div>
         <div className='footer_content_box flex flex-col'>
           <p
-            className='footer_section_title_main'
+            className='footer_section_title_main pb-2'
             onClick={() => history.push('/about_us')}
           >
             About Us
@@ -89,7 +89,7 @@ const Footer = () => {
         </div>
         <div className='footer_content_box flex flex-col'>
           <p
-            className='footer_section_title_main'
+            className='footer_section_title_main pb-2'
             onClick={() => history.push('/how_it_works')}
           >
             How It Works
@@ -115,7 +115,7 @@ const Footer = () => {
         </div>
         <div className='footer_content_box flex flex-col'>
           <p
-            className='footer_section_title_main'
+            className='footer_section_title_main pb-2'
             onClick={() => history.push('/')}
           >
             Top Categories
@@ -173,7 +173,7 @@ const Footer = () => {
           </Link>
         </div>
         <div className='footer_content_box'>
-          <p className='footer_last_title'>Stay Connected</p>
+          <p className='footer_last_title pb-2'>Stay Connected</p>
           <p className='footer_last_desc'>
             Subscribe to the Little Big Shed newsletter to keep up to date with
             our sharing news and new item listings!
@@ -207,7 +207,7 @@ const Footer = () => {
         </div>
       </div>
 
-      <div className='footer_bottom_container'>
+      <div className='footer_bottom_container pt-2 pb-2'>
         <p className='footer_bottom_left'>Support Team</p>
         <p className='footer_bottom_right'>Copyright 2023 Little big shed</p>
       </div>

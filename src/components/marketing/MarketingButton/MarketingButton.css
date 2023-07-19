@@ -1,47 +1,43 @@
 .marketing_btn_container {
-    width: 13em;
-    height: 2.5em;
-    padding: 0.5em;
-    border-radius: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    margin: 0.8em 1em 0.8em 0;
-    font-weight: bold;
-    cursor: pointer;
-    box-shadow: 4px -1px 25px -4px rgba(245, 245, 245, 0);
-    -webkit-box-shadow: 4px -1px 25px -4px rgba(245, 245, 245, 0);
-    -moz-box-shadow: 4px -1px 25px -4px rgba(245, 245, 245, 0);
-    transition: box-shadow 0.3s;
+  height: 2.5em;
+  padding: 1.5em;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  margin: 0.8em 1em 0.8em 0;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 4px -1px 25px -4px rgba(245, 245, 245, 0);
+  -webkit-box-shadow: 4px -1px 25px -4px rgba(245, 245, 245, 0);
+  -moz-box-shadow: 4px -1px 25px -4px rgba(245, 245, 245, 0);
+  transition: box-shadow 0.3s;
 }
 
 .marketing_btn_container:hover {
-    box-shadow: 4px -1px 25px -4px rgba(245, 245, 245, 0.8);
-    -webkit-box-shadow: 4px -1px 25px -4px rgba(245, 245, 245, 0.8);
-    -moz-box-shadow: 4px -1px 25px -4px rgba(245, 245, 245, 0.8);
+  box-shadow: 4px -1px 25px -4px rgba(245, 245, 245, 0.8);
+  -webkit-box-shadow: 4px -1px 25px -4px rgba(245, 245, 245, 0.8);
+  -moz-box-shadow: 4px -1px 25px -4px rgba(245, 245, 245, 0.8);
 }
 
 @media screen and (max-width: 850px) {
-    .marketing_btn_container {
-        font-size: 0.9em;
-    }
+  .marketing_btn_container {
+    font-size: 0.9em;
+  }
 }
 
 @media screen and (max-width: 768px) {
-    .marketing_btn_container {
-       margin: 0.3em 0.5em;
-       width: 16em;
-    }
-    .marketing_btn_container {
-        font-size: 0.8em;
-    }
+  .marketing_btn_container {
+    margin: 0.3em 0.5em;
+  }
+  .marketing_btn_container {
+    font-size: 0.8em;
+  }
 }
 
 @media screen and (max-width: 600px) {
-
 }
 
 @media screen and (max-width: 500px) {
-    
 }

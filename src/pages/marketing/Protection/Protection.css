@@ -39,9 +39,10 @@
 }
 
 .protection_sub_title_text {
-  font-size: 1.1em;
+  font-size: 1.2em;
   width: 100%;
   font-weight: 600;
+  padding-bottom: 0.2em;
 }
 
 .protection_sub_list {

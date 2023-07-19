@@ -1,4 +1,3 @@
-import React from 'react'
 import './footer.css'
 import Logo from './../../assets/Logos/LBS_Logo_Flat_Red.jpg'
 import GoogleButton from '../../assets/Images/GooglePlayButton.png'

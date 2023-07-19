@@ -79,7 +79,9 @@ const FAQs = () => {
 
       <div className='marketing_img_flexible_container bg_dark'>
         <div className='center_quote_btn'>
-          <p className='lbs_quote_lgtext'>Got A Question Not Answered Here?</p>
+          <p className='lbs_quote_lgtext' style={{ color: 'white' }}>
+            Got A Question Not Answered Here?
+          </p>
           <MarketingButton
             bgColor={'#E9D8B4'}
             textColor={'#33384F'}

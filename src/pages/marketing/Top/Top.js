@@ -72,18 +72,20 @@ const Top = () => {
             <p className='download_sub_title dark_sub_title'>
               Download our mobile app to borrow and lend, where ever you are!
             </p>
-            <MarketingButton bgColor={'#E9D8B4'} textColor={'#33384F'}>
-              Download Now!
-              <img src={Apple} className='app_icons' alt='apple icon' />
-              <img src={Android} className='app_icons' alt='android icon' />
-            </MarketingButton>
+            <div className='flex_box'>
+              <MarketingButton bgColor={'#E9D8B4'} textColor={'#33384F'}>
+                Download Now!
+                <img src={Apple} className='app_icons' alt='apple icon' />
+                <img src={Android} className='app_icons' alt='android icon' />
+              </MarketingButton>
+            </div>
           </div>
         </div>
       </div>
 
       <div className='marketing_img_flexible_container bg_white flex_box straight_column'>
         <div className='half_screen_center article_section full_width'>
-          <p className='marketing_main_title'>
+          <p className='marketing_main_title mb-9'>
             Your Local Tool, Hobby Gear And Equipment Rental App.
           </p>
           <div className='marketing_main_description'>
@@ -145,13 +147,15 @@ const Top = () => {
               <br />
             </p>
           </div>
-          <MarketingButton
-            bgColor='#AC172C'
-            textColor='#FFFFFF'
-            linkTo={'/register'}
-          >
-            Sign up to start sharing
-          </MarketingButton>
+          <div className='pt-4'>
+            <MarketingButton
+              bgColor='#AC172C'
+              textColor='#FFFFFF'
+              linkTo={'/register'}
+            >
+              Sign up to start sharing
+            </MarketingButton>
+          </div>
         </div>
         <div className='half_screen_center full_width'>
           <img
@@ -163,14 +167,14 @@ const Top = () => {
       </div>
 
       <div className='marketing_img_flexible_container bg_grey center_items straight_column'>
-        <div className='half_screen_center full_width'>
+        <div className='six_four_screen_center full_width'>
           <img
             src={TopMowing}
             className='graphic_image responsive_img_size'
-            alt='mowing image'
+            alt='mowing'
           />
         </div>
-        <div className='half_screen_center column_section adjusting_box_size full_width'>
+        <div className='six_four_screen_center column_section adjusting_box_size full_width'>
           <p className='marketing_main_title max_width'>
             Share Your Stuff, Earn Cash And Do Good
           </p>
@@ -262,7 +266,7 @@ const Top = () => {
       </div>
 
       <div className='marketing_image_xlg_container bg_grey height100p'>
-        <div className='category_title_section'>
+        <div className='category_title_section pt-6'>
           <p className='category_main_title'>Discover Your Next Borrow</p>
           <p className='category_sub_title'>
             As our little shed grows into something big, you’ll be able to lend

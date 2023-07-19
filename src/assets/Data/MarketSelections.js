@@ -471,58 +471,58 @@ const teamMembers = [
       </p>
     ),
   },
-  {
-    id: 4,
-    name: 'Moumita Das Roy | Lending Marketing Skills for Little Big Shed',
-    shortBio: (
-      <p>
-        Cross-industry marketer with local and international experience with B2B
-        and B2C audiences, Moumita Das Roy brings her left-brain-right-brain
-        balanced approach to work. Last season, she failed at snowboarding,
-        that’s why she wants to try it again this year. She is looking to borrow
-        good snow-gear before she invests on her own.
-      </p>
-    ),
-    longBio: (
-      <p>
-        Moumita Das Roy is a Marketing Consultant with Little Big Shed. She
-        brings more than 15 years experience working with iconic, global brands.
-        She takes great interest in doing meaningful and contributory work for
-        purpose-led brands and has multiple volunteering engagements with
-        not-for-profit organisations in Aotearoa, New Zealand. That is why she
-        is associated with GoodSense, who are Little Big Shed’s ethical
-        marketing partners. She is completely aligned with the philosophy of
-        proper utilisation of stuff and takes pride in repurposing and doing
-        good.
-      </p>
-    ),
-  },
-  {
-    id: 5,
-    name: 'Moumita Das Roy | Lending Marketing Skills for Little Big Shed',
-    shortBio: (
-      <p>
-        Cross-industry marketer with local and international experience with B2B
-        and B2C audiences, Moumita Das Roy brings her left-brain-right-brain
-        balanced approach to work. Last season, she failed at snowboarding,
-        that’s why she wants to try it again this year. She is looking to borrow
-        good snow-gear before she invests on her own.
-      </p>
-    ),
-    longBio: (
-      <p>
-        Moumita Das Roy is a Marketing Consultant with Little Big Shed. She
-        brings more than 15 years experience working with iconic, global brands.
-        She takes great interest in doing meaningful and contributory work for
-        purpose-led brands and has multiple volunteering engagements with
-        not-for-profit organisations in Aotearoa, New Zealand. That is why she
-        is associated with GoodSense, who are Little Big Shed’s ethical
-        marketing partners. She is completely aligned with the philosophy of
-        proper utilisation of stuff and takes pride in repurposing and doing
-        good.
-      </p>
-    ),
-  },
+  // {
+  //   id: 4,
+  //   name: 'Moumita Das Roy | Lending Marketing Skills for Little Big Shed',
+  //   shortBio: (
+  //     <p>
+  //       Cross-industry marketer with local and international experience with B2B
+  //       and B2C audiences, Moumita Das Roy brings her left-brain-right-brain
+  //       balanced approach to work. Last season, she failed at snowboarding,
+  //       that’s why she wants to try it again this year. She is looking to borrow
+  //       good snow-gear before she invests on her own.
+  //     </p>
+  //   ),
+  //   longBio: (
+  //     <p>
+  //       Moumita Das Roy is a Marketing Consultant with Little Big Shed. She
+  //       brings more than 15 years experience working with iconic, global brands.
+  //       She takes great interest in doing meaningful and contributory work for
+  //       purpose-led brands and has multiple volunteering engagements with
+  //       not-for-profit organisations in Aotearoa, New Zealand. That is why she
+  //       is associated with GoodSense, who are Little Big Shed’s ethical
+  //       marketing partners. She is completely aligned with the philosophy of
+  //       proper utilisation of stuff and takes pride in repurposing and doing
+  //       good.
+  //     </p>
+  //   ),
+  // },
+  // {
+  //   id: 5,
+  //   name: 'Moumita Das Roy | Lending Marketing Skills for Little Big Shed',
+  //   shortBio: (
+  //     <p>
+  //       Cross-industry marketer with local and international experience with B2B
+  //       and B2C audiences, Moumita Das Roy brings her left-brain-right-brain
+  //       balanced approach to work. Last season, she failed at snowboarding,
+  //       that’s why she wants to try it again this year. She is looking to borrow
+  //       good snow-gear before she invests on her own.
+  //     </p>
+  //   ),
+  //   longBio: (
+  //     <p>
+  //       Moumita Das Roy is a Marketing Consultant with Little Big Shed. She
+  //       brings more than 15 years experience working with iconic, global brands.
+  //       She takes great interest in doing meaningful and contributory work for
+  //       purpose-led brands and has multiple volunteering engagements with
+  //       not-for-profit organisations in Aotearoa, New Zealand. That is why she
+  //       is associated with GoodSense, who are Little Big Shed’s ethical
+  //       marketing partners. She is completely aligned with the philosophy of
+  //       proper utilisation of stuff and takes pride in repurposing and doing
+  //       good.
+  //     </p>
+  //   ),
+  // },
 ]
 
 const categories = [

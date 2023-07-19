@@ -27,9 +27,13 @@ const AboutUs = () => {
 
       {isBioOpen ? (
         <>
-          <div className='blog_title_container'>
+          <div className='blog_title_container mt-2 '>
             <div className='blog_banner_image_container'>
-              <img className='blog_banner_image' src={Sarmuhabat} />
+              <img
+                className='blog_banner_image'
+                src={Sarmuhabat}
+                alt={'profile'}
+              />
             </div>
           </div>
           <div className='blog_article_container bg_white'>
@@ -110,8 +114,8 @@ const AboutUs = () => {
           </div>
 
           <div className='marketing_img_flexible_container bg_grey flex_box center_items straight_column'>
-            <div className='center_text_image full_width'>
-              <p className='marketing_main_title'>
+            <div className='center_text_image full_width pb-9'>
+              <p className='marketing_main_title pt-8'>
                 A Way We Can All Be Zero Waste
               </p>
               <div>
@@ -146,7 +150,7 @@ const AboutUs = () => {
               <img
                 src={WashingAndSawing}
                 className='picture_image no_left_padding'
-                alt='tradie image'
+                alt='tradie'
               />
             </div>
             <div className='half_screen_center six_to_four column_section align_start text_container_width'>
@@ -192,13 +196,15 @@ const AboutUs = () => {
                 </Link>
                 ?
               </p>
-              <MarketingButton
-                bgColor={'#AC172C'}
-                textColor={'#FFFFFF'}
-                linkTo={'/register'}
-              >
-                <p className='button_font'>Sign Up To Start Sharing</p>
-              </MarketingButton>
+              <div className='pt-4'>
+                <MarketingButton
+                  bgColor={'#AC172C'}
+                  textColor={'#FFFFFF'}
+                  linkTo={'/register'}
+                >
+                  <p className='button_font'>Sign Up To Start Sharing</p>
+                </MarketingButton>
+              </div>
             </div>
           </div>
 
@@ -212,16 +218,18 @@ const AboutUs = () => {
                 believes that one’s success and resources should be shared
                 within the community to help support society as a whole.
               </p>
-              <button
-                className='marketing_btn_container'
-                style={{ background: '#E9D8B4', color: '#33384F' }}
-                onClick={() => {
-                  window.scrollTo(0, 0)
-                  setIsBioOpen(true)
-                }}
-              >
-                <p className='button_font'>Read More: Full Bio</p>
-              </button>
+              <div className='pt-4'>
+                <button
+                  className='marketing_btn_container'
+                  style={{ background: '#E9D8B4', color: '#33384F' }}
+                  onClick={() => {
+                    window.scrollTo(0, 0)
+                    setIsBioOpen(true)
+                  }}
+                >
+                  <p className='button_font'>Read More: Full Bio</p>
+                </button>
+              </div>
             </div>
             <div className='image_half_container full_width'>
               <img
@@ -234,7 +242,7 @@ const AboutUs = () => {
           </div>
 
           <div className='marketing_img_md_container bg_white height100p center_member_items'>
-            <p className='marketing_main_title margin_bottom'>Our Team</p>
+            <p className='marketing_main_title margin_bottom pt-3'>Our Team</p>
             <div className='category_card_section'>
               {teamMembers.map(member => (
                 <MemberCard member={member} key={member.id} />
@@ -242,17 +250,19 @@ const AboutUs = () => {
             </div>
           </div>
 
-          <div className='marketing_img_sm_container bg_about_us_signup'>
+          <div className='marketing_img_sm_banner'>
             <div className='center_quote_btn'>
-              <p className='lbs_quote_lgtext'>
-                Ready To Start Earning And Do Good? Sign Up
+              <p className='lbs_quote_lgtext pt-1'>
+                Ready To Start Earning And Do Good?
               </p>
               <MarketingButton
                 bgColor={'#33384F'}
                 textColor={'#FFFFFF'}
                 linkTo={'/register'}
               >
-                <p className='button_font'>Sign Up To Start Sharing</p>
+                <p className='button_font about_us_cta'>
+                  Sign Up To Start Sharing
+                </p>
                 <img src={SignUpImg} className='app_icons' alt='signup icon' />
               </MarketingButton>
             </div>

@@ -1,8 +1,7 @@
-import React, { useRef } from 'react'
+import { useRef } from 'react'
 import '../Marketing.css'
 import './Protection.css'
 import { damagedProcedures } from '../../../assets/Data/MarketSelections'
-import { MaryClear } from '../../../assets/Images/Marketings/Marketings'
 import Footer from '../../../components/marketing/Footer/Footer'
 import MarketingButton from '../../../components/marketing/MarketingButton/MarketingButton'
 import NavBar from '../../../components/marketing/NavBar/NavBar'
@@ -16,8 +15,13 @@ const Protection = () => {
 
       <div className='marketing_img_md_container bg_protection'>
         <div className='main_title_section protection_title_position'>
-          <p className='main_title title_shadow'>Lender protection</p>
-          <p className='main_sub_title sub_title_width sub_title_shadow'>
+          <p className='main_title' style={{ color: 'var(--color-dark)' }}>
+            Lender protection
+          </p>
+          <p
+            className='main_sub_title sub_title_width'
+            style={{ color: 'var(--color-dark)' }}
+          >
             No worries if your item comes back damaged or is stolen – we’ve got
             you covered!
             <br />
@@ -30,61 +34,20 @@ const Protection = () => {
       </div>
 
       <div className='marketing_img_flexible_container bg_wall flex_box straight_column'>
-        <div className='half_screen_center article_section no_right_padding full_width'>
-          <p className='marketing_main_title'>Are you eligible?</p>
-          <p className='marketing_main_description'>
-            To be to claim through our ‘lender protection policy’ you must meet
-            the following criteria:
+        <div className='half_screen_center article_section eligible no_right_padding full_width pb-7'>
+          <p
+            className='marketing_main_title pt-7'
+            style={{ color: 'var(--color-text)' }}
+          >
+            Are you eligible?
           </p>
-          <p className='protection_sub_title_text'>
-            What you need to do before and after the rental
+          <p>
+            To learn more about our lender protection policy, read this list of
+            what is covered and what is not under the policy.
           </p>
-          <ul className='protection_sub_list'>
-            <li>
-              Immediately raise a dispute with the borrower seeking compensation
-              for any damage, loss or theft of your items during the rental
-              period.
-            </li>
-            <li>
-              Immediately raise a dispute with Little Big Shed by contacting
-              support@littlebigshed.com.
-            </li>
-            <li>
-              In the case of theft, report the incident to the police as soon as
-              reasonably possible, and obtain a crime reference number from
-              them.
-            </li>
-            <li>
-              Take clear photos or videos of the item(s) on your mobile phone or
-              camera with a timestamp immediately (and no more than 24 hours)
-              before the rental to prove they were in your possession undamaged
-              at that time.
-            </li>
-            <li>
-              In the case of damage, take clear photos or videos on your mobile
-              phone or camera with a timestamp immediately (and no more than 24
-              hours) after the rental to prove the damage happened during the
-              rental and not during your own subsequent use.
-            </li>
-            <li>
-              Do not post on social media, online, or make public information
-              about your claim before the claim process has completed.
-            </li>
-            <li>
-              Provide Little Big Shed with the appropriate documentation to
-              support the claim. This is included but not limited to:
-              <ul>
-                <li>
-                  An itemised breakdown of all items that have suffered damage,
-                  loss or theft;
-                </li>
-                <li>Evidence of the value when you purchased the items;</li>
-                <li>Serial numbers on items.</li>
-              </ul>
-            </li>
-          </ul>
+          <br />
           <p className='protection_sub_title_text'>What is covered</p>
-          <ul className='protection_sub_list'>
+          <ol class='policy-list'>
             <li>
               The cost of repair, replacement or the fair market value of the
               asset. The value of the asset is determined by the price that you
@@ -96,9 +59,10 @@ const Protection = () => {
               is the lender's liability and you will need to consult your
               insurance company.
             </li>
-          </ul>
+          </ol>
+          <br />
           <p className='protection_sub_title_text'>What is not covered</p>
-          <ul className='protection_sub_list'>
+          <ol class='policy-list'>
             <li>Damage caused by a breakdown or mechanical fault</li>
             <li>Existing defects, such as corrosion</li>
             <li>
@@ -116,21 +80,17 @@ const Protection = () => {
             <li>
               Anything that is classified as a chemical or dangerous weapon
             </li>
-          </ul>
-          Check out our full lender protection policy to find out more about
-          sharing with our verified Little Big Shed users.
+          </ol>
+          <br />
         </div>
-        {/* <div className='half_screen_center full_width'>
-          <img src={MaryClear} className='graphic_image no_left_padding responsive_img_sm_size' alt='mowing iamge'/>
-        </div> */}
       </div>
 
-      <div className='marketing_img_md_container bg_white height100p center_member_items'>
+      <div className='marketing_img_md_container bg_white height100p center_member_items pt-5'>
         <div className='marketing_main_title margin_bottom'>
           <p className='damaged_steps_title'>
             What To Do If My Item Is Returned Damaged.
           </p>
-          <p className='damaged_steps_description'>
+          <p className='damaged_steps_description pt-3'>
             Now you know what’s covered, learn how to raise a dispute for a
             damaged or stolen item, by following the four easy steps outlined
             below.
@@ -143,10 +103,8 @@ const Protection = () => {
         </div>
         <div className='search_items_btn'>
           <MarketingButton
-            bgColor='#33384F'
+            bgColor='var(--color-dark)'
             textColor='#FFFFFF'
-            width='26em'
-            height='2.9em'
             onClick={() => lenderProtectionLinkRef.current?.click()}
           >
             Check out our full{'\u00A0'}
@@ -162,15 +120,19 @@ const Protection = () => {
       </div>
 
       <div className='marketing_img_flexible_container bg_dark'>
-        <div className='center_quote_btn'>
-          <p className='lbs_quote_lgtext'>Got A Question Not Answered Here?</p>
-          <MarketingButton
-            bgColor={'#E9D8B4'}
-            textColor={'#33384F'}
-            linkTo={'/contact_us'}
-          >
-            Ask A Question
-          </MarketingButton>
+        <div className='center_quote_btn mt-7 mb-5'>
+          <p className='lbs_quote_lgtext' style={{ color: 'white' }}>
+            Got A Question Not Answered Here?
+          </p>
+          <div className=''>
+            <MarketingButton
+              bgColor={'#E9D8B4'}
+              textColor={'#33384F'}
+              linkTo={'/contact_us'}
+            >
+              Ask A Question
+            </MarketingButton>
+          </div>
         </div>
       </div>
       <Footer />

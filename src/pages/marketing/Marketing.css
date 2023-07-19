@@ -15,6 +15,13 @@
   background-size: cover;
 }
 
+.marketing_img_md_find {
+  height: 55vh;
+  width: 100%;
+  position: relative;
+  background-size: cover;
+}
+
 .marketing_image_fit_container {
   height: 100%;
 }
@@ -35,9 +42,22 @@
   height: 70vh;
 }
 
+.marketing_img_sm_banner {
+  padding-top: 4vh;
+  padding-bottom: 4vh;
+  background-color: var(--color-light-grey);
+}
+
 .marketing_img_flexible_container {
   height: fit-content;
-  padding: 1rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.marketing_img_flexible_banner {
+  height: fit-content;
+  padding: 2rem 0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -52,7 +72,7 @@
   height: 100%;
   width: 37%;
   top: 15%;
-  left: 15%;
+  left: 143px;
 }
 
 .main_title,
@@ -114,14 +134,31 @@
   position: relative;
 }
 
+.six_four_screen_center {
+  width: 40%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.eight_two_screen_center {
+  width: 80%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
 .graphic_image {
-  padding: 3em;
+  padding: 2.5em;
   height: 100%;
 }
 
 .screenshot_image {
   padding: 1em;
-  height: 100%;
 }
 
 .picture_image {
@@ -139,6 +176,7 @@
   padding-bottom: 0.5em;
   margin-top: 0.5em;
   line-height: 1em;
+  padding-right: 20px;
 }
 
 .marketing_main_description {
@@ -155,7 +193,6 @@
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
-  padding: 2em 0;
   padding-right: 0;
 }
 
@@ -203,7 +240,7 @@
 }
 
 .margin_bottom {
-  margin: 1em 0;
+  margin: 0.8em 0;
 }
 
 .center_items {
@@ -227,6 +264,7 @@
 @media screen and (max-width: 1440px) {
   .main_title_section {
     width: 45%;
+    left: 130px;
   }
   .graphic_image {
     padding: 2em;
@@ -269,13 +307,13 @@
 
 @media screen and (max-width: 768px) {
   .marketing_img_md_container {
-    height: 45vh;
+    height: 40vh;
   }
   .main_title_section {
-    width: 55%;
+    width: 80%;
     height: auto;
     bottom: 0;
-    left: 15%;
+    left: 60px;
   }
   .main_title {
     font-size: 2em;
