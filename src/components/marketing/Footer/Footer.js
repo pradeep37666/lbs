@@ -18,9 +18,6 @@ const Footer = () => {
   const sendSubscribeEmail = () => {
     // send email
   }
-  const openNewWindow = url => {
-    window.open(url, '_blank')
-  }
   return (
     <div className='footer_container'>
       <div className='footer_header_container'>
