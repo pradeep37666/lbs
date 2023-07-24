@@ -73,27 +73,15 @@ export default function ItemCard({ item, favourited }) {
         <div className='RatingSection'>
           <span className='ItemRateText'>{item.rating}/5</span>
           <div className='RatingStars' style={{ marginLeft: 0 }}>
-            <StarFilled fill='#E9D8B4' className='StarIcon' />
-            {item.rating >= 2 ? (
-              <StarFilled fill='#E9D8B4' className='StarIcon' />
-            ) : (
-              <StarOutline className='StarIcon' />
-            )}
-            {item.rating >= 3 ? (
-              <StarFilled fill='#E9D8B4' className='StarIcon' />
-            ) : (
-              <StarOutline className='StarIcon' />
-            )}
-            {item.rating >= 4 ? (
-              <StarFilled fill='#E9D8B4' className='StarIcon' />
-            ) : (
-              <StarOutline className='StarIcon' />
-            )}
-            {item.rating >= 5 ? (
-              <StarFilled fill='#E9D8B4' className='StarIcon' />
-            ) : (
-              <StarOutline className='StarIcon' />
-            )}
+            {[1, 2, 3, 4, 5].map(index => (
+              <React.Fragment key={index}>
+                {item.rating >= index ? (
+                  <StarFilled fill='#E9D8B4' className='StarIcon' />
+                ) : (
+                  <StarOutline className='StarIcon' />
+                )}
+              </React.Fragment>
+            ))}
           </div>
         </div>
       </div>

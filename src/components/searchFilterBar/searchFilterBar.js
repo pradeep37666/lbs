@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import './searchFilterBar.css'
 import CarIcon from './../../assets/Icons/AutomotiveIcon.svg'
 import BBQIcon from './../../assets/Icons/BBQIcon.svg'
@@ -65,6 +65,8 @@ export default function SearchFilterBar({ keyWord, address }) {
   const [Rating, setRating] = useState(parsed?.rating ?? '')
   const [updateLocation, setUpdateLocation] = useState(false)
 
+  const [activeFilterRef, setActiveFilterRef] = useState(null)
+
   const handleSubmitFilterChange = () => {
     let string = ''
     if (keyWord) {
@@ -90,12 +92,32 @@ export default function SearchFilterBar({ keyWord, address }) {
   }
 
   const handleFilterClick = filter => {
-    if (ActiveFilter === filter) {
-      setActiveFilter('none')
+    if (activeFilterRef === filter) {
+      setActiveFilterRef(null)
     } else {
-      setActiveFilter(filter)
+      setActiveFilterRef(filter)
     }
   }
+
+  useEffect(() => {
+    const handleOutsideClick = event => {
+      if (
+        activeFilterRef &&
+        popoutRef.current &&
+        !popoutRef.current.contains(event.target)
+      ) {
+        setActiveFilterRef(null)
+      }
+    }
+
+    document.addEventListener('click', handleOutsideClick)
+
+    return () => {
+      document.removeEventListener('click', handleOutsideClick)
+    }
+  }, [activeFilterRef])
+
+  const popoutRef = useRef(null)
 
   const getGeoLocation = input => {
     Geocode.setApiKey(process.env.REACT_APP_GOOGLE_API_KEY)
@@ -169,7 +191,6 @@ export default function SearchFilterBar({ keyWord, address }) {
             if (Category === category.name) setCategory('')
             else setCategory(category.name)
             handleSubmitFilterChange()
-            console.log('Category Clicked : ', Category)
           }}
         >
           {category.icon}
@@ -182,7 +203,10 @@ export default function SearchFilterBar({ keyWord, address }) {
   const getCategoryPopout = () => {
     return (
       <div
-        className='FilterPopout FilterPopoutCat'
+        ref={popoutRef}
+        className={`FilterPopout FilterPopoutCat ${
+          activeFilterRef === 'Category' ? 'FilterPopoutActive' : ''
+        }`}
         onClick={e => e.stopPropagation()}
       >
         <hr className='hl hlPopout' />
@@ -196,7 +220,10 @@ export default function SearchFilterBar({ keyWord, address }) {
   const getLocationPopout = () => {
     return (
       <div
-        className='FilterPopout FilterPopoutLoc'
+        ref={popoutRef}
+        className={`FilterPopout FilterPopoutLoc ${
+          activeFilterRef === 'Location' ? 'FilterPopoutActive' : ''
+        }`}
         onClick={e => e.stopPropagation()}
       >
         <hr className='hl hlPopout' />
@@ -218,7 +245,7 @@ export default function SearchFilterBar({ keyWord, address }) {
             className='FilterButtonSave'
             onClick={() => {
               setUpdateLocation(!updateLocation)
-              setActiveFilter('none')
+              setActiveFilterRef(null)
             }}
           >
             Save
@@ -231,7 +258,10 @@ export default function SearchFilterBar({ keyWord, address }) {
   const getPricePopout = () => {
     return (
       <div
-        className='FilterPopout FilterPopoutPrice'
+        ref={popoutRef}
+        className={`FilterPopout FilterPopoutPrice ${
+          activeFilterRef === 'Price' ? 'FilterPopoutActive' : ''
+        }`}
         onClick={e => e.stopPropagation()}
       >
         <hr className='hl hlPopout' />
@@ -265,7 +295,7 @@ export default function SearchFilterBar({ keyWord, address }) {
             <button
               className='FilterButtonSave'
               onClick={() => {
-                setActiveFilter('none')
+                setActiveFilterRef(null)
                 handleSubmitFilterChange()
               }}
             >
@@ -280,7 +310,10 @@ export default function SearchFilterBar({ keyWord, address }) {
   const getRatingPopout = () => {
     return (
       <div
-        className='FilterPopout FilterPopoutRating'
+        ref={popoutRef}
+        className={`FilterPopout FilterPopoutRating ${
+          activeFilterRef === 'Rating' ? 'FilterPopoutActive' : ''
+        }`}
         onClick={e => e.stopPropagation()}
       >
         <hr className='hl hlPopout' />
@@ -363,7 +396,10 @@ export default function SearchFilterBar({ keyWord, address }) {
   const getDeliveryPopout = () => {
     return (
       <div
-        className='FilterPopout FilterPopoutDel'
+        ref={popoutRef}
+        className={`FilterPopout FilterPopoutDel ${
+          activeFilterRef === 'Delivery' ? 'FilterPopoutActive' : ''
+        }`}
         onClick={e => e.stopPropagation()}
       >
         <hr className='hl hlPopout' />
@@ -404,12 +440,12 @@ export default function SearchFilterBar({ keyWord, address }) {
         >
           <span
             className={`SearchFilterText ${
-              ActiveFilter === 'Category' ? 'FilterActive' : ''
+              activeFilterRef === 'Category' ? 'FilterActive' : ''
             }`}
           >
             Category
           </span>
-          {ActiveFilter === 'Category' ? getCategoryPopout() : ''}
+          {activeFilterRef === 'Category' ? getCategoryPopout() : ''}
         </div>
         <div
           onClick={() => handleFilterClick('Location')}
@@ -417,12 +453,12 @@ export default function SearchFilterBar({ keyWord, address }) {
         >
           <span
             className={`SearchFilterText ${
-              ActiveFilter === 'Location' ? 'FilterActive' : ''
+              activeFilterRef === 'Location' ? 'FilterActive' : ''
             }`}
           >
             Location/Postcode
           </span>
-          {ActiveFilter === 'Location' ? getLocationPopout() : ''}
+          {activeFilterRef === 'Location' ? getLocationPopout() : ''}
         </div>
         <div
           onClick={() => handleFilterClick('Price')}
@@ -430,12 +466,12 @@ export default function SearchFilterBar({ keyWord, address }) {
         >
           <span
             className={`SearchFilterText ${
-              ActiveFilter === 'Price' ? 'FilterActive' : ''
+              activeFilterRef === 'Price' ? 'FilterActive' : ''
             }`}
           >
             Price
           </span>
-          {ActiveFilter === 'Price' ? getPricePopout() : ''}
+          {activeFilterRef === 'Price' ? getPricePopout() : ''}
         </div>
         <div
           onClick={() => handleFilterClick('Rating')}
@@ -443,12 +479,12 @@ export default function SearchFilterBar({ keyWord, address }) {
         >
           <span
             className={`SearchFilterText ${
-              ActiveFilter === 'Rating' ? 'FilterActive' : ''
+              activeFilterRef === 'Rating' ? 'FilterActive' : ''
             }`}
           >
             Rating
           </span>
-          {ActiveFilter === 'Rating' ? getRatingPopout() : ''}
+          {activeFilterRef === 'Rating' ? getRatingPopout() : ''}
         </div>
         <div
           onClick={() => handleFilterClick('Delivery')}
@@ -456,12 +492,12 @@ export default function SearchFilterBar({ keyWord, address }) {
         >
           <span
             className={`SearchFilterText ${
-              ActiveFilter === 'Delivery' ? 'FilterActive' : ''
+              activeFilterRef === 'Delivery' ? 'FilterActive' : ''
             }`}
           >
             Delivery
           </span>
-          {ActiveFilter === 'Delivery' ? getDeliveryPopout() : ''}
+          {activeFilterRef === 'Delivery' ? getDeliveryPopout() : ''}
         </div>
       </div>
     </div>

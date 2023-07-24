@@ -32,7 +32,7 @@
   width: 100%;
   border-radius: 15px;
   padding: 2em;
-  margin-bottom: 25px;
+  margin-bottom: 20px;
 }
 
 .SearchFiltersRowFlex {
@@ -44,6 +44,7 @@
 .DividingLine {
   border: solid 1px var(--color-white);
   opacity: 0.3;
+  margin: 14px 0;
 }
 
 .PriceFilterSearch {
@@ -89,7 +90,7 @@
   border: none;
   outline: none;
   border-radius: 10px;
-  padding: 0.4em 2em;
+  padding: 0.3em 1.5em;
   font-family: 'DMSans', sans-serif;
   color: var(--color-white);
   width: max-content;

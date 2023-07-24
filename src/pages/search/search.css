@@ -77,8 +77,8 @@
 
 .PaginationPageActive {
   background-color: #f2e8d3;
-  border: 2px solid #33384f;
-  color: #33384f;
+  border: 2px solid var(--color-dark);
+  color: var(--color-dark);
 }
 
 .SuggestedItemsSection {
@@ -90,6 +90,7 @@
   color: #626262;
   font-weight: bold;
   position: relative;
+  padding-left: 20px;
 }
 
 @media screen and (max-width: 1300px) {

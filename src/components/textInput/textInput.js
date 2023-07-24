@@ -35,6 +35,7 @@ export default function TextInput(props) {
         placeholder={props.placeholder}
         className={`TextInput ${classes.textInput}`}
         onChange={props.onChange}
+        style={props.style}
       ></input>
     </div>
   )

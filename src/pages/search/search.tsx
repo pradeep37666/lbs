@@ -221,26 +221,24 @@ export default function Search() {
   }
 
   const sortPriceLowToHigh = () => {
-    priceAscending.sort(function (a, b) {
-      return a.price - b.price
-    })
+    setSearchItems(prevItems =>
+      prevItems.slice().sort((a, b) => a.price - b.price)
+    )
   }
 
   const sortPriceHighToLow = () => {
-    priceDescending.sort(function (a, b) {
-      return b.price - a.price
-    })
+    setSearchItems(prevItems =>
+      prevItems.slice().sort((a, b) => b.price - a.price)
+    )
+  }
+  const sortRatingLowToHigh = () => {
+    const sortedItems = [...searchItems].sort((a, b) => a.rating - b.rating)
+    setSearchItems(sortedItems)
   }
 
-  const sortRatingLowToHigh = () => {
-    ratingAscending.sort(function (a, b) {
-      return a.rating - b.rating
-    })
-  }
   const sortRatingHighToLow = () => {
-    ratingDescending.sort(function (a, b) {
-      return b.rating - a.rating
-    })
+    const sortedItems = [...searchItems].sort((a, b) => b.rating - a.rating)
+    setSearchItems(sortedItems)
   }
 
   const randomItemsMapper = () => {
@@ -252,7 +250,19 @@ export default function Search() {
   }
 
   const handleChange = (event: any) => {
-    setSortBy(event.target.value)
+    const selectedValue = event.target.value
+    setSortBy(selectedValue)
+
+    if (selectedValue === 'Rating - Low to High') {
+      sortRatingLowToHigh()
+    } else if (selectedValue === 'Rating - High to Low') {
+      sortRatingHighToLow()
+    } else if (selectedValue === 'Price - Low to High') {
+      sortPriceLowToHigh()
+    } else if (selectedValue === 'Price - High to Low') {
+      sortPriceHighToLow()
+    } else {
+    }
   }
 
   const classes = useStyles()
@@ -280,12 +290,12 @@ export default function Search() {
               <Select
                 onChange={handleChange}
                 input={<BootstrapInput />}
-                className={`${classes.select}`}
+                className={`${classes.select} pr-3`}
                 IconComponent={ArrowDown}
                 value={sortBy}
                 MenuProps={{
                   anchorOrigin: {
-                    vertical: 230,
+                    vertical: 250,
                     horizontal: -50,
                   },
                   transformOrigin: {
@@ -298,7 +308,12 @@ export default function Search() {
                   },
                 }}
               >
-                <MenuItem value='Nothing Selected' style={{ display: 'none' }}>
+                <MenuItem
+                  value='Nothing Selected'
+                  style={{
+                    display: 'none',
+                  }}
+                >
                   {sortBy}
                 </MenuItem>
                 <MenuItem
@@ -389,6 +404,7 @@ const useStyles = makeStyles({
     fontWeight: 'normal',
     '& .MuiSvgIcon-root': {
       color: '#95272f',
+      marginRight: '6px',
     },
   },
 })

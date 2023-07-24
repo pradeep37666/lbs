@@ -2,6 +2,31 @@
   background-image: url(../../../assets/Images/Marketings/Background/CONTACT\ US_TS139674_m.jpg);
 }
 
+.bg_contact_us::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  z-index: -1;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(
+    0,
+    0,
+    0,
+    0.5
+  ); /* Adjust the opacity (0.5) to make it darker/lighter */
+}
+
 .contact_img_bg {
   background-image: url(../../../assets/Images/Marketings/Graphics/lys_mowing.png);
   background-size: cover;
@@ -31,7 +56,7 @@
 .contact_details_box {
   display: flex;
   width: 100%;
-  justify-content: center;
+  padding-left: 9px;
 }
 
 .contact_number_box,
@@ -40,10 +65,8 @@
 }
 
 .contact_detail_title {
-  font-size: 1.3em;
+  font-size: 1em;
   color: var(--color-dark);
-  font-weight: bold;
-  margin: 0;
 }
 
 .contact_detail_content {
@@ -58,8 +81,8 @@
 }
 
 .submit_message_btn {
-  width: 12em;
-  height: 3.3em;
+  width: 11em;
+  height: 3em;
   margin: 1em 0;
   font-weight: bold;
   color: var(--color-white);
@@ -80,13 +103,13 @@
 }
 
 .news_title_box {
-  max-width: 80%;
+  max-width: 85%;
 }
 
 .news_main_title,
 .news_sub_title {
   margin: 0;
-  padding: 0 1em;
+  padding: 0 0.6em;
 }
 
 .news_main_title {
@@ -109,11 +132,37 @@
 
 .news_checkbox_input {
   cursor: pointer;
+  width: 25px;
+  height: 25px;
+}
+
+.news_checkbox_input:checked {
+  background-color: red;
+  border-color: red;
+}
+
+.news_checkbox_input:checked + .news_checkbox_label::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 20px;
+  height: 20px;
+  background-color: red;
+}
+
+.news_checkbox_label::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 20px;
+  height: 20px;
+  border: 2px solid black;
 }
 
 @media screen and (max-width: 1440px) {
   .contact_details_box {
-    flex-direction: column;
     align-items: center;
   }
   .contact_number_box {

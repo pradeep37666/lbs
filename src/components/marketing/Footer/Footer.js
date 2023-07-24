@@ -171,7 +171,7 @@ const Footer = () => {
         </div>
         <div className='footer_content_box'>
           <p className='footer_last_title pb-2'>Stay Connected</p>
-          <p className='footer_last_desc'>
+          <p className='footer_last_desc pb-3'>
             Subscribe to the Little Big Shed newsletter to keep up to date with
             our sharing news and new item listings!
           </p>
@@ -189,16 +189,16 @@ const Footer = () => {
               />
             </button>
           </div>
-          <p className='footer_last_title margin_top'>Get Social</p>
+          <p className='footer_last_title margin_top pb-2'>Get Social</p>
           <div className='flex_box'>
             <a href='https://www.instagram.com/little_big_shed/'>
-              <FiInstagram className='social_media_icons' />
+              <FiInstagram className='social_media_icons bigger_icon' />
             </a>
             <a href='https://www.linkedin.com/company/little-big-shed/'>
-              <BsLinkedin className='social_media_icons' />
+              <BsLinkedin className='social_media_icons bigger_icon' />
             </a>
             <a href='https://www.facebook.com/LittleBigShed'>
-              <BsFacebook className='social_media_icons' />
+              <BsFacebook className='social_media_icons bigger_icon' />
             </a>
           </div>
         </div>

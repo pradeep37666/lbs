@@ -1,13 +1,9 @@
-import React from 'react'
 import '../Marketing.css'
 import './RentStuff.css'
 import NavBar from '../../../components/marketing/NavBar/NavBar'
 import Footer from '../../../components/marketing/Footer/Footer'
 import SearchInput from '../../../components/marketing/SearchInput/SearchInput'
-import {
-  CleaningWindow,
-  RSSawing,
-} from '../../../assets/Images/Marketings/Marketings'
+import { RSSawing } from '../../../assets/Images/Marketings/Marketings'
 import MarketingButton from '../../../components/marketing/MarketingButton/MarketingButton'
 import { categories } from '../../../assets/Data/MarketSelections'
 import CategoryCard from '../../../components/marketing/CategoryCard/CategoryCard'
@@ -20,9 +16,7 @@ const RentStuff = () => {
 
       <div className='marketing_img_md_find bg_rent_stuff center_items responsive_box_for_search'>
         <div className='search_title_section'>
-          <p className='search_title title_shadow'>
-            Let’s find your next borrow
-          </p>
+          <p className='search_title pb-3'>Let’s find your next borrow</p>
           <div className='search_input_wrapper'>
             <SearchInput />
           </div>
@@ -106,14 +100,14 @@ const RentStuff = () => {
 
       <div className='marketing_img_flexible_container bg_grey flex_box center_items straight_column'>
         <div className='center_text_image full_width'>
-          <p className='marketing_main_title text_align pt-5'>
+          <p className='marketing_main_title text_align pt-5 text-center'>
             Want To Share Your Stuff And Earn Some Cash?
           </p>
-          <div className='marketing_main_description text_align'>
+          <div className='marketing_main_description text_align text-center'>
             <p>
               Anything you have in your ‘little shed’ – whether that’s a garage,
               a kitchen drawer or a cupboard shelf – could be useful for someone
-              else. Why not lend your stuff to people in your area when not in
+              else. Why not lend your stuff to people in your area whfen not in
               use and make some extra cash on the side? We’ll take good care of
               you too so you can lend your items worry-free.{' '}
               <Link

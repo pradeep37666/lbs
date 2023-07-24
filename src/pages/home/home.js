@@ -14,12 +14,12 @@ import MapsAutocomplete from '../../components/mapsAutocomplete/MapsAutocomplete
 export default function Home() {
   const [loading, setLoading] = useState(true)
   const [items, setItems] = useState([])
-  const [suggestedItems, setSuggestedItems] = useState([])
+  const [, setSuggestedItems] = useState([])
   const history = useHistory()
 
   const [keywords, setKeywords] = useState('')
   const [category, setCategory] = useState('')
-  const [location, setLocation] = useState('')
+  const [location] = useState('')
   const [priceMin, setPriceMin] = useState('')
   const [priceMax, setPriceMax] = useState('')
   const [rating, setRating] = useState('')
@@ -101,11 +101,12 @@ export default function Home() {
           <div className='SearchSectionTitle'>Let's find your next borrow</div>
           <div className='SearchSectionFilters'>
             <div className='SearchFiltersRowFlex'>
-              <div className='SearchInputContainer'>
+              <div className='SearchInputContainer pt-3'>
                 <TextInput
                   width='100%'
                   label='Keywords'
                   fontSize='20px'
+                  placeholder='Heavy Duty Car Jack'
                   onChange={e => setKeywords(e.target.value)}
                 />
               </div>

@@ -57,7 +57,8 @@ const SearchInput = () => {
             <TextInput
               width='100%'
               label='Keywords'
-              fontSize='20px'
+              fontSize='17px'
+              style={{ paddingTop: '25px' }}
               onChange={e => setKeywords(e.target.value)}
             />
           </div>
@@ -104,7 +105,7 @@ const SearchInput = () => {
             <RatingSelect
               width='100%'
               label='Minimum Rating'
-              fontSize='20px'
+              fontSize='17px'
               onChange={e => setRating(e.target.value)}
             />
           </div>
@@ -113,7 +114,8 @@ const SearchInput = () => {
               width='100%'
               label='Delivery'
               borders={true}
-              fontSize='20px'
+              fontSize='17px'
+              paddingTop='20px'
               options={['', 'Available', 'Unavailable']}
               onChange={e => setDelivery(e.target.value)}
             />

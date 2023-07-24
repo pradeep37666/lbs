@@ -31,10 +31,7 @@ export default function Footer() {
           <div>
             <div className='LinkHeader'>Account</div>
             <div className='LinkContainer'>
-              <Link
-                className='LinkText'
-                to={'/search/?keyword=&category=Vehicle'}
-              >
+              <Link className='LinkText' to={'/contact_us'}>
                 Support Team
               </Link>
               <Link className='LinkText' to={`/user/account`}>
@@ -58,13 +55,12 @@ export default function Footer() {
               >
                 Terms and Condtions
               </a>
-              <a
-                className='LinkText'
-                download='Little Big Shed _ Privacy Policy.pdf'
-                href='/Policies/LBS_PrivacyPolicy.pdf'
+              <Link
+                className='footer_section_title LinkText'
+                to='/privacy_policy'
               >
                 Privacy Policy
-              </a>
+              </Link>
               <a
                 className='LinkText'
                 download='LBS _ Lender Protection Policy.pdf'
@@ -72,13 +68,12 @@ export default function Footer() {
               >
                 Lender Agreement
               </a>
-              <a
-                className='LinkText'
-                href='Policies/LBS_Cancelleations&RefundPolicy.pdf'
-                download='Little Big Shed _ Cancellations and Refund Policy.pdf'
+              <Link
+                className='footer_section_title LinkText'
+                to='/cancellation_policy'
               >
                 Cancellation and Refund Policy
-              </a>
+              </Link>
             </div>
           </div>
 
@@ -117,7 +112,7 @@ export default function Footer() {
               </Link>
               <Link
                 className='LinkText'
-                to={`/search?category=${encodeURIComponent('DIY & Garden')}`}
+                to={'/search/?keyword=&category=Household'}
               >
                 Hand Tools
               </Link>

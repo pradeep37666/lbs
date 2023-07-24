@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import './header.css'
 import Logo from './../../assets/Logos/LBS_Logo_Flat_White.png'
 import Search from './../searchButton/searchButton.js'
@@ -80,7 +80,7 @@ export default function Header() {
               type='text'
               placeholder='Search for stuff'
               className='TextInput HeaderSearchInput'
-              style={{ padding: '1em 0.6em' }}
+              style={{ padding: '1em 1em' }}
               value={searchText}
               onChange={e => setSearchText(e.target.value)}
             ></input>

@@ -1,15 +1,14 @@
-import { React, useState} from 'react';
-import { makeStyles, withStyles } from '@material-ui/styles';
-import './ratingSelect.css';
-import Select from '@material-ui/core/Select';
-import MenuItem from '@material-ui/core/MenuItem';
-import InputBase from '@material-ui/core/InputBase';
-import ArrowDown from '@material-ui/icons/ExpandMore';
-import {ReactComponent as StarOutline} from './../../assets/Icons/StarOutline.svg';
-import {ReactComponent as StarFilled} from './../../assets/Icons/StarFilled.svg';
+import { useState } from 'react'
+import { makeStyles, withStyles } from '@material-ui/styles'
+import './ratingSelect.css'
+import Select from '@material-ui/core/Select'
+import MenuItem from '@material-ui/core/MenuItem'
+import InputBase from '@material-ui/core/InputBase'
+import ArrowDown from '@material-ui/icons/ExpandMore'
+import { ReactComponent as StarOutline } from './../../assets/Icons/StarOutline.svg'
+import { ReactComponent as StarFilled } from './../../assets/Icons/StarFilled.svg'
 
-
-const BootstrapInput = withStyles((theme) => ({
+const BootstrapInput = withStyles(theme => ({
   input: {
     textAlign: 'left',
     fontSize: '20px',
@@ -19,7 +18,7 @@ const BootstrapInput = withStyles((theme) => ({
       borderRadius: '15px',
     },
   },
-}))(InputBase);
+}))(InputBase)
 
 const useStyles = makeStyles({
   inputDiv: props => ({
@@ -29,9 +28,9 @@ const useStyles = makeStyles({
     maxHeight: '74px',
   }),
   inputLabel: props => ({
-    display: (props.label === '') ? 'none' : 'block',
+    display: props.label === '' ? 'none' : 'block',
     position: 'absolute',
-    top: '10px', 
+    top: '10px',
     left: '20px',
     fontWeight: 'bold',
     color: '#bcbcbc',
@@ -41,36 +40,40 @@ const useStyles = makeStyles({
   dropDown: props => ({
     border: '2px solid #95272f',
     borderRadius: '15px',
+    marginLeft: '-15px',
+    marginTop: '-20px',
+    width: '158px',
     boxSizing: 'content-box',
-    "& .MuiMenuItem-root": {
+    '& .MuiMenuItem-root': {
       fontFamily: 'DMSans, sans-serif',
       fontSize: '14px',
       padding: '2px',
     },
-    "& .MuiMenuItem-root:hover, .MuiMenuItem-root:focus": {
+    '& .MuiMenuItem-root:hover, .MuiMenuItem-root:focus': {
       backgroundColor: '#FFFFFF',
-    }
+    },
   }),
   select: props => ({
     border: '2px solid #95272f',
-    "& .MuiSvgIcon-root": {
-      color: "#95272f",
-    }
+    '& .MuiSvgIcon-root': {
+      color: '#95272f',
+      marginRight: '6px',
+    },
   }),
   option: props => ({
-    display: 'inline',
+    display: 'inline-flex',
     backgroundColor: 'none',
-    ".MuiListItem-root.Mui-selected:hover": {
+    '.MuiListItem-root.Mui-selected:hover': {
       height: '100px',
-    }
-  })
+    },
+  }),
 })
 
 export default function RatingSelect(props) {
-  const classes = useStyles(props);
-  const [rating, setRating] = useState();
+  const classes = useStyles(props)
+  const [rating, setRating] = useState()
 
-  const handleChange = (event) => {
+  const handleChange = event => {
     setRating(event.target.value)
     props.onChange(event)
   }
@@ -78,47 +81,65 @@ export default function RatingSelect(props) {
   return (
     <div className={`${classes.inputDiv}`}>
       <label className={`${classes.inputLabel}`}>{props.label}</label>
-      <Select 
-      onChange={handleChange} 
-      input={<BootstrapInput />} className={`SelectInput ${classes.select}`}
-      IconComponent={ArrowDown}
-      value={rating}
-      MenuProps={{
-        anchorOrigin: {
-          vertical: 96,
-          horizontal: -2
-        },
-        transformOrigin: {
-          vertical: "bottom",
-          horizontal: "left"
-        },
-        getContentAnchorEl: null,
-        classes: {
-          paper: classes.dropDown
-        }
-      }}
+      <Select
+        onChange={handleChange}
+        input={<BootstrapInput />}
+        className={`SelectInput ${classes.select}`}
+        IconComponent={ArrowDown}
+        value={rating}
+        MenuProps={{
+          anchorOrigin: {
+            vertical: 96,
+            horizontal: -2,
+          },
+          transformOrigin: {
+            vertical: 'bottom',
+            horizontal: 'left',
+          },
+          getContentAnchorEl: null,
+          classes: {
+            paper: classes.dropDown,
+          },
+        }}
       >
-      <label className={`${classes.inputLabel}`}>{props.label}</label>
-      <div className="DropDownTitle">{rating ? rating + ' star' : ''}</div>
-      <hr className="hl"/>
-      <MenuItem value="" className={`${classes.option}`} style={{marginLeft: '10px'}}>
-      </MenuItem>
-      <MenuItem value="1" className={`${classes.option}`} style={{marginLeft: '10px'}}>
-      <StarFilled fill='#E9D8B4' className="StarIcon"/><div className="RatingText">{rating} star</div>
-      </MenuItem>
-      <MenuItem value="2" className={`${classes.option}`}>
-      {rating >= 2 ? <StarFilled fill='#E9D8B4' className="StarIcon"/> : <StarOutline className="StarIcon"/>}<div className="RatingText">{rating} star</div>
-      </MenuItem>
-      <MenuItem value="3" className={`${classes.option}`}>
-      {rating >= 3 ? <StarFilled fill='#E9D8B4' className="StarIcon"/> : <StarOutline className="StarIcon"/>}<div className="RatingText">{rating} star</div>
-      </MenuItem>
-      <MenuItem value="4" className={`${classes.option}`}>
-      {rating >= 4 ? <StarFilled fill='#E9D8B4' className="StarIcon"/> : <StarOutline className="StarIcon"/>}<div className="RatingText">{rating} star</div>
-      </MenuItem>
-      <MenuItem value="5" className={`${classes.option}`}>
-      {rating >= 5 ? <StarFilled fill='#E9D8B4' className="StarIcon"/> : <StarOutline className="StarIcon"/>}<div className="RatingText">{rating} star</div>
-      </MenuItem>
-      {/* </div> */}
+        <MenuItem value='' className={`${classes.option}`}></MenuItem>
+        <MenuItem value='1' className={`${classes.option}`}>
+          <StarFilled fill='#E9D8B4' className='StarIcon' />
+          <div className='RatingText'>{rating} star</div>
+        </MenuItem>
+        <MenuItem value='2' className={`${classes.option}`}>
+          {rating >= 2 ? (
+            <StarFilled fill='#E9D8B4' className='StarIcon' />
+          ) : (
+            <StarOutline className='StarIcon' />
+          )}
+          <div className='RatingText'>{rating} star</div>
+        </MenuItem>
+        <MenuItem value='3' className={`${classes.option}`}>
+          {rating >= 3 ? (
+            <StarFilled fill='#E9D8B4' className='StarIcon' />
+          ) : (
+            <StarOutline className='StarIcon' />
+          )}
+          <div className='RatingText'>{rating} star</div>
+        </MenuItem>
+        <MenuItem value='4' className={`${classes.option}`}>
+          {rating >= 4 ? (
+            <StarFilled fill='#E9D8B4' className='StarIcon' />
+          ) : (
+            <StarOutline className='StarIcon' />
+          )}
+          <div className='RatingText'>{rating} star</div>
+        </MenuItem>
+        <MenuItem value='5' className={`${classes.option}`}>
+          {rating >= 5 ? (
+            <StarFilled fill='#E9D8B4' className='StarIcon' />
+          ) : (
+            <StarOutline className='StarIcon' />
+          )}
+          <div className='RatingText'>{rating} star</div>
+        </MenuItem>
+        {/* </div> */}
       </Select>
     </div>
   )

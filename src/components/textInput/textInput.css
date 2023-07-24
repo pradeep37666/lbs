@@ -1,8 +1,9 @@
 .TextInput {
   border-radius: 15px;
+  max-height: 58px;
   border: 2px solid #95272f;
   outline: none;
-  padding: 1em 0em 0.7em 1em;
+  padding: 1em 5em 0.7em 1em;
   width: 100%;
   font-family: 'DMSans', sans-serif;
   background-color: var(--color-white);

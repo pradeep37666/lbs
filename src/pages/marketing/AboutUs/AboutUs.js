@@ -114,7 +114,7 @@ const AboutUs = () => {
           </div>
 
           <div className='marketing_img_flexible_container bg_grey flex_box center_items straight_column'>
-            <div className='center_text_image full_width pb-9'>
+            <div className='center_text_image full_width pb-12'>
               <p className='marketing_main_title pt-8'>
                 A Way We Can All Be Zero Waste
               </p>
@@ -154,7 +154,7 @@ const AboutUs = () => {
               />
             </div>
             <div className='half_screen_center six_to_four column_section align_start text_container_width'>
-              <p className='marketing_main_title'>The Power Of Sharing</p>
+              <p className='marketing_main_title pt-10'>The Power Of Sharing</p>
               <p>
                 Through buying less, and lending and borrowing more, we can
                 reimagine supply chains and make a collective effort to support
@@ -196,7 +196,7 @@ const AboutUs = () => {
                 </Link>
                 ?
               </p>
-              <div className='pt-4'>
+              <div className='pt-4 pb-10'>
                 <MarketingButton
                   bgColor={'#AC172C'}
                   textColor={'#FFFFFF'}
@@ -235,14 +235,16 @@ const AboutUs = () => {
               <img
                 src={Sarmuhabat}
                 className='picture_image'
-                style={{ objectFit: 'contain' }}
+                style={{
+                  objectFit: 'contain',
+                }}
                 alt='tradie'
               />
             </div>
           </div>
 
           <div className='marketing_img_md_container bg_white height100p center_member_items'>
-            <p className='marketing_main_title margin_bottom pt-3'>Our Team</p>
+            <p className='marketing_main_title pt-3'>Our Team</p>
             <div className='category_card_section'>
               {teamMembers.map(member => (
                 <MemberCard member={member} key={member.id} />

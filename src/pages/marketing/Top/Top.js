@@ -85,7 +85,7 @@ const Top = () => {
 
       <div className='marketing_img_flexible_container bg_white flex_box straight_column'>
         <div className='half_screen_center article_section full_width'>
-          <p className='marketing_main_title mb-9'>
+          <p className='marketing_main_title mb-9 pt-9'>
             Your Local Tool, Hobby Gear And Equipment Rental App.
           </p>
           <div className='marketing_main_description'>
@@ -147,7 +147,7 @@ const Top = () => {
               <br />
             </p>
           </div>
-          <div className='pt-4'>
+          <div className='pt-4 pb-8'>
             <MarketingButton
               bgColor='#AC172C'
               textColor='#FFFFFF'
@@ -238,7 +238,7 @@ const Top = () => {
           >
             <img
               src={Screenshots}
-              className='screenshot_image responsive_img_sm_size disable_img'
+              className='graphic_image responsive_img_sm_size disable_img p-0'
               style={{ padding: '50' }}
               alt='screenshots'
             />

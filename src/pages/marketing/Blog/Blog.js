@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import '../Marketing.css'
 import './Blog.css'
-import { SawingGuiter } from '../../../assets/Images/Marketings/Marketings'
 import NavBar from '../../../components/marketing/NavBar/NavBar'
 import {
   categories,
@@ -64,7 +63,11 @@ const Blog = () => {
         <>
           <div className='blog_title_container'>
             <div className='blog_banner_image_container'>
-              <img className='blog_banner_image' src={selectedArticle.image} />
+              <img
+                className='blog_banner_image'
+                src={selectedArticle.image}
+                alt='article'
+              />
             </div>
             <div className='main_title_section blog_title_position'>
               <p className='main_title title_shadow'>

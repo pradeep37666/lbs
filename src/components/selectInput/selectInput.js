@@ -1,12 +1,12 @@
-import { React, useState } from 'react';
-import './selectInput.css';
-import { makeStyles, withStyles } from '@material-ui/styles';
-import Select from '@material-ui/core/Select';
-import MenuItem from '@material-ui/core/MenuItem';
-import InputBase from '@material-ui/core/InputBase';
-import ArrowDown from '@material-ui/icons/ExpandMore';
+import { React, useState } from 'react'
+import './selectInput.css'
+import { makeStyles, withStyles } from '@material-ui/styles'
+import Select from '@material-ui/core/Select'
+import MenuItem from '@material-ui/core/MenuItem'
+import InputBase from '@material-ui/core/InputBase'
+import ArrowDown from '@material-ui/icons/ExpandMore'
 
-const BootstrapInput = withStyles((theme) => ({
+const BootstrapInput = withStyles(theme => ({
   input: {
     textAlign: 'left',
     fontSize: '20px',
@@ -16,7 +16,7 @@ const BootstrapInput = withStyles((theme) => ({
       borderRadius: '15px',
     },
   },
-}))(InputBase);
+}))(InputBase)
 
 const useStyles = makeStyles({
   inputDiv: props => ({
@@ -26,12 +26,12 @@ const useStyles = makeStyles({
     maxHeight: '74px',
   }),
   option: props => ({
-    minHeight: '30px'
+    minHeight: '30px',
   }),
   inputLabel: props => ({
-    display: (props.label === '') ? 'none' : 'block',
+    display: props.label === '' ? 'none' : 'block',
     position: 'absolute',
-    top: '10px', 
+    top: '10px',
     left: '20px',
     fontWeight: 'bold',
     color: '#bcbcbc',
@@ -44,55 +44,59 @@ const useStyles = makeStyles({
     border: '2px solid #95272f',
     borderRadius: '15px',
     boxSizing: 'content-box',
-    "& .MuiMenuItem-root": {
+    '& .MuiMenuItem-root': {
       fontFamily: 'DMSans, sans-serif',
-    }
+    },
   }),
   select: props => ({
     border: props.borders ? '2px solid #95272f' : 'none',
-    "& .MuiSvgIcon-root": {
-      color: "#95272f",
-    }
-  }) 
+    '& .MuiSvgIcon-root': {
+      color: '#95272f',
+      marginRight: '5px',
+    },
+  }),
 })
 
 export default function SelectInput(props) {
   const classes = useStyles(props)
   const [name, setName] = useState(props.options[0])
 
-  const handleChange = (event) => {
+  const handleChange = event => {
     setName(event.target.value)
     props.onChange(event)
   }
   return (
     <div className={`${classes.inputDiv}`}>
       <label className={`${classes.inputLabel}`}>{props.label}</label>
-      <Select 
-      onChange={handleChange} 
-      input={<BootstrapInput />} className={`SelectInput ${classes.select}`}
-      IconComponent={ArrowDown}
-      value={name}
-      MenuProps={{
-        anchorOrigin: {
-          vertical: -22,
-          horizontal: -2
-        },
-        transformOrigin: {
-          vertical: "top",
-          horizontal: "left"
-        },
-        getContentAnchorEl: null,
-        classes: {
-          paper: classes.dropDown
-        }
-      }}
+      <Select
+        onChange={handleChange}
+        input={<BootstrapInput />}
+        className={`SelectInput ${classes.select}`}
+        IconComponent={ArrowDown}
+        value={name}
+        MenuProps={{
+          anchorOrigin: {
+            vertical: -22,
+            horizontal: -2,
+          },
+          transformOrigin: {
+            vertical: 'top',
+            horizontal: 'left',
+          },
+          getContentAnchorEl: null,
+          classes: {
+            paper: classes.dropDown,
+          },
+        }}
       >
-      <label className={`${classes.inputLabel}`}>{props.label}</label>
-      <div className="DropDownTitle">{name}</div>
-      <hr className="hl"/>
-      {props.options.map((name, index) => 
-      <MenuItem value={name} key={index} className={`${classes.option}`}>{name}</MenuItem>
-      )}
+        <label className={`${classes.inputLabel}`}>{props.label}</label>
+        <div className='DropDownTitle'>{name}</div>
+        <hr className='hl' />
+        {props.options.map((name, index) => (
+          <MenuItem value={name} key={index} className={`${classes.option}`}>
+            {name}
+          </MenuItem>
+        ))}
       </Select>
     </div>
   )

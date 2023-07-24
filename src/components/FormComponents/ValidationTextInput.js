@@ -1,7 +1,8 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import ValidationPopup from '../ValidationPopup/ValidationPopup'
 import ShowPasswordIcon from '../../assets/Icons/ShowPasswordIcon'
 import './ValidationTextInput.css'
+import ShowPasswordDefaultIcon from '../../assets/Icons/ShowPasswordDefaultIcon'
 
 export default function ValidationTextInput({
   onChange,
@@ -15,6 +16,12 @@ export default function ValidationTextInput({
   inputType,
 }) {
   const [isInputHidden, setIsInputHidden] = useState(true)
+  const [showPasswordIcon, setShowPasswordIcon] = useState(true)
+
+  const togglePasswordVisibility = () => {
+    setIsInputHidden(!isInputHidden)
+    setShowPasswordIcon(!showPasswordIcon)
+  }
 
   return (
     <div className={'ValidationInputContainer'}>
@@ -30,9 +37,11 @@ export default function ValidationTextInput({
                 value={value}
                 onChange={onChange}
               />
-              <ShowPasswordIcon
-                onClick={() => setIsInputHidden(!isInputHidden)}
-              />
+              {showPasswordIcon ? (
+                <ShowPasswordIcon onClick={togglePasswordVisibility} />
+              ) : (
+                <ShowPasswordDefaultIcon onClick={togglePasswordVisibility} />
+              )}
             </div>
           ) : (
             <input

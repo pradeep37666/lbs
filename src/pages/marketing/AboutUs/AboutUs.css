@@ -31,10 +31,6 @@
   font-size: 0.8em;
 }
 
-.text_container_width {
-  padding-right: 10em;
-}
-
 .center_member_items {
   display: flex;
   flex-direction: column;

@@ -1,4 +1,3 @@
-import React from 'react'
 import './CategoryCard.css'
 import { useHistory } from 'react-router-dom'
 

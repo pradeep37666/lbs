@@ -7,7 +7,7 @@
   width: 100%;
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: center;
   background-image: url(../../../assets/TexturedBackgrounds/LBS_Illustration\ Pattern_RED.jpg);
 }
 
@@ -65,6 +65,7 @@
 .footer_middle_logo {
   height: 5em;
   width: 5em;
+  margin-bottom: 0.5em;
 }
 
 .footer_first_title,
@@ -73,6 +74,10 @@
 .footer_last_desc {
   margin: 0;
   max-width: 12em;
+}
+
+.bigger_icon {
+  font-size: 28px;
 }
 
 .footer_first_title,
@@ -155,11 +160,10 @@
   right: 0;
   top: 0;
   bottom: 0;
-  background: #95272f;
-  outline: none;
-  border: none;
   margin: 0.2em;
-  border-radius: 6px;
+  width: 1.4em;
+  border-radius: 20px;
+  padding-right: 2px;
 }
 .footer_section_title:not(:last-child) {
   margin-bottom: 0.5em;

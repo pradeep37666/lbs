@@ -1,9 +1,8 @@
 .SearchButton {
-  background-color: var(--color-accent);
   border: none;
   outline: none;
   border-radius: 10px;
-  padding: 19px;
+  padding: 15px 10px;
   font-family: 'DMSans', sans-serif;
   color: var(--color-white);
   width: max-content;

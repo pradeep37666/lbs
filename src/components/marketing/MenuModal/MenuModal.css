@@ -30,6 +30,7 @@
 .modal_text:hover,
 .modal_info_hub_container:hover {
   border-radius: 5px;
+  color: var(--color-dark);
   background: var(--color-white);
 }
 
