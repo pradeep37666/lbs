@@ -113,7 +113,6 @@ export default function UpgradeLender() {
         user.id,
         userBlockedAvailability
       )
-      console.log('DATA WE ARE SENDING', JSON.stringify(userData, null, 3))
       globalDispatch({ type: 'setUser', data: result.user.data })
       globalDispatch({
         type: 'setUserBlockedAvailability',

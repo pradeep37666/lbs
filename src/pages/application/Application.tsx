@@ -110,10 +110,6 @@ export default function Application() {
     try {
       const { data, status } = await instance.get(`/items/${itemId}`)
       const bookings = getItemBookings(data)
-      // dispatch({
-      //   type: 'setInitialState',
-      //   data: { item: data, bookingDetails: [] },
-      // })
     } catch (error) {
       console.log(error)
     }

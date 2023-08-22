@@ -63,8 +63,6 @@ export const TradeCalendarStatusPanel = ({
     BookingEventStatus | undefined
   >(getMostRecentBookingEvent(selectedBooking.bookingEvents)?.event)
 
-  console.log('SELECTED', JSON.stringify(selectedBooking, null, 2))
-
   useEffect(() => {
     setStatus(selectedBooking.status)
     setIsDisputed(getIsDisputed(selectedBooking.disputes))
@@ -142,7 +140,6 @@ export const TradeCalendarStatusPanel = ({
         }
       }
     } catch (error) {
-      console.log('BOOKING ACTION ERROR', error)
       errorDispatch({
         type: 'openSnackBar',
         data: {

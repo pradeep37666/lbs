@@ -22,8 +22,6 @@ export default function TradeCalendarItem({
     timeslot: 'morning',
   })
 
-  console.log('BOOKING', JSON.stringify(booking, null, 2))
-
   const isLend = booking.lenderId === user.id
   const isConfirmed = booking.status === 'APPROVED'
   const isCancelled =

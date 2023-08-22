@@ -113,7 +113,6 @@ export const getPrevBookingPage = (
       dispatch({ type: 'setPage', data: CREATE_BOOKING.AVAILABILITY })
       return
     case CREATE_BOOKING.OVERVIEW:
-      console.log("We're Hitting this case")
       if (mode === 'EXTEND') {
         dispatch({ type: 'setPage', data: CREATE_BOOKING.AVAILABILITY })
       } else {

@@ -66,7 +66,7 @@ export default function Trades() {
       if (status !== 200) return
       setLenderBookingItems(data)
     } catch (error) {
-      console.log('LENDER ERROR', error)
+      console.log(error)
     }
   }
 

@@ -136,9 +136,7 @@ export default function SearchFilterBar({ keyWord, address }) {
         }
       })
       .catch(error => {
-        // if theres an error with the geocode we don't say anything
-        // console.log(error.response)
-        // alert('There was an issue processing this address, please try again')
+        console.log(error)
       })
   }
 

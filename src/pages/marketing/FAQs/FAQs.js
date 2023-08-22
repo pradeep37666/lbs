@@ -16,11 +16,6 @@ import {
 
 const FAQs = () => {
   const [selectedTab, setSelectedTab] = useState(FQA_TABS.GENERAL)
-  // const [ selectedQuestions, setSelectedQuestions ] = useState([])
-
-  // useEffect(() => {
-  //   // requestion question data and store into selectedQuestions
-  // },[selectedTab])
 
   const renderFAQs = () => {
     switch (selectedTab) {

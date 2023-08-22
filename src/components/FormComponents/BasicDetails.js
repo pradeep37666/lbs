@@ -79,7 +79,6 @@ export default function BasicDetails({ context }) {
           email: `${email}`,
         }
       )
-      console.log('DATA', data)
       if (status === 201)
         dispatch({ type: 'setCurrentPage', data: REGISTER_PAGES.VERIFICATION })
     } catch (error) {

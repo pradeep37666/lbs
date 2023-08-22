@@ -45,8 +45,6 @@ export default function Search() {
     location.search
   )
 
-  console.log('PARAMS', parsedSearchParams)
-
   useEffect(() => {
     getSearchItems()
   }, [location.search])

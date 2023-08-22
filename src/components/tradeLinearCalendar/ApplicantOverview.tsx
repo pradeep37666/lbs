@@ -11,7 +11,6 @@ type Props = {
 }
 
 const ApplicantOverview = ({ userDetails }: Props) => {
-  console.log(userDetails)
   return (
     <div className='TradeSidebarSection'>
       <div className='TradeSidebarHeading'>

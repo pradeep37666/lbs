@@ -70,7 +70,6 @@ export default function Item() {
   const getItemBookings = async itemId => {
     try {
       const bookingDetails = await itemService.getItemBookedDates(itemId)
-      console.log('THESE ARE THE BOOKING DATES', bookingDetails)
       setBookedDates(bookingDetails)
     } catch (error) {
       console.log({ error })

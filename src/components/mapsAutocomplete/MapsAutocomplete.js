@@ -99,7 +99,6 @@ export default function MapsAutocomplete(props) {
   }
 
   const selectAddress = place => {
-    console.log('DA PLACE', place)
     setShowResults(false)
     setValue(place.description)
     getPlaceDetails(place)

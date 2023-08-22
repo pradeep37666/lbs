@@ -1,5 +1,4 @@
 const parseAddressComponent = addressComponent => {
-  console.log('ADDRESS', JSON.stringify(addressComponent, null, 2))
   const subPremiseObj = addressComponent.find(obj =>
     obj.types.includes('subpremise')
   )
@@ -41,27 +40,6 @@ const parseAddressComponent = addressComponent => {
     postCode,
   ].filter(value => value !== undefined)
   const fullAddress = presentValues.join(' ')
-  console.log('BLAH BLAH', {
-    streetNumber,
-    streetName,
-    suburb,
-    city,
-    state,
-    country,
-    postCode,
-    fullAddress,
-  })
-  // TODO - Implement less strict check to prevent issues with New Zealand addresses
-  //   if (
-  //     streetNumber === undefined ||
-  //     streetName === undefined ||
-  //     suburb === undefined ||
-  //     city === undefined ||
-  //     state === undefined ||
-  //     country === undefined ||
-  //     postCode === undefined
-  //   )
-  //     return
   return {
     streetNumber,
     streetName,

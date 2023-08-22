@@ -64,12 +64,10 @@ export default function ItemOverview() {
 
   const saveBooking = async () => {
     const bookingInfo = getBookingInfo()
-    console.log('BOOKING INFO', JSON.stringify(bookingInfo, null, 2))
     try {
       setIsLoading(true)
       await makeBooking(bookingInfo, item)
     } catch (error) {
-      console.log(error)
       if (axios.isAxiosError(error)) console.log(error.response?.data)
       errorDispatch({
         type: 'openSnackBar',

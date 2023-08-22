@@ -26,10 +26,6 @@ export default function Home() {
   const [delivery, setDelivery] = useState('')
   const [address, setAddress] = useState()
 
-  useEffect(() => {
-    console.log('THIS IS THE ADDRESS', address)
-  }, [address])
-
   const formatSearchParams = () => {
     let string = ''
     if (keywords) {

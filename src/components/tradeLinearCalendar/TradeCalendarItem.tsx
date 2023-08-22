@@ -64,12 +64,6 @@ export default function TradeCalendarItem({
     return isLender ? `url(${LendStripes})` : `url(${BorrowStripes})`
   }
 
-  useEffect(() => {
-    if (bookingDuration?.id === 'c1385c68-de31-4429-aa15-a73642eb82fe') {
-      console.log(moment(bookingDuration.startDate).hours())
-    }
-  }, [])
-
   /*
   Find difference in days from the first day of the first rendered month,
   multiply by two to account for days being split by two timeslots

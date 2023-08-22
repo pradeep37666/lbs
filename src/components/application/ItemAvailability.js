@@ -7,7 +7,6 @@ import { BookingContext } from '../../pages/application/Application'
 export default function ItemAvailability() {
   const { state } = useContext(BookingContext)
   const { item, bookedDates } = state
-  console.log(bookedDates)
   const renderMonths = () => {
     const today = new Date()
     const currentMonth = today.getMonth()

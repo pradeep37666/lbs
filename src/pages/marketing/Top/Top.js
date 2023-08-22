@@ -29,7 +29,6 @@ const Top = () => {
       const { data } = await Instance.get('/items/count-by-category')
       setItemCountByCategories(data)
     } catch (error) {
-      console.log('ERROR')
       console.log(error)
     }
   }
