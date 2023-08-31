@@ -15,10 +15,12 @@ import { ReactComponent as StarFilled } from './../../assets/Icons/StarFilled.sv
 import { withStyles } from '@material-ui/core/styles'
 import Slider from '@material-ui/core/Slider'
 import { useHistory } from 'react-router'
-import MapsAutocomplete from '../mapsAutocomplete/MapsAutocomplete'
+import MapsAutocomplete, { BootstrapInput } from '../mapsAutocomplete/MapsAutocomplete'
 import { useLocation } from 'react-router'
 import Geocode from 'react-geocode'
 import { ITEM_CATEGORIES } from '../../assets/Data/LBSSelectOptions'
+import TextInput from '../textInput/textInput'
+
 
 const LocationSlider = withStyles({
   root: {
@@ -60,6 +62,7 @@ export default function SearchFilterBar({ keyWord, address }) {
     address.lat && address.lng ? address : ''
   )
   const [SearchRadius, setSearchRadius] = useState(10)
+  const [SearchRadiusInput, setSearchRadiusInput] = useState(20)
   const [PriceMin, setPriceMin] = useState(parsed?.minPrice ?? '')
   const [PriceMax, setPriceMax] = useState(parsed?.maxPrice ?? '')
   const [Rating, setRating] = useState(parsed?.rating ?? '')
@@ -182,9 +185,8 @@ export default function SearchFilterBar({ keyWord, address }) {
       return (
         <div
           key={index}
-          className={`CategoryFilterDiv ${
-            Category === category.name ? 'CategoryFilterDivActive' : ''
-          }`}
+          className={`CategoryFilterDiv ${Category === category.name ? 'CategoryFilterDivActive' : ''
+            }`}
           onClick={() => {
             if (Category === category.name) setCategory('')
             else setCategory(category.name)
@@ -202,9 +204,8 @@ export default function SearchFilterBar({ keyWord, address }) {
     return (
       <div
         ref={popoutRef}
-        className={`FilterPopout FilterPopoutCat ${
-          activeFilterRef === 'Category' ? 'FilterPopoutActive' : ''
-        }`}
+        className={`FilterPopout FilterPopoutCat ${activeFilterRef === 'Category' ? 'FilterPopoutActive' : ''
+          }`}
         onClick={e => e.stopPropagation()}
       >
         <hr className='hl hlPopout' />
@@ -219,26 +220,29 @@ export default function SearchFilterBar({ keyWord, address }) {
     return (
       <div
         ref={popoutRef}
-        className={`FilterPopout FilterPopoutLoc ${
-          activeFilterRef === 'Location' ? 'FilterPopoutActive' : ''
-        }`}
+        className={`FilterPopout FilterPopoutLoc ${activeFilterRef === 'Location' ? 'FilterPopoutActive' : ''
+          }`}
         onClick={e => e.stopPropagation()}
       >
         <hr className='hl hlPopout' />
         <div className='MainBodyPopout'>
           <MapsAutocomplete setAddress={setAddress} small />
           <div className='PostcodeText'>Search radius</div>
+
           <div className='LocationSliderFlex'>
             <LocationSlider
               aria-label='search radius'
               defaultValue={10}
-              max={20}
+              max={SearchRadiusInput}
               min={2}
               onChange={(e, val) => setSearchRadius(val)}
             />
             <div className='SearchRadiusValue'>{SearchRadius}km</div>
           </div>
 
+          <div className="my-5">
+            <BootstrapInput  defaultValue={SearchRadiusInput} onChange={e => setSearchRadiusInput(e.target.value)} />
+          </div>
           <button
             className='FilterButtonSave'
             onClick={() => {
@@ -257,9 +261,8 @@ export default function SearchFilterBar({ keyWord, address }) {
     return (
       <div
         ref={popoutRef}
-        className={`FilterPopout FilterPopoutPrice ${
-          activeFilterRef === 'Price' ? 'FilterPopoutActive' : ''
-        }`}
+        className={`FilterPopout FilterPopoutPrice ${activeFilterRef === 'Price' ? 'FilterPopoutActive' : ''
+          }`}
         onClick={e => e.stopPropagation()}
       >
         <hr className='hl hlPopout' />
@@ -309,9 +312,8 @@ export default function SearchFilterBar({ keyWord, address }) {
     return (
       <div
         ref={popoutRef}
-        className={`FilterPopout FilterPopoutRating ${
-          activeFilterRef === 'Rating' ? 'FilterPopoutActive' : ''
-        }`}
+        className={`FilterPopout FilterPopoutRating ${activeFilterRef === 'Rating' ? 'FilterPopoutActive' : ''
+          }`}
         onClick={e => e.stopPropagation()}
       >
         <hr className='hl hlPopout' />
@@ -395,18 +397,16 @@ export default function SearchFilterBar({ keyWord, address }) {
     return (
       <div
         ref={popoutRef}
-        className={`FilterPopout FilterPopoutDel ${
-          activeFilterRef === 'Delivery' ? 'FilterPopoutActive' : ''
-        }`}
+        className={`FilterPopout FilterPopoutDel ${activeFilterRef === 'Delivery' ? 'FilterPopoutActive' : ''
+          }`}
         onClick={e => e.stopPropagation()}
       >
         <hr className='hl hlPopout' />
         <div className='MainBodyPopout'>
           <div className='DeliveryFlex'>
             <button
-              className={`DeliveryButton ${
-                Delivery === true ? '' : 'DeliveryButtonInactive'
-              }`}
+              className={`DeliveryButton ${Delivery === true ? '' : 'DeliveryButtonInactive'
+                }`}
               onClick={() => {
                 Delivery !== true ? setDelivery(true) : setDelivery('Both')
               }}
@@ -414,9 +414,8 @@ export default function SearchFilterBar({ keyWord, address }) {
               Yes
             </button>
             <button
-              className={`DeliveryButton ${
-                Delivery === false ? '' : 'DeliveryButtonInactive'
-              }`}
+              className={`DeliveryButton ${Delivery === false ? '' : 'DeliveryButtonInactive'
+                }`}
               onClick={() => {
                 Delivery !== false ? setDelivery(false) : setDelivery('Both')
               }}
@@ -437,9 +436,8 @@ export default function SearchFilterBar({ keyWord, address }) {
           className='FilterContainer'
         >
           <span
-            className={`SearchFilterText ${
-              activeFilterRef === 'Category' ? 'FilterActive' : ''
-            }`}
+            className={`SearchFilterText ${activeFilterRef === 'Category' ? 'FilterActive' : ''
+              }`}
           >
             Category
           </span>
@@ -450,9 +448,8 @@ export default function SearchFilterBar({ keyWord, address }) {
           className='FilterContainer'
         >
           <span
-            className={`SearchFilterText ${
-              activeFilterRef === 'Location' ? 'FilterActive' : ''
-            }`}
+            className={`SearchFilterText ${activeFilterRef === 'Location' ? 'FilterActive' : ''
+              }`}
           >
             Location/Postcode
           </span>
@@ -463,9 +460,8 @@ export default function SearchFilterBar({ keyWord, address }) {
           className='FilterContainer'
         >
           <span
-            className={`SearchFilterText ${
-              activeFilterRef === 'Price' ? 'FilterActive' : ''
-            }`}
+            className={`SearchFilterText ${activeFilterRef === 'Price' ? 'FilterActive' : ''
+              }`}
           >
             Price
           </span>
@@ -476,9 +472,8 @@ export default function SearchFilterBar({ keyWord, address }) {
           className='FilterContainer'
         >
           <span
-            className={`SearchFilterText ${
-              activeFilterRef === 'Rating' ? 'FilterActive' : ''
-            }`}
+            className={`SearchFilterText ${activeFilterRef === 'Rating' ? 'FilterActive' : ''
+              }`}
           >
             Rating
           </span>
@@ -489,9 +484,8 @@ export default function SearchFilterBar({ keyWord, address }) {
           className='FilterContainer'
         >
           <span
-            className={`SearchFilterText ${
-              activeFilterRef === 'Delivery' ? 'FilterActive' : ''
-            }`}
+            className={`SearchFilterText ${activeFilterRef === 'Delivery' ? 'FilterActive' : ''
+              }`}
           >
             Delivery
           </span>

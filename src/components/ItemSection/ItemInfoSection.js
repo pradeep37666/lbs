@@ -116,7 +116,7 @@ const ItemInfoSection = ({
           Edit Item Details
         </button>
       ) : (
-        <div>
+        !user?.isLender && (<div>
           <div className='ItemButtons'>
             <button
               className='ButtonAvailability'
@@ -167,7 +167,7 @@ const ItemInfoSection = ({
               )}
             </button>
           </div>
-        </div>
+        </div>)
       )}
 
       <hr className='hr' />

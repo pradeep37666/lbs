@@ -11,11 +11,12 @@ import MapMarker from '../mapMarker/mapMarker'
 import parseAddressComponent from '../../util/parseAddressComponent'
 import TextInput from '../textInput/textInput'
 
-const BootstrapInput = withStyles(theme => ({
+export const BootstrapInput = withStyles(theme => ({
   root: {
     'label + &': {
       marginTop: '1.2em',
     },
+    width:'100%'
   },
   input: {
     borderRadius: '10px',
@@ -65,8 +66,8 @@ export default function MapsAutocomplete(props) {
   const [googleInstance, setGoogleInstance] = useState('')
   const [mapProps, setMapProps] = useState({
     center: {
-      lat: -43.532054,
-      lng: 172.636225,
+      lat: -36.855301845507924,
+      lng: 174.76447481812605,
     },
     zoom: 4,
   })

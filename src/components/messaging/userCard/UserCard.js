@@ -61,12 +61,12 @@ export default function UserCard({
                 `${conversation.conversationWith.name} has enquired about your ${conversation.lastMessage.data.metadata.itemName}`
             )
         } 
-        return conversation.lastMessage.sender.uid === user.id ? (
+        return conversation?.lastMessage?.sender?.uid === user.id ? (
             <> 
              <span className="LastMessageOwner">You: </span>
              <span>{
-                conversation.lastMessage.data.text.length > 25 ? (
-                    `${conversation.lastMessage.data.text.slice(0,25)}...`
+                conversation?.lastMessage?.data?.text?.length > 25 ? (
+                    `${conversation?.lastMessage?.data?.text.slice(0,25)}...`
                 ) : (
                     conversation.lastMessage.data.text
                 )}
@@ -76,7 +76,7 @@ export default function UserCard({
         ) : (
             <>
                 <span className="LastMessageOwner">{conversation.conversationWith.name}: </span>
-                <span>{conversation.lastMessage.data.text.split(0,20)}</span>
+                <span>{conversation?.lastMessage?.data?.text.split(0,20)}</span>
             </>
         ) 
     }
