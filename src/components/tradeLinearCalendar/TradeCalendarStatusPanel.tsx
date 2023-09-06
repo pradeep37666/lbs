@@ -99,7 +99,7 @@ export const TradeCalendarStatusPanel = ({
             : setStatus('CANCELLED')
           break
         case 'DISPUTE':
-          await BookingService.disputeBooking(selectedBooking.id)
+          await BookingService.disputeBooking(selectedBooking.id,selectedBooking)
           setIsDisputed(true)
           getBookings()
           break

@@ -81,7 +81,7 @@ export default function SignupLocationDetails({ context }) {
       streetName: address.streetName ?? '',
       streetNumber: address.streetNumber ?? '',
       suburb: address.suburb ?? '',
-      city: address.city ?? '',
+      city: address.city ?  address.city :  address.suburb ?? '',
       lat: address.lat ?? 0,
       lng: address.lng ?? 0,
     })

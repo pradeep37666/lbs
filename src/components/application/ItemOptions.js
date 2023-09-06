@@ -1,25 +1,88 @@
-import React, { useContext, useEffect } from 'react'
-import CheckBox from '../checkBox/CheckBox'
-import './ItemOptions.css'
-import MapsAutocomplete from '../mapsAutocomplete/MapsAutocomplete'
-import useGlobalState from '../../util/useGlobalState'
+import { useContext, useEffect, useState } from 'react'
+import { validate } from 'validate.js'
 import { BookingContext } from '../../pages/application/Application'
+import useGlobalState from '../../util/useGlobalState'
+import { userAddressConstraints } from '../../util/validationConstraints'
+import ValidationTextInput from '../FormComponents/ValidationTextInput'
+import CheckBox from '../checkBox/CheckBox'
+import MapsAutocomplete from '../mapsAutocomplete/MapsAutocomplete'
+import './ItemOptions.css'
+
+const ADDRESS_INITIAL_VALUES = {
+  streetNumber: '',
+  streetName: '',
+  suburb: '',
+  state: '',
+  postCode: '',
+  country: '',
+  fullAddress: '',
+  city: '',
+}
 
 export default function ItemOptions() {
   const { state, dispatch } = useContext(BookingContext)
   const globalState = useGlobalState().state
   const { user } = globalState
   const { item, isPickupSelected, isDeliverySelected } = state
+  const [address, setAddress] = useState(ADDRESS_INITIAL_VALUES)
+  const [errorMessages, setErrorMessages] = useState({})
 
-  const setAddress = addressObj => {
-    dispatch({ type: 'setBorrowerAddress', data: addressObj })
+  const getErrorMessage = inputName => {
+    if (Object.keys(errorMessages).length === 0) return null
+    for (const key in errorMessages) {
+      if (Object.keys(errorMessages)[0] === inputName)
+        return errorMessages[key][0]
+    }
   }
+  const validateInputs = () => {
+    const { streetNumber, streetName, suburb, state, postCode, country, city } =
+      address
+    const validationErrors = validate(
+      { streetNumber, streetName, suburb, state, postCode, country, city },
+      userAddressConstraints
+    )
+    if (validationErrors) {
+      setErrorMessages(validationErrors)
+      return false
+    }
+    setErrorMessages({})
+    return true
+  }
+
+  const handleAddressSelect = address => {
+    console.log("--address--",address);
+    if(address!=="")
+    setAddress({
+      country: address.country ?? '',
+      state: address.state ?? '',
+      fullAddress: address.fullAddress ?? '',
+      postCode: address.postCode ?? '',
+      streetName: address.streetName ?? '',
+      streetNumber: address.streetNumber ?? '',
+      suburb: address.suburb ?? '',
+      city: address.city ?  address.city :  address.suburb ?? '',
+      lat: address.lat ?? 0,
+      lng: address.lng ?? 0,
+    })
+  }
+
+  useEffect(() => { }, [address])
+
+  const checkAddress = () => {
+    const valid = validateInputs()
+    if (!valid) return 
+    dispatch({ type: 'setBorrowerAddress', data: address })
+  }
+  useEffect(() => { checkAddress() }, [address])
+
 
   const getMap = () => {
     if (user.address && (isDeliverySelected || isPickupSelected)) {
       return (
         <MapsAutocomplete
-          setAddress={setAddress}
+          setAddress={address => {
+            handleAddressSelect(address)
+          }}
           defaultAddress={user.address}
           defaultLocation={user.address.fullAddress}
           defaultLat={user.address.lat}
@@ -27,7 +90,9 @@ export default function ItemOptions() {
         />
       )
     } else {
-      return <MapsAutocomplete setAddress={setAddress} />
+      return <MapsAutocomplete setAddress={address => {
+        handleAddressSelect(address)
+      }} />
     }
   }
 
@@ -124,6 +189,62 @@ export default function ItemOptions() {
         )}
       </div>
       {(isDeliverySelected || isPickupSelected) && getMap()}
+      {
+        (isDeliverySelected || isPickupSelected) && (<div className='flex flex-col gap-3 mb-5 w-full -translate-y-5'>
+          <ValidationTextInput
+            width='100%'
+            value={address.streetNumber}
+            label='Street Number'
+            fontSize='20px'
+            onChange={e =>
+              setAddress({ ...address, streetNumber: e.target.value })
+            }
+            errorMessage={getErrorMessage('streetNumber')}
+          />
+          <ValidationTextInput
+            width='100%'
+            value={address.streetName}
+            label='Street Name'
+            fontSize='20px'
+            onChange={e =>
+              setAddress({ ...address, streetName: e.target.value })
+            }
+            errorMessage={getErrorMessage('streetName')}
+          />
+          <ValidationTextInput
+            width='100%'
+            label='City'
+            value={address.city}
+            fontSize='20px'
+            onChange={e => setAddress({ ...address, city: e.target.value })}
+            errorMessage={getErrorMessage('city')}
+          />
+          <ValidationTextInput
+            width='100%'
+            value={address.state}
+            label='State'
+            fontSize='20px'
+            onChange={e => setAddress({ ...address, state: e.target.value })}
+            errorMessage={getErrorMessage('state')}
+          />
+          <ValidationTextInput
+            width='100%'
+            label='Post Code'
+            value={address.postCode}
+            fontSize='20px'
+            onChange={e => setAddress({ ...address, postCode: e.target.value })}
+            errorMessage={getErrorMessage('postCode')}
+          />
+          <ValidationTextInput
+            width='100%'
+            label='Country'
+            value={address.country}
+            fontSize='20px'
+            onChange={e => setAddress({ ...address, country: e.target.value })}
+            errorMessage={getErrorMessage('country')}
+          />
+        </div>)
+      }
     </div>
   )
 }

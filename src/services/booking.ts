@@ -138,9 +138,9 @@ namespace BookingService {
     }
   }
 
-  export const disputeBooking = async (bookingId: string) => {
+  export const disputeBooking = async (bookingId: string, selectedBooking:any) => {
     try {
-      const { data } = await Instance.post(`bookings/${bookingId}/dispute`)
+      const { data } = await Instance.post(`bookings/${bookingId}/dispute`,selectedBooking)
       return data
     } catch (error: unknown) {
       if (error && axios.isAxiosError(error)) {

@@ -13,6 +13,7 @@ import { Rating } from '../../types/Rating'
 import { Item } from '../../types/Item'
 import ItemCard from '../../components/itemCard/itemCard'
 import ColdChatModal from '../../components/modals/ColdChatModal.js/ColdChatModal'
+import useGlobalState from '../../util/useGlobalState'
 
 function LenderShed() {
   const userService = new UserService()
@@ -24,6 +25,7 @@ function LenderShed() {
   const [lenderItems, setLenderItems] = useState<Item[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const [isColdChatOpen, setIsColdChatOpen] = useState(false)
+  const user = useGlobalState().state.user  
 
   const params: {
     lenderId?: string
@@ -166,6 +168,7 @@ function LenderShed() {
               onClick={() => setIsColdChatOpen(true)}
               text={`Message ${lender.firstName}`}
               className='bg-white text-black-base hover:bg-white mb-4'
+              disabled={user.isLender}
             />
 
             <p className='font-bold text-[14px] mb-2'>Lender Reviews</p>

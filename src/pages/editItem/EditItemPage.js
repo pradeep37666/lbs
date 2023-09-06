@@ -104,7 +104,7 @@ const EditItemPage = () => {
         lng: address.lng,
         country: address.country,
         state: address.state,
-        city: address.city,
+        city: address.city ? address.city : address.suburb ?? '',
         postCode: address.postCode,
         streetNumber: address.streetNumber,
         fullAddress: address.fullAddress,
