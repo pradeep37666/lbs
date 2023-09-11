@@ -24,7 +24,7 @@ export default function EnterPhone({ setPhoneNumber, phoneNumber, setCurrentPage
         <div className="LoginMain">
                 <div className="LoginHeader">Account Phone Number</div>
                 <div className="LoginText">
-                    Enter the phone number associated with your Little Big Shed Account to retieve a new password.
+                    Enter the phone number associated with your Little Big Shed Account to retrieve a new password.
                 </div>
                 <PhoneNumberInput 
                     label={'Phone Number'}

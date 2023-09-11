@@ -103,7 +103,7 @@ export default function Login() {
             placeholder='Email'
             errorHeader='Invalid Email'
             errorMessage={getErrorMessage('email')}
-            onChange={e => setEmail(e.target.value)}
+            onChange={e => setEmail(e.target.value.trim())}
           />
           <ValidationTextInput
             placeholder='Password'

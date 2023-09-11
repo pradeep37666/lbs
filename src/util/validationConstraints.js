@@ -146,3 +146,7 @@ export const userAddressConstraints = createValidationObject([
   'country',
   'city',
 ])
+
+export const forgetPasswordEmailConstraints = createValidationObject([
+  'email'
+])

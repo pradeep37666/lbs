@@ -22,6 +22,7 @@ export default function ActiveChat({
     getConversations 
 }) {
     const messageEndRef = useRef(null)
+    const divRef = useRef(null);
     const { state } = useGlobalState()
     const { user } = state
     const [ messageText, setMessageText ] = useState("") 
@@ -43,7 +44,14 @@ export default function ActiveChat({
     
     useEffect(() => {
         autoScroll()
-    },[messages])
+        scrollToEnd()
+    },[messages,isLoading])
+
+    const scrollToEnd = ()=>{
+        if (divRef.current) {
+            divRef.current.scrollTop = divRef.current.scrollHeight;
+          }
+    }
 
     const autoScroll = () => {
         setMessagesLoaded(true)
@@ -91,7 +99,7 @@ export default function ActiveChat({
             return (
                 message.sender.uid === user.id ? (
                    <div key={index}>
-                        <SentMessage message={message.data.text}/>
+                        <SentMessage  message={message.data.text}/>
                     </div> 
                 ) : (
                     <div key={index}>
@@ -126,16 +134,15 @@ export default function ActiveChat({
             </div>}
             
             <div 
+            ref={divRef}
                 style={ isLoading ? { justifyContent: 'center', alignItems: 'center'} : null} 
                 className="ActiveChatMessageContainer"
             >
-                {/* {isLoading ? (
+                {isLoading ? (
                     <CircularProgress size={30}/>
                 ) : (
                     messages && renderMessages()
-                )} */}
-                {messages && renderMessages()}
-                {/* <div ref={messageEndRef}/> */}
+                )}
             </div>
              
             <div className="ActiveChatInputContainer">

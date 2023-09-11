@@ -88,7 +88,7 @@ export const Messages = () => {
     }
 
     const handleTextMessage = async (msg) => {
-        if(activeChatUser && ((msg.sender.uid === activeChatUser.uid) || (msg.sender.uid === user.id))){
+        if(activeChatUser && ((msg.sender.uid === activeChatUser.uid) && (msg.receiver.uid === user.id))){
             setMessages(prevMessages => [...prevMessages, msg])
         }
         try{      

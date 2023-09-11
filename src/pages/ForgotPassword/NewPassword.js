@@ -81,7 +81,7 @@ export default function NewPassword() {
                     className="LoginFormButton"
                     disabled={isLoading}
                     isLoading={isLoading}
-                    text='Send'
+                    text='Next'
                 />
         </div>
     )

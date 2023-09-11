@@ -12,7 +12,7 @@ export default function ForgotPassword() {
     useState<ResetPasswordPage>('EnterEmail')
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEmail(e.target.value)
+    setEmail(e.target.value.trim())
   }
 
   const switchPage = (newPage: ResetPasswordPage) => {
