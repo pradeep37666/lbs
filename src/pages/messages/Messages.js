@@ -88,7 +88,10 @@ export const Messages = () => {
     }
 
     const handleTextMessage = async (msg) => {
-        if(activeChatUser && ((msg.sender.uid === activeChatUser.uid) && (msg.receiver.uid === user.id))){
+        if(activeChatUser && ((msg?.sender?.uid === activeChatUser?.uid) && (msg?.receiver?.uid === user?.id))){
+            setMessages(prevMessages => [...prevMessages, msg])
+        }
+        else if ( activeChatUser && msg?.receiver?.uid === activeChatUser?.uid){
             setMessages(prevMessages => [...prevMessages, msg])
         }
         try{      
@@ -99,6 +102,7 @@ export const Messages = () => {
     }
 
     const renderCards = () => {
+        console.log("-----conversations--",conversations);
         return conversations.map((conversation, index) => {
             return (
                 <UserCard 

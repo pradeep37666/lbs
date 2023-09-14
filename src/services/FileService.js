@@ -1,10 +1,12 @@
 import Instance from '../util/axios'
+import compressImage from '../util/compressImage'
 
 const FileService = {
     uploadSingleImage: async (file) => {
         try {
             const formData = new FormData()
-            formData.append("file", file)
+            const compressed_file = await compressImage(file)
+            formData.append("file", compressed_file)
             const { data, status } = await Instance.post('/file-uploads/single', formData) 
             if (status === 201) return data
         } catch (error) {
@@ -15,7 +17,8 @@ const FileService = {
     uploadMultipleImages: async (files) => {
         const formData = new FormData()
         for (let i = 0; i < files.length; i++) {
-            formData.append('files', files[i])
+            const compressed_file = await compressImage(files[i])
+            formData.append('files',compressed_file)
         }
         try {
             const { data, status } = await Instance.post('/file-uploads/multiple', formData)
@@ -36,7 +39,8 @@ const FileService = {
     uploadIdentityImage: async (file) => {
         try {
             const formData = new FormData()
-            formData.append("file", file)
+            const compressed_file = await compressImage(file)
+            formData.append("file", compressed_file)
             const { data, status } = await Instance.post('/stripe/stripe-connect/identity-documents', formData)
             if (status === 201) return data
         } catch (error) {

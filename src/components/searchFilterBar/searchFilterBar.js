@@ -1,25 +1,24 @@
-import React, { useEffect, useState, useRef } from 'react'
-import './searchFilterBar.css'
+import Slider from '@material-ui/core/Slider'
+import { withStyles } from '@material-ui/core/styles'
+import { useEffect, useRef, useState } from 'react'
+import Geocode from 'react-geocode'
+import { useHistory, useLocation } from 'react-router'
+import { ITEM_CATEGORIES } from '../../assets/Data/LBSSelectOptions'
+import MapsAutocomplete from '../mapsAutocomplete/MapsAutocomplete'
 import CarIcon from './../../assets/Icons/AutomotiveIcon.svg'
 import BBQIcon from './../../assets/Icons/BBQIcon.svg'
 import CleaningIcon from './../../assets/Icons/CleaningIcon.svg'
 import CreativeIcon from './../../assets/Icons/CreativeIcon.svg'
 import DrillIcon from './../../assets/Icons/DrillIcon.svg'
 import HammerIcon from './../../assets/Icons/HammerIcon.svg'
+import MowingIcon from './../../assets/Icons/MowingIcon.svg'
 import OfficeIcon from './../../assets/Icons/OfficeIcon.svg'
 import PaintingIcon from './../../assets/Icons/PaintingIcon.svg'
 import SportingIcon from './../../assets/Icons/SportingIcon.svg'
-import MowingIcon from './../../assets/Icons/MowingIcon.svg'
-import { ReactComponent as StarOutline } from './../../assets/Icons/StarOutline.svg'
 import { ReactComponent as StarFilled } from './../../assets/Icons/StarFilled.svg'
-import { withStyles } from '@material-ui/core/styles'
-import Slider from '@material-ui/core/Slider'
-import { useHistory } from 'react-router'
-import MapsAutocomplete, { BootstrapInput } from '../mapsAutocomplete/MapsAutocomplete'
-import { useLocation } from 'react-router'
-import Geocode from 'react-geocode'
-import { ITEM_CATEGORIES } from '../../assets/Data/LBSSelectOptions'
-import TextInput from '../textInput/textInput'
+import { ReactComponent as StarOutline } from './../../assets/Icons/StarOutline.svg'
+import './searchFilterBar.css'
+import useGlobalState from '../../util/useGlobalState'
 
 
 const LocationSlider = withStyles({
@@ -53,16 +52,15 @@ export default function SearchFilterBar({ keyWord, address }) {
   const queryString = require('query-string')
 
   const parsed = queryString.parse(location.search)
+  const {  user } = useGlobalState()?.state
 
   const history = useHistory()
   const [Delivery, setDelivery] = useState(parsed?.delivery ?? 'Both')
-  const [ActiveFilter, setActiveFilter] = useState('none')
   const [Category, setCategory] = useState(parsed?.category ?? '')
   const [Address, setAddress] = useState(
     address.lat && address.lng ? address : ''
   )
   const [SearchRadius, setSearchRadius] = useState(10)
-  const [SearchRadiusInput, setSearchRadiusInput] = useState(20)
   const [PriceMin, setPriceMin] = useState(parsed?.minPrice ?? '')
   const [PriceMax, setPriceMax] = useState(parsed?.maxPrice ?? '')
   const [Rating, setRating] = useState(parsed?.rating ?? '')
@@ -103,6 +101,7 @@ export default function SearchFilterBar({ keyWord, address }) {
   }
 
   useEffect(() => {
+    
     const handleOutsideClick = event => {
       if (
         activeFilterRef &&
@@ -152,7 +151,10 @@ export default function SearchFilterBar({ keyWord, address }) {
   useEffect(() => {
     if (Delivery === '1') setDelivery(true)
     if (Delivery === '0') setDelivery(false)
-    handleSubmitFilterChange()
+    if(Address === ""){
+      handleSubmitFilterChange()
+    }
+    
   }, [Delivery, Category, Rating, Address, updateLocation])
 
   const handlePriceMinChange = e => {
@@ -232,20 +234,18 @@ export default function SearchFilterBar({ keyWord, address }) {
           <div className='LocationSliderFlex'>
             <LocationSlider
               aria-label='search radius'
-              defaultValue={10}
-              max={SearchRadiusInput}
+              defaultValue={40}
               min={2}
+              max={400}
               onChange={(e, val) => setSearchRadius(val)}
             />
             <div className='SearchRadiusValue'>{SearchRadius}km</div>
           </div>
-
-          <div className="my-5">
-            <BootstrapInput  defaultValue={SearchRadiusInput} onChange={e => setSearchRadiusInput(e.target.value)} />
-          </div>
           <button
-            className='FilterButtonSave'
+            className={`FilterButtonSave ${Address===""?'ButtonDisabled':''}`}
+            disabled={Address===""?true:false}
             onClick={() => {
+              handleSubmitFilterChange()
               setUpdateLocation(!updateLocation)
               setActiveFilterRef(null)
             }}
