@@ -42,6 +42,8 @@ import CancellationPolicy from './components/marketing/Footer/CancellationPolicy
 import DamagesAndDisputes from './components/marketing/Footer/DamagesAndDisputes'
 import RentalAgreement from './components/marketing/Footer/RentalAgreement'
 import PrivacyPolicy from './components/marketing/Footer/PrivacyPolicy'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export const GlobalStateContext = React.createContext()
 export const GlobalErrorContext = React.createContext()
@@ -51,7 +53,7 @@ const initialErrorState = {
   toggleSnackbar: false,
   snackbarMessage: '',
   snackbarBtnText: '',
-  snackbarBtnFunc: () => {},
+  snackbarBtnFunc: () => { },
 }
 
 const stripe = loadStripe(process.env.REACT_APP_STRIPE_KEY)
@@ -180,7 +182,6 @@ function App() {
       />
     )
   }
-
   return (
     <Elements stripe={stripe}>
       <GlobalErrorContext.Provider value={{ errorState, errorDispatch }}>
@@ -189,6 +190,19 @@ function App() {
             ''
           ) : (
             <Router>
+              <ToastContainer
+              closeButton={false}
+                className="toaster-container"
+                position="top-right"
+                autoClose={5000}
+                hideProgressBar={true}
+                newestOnTop={false}
+                // closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+              />
               <LBSSnackBar timeout={10000} />
               <ScrollToTop>
                 {/* marketing pages here with different routers */}

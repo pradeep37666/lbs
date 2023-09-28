@@ -110,6 +110,7 @@ export default function ActiveChat({
             )
         })
     }
+    console.log("--messages--",messages);
 
     return (
         <div className="ActiveChatContainer">

@@ -1,34 +1,35 @@
 .ReceivedMessageTextContainer {
   background-color: #ebebeb;
-  width: 90%;
-  max-width: 90%;
+  width: calc(100% - 60px);
+  flex: 0 0 calc(100% - 60px);
   border-radius: 5px;
   position: relative;
-  padding-left: 15px;
-  padding-right: 15px;
-  margin-top: 8px;
-  margin-bottom: 8px;
+  padding: 12px 12px 12px 18px;
   overflow-wrap: break-word;
   word-wrap: break-word;
-  margin-right: auto;
 }
+
 .ReceivedMessageContainer {
-  display: flex;
-  flex-direction: row;
-  width: 100%;
   position: relative;
-  padding: 0px 5px;
+  display: flex;
+  width: 70%;
+  padding: 0;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin: 0 auto 15px 0;
 }
+
 .ReceivedMessageTriangle {
   position: absolute;
-  bottom: 3px;
-  left: calc(10% - 8px);
+  bottom: 0;
+  left: -16px;
 }
+
 .ReceivedMessageImage {
-  height: 80%;
-  width: 80%;
-  margin-right: 15px;
+  height: 40px;
+  width: 40px;
 }
+
 .ReceivedMessageImageContainer {
   width: 10%;
   display: flex;
@@ -39,9 +40,11 @@
   .ReceivedMessageTextContainer {
     width: 85%;
   }
+
   .ReceivedMessageImageContainer {
     width: 15%;
   }
+
   .ReceivedMessageTriangle {
     left: calc(15% - 8px);
   }

@@ -6,14 +6,19 @@ import Login from './../loginButton/loginButton.js'
 import UserButton from '../UserButton/UserButton'
 import { Link } from 'react-router-dom'
 import { useHistory } from 'react-router'
-import useGlobalState from '../../util/useGlobalState'
+import useGlobalState from '../../util/useGlobalState' 
 import { isMobile } from 'react-device-detect'
+import { CometChat } from '@cometchat-pro/chat'
+import useErrorState from '../../util/reducers/errorContext'
+import { SNACKBAR_BUTTON_TYPES } from '../../assets/Data/LBSEnum'
+import { notify } from '../../util/notifyToaster'
 
 export default function Header() {
   const [HeaderSticky, setHeaderSticky] = useState(false)
   const [searchText, setSearchText] = useState('')
   const history = useHistory()
   const { state } = useGlobalState()
+  const { errorDispatch } = useErrorState()
   const { user } = state
 
   const handleSubmit = e => {
@@ -37,6 +42,24 @@ export default function Header() {
     }
     history.replace(`/search/${string}`)
   }
+  useEffect(() => {
+    if(user){
+      CometChat.addMessageListener(user.id,
+        new CometChat.MessageListener({
+            onTextMessageReceived: handleTextMessage
+        }))
+    return () => {
+        CometChat.removeMessageListener(user?.id)
+    }
+    }
+    
+  }, [user])
+  
+  const handleTextMessage = (message)=>{
+//  notify(message.text)
+  }
+
+
 
   useEffect(() => {
     const threshold = 0

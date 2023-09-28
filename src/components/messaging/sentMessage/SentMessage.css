@@ -1,37 +1,33 @@
 .SentMessageTextContainer {
   background-color: var(--color-bg-light);
   position: relative;
-  width: 90%;
-  max-width: 90%;
+  width: calc(100% - 60px);
+  flex: 0 0 calc(100% - 60px);
   border-radius: 5px;
-  padding-left: 15px;
-  padding-right: 25px;
-  margin-top: 8px;
-  margin-bottom: 8px;
+  padding: 12px 18px 12px 12px;
+  margin: 0;
   overflow-wrap: break-word;
   word-wrap: break-word;
 }
+
 .SentMessageContainer {
   display: flex;
-  width: 100%;
+  width: 70%;
   position: relative;
-  padding: 0px 5px;
-}
-
-.SentMessageImage {
-  height: 80%;
-  width: 80%;
-  margin-left: 15px;
+  padding: 0;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin: 0 0 15px auto;
 }
 
 .SentMessageTriangle {
   position: absolute;
-  right: calc(10% - 8px);
-  bottom: 3px;
+  right: -13px;
+  bottom: 0px;
 }
 
 .SentMessageImageContainer {
-  width: 10%;
+  width: 40px;
   display: flex;
   align-items: center;
 }
@@ -40,9 +36,11 @@
   .SentMessageTextContainer {
     width: 85%;
   }
+
   .SentMessageImageContainer {
     width: 15%;
   }
+
   .SentMessageTriangle {
     right: calc(15% - 8px);
   }

@@ -4,7 +4,6 @@ import './Blog.css'
 import NavBar from '../../../components/marketing/NavBar/NavBar'
 import {
   categories,
-  blogData,
   howItWorksProcedures,
 } from '../../../assets/Data/MarketSelections'
 import BlogCard from '../../../components/marketing/BlogCard/BlogCard'
@@ -13,19 +12,28 @@ import CategoryCard from '../../../components/marketing/CategoryCard/CategoryCar
 import MarketingButton from '../../../components/marketing/MarketingButton/MarketingButton'
 import Footer from '../../../components/marketing/Footer/Footer'
 import moment from 'moment'
+import BlogService from '../../../services/blog'
+import parser from "html-react-parser";
+import getImage from '../../../util/getImage'
+const blogService = new BlogService()
 
 const Blog = () => {
   const [clickedBlogId, setClickedBlogId] = useState('')
   const [selectedArticle, setSelectedArticle] = useState('')
-  const sortedByDate = blogData.sort(
-    (a, b) => moment(b.publishDate) - moment(a.publishDate)
-  )
+  const [blogData,setBlogData] = useState([])
+ 
 
   useEffect(() => {
     if (clickedBlogId === '') return
     const blogContent = blogData.find(blog => blog.id === clickedBlogId)
     setSelectedArticle(blogContent)
   }, [clickedBlogId])
+  useEffect(()=>{
+    (async ()=>{
+      const data = await blogService.getBlogs()
+      setBlogData(data.data)
+    })()
+  },[])
 
   return (
     <div className='marketing_container'>
@@ -48,7 +56,7 @@ const Blog = () => {
 
           <div className='marketing_image_fit_container bg_white blog_scroller'>
             <div className='blog_card_flex_box'>
-              {sortedByDate.map(blog => (
+              {blogData.length > 0 &&  blogData.map(blog => (
                 <BlogCard
                   blog={blog}
                   key={blog.id}
@@ -65,7 +73,7 @@ const Blog = () => {
             <div className='blog_banner_image_container'>
               <img
                 className='blog_banner_image'
-                src={selectedArticle.image}
+                src={getImage(selectedArticle.image)}
                 alt='article'
               />
             </div>
@@ -78,7 +86,7 @@ const Blog = () => {
 
           <div className='blog_article_container bg_white'>
             <p className='blog_article_title'>{selectedArticle.contentTitle}</p>
-            <p className='blog_article_body'>{selectedArticle.contentBody}</p>
+            <p className='blog_article_body'>{parser(selectedArticle.contentBody)}</p>
           </div>
 
           {selectedArticle.id === 1 && (

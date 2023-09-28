@@ -12,16 +12,13 @@ export default function SentMessage({ message }) {
 
     return (
         <div className="SentMessageContainer">
-            
             <div className="SentMessageTextContainer">
                 <p>{message}</p>
-            </div> 
-            <div className="SentMessageImageContainer">
-               <Avatar src={user ? getImage(user.avatar) : MissingProfile } className="SentMessageImage" /> 
+                <BrownTriangle />
             </div>
-            
-            <BrownTriangle />
+            <div className="SentMessageImageContainer">
+                <Avatar src={user ? getImage(user.avatar) : MissingProfile} className="SentMessageImage" />
+            </div>
         </div>
-        
     )
 }

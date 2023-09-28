@@ -22,6 +22,7 @@ import {
   BlogImage5,
   BlogImage6,
 } from '../Images/Marketings/Marketings'
+import parser from "html-react-parser";
 
 const procedures = [
   {
@@ -1080,131 +1081,7 @@ const blogData = [
       'Here are the steps to list stuff on the Little Big Shed website, and why it is important to normalise the concept of sharing over buying.',
     bannerTitle: 'What if sharing, not buying, was the norm?',
     contentTitle: 'Share your Shed - Lend with us in Four Simple Steps',
-    contentBody: (
-      <p>
-        Sharing really does make the world a better place. Not only is it a
-        potent life lesson for four year olds and their lego, but it’s just as
-        important for us forty-somethings with established homes and sheds
-        <br />
-        <br />
-        At Little Big Shed, we ask ourselves every day - what if sharing, not
-        buying, was the norm? Imagine a world where we all don’t have to ‘own’
-        the items we use as little as once a month.
-        <br />
-        <br />
-        Think about the red lawn mower sitting in every second person's shed or
-        the sewing machines that collect dust under the floral sheet in the
-        spare room. Or the pressure hoses and drills bought on sale that are
-        still sitting neatly on the shelf, unopened in their shiny boxes.
-        <br />
-        <br />
-        Now think of a different world, one where you and your neighbour use
-        equipment rental and equipment sharing services, just like Little Big
-        Shed. Ask yourself the question - how much money will you save in your
-        lifetime? How much waste can you reduce in your neighbourhood? How much
-        can all your reduced consumption help the planet?
-        <br />
-        <br />
-        We want to support you to do just this.Why not get started now and list
-        your first item. Learn to lend with us in four simple steps:
-        <br />
-        <br />
-        <strong>1. STEP ONE - CREATE & LIST</strong>
-        <br />
-        <span>
-          Create an account and start listing stuff you’d like to share. As part
-          of this process it's great to do a walk around a ‘stock take’ of some
-          of the items in your shed, home and office that you’ve invested in but
-          have outgrown or are seldom used….
-          <br />
-          For example - <br />
-          <ul>
-            <li>Drills</li>
-            <li>Surfboards</li>
-            <li>Sewing machines</li>
-            <li>Water blasters</li>
-            <li>Lawn mowers </li>
-            <li>Kayaks</li>
-            <li>Mountain bikes</li>
-            <li>Drones</li>
-            <li>Evening dresses</li>
-            <li>Watches</li>
-            <li>Glassware</li>
-            <li>Party lights</li>
-            <li>Trailers</li>
-            <li>Spare cars</li>
-            <li>Office desks</li>
-            <li>Bassinets</li>
-            <li>Baby clothes</li>
-          </ul>
-          What you decide to list is limitless. You get to be as creative as you
-          want and need… Plus, you can do it all worry-free! Our ratings system,
-          lender protection policy, and verified users make it a trusted,
-          sharing marketplace.
-          <br />
-          <br />
-          <b>How do I decide what to list my item for?</b>
-          <br />
-          Check our pricing guide below for market trends on some of the most
-          commonly used items.
-          <br />
-          <br />
-          <b>Oh… and did we mention no service fee ?</b>
-          <br />
-          At Little Big Shed we don’t charge a service fee to share on our
-          platform. This means you end up with more cash in your back pocket,
-          and we hope it inspires you to share more! This puts more dollars into
-          local communities, instead of big box retailers that create waste and
-          send the money offshore!
-          <br />
-          <br />
-        </span>
-        <strong>2. STEP TWO - ACCEPT AND ARRANGE</strong>&nbsp;
-        <span>
-          – once your listing is loaded successfully on our platform you’ll be
-          notified when bookings come through to accept the share. We take the
-          hassle out of sharing and connect you directly to a pool of ‘active
-          seeking’ borrowers in your local community.
-        </span>
-        <br />
-        <br />
-        <strong>3. STEP THREE - CONNECT AND SHARE</strong>&nbsp;
-        <span>
-          – connect with the borrower to share the item and any quirks. Beyond
-          the practicalities of sharing and the good we are doing in the world,
-          this is a fantastic opportunity to inspire and invigorate more
-          connections in your local community. Chances are you are lending your
-          sewing machine or wood carver to someone who shares common interests…
-          or wants to learn more about the craft you’ve had experience in. A
-          beautiful way to better know thy neighbours! This is also the perfect
-          opportunity to advise them of the little kick start and flick of the
-          wrist that some items so commonly need to get started.
-        </span>
-        <br />
-        <br />
-        <strong>4. STEP FOUR - RATE AND GET PAID</strong>&nbsp;
-        <span>
-          – rate the borrower and get paid once the item is safely returned.
-          It's important to create a sharing community built on integrity and
-          trust for both the borrower and for the lender. The rating
-          accountability ensures that if people are to be accepted to borrow
-          again they are to treat your items with respect and care and for the
-          lender our app safely and securely takes care of the transaction and
-          ensure the cash gets into your pocket.
-        </span>
-        <br />
-        <br />
-        So… are you ready to lend your stuff? <br />
-        <br />
-        <a
-          class='underline_link'
-          style={{ fontWeight: '600', fontSize: '1.1em' }}
-          href='/#/register'
-        >
-          Join us
-        </a>
-      </p>
-    ),
+contentBody:parser("<p>        Sharing really does make the world a better place. Not only is it a        potent life lesson for four year olds and their lego, but it’s just as        important for us forty-somethings with established homes and sheds        <br><br>        At Little Big Shed, we ask ourselves every day - what if sharing, not        buying, was the norm? Imagine a world where we all don’t have to ‘own’        the items we use as little as once a month.        <br><br>        Think about the red lawn mower sitting in every second person's shed or        the sewing machines that collect dust under the floral sheet in the        spare room. Or the pressure hoses and drills bought on sale that are        still sitting neatly on the shelf, unopened in their shiny boxes.        <br><br>        Now think of a different world, one where you and your neighbour use        equipment rental and equipment sharing services, just like Little Big        Shed. Ask yourself the question - how much money will you save in your        lifetime? How much waste can you reduce in your neighbourhood? How much        can all your reduced consumption help the planet?        <br><br>        We want to support you to do just this.Why not get started now and list        your first item. Learn to lend with us in four simple steps:        <br><br><strong>1. STEP ONE - CREATE &amp; LIST</strong><br>          Create an account and start listing stuff you’d like to share. As part          of this process it's great to do a walk around a ‘stock take’ of some          of the items in your shed, home and office that you’ve invested in but          have outgrown or are seldom used….          <br>          For example - <br></p><ul><li>Drills</li><li>Surfboards</li><li>Sewing machines</li><li>Water blasters</li><li>Lawn mowers </li><li>Kayaks</li><li>Mountain bikes</li><li>Drones</li><li>Evening dresses</li><li>Watches</li><li>Glassware</li><li>Party lights</li><li>Trailers</li><li>Spare cars</li><li>Office desks</li><li>Bassinets</li><li>Baby clothes</li></ul><p>          What you decide to list is limitless. You get to be as creative as you          want and need… Plus, you can do it all worry-free! Our ratings system,          lender protection policy, and verified users make it a trusted,          sharing marketplace.          <br><br><strong>How do I decide what to list my item for?</strong><br>          Check our pricing guide below for market trends on some of the most          commonly used items.          <br><br><strong>Oh… and did we mention no service fee ?</strong><br>          At Little Big Shed we don’t charge a service fee to share on our          platform. This means you end up with more cash in your back pocket,          and we hope it inspires you to share more! This puts more dollars into          local communities, instead of big box retailers that create waste and          send the money offshore!          <br><br><strong>2. STEP TWO - ACCEPT AND ARRANGE</strong>&nbsp;                  – once your listing is loaded successfully on our platform you’ll be          notified when bookings come through to accept the share. We take the          hassle out of sharing and connect you directly to a pool of ‘active          seeking’ borrowers in your local community.        <br><br><strong>3. STEP THREE - CONNECT AND SHARE</strong>&nbsp;                  – connect with the borrower to share the item and any quirks. Beyond          the practicalities of sharing and the good we are doing in the world,          this is a fantastic opportunity to inspire and invigorate more          connections in your local community. Chances are you are lending your          sewing machine or wood carver to someone who shares common interests…          or wants to learn more about the craft you’ve had experience in. A          beautiful way to better know thy neighbours! This is also the perfect          opportunity to advise them of the little kick start and flick of the          wrist that some items so commonly need to get started.        <br><br><strong>4. STEP FOUR - RATE AND GET PAID</strong>&nbsp;                  – rate the borrower and get paid once the item is safely returned.          It's important to create a sharing community built on integrity and          trust for both the borrower and for the lender. The rating          accountability ensures that if people are to be accepted to borrow          again they are to treat your items with respect and care and for the          lender our app safely and securely takes care of the transaction and          ensure the cash gets into your pocket.        <br><br>        So… are you ready to lend your stuff? <br><br><a href=\"/#/register\">          Join us        </a></p>")
   },
   {
     id: 5,

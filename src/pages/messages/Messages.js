@@ -102,7 +102,6 @@ export const Messages = () => {
     }
 
     const renderCards = () => {
-        console.log("-----conversations--",conversations);
         return conversations.map((conversation, index) => {
             return (
                 <UserCard 

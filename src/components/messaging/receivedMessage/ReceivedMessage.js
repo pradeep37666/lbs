@@ -11,13 +11,12 @@ export default function ReceivedMessage({ user, message }) {
             <div className="ReceivedMessageImageContainer">
                 <Avatar src={user && user.avatar ? getImage(user.avatar) : MissingProfile} className="ReceivedMessageImage" />
             </div>
-            
-             <div className="ReceivedMessageTextContainer">
+
+            <div className="ReceivedMessageTextContainer">
                 <p>{message}</p>
-                
+                <GreyTriangle />
             </div>
-            <GreyTriangle />
         </div>
-       
+
     )
 }
