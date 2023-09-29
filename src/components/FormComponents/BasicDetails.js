@@ -12,6 +12,7 @@ import PhoneNumberInput from '../phoneNumberInput/PhoneNumberInput'
 import {
   REGISTER_PAGES,
   SNACKBAR_BUTTON_TYPES,
+  SCREEN_TYPE
 } from '../../assets/Data/LBSEnum'
 import useErrorState from '../../util/reducers/errorContext'
 import ValidationPopup from '../ValidationPopup/ValidationPopup'
@@ -77,6 +78,8 @@ export default function BasicDetails({ context }) {
         '/auth/getVerificationCodeToEmail',
         {
           email: `${email}`,
+          screenType:SCREEN_TYPE.SIGNUP
+          
         }
       )
       if (status === 201)

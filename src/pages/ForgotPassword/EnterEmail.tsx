@@ -5,6 +5,7 @@ import ValidationTextInput from '../../components/FormComponents/ValidationTextI
 import Instance from '../../util/axios'
 import { forgetPasswordEmailConstraints } from '../../util/validationConstraints'
 import { ResetPasswordPage } from './ForgotPassword'
+import { SCREEN_TYPE } from '../../assets/Data/LBSEnum'
 
 type Props = {
   handleEmailChange: (e: React.ChangeEvent<HTMLInputElement>) => void
@@ -18,6 +19,7 @@ export default function EnterEmail({
   switchPage,
 }: Props) {
   const [errorMessages, setErrorMessages] = useState<any>({})
+  const [emailExistError,setEmailExistError] = useState("")
 
   const getErrorMessage = (inputName:string) => {
     if (Object.keys(errorMessages).length === 0) return null
@@ -40,7 +42,8 @@ export default function EnterEmail({
     return true
   }
 
-  const sendVerificationCode = async () => {    
+  const sendVerificationCode = async () => {  
+    setEmailExistError("")  
    const valid = validateInputs()   
    if(!valid){
     return 
@@ -58,13 +61,14 @@ export default function EnterEmail({
           '/auth/getVerificationCodeToEmail',
           {
             email: `${email}`,
+            screenType: SCREEN_TYPE.FORGOT
           }
         )
         if (status !== 201) return
         switchPage('EnterCode')
       }
       else {
-        setErrorMessages('This email does not exist')
+        setEmailExistError("This email does not exist")
       }
     } catch (error) {
       if (axios.isAxiosError(error)) {
@@ -90,7 +94,7 @@ export default function EnterEmail({
         }
         value={email}
         placeholder='Enter email here...'
-        errorMessage={getErrorMessage("email")}
+        errorMessage={ emailExistError ? emailExistError : getErrorMessage("email")}
         inLineError={""}
         errorHeader={undefined}
         inputType={undefined}

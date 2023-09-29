@@ -96,6 +96,10 @@ const DATE_VALUES = {
     'December',
   ],
 }
+const SCREEN_TYPE= {
+  SIGNUP :'SIGNUP',
+ FORGOT :'FORGOT',
+}
 
 export {
   FQA_TABS,
@@ -107,4 +111,5 @@ export {
   UPGRADE_LENDER,
   CREATE_BOOKING,
   DATE_VALUES,
+  SCREEN_TYPE
 }

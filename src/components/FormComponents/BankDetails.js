@@ -370,8 +370,8 @@ export default function BankDetails({ context, lenderUpgrade }) {
             ) : null}
           </div>
 
-          <div className='LoginHeader LoginHeader--NoMargin'>
-            Website (Social Media)
+          {/* <div className='LoginHeader LoginHeader--NoMargin'>
+            Website (Social Media) Optional
           </div>
           <div
             className='LoginInputValidationContainer'
@@ -386,12 +386,13 @@ export default function BankDetails({ context, lenderUpgrade }) {
                 dispatch({ type: 'setWebsite', data: e.target.value })
               }
             />
-          </div>
+          </div> */}
           <Button
+          style={{marginTop:"20px"}}
             text='Next'
             isLoading={isLoading}
             isDisabled={
-              !accountNumber || !idFrontImage || !idBackImage || !website
+              !accountNumber || !idFrontImage || !idBackImage 
             }
             onClick={() =>
               user
