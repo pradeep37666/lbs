@@ -29,7 +29,6 @@ export default function BankDetails({ context, lenderUpgrade }) {
   const {
     accountNumber,
     BSB,
-    website,
     idFrontImage,
     idBackImage,
     isLenderUpgrade,

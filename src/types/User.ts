@@ -81,7 +81,7 @@ export type StripeDetails = {
   bsb: string
   accountNumber: string
   mcc: string
-  website: string
+  // website: string
   documentFrontImage: string
   documentBackImage: string
 }

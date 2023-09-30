@@ -69,7 +69,6 @@ export default function Register() {
     availability,
     accountNumber,
     BSB,
-    website,
     idFrontImageLink,
     idBackImageLink,
   } = state
@@ -105,7 +104,7 @@ export default function Register() {
           year: dateOfBirth.getFullYear(),
           accountNumber: accountNumber,
           mcc: '5734',
-          website: website ?? 'https://www.stripe.com/au',
+          // website: website ?? 'https://www.stripe.com/au',
           documentFrontImage: idFrontImageLink,
           documentBackImage: idBackImageLink,
           paymentMethodId: paymentMethod.id,
